@@ -242,7 +242,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Direct implementation of client APIs to string values
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="verb"></param>
         /// <param name="uri"></param>
         /// <param name="payload"></param>

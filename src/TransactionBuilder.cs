@@ -395,7 +395,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Create this transaction
         /// </summary>
-        /// <param name="client"></param>
         /// <returns></returns>
         public TransactionModel Create()
         {
