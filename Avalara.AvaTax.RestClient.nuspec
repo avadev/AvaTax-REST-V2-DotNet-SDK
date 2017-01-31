@@ -7,10 +7,10 @@
         <description>Client library for Avalara's AvaTax suite of business tax calculation and processing services.  Uses the REST v2 API.</description>
         <authors>Ted Spence, Zhenya Frolov</authors>
         <language>en-US</language>
-        <projectUrl>https://developer.avalara.com</projectUrl>
+        <projectUrl>https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK</projectUrl>
         <iconUrl>https://developer.avalara.com/public/images/favicon/A-Check-RGB.png</iconUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<copyright>(C) 2004-2016, Avalara, Inc.</copyright>
+		<copyright>(C) 2004-2017, Avalara, Inc.</copyright>
         <tags>tax Avalara AvaTax</tags>
         <dependencies>
             <group targetFramework=".NETStandard1.1">
