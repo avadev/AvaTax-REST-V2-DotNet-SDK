@@ -1,0 +1,11 @@
+﻿{
+  "version": "2.16.12.3",
+  "supports": {},
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1"
+  },
+  "frameworks": {
+    "netstandard1.1": {}
+  }
+}

@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "net20", "net20", "{54B4EB19-09BE-421C-9282-20FDECBABB3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netstandard", "netstandard", "{B2853177-1857-4F2D-957D-2C46E23FF8E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalara.AvaTax.RestClient.net20", "src\Avalara.AvaTax.RestClient.net20.csproj", "{BB6B21A0-91B3-43B2-BF4C-531D0504120A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalara.AvaTax.RestClient.netstandard", "src\Avalara.AvaTax.RestClient.netstandard.csproj", "{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Avalara.AvaTax.RestClient.net20", "tests\net20\Tests.Avalara.AvaTax.RestClient.net20.csproj", "{AE5DC145-B7E9-40D5-90AA-2A30B3168CC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Avalara.AvaTax.RestClient.netstandard", "tests\netstandard\Tests.Avalara.AvaTax.RestClient.netstandard.csproj", "{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB6B21A0-91B3-43B2-BF4C-531D0504120A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB6B21A0-91B3-43B2-BF4C-531D0504120A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB6B21A0-91B3-43B2-BF4C-531D0504120A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB6B21A0-91B3-43B2-BF4C-531D0504120A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5DC145-B7E9-40D5-90AA-2A30B3168CC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5DC145-B7E9-40D5-90AA-2A30B3168CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5DC145-B7E9-40D5-90AA-2A30B3168CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5DC145-B7E9-40D5-90AA-2A30B3168CC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BB6B21A0-91B3-43B2-BF4C-531D0504120A} = {54B4EB19-09BE-421C-9282-20FDECBABB3F}
+		{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3} = {B2853177-1857-4F2D-957D-2C46E23FF8E6}
+		{AE5DC145-B7E9-40D5-90AA-2A30B3168CC3} = {54B4EB19-09BE-421C-9282-20FDECBABB3F}
+		{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909} = {B2853177-1857-4F2D-957D-2C46E23FF8E6}
+	EndGlobalSection
+EndGlobal
