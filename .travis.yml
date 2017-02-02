@@ -5,7 +5,7 @@ install:
   - nuget install NUnit -Version 3.6.0 -OutputDirectory nunit
   - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
 script:
-  - xbuild
+  - xbuild /p:TargetFrameworkVersion="v4.5"
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net20/bin/Debug/Tests.Avalara.AvaTax.RestClient.net20.dll
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/netstandard/bin/Debug/Tests.Avalara.AvaTax.RestClient.netstandard.dll
 after_success:
