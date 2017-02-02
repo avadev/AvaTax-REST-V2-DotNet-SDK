@@ -10,7 +10,7 @@ NuGet
 
 Travis-CI
 
-![](https://api.travis-ci.org/avadev/AvaTax-REST-V2-DotNet-SDK.svg?branch=master&style=plastic)
+![Travis](https://api.travis-ci.org/avadev/AvaTax-REST-V2-DotNet-SDK.svg?branch=master&style=plastic)
 
 # Installing the DotNet SDK
 
