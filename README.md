@@ -34,11 +34,8 @@ public class Program
     public void Main()
     {
         // Create a client and set up authentication
-        var Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
-            typeof(TransactionTests).Assembly.GetName().Version.ToString(),
-            Environment.MachineName,
-            AvaTaxEnvironment.Sandbox)
-            .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+        var Client = new AvaTaxClient("MyTestApp", "1.0", Environment.MachineName, AvaTaxEnvironment.Sandbox)
+            .WithSecurity("MyUsername", "MyPassword");
 
         // Verify that we can ping successfully
         var pingResult = Client.Ping();
