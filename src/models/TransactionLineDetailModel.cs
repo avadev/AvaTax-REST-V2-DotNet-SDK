@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -166,8 +178,8 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The amount of tax that was calculated. This amount may be different if a tax override was used.
-        /// If the customer specified a tax override, this calculated tax value represents the amount of tax that would
-        /// have been charged if Avalara had calculated the tax for the rule.
+        ///If the customer specified a tax override, this calculated tax value represents the amount of tax that would
+        ///have been charged if Avalara had calculated the tax for the rule.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 

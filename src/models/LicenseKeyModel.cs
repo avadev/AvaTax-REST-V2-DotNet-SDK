@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -16,14 +28,14 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// This is your private license key. You must record this license key for safekeeping.
-        /// If you lose this key, you must contact the ResetLicenseKey API in order to request a new one.
-        /// Each account can only have one license key at a time.
+        ///If you lose this key, you must contact the ResetLicenseKey API in order to request a new one.
+        ///Each account can only have one license key at a time.
         /// </summary>
         public String privateLicenseKey { get; set; }
 
         /// <summary>
         /// If your software allows you to specify the HTTP Authorization header directly, this is the header string you 
-        /// should use when contacting Avalara to make API calls with this license key.
+        ///should use when contacting Avalara to make API calls with this license key.
         /// </summary>
         public String httpRequestHeader { get; set; }
 

@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -81,13 +93,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// True if you are also declaring local nexus within this jurisdiction.
-        /// Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
+        ///Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
         /// </summary>
         public Boolean? hasLocalNexus { get; set; }
 
         /// <summary>
         /// If you are declaring local nexus within this jurisdiction, this indicates whether you are declaring only 
-        /// a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
+        ///a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
         /// </summary>
         public LocalNexusTypeId? localNexusTypeId { get; set; }
 

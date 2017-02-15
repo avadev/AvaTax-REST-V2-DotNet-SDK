@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -53,6 +65,17 @@ namespace Avalara.AvaTax.RestClient
         /// Geospatial longitude measurement
         /// </summary>
         public Decimal? longitude { get; set; }
+
+        /// <summary>
+        /// Address type code. One of: 
+        ///* F - Firm or company address
+        ///* G - General Delivery address
+        ///* H - High-rise or business complex
+        ///* P - PO Box address
+        ///* R - Rural route address
+        ///* S - Street or residential address
+        /// </summary>
+        public String addressType { get; set; }
 
 
         /// <summary>

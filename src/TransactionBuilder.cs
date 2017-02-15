@@ -147,8 +147,8 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country)
         {
-            if (_model.addresses == null) _model.addresses = new Dictionary<TransactionAddressType, AddressInfo>();
-            var ai = new AddressInfo
+            if (_model.addresses == null) _model.addresses = new AddressesModel();
+            var ai = new AddressLocationInfo
             {
                 line1 = line1,
                 line2 = line2,
@@ -158,8 +158,29 @@ namespace Avalara.AvaTax.RestClient
                 postalCode = postalCode,
                 country = country
             };
-            _model.addresses[type] = ai;
+            SetAddress(_model.addresses, type, ai);
             return this;
+        }
+
+        private void SetAddress(AddressesModel addresses, TransactionAddressType type, AddressLocationInfo ai)
+        {
+            switch (type) {
+                case TransactionAddressType.PointOfOrderAcceptance:
+                    addresses.pointOfOrderAcceptance = ai;
+                    break;
+                case TransactionAddressType.PointOfOrderOrigin:
+                    addresses.pointOfOrderOrigin = ai;
+                    break;
+                case TransactionAddressType.ShipFrom:
+                    addresses.shipFrom = ai;
+                    break;
+                case TransactionAddressType.ShipTo:
+                    addresses.shipTo = ai;
+                    break;
+                case TransactionAddressType.SingleLocation:
+                    addresses.singleLocation = ai;
+                    break;
+            }
         }
 
         /// <summary>
@@ -171,12 +192,13 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionBuilder WithLatLong(TransactionAddressType type, decimal latitude, decimal longitude)
         {
-            var ai = new AddressInfo
+            if (_model.addresses == null) _model.addresses = new AddressesModel();
+            var ai = new AddressLocationInfo
             {
                 latitude = latitude,
                 longitude = longitude
             };
-            _model.addresses[type] = ai;
+            SetAddress(_model.addresses, type, ai);
             return this;
         }
 

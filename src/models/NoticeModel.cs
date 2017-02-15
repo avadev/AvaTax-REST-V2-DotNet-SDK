@@ -2,12 +2,24 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a letter received from a tax authority regarding tax filing.
-        /// These letters often have the warning "Notice" printed at the top, which is why
-        /// they are called "Notices".
+        ///These letters often have the warning "Notice" printed at the top, which is why
+        ///they are called "Notices".
     /// </summary>
     public class NoticeModel
     {
@@ -42,14 +54,9 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? closedDate { get; set; }
 
         /// <summary>
-        /// TaxNoticeCustomerTypeId
+        /// NoticeCustomerTypeID can be retrieved from the definitions API
         /// </summary>
-        public Int32 customerTypeId { get; set; }
-
-        /// <summary>
-        /// TaxNoticeCustomerTypeId
-        /// </summary>
-        public String customerType { get; set; }
+        public NoticeCustomerType customerTypeId { get; set; }
 
         /// <summary>
         /// taxNoticeCountry
@@ -74,12 +81,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// taxNoticeFilingTypeId
         /// </summary>
-        public Int32? filingTypeId { get; set; }
-
-        /// <summary>
-        /// taxNoticeFilingTypeId
-        /// </summary>
-        public String filingType { get; set; }
+        public FilingTypeId? filingTypeId { get; set; }
 
         /// <summary>
         /// ticketReferenceNo
@@ -129,22 +131,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// taxNoticeCustomerFundingOptionId
         /// </summary>
-        public Int32? customerFundingOptionId { get; set; }
-
-        /// <summary>
-        /// taxNoticeCustomerFundingOptionId
-        /// </summary>
-        public String customerFundingOption { get; set; }
+        public FundingOption? customerFundingOptionId { get; set; }
 
         /// <summary>
         /// taxNoticePriorityId
         /// </summary>
-        public Int32 priorityId { get; set; }
-
-        /// <summary>
-        /// taxNoticePriorityId
-        /// </summary>
-        public String priority { get; set; }
+        public NoticePriorityId priorityId { get; set; }
 
         /// <summary>
         /// CustomerComment
@@ -202,11 +194,6 @@ namespace Avalara.AvaTax.RestClient
         public Int32? complianceContactId { get; set; }
 
         /// <summary>
-        /// taxNoticeMailCheckToId
-        /// </summary>
-        public Int32? taxNoticeMailCheckToId { get; set; }
-
-        /// <summary>
         /// documentReference
         /// </summary>
         public String documentReference { get; set; }
@@ -232,9 +219,14 @@ namespace Avalara.AvaTax.RestClient
         public List<NoticeFinanceModel> finances { get; set; }
 
         /// <summary>
-        /// salesForceCaseNo
+        /// Notice Responsibility Details
         /// </summary>
-        public String downloadAttachmentsUrl { get; set; }
+        public List<NoticeResponsibilityDetailModel> responsibility { get; set; }
+
+        /// <summary>
+        /// Notice Root Cause Details
+        /// </summary>
+        public List<NoticeRootCauseDetailModel> rootCause { get; set; }
 
         /// <summary>
         /// The date when this record was created.

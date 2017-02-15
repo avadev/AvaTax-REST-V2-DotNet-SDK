@@ -2,13 +2,25 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// This object is used to keep track of custom information about a company.
-        /// A setting can refer to any type of data you need to remember about this company object.
-        /// When creating this object, you may define your own "set", "name", and "value" parameters.
-        /// To define your own values, please choose a "set" name that begins with "X-" to indicate an extension.
+        ///A setting can refer to any type of data you need to remember about this company object.
+        ///When creating this object, you may define your own "set", "name", and "value" parameters.
+        ///To define your own values, please choose a "set" name that begins with "X-" to indicate an extension.
     /// </summary>
     public class SettingModel
     {

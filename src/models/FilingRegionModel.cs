@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -87,12 +99,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The current status of the filing region.
         /// </summary>
-        public WorksheetStatusId? status { get; set; }
+        public FilingStatusId? status { get; set; }
 
         /// <summary>
         /// A list of tax returns in this region.
         /// </summary>
         public List<FilingReturnModel> returns { get; set; }
+
+        /// <summary>
+        /// A list of tax returns in this region.
+        /// </summary>
+        public List<FilingsCheckupSuggestedFormModel> suggestReturns { get; set; }
 
 
         /// <summary>
