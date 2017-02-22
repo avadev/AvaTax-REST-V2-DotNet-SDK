@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -16,13 +28,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Transaction Code - the internal reference code used by the client application. This is used for operations such as
-        /// Get, Adjust, Settle, and Void. If you leave the transaction code blank, a GUID will be assigned to each transaction.
+        ///Get, Adjust, Settle, and Void. If you leave the transaction code blank, a GUID will be assigned to each transaction.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
         /// Company Code - Specify the code of the company creating this transaction here. If you leave this value null,
-        /// your account's default company will be used instead.
+        ///your account's default company will be used instead.
         /// </summary>
         public String companyCode { get; set; }
 
@@ -64,7 +76,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Default addresses for all lines in this document
         /// </summary>
-        public Dictionary<TransactionAddressType, AddressInfo> addresses { get; set; }
+        public AddressesModel addresses { get; set; }
 
         /// <summary>
         /// Document line items list
@@ -73,7 +85,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Special parameters for this transaction.
-        /// To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
+        ///To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
 
@@ -101,11 +113,6 @@ namespace Avalara.AvaTax.RestClient
         /// Specifies a tax override for the entire document
         /// </summary>
         public TaxOverrideModel taxOverride { get; set; }
-
-        /// <summary>
-        /// Indicates the tax effectivity override date for the entire document.
-        /// </summary>
-        public DateTime? taxDate { get; set; }
 
         /// <summary>
         /// 3 character ISO 4217 currency code.

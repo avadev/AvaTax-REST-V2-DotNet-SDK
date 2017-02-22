@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -21,7 +33,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// If additional information is available about the location setting, this contains descriptive text to help
-        /// you identify the correct value to provide in this setting.
+        ///you identify the correct value to provide in this setting.
         /// </summary>
         public String description { get; set; }
 

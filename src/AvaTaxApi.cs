@@ -2,9 +2,23 @@ using System;
 using System.Collections.Generic;
 #if PORTABLE
 using System.Threading.Tasks;
-#else
-using System.Security;
 #endif
+
+/*
+ * AvaTax Software Development Kit for C#
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author     Ted Spence <ted.spence@avalara.com>
+ * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
+ * @copyright  2004-2017 Avalara, Inc.
+ * @license    https://www.apache.org/licenses/LICENSE-2.0
+ * @version    
+ * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
+ */
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -21,19 +35,24 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve all accounts
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Get multiple account objects.
-        /// Search for specific objects using the criteria in the '$filter' parameter.
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Subscriptions</li><li>Users</li></ul>
-        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Get multiple account objects.
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        ///You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Subscriptions
+        ///* Users
+        /// 
+        ///For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<AccountModel> QueryAccounts(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
@@ -50,9 +69,11 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new account
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Create a single new account object. 
-        /// When creating an account object you may attach subscriptions and users as part of the 'Create' call.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Create a single new account object. 
+        ///When creating an account object you may attach subscriptions and users as part of the 'Create' call.
         /// </remarks>
         /// <param name="model">The account you wish to create.</param>
         public AccountModel CreateAccount(AccountModel model)
@@ -67,16 +88,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all subscription objects attached to this account.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns these subscriptions</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<SubscriptionModel> ListSubscriptionsByAccount(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
@@ -93,10 +115,12 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new subscription
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Create one or more new subscription objects attached to this account.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Create one or more new subscription objects attached to this account.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
         /// <param name="model">The subscription you wish to create.</param>
@@ -113,8 +137,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the subscription object identified by this URL.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this subscription</param>
         /// <param name="id">The primary key of this subscription</param>
@@ -131,12 +155,14 @@ namespace Avalara.AvaTax.RestClient
         /// Update a single subscription
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Replace the existing subscription object at this URL with an updated object.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Replace the existing subscription object at this URL with an updated object.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="accountId">The ID of the account that this subscription belongs to.</param>
         /// <param name="id">The ID of the subscription you wish to update</param>
@@ -154,17 +180,19 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single subscription
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Mark the existing account identified by this URL as deleted.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Mark the existing account identified by this URL as deleted.
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
         /// <param name="id">The ID of the subscription you wish to delete.</param>
-        public ErrorResult DeleteSubscription(Int32 accountId, Int32 id)
+        public List<ErrorDetail> DeleteSubscription(Int32 accountId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -173,16 +201,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all user objects attached to this account.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="accountId">The accountID of the user you wish to list.</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<UserModel> ListUsersByAccount(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
@@ -200,9 +229,11 @@ namespace Avalara.AvaTax.RestClient
         /// Create new users
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Create one or more new user objects attached to this account.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Create one or more new user objects attached to this account.
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
         /// </remarks>
         /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
         /// <param name="model">The user or array of users you wish to create.</param>
@@ -219,7 +250,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the user object identified by this URL.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
         /// </remarks>
         /// <param name="id">The ID of the user to retrieve.</param>
         /// <param name="accountId">The accountID of the user you wish to get.</param>
@@ -239,9 +270,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing user object at this URL with an updated object.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="id">The ID of the user you wish to update.</param>
         /// <param name="accountId">The accountID of the user you wish to update.</param>
@@ -259,17 +290,19 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single user
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Mark the user object identified by this URL as deleted.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Mark the user object identified by this URL as deleted.
         /// </remarks>
         /// <param name="id">The ID of the user you wish to delete.</param>
         /// <param name="accountId">The accountID of the user you wish to delete.</param>
-        public ErrorResult DeleteUser(Int32 id, Int32 accountId)
+        public List<ErrorDetail> DeleteUser(Int32 id, Int32 accountId)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -278,15 +311,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Return a list of all entitlements to which this user has rights to access.
-        /// Entitlements are a list of specified API calls the user is permitted to make, a list of identifier numbers for companies the user is 
-        /// allowed to use, and an access level identifier that indicates what types of access roles the user is allowed to use.
-        /// This API call is intended to provide a validation endpoint to determine, before making an API call, whether this call is likely to succeed.
-        /// For example, if user 567 within account 999 is attempting to create a new child company underneath company 12345, you could preview the user's
-        /// entitlements and predict whether this call would succeed:
-        /// <ul><li>Retrieve entitlements by calling '/api/v2/accounts/999/users/567/entitlements' . If the call fails, you do not have accurate 
-        /// credentials for this user.</li><li>If the 'accessLevel' field within entitlements is 'None', the call will fail.</li><li>If the 'accessLevel' field within entitlements is 'SingleCompany' or 'SingleAccount', the call will fail if the companies
-        /// table does not contain the ID number 12345.</li><li>If the 'permissions' array within entitlements does not contain 'AccountSvc.CompanySave', the call will fail.</li></ul>
-        /// For a full list of defined permissions, please use '/api/v2/definitions/permissions' .
+        ///Entitlements are a list of specified API calls the user is permitted to make, a list of identifier numbers for companies the user is 
+        ///allowed to use, and an access level identifier that indicates what types of access roles the user is allowed to use.
+        ///This API call is intended to provide a validation endpoint to determine, before making an API call, whether this call is likely to succeed.
+        ///For example, if user 567 within account 999 is attempting to create a new child company underneath company 12345, you could preview the user's
+        ///entitlements and predict whether this call would succeed:
+        /// 
+        ///* Retrieve entitlements by calling '/api/v2/accounts/999/users/567/entitlements' . If the call fails, you do not have accurate 
+        /// credentials for this user.
+        ///* If the 'accessLevel' field within entitlements is 'None', the call will fail.
+        ///* If the 'accessLevel' field within entitlements is 'SingleCompany' or 'SingleAccount', the call will fail if the companies
+        /// table does not contain the ID number 12345.
+        ///* If the 'permissions' array within entitlements does not contain 'AccountSvc.CompanySave', the call will fail.
+        /// 
+        ///For a full list of defined permissions, please use '/api/v2/definitions/permissions' .
         /// </remarks>
         /// <param name="id">The ID of the user to retrieve.</param>
         /// <param name="accountId">The accountID of the user you wish to get.</param>
@@ -304,8 +342,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the account object identified by this URL.
-        /// You may use the '$include' parameter to fetch additional nested data:
-        /// <ul><li>Subscriptions</li><li>Users</li></ul>
+        ///You may use the '$include' parameter to fetch additional nested data:
+        ///
+        ///* Subscriptions
+        ///* Users
         /// </remarks>
         /// <param name="id">The ID of the account to retrieve</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -322,8 +362,10 @@ namespace Avalara.AvaTax.RestClient
         /// Update a single account
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Replace an existing account object with an updated account object.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Replace an existing account object with an updated account object.
         /// </remarks>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">The account object you wish to update.</param>
@@ -339,16 +381,18 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single account
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Delete an account.
-        /// Deleting an account will delete all companies and all account level users attached to this account.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Delete an account.
+        ///Deleting an account will delete all companies and all account level users attached to this account.
         /// </remarks>
         /// <param name="id">The ID of the account you wish to delete.</param>
-        public ErrorResult DeleteAccount(Int32 id)
+        public List<ErrorDetail> DeleteAccount(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -357,8 +401,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Resets the existing license key for this account to a new key.
-        /// To reset your account, you must specify the ID of the account you wish to reset and confirm the action.
-        /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
+        ///To reset your account, you must specify the ID of the account you wish to reset and confirm the action.
+        ///Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
         /// </remarks>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">A request confirming that you wish to reset the license key of this account.</param>
@@ -371,15 +415,57 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// FREE API - Request a free trial of AvaTax
+        /// </summary>
+        /// <remarks>
+        /// Call this API to obtain a free AvaTax sandbox account.
+        ///
+        ///This API is free to use. No authentication credentials are required to call this API.
+        ///The account will grant a full trial version of AvaTax (e.g. AvaTaxPro) for 90 days.
+        ///After 90 days, you may continue to use the free TaxRates API.
+        ///
+        ///Limitations on free trial accounts:
+        /// 
+        ///* Only one free trial per company.
+        ///* The free trial account does not expire.
+        ///* Includes a 90-day free trial of AvaTaxPro; after that date, the free TaxRates API will continue to work.
+        ///* Each free trial account must have its own valid email address.
+        /// </remarks>
+        /// <param name="model">Required information to provision a free trial account.</param>
+        public NewAccountModel RequestFreeTrial(FreeTrialRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
+            return RestCall<NewAccountModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Request a new Avalara account
+        /// </summary>
+        /// <remarks>
+        /// This API is for use by partner onboarding services customers only.
+        ///Calling this API creates an account with the specified product subscriptions, but does not configure billing.
+        ///The customer will receive information from Avalara about how to configure billing for their account.
+        ///You should call this API when a customer has requested to begin using Avalara services.
+        /// </remarks>
+        /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
+        public NewAccountModel RequestNewAccount(NewAccountRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/request");
+            return RestCall<NewAccountModel>("post", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve geolocation information for a specified address
         /// </summary>
         /// <remarks>
         /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API 
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the 
-        /// 'messages' structure to learn more about problems with this address.
-        /// This is the same API as the POST /api/v2/addresses/resolve endpoint.
-        /// Both verbs are supported to provide for flexible implementation.
+        ///provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
+        ///to identify how closely this address can be located. If the address cannot be clearly located, use the 
+        ///'messages' structure to learn more about problems with this address.
+        ///This is the same API as the POST /api/v2/addresses/resolve endpoint.
+        ///Both verbs are supported to provide for flexible implementation.
         /// </remarks>
         /// <param name="line1">Line 1</param>
         /// <param name="line2">Line 2</param>
@@ -388,9 +474,10 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">State / Province / Region</param>
         /// <param name="postalCode">Postal Code / Zip Code</param>
         /// <param name="country">Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)</param>
+        /// <param name="textCase">selectable text case for address validation</param>
         /// <param name="latitude">Geospatial latitude measurement</param>
         /// <param name="longitude">Geospatial longitude measurement</param>
-        public AddressResolutionModel ResolveAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
+        public AddressResolutionModel ResolveAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase, Decimal? latitude, Decimal? longitude)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             path.AddQuery("line1", line1);
@@ -400,6 +487,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            path.AddQuery("textCase", textCase);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
             return RestCall<AddressResolutionModel>("get", path, null);
@@ -411,14 +499,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API 
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the 
-        /// 'messages' structure to learn more about problems with this address.
-        /// This is the same API as the GET /api/v2/addresses/resolve endpoint.
-        /// Both verbs are supported to provide for flexible implementation.
+        ///provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
+        ///to identify how closely this address can be located. If the address cannot be clearly located, use the 
+        ///'messages' structure to learn more about problems with this address.
+        ///This is the same API as the GET /api/v2/addresses/resolve endpoint.
+        ///Both verbs are supported to provide for flexible implementation.
         /// </remarks>
         /// <param name="model">The address to resolve</param>
-        public AddressResolutionModel ResolveAddressPost(AddressInfo model)
+        public AddressResolutionModel ResolveAddressPost(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return RestCall<AddressResolutionModel>("post", path, model);
@@ -430,17 +518,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple batch objects across all companies.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<BatchModel> QueryBatches(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/batches");
@@ -458,17 +547,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple company objects.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Contacts</li><li>Items</li><li>Locations</li><li>Nexus</li><li>Settings</li><li>TaxCodes</li><li>TaxRules</li><li>UPC</li></ul>
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        ///You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Contacts
+        ///* Items
+        ///* Locations
+        ///* Nexus
+        ///* Settings
+        ///* TaxCodes
+        ///* TaxRules
+        ///* UPC
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<CompanyModel> QueryCompanies(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies");
@@ -486,8 +583,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new company objects.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// You may attach nested data objects such as contacts, locations, and nexus with this CREATE call, and those objects will be created with the company.
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///You may attach nested data objects such as contacts, locations, and nexus with this CREATE call, and those objects will be created with the company.
         /// </remarks>
         /// <param name="model">Either a single company object or an array of companies to create</param>
         public List<CompanyModel> CreateCompanies(List<CompanyModel> model)
@@ -502,20 +599,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all transactions attached to this company.
-        /// This endpoint is limited to returning 1,000 transactions at a time maximum.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Lines</li><li>Details (implies lines)</li><li>Summary (implies details)</li><li>Addresses</li></ul>
+        ///This endpoint is limited to returning 1,000 transactions at a time maximum.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        ///You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<TransactionModel> ListTransactionsByCompany(String companyCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions");
@@ -534,10 +636,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the current transaction identified by this URL.
-        /// If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
-        /// the transaction will be attached to the 'history' data field.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Lines</li><li>Details (implies lines)</li><li>Summary (implies details)</li><li>Addresses</li></ul>
+        ///If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
+        ///the transaction will be attached to the 'history' data field.
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
@@ -557,12 +663,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replaces the current transaction uniquely identified by this URL with a new transaction.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// When you adjust a committed transaction, the original transaction will be updated with the status code 'Adjusted', and
-        /// both revisions will be available for retrieval based on their code and ID numbers.
-        /// Only transactions in 'Committed' status are reported by Avalara Managed Returns.
-        /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available for adjustments.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///When you adjust a committed transaction, the original transaction will be updated with the status code 'Adjusted', and
+        ///both revisions will be available for retrieval based on their code and ID numbers.
+        ///Only transactions in 'Committed' status are reported by Avalara Managed Returns.
+        ///Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available for adjustments.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
@@ -581,9 +687,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Renames a transaction uniquely identified by this URL by changing its code to a new code.
-        /// After this API call succeeds, the transaction will have a new URL matching its new code.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///After this API call succeeds, the transaction will have a new URL matching its new code.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
@@ -602,10 +708,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks a transaction by changing its status to 'Committed'.
-        /// Transactions that are committed are available to be reported to a tax authority by Avalara Managed Returns.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// Any changes made to a committed transaction will generate a transaction history.
+        ///Transactions that are committed are available to be reported to a tax authority by Avalara Managed Returns.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///Any changes made to a committed transaction will generate a transaction history.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
@@ -613,6 +719,32 @@ namespace Avalara.AvaTax.RestClient
         public TransactionModel CommitTransaction(String companyCode, String transactionCode, CommitTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/commit");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            return RestCall<TransactionModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Lock a single transaction
+        /// </summary>
+        /// <remarks>
+        /// Lock a transaction uniquely identified by this URL. 
+        ///
+        ///This API is mainly used for connector developer to simulate what happens when Returns product locks a document.
+        ///After this API call succeeds, the document will be locked and can't be voided or adjusted.
+        ///
+        ///This API is only available to customers in Sandbox. On production servers, this API is available by invitation only.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        /// </remarks>
+        /// <param name="companyCode">The company code of the company that recorded this transaction</param>
+        /// <param name="transactionCode">The transaction code to lock</param>
+        /// <param name="model">The lock request you wish to execute</param>
+        public TransactionModel LockTransaction(String companyCode, String transactionCode, LockTransactionModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/lock");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             return RestCall<TransactionModel>("post", path, model);
@@ -642,9 +774,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Verifies that the transaction uniquely identified by this URL matches certain expected values.
-        /// If the transaction does not match these expected values, this API will return an error code indicating which value did not match.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///If the transaction does not match these expected values, this API will return an error code indicating which value did not match.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
@@ -663,10 +795,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Voids the current transaction uniquely identified by this URL.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// When you void a transaction, that transaction's status is recorded as 'DocVoided'.
-        /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available to be voided.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///When you void a transaction, that transaction's status is recorded as 'DocVoided'.
+        ///Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available to be voided.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
@@ -685,18 +817,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all batch objects attached to the specified company.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<BatchModel> ListBatchesByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
@@ -715,10 +847,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new batch objects attached to this company.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Each batch object may have one or more file objects attached.
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///Each batch object may have one or more file objects attached.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
@@ -731,13 +863,32 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Download a single batch file
+        /// </summary>
+        /// <remarks>
+        /// Download a single batch file identified by this URL.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this batch</param>
+        /// <param name="batchId">The ID of the batch object</param>
+        /// <param name="id">The primary key of this batch file object</param>
+        public String DownloadBatch(Int32 companyId, Int32 batchId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{batchId}/files/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("batchId", batchId);
+            path.ApplyField("id", id);
+            return RestCallString("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve a single batch
         /// </summary>
         /// <remarks>
         /// Get the batch object identified by this URL.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch</param>
         /// <param name="id">The primary key of this batch</param>
@@ -755,11 +906,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing batch object at this URL with an updated object.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this batch belongs to.</param>
         /// <param name="id">The ID of the batch you wish to update</param>
@@ -781,12 +932,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="id">The ID of the batch you wish to delete.</param>
-        public ErrorResult DeleteBatch(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteBatch(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -795,15 +946,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all contact objects assigned to this company.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these contacts</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<ContactModel> ListContactsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
@@ -822,8 +974,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new contact objects.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="model">The contacts you wish to create.</param>
@@ -840,8 +992,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the contact object identified by this URL.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this contact</param>
         /// <param name="id">The primary key of this contact</param>
@@ -859,10 +1011,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing contact object at this URL with an updated object.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this contact belongs to.</param>
         /// <param name="id">The ID of the contact you wish to update</param>
@@ -884,12 +1036,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="id">The ID of the contact you wish to delete.</param>
-        public ErrorResult DeleteContact(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteContact(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -900,10 +1052,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API is available by invitation only.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<FilingCalendarModel> CompaniesByCompanyIdFilingcalendarsGet(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
@@ -955,13 +1107,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
         /// <param name="id">The unique ID number of the filing calendar to cancel</param>
         /// <param name="model">The cancellation request for this filing calendar</param>
-        public FilingRequestModel FilingRequestsNewCancel(Int32 companyId, Int32 id, FilingRequestModel model)
+        public FilingRequestModel FilingRequestsNewCancel(Int32 companyId, Int32 id, List<FilingRequestModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
             path.ApplyField("companyId", companyId);
@@ -993,13 +1145,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
         /// <param name="id">The unique ID number of the filing calendar to edit</param>
         /// <param name="model">A list of filing calendar edits to be made</param>
-        public FilingRequestModel FilingRequestsNewEdit(Int32 companyId, Int32 id, FilingRequestModel model)
+        public FilingRequestModel FilingRequestsNewEdit(Int32 companyId, Int32 id, List<FilingRequestModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
             path.ApplyField("companyId", companyId);
@@ -1030,12 +1182,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
         /// <param name="model">Information about the proposed new filing calendar</param>
-        public FilingRequestModel FilingRequestsAdd(Int32 companyId, FilingRequestModel model)
+        public FilingRequestModel FilingRequestsAdd(Int32 companyId, List<FilingRequestModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
             path.ApplyField("companyId", companyId);
@@ -1048,14 +1200,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<FilingRequestModel> CompaniesByCompanyIdFilingrequestsGet(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
@@ -1073,8 +1225,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this filing calendar</param>
         /// <param name="id">The primary key of this filing calendar</param>
@@ -1092,8 +1244,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing request object</param>
@@ -1112,8 +1264,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
+        ///The filing request must be in the "ChangeRequest" status to be approved.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing request object</param>
@@ -1131,8 +1284,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing request object</param>
@@ -1146,6 +1299,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a single attachment for a filing
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="worksheetId">The unique id of the worksheet.</param>
+        public FileContentResult GetFilingAttachment(Int32 companyId, Int64 worksheetId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("worksheetId", worksheetId);
+            return RestCall<FileContentResult>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve worksheet checkup report for company and filing period.
         /// </summary>
         /// <remarks>
@@ -1155,7 +1325,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The unique ID of the company that owns the worksheet.</param>
         public FilingsCheckupModel FilingsCheckupReport(Int32 worksheetId, Int32 companyId)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetid}/checkup");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/checkup");
             path.ApplyField("worksheetId", worksheetId);
             path.ApplyField("companyId", companyId);
             return RestCall<FilingsCheckupModel>("get", path, null);
@@ -1167,8 +1337,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -1188,8 +1358,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -1211,8 +1381,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -1236,8 +1406,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -1263,11 +1433,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API creates a new adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
+        ///An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
+        ///such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        ///Sometimes may be a manual change in tax liability similar to an augmentation.
+        ///This API creates a new adjustment for an existing tax filing.
+        ///This API can only be used when the filing has not yet been approved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="year">The year of the filing's filing period being adjusted.</param>
@@ -1294,10 +1464,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API creates a new augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.
+        ///An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
+        ///usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
+        ///This API creates a new augmentation for an existing tax filing.
+        ///This API can only be used when the filing has not been approved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="year">The month of the filing's filing period being changed.</param>
@@ -1324,12 +1494,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console, 
-        /// else system auto-approves the night before the filing cycle
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///Approving a return means the customer is ready to let Avalara file that return.
+        ///Customer either approves themselves from admin console, 
+        ///else system auto-approves the night before the filing cycle
+        ///Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to approve.</param>
@@ -1354,11 +1524,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing. 
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
+        ///Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
+        ///Rebuilding has to be done whenever a customer adds transactions to a filing. 
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        ///This API requires filing to be unapproved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to be rebuilt.</param>
@@ -1383,12 +1553,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console, 
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///Approving a return means the customer is ready to let Avalara file that return.
+        ///Customer either approves themselves from admin console, 
+        ///else system auto-approves the night before the filing cycle.
+        ///Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to approve.</param>
@@ -1411,11 +1581,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
+        ///Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
+        ///Rebuilding has to be done whenever a customer adds transactions to a filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        ///This API requires filing to be unapproved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to be rebuilt.</param>
@@ -1438,12 +1608,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console, 
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
+        ///Approving a return means the customer is ready to let Avalara file that return.
+        ///Customer either approves themselves from admin console, 
+        ///else system auto-approves the night before the filing cycle.
+        ///Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to approve.</param>
@@ -1456,6 +1626,48 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             return RestCall<List<FilingModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="year">The year of the filing period.</param>
+        /// <param name="month">The two digit month of the filing period.</param>
+        public FileContentResult GetFilingAttachments(Int32 companyId, Int16 year, Byte month)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("year", year);
+            path.ApplyField("month", month);
+            return RestCall<FileContentResult>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single trace file for a company filing period
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="year">The year of the filing period.</param>
+        /// <param name="month">The two digit month of the filing period.</param>
+        public FileContentResult GetFilingAttachmentsTraceFile(Int32 companyId, Int16 year, Byte month)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments/tracefile");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("year", year);
+            path.ApplyField("month", month);
+            return RestCall<FileContentResult>("get", path, null);
         }
 
 
@@ -1483,11 +1695,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
+        ///Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
+        ///Rebuilding has to be done whenever a customer adds transactions to a filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        ///This API requires filing to be unapproved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to be rebuilt.</param>
@@ -1508,11 +1720,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API modifies an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
+        ///An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
+        ///such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        ///Sometimes may be a manual change in tax liability similar to an augmentation.
+        ///This API modifies an adjustment for an existing tax filing.
+        ///This API can only be used when the filing has not yet been approved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="id">The ID of the adjustment being edited.</param>
@@ -1531,20 +1743,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API deletes an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
+        ///An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
+        ///such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        ///Sometimes may be a manual change in tax liability similar to an augmentation.
+        ///This API deletes an adjustment for an existing tax filing.
+        ///This API can only be used when the filing has been unapproved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="id">The ID of the adjustment being deleted.</param>
-        public ErrorResult DeleteReturnAdjustment(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteReturnAdjustment(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -1553,10 +1765,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API modifies an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.
+        ///An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
+        ///usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
+        ///This API modifies an augmentation for an existing tax filing.
+        ///This API can only be used when the filing has not been approved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being edited.</param>
@@ -1575,19 +1787,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API deletes an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
+        ///An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
+        ///usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
+        ///This API deletes an augmentation for an existing tax filing.
+        ///This API can only be used when the filing has been unapproved.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being added.</param>
-        public ErrorResult DeleteReturnAugmentation(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteReturnAugmentation(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -1596,16 +1808,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all items defined for the current company.
-        /// An 'Item' represents a product or service that your company offers for sale.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///
+        ///An 'Item' represents a product or service that your company offers for sale.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<ItemModel> ListItemsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
@@ -1640,7 +1854,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the item object identified by this URL.
-        /// An 'Item' represents a product or service that your company offers for sale.
+        ///An 'Item' represents a product or service that your company offers for sale.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
@@ -1658,8 +1872,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing item object at this URL with an updated object.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
@@ -1681,12 +1895,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
-        public ErrorResult DeleteItem(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteItem(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -1695,19 +1909,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all location objects defined for this company.
-        /// An 'Location' represents a physical address where a company does business.
-        /// Many taxing authorities require that you define a list of all locations where your company does business.
-        /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///An 'Location' represents a physical address where a company does business.
+        ///Many taxing authorities require that you define a list of all locations where your company does business.
+        ///These locations may require additional custom configuration or tax registration with these authorities.
+        ///For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<LocationModel> ListLocationsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
@@ -1742,10 +1957,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the location object identified by this URL.
-        /// An 'Location' represents a physical address where a company does business.
-        /// Many taxing authorities require that you define a list of all locations where your company does business.
-        /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        ///An 'Location' represents a physical address where a company does business.
+        ///Many taxing authorities require that you define a list of all locations where your company does business.
+        ///These locations may require additional custom configuration or tax registration with these authorities.
+        ///For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -1763,8 +1978,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing location object at this URL with an updated object.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this location belongs to.</param>
         /// <param name="id">The ID of the location you wish to update</param>
@@ -1786,12 +2001,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location.</param>
         /// <param name="id">The ID of the location you wish to delete.</param>
-        public ErrorResult DeleteLocation(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteLocation(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -1800,11 +2015,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a point-of-sale data file containing tax rates and rules for this location, containing tax rates for all
-        /// items defined for this company. This data file can be used to correctly calculate tax in the event a 
-        /// point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to a maximum of 7500 items.
+        ///items defined for this company. This data file can be used to correctly calculate tax in the event a 
+        ///point-of-sale device is not able to reach AvaTax.
+        ///This data file can be customized for specific partner devices and usage conditions.
+        ///The result of this API is the file you requested in the format you requested using the 'responseType' field.
+        ///This API builds the file on demand, and is limited to a maximum of 7500 items.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that owns this location.</param>
         /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
@@ -1830,8 +2045,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns validation information for this location.
-        /// This API call is intended to compare this location against the currently known taxing authority rules and regulations,
-        /// and provide information about what additional work is required to completely setup this location.
+        ///This API call is intended to compare this location against the currently known taxing authority rules and regulations,
+        ///and provide information about what additional work is required to completely setup this location.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -1849,19 +2064,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all nexus objects defined for this company.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<NexusModel> ListNexusByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
@@ -1880,13 +2096,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates one or more new nexus objects attached to this company.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
-        /// '/api/v2/definitions/nexus' endpoint.
-        /// You may only define nexus matching the official list of declared nexus.
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
+        ///'/api/v2/definitions/nexus' endpoint.
+        ///You may only define nexus matching the official list of declared nexus.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
@@ -1903,10 +2119,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the nexus object identified by this URL.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
         /// <param name="id">The primary key of this nexus</param>
@@ -1924,15 +2140,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing nexus object at this URL with an updated object.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
-        /// '/api/v2/definitions/nexus' endpoint.
-        /// You may only define nexus matching the official list of declared nexus.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
+        ///'/api/v2/definitions/nexus' endpoint.
+        ///You may only define nexus matching the official list of declared nexus.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
         /// <param name="id">The ID of the nexus you wish to update</param>
@@ -1954,12 +2170,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="id">The ID of the nexus you wish to delete.</param>
-        public ErrorResult DeleteNexus(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteNexus(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -1968,18 +2184,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// List all tax notice objects assigned to this company.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///List all tax notice objects assigned to this company.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<NoticeModel> ListNoticesByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices");
@@ -1998,9 +2215,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Create one or more new notice objects.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///Create one or more new notice objects.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="model">The notice object you wish to create.</param>
@@ -2017,9 +2234,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Get the tax notice object identified by this URL.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///Get the tax notice object identified by this URL.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this notice.</param>
         /// <param name="id">The ID of this notice.</param>
@@ -2037,11 +2254,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Replace the existing notice object at this URL with an updated object.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///Replace the existing notice object at this URL with an updated object.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice belongs to.</param>
         /// <param name="id">The ID of the notice you wish to update.</param>
@@ -2060,18 +2277,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Mark the existing notice object at this URL as deleted.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///Mark the existing notice object at this URL as deleted.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete.</param>
-        public ErrorResult DeleteNotice(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteNotice(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -2080,9 +2297,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -2100,9 +2317,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the comment for.</param>
@@ -2121,10 +2338,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
-        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
+        ///as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="id">The ID of the company that owns these notices.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -2142,10 +2359,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
-        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
+        ///as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice added to the finance details.</param>
@@ -2160,25 +2377,126 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve notice responsibilities for a specific notice.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice responsibilities' are are those who are responsible for the notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="id">The ID of the notice.</param>
+        /// <param name="companyId">The ID of the company that owns these notices.</param>
+        public FetchResult<NoticeResponsibilityDetailModel> GetNoticeResponsibilities(Int32 id, Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
+            path.ApplyField("id", id);
+            path.ApplyField("companyId", companyId);
+            return RestCall<FetchResult<NoticeResponsibilityDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a new notice responsibility.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
+        /// <param name="model">The notice responsibilities you wish to create.</param>
+        public List<NoticeResponsibilityDetailModel> CreateNoticeResponsibilities(Int32 companyId, Int32 id, List<NoticeResponsibilityDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<List<NoticeResponsibilityDetailModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve notice root causes for a specific notice.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice root causes' are are those who are responsible for the notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="id">The ID of the notice.</param>
+        /// <param name="companyId">The ID of the company that owns these notices.</param>
+        public FetchResult<NoticeRootCauseDetailModel> GetNoticeRootCauses(Int32 id, Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
+            path.ApplyField("id", id);
+            path.ApplyField("companyId", companyId);
+            return RestCall<FetchResult<NoticeRootCauseDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a new notice root cause.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice root causes' are are those who are responsible for the notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
+        /// <param name="model">The notice root causes you wish to create.</param>
+        public List<NoticeRootCauseDetailModel> CreateNoticeRootCauses(Int32 companyId, Int32 id, List<NoticeRootCauseDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<List<NoticeRootCauseDetailModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single attachment
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///Get the file attachment identified by this URL.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company for this attachment.</param>
+        /// <param name="id">The ResourceFileId of the attachment to download.</param>
+        public String DownloadNoticeAttachment(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCallString("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve all settings for this company
         /// </summary>
         /// <remarks>
         /// List all setting objects attached to this company.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these settings</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<SettingModel> ListSettingsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
@@ -2197,12 +2515,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new setting objects attached to this company.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="model">The setting you wish to create.</param>
@@ -2219,12 +2537,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get a single setting object by its unique ID.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this setting</param>
         /// <param name="id">The primary key of this setting</param>
@@ -2242,14 +2560,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing setting object at this URL with an updated object.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this setting belongs to.</param>
         /// <param name="id">The ID of the setting you wish to update</param>
@@ -2271,12 +2589,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="id">The ID of the setting you wish to delete.</param>
-        public ErrorResult DeleteSetting(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteSetting(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -2285,19 +2603,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all taxcode objects attached to this company.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<TaxCodeModel> ListTaxCodesByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
@@ -2316,10 +2635,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new taxcode objects attached to this company.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="model">The tax code you wish to create.</param>
@@ -2336,10 +2655,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the taxcode object identified by this URL.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax code</param>
         /// <param name="id">The primary key of this tax code</param>
@@ -2357,12 +2676,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing taxcode object at this URL with an updated object.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this tax code belongs to.</param>
         /// <param name="id">The ID of the tax code you wish to update</param>
@@ -2384,12 +2703,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="id">The ID of the tax code you wish to delete.</param>
-        public ErrorResult DeleteTaxCode(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteTaxCode(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -2398,19 +2717,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all taxrule objects attached to this company.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax rules</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<TaxRuleModel> ListTaxRules(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
@@ -2429,10 +2749,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new taxrule objects attached to this company.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="model">The tax rule you wish to create.</param>
@@ -2449,10 +2769,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the taxrule object identified by this URL.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax rule</param>
         /// <param name="id">The primary key of this tax rule</param>
@@ -2470,12 +2790,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing taxrule object at this URL with an updated object.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this tax rule belongs to.</param>
         /// <param name="id">The ID of the tax rule you wish to update</param>
@@ -2497,12 +2817,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="id">The ID of the tax rule you wish to delete.</param>
-        public ErrorResult DeleteTaxRule(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteTaxRule(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -2511,18 +2831,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all UPC objects attached to this company.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// By default you will retrieve no more than 1000 records from this query. To include a full list of number of records matching your query,
-        /// please specify '$include=count' as an option.
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these UPCs</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<UPCModel> ListUPCsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
@@ -2541,7 +2860,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new UPC objects attached to this company.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="model">The UPC you wish to create.</param>
@@ -2558,7 +2877,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the UPC object identified by this URL.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this UPC</param>
         /// <param name="id">The primary key of this UPC</param>
@@ -2576,9 +2895,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing UPC object at this URL with an updated object.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this UPC belongs to.</param>
         /// <param name="id">The ID of the UPC you wish to update</param>
@@ -2600,12 +2919,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="id">The ID of the UPC you wish to delete.</param>
-        public ErrorResult DeleteUPC(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteUPC(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -2614,9 +2933,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the company object identified by this URL.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Contacts</li><li>Items</li><li>Locations</li><li>Nexus</li><li>Settings</li><li>TaxCodes</li><li>TaxRules</li><li>UPC</li></ul>
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///
+        /// * Contacts
+        /// * Items
+        /// * Locations
+        /// * Nexus
+        /// * Settings
+        /// * TaxCodes
+        /// * TaxRules
+        /// * UPC
         /// </remarks>
         /// <param name="id">The ID of the company to retrieve.</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -2634,9 +2961,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing company object at this URL with an updated object.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
         /// <param name="id">The ID of the company you wish to update.</param>
         /// <param name="model">The company object you wish to update.</param>
@@ -2655,11 +2982,11 @@ namespace Avalara.AvaTax.RestClient
         /// Deleting a company will delete all child companies, and all users attached to this company.
         /// </remarks>
         /// <param name="id">The ID of the company you wish to delete.</param>
-        public ErrorResult DeleteCompanies(Int32 id)
+        public List<ErrorDetail> DeleteCompanies(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return RestCall<ErrorResult>("delete", path, null);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -2668,9 +2995,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
-        /// Returns a list of funding setup requests and their current status.
-        /// Each object in the result is a request that was made to setup or adjust funding configuration for this company.
+        ///Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        ///Returns a list of funding setup requests and their current status.
+        ///Each object in the result is a request that was made to setup or adjust funding configuration for this company.
         /// </remarks>
         /// <param name="id">The unique identifier of the company</param>
         public List<FundingStatusModel> ListFundingRequestsByCompany(Int32 id)
@@ -2686,15 +3013,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their 
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API records that an ambedded HTML funding setup widget was activated.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        ///Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
+        ///required to setup their funding configuration before Avalara can begin filing tax returns on their 
+        ///behalf.
+        ///Funding configuration for each company is set up by submitting a funding setup request, which can
+        ///be sent either via email or via an embedded HTML widget.
+        ///When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
+        ///before approval.
+        ///This API records that an ambedded HTML funding setup widget was activated.
+        ///This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
         /// </remarks>
         /// <param name="id">The unique identifier of the company</param>
         /// <param name="model">The funding initialization request</param>
@@ -2711,10 +3038,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Shortcut to quickly setup a single-physical-location company with critical information and activate it.
-        /// This API provides quick and simple company setup functionality and does the following things:
-        /// <ul><li>Create a company object with its own tax profile</li><li>Add a key contact person for the company</li><li>Set up one physical location for the main office</li><li>Declare nexus in all taxing jurisdictions for that main office address</li><li>Activate the company</li></ul>
-        /// This API only provides a limited subset of functionality compared to the 'Create Company' API call. 
-        /// If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.
+        ///This API provides quick and simple company setup functionality and does the following things:
+        /// 
+        ///* Create a company object with its own tax profile
+        ///* Add a key contact person for the company
+        ///* Set up one physical location for the main office
+        ///* Declare nexus in all taxing jurisdictions for that main office address
+        ///* Activate the company
+        /// 
+        ///This API only provides a limited subset of functionality compared to the 'Create Company' API call. 
+        ///If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.
         /// </remarks>
         /// <param name="model">Information about the company you wish to create.</param>
         public CompanyModel CompanyInitialize(CompanyInitializationModel model)
@@ -2729,16 +3062,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple contact objects across all companies.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<ContactModel> QueryContacts(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/contacts");
@@ -2756,8 +3090,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all ISO 3166 country codes, and their US English friendly names.
-        /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a country for 
-        /// a shipping address.
+        ///This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a country for 
+        ///a shipping address.
         /// </remarks>
         public FetchResult<IsoCountryModel> ListCountries()
         {
@@ -2771,8 +3105,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all ISO 3166 region codes for a specific country code, and their US English friendly names.
-        /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
-        /// within the country for a shipping addresses.
+        ///This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
+        ///within the country for a shipping addresses.
         /// </remarks>
         /// <param name="country"></param>
         public FetchResult<IsoRegionModel> ListRegionsByCountry(String country)
@@ -2788,10 +3122,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported entity use codes.
-        /// Entity/Use Codes are definitions of the entity who is purchasing something, or the purpose for which the transaction
-        /// is occurring. This information is generally used to determine taxability of the product.
-        /// In order to facilitate correct reporting of your taxes, you are encouraged to select the proper entity use codes for
-        /// all transactions that are exempt.
+        ///Entity/Use Codes are definitions of the entity who is purchasing something, or the purpose for which the transaction
+        ///is occurring. This information is generally used to determine taxability of the product.
+        ///In order to facilitate correct reporting of your taxes, you are encouraged to select the proper entity use codes for
+        ///all transactions that are exempt.
         /// </remarks>
         public FetchResult<EntityUseCodeModel> ListEntityUseCodes()
         {
@@ -2801,11 +3135,42 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List all forms where logins can be verified automatically
+        /// </summary>
+        /// <remarks>
+        /// List all forms where logins can be verified automatically.
+        ///This API is intended to be useful to identify whether the user should be allowed
+        ///to automatically verify their login and password.
+        /// </remarks>
+        public FetchResult<SkyscraperStatusModel> ListLoginVerifiers()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers");
+            return RestCall<FetchResult<SkyscraperStatusModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Test whether a form supports online login verification
+        /// </summary>
+        /// <remarks>
+        /// This API is intended to be useful to identify whether the user should be allowed
+        ///to automatically verify their login and password.
+        /// </remarks>
+        /// <param name="form">The name of the form you would like to verify</param>
+        public FetchResult<SkyscraperStatusModel> GetLoginVerifierByForm(String form)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers/{form}");
+            path.ApplyField("form", form);
+            return RestCall<FetchResult<SkyscraperStatusModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported filing frequencies.
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported filing frequencies.
-        /// This API is intended to be useful to identify all the different filing frequencies that can be used in notices.
+        ///This API is intended to be useful to identify all the different filing frequencies that can be used in notices.
         /// </remarks>
         public FetchResult<FilingFrequencyModel> ListFilingFrequencies()
         {
@@ -2815,15 +3180,48 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List jurisdictions near a specific address
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all Avalara-supported taxing jurisdictions that apply to this address.
+        ///
+        ///This API allows you to identify which jurisdictions are nearby a specific address according to the best available geocoding information.
+        ///It is intended to allow you to create a "Jurisdiction Override", which allows an address to be configured as belonging to a nearby 
+        ///jurisdiction in AvaTax.
+        /// 
+        ///The results of this API call can be passed to the `CreateJurisdictionOverride` API call.
+        /// </remarks>
+        /// <param name="line1">The first address line portion of this address.</param>
+        /// <param name="line2">The second address line portion of this address.</param>
+        /// <param name="line3">The third address line portion of this address.</param>
+        /// <param name="city">The city portion of this address.</param>
+        /// <param name="region">The region, state, or province code portion of this address.</param>
+        /// <param name="postalCode">The postal code or zip code portion of this address.</param>
+        /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
+        public FetchResult<JurisdictionOverrideModel> ListJurisdictionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictionsnearaddress");
+            path.AddQuery("line1", line1);
+            path.AddQuery("line2", line2);
+            path.AddQuery("line3", line3);
+            path.AddQuery("city", city);
+            path.AddQuery("region", region);
+            path.AddQuery("postalCode", postalCode);
+            path.AddQuery("country", country);
+            return RestCall<FetchResult<JurisdictionOverrideModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the list of questions that are required for a tax location
         /// </summary>
         /// <remarks>
         /// Returns the list of additional questions you must answer when declaring a location in certain taxing jurisdictions.
-        /// Some tax jurisdictions require that you register or provide additional information to configure each physical place where
-        /// your company does business.
-        /// This information is not usually required in order to calculate tax correctly, but is almost always required to file your tax correctly.
-        /// You can call this API call for any address and obtain information about what questions must be answered in order to properly
-        /// file tax in that location.
+        ///Some tax jurisdictions require that you register or provide additional information to configure each physical place where
+        ///your company does business.
+        ///This information is not usually required in order to calculate tax correctly, but is almost always required to file your tax correctly.
+        ///You can call this API call for any address and obtain information about what questions must be answered in order to properly
+        ///file tax in that location.
         /// </remarks>
         /// <param name="line1">The first line of this location's address.</param>
         /// <param name="line2">The second line of this location's address.</param>
@@ -2855,7 +3253,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.
+        ///This API is intended to be useful if your user interface needs to display a selectable list of nexus.
         /// </remarks>
         public FetchResult<NexusModel> DefinitionsNexusGet()
         {
@@ -2869,7 +3267,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
+        ///This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
         /// </remarks>
         /// <param name="country"></param>
         public FetchResult<NexusModel> DefinitionsNexusByCountryGet(String country)
@@ -2885,7 +3283,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country and region.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.
+        ///This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.
         /// </remarks>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
@@ -2903,10 +3301,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all Avalara-supported taxing jurisdictions that apply to this address.
-        /// This API allows you to identify which tax authorities apply to a physical location, salesperson address, or point of sale.
-        /// In general, it is usually expected that a company will declare nexus in all the jurisdictions that apply to each physical address
-        /// where the company does business.
-        /// The results of this API call can be passed to the 'Create Nexus' API call to declare nexus for this address.
+        ///This API allows you to identify which tax authorities apply to a physical location, salesperson address, or point of sale.
+        ///In general, it is usually expected that a company will declare nexus in all the jurisdictions that apply to each physical address
+        ///where the company does business.
+        ///The results of this API call can be passed to the 'Create Nexus' API call to declare nexus for this address.
         /// </remarks>
         /// <param name="line1">The first address line portion of this address.</param>
         /// <param name="line2">The first address line portion of this address.</param>
@@ -2934,7 +3332,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice customer funding options.
-        /// This API is intended to be useful to identify all the different notice customer funding options that can be used in notices.
+        ///This API is intended to be useful to identify all the different notice customer funding options that can be used in notices.
         /// </remarks>
         public FetchResult<NoticeCustomerFundingOptionModel> ListNoticeCustomerFundingOptions()
         {
@@ -2948,7 +3346,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice customer types.
-        /// This API is intended to be useful to identify all the different notice customer types.
+        ///This API is intended to be useful to identify all the different notice customer types.
         /// </remarks>
         public FetchResult<NoticeCustomerTypeModel> ListNoticeCustomerTypes()
         {
@@ -2962,7 +3360,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice filing types.
-        /// This API is intended to be useful to identify all the different notice filing types that can be used in notices.
+        ///This API is intended to be useful to identify all the different notice filing types that can be used in notices.
         /// </remarks>
         public FetchResult<NoticeFilingTypeModel> ListNoticeFilingtypes()
         {
@@ -2976,7 +3374,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice priorities.
-        /// This API is intended to be useful to identify all the different notice priorities that can be used in notices.
+        ///This API is intended to be useful to identify all the different notice priorities that can be used in notices.
         /// </remarks>
         public FetchResult<NoticePriorityModel> ListNoticePriorities()
         {
@@ -2990,7 +3388,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice reasons.
-        /// This API is intended to be useful to identify all the different tax notice reasons.
+        ///This API is intended to be useful to identify all the different tax notice reasons.
         /// </remarks>
         public FetchResult<NoticeReasonModel> ListNoticeReasons()
         {
@@ -3000,11 +3398,39 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of Avalara-supported tax notice responsibility ids
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported tax notice responsibility ids
+        ///This API is intended to be useful to identify all the different tax notice responsibilities.
+        /// </remarks>
+        public FetchResult<NoticeResponsibilityDetailModel> ListNoticeResponsibilities()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/noticeresponsibilities");
+            return RestCall<FetchResult<NoticeResponsibilityDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported tax notice root causes
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported tax notice root causes
+        ///This API is intended to be useful to identify all the different tax notice root causes.
+        /// </remarks>
+        public FetchResult<NoticeRootCauseDetailModel> ListNoticeRootCauses()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/noticerootcauses");
+            return RestCall<FetchResult<NoticeRootCauseDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported tax notice statuses.
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice statuses.
-        /// This API is intended to be useful to identify all the different tax notice statuses.
+        ///This API is intended to be useful to identify all the different tax notice statuses.
         /// </remarks>
         public FetchResult<NoticeStatusModel> ListNoticeStatuses()
         {
@@ -3018,7 +3444,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice types.
-        /// This API is intended to be useful to identify all the different notice types that can be used in notices.
+        ///This API is intended to be useful to identify all the different notice types that can be used in notices.
         /// </remarks>
         public FetchResult<NoticeTypeModel> ListNoticeTypes()
         {
@@ -3032,8 +3458,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported extra parameters for the 'Create Transaction' API call.
-        /// This list of parameters is available for use when configuring your transaction.
-        /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.
+        ///This list of parameters is available for use when configuring your transaction.
+        ///Some parameters are only available for use if you have subscribed to certain features of AvaTax.
         /// </remarks>
         public FetchResult<ParameterModel> ListParameters()
         {
@@ -3047,7 +3473,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported permission types.
-        /// This API is intended to be useful to identify the capabilities of a particular user logon.
+        ///This API is intended to be useful to identify the capabilities of a particular user logon.
         /// </remarks>
         public FetchResult<String> ListPermissions()
         {
@@ -3061,8 +3487,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all ISO 3166 region codes and their US English friendly names.
-        /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
-        /// within the country for a shipping addresses.
+        ///This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
+        ///within the country for a shipping addresses.
         /// </remarks>
         public FetchResult<IsoRegionModel> ListRegions()
         {
@@ -3076,8 +3502,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported permission types.
-        /// This API is intended to be useful when designing a user interface for selecting the security role of a user account.
-        /// Some security roles are restricted for Avalara internal use.
+        ///This API is intended to be useful when designing a user interface for selecting the security role of a user account.
+        ///Some security roles are restricted for Avalara internal use.
         /// </remarks>
         public FetchResult<SecurityRoleModel> ListSecurityRoles()
         {
@@ -3091,9 +3517,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported subscription types.
-        /// This API is intended to be useful for identifying which features you have added to your account.
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// You cannot change your subscriptions directly through the API.
+        ///This API is intended to be useful for identifying which features you have added to your account.
+        ///You may always contact Avalara's sales department for information on available products or services.
+        ///You cannot change your subscriptions directly through the API.
         /// </remarks>
         public FetchResult<SubscriptionTypeModel> ListSubscriptionTypes()
         {
@@ -3107,7 +3533,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax authorities.
-        /// This API is intended to be useful to identify all the different authorities that receive tax.
+        ///This API is intended to be useful to identify all the different authorities that receive tax.
         /// </remarks>
         public FetchResult<TaxAuthorityModel> ListTaxAuthorities()
         {
@@ -3121,9 +3547,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported forms for each tax authority.
-        /// This list represents tax forms that Avalara recognizes.
-        /// Customers who subscribe to Avalara Managed Returns Service can request these forms to be filed automatically 
-        /// based on the customer's AvaTax data.
+        ///This list represents tax forms that Avalara recognizes.
+        ///Customers who subscribe to Avalara Managed Returns Service can request these forms to be filed automatically 
+        ///based on the customer's AvaTax data.
         /// </remarks>
         public FetchResult<TaxAuthorityFormModel> ListTaxAuthorityForms()
         {
@@ -3137,7 +3563,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax authority types.
-        /// This API is intended to be useful to identify all the different authority types.
+        ///This API is intended to be useful to identify all the different authority types.
         /// </remarks>
         public FetchResult<TaxAuthorityTypeModel> ListTaxAuthorityTypes()
         {
@@ -3151,10 +3577,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieves the list of Avalara-supported system tax codes.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
         /// </remarks>
         public FetchResult<TaxCodeModel> ListTaxCodes()
         {
@@ -3168,8 +3594,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of recognized tax code types.
-        /// A 'Tax Code Type' represents a broad category of tax codes, and is less detailed than a single TaxCode.
-        /// This API is intended to be useful for broadly searching for tax codes by tax code type.
+        ///A 'Tax Code Type' represents a broad category of tax codes, and is less detailed than a single TaxCode.
+        ///This API is intended to be useful for broadly searching for tax codes by tax code type.
         /// </remarks>
         public TaxCodeTypesModel ListTaxCodeTypes()
         {
@@ -3184,10 +3610,10 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// This API is available by invitation only.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<FilingCalendarModel> QueryFilingCalendars(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars");
@@ -3233,15 +3659,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<FilingRequestModel> QueryFilingRequests(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/filingrequests");
@@ -3258,15 +3685,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their 
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API checks the status on an existing funding request.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        ///Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
+        ///required to setup their funding configuration before Avalara can begin filing tax returns on their 
+        ///behalf.
+        ///Funding configuration for each company is set up by submitting a funding setup request, which can
+        ///be sent either via email or via an embedded HTML widget.
+        ///When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
+        ///before approval.
+        ///This API checks the status on an existing funding request.
+        ///This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
         /// </remarks>
         /// <param name="id">The unique ID number of this funding request</param>
         public FundingStatusModel FundingRequestStatus(Int32 id)
@@ -3282,17 +3709,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their 
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API returns back the actual javascript code to insert into your application to render the 
-        /// JavaScript funding setup widget inline.
-        /// Use the 'methodReturn.javaScript' return value to insert this widget into your HTML page.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        ///Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
+        ///required to setup their funding configuration before Avalara can begin filing tax returns on their 
+        ///behalf.
+        ///Funding configuration for each company is set up by submitting a funding setup request, which can
+        ///be sent either via email or via an embedded HTML widget.
+        ///When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
+        ///before approval.
+        ///This API returns back the actual javascript code to insert into your application to render the 
+        ///JavaScript funding setup widget inline.
+        ///Use the 'methodReturn.javaScript' return value to insert this widget into your HTML page.
+        ///This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
         /// </remarks>
         /// <param name="id">The unique ID number of this funding request</param>
         public FundingStatusModel ActivateFundingRequest(Int64 id)
@@ -3308,15 +3735,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple item objects across all companies.
-        /// An 'Item' represents a product or service that your company offers for sale.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///An 'Item' represents a product or service that your company offers for sale.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<ItemModel> QueryItems(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/items");
@@ -3334,18 +3762,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple location objects across all companies.
-        /// An 'Location' represents a physical address where a company does business.
-        /// Many taxing authorities require that you define a list of all locations where your company does business.
-        /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///An 'Location' represents a physical address where a company does business.
+        ///Many taxing authorities require that you define a list of all locations where your company does business.
+        ///These locations may require additional custom configuration or tax registration with these authorities.
+        ///For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<LocationModel> QueryLocations(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/locations");
@@ -3363,18 +3792,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple nexus objects across all companies.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<NexusModel> QueryNexus(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/nexus");
@@ -3392,17 +3822,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Get multiple notice objects across all companies.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///Get multiple notice objects across all companies.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<NoticeModel> QueryNotices(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/notices");
@@ -3419,10 +3850,12 @@ namespace Avalara.AvaTax.RestClient
         /// Change Password
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Allows a user to change their password via the API.
-        /// This API only allows the currently authenticated user to change their password; it cannot be used to apply to a
-        /// different user than the one authenticating the current API call.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Allows a user to change their password via the API.
+        ///This API only allows the currently authenticated user to change their password; it cannot be used to apply to a
+        ///different user than the one authenticating the current API call.
         /// </remarks>
         /// <param name="model">An object containing your current password and the new password.</param>
         public String ChangePassword(PasswordChangeModel model)
@@ -3436,10 +3869,12 @@ namespace Avalara.AvaTax.RestClient
         /// Reset a user's password programmatically
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Allows a system admin to reset the password for a specific user via the API.
-        /// This API is only available for Avalara Registrar Admins, and can be used to reset the password of any
-        /// user based on internal Avalara business processes.
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Allows a system admin to reset the password for a specific user via the API.
+        ///This API is only available for Avalara Registrar Admins, and can be used to reset the password of any
+        ///user based on internal Avalara business processes.
         /// </remarks>
         /// <param name="userId">The unique ID of the user whose password will be changed</param>
         /// <param name="model">The new password for this user</param>
@@ -3456,10 +3891,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a point-of-sale data file containing tax rates and rules for items and locations that can be used
-        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios.
+        ///to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        ///This data file can be customized for specific partner devices and usage conditions.
+        ///The result of this API is the file you requested in the format you requested using the 'responseType' field.
+        ///This API builds the file on demand, and is limited to files with no more than 7500 scenarios.
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
         public String BuildPointOfSaleDataFile(PointOfSaleDataRequestModel model)
@@ -3474,20 +3909,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple setting objects across all companies.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<SettingModel> QuerySettings(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/settings");
@@ -3505,15 +3941,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple subscription objects across all accounts.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<SubscriptionModel> QuerySubscriptions(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/subscriptions");
@@ -3530,18 +3967,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple taxcode objects across all companies.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<TaxCodeModel> QueryTaxCodes(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxcodes");
@@ -3555,13 +3993,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve tax rates for a specified address
+        /// FREE API - Sales tax rates for a specified address
         /// </summary>
         /// <remarks>
-        /// Identifies estimated general tangible personal property rates for a specified address.
-        /// This API produces only estimated tax rates based on assumptions and is not suitable for precise tax calculations; it should
-        /// be used to identify rough guesses for tax during planning or research.
-        /// For more information on estimating tax correctly, please see http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/ .
+        /// # Free-To-Use
+        ///
+        ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
+        ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///
+        ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
+        ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
+        ///support for scenarios including, but not limited to:
+        ///
+        ///* Nexus declarations
+        ///* Taxability based on product/service type
+        ///* Sourcing rules affecting origin/destination states
+        ///* Customers who are exempt from certain taxes
+        ///* States that have dollar value thresholds for tax amounts
+        ///* Refunds for products purchased on a different date
+        ///* Detailed jurisdiction names and state assigned codes
+        ///* And more!
+        ///
+        ///Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
+        ///for information on how to upgrade to the full AvaTax CreateTransaction API.
         /// </remarks>
         /// <param name="line1">The street address of the location.</param>
         /// <param name="line2">The street address of the location.</param>
@@ -3585,13 +4039,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve tax rates for a specified country and postal code
+        /// FREE API - Sales tax rates for a specified country and postal code
         /// </summary>
         /// <remarks>
-        /// Identifies estimated general tangible personal property rates for a specified postal code and country code.
-        /// This API produces only estimated tax rates based on assumptions and is not suitable for precise tax calculations; it should
-        /// be used to identify rough guesses for tax during planning or research.
-        /// For more information on estimating tax correctly, please see http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/ .
+        /// # Free-To-Use
+        ///
+        ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
+        ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///
+        ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
+        ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
+        ///support for scenarios including, but not limited to:
+        ///
+        ///* Nexus declarations
+        ///* Taxability based on product/service type
+        ///* Sourcing rules affecting origin/destination states
+        ///* Customers who are exempt from certain taxes
+        ///* States that have dollar value thresholds for tax amounts
+        ///* Refunds for products purchased on a different date
+        ///* Detailed jurisdiction names and state assigned codes
+        ///* And more!
+        ///
+        ///Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
+        ///for information on how to upgrade to the full AvaTax CreateTransaction API.
         /// </remarks>
         /// <param name="country">The two letter ISO-3166 country code.</param>
         /// <param name="postalCode">The postal code of the location.</param>
@@ -3609,18 +4079,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple taxrule objects across all companies.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<TaxRuleModel> QueryTaxRules(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxrules");
@@ -3638,12 +4109,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the unique transaction identified by this URL.
-        /// This endpoint retrieves the exact transaction identified by this ID number even if that transaction was later adjusted
-        /// by using the 'Adjust Transaction' endpoint.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Lines</li><li>Details (implies lines)</li><li>Summary (implies details)</li><li>Addresses</li></ul>
+        ///This endpoint retrieves the exact transaction identified by this ID number even if that transaction was later adjusted
+        ///by using the 'Adjust Transaction' endpoint.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -3661,11 +4136,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Records a new transaction in AvaTax.
-        /// The 'Create Transaction' endpoint uses the configuration values specified by your company to identify the correct tax rules
-        /// and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
-        /// company's configuration and the data provided in this API call.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///The 'Create Transaction' endpoint uses the configuration values specified by your company to identify the correct tax rules
+        ///and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
+        ///company's configuration and the data provided in this API call.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
         /// </remarks>
         /// <param name="model">The transaction you wish to create</param>
         public TransactionModel CreateTransaction(CreateTransactionModel model)
@@ -3676,19 +4151,40 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Lock a set of documents
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///
+        ///Lock a set of transactions uniquely identified by DocumentIds provided. This API allows locking multiple documents at once.
+        ///After this API call succeeds, documents will be locked and can't be voided.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        /// </remarks>
+        /// <param name="model">bulk lock request</param>
+        public BulkLockTransactionResult BulkLockTransaction(BulkLockTransactionModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/transactions/lock");
+            return RestCall<BulkLockTransactionResult>("post", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve all UPCs
         /// </summary>
         /// <remarks>
         /// Get multiple UPC objects across all companies.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<UPCModel> QueryUPCs(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/upcs");
@@ -3706,15 +4202,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple user objects across all accounts.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public FetchResult<UserModel> QueryUsers(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/users");
@@ -3732,10 +4229,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API helps diagnose connectivity problems between your application and AvaTax; you may call this API even 
-        /// if you do not have verified connection credentials.
-        /// The results of this API call will help you determine whether your computer can contact AvaTax via the network,
-        /// whether your authentication credentials are recognized, and the roundtrip time it takes to communicate with
-        /// AvaTax.
+        ///if you do not have verified connection credentials.
+        ///The results of this API call will help you determine whether your computer can contact AvaTax via the network,
+        ///whether your authentication credentials are recognized, and the roundtrip time it takes to communicate with
+        ///AvaTax.
         /// </remarks>
         public PingResultModel Ping()
         {
@@ -3749,8 +4246,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the list of all subscriptions enabled for the current account.
-        /// This API is intended to help you determine whether you have the necessary subscription to use certain API calls
-        /// within AvaTax.
+        ///This API is intended to help you determine whether you have the necessary subscription to use certain API calls
+        ///within AvaTax.
         /// </remarks>
         public SubscriptionModel ListMySubscriptions()
         {
@@ -3764,8 +4261,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a subscription object for the current account, or 404 Not Found if this subscription is not enabled for this account.
-        /// This API call is intended to allow you to identify whether you have the necessary account configuration to access certain
-        /// features of AvaTax, and would be useful in debugging access privilege problems.
+        ///This API call is intended to allow you to identify whether you have the necessary account configuration to access certain
+        ///features of AvaTax, and would be useful in debugging access privilege problems.
         /// </remarks>
         /// <param name="serviceTypeId">The service to check</param>
         public SubscriptionModel GetMySubscription(ServiceTypeId serviceTypeId)
@@ -3784,19 +4281,24 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve all accounts;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Get multiple account objects.
-        /// Search for specific objects using the criteria in the '$filter' parameter.
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Subscriptions</li><li>Users</li></ul>
-        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Get multiple account objects.
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        ///You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Subscriptions
+        ///* Users
+        /// 
+        ///For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .;
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<AccountModel>> QueryAccountsAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
@@ -3813,9 +4315,11 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new account;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Create a single new account object. 
-        /// When creating an account object you may attach subscriptions and users as part of the 'Create' call.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Create a single new account object. 
+        ///When creating an account object you may attach subscriptions and users as part of the 'Create' call.;
         /// </remarks>
         /// <param name="model">The account you wish to create.</param>
         public async Task<AccountModel> CreateAccountAsync(AccountModel model)
@@ -3830,16 +4334,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all subscription objects attached to this account.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns these subscriptions</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<SubscriptionModel>> ListSubscriptionsByAccountAsync(Int32 accountId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
@@ -3856,10 +4361,12 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new subscription;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Create one or more new subscription objects attached to this account.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Create one or more new subscription objects attached to this account.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.;
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
         /// <param name="model">The subscription you wish to create.</param>
@@ -3876,8 +4383,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the subscription object identified by this URL.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.;
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.;
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this subscription</param>
         /// <param name="id">The primary key of this subscription</param>
@@ -3894,12 +4401,14 @@ namespace Avalara.AvaTax.RestClient
         /// Update a single subscription;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Replace the existing subscription object at this URL with an updated object.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Replace the existing subscription object at this URL with an updated object.
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="accountId">The ID of the account that this subscription belongs to.</param>
         /// <param name="id">The ID of the subscription you wish to update</param>
@@ -3917,17 +4426,19 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single subscription;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Mark the existing account identified by this URL as deleted.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Mark the existing account identified by this URL as deleted.;
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this subscription.</param>
         /// <param name="id">The ID of the subscription you wish to delete.</param>
-        public async Task<ErrorResult> DeleteSubscriptionAsync(Int32 accountId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteSubscriptionAsync(Int32 accountId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -3936,16 +4447,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all user objects attached to this account.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="accountId">The accountID of the user you wish to list.</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<UserModel>> ListUsersByAccountAsync(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
@@ -3963,9 +4475,11 @@ namespace Avalara.AvaTax.RestClient
         /// Create new users;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Create one or more new user objects attached to this account.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Create one or more new user objects attached to this account.
+        ///A user represents one person with access privileges to make API calls and work with a specific account.;
         /// </remarks>
         /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
         /// <param name="model">The user or array of users you wish to create.</param>
@@ -3982,7 +4496,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the user object identified by this URL.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.;
+        ///A user represents one person with access privileges to make API calls and work with a specific account.;
         /// </remarks>
         /// <param name="id">The ID of the user to retrieve.</param>
         /// <param name="accountId">The accountID of the user you wish to get.</param>
@@ -4002,9 +4516,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing user object at this URL with an updated object.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="id">The ID of the user you wish to update.</param>
         /// <param name="accountId">The accountID of the user you wish to update.</param>
@@ -4022,17 +4536,19 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single user;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Mark the user object identified by this URL as deleted.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Mark the user object identified by this URL as deleted.;
         /// </remarks>
         /// <param name="id">The ID of the user you wish to delete.</param>
         /// <param name="accountId">The accountID of the user you wish to delete.</param>
-        public async Task<ErrorResult> DeleteUserAsync(Int32 id, Int32 accountId)
+        public async Task<List<ErrorDetail>> DeleteUserAsync(Int32 id, Int32 accountId)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -4041,15 +4557,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Return a list of all entitlements to which this user has rights to access.
-        /// Entitlements are a list of specified API calls the user is permitted to make, a list of identifier numbers for companies the user is 
-        /// allowed to use, and an access level identifier that indicates what types of access roles the user is allowed to use.
-        /// This API call is intended to provide a validation endpoint to determine, before making an API call, whether this call is likely to succeed.
-        /// For example, if user 567 within account 999 is attempting to create a new child company underneath company 12345, you could preview the user's
-        /// entitlements and predict whether this call would succeed:
-        /// <ul><li>Retrieve entitlements by calling '/api/v2/accounts/999/users/567/entitlements' . If the call fails, you do not have accurate 
-        /// credentials for this user.</li><li>If the 'accessLevel' field within entitlements is 'None', the call will fail.</li><li>If the 'accessLevel' field within entitlements is 'SingleCompany' or 'SingleAccount', the call will fail if the companies
-        /// table does not contain the ID number 12345.</li><li>If the 'permissions' array within entitlements does not contain 'AccountSvc.CompanySave', the call will fail.</li></ul>
-        /// For a full list of defined permissions, please use '/api/v2/definitions/permissions' .;
+        ///Entitlements are a list of specified API calls the user is permitted to make, a list of identifier numbers for companies the user is 
+        ///allowed to use, and an access level identifier that indicates what types of access roles the user is allowed to use.
+        ///This API call is intended to provide a validation endpoint to determine, before making an API call, whether this call is likely to succeed.
+        ///For example, if user 567 within account 999 is attempting to create a new child company underneath company 12345, you could preview the user's
+        ///entitlements and predict whether this call would succeed:
+        /// 
+        ///* Retrieve entitlements by calling '/api/v2/accounts/999/users/567/entitlements' . If the call fails, you do not have accurate 
+        /// credentials for this user.
+        ///* If the 'accessLevel' field within entitlements is 'None', the call will fail.
+        ///* If the 'accessLevel' field within entitlements is 'SingleCompany' or 'SingleAccount', the call will fail if the companies
+        /// table does not contain the ID number 12345.
+        ///* If the 'permissions' array within entitlements does not contain 'AccountSvc.CompanySave', the call will fail.
+        /// 
+        ///For a full list of defined permissions, please use '/api/v2/definitions/permissions' .;
         /// </remarks>
         /// <param name="id">The ID of the user to retrieve.</param>
         /// <param name="accountId">The accountID of the user you wish to get.</param>
@@ -4067,8 +4588,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the account object identified by this URL.
-        /// You may use the '$include' parameter to fetch additional nested data:
-        /// <ul><li>Subscriptions</li><li>Users</li></ul>;
+        ///You may use the '$include' parameter to fetch additional nested data:
+        ///
+        ///* Subscriptions
+        ///* Users;
         /// </remarks>
         /// <param name="id">The ID of the account to retrieve</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -4085,8 +4608,10 @@ namespace Avalara.AvaTax.RestClient
         /// Update a single account;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Replace an existing account object with an updated account object.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Replace an existing account object with an updated account object.;
         /// </remarks>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">The account object you wish to update.</param>
@@ -4102,16 +4627,18 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single account;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Delete an account.
-        /// Deleting an account will delete all companies and all account level users attached to this account.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Delete an account.
+        ///Deleting an account will delete all companies and all account level users attached to this account.;
         /// </remarks>
         /// <param name="id">The ID of the account you wish to delete.</param>
-        public async Task<ErrorResult> DeleteAccountAsync(Int32 id)
+        public async Task<List<ErrorDetail>> DeleteAccountAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -4120,8 +4647,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Resets the existing license key for this account to a new key.
-        /// To reset your account, you must specify the ID of the account you wish to reset and confirm the action.
-        /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.;
+        ///To reset your account, you must specify the ID of the account you wish to reset and confirm the action.
+        ///Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.;
         /// </remarks>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">A request confirming that you wish to reset the license key of this account.</param>
@@ -4134,15 +4661,57 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// FREE API - Request a free trial of AvaTax;
+        /// </summary>
+        /// <remarks>
+        /// Call this API to obtain a free AvaTax sandbox account.
+        ///
+        ///This API is free to use. No authentication credentials are required to call this API.
+        ///The account will grant a full trial version of AvaTax (e.g. AvaTaxPro) for 90 days.
+        ///After 90 days, you may continue to use the free TaxRates API.
+        ///
+        ///Limitations on free trial accounts:
+        /// 
+        ///* Only one free trial per company.
+        ///* The free trial account does not expire.
+        ///* Includes a 90-day free trial of AvaTaxPro; after that date, the free TaxRates API will continue to work.
+        ///* Each free trial account must have its own valid email address.;
+        /// </remarks>
+        /// <param name="model">Required information to provision a free trial account.</param>
+        public async Task<NewAccountModel> RequestFreeTrialAsync(FreeTrialRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
+            return await RestCallAsync<NewAccountModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Request a new Avalara account;
+        /// </summary>
+        /// <remarks>
+        /// This API is for use by partner onboarding services customers only.
+        ///Calling this API creates an account with the specified product subscriptions, but does not configure billing.
+        ///The customer will receive information from Avalara about how to configure billing for their account.
+        ///You should call this API when a customer has requested to begin using Avalara services.;
+        /// </remarks>
+        /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
+        public async Task<NewAccountModel> RequestNewAccountAsync(NewAccountRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/request");
+            return await RestCallAsync<NewAccountModel>("post", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve geolocation information for a specified address;
         /// </summary>
         /// <remarks>
         /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API 
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the 
-        /// 'messages' structure to learn more about problems with this address.
-        /// This is the same API as the POST /api/v2/addresses/resolve endpoint.
-        /// Both verbs are supported to provide for flexible implementation.;
+        ///provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
+        ///to identify how closely this address can be located. If the address cannot be clearly located, use the 
+        ///'messages' structure to learn more about problems with this address.
+        ///This is the same API as the POST /api/v2/addresses/resolve endpoint.
+        ///Both verbs are supported to provide for flexible implementation.;
         /// </remarks>
         /// <param name="line1">Line 1</param>
         /// <param name="line2">Line 2</param>
@@ -4151,9 +4720,10 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">State / Province / Region</param>
         /// <param name="postalCode">Postal Code / Zip Code</param>
         /// <param name="country">Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)</param>
+        /// <param name="textCase">selectable text case for address validation</param>
         /// <param name="latitude">Geospatial latitude measurement</param>
         /// <param name="longitude">Geospatial longitude measurement</param>
-        public async Task<AddressResolutionModel> ResolveAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
+        public async Task<AddressResolutionModel> ResolveAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase, Decimal? latitude, Decimal? longitude)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             path.AddQuery("line1", line1);
@@ -4163,6 +4733,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            path.AddQuery("textCase", textCase);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
             return await RestCallAsync<AddressResolutionModel>("get", path, null);
@@ -4174,14 +4745,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API 
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the 
-        /// 'messages' structure to learn more about problems with this address.
-        /// This is the same API as the GET /api/v2/addresses/resolve endpoint.
-        /// Both verbs are supported to provide for flexible implementation.;
+        ///provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used 
+        ///to identify how closely this address can be located. If the address cannot be clearly located, use the 
+        ///'messages' structure to learn more about problems with this address.
+        ///This is the same API as the GET /api/v2/addresses/resolve endpoint.
+        ///Both verbs are supported to provide for flexible implementation.;
         /// </remarks>
         /// <param name="model">The address to resolve</param>
-        public async Task<AddressResolutionModel> ResolveAddressPostAsync(AddressInfo model)
+        public async Task<AddressResolutionModel> ResolveAddressPostAsync(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return await RestCallAsync<AddressResolutionModel>("post", path, model);
@@ -4193,17 +4764,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple batch objects across all companies.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<BatchModel>> QueryBatchesAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/batches");
@@ -4221,17 +4793,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple company objects.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Contacts</li><li>Items</li><li>Locations</li><li>Nexus</li><li>Settings</li><li>TaxCodes</li><li>TaxRules</li><li>UPC</li></ul>;
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        ///You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Contacts
+        ///* Items
+        ///* Locations
+        ///* Nexus
+        ///* Settings
+        ///* TaxCodes
+        ///* TaxRules
+        ///* UPC;
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<CompanyModel>> QueryCompaniesAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies");
@@ -4249,8 +4829,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new company objects.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// You may attach nested data objects such as contacts, locations, and nexus with this CREATE call, and those objects will be created with the company.;
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///You may attach nested data objects such as contacts, locations, and nexus with this CREATE call, and those objects will be created with the company.;
         /// </remarks>
         /// <param name="model">Either a single company object or an array of companies to create</param>
         public async Task<List<CompanyModel>> CreateCompaniesAsync(List<CompanyModel> model)
@@ -4265,20 +4845,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all transactions attached to this company.
-        /// This endpoint is limited to returning 1,000 transactions at a time maximum.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Lines</li><li>Details (implies lines)</li><li>Summary (implies details)</li><li>Addresses</li></ul>;
+        ///This endpoint is limited to returning 1,000 transactions at a time maximum.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        ///You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<TransactionModel>> ListTransactionsByCompanyAsync(String companyCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions");
@@ -4297,10 +4882,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the current transaction identified by this URL.
-        /// If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
-        /// the transaction will be attached to the 'history' data field.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Lines</li><li>Details (implies lines)</li><li>Summary (implies details)</li><li>Addresses</li></ul>;
+        ///If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
+        ///the transaction will be attached to the 'history' data field.
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
@@ -4320,12 +4909,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replaces the current transaction uniquely identified by this URL with a new transaction.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// When you adjust a committed transaction, the original transaction will be updated with the status code 'Adjusted', and
-        /// both revisions will be available for retrieval based on their code and ID numbers.
-        /// Only transactions in 'Committed' status are reported by Avalara Managed Returns.
-        /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available for adjustments.;
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///When you adjust a committed transaction, the original transaction will be updated with the status code 'Adjusted', and
+        ///both revisions will be available for retrieval based on their code and ID numbers.
+        ///Only transactions in 'Committed' status are reported by Avalara Managed Returns.
+        ///Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available for adjustments.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
@@ -4344,9 +4933,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Renames a transaction uniquely identified by this URL by changing its code to a new code.
-        /// After this API call succeeds, the transaction will have a new URL matching its new code.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).;
+        ///After this API call succeeds, the transaction will have a new URL matching its new code.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
@@ -4365,10 +4954,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks a transaction by changing its status to 'Committed'.
-        /// Transactions that are committed are available to be reported to a tax authority by Avalara Managed Returns.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// Any changes made to a committed transaction will generate a transaction history.;
+        ///Transactions that are committed are available to be reported to a tax authority by Avalara Managed Returns.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///Any changes made to a committed transaction will generate a transaction history.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
@@ -4376,6 +4965,32 @@ namespace Avalara.AvaTax.RestClient
         public async Task<TransactionModel> CommitTransactionAsync(String companyCode, String transactionCode, CommitTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/commit");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            return await RestCallAsync<TransactionModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Lock a single transaction;
+        /// </summary>
+        /// <remarks>
+        /// Lock a transaction uniquely identified by this URL. 
+        ///
+        ///This API is mainly used for connector developer to simulate what happens when Returns product locks a document.
+        ///After this API call succeeds, the document will be locked and can't be voided or adjusted.
+        ///
+        ///This API is only available to customers in Sandbox. On production servers, this API is available by invitation only.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
+        /// </remarks>
+        /// <param name="companyCode">The company code of the company that recorded this transaction</param>
+        /// <param name="transactionCode">The transaction code to lock</param>
+        /// <param name="model">The lock request you wish to execute</param>
+        public async Task<TransactionModel> LockTransactionAsync(String companyCode, String transactionCode, LockTransactionModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/lock");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             return await RestCallAsync<TransactionModel>("post", path, model);
@@ -4405,9 +5020,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Verifies that the transaction uniquely identified by this URL matches certain expected values.
-        /// If the transaction does not match these expected values, this API will return an error code indicating which value did not match.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).;
+        ///If the transaction does not match these expected values, this API will return an error code indicating which value did not match.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
@@ -4426,10 +5041,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Voids the current transaction uniquely identified by this URL.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// When you void a transaction, that transaction's status is recorded as 'DocVoided'.
-        /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available to be voided.;
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///When you void a transaction, that transaction's status is recorded as 'DocVoided'.
+        ///Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available to be voided.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
@@ -4448,18 +5063,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all batch objects attached to the specified company.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<BatchModel>> ListBatchesByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
@@ -4478,10 +5093,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new batch objects attached to this company.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Each batch object may have one or more file objects attached.;
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///Each batch object may have one or more file objects attached.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
@@ -4494,13 +5109,32 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Download a single batch file;
+        /// </summary>
+        /// <remarks>
+        /// Download a single batch file identified by this URL.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this batch</param>
+        /// <param name="batchId">The ID of the batch object</param>
+        /// <param name="id">The primary key of this batch file object</param>
+        public async Task<String> DownloadBatchAsync(Int32 companyId, Int32 batchId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{batchId}/files/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("batchId", batchId);
+            path.ApplyField("id", id);
+            return await RestCallStringAsync("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve a single batch;
         /// </summary>
         /// <remarks>
         /// Get the batch object identified by this URL.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.;
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch</param>
         /// <param name="id">The primary key of this batch</param>
@@ -4518,11 +5152,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing batch object at this URL with an updated object.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A batch object is a large collection of API calls stored in a compact file.
+        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this batch belongs to.</param>
         /// <param name="id">The ID of the batch you wish to update</param>
@@ -4544,12 +5178,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="id">The ID of the batch you wish to delete.</param>
-        public async Task<ErrorResult> DeleteBatchAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteBatchAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -4558,15 +5192,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all contact objects assigned to this company.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these contacts</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<ContactModel>> ListContactsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
@@ -4585,8 +5220,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new contact objects.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.;
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="model">The contacts you wish to create.</param>
@@ -4603,8 +5238,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the contact object identified by this URL.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.;
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.;
         /// </remarks>
         /// <param name="companyId">The ID of the company for this contact</param>
         /// <param name="id">The primary key of this contact</param>
@@ -4622,10 +5257,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing contact object at this URL with an updated object.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this contact belongs to.</param>
         /// <param name="id">The ID of the contact you wish to update</param>
@@ -4647,12 +5282,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this contact.</param>
         /// <param name="id">The ID of the contact you wish to delete.</param>
-        public async Task<ErrorResult> DeleteContactAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteContactAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -4663,10 +5298,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API is available by invitation only.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<FilingCalendarModel>> CompaniesByCompanyIdFilingcalendarsGetAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
@@ -4718,13 +5353,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
         /// <param name="id">The unique ID number of the filing calendar to cancel</param>
         /// <param name="model">The cancellation request for this filing calendar</param>
-        public async Task<FilingRequestModel> FilingRequestsNewCancelAsync(Int32 companyId, Int32 id, FilingRequestModel model)
+        public async Task<FilingRequestModel> FilingRequestsNewCancelAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
             path.ApplyField("companyId", companyId);
@@ -4756,13 +5391,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
         /// <param name="id">The unique ID number of the filing calendar to edit</param>
         /// <param name="model">A list of filing calendar edits to be made</param>
-        public async Task<FilingRequestModel> FilingRequestsNewEditAsync(Int32 companyId, Int32 id, FilingRequestModel model)
+        public async Task<FilingRequestModel> FilingRequestsNewEditAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
             path.ApplyField("companyId", companyId);
@@ -4793,12 +5428,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
         /// <param name="model">Information about the proposed new filing calendar</param>
-        public async Task<FilingRequestModel> FilingRequestsAddAsync(Int32 companyId, FilingRequestModel model)
+        public async Task<FilingRequestModel> FilingRequestsAddAsync(Int32 companyId, List<FilingRequestModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
             path.ApplyField("companyId", companyId);
@@ -4811,14 +5446,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<FilingRequestModel>> CompaniesByCompanyIdFilingrequestsGetAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
@@ -4836,8 +5471,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this filing calendar</param>
         /// <param name="id">The primary key of this filing calendar</param>
@@ -4855,8 +5490,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing request object</param>
@@ -4875,8 +5510,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
+        ///The filing request must be in the "ChangeRequest" status to be approved.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing request object</param>
@@ -4894,8 +5530,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing request object</param>
@@ -4909,6 +5545,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a single attachment for a filing;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="worksheetId">The unique id of the worksheet.</param>
+        public async Task<FileContentResult> GetFilingAttachmentAsync(Int32 companyId, Int64 worksheetId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("worksheetId", worksheetId);
+            return await RestCallAsync<FileContentResult>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve worksheet checkup report for company and filing period.;
         /// </summary>
         /// <remarks>
@@ -4918,7 +5571,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The unique ID of the company that owns the worksheet.</param>
         public async Task<FilingsCheckupModel> FilingsCheckupReportAsync(Int32 worksheetId, Int32 companyId)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetid}/checkup");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/checkup");
             path.ApplyField("worksheetId", worksheetId);
             path.ApplyField("companyId", companyId);
             return await RestCallAsync<FilingsCheckupModel>("get", path, null);
@@ -4930,8 +5583,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -4951,8 +5604,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -4974,8 +5627,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -4999,8 +5652,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -5026,11 +5679,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API creates a new adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.;
+        ///An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
+        ///such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        ///Sometimes may be a manual change in tax liability similar to an augmentation.
+        ///This API creates a new adjustment for an existing tax filing.
+        ///This API can only be used when the filing has not yet been approved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="year">The year of the filing's filing period being adjusted.</param>
@@ -5057,10 +5710,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API creates a new augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.;
+        ///An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
+        ///usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
+        ///This API creates a new augmentation for an existing tax filing.
+        ///This API can only be used when the filing has not been approved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="year">The month of the filing's filing period being changed.</param>
@@ -5087,12 +5740,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console, 
-        /// else system auto-approves the night before the filing cycle
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///Approving a return means the customer is ready to let Avalara file that return.
+        ///Customer either approves themselves from admin console, 
+        ///else system auto-approves the night before the filing cycle
+        ///Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to approve.</param>
@@ -5117,11 +5770,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing. 
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.;
+        ///Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
+        ///Rebuilding has to be done whenever a customer adds transactions to a filing. 
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        ///This API requires filing to be unapproved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to be rebuilt.</param>
@@ -5146,12 +5799,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console, 
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///Approving a return means the customer is ready to let Avalara file that return.
+        ///Customer either approves themselves from admin console, 
+        ///else system auto-approves the night before the filing cycle.
+        ///Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to approve.</param>
@@ -5174,11 +5827,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.;
+        ///Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
+        ///Rebuilding has to be done whenever a customer adds transactions to a filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        ///This API requires filing to be unapproved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to be rebuilt.</param>
@@ -5201,12 +5854,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console, 
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.;
+        ///Approving a return means the customer is ready to let Avalara file that return.
+        ///Customer either approves themselves from admin console, 
+        ///else system auto-approves the night before the filing cycle.
+        ///Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to approve.</param>
@@ -5219,6 +5872,48 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             return await RestCallAsync<List<FilingModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="year">The year of the filing period.</param>
+        /// <param name="month">The two digit month of the filing period.</param>
+        public async Task<FileContentResult> GetFilingAttachmentsAsync(Int32 companyId, Int16 year, Byte month)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("year", year);
+            path.ApplyField("month", month);
+            return await RestCallAsync<FileContentResult>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single trace file for a company filing period;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="year">The year of the filing period.</param>
+        /// <param name="month">The two digit month of the filing period.</param>
+        public async Task<FileContentResult> GetFilingAttachmentsTraceFileAsync(Int32 companyId, Int16 year, Byte month)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments/tracefile");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("year", year);
+            path.ApplyField("month", month);
+            return await RestCallAsync<FileContentResult>("get", path, null);
         }
 
 
@@ -5246,11 +5941,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.;
+        ///Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
+        ///Rebuilding has to be done whenever a customer adds transactions to a filing.
+        ///A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        ///based on filing frequency of filing.
+        ///This API requires filing to be unapproved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period to be rebuilt.</param>
@@ -5271,11 +5966,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API modifies an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.;
+        ///An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
+        ///such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        ///Sometimes may be a manual change in tax liability similar to an augmentation.
+        ///This API modifies an adjustment for an existing tax filing.
+        ///This API can only be used when the filing has not yet been approved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="id">The ID of the adjustment being edited.</param>
@@ -5294,20 +5989,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API deletes an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.;
+        ///An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
+        ///such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        ///Sometimes may be a manual change in tax liability similar to an augmentation.
+        ///This API deletes an adjustment for an existing tax filing.
+        ///This API can only be used when the filing has been unapproved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="id">The ID of the adjustment being deleted.</param>
-        public async Task<ErrorResult> DeleteReturnAdjustmentAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteReturnAdjustmentAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -5316,10 +6011,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API modifies an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.;
+        ///An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
+        ///usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
+        ///This API modifies an augmentation for an existing tax filing.
+        ///This API can only be used when the filing has not been approved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being edited.</param>
@@ -5338,19 +6033,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API deletes an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.;
+        ///An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara 
+        ///usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
+        ///This API deletes an augmentation for an existing tax filing.
+        ///This API can only be used when the filing has been unapproved.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being added.</param>
-        public async Task<ErrorResult> DeleteReturnAugmentationAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteReturnAugmentationAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -5359,16 +6054,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all items defined for the current company.
-        /// An 'Item' represents a product or service that your company offers for sale.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///
+        ///An 'Item' represents a product or service that your company offers for sale.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<ItemModel>> ListItemsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
@@ -5403,7 +6100,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the item object identified by this URL.
-        /// An 'Item' represents a product or service that your company offers for sale.;
+        ///An 'Item' represents a product or service that your company offers for sale.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
@@ -5421,8 +6118,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing item object at this URL with an updated object.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
@@ -5444,12 +6141,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
-        public async Task<ErrorResult> DeleteItemAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteItemAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -5458,19 +6155,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all location objects defined for this company.
-        /// An 'Location' represents a physical address where a company does business.
-        /// Many taxing authorities require that you define a list of all locations where your company does business.
-        /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///An 'Location' represents a physical address where a company does business.
+        ///Many taxing authorities require that you define a list of all locations where your company does business.
+        ///These locations may require additional custom configuration or tax registration with these authorities.
+        ///For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<LocationModel>> ListLocationsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
@@ -5505,10 +6203,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the location object identified by this URL.
-        /// An 'Location' represents a physical address where a company does business.
-        /// Many taxing authorities require that you define a list of all locations where your company does business.
-        /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.;
+        ///An 'Location' represents a physical address where a company does business.
+        ///Many taxing authorities require that you define a list of all locations where your company does business.
+        ///These locations may require additional custom configuration or tax registration with these authorities.
+        ///For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -5526,8 +6224,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing location object at this URL with an updated object.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this location belongs to.</param>
         /// <param name="id">The ID of the location you wish to update</param>
@@ -5549,12 +6247,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location.</param>
         /// <param name="id">The ID of the location you wish to delete.</param>
-        public async Task<ErrorResult> DeleteLocationAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteLocationAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -5563,11 +6261,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a point-of-sale data file containing tax rates and rules for this location, containing tax rates for all
-        /// items defined for this company. This data file can be used to correctly calculate tax in the event a 
-        /// point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to a maximum of 7500 items.;
+        ///items defined for this company. This data file can be used to correctly calculate tax in the event a 
+        ///point-of-sale device is not able to reach AvaTax.
+        ///This data file can be customized for specific partner devices and usage conditions.
+        ///The result of this API is the file you requested in the format you requested using the 'responseType' field.
+        ///This API builds the file on demand, and is limited to a maximum of 7500 items.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that owns this location.</param>
         /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
@@ -5593,8 +6291,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns validation information for this location.
-        /// This API call is intended to compare this location against the currently known taxing authority rules and regulations,
-        /// and provide information about what additional work is required to completely setup this location.;
+        ///This API call is intended to compare this location against the currently known taxing authority rules and regulations,
+        ///and provide information about what additional work is required to completely setup this location.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -5612,19 +6310,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all nexus objects defined for this company.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<NexusModel>> ListNexusByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
@@ -5643,13 +6342,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates one or more new nexus objects attached to this company.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
-        /// '/api/v2/definitions/nexus' endpoint.
-        /// You may only define nexus matching the official list of declared nexus.;
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
+        ///'/api/v2/definitions/nexus' endpoint.
+        ///You may only define nexus matching the official list of declared nexus.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
@@ -5666,10 +6365,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the nexus object identified by this URL.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.;
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
         /// <param name="id">The primary key of this nexus</param>
@@ -5687,15 +6386,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing nexus object at this URL with an updated object.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
-        /// '/api/v2/definitions/nexus' endpoint.
-        /// You may only define nexus matching the official list of declared nexus.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
+        ///'/api/v2/definitions/nexus' endpoint.
+        ///You may only define nexus matching the official list of declared nexus.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
         /// <param name="id">The ID of the nexus you wish to update</param>
@@ -5717,12 +6416,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="id">The ID of the nexus you wish to delete.</param>
-        public async Task<ErrorResult> DeleteNexusAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteNexusAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -5731,18 +6430,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// List all tax notice objects assigned to this company.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///List all tax notice objects assigned to this company.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<NoticeModel>> ListNoticesByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices");
@@ -5761,9 +6461,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Create one or more new notice objects.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///Create one or more new notice objects.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="model">The notice object you wish to create.</param>
@@ -5780,9 +6480,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Get the tax notice object identified by this URL.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///Get the tax notice object identified by this URL.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="companyId">The ID of the company for this notice.</param>
         /// <param name="id">The ID of this notice.</param>
@@ -5800,11 +6500,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Replace the existing notice object at this URL with an updated object.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///Replace the existing notice object at this URL with an updated object.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice belongs to.</param>
         /// <param name="id">The ID of the notice you wish to update.</param>
@@ -5823,18 +6523,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Mark the existing notice object at this URL as deleted.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///Mark the existing notice object at this URL as deleted.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete.</param>
-        public async Task<ErrorResult> DeleteNoticeAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteNoticeAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -5843,9 +6543,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -5863,9 +6563,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the comment for.</param>
@@ -5884,10 +6584,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
-        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
+        ///as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="id">The ID of the company that owns these notices.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -5905,10 +6605,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
-        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        ///'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
+        ///as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice added to the finance details.</param>
@@ -5923,25 +6623,126 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve notice responsibilities for a specific notice.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice responsibilities' are are those who are responsible for the notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="id">The ID of the notice.</param>
+        /// <param name="companyId">The ID of the company that owns these notices.</param>
+        public async Task<FetchResult<NoticeResponsibilityDetailModel>> GetNoticeResponsibilitiesAsync(Int32 id, Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
+            path.ApplyField("id", id);
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FetchResult<NoticeResponsibilityDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a new notice responsibility.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
+        /// <param name="model">The notice responsibilities you wish to create.</param>
+        public async Task<List<NoticeResponsibilityDetailModel>> CreateNoticeResponsibilitiesAsync(Int32 companyId, Int32 id, List<NoticeResponsibilityDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<NoticeResponsibilityDetailModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve notice root causes for a specific notice.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice root causes' are are those who are responsible for the notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="id">The ID of the notice.</param>
+        /// <param name="companyId">The ID of the company that owns these notices.</param>
+        public async Task<FetchResult<NoticeRootCauseDetailModel>> GetNoticeRootCausesAsync(Int32 id, Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
+            path.ApplyField("id", id);
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FetchResult<NoticeRootCauseDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a new notice root cause.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///'Notice root causes' are are those who are responsible for the notice.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
+        /// <param name="model">The notice root causes you wish to create.</param>
+        public async Task<List<NoticeRootCauseDetailModel>> CreateNoticeRootCausesAsync(Int32 companyId, Int32 id, List<NoticeRootCauseDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<NoticeRootCauseDetailModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single attachment;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///Get the file attachment identified by this URL.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company for this attachment.</param>
+        /// <param name="id">The ResourceFileId of the attachment to download.</param>
+        public async Task<String> DownloadNoticeAttachmentAsync(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallStringAsync("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve all settings for this company;
         /// </summary>
         /// <remarks>
         /// List all setting objects attached to this company.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these settings</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<SettingModel>> ListSettingsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
@@ -5960,12 +6761,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new setting objects attached to this company.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.;
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="model">The setting you wish to create.</param>
@@ -5982,12 +6783,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get a single setting object by its unique ID.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.;
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this setting</param>
         /// <param name="id">The primary key of this setting</param>
@@ -6005,14 +6806,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing setting object at this URL with an updated object.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this setting belongs to.</param>
         /// <param name="id">The ID of the setting you wish to update</param>
@@ -6034,12 +6835,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this setting.</param>
         /// <param name="id">The ID of the setting you wish to delete.</param>
-        public async Task<ErrorResult> DeleteSettingAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteSettingAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -6048,19 +6849,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all taxcode objects attached to this company.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<TaxCodeModel>> ListTaxCodesByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
@@ -6079,10 +6881,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new taxcode objects attached to this company.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.;
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="model">The tax code you wish to create.</param>
@@ -6099,10 +6901,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the taxcode object identified by this URL.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.;
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax code</param>
         /// <param name="id">The primary key of this tax code</param>
@@ -6120,12 +6922,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing taxcode object at this URL with an updated object.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this tax code belongs to.</param>
         /// <param name="id">The ID of the tax code you wish to update</param>
@@ -6147,12 +6949,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax code.</param>
         /// <param name="id">The ID of the tax code you wish to delete.</param>
-        public async Task<ErrorResult> DeleteTaxCodeAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteTaxCodeAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -6161,19 +6963,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all taxrule objects attached to this company.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax rules</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<TaxRuleModel>> ListTaxRulesAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
@@ -6192,10 +6995,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new taxrule objects attached to this company.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.;
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="model">The tax rule you wish to create.</param>
@@ -6212,10 +7015,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the taxrule object identified by this URL.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.;
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax rule</param>
         /// <param name="id">The primary key of this tax rule</param>
@@ -6233,12 +7036,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing taxrule object at this URL with an updated object.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this tax rule belongs to.</param>
         /// <param name="id">The ID of the tax rule you wish to update</param>
@@ -6260,12 +7063,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this tax rule.</param>
         /// <param name="id">The ID of the tax rule you wish to delete.</param>
-        public async Task<ErrorResult> DeleteTaxRuleAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteTaxRuleAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -6274,18 +7077,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all UPC objects attached to this company.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.
-        /// By default you will retrieve no more than 1000 records from this query. To include a full list of number of records matching your query,
-        /// please specify '$include=count' as an option.;
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these UPCs</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<UPCModel>> ListUPCsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
@@ -6304,7 +7106,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new UPC objects attached to this company.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.;
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="model">The UPC you wish to create.</param>
@@ -6321,7 +7123,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the UPC object identified by this URL.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.;
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this UPC</param>
         /// <param name="id">The primary key of this UPC</param>
@@ -6339,9 +7141,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing UPC object at this URL with an updated object.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this UPC belongs to.</param>
         /// <param name="id">The ID of the UPC you wish to update</param>
@@ -6363,12 +7165,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this UPC.</param>
         /// <param name="id">The ID of the UPC you wish to delete.</param>
-        public async Task<ErrorResult> DeleteUPCAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteUPCAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -6377,9 +7179,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the company object identified by this URL.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Contacts</li><li>Items</li><li>Locations</li><li>Nexus</li><li>Settings</li><li>TaxCodes</li><li>TaxRules</li><li>UPC</li></ul>;
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///
+        /// * Contacts
+        /// * Items
+        /// * Locations
+        /// * Nexus
+        /// * Settings
+        /// * TaxCodes
+        /// * TaxRules
+        /// * UPC;
         /// </remarks>
         /// <param name="id">The ID of the company to retrieve.</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -6397,9 +7207,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing company object at this URL with an updated object.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        ///A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        ///All data from the existing object will be replaced with data in the object you PUT. 
+        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
         /// <param name="id">The ID of the company you wish to update.</param>
         /// <param name="model">The company object you wish to update.</param>
@@ -6418,11 +7228,11 @@ namespace Avalara.AvaTax.RestClient
         /// Deleting a company will delete all child companies, and all users attached to this company.;
         /// </remarks>
         /// <param name="id">The ID of the company you wish to delete.</param>
-        public async Task<ErrorResult> DeleteCompaniesAsync(Int32 id)
+        public async Task<List<ErrorDetail>> DeleteCompaniesAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<ErrorResult>("delete", path, null);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -6431,9 +7241,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
-        /// Returns a list of funding setup requests and their current status.
-        /// Each object in the result is a request that was made to setup or adjust funding configuration for this company.;
+        ///Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        ///Returns a list of funding setup requests and their current status.
+        ///Each object in the result is a request that was made to setup or adjust funding configuration for this company.;
         /// </remarks>
         /// <param name="id">The unique identifier of the company</param>
         public async Task<List<FundingStatusModel>> ListFundingRequestsByCompanyAsync(Int32 id)
@@ -6449,15 +7259,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their 
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API records that an ambedded HTML funding setup widget was activated.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.;
+        ///Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
+        ///required to setup their funding configuration before Avalara can begin filing tax returns on their 
+        ///behalf.
+        ///Funding configuration for each company is set up by submitting a funding setup request, which can
+        ///be sent either via email or via an embedded HTML widget.
+        ///When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
+        ///before approval.
+        ///This API records that an ambedded HTML funding setup widget was activated.
+        ///This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.;
         /// </remarks>
         /// <param name="id">The unique identifier of the company</param>
         /// <param name="model">The funding initialization request</param>
@@ -6474,10 +7284,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Shortcut to quickly setup a single-physical-location company with critical information and activate it.
-        /// This API provides quick and simple company setup functionality and does the following things:
-        /// <ul><li>Create a company object with its own tax profile</li><li>Add a key contact person for the company</li><li>Set up one physical location for the main office</li><li>Declare nexus in all taxing jurisdictions for that main office address</li><li>Activate the company</li></ul>
-        /// This API only provides a limited subset of functionality compared to the 'Create Company' API call. 
-        /// If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.;
+        ///This API provides quick and simple company setup functionality and does the following things:
+        /// 
+        ///* Create a company object with its own tax profile
+        ///* Add a key contact person for the company
+        ///* Set up one physical location for the main office
+        ///* Declare nexus in all taxing jurisdictions for that main office address
+        ///* Activate the company
+        /// 
+        ///This API only provides a limited subset of functionality compared to the 'Create Company' API call. 
+        ///If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.;
         /// </remarks>
         /// <param name="model">Information about the company you wish to create.</param>
         public async Task<CompanyModel> CompanyInitializeAsync(CompanyInitializationModel model)
@@ -6492,16 +7308,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple contact objects across all companies.
-        /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
-        /// a tax collecting and filing entity.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
+        ///a tax collecting and filing entity.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<ContactModel>> QueryContactsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/contacts");
@@ -6519,8 +7336,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all ISO 3166 country codes, and their US English friendly names.
-        /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a country for 
-        /// a shipping address.;
+        ///This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a country for 
+        ///a shipping address.;
         /// </remarks>
         public async Task<FetchResult<IsoCountryModel>> ListCountriesAsync()
         {
@@ -6534,8 +7351,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all ISO 3166 region codes for a specific country code, and their US English friendly names.
-        /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
-        /// within the country for a shipping addresses.;
+        ///This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
+        ///within the country for a shipping addresses.;
         /// </remarks>
         /// <param name="country"></param>
         public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAsync(String country)
@@ -6551,10 +7368,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported entity use codes.
-        /// Entity/Use Codes are definitions of the entity who is purchasing something, or the purpose for which the transaction
-        /// is occurring. This information is generally used to determine taxability of the product.
-        /// In order to facilitate correct reporting of your taxes, you are encouraged to select the proper entity use codes for
-        /// all transactions that are exempt.;
+        ///Entity/Use Codes are definitions of the entity who is purchasing something, or the purpose for which the transaction
+        ///is occurring. This information is generally used to determine taxability of the product.
+        ///In order to facilitate correct reporting of your taxes, you are encouraged to select the proper entity use codes for
+        ///all transactions that are exempt.;
         /// </remarks>
         public async Task<FetchResult<EntityUseCodeModel>> ListEntityUseCodesAsync()
         {
@@ -6564,11 +7381,42 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List all forms where logins can be verified automatically;
+        /// </summary>
+        /// <remarks>
+        /// List all forms where logins can be verified automatically.
+        ///This API is intended to be useful to identify whether the user should be allowed
+        ///to automatically verify their login and password.;
+        /// </remarks>
+        public async Task<FetchResult<SkyscraperStatusModel>> ListLoginVerifiersAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers");
+            return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Test whether a form supports online login verification;
+        /// </summary>
+        /// <remarks>
+        /// This API is intended to be useful to identify whether the user should be allowed
+        ///to automatically verify their login and password.;
+        /// </remarks>
+        /// <param name="form">The name of the form you would like to verify</param>
+        public async Task<FetchResult<SkyscraperStatusModel>> GetLoginVerifierByFormAsync(String form)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers/{form}");
+            path.ApplyField("form", form);
+            return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported filing frequencies.;
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported filing frequencies.
-        /// This API is intended to be useful to identify all the different filing frequencies that can be used in notices.;
+        ///This API is intended to be useful to identify all the different filing frequencies that can be used in notices.;
         /// </remarks>
         public async Task<FetchResult<FilingFrequencyModel>> ListFilingFrequenciesAsync()
         {
@@ -6578,15 +7426,48 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List jurisdictions near a specific address;
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all Avalara-supported taxing jurisdictions that apply to this address.
+        ///
+        ///This API allows you to identify which jurisdictions are nearby a specific address according to the best available geocoding information.
+        ///It is intended to allow you to create a "Jurisdiction Override", which allows an address to be configured as belonging to a nearby 
+        ///jurisdiction in AvaTax.
+        /// 
+        ///The results of this API call can be passed to the `CreateJurisdictionOverride` API call.;
+        /// </remarks>
+        /// <param name="line1">The first address line portion of this address.</param>
+        /// <param name="line2">The second address line portion of this address.</param>
+        /// <param name="line3">The third address line portion of this address.</param>
+        /// <param name="city">The city portion of this address.</param>
+        /// <param name="region">The region, state, or province code portion of this address.</param>
+        /// <param name="postalCode">The postal code or zip code portion of this address.</param>
+        /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
+        public async Task<FetchResult<JurisdictionOverrideModel>> ListJurisdictionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictionsnearaddress");
+            path.AddQuery("line1", line1);
+            path.AddQuery("line2", line2);
+            path.AddQuery("line3", line3);
+            path.AddQuery("city", city);
+            path.AddQuery("region", region);
+            path.AddQuery("postalCode", postalCode);
+            path.AddQuery("country", country);
+            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the list of questions that are required for a tax location;
         /// </summary>
         /// <remarks>
         /// Returns the list of additional questions you must answer when declaring a location in certain taxing jurisdictions.
-        /// Some tax jurisdictions require that you register or provide additional information to configure each physical place where
-        /// your company does business.
-        /// This information is not usually required in order to calculate tax correctly, but is almost always required to file your tax correctly.
-        /// You can call this API call for any address and obtain information about what questions must be answered in order to properly
-        /// file tax in that location.;
+        ///Some tax jurisdictions require that you register or provide additional information to configure each physical place where
+        ///your company does business.
+        ///This information is not usually required in order to calculate tax correctly, but is almost always required to file your tax correctly.
+        ///You can call this API call for any address and obtain information about what questions must be answered in order to properly
+        ///file tax in that location.;
         /// </remarks>
         /// <param name="line1">The first line of this location's address.</param>
         /// <param name="line2">The second line of this location's address.</param>
@@ -6618,7 +7499,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
+        ///This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
         /// </remarks>
         public async Task<FetchResult<NexusModel>> DefinitionsNexusGetAsync()
         {
@@ -6632,7 +7513,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
+        ///This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
         /// </remarks>
         /// <param name="country"></param>
         public async Task<FetchResult<NexusModel>> DefinitionsNexusByCountryGetAsync(String country)
@@ -6648,7 +7529,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country and region.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.;
+        ///This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.;
         /// </remarks>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
@@ -6666,10 +7547,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all Avalara-supported taxing jurisdictions that apply to this address.
-        /// This API allows you to identify which tax authorities apply to a physical location, salesperson address, or point of sale.
-        /// In general, it is usually expected that a company will declare nexus in all the jurisdictions that apply to each physical address
-        /// where the company does business.
-        /// The results of this API call can be passed to the 'Create Nexus' API call to declare nexus for this address.;
+        ///This API allows you to identify which tax authorities apply to a physical location, salesperson address, or point of sale.
+        ///In general, it is usually expected that a company will declare nexus in all the jurisdictions that apply to each physical address
+        ///where the company does business.
+        ///The results of this API call can be passed to the 'Create Nexus' API call to declare nexus for this address.;
         /// </remarks>
         /// <param name="line1">The first address line portion of this address.</param>
         /// <param name="line2">The first address line portion of this address.</param>
@@ -6697,7 +7578,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice customer funding options.
-        /// This API is intended to be useful to identify all the different notice customer funding options that can be used in notices.;
+        ///This API is intended to be useful to identify all the different notice customer funding options that can be used in notices.;
         /// </remarks>
         public async Task<FetchResult<NoticeCustomerFundingOptionModel>> ListNoticeCustomerFundingOptionsAsync()
         {
@@ -6711,7 +7592,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice customer types.
-        /// This API is intended to be useful to identify all the different notice customer types.;
+        ///This API is intended to be useful to identify all the different notice customer types.;
         /// </remarks>
         public async Task<FetchResult<NoticeCustomerTypeModel>> ListNoticeCustomerTypesAsync()
         {
@@ -6725,7 +7606,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice filing types.
-        /// This API is intended to be useful to identify all the different notice filing types that can be used in notices.;
+        ///This API is intended to be useful to identify all the different notice filing types that can be used in notices.;
         /// </remarks>
         public async Task<FetchResult<NoticeFilingTypeModel>> ListNoticeFilingtypesAsync()
         {
@@ -6739,7 +7620,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice priorities.
-        /// This API is intended to be useful to identify all the different notice priorities that can be used in notices.;
+        ///This API is intended to be useful to identify all the different notice priorities that can be used in notices.;
         /// </remarks>
         public async Task<FetchResult<NoticePriorityModel>> ListNoticePrioritiesAsync()
         {
@@ -6753,7 +7634,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice reasons.
-        /// This API is intended to be useful to identify all the different tax notice reasons.;
+        ///This API is intended to be useful to identify all the different tax notice reasons.;
         /// </remarks>
         public async Task<FetchResult<NoticeReasonModel>> ListNoticeReasonsAsync()
         {
@@ -6763,11 +7644,39 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of Avalara-supported tax notice responsibility ids;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported tax notice responsibility ids
+        ///This API is intended to be useful to identify all the different tax notice responsibilities.;
+        /// </remarks>
+        public async Task<FetchResult<NoticeResponsibilityDetailModel>> ListNoticeResponsibilitiesAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/noticeresponsibilities");
+            return await RestCallAsync<FetchResult<NoticeResponsibilityDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported tax notice root causes;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported tax notice root causes
+        ///This API is intended to be useful to identify all the different tax notice root causes.;
+        /// </remarks>
+        public async Task<FetchResult<NoticeRootCauseDetailModel>> ListNoticeRootCausesAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/noticerootcauses");
+            return await RestCallAsync<FetchResult<NoticeRootCauseDetailModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported tax notice statuses.;
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice statuses.
-        /// This API is intended to be useful to identify all the different tax notice statuses.;
+        ///This API is intended to be useful to identify all the different tax notice statuses.;
         /// </remarks>
         public async Task<FetchResult<NoticeStatusModel>> ListNoticeStatusesAsync()
         {
@@ -6781,7 +7690,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax notice types.
-        /// This API is intended to be useful to identify all the different notice types that can be used in notices.;
+        ///This API is intended to be useful to identify all the different notice types that can be used in notices.;
         /// </remarks>
         public async Task<FetchResult<NoticeTypeModel>> ListNoticeTypesAsync()
         {
@@ -6795,8 +7704,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported extra parameters for the 'Create Transaction' API call.
-        /// This list of parameters is available for use when configuring your transaction.
-        /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.;
+        ///This list of parameters is available for use when configuring your transaction.
+        ///Some parameters are only available for use if you have subscribed to certain features of AvaTax.;
         /// </remarks>
         public async Task<FetchResult<ParameterModel>> ListParametersAsync()
         {
@@ -6810,7 +7719,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported permission types.
-        /// This API is intended to be useful to identify the capabilities of a particular user logon.;
+        ///This API is intended to be useful to identify the capabilities of a particular user logon.;
         /// </remarks>
         public async Task<FetchResult<String>> ListPermissionsAsync()
         {
@@ -6824,8 +7733,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a list of all ISO 3166 region codes and their US English friendly names.
-        /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
-        /// within the country for a shipping addresses.;
+        ///This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
+        ///within the country for a shipping addresses.;
         /// </remarks>
         public async Task<FetchResult<IsoRegionModel>> ListRegionsAsync()
         {
@@ -6839,8 +7748,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported permission types.
-        /// This API is intended to be useful when designing a user interface for selecting the security role of a user account.
-        /// Some security roles are restricted for Avalara internal use.;
+        ///This API is intended to be useful when designing a user interface for selecting the security role of a user account.
+        ///Some security roles are restricted for Avalara internal use.;
         /// </remarks>
         public async Task<FetchResult<SecurityRoleModel>> ListSecurityRolesAsync()
         {
@@ -6854,9 +7763,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported subscription types.
-        /// This API is intended to be useful for identifying which features you have added to your account.
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// You cannot change your subscriptions directly through the API.;
+        ///This API is intended to be useful for identifying which features you have added to your account.
+        ///You may always contact Avalara's sales department for information on available products or services.
+        ///You cannot change your subscriptions directly through the API.;
         /// </remarks>
         public async Task<FetchResult<SubscriptionTypeModel>> ListSubscriptionTypesAsync()
         {
@@ -6870,7 +7779,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax authorities.
-        /// This API is intended to be useful to identify all the different authorities that receive tax.;
+        ///This API is intended to be useful to identify all the different authorities that receive tax.;
         /// </remarks>
         public async Task<FetchResult<TaxAuthorityModel>> ListTaxAuthoritiesAsync()
         {
@@ -6884,9 +7793,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported forms for each tax authority.
-        /// This list represents tax forms that Avalara recognizes.
-        /// Customers who subscribe to Avalara Managed Returns Service can request these forms to be filed automatically 
-        /// based on the customer's AvaTax data.;
+        ///This list represents tax forms that Avalara recognizes.
+        ///Customers who subscribe to Avalara Managed Returns Service can request these forms to be filed automatically 
+        ///based on the customer's AvaTax data.;
         /// </remarks>
         public async Task<FetchResult<TaxAuthorityFormModel>> ListTaxAuthorityFormsAsync()
         {
@@ -6900,7 +7809,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of Avalara-supported tax authority types.
-        /// This API is intended to be useful to identify all the different authority types.;
+        ///This API is intended to be useful to identify all the different authority types.;
         /// </remarks>
         public async Task<FetchResult<TaxAuthorityTypeModel>> ListTaxAuthorityTypesAsync()
         {
@@ -6914,10 +7823,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieves the list of Avalara-supported system tax codes.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.;
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.;
         /// </remarks>
         public async Task<FetchResult<TaxCodeModel>> ListTaxCodesAsync()
         {
@@ -6931,8 +7840,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the full list of recognized tax code types.
-        /// A 'Tax Code Type' represents a broad category of tax codes, and is less detailed than a single TaxCode.
-        /// This API is intended to be useful for broadly searching for tax codes by tax code type.;
+        ///A 'Tax Code Type' represents a broad category of tax codes, and is less detailed than a single TaxCode.
+        ///This API is intended to be useful for broadly searching for tax codes by tax code type.;
         /// </remarks>
         public async Task<TaxCodeTypesModel> ListTaxCodeTypesAsync()
         {
@@ -6947,10 +7856,10 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// This API is available by invitation only.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<FilingCalendarModel>> QueryFilingCalendarsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars");
@@ -6996,15 +7905,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A "filing request" represents a request to change an existing filing calendar. Filing requests
+        ///are reviewed and validated by Avalara Compliance before being implemented.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<FilingRequestModel>> QueryFilingRequestsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/filingrequests");
@@ -7021,15 +7931,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their 
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API checks the status on an existing funding request.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.;
+        ///Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
+        ///required to setup their funding configuration before Avalara can begin filing tax returns on their 
+        ///behalf.
+        ///Funding configuration for each company is set up by submitting a funding setup request, which can
+        ///be sent either via email or via an embedded HTML widget.
+        ///When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
+        ///before approval.
+        ///This API checks the status on an existing funding request.
+        ///This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.;
         /// </remarks>
         /// <param name="id">The unique ID number of this funding request</param>
         public async Task<FundingStatusModel> FundingRequestStatusAsync(Int32 id)
@@ -7045,17 +7955,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their 
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API returns back the actual javascript code to insert into your application to render the 
-        /// JavaScript funding setup widget inline.
-        /// Use the 'methodReturn.javaScript' return value to insert this widget into your HTML page.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.;
+        ///Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are 
+        ///required to setup their funding configuration before Avalara can begin filing tax returns on their 
+        ///behalf.
+        ///Funding configuration for each company is set up by submitting a funding setup request, which can
+        ///be sent either via email or via an embedded HTML widget.
+        ///When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
+        ///before approval.
+        ///This API returns back the actual javascript code to insert into your application to render the 
+        ///JavaScript funding setup widget inline.
+        ///Use the 'methodReturn.javaScript' return value to insert this widget into your HTML page.
+        ///This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.;
         /// </remarks>
         /// <param name="id">The unique ID number of this funding request</param>
         public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int64 id)
@@ -7071,15 +7981,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple item objects across all companies.
-        /// An 'Item' represents a product or service that your company offers for sale.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///An 'Item' represents a product or service that your company offers for sale.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<ItemModel>> QueryItemsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/items");
@@ -7097,18 +8008,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple location objects across all companies.
-        /// An 'Location' represents a physical address where a company does business.
-        /// Many taxing authorities require that you define a list of all locations where your company does business.
-        /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///An 'Location' represents a physical address where a company does business.
+        ///Many taxing authorities require that you define a list of all locations where your company does business.
+        ///These locations may require additional custom configuration or tax registration with these authorities.
+        ///For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<LocationModel>> QueryLocationsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/locations");
@@ -7126,18 +8038,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple nexus objects across all companies.
-        /// The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
-        /// to collect and remit transaction-based taxes.
-        /// When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
-        /// in all jurisdictions affected by your transactions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///The concept of 'Nexus' indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<NexusModel>> QueryNexusAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/nexus");
@@ -7155,17 +8068,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// Get multiple notice objects across all companies.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///Get multiple notice objects across all companies.
+        ///A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        ///Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<NoticeModel>> QueryNoticesAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/notices");
@@ -7182,10 +8096,12 @@ namespace Avalara.AvaTax.RestClient
         /// Change Password;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Allows a user to change their password via the API.
-        /// This API only allows the currently authenticated user to change their password; it cannot be used to apply to a
-        /// different user than the one authenticating the current API call.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Allows a user to change their password via the API.
+        ///This API only allows the currently authenticated user to change their password; it cannot be used to apply to a
+        ///different user than the one authenticating the current API call.;
         /// </remarks>
         /// <param name="model">An object containing your current password and the new password.</param>
         public async Task<String> ChangePasswordAsync(PasswordChangeModel model)
@@ -7199,10 +8115,12 @@ namespace Avalara.AvaTax.RestClient
         /// Reset a user's password programmatically;
         /// </summary>
         /// <remarks>
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// Allows a system admin to reset the password for a specific user via the API.
-        /// This API is only available for Avalara Registrar Admins, and can be used to reset the password of any
-        /// user based on internal Avalara business processes.;
+        /// # For Registrar Use Only
+        ///This API is for use by Avalara Registrar administrative users only.
+        ///
+        ///Allows a system admin to reset the password for a specific user via the API.
+        ///This API is only available for Avalara Registrar Admins, and can be used to reset the password of any
+        ///user based on internal Avalara business processes.;
         /// </remarks>
         /// <param name="userId">The unique ID of the user whose password will be changed</param>
         /// <param name="model">The new password for this user</param>
@@ -7219,10 +8137,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a point-of-sale data file containing tax rates and rules for items and locations that can be used
-        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios.;
+        ///to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        ///This data file can be customized for specific partner devices and usage conditions.
+        ///The result of this API is the file you requested in the format you requested using the 'responseType' field.
+        ///This API builds the file on demand, and is limited to files with no more than 7500 scenarios.;
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
         public async Task<String> BuildPointOfSaleDataFileAsync(PointOfSaleDataRequestModel model)
@@ -7237,20 +8155,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple setting objects across all companies.
-        /// A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
-        /// not defined or managed by Avalara.
-        /// You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
-        /// 'value' data fields.
-        /// To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
-        /// the 'set' data field.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'setting' is a piece of user-defined data that can be attached to a company, and it provides you the ability to store information
+        ///not defined or managed by Avalara.
+        ///You may create, update, and delete your own settings objects as required, and there is no mandatory data format for the 'name' and 
+        ///'value' data fields.
+        ///To ensure correct operation of other programs or connectors, please create a new GUID for your application and use that value for
+        ///the 'set' data field.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<SettingModel>> QuerySettingsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/settings");
@@ -7268,15 +8187,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple subscription objects across all accounts.
-        /// A 'subscription' indicates a licensed subscription to a named Avalara service.
-        /// To request or remove subscriptions, please contact Avalara sales or your customer account manager.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'subscription' indicates a licensed subscription to a named Avalara service.
+        ///To request or remove subscriptions, please contact Avalara sales or your customer account manager.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<SubscriptionModel>> QuerySubscriptionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/subscriptions");
@@ -7293,18 +8213,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple taxcode objects across all companies.
-        /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
-        /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
-        /// taxability rules for this product in all supported jurisdictions.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A 'TaxCode' represents a uniquely identified type of product, good, or service.
+        ///Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
+        ///If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        ///taxability rules for this product in all supported jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<TaxCodeModel>> QueryTaxCodesAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxcodes");
@@ -7318,13 +8239,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve tax rates for a specified address;
+        /// FREE API - Sales tax rates for a specified address;
         /// </summary>
         /// <remarks>
-        /// Identifies estimated general tangible personal property rates for a specified address.
-        /// This API produces only estimated tax rates based on assumptions and is not suitable for precise tax calculations; it should
-        /// be used to identify rough guesses for tax during planning or research.
-        /// For more information on estimating tax correctly, please see http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/ .;
+        /// # Free-To-Use
+        ///
+        ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
+        ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///
+        ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
+        ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
+        ///support for scenarios including, but not limited to:
+        ///
+        ///* Nexus declarations
+        ///* Taxability based on product/service type
+        ///* Sourcing rules affecting origin/destination states
+        ///* Customers who are exempt from certain taxes
+        ///* States that have dollar value thresholds for tax amounts
+        ///* Refunds for products purchased on a different date
+        ///* Detailed jurisdiction names and state assigned codes
+        ///* And more!
+        ///
+        ///Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
+        ///for information on how to upgrade to the full AvaTax CreateTransaction API.;
         /// </remarks>
         /// <param name="line1">The street address of the location.</param>
         /// <param name="line2">The street address of the location.</param>
@@ -7348,13 +8285,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve tax rates for a specified country and postal code;
+        /// FREE API - Sales tax rates for a specified country and postal code;
         /// </summary>
         /// <remarks>
-        /// Identifies estimated general tangible personal property rates for a specified postal code and country code.
-        /// This API produces only estimated tax rates based on assumptions and is not suitable for precise tax calculations; it should
-        /// be used to identify rough guesses for tax during planning or research.
-        /// For more information on estimating tax correctly, please see http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/ .;
+        /// # Free-To-Use
+        ///
+        ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
+        ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///
+        ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
+        ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
+        ///support for scenarios including, but not limited to:
+        ///
+        ///* Nexus declarations
+        ///* Taxability based on product/service type
+        ///* Sourcing rules affecting origin/destination states
+        ///* Customers who are exempt from certain taxes
+        ///* States that have dollar value thresholds for tax amounts
+        ///* Refunds for products purchased on a different date
+        ///* Detailed jurisdiction names and state assigned codes
+        ///* And more!
+        ///
+        ///Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
+        ///for information on how to upgrade to the full AvaTax CreateTransaction API.;
         /// </remarks>
         /// <param name="country">The two letter ISO-3166 country code.</param>
         /// <param name="postalCode">The postal code of the location.</param>
@@ -7372,18 +8325,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple taxrule objects across all companies.
-        /// A tax rule represents a custom taxability rule for a product or service sold by your company.
-        /// If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
-        /// within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
-        /// you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A tax rule represents a custom taxability rule for a product or service sold by your company.
+        ///If you have obtained a custom tax ruling from an auditor that changes the behavior of certain goods or services
+        ///within certain taxing jurisdictions, or you have obtained special tax concessions for certain dates or locations,
+        ///you may wish to create a TaxRule object to override the AvaTax engine's default behavior in those circumstances.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<TaxRuleModel>> QueryTaxRulesAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/taxrules");
@@ -7401,12 +8355,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the unique transaction identified by this URL.
-        /// This endpoint retrieves the exact transaction identified by this ID number even if that transaction was later adjusted
-        /// by using the 'Adjust Transaction' endpoint.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        /// <ul><li>Lines</li><li>Details (implies lines)</li><li>Summary (implies details)</li><li>Addresses</li></ul>;
+        ///This endpoint retrieves the exact transaction identified by this ID number even if that transaction was later adjusted
+        ///by using the 'Adjust Transaction' endpoint.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses;
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -7424,11 +8382,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Records a new transaction in AvaTax.
-        /// The 'Create Transaction' endpoint uses the configuration values specified by your company to identify the correct tax rules
-        /// and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
-        /// company's configuration and the data provided in this API call.
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).;
+        ///The 'Create Transaction' endpoint uses the configuration values specified by your company to identify the correct tax rules
+        ///and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
+        ///company's configuration and the data provided in this API call.
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
         /// </remarks>
         /// <param name="model">The transaction you wish to create</param>
         public async Task<TransactionModel> CreateTransactionAsync(CreateTransactionModel model)
@@ -7439,19 +8397,40 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Lock a set of documents;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///
+        ///Lock a set of transactions uniquely identified by DocumentIds provided. This API allows locking multiple documents at once.
+        ///After this API call succeeds, documents will be locked and can't be voided.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
+        /// </remarks>
+        /// <param name="model">bulk lock request</param>
+        public async Task<BulkLockTransactionResult> BulkLockTransactionAsync(BulkLockTransactionModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/transactions/lock");
+            return await RestCallAsync<BulkLockTransactionResult>("post", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve all UPCs;
         /// </summary>
         /// <remarks>
         /// Get multiple UPC objects across all companies.
-        /// A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A UPC represents a single UPC code in your catalog and matches this product to the tax code identified by this UPC.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<UPCModel>> QueryUPCsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/upcs");
@@ -7469,15 +8448,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple user objects across all accounts.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// Search for specific objects using the criteria in the '$filter' parameter; full documentation is available on http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// Paginate your results using the '$top', '$skip', and '$orderby' parameters.;
+        ///A user represents one person with access privileges to make API calls and work with a specific account.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve, as defined by https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#97-filtering .</param>
-        /// <param name="top">If nonzero, return no more than this number of results.</param>
-        /// <param name="skip">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format '(fieldname) [ASC|DESC]', for example 'id ASC'.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         public async Task<FetchResult<UserModel>> QueryUsersAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/users");
@@ -7495,10 +8475,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API helps diagnose connectivity problems between your application and AvaTax; you may call this API even 
-        /// if you do not have verified connection credentials.
-        /// The results of this API call will help you determine whether your computer can contact AvaTax via the network,
-        /// whether your authentication credentials are recognized, and the roundtrip time it takes to communicate with
-        /// AvaTax.;
+        ///if you do not have verified connection credentials.
+        ///The results of this API call will help you determine whether your computer can contact AvaTax via the network,
+        ///whether your authentication credentials are recognized, and the roundtrip time it takes to communicate with
+        ///AvaTax.;
         /// </remarks>
         public async Task<PingResultModel> PingAsync()
         {
@@ -7512,8 +8492,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns the list of all subscriptions enabled for the current account.
-        /// This API is intended to help you determine whether you have the necessary subscription to use certain API calls
-        /// within AvaTax.;
+        ///This API is intended to help you determine whether you have the necessary subscription to use certain API calls
+        ///within AvaTax.;
         /// </remarks>
         public async Task<SubscriptionModel> ListMySubscriptionsAsync()
         {
@@ -7527,8 +8507,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Returns a subscription object for the current account, or 404 Not Found if this subscription is not enabled for this account.
-        /// This API call is intended to allow you to identify whether you have the necessary account configuration to access certain
-        /// features of AvaTax, and would be useful in debugging access privilege problems.;
+        ///This API call is intended to allow you to identify whether you have the necessary account configuration to access certain
+        ///features of AvaTax, and would be useful in debugging access privilege problems.;
         /// </remarks>
         /// <param name="serviceTypeId">The service to check</param>
         public async Task<SubscriptionModel> GetMySubscriptionAsync(ServiceTypeId serviceTypeId)

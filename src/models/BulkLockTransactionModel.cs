@@ -2,32 +2,34 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about the error that occurred
+    /// Bulk lock documents model
     /// </summary>
-    public class ErrorInfo
+    public class BulkLockTransactionModel
     {
         /// <summary>
-        /// Type of error that occurred
+        /// List of documents to lock
         /// </summary>
-        public ErrorCodeId? code { get; set; }
+        public List<Int64> documentIds { get; set; }
 
         /// <summary>
-        /// Short one-line message to summaryize what went wrong
+        /// The lock status to set for the documents designated in this API
         /// </summary>
-        public String message { get; set; }
-
-        /// <summary>
-        /// What object or service caused the error?
-        /// </summary>
-        public ErrorTargetCode? target { get; set; }
-
-        /// <summary>
-        /// Array of detailed error messages
-        /// </summary>
-        public List<ErrorDetail> details { get; set; }
+        public Boolean isLocked { get; set; }
 
 
         /// <summary>

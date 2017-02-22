@@ -2,11 +2,23 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// A location where this company does business.
-        /// Some jurisdictions may require you to list all locations where your company does business.
+        ///Some jurisdictions may require you to list all locations where your company does business.
     /// </summary>
     public class LocationModel
     {
@@ -142,8 +154,8 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Extra information required by certain jurisdictions for filing.
-        /// For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions". 
-        /// To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
+        ///For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions". 
+        ///To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
         /// </summary>
         public List<LocationSettingModel> settings { get; set; }
 
