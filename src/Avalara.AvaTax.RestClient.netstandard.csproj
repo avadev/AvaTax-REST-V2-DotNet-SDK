@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-        <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +53,7 @@
     <Compile Include="AvaTaxPath.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="enums\AccountStatusId.cs" />
+    <Compile Include="enums\AccrualType.cs" />
     <Compile Include="enums\AddressCategoryId.cs" />
     <Compile Include="enums\AddressTypeId.cs" />
     <Compile Include="enums\AdjustmentPeriodTypeId.cs" />
@@ -66,15 +67,18 @@
     <Compile Include="enums\DocumentStatus.cs" />
     <Compile Include="enums\DocumentType.cs" />
     <Compile Include="enums\ErrorCodeId.cs" />
-    <Compile Include="enums\ErrorTargetCode.cs" />
     <Compile Include="enums\FilingFrequencyId.cs" />
     <Compile Include="enums\FilingRequestStatus.cs" />
+    <Compile Include="enums\FilingStatusId.cs" />
     <Compile Include="enums\FilingTypeId.cs" />
+    <Compile Include="enums\FundingOption.cs" />
     <Compile Include="enums\JurisdictionType.cs" />
     <Compile Include="enums\JurisTypeId.cs" />
     <Compile Include="enums\LocalNexusTypeId.cs" />
     <Compile Include="enums\MatchingTaxType.cs" />
     <Compile Include="enums\NexusTypeId.cs" />
+    <Compile Include="enums\NoticeCustomerType.cs" />
+    <Compile Include="enums\NoticePriorityId.cs" />
     <Compile Include="enums\OutletTypeId.cs" />
     <Compile Include="enums\ParameterBagDataType.cs" />
     <Compile Include="enums\PasswordStatusId.cs" />
@@ -83,6 +87,7 @@
     <Compile Include="enums\RateType.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />
+    <Compile Include="enums\ScraperType.cs" />
     <Compile Include="enums\SecurityRoleId.cs" />
     <Compile Include="enums\ServiceMode.cs" />
     <Compile Include="enums\ServiceTypeId.cs" />
@@ -94,20 +99,27 @@
     <Compile Include="enums\TaxOverrideTypeId.cs" />
     <Compile Include="enums\TaxRuleTypeId.cs" />
     <Compile Include="enums\TaxType.cs" />
+    <Compile Include="enums\TextCase.cs" />
     <Compile Include="enums\TransactionAddressType.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
-    <Compile Include="enums\WorksheetStatusId.cs" />
     <Compile Include="enums\WorksheetTypeId.cs" />
+    <Compile Include="ErrorInfo.cs" />
+    <Compile Include="ErrorResult.cs" />
+    <Compile Include="ErrorTargetCode.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="models\AccountModel.cs" />
+    <Compile Include="models\AddressesModel.cs" />
     <Compile Include="models\AddressInfo.cs" />
     <Compile Include="models\AddressLocationInfo.cs" />
     <Compile Include="models\AddressResolutionModel.cs" />
+    <Compile Include="models\AddressValidationInfo.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
     <Compile Include="models\AvaTaxMessage.cs" />
     <Compile Include="models\BatchFileModel.cs" />
     <Compile Include="models\BatchModel.cs" />
+    <Compile Include="models\BulkLockTransactionModel.cs" />
+    <Compile Include="models\BulkLockTransactionResult.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
     <Compile Include="models\CommitTransactionModel.cs" />
     <Compile Include="models\CompanyInitializationModel.cs" />
@@ -121,10 +133,9 @@
     <Compile Include="models\CycleExpireOptionModel.cs" />
     <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
-    <Compile Include="models\ErrorInfo.cs" />
-    <Compile Include="models\ErrorResult.cs" />
+    <Compile Include="models\FileContentResult.cs" />
     <Compile Include="models\FilingAdjustmentModel.cs" />
-    <Compile Include="models\FilingAnswer.cs" />
+    <Compile Include="models\FilingAnswerModel.cs" />
     <Compile Include="models\FilingAugmentationModel.cs" />
     <Compile Include="models\FilingCalendarEditModel.cs" />
     <Compile Include="models\FilingCalendarModel.cs" />
@@ -137,20 +148,26 @@
     <Compile Include="models\FilingsCheckupAuthorityModel.cs" />
     <Compile Include="models\FilingsCheckupModel.cs" />
     <Compile Include="models\FilingsCheckupSuggestedFormModel.cs" />
+    <Compile Include="models\FreeTrialRequestModel.cs" />
     <Compile Include="models\FundingESignMethodReturn.cs" />
     <Compile Include="models\FundingInitiateModel.cs" />
     <Compile Include="models\FundingStatusModel.cs" />
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoRegionModel.cs" />
     <Compile Include="models\ItemModel.cs" />
+    <Compile Include="models\JurisdictionModel.cs" />
+    <Compile Include="models\JurisdictionOverrideModel.cs" />
     <Compile Include="models\LicenseKeyModel.cs" />
     <Compile Include="models\LineItemModel.cs" />
     <Compile Include="models\LocationModel.cs" />
     <Compile Include="models\LocationQuestionModel.cs" />
     <Compile Include="models\LocationSettingModel.cs" />
     <Compile Include="models\LocationValidationModel.cs" />
+    <Compile Include="models\LockTransactionModel.cs" />
     <Compile Include="models\LoginVerificationInputModel.cs" />
     <Compile Include="models\LoginVerificationOutputModel.cs" />
+    <Compile Include="models\NewAccountModel.cs" />
+    <Compile Include="models\NewAccountRequestModel.cs" />
     <Compile Include="models\NexusModel.cs" />
     <Compile Include="models\NoticeCommentModel.cs" />
     <Compile Include="models\NoticeCustomerFundingOptionModel.cs" />
@@ -160,6 +177,8 @@
     <Compile Include="models\NoticeModel.cs" />
     <Compile Include="models\NoticePriorityModel.cs" />
     <Compile Include="models\NoticeReasonModel.cs" />
+    <Compile Include="models\NoticeResponsibilityDetailModel.cs" />
+    <Compile Include="models\NoticeRootCauseDetailModel.cs" />
     <Compile Include="models\NoticeStatusModel.cs" />
     <Compile Include="models\NoticeTypeModel.cs" />
     <Compile Include="models\ParameterModel.cs" />
@@ -168,12 +187,13 @@
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
-    <Compile Include="models\RebuildWorksheetModel.cs" />
+    <Compile Include="models\requiredFilingCalendarDataFieldModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />
     <Compile Include="models\SetPasswordModel.cs" />
     <Compile Include="models\SettingModel.cs" />
     <Compile Include="models\SettleTransactionModel.cs" />
+    <Compile Include="models\SkyscraperStatusModel.cs" />
     <Compile Include="models\SubscriptionModel.cs" />
     <Compile Include="models\SubscriptionTypeModel.cs" />
     <Compile Include="models\TaxAuthorityFormModel.cs" />
@@ -193,12 +213,10 @@
     <Compile Include="models\UPCModel.cs" />
     <Compile Include="models\UserEntitlementModel.cs" />
     <Compile Include="models\UserModel.cs" />
+    <Compile Include="models\ValidatedAddressInfo.cs" />
     <Compile Include="models\VerifyTransactionModel.cs" />
     <Compile Include="models\VoidTransactionModel.cs" />
     <Compile Include="AvaTaxClient.cs" />
-    <Compile Include="models\WorksheetBucketModel.cs" />
-    <Compile Include="models\WorksheetModel.cs" />
-    <Compile Include="models\WorksheetReturnModel.cs" />
     <Compile Include="TransactionBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
