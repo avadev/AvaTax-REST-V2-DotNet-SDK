@@ -2,11 +2,23 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a commitment to file a tax return on a recurring basis.
-        /// Only used if you subscribe to Avalara Returns.
+        ///Only used if you subscribe to Avalara Returns.
     /// </summary>
     public class FilingCalendarModel
     {
@@ -72,7 +84,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The second line of the physical address to be used when filing this tax return.
-        /// Please note that some tax forms do not support multiple address lines.
+        ///Please note that some tax forms do not support multiple address lines.
         /// </summary>
         public String line2 { get; set; }
 
@@ -103,7 +115,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Special filing instructions to be used when filing this return.
-        /// Please note that requesting special filing instructions may incur additional costs.
+        ///Please note that requesting special filing instructions may incur additional costs.
         /// </summary>
         public String customerFilingInstructions { get; set; }
 
@@ -114,15 +126,15 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The earliest date for the tax period when this return should be filed.
-        /// This date specifies the earliest date for tax transactions that should be reported on this filing calendar.
-        /// Please note that tax is usually filed one month in arrears: for example, tax for January transactions is typically filed during the month of February.
+        ///This date specifies the earliest date for tax transactions that should be reported on this filing calendar.
+        ///Please note that tax is usually filed one month in arrears: for example, tax for January transactions is typically filed during the month of February.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
         /// <summary>
         /// The last date for the tax period when this return should be filed.
-        /// This date specifies the last date for tax transactions that should be reported on this filing calendar.
-        /// Please note that tax is usually filed one month in arrears: for example, tax for January transactions is typically filed during the month of February.
+        ///This date specifies the last date for tax transactions that should be reported on this filing calendar.
+        ///Please note that tax is usually filed one month in arrears: for example, tax for January transactions is typically filed during the month of February.
         /// </summary>
         public DateTime? endDate { get; set; }
 
@@ -143,7 +155,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// If you are required to prepay a percentage of taxes for future periods, please specify the percentage in whole numbers; 
-        /// for example, the value 90 would indicate 90%.
+        ///for example, the value 90 would indicate 90%.
         /// </summary>
         public Byte? prepayPercentage { get; set; }
 

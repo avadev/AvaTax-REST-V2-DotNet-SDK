@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -11,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// Whether or not the filing calendar can be expired.
-        /// e.g. if user makes end date of a calendar earlier than latest filing, this would be set to false.
+        ///e.g. if user makes end date of a calendar earlier than latest filing, this would be set to false.
         /// </summary>
         public Boolean? success { get; set; }
 

@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -26,13 +38,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The unique ID number of the tax code that is applied when selling this item.
-        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
+        ///When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
         /// The unique code string of the Tax Code that is applied when selling this item.
-        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
+        ///When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
         /// </summary>
         public String taxCode { get; set; }
 

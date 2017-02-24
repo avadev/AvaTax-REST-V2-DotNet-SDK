@@ -2,12 +2,24 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a letter received from a tax authority regarding tax filing.
-        /// These letters often have the warning "Notice" printed at the top, which is why
-        /// they are called "Notices".
+        ///These letters often have the warning "Notice" printed at the top, which is why
+        ///they are called "Notices".
     /// </summary>
     public class NoticeModel
     {
@@ -22,147 +34,127 @@ namespace Avalara.AvaTax.RestClient
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// taxNoticeStatusId
+        /// The status id of the notice
         /// </summary>
         public Int32? statusId { get; set; }
 
         /// <summary>
-        /// taxNoticeStatus
+        /// The status of the notice
         /// </summary>
         public String status { get; set; }
 
         /// <summary>
-        /// receivedDate
+        /// The received date of the notice
         /// </summary>
         public DateTime? receivedDate { get; set; }
 
         /// <summary>
-        /// closedDate
+        /// The closed date of the notice
         /// </summary>
         public DateTime? closedDate { get; set; }
 
         /// <summary>
-        /// TaxNoticeCustomerTypeId
+        /// NoticeCustomerTypeID can be retrieved from the definitions API
         /// </summary>
-        public Int32 customerTypeId { get; set; }
+        public NoticeCustomerType customerTypeId { get; set; }
 
         /// <summary>
-        /// TaxNoticeCustomerTypeId
-        /// </summary>
-        public String customerType { get; set; }
-
-        /// <summary>
-        /// taxNoticeCountry
+        /// The country the notice is in
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// taxNoticeState
+        /// The region the notice is for
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// taxNoticeTaxAuthorityId
+        /// The tax authority id of the notice
         /// </summary>
         public Int32? taxAuthorityId { get; set; }
 
         /// <summary>
-        /// taxNoticeFilingFrequencyId
+        /// The filing frequency of the notice
         /// </summary>
         public FilingFrequencyId? filingFrequency { get; set; }
 
         /// <summary>
-        /// taxNoticeFilingTypeId
+        /// The filing type of the notice
         /// </summary>
-        public Int32? filingTypeId { get; set; }
+        public FilingTypeId? filingTypeId { get; set; }
 
         /// <summary>
-        /// taxNoticeFilingTypeId
-        /// </summary>
-        public String filingType { get; set; }
-
-        /// <summary>
-        /// ticketReferenceNo
+        /// The ticket reference number of the notice
         /// </summary>
         public String ticketReferenceNo { get; set; }
 
         /// <summary>
-        /// ticketReferenceUrl
+        /// The ticket reference url of the notice
         /// </summary>
         public String ticketReferenceUrl { get; set; }
 
         /// <summary>
-        /// salesForceCaseNo
+        /// The sales force case of the notice
         /// </summary>
         public String salesForceCase { get; set; }
 
         /// <summary>
-        /// SalesForceCaseUrl
+        /// The URL to the sales force case
         /// </summary>
         public String salesForceCaseUrl { get; set; }
 
         /// <summary>
-        /// TaxPeriod
+        /// The tax period of the notice
         /// </summary>
         public String taxPeriod { get; set; }
 
         /// <summary>
-        /// taxNoticeReasonId
+        /// The notice reason id
         /// </summary>
         public Int32? reasonId { get; set; }
 
         /// <summary>
-        /// taxNoticeReason
+        /// The notice reason
         /// </summary>
         public String reason { get; set; }
 
         /// <summary>
-        /// taxNoticeTypeId
+        /// The tax notice type id
         /// </summary>
         public Int32? typeId { get; set; }
 
         /// <summary>
-        /// taxNoticeTypeId
+        /// The tax notice type description
         /// </summary>
         public String type { get; set; }
 
         /// <summary>
-        /// taxNoticeCustomerFundingOptionId
+        /// The notice customer funding options
         /// </summary>
-        public Int32? customerFundingOptionId { get; set; }
+        public FundingOption? customerFundingOptionId { get; set; }
 
         /// <summary>
-        /// taxNoticeCustomerFundingOptionId
+        /// The priority of the notice
         /// </summary>
-        public String customerFundingOption { get; set; }
+        public NoticePriorityId priorityId { get; set; }
 
         /// <summary>
-        /// taxNoticePriorityId
-        /// </summary>
-        public Int32 priorityId { get; set; }
-
-        /// <summary>
-        /// taxNoticePriorityId
-        /// </summary>
-        public String priority { get; set; }
-
-        /// <summary>
-        /// CustomerComment
+        /// Comments from the customer on this notice
         /// </summary>
         public String customerComment { get; set; }
 
         /// <summary>
-        /// hideFromCustomer
+        /// Indicator to hide from customer
         /// </summary>
         public Boolean hideFromCustomer { get; set; }
 
         /// <summary>
-        /// expectedResolutionDate
+        /// Expected resolution date of the notice
         /// </summary>
         public DateTime? expectedResolutionDate { get; set; }
 
         /// <summary>
-        /// showResolutionDateToCustomer
+        /// Indicator to show customer this resolution date
         /// </summary>
         public Boolean showResolutionDateToCustomer { get; set; }
 
@@ -172,7 +164,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? closedByUserId { get; set; }
 
         /// <summary>
-        /// createdByUser
+        /// The user who created the notice
         /// </summary>
         public String createdByUserName { get; set; }
 
@@ -182,59 +174,59 @@ namespace Avalara.AvaTax.RestClient
         public Int32? ownedByUserId { get; set; }
 
         /// <summary>
-        /// description
+        /// The description of the notice
         /// </summary>
         public String description { get; set; }
 
         /// <summary>
-        /// avaFileFormId
+        /// The ava file form id of the notice
         /// </summary>
         public Int32? avaFileFormId { get; set; }
 
         /// <summary>
-        /// revenueContactId
+        /// The id of the revenue contact
         /// </summary>
         public Int32? revenueContactId { get; set; }
 
         /// <summary>
-        /// complianceContactId
+        /// The id of the compliance contact
         /// </summary>
         public Int32? complianceContactId { get; set; }
 
         /// <summary>
-        /// taxNoticeMailCheckToId
-        /// </summary>
-        public Int32? taxNoticeMailCheckToId { get; set; }
-
-        /// <summary>
-        /// documentReference
+        /// The document reference of the notice
         /// </summary>
         public String documentReference { get; set; }
 
         /// <summary>
-        /// jurisdictionName
+        /// The jurisdiction name of the notice
         /// </summary>
         public String jurisdictionName { get; set; }
 
         /// <summary>
-        /// jurisdictionType
+        /// The jurisdiction type of the notice
         /// </summary>
         public String jurisdictionType { get; set; }
 
         /// <summary>
-        /// taxNoticeComments
+        /// Additional comments on the notice
         /// </summary>
         public List<NoticeCommentModel> comments { get; set; }
 
         /// <summary>
-        /// taxNoticeFinanceDetails
+        /// Finance details of the notice
         /// </summary>
         public List<NoticeFinanceModel> finances { get; set; }
 
         /// <summary>
-        /// salesForceCaseNo
+        /// Notice Responsibility Details
         /// </summary>
-        public String downloadAttachmentsUrl { get; set; }
+        public List<NoticeResponsibilityDetailModel> responsibility { get; set; }
+
+        /// <summary>
+        /// Notice Root Cause Details
+        /// </summary>
+        public List<NoticeRootCauseDetailModel> rootCause { get; set; }
 
         /// <summary>
         /// The date when this record was created.

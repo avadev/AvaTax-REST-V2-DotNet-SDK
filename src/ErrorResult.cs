@@ -1,18 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Commit a worksheet for rebuilding
+    /// Helper function for throwing known error response
     /// </summary>
-    public class RebuildWorksheetModel
+    public class ErrorResult
     {
         /// <summary>
-        /// Set this value to true in order to rebuild the worksheets.
+        /// Information about the error(s)
         /// </summary>
-        public Boolean commit { get; set; }
+        public ErrorInfo error { get; set; }
 
 
         /// <summary>

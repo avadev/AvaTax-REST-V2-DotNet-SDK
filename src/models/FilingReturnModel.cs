@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -20,9 +32,14 @@ namespace Avalara.AvaTax.RestClient
         public Int64? filingCalendarId { get; set; }
 
         /// <summary>
+        /// Tax Authority ID of this return
+        /// </summary>
+        public Int32? taxAuthorityId { get; set; }
+
+        /// <summary>
         /// The current status of the filing return.
         /// </summary>
-        public WorksheetStatusId? status { get; set; }
+        public FilingStatusId? status { get; set; }
 
         /// <summary>
         /// The filing frequency of the return.
@@ -113,6 +130,11 @@ namespace Avalara.AvaTax.RestClient
         /// The Augmentations for this return.
         /// </summary>
         public List<FilingAugmentationModel> augmentations { get; set; }
+
+        /// <summary>
+        /// Accrual type of the return
+        /// </summary>
+        public AccrualType? accrualType { get; set; }
 
 
         /// <summary>

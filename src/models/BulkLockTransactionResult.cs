@@ -2,17 +2,29 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Returns information about transactions that were locked
     /// </summary>
-    public class ErrorResult
+    public class BulkLockTransactionResult
     {
         /// <summary>
-        /// Information about the error(s)
+        /// Number of records that have been modified
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public Int32? numberOfRecords { get; set; }
 
 
         /// <summary>

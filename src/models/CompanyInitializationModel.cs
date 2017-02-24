@@ -2,6 +2,18 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2017 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Ted Spence
+ * @author Zhenya Frolov
+ */
+
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
@@ -26,9 +38,9 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your 
-        /// Social Security Number if you are an individual.
-        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services, 
-        /// but it is optional if you do not subscribe to either of those services.
+        ///Social Security Number if you are an individual.
+        ///This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services, 
+        ///but it is optional if you do not subscribe to either of those services.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
 
