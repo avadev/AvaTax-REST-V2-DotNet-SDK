@@ -964,13 +964,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this batch</param>
         /// <param name="batchId">The ID of the batch object</param>
         /// <param name="id">The primary key of this batch file object</param>
-        public String DownloadBatch(Int32 companyId, Int32 batchId, Int32 id)
+        public FileResult DownloadBatch(Int32 companyId, Int32 batchId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{batchId}/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            return RestCallString("get", path, null);
+            return RestCallFile("get", path, null);
         }
 
 
@@ -2120,7 +2120,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="format">The format of the file (JSON by default)</param>
         /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
         /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public String BuildPointOfSaleDataForLocation(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, Int32? partnerId, Boolean? includeJurisCodes)
+        public FileResult BuildPointOfSaleDataForLocation(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, Int32? partnerId, Boolean? includeJurisCodes)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
             path.ApplyField("companyId", companyId);
@@ -2129,7 +2129,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return RestCallString("get", path, null);
+            return RestCallFile("get", path, null);
         }
 
 
@@ -2560,12 +2560,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company for this attachment.</param>
         /// <param name="id">The ResourceFileId of the attachment to download.</param>
-        public String DownloadNoticeAttachment(Int32 companyId, Int64 id)
+        public FileResult DownloadNoticeAttachment(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCallString("get", path, null);
+            return RestCallFile("get", path, null);
         }
 
 
@@ -4021,10 +4021,10 @@ namespace Avalara.AvaTax.RestClient
         ///This API builds the file on demand, and is limited to files with no more than 7500 scenarios.
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
-        public String BuildPointOfSaleDataFile(PointOfSaleDataRequestModel model)
+        public FileResult BuildPointOfSaleDataFile(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return RestCallString("post", path, model);
+            return RestCallFile("post", path, model);
         }
 
 
@@ -5334,13 +5334,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this batch</param>
         /// <param name="batchId">The ID of the batch object</param>
         /// <param name="id">The primary key of this batch file object</param>
-        public async Task<String> DownloadBatchAsync(Int32 companyId, Int32 batchId, Int32 id)
+        public async Task<FileResult> DownloadBatchAsync(Int32 companyId, Int32 batchId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{batchId}/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            return await RestCallStringAsync("get", path, null);
+            return await RestCallAsync<FileResult>("get", path, null);
         }
 
 
@@ -6490,7 +6490,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="format">The format of the file (JSON by default)</param>
         /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
         /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public async Task<String> BuildPointOfSaleDataForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, Int32? partnerId, Boolean? includeJurisCodes)
+        public async Task<FileResult> BuildPointOfSaleDataForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, Int32? partnerId, Boolean? includeJurisCodes)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
             path.ApplyField("companyId", companyId);
@@ -6499,7 +6499,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return await RestCallStringAsync("get", path, null);
+            return await RestCallAsync<FileResult>("get", path, null);
         }
 
 
@@ -6930,12 +6930,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company for this attachment.</param>
         /// <param name="id">The ResourceFileId of the attachment to download.</param>
-        public async Task<String> DownloadNoticeAttachmentAsync(Int32 companyId, Int64 id)
+        public async Task<FileResult> DownloadNoticeAttachmentAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallStringAsync("get", path, null);
+            return await RestCallAsync<FileResult>("get", path, null);
         }
 
 
@@ -8391,10 +8391,10 @@ namespace Avalara.AvaTax.RestClient
         ///This API builds the file on demand, and is limited to files with no more than 7500 scenarios.;
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
-        public async Task<String> BuildPointOfSaleDataFileAsync(PointOfSaleDataRequestModel model)
+        public async Task<FileResult> BuildPointOfSaleDataFileAsync(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return await RestCallStringAsync("post", path, model);
+            return await RestCallAsync<FileResult>("post", path, model);
         }
 
 

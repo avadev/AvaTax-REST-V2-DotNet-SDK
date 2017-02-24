@@ -152,6 +152,63 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
+        /// Implementation of raw file-returning async API 
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath uri, object payload = null)
+        {
+            using (var client = new HttpClient()) {
+                client.BaseAddress = _envUri;
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _credentials);
+                client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
+
+                // Make the request
+                HttpResponseMessage result = null;
+                string json = null;
+                if (verb == "get") {
+                    result = await client.GetAsync(uri.ToString());
+                } else if (verb == "post") {
+                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                    result = await client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+                } else if (verb == "put") {
+                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                    result = await client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+                } else if (verb == "delete") {
+                    result = await client.DeleteAsync(uri.ToString());
+                }
+
+                // Read the result
+                if (result.IsSuccessStatusCode) {
+                    return new FileResult()
+                    {
+                        ContentType = result.Headers.GetValues("Content-Type").FirstOrDefault(),
+                        Filename = result.Headers.GetValues("Content-Disposition").FirstOrDefault(),
+                        Data = await result.Content.ReadAsByteArrayAsync()
+                    };
+                } else {
+                    var s = await result.Content.ReadAsStringAsync();
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    throw new AvaTaxError(err);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Non-async method for downloading a file
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private FileResult RestCallFile(string verb, AvaTaxPath uri, object payload = null)
+        {
+            return RestCallFileAsync(verb, uri, payload).Result;
+        }
+
+        /// <summary>
         /// Implementation of raw string-returning async API 
         /// </summary>
         /// <param name="verb"></param>
@@ -237,6 +294,91 @@ namespace Avalara.AvaTax.RestClient
         {
             var s = RestCallString(verb, uri, payload);
             return JsonConvert.DeserializeObject<T>(s);
+        }
+
+        /// <summary>
+        /// Direct implementation of client APIs to string values
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="uri"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        private FileResult RestCallFile(string verb, AvaTaxPath uri, object payload = null)
+        {
+            string path = CombinePath(_envUri.ToString(), uri.ToString());
+
+            // Use HttpWebRequest so we can get a decent response
+            var wr = (HttpWebRequest)WebRequest.Create(path);
+            wr.Proxy = null;
+
+            // Construct the basic auth, if required
+            if (!String.IsNullOrEmpty(_credentials)) {
+                wr.Headers[HttpRequestHeader.Authorization] = "Basic " + _credentials;
+            }
+            if (!String.IsNullOrEmpty(_clientHeader)) {
+                wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
+            }
+
+            // Convert the name-value pairs into a byte array
+            wr.Method = verb.ToUpper();
+            if (payload != null) {
+                wr.ContentType = Constants.JSON_MIME_TYPE;
+                wr.ServicePoint.Expect100Continue = false;
+
+                // Encode the payload
+                var json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                var encoding = new UTF8Encoding();
+                byte[] data = encoding.GetBytes(json);
+                wr.ContentLength = data.Length;
+
+                // Call the server
+                using (var s = wr.GetRequestStream()) {
+                    s.Write(data, 0, data.Length);
+                    s.Close();
+                }
+            }
+
+            // Transmit, and get back the response, save it to a temp file
+            try {
+                using (var response = wr.GetResponse()) {
+                    using (var inStream = response.GetResponseStream()) {
+                        int pos = 0;
+                        byte[] data = new byte[response.ContentLength];
+                        while (pos < response.ContentLength) {
+                            int bytesRead = inStream.Read(data, pos, (int)(response.ContentLength) - pos);
+                            if (bytesRead == 0) {
+                                // End of data and we didn't finish reading. Oops.
+                                throw new IOException("Premature end of data");
+                            }
+                            pos += bytesRead;
+                        }
+
+                        // Here's your file result
+                        return new FileResult()
+                        {
+                            ContentType = response.Headers[HttpRequestHeader.ContentType].ToString(),
+                            Filename = response.Headers["Content-Disposition"].ToString(),
+                            Data = data
+                        };
+                    }
+                }
+
+                // Catch a web exception
+            } catch (WebException webex) {
+                HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
+                if (httpWebResponse != null) {
+                    using (Stream stream = httpWebResponse.GetResponseStream()) {
+                        using (StreamReader reader = new StreamReader(stream)) {
+                            var errString = reader.ReadToEnd();
+                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
+                            throw new AvaTaxError(err);
+                        }
+                    }
+                }
+
+                // If we can't parse it as an AvaTax error, just throw
+                throw webex;
+            }
         }
 
         /// <summary>

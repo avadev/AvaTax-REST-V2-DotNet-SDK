@@ -107,6 +107,7 @@
     <Compile Include="ErrorResult.cs" />
     <Compile Include="ErrorTargetCode.cs" />
     <Compile Include="FetchResult.cs" />
+    <Compile Include="FileResult.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\AddressesModel.cs" />
     <Compile Include="models\AddressInfo.cs" />
