@@ -422,6 +422,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        CountryOverridesNotAvailable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        JurisdictionOverrideMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BatchSalesAuditMustBeZippedError,
 
         /// <summary>

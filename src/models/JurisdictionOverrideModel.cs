@@ -17,57 +17,61 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a declaration of JurisdictionOverride within a particular taxing jurisdiction.
+    /// Represents an override of tax jurisdictions for a specific address.
+        ///
+        ///During the time period represented by EffDate through EndDate, all tax decisions for addresses matching
+        ///this override object will be assigned to the list of jurisdictions designated in this object.
     /// </summary>
     public class JurisdictionOverrideModel
     {
         /// <summary>
-        /// The unique ID number of this declaration of jurisdictionoverride.
+        /// The unique ID number of this override.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
         /// The unique ID number assigned to this account.
         /// </summary>
-        public Int32 accountId { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
-        /// The summerization of why this jurisdictionoverride is created.
+        /// A description of why this jurisdiction override was created.
         /// </summary>
         public String description { get; set; }
 
         /// <summary>
-        /// The street address of the JurisdictionOverride intends be created upon
+        /// The street address of the physical location affected by this override.
         /// </summary>
-        public String address { get; set; }
+        public String line1 { get; set; }
 
         /// <summary>
-        /// The city of the passed in address which the jurisdictionOverride intends to be created upon
+        /// The city address of the physical location affected by this override.
         /// </summary>
         public String city { get; set; }
 
         /// <summary>
-        /// The two or three character ISO region code of the region, state, or province in which this company declared nexus.
+        /// The two or three character ISO region code of the region, state, or province affected by this override.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// The two character ISO-3166 country code of the country in which this company declared nexus.
+        /// The two character ISO-3166 country code of the country affected by this override.
+        ///Note that only United States addresses are affected by the jurisdiction override system.
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// The postal code of the passed in address
+        /// The postal code of the physical location affected by this override.
         /// </summary>
         public String postalCode { get; set; }
 
         /// <summary>
-        /// The date when this nexus began. If not known, set to null.
+        /// The date when this override first takes effect. Set this value to null to affect all dates up to the end date.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// If this nexus will end or has ended on a specific date, set this to the date when this nexus ends.
+        /// The date when this override will cease to take effect. Set this value to null to never expire.
         /// </summary>
         public DateTime? endDate { get; set; }
 
@@ -92,9 +96,24 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
-        /// A list of tax authorities contributing to the taxing of this location
+        /// A list of the tax jurisdictions that will be assigned to this overridden address.
         /// </summary>
         public List<JurisdictionModel> jurisdictions { get; set; }
+
+        /// <summary>
+        /// The TaxRegionId of the new location affected by this jurisdiction override.
+        /// </summary>
+        public Int32 taxRegionId { get; set; }
+
+        /// <summary>
+        /// The boundary level of this override
+        /// </summary>
+        public BoundaryLevelForJO? boundaryLevel { get; set; }
+
+        /// <summary>
+        /// True if this is a default boundary
+        /// </summary>
+        public Boolean? isDefault { get; set; }
 
 
         /// <summary>

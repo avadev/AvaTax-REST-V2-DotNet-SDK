@@ -34,7 +34,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of the jurisdiction, indicating whether it is a country, state/region, city, for example.
         /// </summary>
-        public JurisdictionType? type { get; set; }
+        public JurisdictionType type { get; set; }
 
         /// <summary>
         /// The base rate of tax specific to this jurisdiction.
@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The state assigned code for this jurisdiction, if any.
         /// </summary>
-        public String stateCode { get; set; }
+        public String region { get; set; }
 
         /// <summary>
         /// The "Seller's Use" tax rate specific to this jurisdiction.

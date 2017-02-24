@@ -62,6 +62,7 @@
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
+    <Compile Include="enums\BoundaryLevelForJO.cs" />
     <Compile Include="enums\CompanyAccessLevel.cs" />
     <Compile Include="enums\DocumentStatus.cs" />
     <Compile Include="enums\DocumentType.cs" />

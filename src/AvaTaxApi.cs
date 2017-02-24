@@ -84,6 +84,99 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve overrides for this account
+        /// </summary>
+        /// <remarks>
+        /// List all jurisdiction override objects defined for this account.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<JurisdictionOverrideModel> ListJurisdictionOverridesByAccount(Int32 accountId, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
+            path.ApplyField("accountId", accountId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<JurisdictionOverrideModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create one or more overrides
+        /// </summary>
+        /// <remarks>
+        /// Creates one or more jurisdiction override objects for this account.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="model">The jurisdiction override objects to create</param>
+        public List<JurisdictionOverrideModel> CreateJurisdictionOverrides(Int32 accountId, List<JurisdictionOverrideModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
+            path.ApplyField("accountId", accountId);
+            return RestCall<List<JurisdictionOverrideModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single override
+        /// </summary>
+        /// <remarks>
+        /// Get the item object identified by this URL.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="id">The primary key of this override</param>
+        public JurisdictionOverrideModel GetJurisdictionOverride(Int32 accountId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return RestCall<JurisdictionOverrideModel>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single override
+        /// </summary>
+        /// <remarks>
+        /// Marks the item object at this URL as deleted.
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="id">The ID of the override you wish to delete</param>
+        public List<ErrorDetail> DeleteJurisdictionOverride(Int32 accountId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("delete", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve subscriptions for this account
         /// </summary>
         /// <remarks>
@@ -2982,7 +3075,7 @@ namespace Avalara.AvaTax.RestClient
         /// Deleting a company will delete all child companies, and all users attached to this company.
         /// </remarks>
         /// <param name="id">The ID of the company you wish to delete.</param>
-        public List<ErrorDetail> DeleteCompanies(Int32 id)
+        public List<ErrorDetail> DeleteCompany(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
@@ -3758,6 +3851,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve all overrides
+        /// </summary>
+        /// <remarks>
+        /// Get multiple jurisdiction override objects across all companies.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<JurisdictionOverrideModel> QueryJurisdictionOverrides(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/jurisdictionoverrides");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<JurisdictionOverrideModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve all locations
         /// </summary>
         /// <remarks>
@@ -4326,6 +4450,99 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts");
             return await RestCallAsync<AccountModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve overrides for this account;
+        /// </summary>
+        /// <remarks>
+        /// List all jurisdiction override objects defined for this account.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<JurisdictionOverrideModel>> ListJurisdictionOverridesByAccountAsync(Int32 accountId, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
+            path.ApplyField("accountId", accountId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create one or more overrides;
+        /// </summary>
+        /// <remarks>
+        /// Creates one or more jurisdiction override objects for this account.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="model">The jurisdiction override objects to create</param>
+        public async Task<List<JurisdictionOverrideModel>> CreateJurisdictionOverridesAsync(Int32 accountId, List<JurisdictionOverrideModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
+            path.ApplyField("accountId", accountId);
+            return await RestCallAsync<List<JurisdictionOverrideModel>>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single override;
+        /// </summary>
+        /// <remarks>
+        /// Get the item object identified by this URL.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="id">The primary key of this override</param>
+        public async Task<JurisdictionOverrideModel> GetJurisdictionOverrideAsync(Int32 accountId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<JurisdictionOverrideModel>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single override;
+        /// </summary>
+        /// <remarks>
+        /// Marks the item object at this URL as deleted.;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that owns this override</param>
+        /// <param name="id">The ID of the override you wish to delete</param>
+        public async Task<List<ErrorDetail>> DeleteJurisdictionOverrideAsync(Int32 accountId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
         }
 
 
@@ -7228,7 +7445,7 @@ namespace Avalara.AvaTax.RestClient
         /// Deleting a company will delete all child companies, and all users attached to this company.;
         /// </remarks>
         /// <param name="id">The ID of the company you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteCompaniesAsync(Int32 id)
+        public async Task<List<ErrorDetail>> DeleteCompanyAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
@@ -8000,6 +8217,37 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<ItemModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all overrides;
+        /// </summary>
+        /// <remarks>
+        /// Get multiple jurisdiction override objects across all companies.
+        ///
+        ///A Jurisdiction Override is a configuration setting that allows you to select the taxing
+        ///jurisdiction for a specific address. If you encounter an address that is on the boundary
+        ///between two different jurisdictions, you can choose to set up a jurisdiction override
+        ///to switch this address to use different taxing jurisdictions.
+        ///
+        ///Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve.  For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="top">If nonzero, return no more than this number of results.  Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data.  Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<JurisdictionOverrideModel>> QueryJurisdictionOverridesAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/jurisdictionoverrides");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("get", path, null);
         }
 
 
