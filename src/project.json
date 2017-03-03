@@ -1,23 +1,20 @@
 ﻿{
-	"version": "2.17.1.35",
-
-	"supports": {
-	},
-
-	"frameworks": {
-		".NETPortable,Version=v4.5,Profile=Profile7": {
-			"imports": "portable-net45+netcore45",
-			"dependencies": {
-				"NETStandard.Library": "1.6.0",
-				"Newtonsoft.Json": "9.0.1"
-			}
-		},
-		".NETPlatform,Version=v5.0": {
-			"imports": "portable-net45+netcore45",
-			"dependencies": {
-				"NETStandard.Library": "1.6.0",
-				"Newtonsoft.Json": "9.0.1"
-			}
-		},        
-	}
+  "version": "2.17.1.35",
+  "supports": {},
+  "frameworks": {
+    ".NETPortable,Version=v4.5,Profile=Profile7": {
+      "imports": "portable-net45+netcore45",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Newtonsoft.Json": "9.0.1"
+      }
+    },
+    ".NETPlatform,Version=v5.0": {
+      "imports": "portable-net45+netcore45",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Newtonsoft.Json": "9.0.1"
+      }
+    }
+  }
 }
