@@ -185,7 +185,7 @@ namespace Avalara.AvaTax.RestClient
                     return new FileResult()
                     {
                         ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault(),
+                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
                         Data = await result.Content.ReadAsByteArrayAsync()
                     };
                 } else {
@@ -357,7 +357,7 @@ namespace Avalara.AvaTax.RestClient
                         return new FileResult()
                         {
                             ContentType = response.Headers[HttpRequestHeader.ContentType].ToString(),
-                            Filename = response.Headers["Content-Disposition"].ToString(),
+                            Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
                             Data = data
                         };
                     }
@@ -465,6 +465,22 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 #endif
+
+        /// <summary>
+        /// Shortcut to parse a content disposition to determine attachment filename
+        /// </summary>
+        /// <param name="contentDisposition"></param>
+        /// <returns></returns>
+        private string GetDispositionFilename(string contentDisposition)
+        {
+            const string filename = "filename=";
+            int index = contentDisposition.LastIndexOf(filename, StringComparison.OrdinalIgnoreCase);
+            if (index > -1) {
+                return contentDisposition.Substring(index + filename.Length);
+            }
+            return contentDisposition;
+        }
+
         #endregion
     }
 }

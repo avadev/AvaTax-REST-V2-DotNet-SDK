@@ -180,7 +180,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.NotNull(fileResult);
 
                 // Compare what we got back with what we sent.
-                Assert.AreEqual(batchFileModel.name, fileResult.Filename);
+                Assert.AreEqual(batchFetchResult.name + ".Input.CSV", fileResult.Filename);
                 Assert.AreEqual(batchFileModel.content, fileResult.Data);
                 Assert.AreEqual(batchFileModel.contentType, fileResult.ContentType);
             } catch (AvaTaxError e)
