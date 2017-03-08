@@ -342,23 +342,35 @@ namespace Avalara.AvaTax.RestClient
             try {
                 using (var response = wr.GetResponse()) {
                     using (var inStream = response.GetResponseStream()) {
-                        int pos = 0;
-                        byte[] data = new byte[response.ContentLength];
-                        while (pos < response.ContentLength) {
-                            int bytesRead = inStream.Read(data, pos, (int)(response.ContentLength) - pos);
-                            if (bytesRead == 0) {
-                                // End of data and we didn't finish reading. Oops.
-                                throw new IOException("Premature end of data");
+                        const int BUFFER_SIZE = 1024;
+                        var chunks = new List<byte>();
+                        var totalBytes = 0; 
+                        var bytesRead = 0;
+
+                        do
+                        {
+                            var buffer = new byte[BUFFER_SIZE];
+                            bytesRead = inStream.Read(buffer, 0, BUFFER_SIZE);
+                            if (bytesRead == BUFFER_SIZE) {
+                                chunks.AddRange(buffer);
+                            } else {
+                                for (int i = 0; i < bytesRead; i++) {
+                                    chunks.Add(buffer[i]);
+                                }
                             }
-                            pos += bytesRead;
+                            totalBytes += bytesRead;
+                        } while (bytesRead > 0);
+        
+                        if(totalBytes <= 0) {
+                            throw new IOException("Response contained no data");
                         }
 
                         // Here's your file result
                         return new FileResult()
                         {
-                            ContentType = response.Headers[HttpRequestHeader.ContentType].ToString(),
+                            ContentType = response.Headers["Content-Type"].ToString(),
                             Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
-                            Data = data
+                            Data = chunks.ToArray()
                         };
                     }
                 }
