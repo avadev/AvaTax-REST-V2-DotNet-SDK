@@ -184,8 +184,8 @@ namespace Avalara.AvaTax.RestClient
                 if (result.IsSuccessStatusCode) {
                     return new FileResult()
                     {
-                        ContentType = result.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = result.Headers.GetValues("Content-Disposition").FirstOrDefault(),
+                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
+                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
                         Data = await result.Content.ReadAsByteArrayAsync()
                     };
                 } else {
@@ -342,23 +342,35 @@ namespace Avalara.AvaTax.RestClient
             try {
                 using (var response = wr.GetResponse()) {
                     using (var inStream = response.GetResponseStream()) {
-                        int pos = 0;
-                        byte[] data = new byte[response.ContentLength];
-                        while (pos < response.ContentLength) {
-                            int bytesRead = inStream.Read(data, pos, (int)(response.ContentLength) - pos);
-                            if (bytesRead == 0) {
-                                // End of data and we didn't finish reading. Oops.
-                                throw new IOException("Premature end of data");
+                        const int BUFFER_SIZE = 1024;
+                        var chunks = new List<byte>();
+                        var totalBytes = 0; 
+                        var bytesRead = 0;
+
+                        do
+                        {
+                            var buffer = new byte[BUFFER_SIZE];
+                            bytesRead = inStream.Read(buffer, 0, BUFFER_SIZE);
+                            if (bytesRead == BUFFER_SIZE) {
+                                chunks.AddRange(buffer);
+                            } else {
+                                for (int i = 0; i < bytesRead; i++) {
+                                    chunks.Add(buffer[i]);
+                                }
                             }
-                            pos += bytesRead;
+                            totalBytes += bytesRead;
+                        } while (bytesRead > 0);
+        
+                        if(totalBytes <= 0) {
+                            throw new IOException("Response contained no data");
                         }
 
                         // Here's your file result
                         return new FileResult()
                         {
-                            ContentType = response.Headers[HttpRequestHeader.ContentType].ToString(),
-                            Filename = response.Headers["Content-Disposition"].ToString(),
-                            Data = data
+                            ContentType = response.Headers["Content-Type"].ToString(),
+                            Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
+                            Data = chunks.ToArray()
                         };
                     }
                 }
@@ -465,6 +477,22 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 #endif
+
+        /// <summary>
+        /// Shortcut to parse a content disposition to determine attachment filename
+        /// </summary>
+        /// <param name="contentDisposition"></param>
+        /// <returns></returns>
+        private string GetDispositionFilename(string contentDisposition)
+        {
+            const string filename = "filename=";
+            int index = contentDisposition.LastIndexOf(filename, StringComparison.OrdinalIgnoreCase);
+            if (index > -1) {
+                return contentDisposition.Substring(index + filename.Length);
+            }
+            return contentDisposition;
+        }
+
         #endregion
     }
 }

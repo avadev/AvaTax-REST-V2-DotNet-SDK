@@ -1,7 +1,6 @@
 ﻿using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -19,7 +18,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [SetUp]
         public void Setup()
         {
-            try {
+            try
+            {
                 // Create a client and set up authentication
                 Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
                     typeof(TransactionTests).Assembly.GetName().Version.ToString(),
@@ -59,9 +59,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.True(TestCompany.nexus.Count > 0, "Test company should have nexus");
                 Assert.True(TestCompany.locations.Count > 0, "Test company should have locations");
 
-            // Shouldn't fail
-            } catch (Exception ex) {
-                Assert.Fail("Exception in SetUp: " + ex.ToString());
+                // Shouldn't fail
+            } catch (Exception ex)
+            {
+                Assert.Fail("Exception in SetUp: " + ex);
             }
         }
 
@@ -72,7 +73,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [TearDown]
         public void TearDown()
         {
-            try {
+            try
+            {
 
                 // Re-fetch the company
                 var company = Client.GetCompany(TestCompany.id, null);
@@ -85,9 +87,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.NotNull(disableResult, "Should have been able to update this company");
                 Assert.False(disableResult.isActive, "Company should have been deactivated");
 
-            // Shouldn't fail
-            } catch (Exception ex) {
-                Assert.Fail("Exception in TearDown: " + ex.ToString());
+                // Shouldn't fail
+            } catch (Exception ex)
+            {
+                Assert.Fail("Exception in TearDown: " + ex);
             }
         }
         #endregion
@@ -95,7 +98,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// <summary>
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
-        /// <param name="args"></param>
         [Test]
         public void TransactionWorkflow()
         {
@@ -104,7 +106,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
                 .WithLine(100.0m, 1, "P0000000")
-                .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Test", 50m)
                 .WithLine(200m)
                 .WithExemptLine(50m, "NT")
                 .Create();
@@ -130,6 +131,45 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Ensure that the transaction was voided
             Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
+        }
+
+        [Test]
+        public void TaxOverrideExample()
+        {
+            // Create base transaction.
+            var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
+                    "TaxOverrideCustomerCode")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m);
+
+            var transaction = builder.Create();
+
+            // Ensure this transaction was created.
+            Assert.NotNull(transaction, "Transaction should have been created");
+
+            // Add Line-level TaxOverride.
+            var overrideTransaction = builder
+                .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Tax Override Reason", 1)
+                .Create();
+
+            // Ensure this transaction was created.
+            Assert.NotNull(overrideTransaction, "Transaction should have been created");
+
+            // Compare the two transactions.
+            Assert.AreEqual(overrideTransaction.totalTaxCalculated, transaction.totalTaxCalculated, "Total Tax Calculated should be the same.");
+            Assert.True(overrideTransaction.totalTax < transaction.totalTax, "Total Tax should not be the same. Overridden transaction should be smaller.");
+
+            // Compare the transaction lines.
+            var overrideLine = overrideTransaction.lines[1];
+            var line = transaction.lines[1];
+            Assert.AreEqual(overrideLine.isItemTaxable, line.isItemTaxable);
+            Assert.AreEqual(overrideLine.taxCalculated, line.taxCalculated);
+            Assert.AreEqual(overrideLine.lineAmount, line.lineAmount);
+            Assert.AreEqual(1, overrideLine.tax);
+            Assert.True(overrideLine.tax < line.tax);
+            Assert.AreEqual(TaxOverrideTypeId.TaxAmount, overrideLine.taxOverrideType);
         }
     }
 }
