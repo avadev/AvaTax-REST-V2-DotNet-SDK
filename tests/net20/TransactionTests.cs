@@ -172,5 +172,34 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.True(overrideLine.tax < line.tax);
             Assert.AreEqual(TaxOverrideTypeId.TaxAmount, overrideLine.taxOverrideType);
         }
+
+
+        /// <summary>
+        /// Verify that transaction codes can be created with correctly URL encoded values
+        /// </summary>
+        [Test]
+        public void VerifyUrlEncoding()
+        {
+            string aComplexTransactionCode = "test?hi=1&test!";
+
+            // Create base transaction.
+            var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
+                    "TaxOverrideCustomerCode")
+                .WithTransactionCode(aComplexTransactionCode)
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m);
+            var transaction = builder.Create();
+
+            // Ensure this transaction was created
+            Assert.NotNull(transaction, "Transaction should have been created");
+            Assert.AreEqual(aComplexTransactionCode, transaction.code);
+
+            // Fetch the transaction back
+            var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null);
+            Assert.NotNull(fetchBack);
+            Assert.AreEqual(aComplexTransactionCode, fetchBack.code);
+        }
     }
 }

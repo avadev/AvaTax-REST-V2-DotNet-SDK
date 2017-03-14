@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="value"></param>
         public void ApplyField(string name, object value)
         {
-            _path.Replace("{" + name + "}", value.ToString());
+            _path.Replace("{" + name + "}", System.Uri.EscapeDataString(value.ToString()));
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Avalara.AvaTax.RestClient
                 _path.Append("?");
                 foreach (var kvp in _query) {
 #if PORTABLE
-                    _path.AppendFormat("{0}={1}&", System.Net.WebUtility.UrlEncode(kvp.Key), System.Net.WebUtility.UrlEncode(kvp.Value));
+                    _path.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
 #else
-                    _path.AppendFormat("{0}={1}&", System.Web.HttpUtility.UrlEncode(kvp.Key), System.Web.HttpUtility.UrlEncode(kvp.Value));
+                    _path.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
 #endif
                 }
                 _path.Length -= 1;
