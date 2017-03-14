@@ -17,35 +17,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a region, province, or state within a country
+    /// NoticeResponsibility Model
     /// </summary>
-    public class IsoRegionModel
+    public class NoticeResponsibilityModel
     {
         /// <summary>
-        /// The two-character ISO 3166 country code this region belongs to
+        /// The unique ID number of this notice responsibility.
         /// </summary>
-        public String countryCode { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The three character ISO 3166 region code
+        /// The description name of this notice responsibility
         /// </summary>
-        public String code { get; set; }
+        public String description { get; set; }
 
         /// <summary>
-        /// The full name, using localized characters, for this region
+        /// Defines if the responsibility is active
         /// </summary>
-        public String name { get; set; }
+        public Boolean? isActive { get; set; }
 
         /// <summary>
-        /// The word in the local language that classifies what type of a region this represents
+        /// The sort order of this responsibility
         /// </summary>
-        public String classification { get; set; }
-
-        /// <summary>
-        /// For the United States, this flag indicates whether a U.S. State participates in the Streamlined
-        ///Sales Tax program. For countries other than the US, this flag is null.
-        /// </summary>
-        public Boolean? streamlinedSalesTax { get; set; }
+        public Int32? sortOrder { get; set; }
 
 
         /// <summary>

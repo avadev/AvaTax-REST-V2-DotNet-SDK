@@ -232,6 +232,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
+        /// Tax date for this transaction
+        /// </summary>
+        public DateTime? taxDate { get; set; }
+
+        /// <summary>
         /// Optional: A list of line items in this transaction. To fetch this list, add the query string "?$include=Lines" or "?$include=Details" to your URL.
         /// </summary>
         public List<TransactionLineModel> lines { get; set; }
@@ -240,6 +245,11 @@ namespace Avalara.AvaTax.RestClient
         /// Optional: A list of line items in this transaction. To fetch this list, add the query string "?$include=Addresses" to your URL.
         /// </summary>
         public List<TransactionAddressModel> addresses { get; set; }
+
+        /// <summary>
+        /// Optional: A list of location types in this transaction. To fetch this list, add the query string "?$include=Addresses" to your URL.
+        /// </summary>
+        public List<TransactionLocationTypeModel> locationTypes { get; set; }
 
         /// <summary>
         /// If this transaction has been adjusted, this list contains all the previous versions of the document.

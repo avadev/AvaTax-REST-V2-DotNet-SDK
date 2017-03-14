@@ -17,35 +17,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a region, province, or state within a country
+    /// Identifies all nexus that match a particular tax form
     /// </summary>
-    public class IsoRegionModel
+    public class NexusByTaxFormModel
     {
         /// <summary>
-        /// The two-character ISO 3166 country code this region belongs to
+        /// The code of the tax form that was requested
         /// </summary>
-        public String countryCode { get; set; }
+        public String formCode { get; set; }
 
         /// <summary>
-        /// The three character ISO 3166 region code
+        /// The company ID of the company that was used to load the companyNexus array. If this value is null, no company data was loaded.
         /// </summary>
-        public String code { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The full name, using localized characters, for this region
+        /// A list of all Avalara-defined nexus that are relevant to this tax form
         /// </summary>
-        public String name { get; set; }
+        public List<NexusModel> nexusDefinitions { get; set; }
 
         /// <summary>
-        /// The word in the local language that classifies what type of a region this represents
+        /// A list of all currently-defined company nexus that are related to this tax form
         /// </summary>
-        public String classification { get; set; }
-
-        /// <summary>
-        /// For the United States, this flag indicates whether a U.S. State participates in the Streamlined
-        ///Sales Tax program. For countries other than the US, this flag is null.
-        /// </summary>
-        public Boolean? streamlinedSalesTax { get; set; }
+        public List<NexusModel> companyNexus { get; set; }
 
 
         /// <summary>

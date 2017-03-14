@@ -57,6 +57,7 @@
     <Compile Include="enums\AdjustmentPeriodTypeId.cs" />
     <Compile Include="enums\AdjustmentReason.cs" />
     <Compile Include="enums\AdjustmentTypeId.cs" />
+    <Compile Include="enums\ApiCallStatus.cs" />
     <Compile Include="enums\AuthenticationTypeId.cs" />
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
@@ -83,7 +84,9 @@
     <Compile Include="enums\PasswordStatusId.cs" />
     <Compile Include="enums\PaymentAccountTypeId.cs" />
     <Compile Include="enums\PointOfSaleFileType.cs" />
+    <Compile Include="enums\PointOfSalePartnerId.cs" />
     <Compile Include="enums\RateType.cs" />
+    <Compile Include="enums\RefundType.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />
     <Compile Include="enums\ScraperType.cs" />
@@ -115,6 +118,7 @@
     <Compile Include="models\AddressValidationInfo.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
+    <Compile Include="models\AuditTransactionModel.cs" />
     <Compile Include="models\AvaTaxMessage.cs" />
     <Compile Include="models\BatchFileModel.cs" />
     <Compile Include="models\BatchModel.cs" />
@@ -133,7 +137,6 @@
     <Compile Include="models\CycleExpireOptionModel.cs" />
     <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
-    <Compile Include="models\FileContentResult.cs" />
     <Compile Include="models\FilingAdjustmentModel.cs" />
     <Compile Include="models\FilingAnswerModel.cs" />
     <Compile Include="models\FilingAugmentationModel.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="models\LoginVerificationOutputModel.cs" />
     <Compile Include="models\NewAccountModel.cs" />
     <Compile Include="models\NewAccountRequestModel.cs" />
+    <Compile Include="models\NexusByTaxFormModel.cs" />
     <Compile Include="models\NexusModel.cs" />
     <Compile Include="models\NoticeCommentModel.cs" />
     <Compile Include="models\NoticeCustomerFundingOptionModel.cs" />
@@ -178,17 +182,24 @@
     <Compile Include="models\NoticePriorityModel.cs" />
     <Compile Include="models\NoticeReasonModel.cs" />
     <Compile Include="models\NoticeResponsibilityDetailModel.cs" />
+    <Compile Include="models\NoticeResponsibilityModel.cs" />
     <Compile Include="models\NoticeRootCauseDetailModel.cs" />
+    <Compile Include="models\NoticeRootCauseModel.cs" />
     <Compile Include="models\NoticeStatusModel.cs" />
     <Compile Include="models\NoticeTypeModel.cs" />
+    <Compile Include="models\OriginalApiRequestResponseModel.cs" />
     <Compile Include="models\ParameterModel.cs" />
     <Compile Include="models\PasswordChangeModel.cs" />
     <Compile Include="models\PingResultModel.cs" />
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
+    <Compile Include="models\ReconstructedApiRequestResponseModel.cs" />
+    <Compile Include="models\RefundTransactionModel.cs" />
     <Compile Include="models\requiredFilingCalendarDataFieldModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
+    <Compile Include="models\ResourceFileTypeModel.cs" />
+    <Compile Include="models\ResourceFileUploadRequestModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />
     <Compile Include="models\SetPasswordModel.cs" />
     <Compile Include="models\SettingModel.cs" />
@@ -207,7 +218,9 @@
     <Compile Include="models\TaxRuleModel.cs" />
     <Compile Include="models\TransactionAddressModel.cs" />
     <Compile Include="models\TransactionLineDetailModel.cs" />
+    <Compile Include="models\TransactionLineLocationTypeModel.cs" />
     <Compile Include="models\TransactionLineModel.cs" />
+    <Compile Include="models\TransactionLocationTypeModel.cs" />
     <Compile Include="models\TransactionModel.cs" />
     <Compile Include="models\TransactionSummary.cs" />
     <Compile Include="models\UPCModel.cs" />

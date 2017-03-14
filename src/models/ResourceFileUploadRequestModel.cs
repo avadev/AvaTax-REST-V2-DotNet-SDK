@@ -17,35 +17,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a region, province, or state within a country
+    /// A request to upload a file to Resource Files
     /// </summary>
-    public class IsoRegionModel
+    public class ResourceFileUploadRequestModel
     {
         /// <summary>
-        /// The two-character ISO 3166 country code this region belongs to
+        /// This stream contains the bytes of the file being uploaded.
         /// </summary>
-        public String countryCode { get; set; }
+        public Byte[] content { get; set; }
 
         /// <summary>
-        /// The three character ISO 3166 region code
+        /// The username adding the file
         /// </summary>
-        public String code { get; set; }
+        public String username { get; set; }
 
         /// <summary>
-        /// The full name, using localized characters, for this region
+        /// The account ID to which this file will be attached.
+        /// </summary>
+        public Int32? accountId { get; set; }
+
+        /// <summary>
+        /// The company ID to which this file will be attached.
+        /// </summary>
+        public Int32? companyId { get; set; }
+
+        /// <summary>
+        /// The original name of this file.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// The word in the local language that classifies what type of a region this represents
+        /// The resource type ID of this file.
         /// </summary>
-        public String classification { get; set; }
+        public Int32? resourceFileTypeId { get; set; }
 
         /// <summary>
-        /// For the United States, this flag indicates whether a U.S. State participates in the Streamlined
-        ///Sales Tax program. For countries other than the US, this flag is null.
+        /// Length of the file in bytes.
         /// </summary>
-        public Boolean? streamlinedSalesTax { get; set; }
+        public Int64? length { get; set; }
 
 
         /// <summary>

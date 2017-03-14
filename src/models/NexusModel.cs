@@ -114,6 +114,12 @@ namespace Avalara.AvaTax.RestClient
         public String taxId { get; set; }
 
         /// <summary>
+        /// For the United States, this flag indicates whether this particular nexus falls within a U.S. State that participates 
+        ///in the Streamlined Sales Tax program. For countries other than the US, this flag is null.
+        /// </summary>
+        public Boolean? streamlinedSalesTax { get; set; }
+
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }

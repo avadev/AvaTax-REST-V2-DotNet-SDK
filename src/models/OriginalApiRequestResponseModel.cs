@@ -17,34 +17,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents information about a newly created account
+    /// Represents the exact API request and response from the original transaction API call, if available
     /// </summary>
-    public class NewAccountModel
+    public class OriginalApiRequestResponseModel
     {
         /// <summary>
-        /// This is the ID number of the account that was created
+        /// API request
         /// </summary>
-        public Int32? accountId { get; set; }
+        public String request { get; set; }
 
         /// <summary>
-        /// This is the email address to which credentials were mailed
+        /// API response
         /// </summary>
-        public String accountDetailsEmailedTo { get; set; }
-
-        /// <summary>
-        /// The date and time when this account was created
-        /// </summary>
-        public DateTime? createdDate { get; set; }
-
-        /// <summary>
-        /// The date and time when account information was emailed to the user
-        /// </summary>
-        public DateTime? emailedDate { get; set; }
-
-        /// <summary>
-        /// If this account includes any limitations, specify them here
-        /// </summary>
-        public String limitations { get; set; }
+        public String response { get; set; }
 
 
         /// <summary>

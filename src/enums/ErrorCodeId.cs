@@ -432,6 +432,31 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        DuplicateSystemTaxCode,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SSTOverridesNotAvailable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NexusDateMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TechSupportAuditRequired,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NexusParentDateMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BatchSalesAuditMustBeZippedError,
 
         /// <summary>
@@ -522,6 +547,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        MultiDocumentTypesError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentTypesToFetch,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BadDocumentFetch,
 
         /// <summary>
@@ -553,6 +588,61 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         ZTBCreateSubscriptionsFail,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FreeTrialNotAvailable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentStatusForRefund,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RefundTypeAndPercentageMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentTypeForRefund,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RefundTypeAndLineMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NullRefundPercentageAndLines,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidRefundType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RefundPercentageForTaxOnly,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LineNoOutOfRange,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RefundPercentageOutOfRange,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxRateNotAvailableForFreeInThisCountry,
 
     }
 }

@@ -17,24 +17,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Refund a committed transaction
     /// </summary>
-    public class FileContentResult
+    public class RefundTransactionModel
     {
         /// <summary>
-        /// 
+        /// the committed transaction code to be refunded
         /// </summary>
-        public Byte[] fileContents { get; set; }
+        public String refundTransactionCode { get; set; }
 
         /// <summary>
-        /// 
+        /// The date when the refund happens
         /// </summary>
-        public String contentType { get; set; }
+        public DateTime? refundDate { get; set; }
 
         /// <summary>
-        /// 
+        /// Type of this refund
         /// </summary>
-        public String fileDownloadName { get; set; }
+        public RefundType? refundType { get; set; }
+
+        /// <summary>
+        /// Percentage for refund
+        /// </summary>
+        public Decimal? refundPercentage { get; set; }
+
+        /// <summary>
+        /// Process refund for these lines
+        /// </summary>
+        public List<String> refundLines { get; set; }
 
 
         /// <summary>
