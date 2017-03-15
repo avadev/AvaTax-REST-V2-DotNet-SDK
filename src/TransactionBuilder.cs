@@ -297,7 +297,7 @@ namespace Avalara.AvaTax.RestClient
             // Address the DateOverride constraint.
             if (type.Equals(TaxOverrideType.TaxDate) && taxDate == null)
             {
-                throw new Exception("A valid date is required for a Tax Date Tax Override.");
+                throw new Exception("A valid date is required for a TaxDate Tax Override.");
             }
 
             var line = GetMostRecentLine("WithLineTaxOverride");
@@ -404,6 +404,25 @@ namespace Avalara.AvaTax.RestClient
             };
             _model.lines.Add(l);
             _line_number++;
+
+            // Continue building
+            return this;
+        }
+
+        /// <summary>
+        /// Add the Ref1 [and Ref2] field to the current line.
+        /// 
+        /// Used for user-side reporting.
+        /// Does not affect tax calculation.
+        /// </summary>
+        /// <param name="ref1"></param>
+        /// <param name="ref2"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithLineReference(string ref1, string ref2 = null)
+        {
+            var line = GetMostRecentLine("WithLineReference");
+            line.ref1 = ref1;
+            line.ref2 = ref2;
 
             // Continue building
             return this;

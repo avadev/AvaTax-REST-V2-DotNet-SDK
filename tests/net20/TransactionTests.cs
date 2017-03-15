@@ -106,15 +106,16 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
                 .WithLine(100.0m, 1, "P0000000")
-                .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Test", 50m)
                 .WithLine(200m)
                 .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!")
                 .Create();
 
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");
             Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
             Assert.True(transaction.lines.Count == 3, "Transaction should have three lines");
+            Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
 
             // Now commit that transaction
             var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, new CommitTransactionModel { commit = true });
