@@ -475,6 +475,7 @@ namespace Avalara.AvaTax.RestClient
         {
             return _client.CreateTransaction(_model);
         }
+#endif
 
         /// <summary>
         /// Return the current CreateTransactionModel but do not call AvaTax to record the transaction.
@@ -488,7 +489,6 @@ namespace Avalara.AvaTax.RestClient
         {
             return _model;
         }
-#endif
 
         /// <summary>
         /// For using this with an adjustment
