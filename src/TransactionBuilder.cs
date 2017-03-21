@@ -60,6 +60,17 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
+        /// <summary>
+        /// Specify a specific usage type for the entire transaction
+        /// </summary>
+        /// <param name="usageType"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithUsageType(string usageType)
+        {
+            _model.customerUsageType = usageType;
+            return this;
+        }
+
 
         /// <summary>
         /// Set a specific discount amount
