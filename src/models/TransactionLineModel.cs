@@ -206,6 +206,11 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionLineDetailModel> details { get; set; }
 
         /// <summary>
+        /// Optional: A list of location types for this line item. To fetch this list, add the query string "?$include=LineLocationTypes" to your URL.
+        /// </summary>
+        public List<TransactionLineLocationTypeModel> lineLocationTypes { get; set; }
+
+        /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }

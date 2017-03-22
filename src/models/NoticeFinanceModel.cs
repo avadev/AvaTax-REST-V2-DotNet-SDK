@@ -94,7 +94,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// resourceFileId
         /// </summary>
-        public Int32? resourceFileId { get; set; }
+        public Int64? resourceFileId { get; set; }
 
         /// <summary>
         /// The date when this record was created.
@@ -115,6 +115,11 @@ namespace Avalara.AvaTax.RestClient
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// An attachment to the finance detail
+        /// </summary>
+        public ResourceFileUploadRequestModel attachmentUploadRequest { get; set; }
 
 
         /// <summary>

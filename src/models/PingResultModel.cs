@@ -41,6 +41,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String authenticatedUserName { get; set; }
 
+        /// <summary>
+        /// The ID number of the currently authenticated user, if any.
+        /// </summary>
+        public Int32? authenticatedUserId { get; set; }
+
+        /// <summary>
+        /// The ID number of the currently authenticated user's account, if any.
+        /// </summary>
+        public Int32? authenticatedAccountId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

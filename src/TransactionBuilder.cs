@@ -60,6 +60,17 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
+        /// <summary>
+        /// Specify a specific usage type for the entire transaction
+        /// </summary>
+        /// <param name="usageType"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithUsageType(string usageType)
+        {
+            _model.customerUsageType = usageType;
+            return this;
+        }
+
 
         /// <summary>
         /// Set a specific discount amount
@@ -297,7 +308,7 @@ namespace Avalara.AvaTax.RestClient
             // Address the DateOverride constraint.
             if (type.Equals(TaxOverrideType.TaxDate) && taxDate == null)
             {
-                throw new Exception("A valid date is required for a Tax Date Tax Override.");
+                throw new Exception("A valid date is required for a TaxDate Tax Override.");
             }
 
             var line = GetMostRecentLine("WithLineTaxOverride");
@@ -408,6 +419,25 @@ namespace Avalara.AvaTax.RestClient
             // Continue building
             return this;
         }
+
+        /// <summary>
+        /// Add the Ref1 [and Ref2] field to the current line.
+        /// 
+        /// Used for user-side reporting.
+        /// Does not affect tax calculation.
+        /// </summary>
+        /// <param name="ref1"></param>
+        /// <param name="ref2"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithLineReference(string ref1, string ref2 = null)
+        {
+            var line = GetMostRecentLine("WithLineReference");
+            line.ref1 = ref1;
+            line.ref2 = ref2;
+
+            // Continue building
+            return this;
+        }
         #endregion
 
         #region Private Helpers
@@ -456,6 +486,7 @@ namespace Avalara.AvaTax.RestClient
         {
             return _client.CreateTransaction(_model);
         }
+#endif
 
         /// <summary>
         /// Return the current CreateTransactionModel but do not call AvaTax to record the transaction.
@@ -469,7 +500,6 @@ namespace Avalara.AvaTax.RestClient
         {
             return _model;
         }
-#endif
 
         /// <summary>
         /// For using this with an adjustment

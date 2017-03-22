@@ -17,35 +17,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a region, province, or state within a country
+    /// Information about a previously created transaction
     /// </summary>
-    public class IsoRegionModel
+    public class AuditTransactionModel
     {
         /// <summary>
-        /// The two-character ISO 3166 country code this region belongs to
+        /// Unique ID number of the company that created this transaction
         /// </summary>
-        public String countryCode { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The three character ISO 3166 region code
+        /// Server timestamp, in UTC, of the date/time when the original transaction was created
         /// </summary>
-        public String code { get; set; }
+        public DateTime? serverTimestamp { get; set; }
 
         /// <summary>
-        /// The full name, using localized characters, for this region
+        /// Length of time the original API call took
         /// </summary>
-        public String name { get; set; }
+        public DateTime? serverDuration { get; set; }
 
         /// <summary>
-        /// The word in the local language that classifies what type of a region this represents
+        /// api call status
         /// </summary>
-        public String classification { get; set; }
+        public ApiCallStatus? apiCallStatus { get; set; }
 
         /// <summary>
-        /// For the United States, this flag indicates whether a U.S. State participates in the Streamlined
-        ///Sales Tax program. For countries other than the US, this flag is null.
+        /// Original API request/response
         /// </summary>
-        public Boolean? streamlinedSalesTax { get; set; }
+        public OriginalApiRequestResponseModel original { get; set; }
+
+        /// <summary>
+        /// Reconstructed API request/response
+        /// </summary>
+        public ReconstructedApiRequestResponseModel reconstructed { get; set; }
 
 
         /// <summary>

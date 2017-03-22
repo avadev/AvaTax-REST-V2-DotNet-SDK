@@ -17,24 +17,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// NoticeRootCause Model
     /// </summary>
-    public class FileContentResult
+    public class NoticeRootCauseModel
     {
         /// <summary>
-        /// 
+        /// The unique ID number of this notice RootCause.
         /// </summary>
-        public Byte[] fileContents { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// 
+        /// The description name of this notice RootCause
         /// </summary>
-        public String contentType { get; set; }
+        public String description { get; set; }
 
         /// <summary>
-        /// 
+        /// Defines if the RootCause is active
         /// </summary>
-        public String fileDownloadName { get; set; }
+        public Boolean? isActive { get; set; }
+
+        /// <summary>
+        /// The sort order of this RootCause
+        /// </summary>
+        public Int32? sortOrder { get; set; }
 
 
         /// <summary>

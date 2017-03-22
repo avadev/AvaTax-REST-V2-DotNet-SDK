@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A unique code assoicated with the Partner you may be working with. If you are not working with a Partner or your Partner has not provided you an ID, leave null.
         /// </summary>
-        public Int32? partnerId { get; set; }
+        public PointOfSalePartnerId? partnerId { get; set; }
 
 
         /// <summary>

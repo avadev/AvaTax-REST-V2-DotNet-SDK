@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    2.17.2-43
+ * @version    2.17.3-52
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -27,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "2.17.2-43"; } }
+        public static string API_VERSION { get { return "2.17.3-52"; } }
 
 #region Methods
 
@@ -156,6 +156,24 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return RestCall<JurisdictionOverrideModel>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a single jurisdictionoverride
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing jurisdictionoverride object at this URL with an updated object.
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that this jurisdictionoverride belongs to.</param>
+        /// <param name="id">The ID of the jurisdictionoverride you wish to update</param>
+        /// <param name="model">The jurisdictionoverride object you wish to update.</param>
+        public JurisdictionOverrideModel UpdateJurisdictionOverride(Int32 accountId, Int32 id, JurisdictionOverrideModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return RestCall<JurisdictionOverrideModel>("put", path, model);
         }
 
 
@@ -514,14 +532,14 @@ namespace Avalara.AvaTax.RestClient
         /// Call this API to obtain a free AvaTax sandbox account.
         ///
         ///This API is free to use. No authentication credentials are required to call this API.
-        ///The account will grant a full trial version of AvaTax (e.g. AvaTaxPro) for 90 days.
-        ///After 90 days, you may continue to use the free TaxRates API.
+        ///The account will grant a full trial version of AvaTax (e.g. AvaTaxPro) for a limited period of time.
+        ///After this introductory period, you may continue to use the free TaxRates API.
         ///
         ///Limitations on free trial accounts:
         /// 
         ///* Only one free trial per company.
         ///* The free trial account does not expire.
-        ///* Includes a 90-day free trial of AvaTaxPro; after that date, the free TaxRates API will continue to work.
+        ///* Includes a limited time free trial of AvaTaxPro; after that date, the free TaxRates API will continue to work.
         ///* Each free trial account must have its own valid email address.
         /// </remarks>
         /// <param name="model">Required information to provision a free trial account.</param>
@@ -776,6 +794,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Get audit information about a transaction
+        /// </summary>
+        /// <remarks>
+        /// Retrieve audit information about a transaction stored in AvaTax.
+        /// 
+        ///The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        ///information includes the following:
+        ///
+        ///* The `CompanyId` of the company that created the transaction
+        ///* The server timestamp representing the exact server time when the transaction was created
+        ///* The server duration - how long it took to process this transaction
+        ///* Whether exact API call details were logged
+        ///* A reconstructed API call showing what the original CreateTransaction call looked like
+        ///
+        ///This API can be used to examine information about a previously created transaction.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        /// </remarks>
+        /// <param name="companyCode">The code identifying the company that owns this transaction</param>
+        /// <param name="transactionCode">The code identifying the transaction</param>
+        public AuditTransactionModel AuditTransaction(String companyCode, String transactionCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            return RestCall<AuditTransactionModel>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Change a transaction's code
         /// </summary>
         /// <remarks>
@@ -827,7 +876,7 @@ namespace Avalara.AvaTax.RestClient
         ///This API is mainly used for connector developer to simulate what happens when Returns product locks a document.
         ///After this API call succeeds, the document will be locked and can't be voided or adjusted.
         ///
-        ///This API is only available to customers in Sandbox. On production servers, this API is available by invitation only.
+        ///This API is only available to customers in Sandbox with AvaTaxPro subscription. On production servers, this API is available by invitation only.
         ///
         ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         ///sales, purchases, inventory transfer, and returns (also called refunds).
@@ -859,6 +908,68 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             return RestCall<TransactionModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single transaction by code
+        /// </summary>
+        /// <remarks>
+        /// Get the current transaction identified by this URL.
+        ///If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
+        ///the transaction will be attached to the 'history' data field.
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
+        /// </remarks>
+        /// <param name="companyCode">The company code of the company that recorded this transaction</param>
+        /// <param name="transactionCode">The transaction code to retrieve</param>
+        /// <param name="documentType">The transaction type to retrieve</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        public TransactionModel GetTransactionByCodeAndType(String companyCode, String transactionCode, DocumentType documentType, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/types/{documentType}");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.ApplyField("documentType", documentType);
+            path.AddQuery("$include", include);
+            return RestCall<TransactionModel>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Get audit information about a transaction
+        /// </summary>
+        /// <remarks>
+        /// Retrieve audit information about a transaction stored in AvaTax.
+        /// 
+        ///The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        ///information includes the following:
+        ///
+        ///* The `CompanyId` of the company that created the transaction
+        ///* The server timestamp representing the exact server time when the transaction was created
+        ///* The server duration - how long it took to process this transaction
+        ///* Whether exact API call details were logged
+        ///* A reconstructed API call showing what the original CreateTransaction call looked like
+        ///
+        ///This API can be used to examine information about a previously created transaction.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        /// </remarks>
+        /// <param name="companyCode">The code identifying the company that owns this transaction</param>
+        /// <param name="transactionCode">The code identifying the transaction</param>
+        /// <param name="documentType">The document type of the original transaction</param>
+        public AuditTransactionModel AuditTransactionWithType(String companyCode, String transactionCode, DocumentType documentType)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/types/{documentType}/audit");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.ApplyField("documentType", documentType);
+            return RestCall<AuditTransactionModel>("get", path, null);
         }
 
 
@@ -991,29 +1102,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<BatchModel>("get", path, null);
-        }
-
-
-        /// <summary>
-        /// Update a single batch
-        /// </summary>
-        /// <remarks>
-        /// Replace the existing batch object at this URL with an updated object.
-        ///A batch object is a large collection of API calls stored in a compact file.
-        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        ///All data from the existing object will be replaced with data in the object you PUT. 
-        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that this batch belongs to.</param>
-        /// <param name="id">The ID of the batch you wish to update</param>
-        /// <param name="model">The batch you wish to update.</param>
-        public BatchModel UpdateBatch(Int32 companyId, Int32 id, BatchModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<BatchModel>("put", path, model);
         }
 
 
@@ -1399,12 +1487,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="worksheetId">The unique id of the worksheet.</param>
-        public FileContentResult GetFilingAttachment(Int32 companyId, Int64 worksheetId)
+        public FileResult GetFilingAttachment(Int32 companyId, Int64 worksheetId)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("worksheetId", worksheetId);
-            return RestCall<FileContentResult>("get", path, null);
+            return RestCallFile("get", path, null);
         }
 
 
@@ -1436,13 +1524,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
-        public List<FilingModel> GetFilings(Int32 companyId, Int16 year, Byte month)
+        public FetchResult<FilingModel> GetFilings(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<List<FilingModel>>("get", path, null);
+            return RestCall<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -1458,14 +1546,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        public List<FilingModel> GetFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country)
+        public FetchResult<FilingModel> GetFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return RestCall<List<FilingModel>>("get", path, null);
+            return RestCall<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -1482,7 +1570,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The two digit month of the filing period.</param>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        public List<FilingModel> GetFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region)
+        public FetchResult<FilingModel> GetFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}");
             path.ApplyField("companyId", companyId);
@@ -1490,7 +1578,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<List<FilingModel>>("get", path, null);
+            return RestCall<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -1508,7 +1596,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
         /// <param name="formCode">The unique code of the form.</param>
-        public List<FilingModel> GetFilingsByReturnName(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode)
+        public FetchResult<FilingModel> GetFilingsByReturnName(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}");
             path.ApplyField("companyId", companyId);
@@ -1517,7 +1605,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingModel>>("get", path, null);
+            return RestCall<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -1629,7 +1717,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
         /// <param name="model">The rebuild request you wish to execute.</param>
-        public List<FilingModel> RebuildFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildFilingsModel model)
+        public FetchResult<FilingModel> RebuildFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildFilingsModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -1637,7 +1725,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<List<FilingModel>>("post", path, model);
+            return RestCall<FetchResult<FilingModel>>("post", path, model);
         }
 
 
@@ -1685,14 +1773,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The month of the filing period to be rebuilt.</param>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="model">The rebuild request you wish to execute.</param>
-        public List<FilingModel> RebuildFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country, RebuildFilingsModel model)
+        public FetchResult<FilingModel> RebuildFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country, RebuildFilingsModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/rebuild");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return RestCall<List<FilingModel>>("post", path, model);
+            return RestCall<FetchResult<FilingModel>>("post", path, model);
         }
 
 
@@ -1733,13 +1821,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
-        public FileContentResult GetFilingAttachments(Int32 companyId, Int16 year, Byte month)
+        public FileResult GetFilingAttachments(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<FileContentResult>("get", path, null);
+            return RestCallFile("get", path, null);
         }
 
 
@@ -1754,13 +1842,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
-        public FileContentResult GetFilingAttachmentsTraceFile(Int32 companyId, Int16 year, Byte month)
+        public FileResult GetFilingAttachmentsTraceFile(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments/tracefile");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<FileContentResult>("get", path, null);
+            return RestCallFile("get", path, null);
         }
 
 
@@ -1798,13 +1886,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filing period to be rebuilt.</param>
         /// <param name="month">The month of the filing period to be rebuilt.</param>
         /// <param name="model">The rebuild request you wish to execute.</param>
-        public List<FilingModel> RebuildFilings(Int32 companyId, Int16 year, Byte month, RebuildFilingsModel model)
+        public FetchResult<FilingModel> RebuildFilings(Int32 companyId, Int16 year, Byte month, RebuildFilingsModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/rebuild");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<List<FilingModel>>("post", path, model);
+            return RestCall<FetchResult<FilingModel>>("post", path, model);
         }
 
 
@@ -1844,7 +1932,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="id">The ID of the adjustment being deleted.</param>
-        public List<ErrorDetail> DeleteReturnAdjustment(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteReturnAdjustment(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
@@ -1887,7 +1975,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being added.</param>
-        public List<ErrorDetail> DeleteReturnAugmentation(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteReturnAugmentation(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
@@ -1951,7 +2039,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
-        public ItemModel GetItem(Int32 companyId, Int32 id)
+        public ItemModel GetItem(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -1971,7 +2059,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
         /// <param name="model">The item object you wish to update.</param>
-        public ItemModel UpdateItem(Int32 companyId, Int32 id, ItemModel model)
+        public ItemModel UpdateItem(Int32 companyId, Int64 id, ItemModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -1988,7 +2076,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
-        public List<ErrorDetail> DeleteItem(Int32 companyId, Int32 id)
+        public List<ErrorDetail> DeleteItem(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -2120,7 +2208,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="format">The format of the file (JSON by default)</param>
         /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
         /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public FileResult BuildPointOfSaleDataForLocation(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, Int32? partnerId, Boolean? includeJurisCodes)
+        public FileResult BuildPointOfSaleDataForLocation(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
             path.ApplyField("companyId", companyId);
@@ -2269,6 +2357,33 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("delete", path, null);
+        }
+
+
+        /// <summary>
+        /// List company nexus related to a tax form
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of nexus related to a tax form.
+        ///
+        ///The concept of `Nexus` indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///This API is intended to provide useful information when examining a tax form. If you are about to begin filing
+        ///a tax form, you may want to know whether you have declared nexus in all the jurisdictions related to that tax 
+        ///form in order to better understand how the form will be filled out.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus object</param>
+        /// <param name="formCode">The form code that we are looking up the nexus for</param>
+        public NexusByTaxFormModel GetNexusByFormCode(Int32 companyId, String formCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("formCode", formCode);
+            return RestCall<NexusByTaxFormModel>("get", path, null);
         }
 
 
@@ -2566,6 +2681,23 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCallFile("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single attachment
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///Get the file attachment identified by this URL.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company for this attachment.</param>
+        /// <param name="model">The ResourceFileId of the attachment to download.</param>
+        public FileResult UploadAttachment(Int32 companyId, ResourceFileUploadRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
+            path.ApplyField("companyId", companyId);
+            return RestCallFile("post", path, model);
         }
 
 
@@ -3421,6 +3553,31 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List nexus related to a tax form
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of nexus related to a tax form.
+        ///
+        ///The concept of `Nexus` indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///This API is intended to provide useful information when examining a tax form. If you are about to begin filing
+        ///a tax form, you may want to know whether you have declared nexus in all the jurisdictions related to that tax 
+        ///form in order to better understand how the form will be filled out.
+        /// </remarks>
+        /// <param name="formCode">The form code that we are looking up the nexus for</param>
+        public NexusByTaxFormModel ListNexusByFormCode(String formCode)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
+            path.ApplyField("formCode", formCode);
+            return RestCall<NexusByTaxFormModel>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported tax notice customer funding options.
         /// </summary>
         /// <remarks>
@@ -3497,10 +3654,10 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice responsibility ids
         ///This API is intended to be useful to identify all the different tax notice responsibilities.
         /// </remarks>
-        public FetchResult<NoticeResponsibilityDetailModel> ListNoticeResponsibilities()
+        public FetchResult<NoticeResponsibilityModel> ListNoticeResponsibilities()
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticeresponsibilities");
-            return RestCall<FetchResult<NoticeResponsibilityDetailModel>>("get", path, null);
+            return RestCall<FetchResult<NoticeResponsibilityModel>>("get", path, null);
         }
 
 
@@ -3511,10 +3668,10 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice root causes
         ///This API is intended to be useful to identify all the different tax notice root causes.
         /// </remarks>
-        public FetchResult<NoticeRootCauseDetailModel> ListNoticeRootCauses()
+        public FetchResult<NoticeRootCauseModel> ListNoticeRootCauses()
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticerootcauses");
-            return RestCall<FetchResult<NoticeRootCauseDetailModel>>("get", path, null);
+            return RestCall<FetchResult<NoticeRootCauseModel>>("get", path, null);
         }
 
 
@@ -3587,6 +3744,20 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/regions");
             return RestCall<FetchResult<IsoRegionModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported resource file types
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported resource file types
+        ///This API is intended to be useful to identify all the different resource file types.
+        /// </remarks>
+        public FetchResult<ResourceFileTypeModel> ListResourceFileTypes()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/resourcefiletypes");
+            return RestCall<FetchResult<ResourceFileTypeModel>>("get", path, null);
         }
 
 
@@ -4124,6 +4295,7 @@ namespace Avalara.AvaTax.RestClient
         ///
         ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///However, this API is currently limited for US only
         ///
         ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
         ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
@@ -4170,6 +4342,7 @@ namespace Avalara.AvaTax.RestClient
         ///
         ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///However, this API is currently limited for US only
         ///
         ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
         ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
@@ -4260,9 +4433,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Records a new transaction in AvaTax.
-        ///The 'Create Transaction' endpoint uses the configuration values specified by your company to identify the correct tax rules
+        ///
+        ///The `CreateTransaction` endpoint uses the configuration values specified by your company to identify the correct tax rules
         ///and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
         ///company's configuration and the data provided in this API call.
+        ///
         ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         ///sales, purchases, inventory transfer, and returns (also called refunds).
         /// </remarks>
@@ -4526,6 +4701,24 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return await RestCallAsync<JurisdictionOverrideModel>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a single jurisdictionoverride;
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing jurisdictionoverride object at this URL with an updated object.;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account that this jurisdictionoverride belongs to.</param>
+        /// <param name="id">The ID of the jurisdictionoverride you wish to update</param>
+        /// <param name="model">The jurisdictionoverride object you wish to update.</param>
+        public async Task<JurisdictionOverrideModel> UpdateJurisdictionOverrideAsync(Int32 accountId, Int32 id, JurisdictionOverrideModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<JurisdictionOverrideModel>("put", path, model);
         }
 
 
@@ -4884,14 +5077,14 @@ namespace Avalara.AvaTax.RestClient
         /// Call this API to obtain a free AvaTax sandbox account.
         ///
         ///This API is free to use. No authentication credentials are required to call this API.
-        ///The account will grant a full trial version of AvaTax (e.g. AvaTaxPro) for 90 days.
-        ///After 90 days, you may continue to use the free TaxRates API.
+        ///The account will grant a full trial version of AvaTax (e.g. AvaTaxPro) for a limited period of time.
+        ///After this introductory period, you may continue to use the free TaxRates API.
         ///
         ///Limitations on free trial accounts:
         /// 
         ///* Only one free trial per company.
         ///* The free trial account does not expire.
-        ///* Includes a 90-day free trial of AvaTaxPro; after that date, the free TaxRates API will continue to work.
+        ///* Includes a limited time free trial of AvaTaxPro; after that date, the free TaxRates API will continue to work.
         ///* Each free trial account must have its own valid email address.;
         /// </remarks>
         /// <param name="model">Required information to provision a free trial account.</param>
@@ -5146,6 +5339,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Get audit information about a transaction;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve audit information about a transaction stored in AvaTax.
+        /// 
+        ///The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        ///information includes the following:
+        ///
+        ///* The `CompanyId` of the company that created the transaction
+        ///* The server timestamp representing the exact server time when the transaction was created
+        ///* The server duration - how long it took to process this transaction
+        ///* Whether exact API call details were logged
+        ///* A reconstructed API call showing what the original CreateTransaction call looked like
+        ///
+        ///This API can be used to examine information about a previously created transaction.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
+        /// </remarks>
+        /// <param name="companyCode">The code identifying the company that owns this transaction</param>
+        /// <param name="transactionCode">The code identifying the transaction</param>
+        public async Task<AuditTransactionModel> AuditTransactionAsync(String companyCode, String transactionCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            return await RestCallAsync<AuditTransactionModel>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Change a transaction's code;
         /// </summary>
         /// <remarks>
@@ -5197,7 +5421,7 @@ namespace Avalara.AvaTax.RestClient
         ///This API is mainly used for connector developer to simulate what happens when Returns product locks a document.
         ///After this API call succeeds, the document will be locked and can't be voided or adjusted.
         ///
-        ///This API is only available to customers in Sandbox. On production servers, this API is available by invitation only.
+        ///This API is only available to customers in Sandbox with AvaTaxPro subscription. On production servers, this API is available by invitation only.
         ///
         ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         ///sales, purchases, inventory transfer, and returns (also called refunds).;
@@ -5229,6 +5453,68 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             return await RestCallAsync<TransactionModel>("post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single transaction by code;
+        /// </summary>
+        /// <remarks>
+        /// Get the current transaction identified by this URL.
+        ///If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
+        ///the transaction will be attached to the 'history' data field.
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses;
+        /// </remarks>
+        /// <param name="companyCode">The company code of the company that recorded this transaction</param>
+        /// <param name="transactionCode">The transaction code to retrieve</param>
+        /// <param name="documentType">The transaction type to retrieve</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        public async Task<TransactionModel> GetTransactionByCodeAndTypeAsync(String companyCode, String transactionCode, DocumentType documentType, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/types/{documentType}");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.ApplyField("documentType", documentType);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<TransactionModel>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Get audit information about a transaction;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve audit information about a transaction stored in AvaTax.
+        /// 
+        ///The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        ///information includes the following:
+        ///
+        ///* The `CompanyId` of the company that created the transaction
+        ///* The server timestamp representing the exact server time when the transaction was created
+        ///* The server duration - how long it took to process this transaction
+        ///* Whether exact API call details were logged
+        ///* A reconstructed API call showing what the original CreateTransaction call looked like
+        ///
+        ///This API can be used to examine information about a previously created transaction.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).;
+        /// </remarks>
+        /// <param name="companyCode">The code identifying the company that owns this transaction</param>
+        /// <param name="transactionCode">The code identifying the transaction</param>
+        /// <param name="documentType">The document type of the original transaction</param>
+        public async Task<AuditTransactionModel> AuditTransactionWithTypeAsync(String companyCode, String transactionCode, DocumentType documentType)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/types/{documentType}/audit");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.ApplyField("documentType", documentType);
+            return await RestCallAsync<AuditTransactionModel>("get", path, null);
         }
 
 
@@ -5361,29 +5647,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<BatchModel>("get", path, null);
-        }
-
-
-        /// <summary>
-        /// Update a single batch;
-        /// </summary>
-        /// <remarks>
-        /// Replace the existing batch object at this URL with an updated object.
-        ///A batch object is a large collection of API calls stored in a compact file.
-        ///When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
-        ///You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        ///All data from the existing object will be replaced with data in the object you PUT. 
-        ///To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that this batch belongs to.</param>
-        /// <param name="id">The ID of the batch you wish to update</param>
-        /// <param name="model">The batch you wish to update.</param>
-        public async Task<BatchModel> UpdateBatchAsync(Int32 companyId, Int32 id, BatchModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<BatchModel>("put", path, model);
         }
 
 
@@ -5769,12 +6032,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="worksheetId">The unique id of the worksheet.</param>
-        public async Task<FileContentResult> GetFilingAttachmentAsync(Int32 companyId, Int64 worksheetId)
+        public async Task<FileResult> GetFilingAttachmentAsync(Int32 companyId, Int64 worksheetId)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("worksheetId", worksheetId);
-            return await RestCallAsync<FileContentResult>("get", path, null);
+            return await RestCallAsync<FileResult>("get", path, null);
         }
 
 
@@ -5806,13 +6069,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
-        public async Task<List<FilingModel>> GetFilingsAsync(Int32 companyId, Int16 year, Byte month)
+        public async Task<FetchResult<FilingModel>> GetFilingsAsync(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<List<FilingModel>>("get", path, null);
+            return await RestCallAsync<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -5828,14 +6091,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        public async Task<List<FilingModel>> GetFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country)
+        public async Task<FetchResult<FilingModel>> GetFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return await RestCallAsync<List<FilingModel>>("get", path, null);
+            return await RestCallAsync<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -5852,7 +6115,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The two digit month of the filing period.</param>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        public async Task<List<FilingModel>> GetFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region)
+        public async Task<FetchResult<FilingModel>> GetFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}");
             path.ApplyField("companyId", companyId);
@@ -5860,7 +6123,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<List<FilingModel>>("get", path, null);
+            return await RestCallAsync<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -5878,7 +6141,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
         /// <param name="formCode">The unique code of the form.</param>
-        public async Task<List<FilingModel>> GetFilingsByReturnNameAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode)
+        public async Task<FetchResult<FilingModel>> GetFilingsByReturnNameAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}");
             path.ApplyField("companyId", companyId);
@@ -5887,7 +6150,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingModel>>("get", path, null);
+            return await RestCallAsync<FetchResult<FilingModel>>("get", path, null);
         }
 
 
@@ -5999,7 +6262,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
         /// <param name="model">The rebuild request you wish to execute.</param>
-        public async Task<List<FilingModel>> RebuildFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildFilingsModel model)
+        public async Task<FetchResult<FilingModel>> RebuildFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildFilingsModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/rebuild");
             path.ApplyField("companyId", companyId);
@@ -6007,7 +6270,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<List<FilingModel>>("post", path, model);
+            return await RestCallAsync<FetchResult<FilingModel>>("post", path, model);
         }
 
 
@@ -6055,14 +6318,14 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="month">The month of the filing period to be rebuilt.</param>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="model">The rebuild request you wish to execute.</param>
-        public async Task<List<FilingModel>> RebuildFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country, RebuildFilingsModel model)
+        public async Task<FetchResult<FilingModel>> RebuildFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country, RebuildFilingsModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/rebuild");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return await RestCallAsync<List<FilingModel>>("post", path, model);
+            return await RestCallAsync<FetchResult<FilingModel>>("post", path, model);
         }
 
 
@@ -6103,13 +6366,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
-        public async Task<FileContentResult> GetFilingAttachmentsAsync(Int32 companyId, Int16 year, Byte month)
+        public async Task<FileResult> GetFilingAttachmentsAsync(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FileContentResult>("get", path, null);
+            return await RestCallAsync<FileResult>("get", path, null);
         }
 
 
@@ -6124,13 +6387,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
         /// <param name="month">The two digit month of the filing period.</param>
-        public async Task<FileContentResult> GetFilingAttachmentsTraceFileAsync(Int32 companyId, Int16 year, Byte month)
+        public async Task<FileResult> GetFilingAttachmentsTraceFileAsync(Int32 companyId, Int16 year, Byte month)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/attachments/tracefile");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FileContentResult>("get", path, null);
+            return await RestCallAsync<FileResult>("get", path, null);
         }
 
 
@@ -6168,13 +6431,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="year">The year of the filing period to be rebuilt.</param>
         /// <param name="month">The month of the filing period to be rebuilt.</param>
         /// <param name="model">The rebuild request you wish to execute.</param>
-        public async Task<List<FilingModel>> RebuildFilingsAsync(Int32 companyId, Int16 year, Byte month, RebuildFilingsModel model)
+        public async Task<FetchResult<FilingModel>> RebuildFilingsAsync(Int32 companyId, Int16 year, Byte month, RebuildFilingsModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/rebuild");
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<List<FilingModel>>("post", path, model);
+            return await RestCallAsync<FetchResult<FilingModel>>("post", path, model);
         }
 
 
@@ -6214,7 +6477,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
         /// <param name="id">The ID of the adjustment being deleted.</param>
-        public async Task<List<ErrorDetail>> DeleteReturnAdjustmentAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteReturnAdjustmentAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
@@ -6257,7 +6520,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being added.</param>
-        public async Task<List<ErrorDetail>> DeleteReturnAugmentationAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteReturnAugmentationAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
@@ -6321,7 +6584,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
-        public async Task<ItemModel> GetItemAsync(Int32 companyId, Int32 id)
+        public async Task<ItemModel> GetItemAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -6341,7 +6604,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
         /// <param name="model">The item object you wish to update.</param>
-        public async Task<ItemModel> UpdateItemAsync(Int32 companyId, Int32 id, ItemModel model)
+        public async Task<ItemModel> UpdateItemAsync(Int32 companyId, Int64 id, ItemModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -6358,7 +6621,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteItemAsync(Int32 companyId, Int32 id)
+        public async Task<List<ErrorDetail>> DeleteItemAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
@@ -6490,7 +6753,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="format">The format of the file (JSON by default)</param>
         /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
         /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public async Task<FileResult> BuildPointOfSaleDataForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, Int32? partnerId, Boolean? includeJurisCodes)
+        public async Task<FileResult> BuildPointOfSaleDataForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
             path.ApplyField("companyId", companyId);
@@ -6639,6 +6902,33 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("delete", path, null);
+        }
+
+
+        /// <summary>
+        /// List company nexus related to a tax form;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of nexus related to a tax form.
+        ///
+        ///The concept of `Nexus` indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///This API is intended to provide useful information when examining a tax form. If you are about to begin filing
+        ///a tax form, you may want to know whether you have declared nexus in all the jurisdictions related to that tax 
+        ///form in order to better understand how the form will be filled out.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus object</param>
+        /// <param name="formCode">The form code that we are looking up the nexus for</param>
+        public async Task<NexusByTaxFormModel> GetNexusByFormCodeAsync(Int32 companyId, String formCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("formCode", formCode);
+            return await RestCallAsync<NexusByTaxFormModel>("get", path, null);
         }
 
 
@@ -6936,6 +7226,23 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<FileResult>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single attachment;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///Get the file attachment identified by this URL.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company for this attachment.</param>
+        /// <param name="model">The ResourceFileId of the attachment to download.</param>
+        public async Task<FileResult> UploadAttachmentAsync(Int32 companyId, ResourceFileUploadRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FileResult>("post", path, model);
         }
 
 
@@ -7791,6 +8098,31 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List nexus related to a tax form;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of nexus related to a tax form.
+        ///
+        ///The concept of `Nexus` indicates a place where your company has sufficient physical presence and is obligated
+        ///to collect and remit transaction-based taxes.
+        ///
+        ///When defining companies in AvaTax, you must declare nexus for your company in order to correctly calculate tax
+        ///in all jurisdictions affected by your transactions.
+        ///
+        ///This API is intended to provide useful information when examining a tax form. If you are about to begin filing
+        ///a tax form, you may want to know whether you have declared nexus in all the jurisdictions related to that tax 
+        ///form in order to better understand how the form will be filled out.;
+        /// </remarks>
+        /// <param name="formCode">The form code that we are looking up the nexus for</param>
+        public async Task<NexusByTaxFormModel> ListNexusByFormCodeAsync(String formCode)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
+            path.ApplyField("formCode", formCode);
+            return await RestCallAsync<NexusByTaxFormModel>("get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported tax notice customer funding options.;
         /// </summary>
         /// <remarks>
@@ -7867,10 +8199,10 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice responsibility ids
         ///This API is intended to be useful to identify all the different tax notice responsibilities.;
         /// </remarks>
-        public async Task<FetchResult<NoticeResponsibilityDetailModel>> ListNoticeResponsibilitiesAsync()
+        public async Task<FetchResult<NoticeResponsibilityModel>> ListNoticeResponsibilitiesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticeresponsibilities");
-            return await RestCallAsync<FetchResult<NoticeResponsibilityDetailModel>>("get", path, null);
+            return await RestCallAsync<FetchResult<NoticeResponsibilityModel>>("get", path, null);
         }
 
 
@@ -7881,10 +8213,10 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice root causes
         ///This API is intended to be useful to identify all the different tax notice root causes.;
         /// </remarks>
-        public async Task<FetchResult<NoticeRootCauseDetailModel>> ListNoticeRootCausesAsync()
+        public async Task<FetchResult<NoticeRootCauseModel>> ListNoticeRootCausesAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticerootcauses");
-            return await RestCallAsync<FetchResult<NoticeRootCauseDetailModel>>("get", path, null);
+            return await RestCallAsync<FetchResult<NoticeRootCauseModel>>("get", path, null);
         }
 
 
@@ -7957,6 +8289,20 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/regions");
             return await RestCallAsync<FetchResult<IsoRegionModel>>("get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported resource file types;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported resource file types
+        ///This API is intended to be useful to identify all the different resource file types.;
+        /// </remarks>
+        public async Task<FetchResult<ResourceFileTypeModel>> ListResourceFileTypesAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/resourcefiletypes");
+            return await RestCallAsync<FetchResult<ResourceFileTypeModel>>("get", path, null);
         }
 
 
@@ -8494,6 +8840,7 @@ namespace Avalara.AvaTax.RestClient
         ///
         ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///However, this API is currently limited for US only
         ///
         ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
         ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
@@ -8540,6 +8887,7 @@ namespace Avalara.AvaTax.RestClient
         ///
         ///The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         ///Any customer can request a free AvaTax account and make use of the TaxRates API.
+        ///However, this API is currently limited for US only
         ///
         ///Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
         ///rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
@@ -8630,9 +8978,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Records a new transaction in AvaTax.
-        ///The 'Create Transaction' endpoint uses the configuration values specified by your company to identify the correct tax rules
+        ///
+        ///The `CreateTransaction` endpoint uses the configuration values specified by your company to identify the correct tax rules
         ///and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
         ///company's configuration and the data provided in this API call.
+        ///
         ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         ///sales, purchases, inventory transfer, and returns (also called refunds).;
         /// </remarks>
