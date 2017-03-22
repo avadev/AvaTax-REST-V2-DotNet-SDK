@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    2.17.3-48
+ * @version    2.17.3-52
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -27,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "2.17.3-48"; } }
+        public static string API_VERSION { get { return "2.17.3-52"; } }
 
 #region Methods
 
@@ -887,31 +887,6 @@ namespace Avalara.AvaTax.RestClient
         public TransactionModel LockTransaction(String companyCode, String transactionCode, LockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/lock");
-            path.ApplyField("companyCode", companyCode);
-            path.ApplyField("transactionCode", transactionCode);
-            return RestCall<TransactionModel>("post", path, model);
-        }
-
-
-        /// <summary>
-        /// Create a refund for a transaction
-        /// </summary>
-        /// <remarks>
-        /// Create a refund for a transaction.
-        ///
-        ///The `RefundTransaction` API allows you to quickly and easily create a `ReturnInvoice` representing a refund
-        ///for a previously created `SalesInvoice` transaction. You can choose to create a full or partial refund, and
-        ///specify individual line items from the original sale for refund.
-        ///
-        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        ///sales, purchases, inventory transfer, and returns (also called refunds).
-        /// </remarks>
-        /// <param name="companyCode">The code of the company that made the original sale</param>
-        /// <param name="transactionCode">The transaction code of the original sale</param>
-        /// <param name="model">Information about the refund to create</param>
-        public TransactionModel RefundTransaction(String companyCode, String transactionCode, RefundTransactionModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             return RestCall<TransactionModel>("post", path, model);
@@ -5457,31 +5432,6 @@ namespace Avalara.AvaTax.RestClient
         public async Task<TransactionModel> LockTransactionAsync(String companyCode, String transactionCode, LockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/lock");
-            path.ApplyField("companyCode", companyCode);
-            path.ApplyField("transactionCode", transactionCode);
-            return await RestCallAsync<TransactionModel>("post", path, model);
-        }
-
-
-        /// <summary>
-        /// Create a refund for a transaction;
-        /// </summary>
-        /// <remarks>
-        /// Create a refund for a transaction.
-        ///
-        ///The `RefundTransaction` API allows you to quickly and easily create a `ReturnInvoice` representing a refund
-        ///for a previously created `SalesInvoice` transaction. You can choose to create a full or partial refund, and
-        ///specify individual line items from the original sale for refund.
-        ///
-        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        ///sales, purchases, inventory transfer, and returns (also called refunds).;
-        /// </remarks>
-        /// <param name="companyCode">The code of the company that made the original sale</param>
-        /// <param name="transactionCode">The transaction code of the original sale</param>
-        /// <param name="model">Information about the refund to create</param>
-        public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, RefundTransactionModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             return await RestCallAsync<TransactionModel>("post", path, model);
