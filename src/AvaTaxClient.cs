@@ -173,7 +173,7 @@ namespace Avalara.AvaTax.RestClient
         {
             using (var client = new HttpClient()) {
                 client.BaseAddress = _envUri;
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(_credentials);
+                client.DefaultRequestHeaders.Add("Authorization", _credentials);
                 client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
 
                 // Make the request
@@ -230,7 +230,7 @@ namespace Avalara.AvaTax.RestClient
         {
             using (var client = new HttpClient()) {
                 client.BaseAddress = _envUri;
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(_credentials);
+                client.DefaultRequestHeaders.Add("Authorization", _credentials);
                 client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
 
                 // Make the request
