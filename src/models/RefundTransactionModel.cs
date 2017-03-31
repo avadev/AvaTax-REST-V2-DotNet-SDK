@@ -27,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
         public String refundTransactionCode { get; set; }
 
         /// <summary>
-        /// The date when the refund happens
+        /// The date of the refund. If null, today's date will be used
         /// </summary>
         public DateTime? refundDate { get; set; }
 

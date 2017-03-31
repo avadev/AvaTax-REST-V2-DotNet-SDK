@@ -84,6 +84,7 @@
     <Compile Include="enums\PaymentAccountTypeId.cs" />
     <Compile Include="enums\PointOfSaleFileType.cs" />
     <Compile Include="enums\PointOfSalePartnerId.cs" />
+    <Compile Include="enums\RateType.cs" />
     <Compile Include="enums\RefundType.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />

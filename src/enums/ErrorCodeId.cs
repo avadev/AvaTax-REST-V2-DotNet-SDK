@@ -342,6 +342,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidRateTypeCode,
+
+        /// <summary>
+        /// 
+        /// </summary>
         RateTypeNotSupported,
 
         /// <summary>
@@ -663,11 +668,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         TaxRateNotAvailableForFreeInThisCountry,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        FilingCalendarChangeNotAllowed,
 
     }
 }

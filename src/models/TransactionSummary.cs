@@ -72,9 +72,14 @@ namespace Avalara.AvaTax.RestClient
         public String taxGroup { get; set; }
 
         /// <summary>
-        /// Indicates the tax rate type.
+        /// (DEPRECATED) Indicates the tax rate type. Please use rateTypeCode instead.
         /// </summary>
-        public String rateType { get; set; }
+        public RateType? rateType { get; set; }
+
+        /// <summary>
+        /// Indicates the code of the rate type. Use `/api/v2/definitions/ratetypes` for a full list of rate type codes.
+        /// </summary>
+        public String rateTypeCode { get; set; }
 
         /// <summary>
         /// Tax Base - The adjusted taxable amount.
