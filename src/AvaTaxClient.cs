@@ -86,7 +86,7 @@ namespace Avalara.AvaTax.RestClient
             var combined = String.Format("{0}:{1}", username, password);
             var bytes = Encoding.UTF8.GetBytes(combined);
             var base64 = System.Convert.ToBase64String(bytes);
-            return WithSecurity(base64);
+            return WithSecurity("Basic " + base64);
         }
 
         /// <summary>
@@ -99,7 +99,18 @@ namespace Avalara.AvaTax.RestClient
             var combined = String.Format("{0}:{1}", accountId, licenseKey);
             var bytes = Encoding.UTF8.GetBytes(combined);
             var base64 = System.Convert.ToBase64String(bytes);
-            return WithSecurity(base64);
+            return WithSecurity("Basic " + base64);
+        }
+
+        /// <summary>
+        /// Set security using a bearer token
+        /// </summary>
+        /// <param name="bearerToken"></param>
+        /// <returns></returns>
+        public AvaTaxClient WithBearerToken(string bearerToken)
+        {
+            WithSecurity("Bearer " + bearerToken);
+            return this;
         }
         #endregion
 
@@ -162,7 +173,7 @@ namespace Avalara.AvaTax.RestClient
         {
             using (var client = new HttpClient()) {
                 client.BaseAddress = _envUri;
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _credentials);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(_credentials);
                 client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
 
                 // Make the request
@@ -219,7 +230,7 @@ namespace Avalara.AvaTax.RestClient
         {
             using (var client = new HttpClient()) {
                 client.BaseAddress = _envUri;
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _credentials);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(_credentials);
                 client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
 
                 // Make the request
@@ -313,7 +324,7 @@ namespace Avalara.AvaTax.RestClient
 
             // Construct the basic auth, if required
             if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = "Basic " + _credentials;
+                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
             }
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
@@ -410,7 +421,7 @@ namespace Avalara.AvaTax.RestClient
 
             // Construct the basic auth, if required
             if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = "Basic " + _credentials;
+                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
             }
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
