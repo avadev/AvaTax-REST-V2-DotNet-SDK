@@ -22,12 +22,12 @@ namespace Avalara.AvaTax.RestClient
     public class ErrorDetail
     {
         /// <summary>
-        /// Name of the error.
+        /// Name of the error or message.
         /// </summary>
         public ErrorCodeId? code { get; set; }
 
         /// <summary>
-        /// Error message identifier
+        /// Unique ID number referring to this error or message.
         /// </summary>
         public Int32? number { get; set; }
 
@@ -42,7 +42,7 @@ namespace Avalara.AvaTax.RestClient
         public String description { get; set; }
 
         /// <summary>
-        /// Indicates the SoapFault code
+        /// Indicates the SOAP Fault code, if this was related to an error that corresponded to AvaTax SOAP v1 behavior.
         /// </summary>
         public String faultCode { get; set; }
 

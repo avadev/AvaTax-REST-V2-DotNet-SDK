@@ -15,24 +15,29 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// BoundaryLevelForJO
+    /// RefundType
     /// </summary>
-    public enum BoundaryLevelForJO
+    public enum RefundType
     {
         /// <summary>
         /// 
         /// </summary>
-        VeryPreciseFullAddress,
+        Full,
 
         /// <summary>
         /// 
         /// </summary>
-        PreciseZIP9,
+        Partial,
 
         /// <summary>
         /// 
         /// </summary>
-        ZIP5Only,
+        TaxOnly,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Percentage,
 
     }
 }

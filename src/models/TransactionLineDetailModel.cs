@@ -191,7 +191,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The rate type for this tax detail.
         /// </summary>
-        public RateType? rateType { get; set; }
+        public String rateType { get; set; }
 
         /// <summary>
         /// Number of units in this line item that were calculated to be taxable according to this rate detail.

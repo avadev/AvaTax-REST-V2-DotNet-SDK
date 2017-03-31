@@ -104,5 +104,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         AvaLodging,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        AvaBottle,
+
     }
 }

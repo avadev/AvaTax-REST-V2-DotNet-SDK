@@ -76,7 +76,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Indicates the rate type to which this rule applies.
         /// </summary>
-        public RateType? rateTypeId { get; set; }
+        public String rateTypeId { get; set; }
 
         /// <summary>
         /// This type value determines the behavior of the tax rule.

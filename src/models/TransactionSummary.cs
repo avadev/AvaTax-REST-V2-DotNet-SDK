@@ -74,7 +74,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Indicates the tax rate type.
         /// </summary>
-        public RateType? rateType { get; set; }
+        public String rateType { get; set; }
 
         /// <summary>
         /// Tax Base - The adjusted taxable amount.

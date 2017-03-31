@@ -37,14 +37,13 @@ namespace Avalara.AvaTax.RestClient
         public AddressLocationInfo shipTo { get; set; }
 
         /// <summary>
-        /// Location from which the order was placed.
-        ///Customer's home or business location.
+        /// The place of business where you receive the customer's order.
         /// </summary>
         public AddressLocationInfo pointOfOrderOrigin { get; set; }
 
         /// <summary>
-        /// Location from which the order was accepted.
-        ///Call center, business office where purchase orders are accepted; or, server locations where orders are processed and accepted.
+        /// The place of business where you accept/approve the customerâ€™s order,
+        ///thereby becoming contractually obligated to make the sale.
         /// </summary>
         public AddressLocationInfo pointOfOrderAcceptance { get; set; }
 

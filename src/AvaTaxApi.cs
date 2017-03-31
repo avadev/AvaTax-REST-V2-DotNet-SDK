@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    2.17.3-52
+ * @version    2.17.4-58
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -27,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "2.17.3-52"; } }
+        public static string API_VERSION { get { return "2.17.4-58"; } }
 
 #region Methods
 
@@ -894,6 +894,41 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a refund for a transaction
+        /// </summary>
+        /// <remarks>
+        /// Create a refund for a transaction.
+        ///
+        ///The `RefundTransaction` API allows you to quickly and easily create a `ReturnInvoice` representing a refund
+        ///for a previously created `SalesInvoice` transaction. You can choose to create a full or partial refund, and
+        ///specify individual line items from the original sale for refund.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
+        /// 
+        ///If you don't specify '$include' parameter, it will include both details and addresses.
+        /// </remarks>
+        /// <param name="companyCode">The code of the company that made the original sale</param>
+        /// <param name="transactionCode">The transaction code of the original sale</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="model">Information about the refund to create</param>
+        public TransactionModel RefundTransaction(String companyCode, String transactionCode, String include, RefundTransactionModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("$include", include);
+            return RestCall<TransactionModel>("post", path, model);
+        }
+
+
+        /// <summary>
         /// Perform multiple actions on a transaction
         /// </summary>
         /// <remarks>
@@ -1486,12 +1521,12 @@ namespace Avalara.AvaTax.RestClient
         /// This API is available by invitation only.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="worksheetId">The unique id of the worksheet.</param>
-        public FileResult GetFilingAttachment(Int32 companyId, Int64 worksheetId)
+        /// <param name="filingId">The unique id of the worksheet return.</param>
+        public FileResult GetFilingAttachment(Int32 companyId, Int64 filingId)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/attachment");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingId}/attachment");
             path.ApplyField("companyId", companyId);
-            path.ApplyField("worksheetId", worksheetId);
+            path.ApplyField("filingId", filingId);
             return RestCallFile("get", path, null);
         }
 
@@ -1954,12 +1989,12 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being edited.</param>
         /// <param name="model">The updated Augmentation.</param>
-        public FilingAugmentationModel UpdateReturnAugmentation(Int32 companyId, Int64 id, FilingAugmentationModel model)
+        public FilingModel UpdateReturnAugmentation(Int32 companyId, Int64 id, FilingAugmentationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingAugmentationModel>("put", path, model);
+            return RestCall<FilingModel>("put", path, model);
         }
 
 
@@ -3326,6 +3361,22 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of rate types for each country
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported rate type file types
+        ///This API is intended to be useful to identify all the different rate types.
+        /// </remarks>
+        /// <param name="country"></param>
+        public FetchResult<RateTypeModel> ListRateTypesByCountry(String country)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/ratetypes");
+            path.ApplyField("country", country);
+            return RestCall<FetchResult<RateTypeModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// List all ISO 3166 regions for a country
         /// </summary>
         /// <remarks>
@@ -4440,11 +4491,21 @@ namespace Avalara.AvaTax.RestClient
         ///
         ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
+        /// 
+        ///If you don't specify '$include' parameter, it will include both details and addresses.
         /// </remarks>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
         /// <param name="model">The transaction you wish to create</param>
-        public TransactionModel CreateTransaction(CreateTransactionModel model)
+        public TransactionModel CreateTransaction(String include, CreateTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
+            path.AddQuery("$include", include);
             return RestCall<TransactionModel>("post", path, model);
         }
 
@@ -4548,10 +4609,10 @@ namespace Avalara.AvaTax.RestClient
         ///This API is intended to help you determine whether you have the necessary subscription to use certain API calls
         ///within AvaTax.
         /// </remarks>
-        public SubscriptionModel ListMySubscriptions()
+        public FetchResult<SubscriptionModel> ListMySubscriptions()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            return RestCall<SubscriptionModel>("get", path, null);
+            return RestCall<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
 
@@ -5439,6 +5500,41 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a refund for a transaction;
+        /// </summary>
+        /// <remarks>
+        /// Create a refund for a transaction.
+        ///
+        ///The `RefundTransaction` API allows you to quickly and easily create a `ReturnInvoice` representing a refund
+        ///for a previously created `SalesInvoice` transaction. You can choose to create a full or partial refund, and
+        ///specify individual line items from the original sale for refund.
+        ///
+        ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
+        /// 
+        ///If you don't specify '$include' parameter, it will include both details and addresses.;
+        /// </remarks>
+        /// <param name="companyCode">The code of the company that made the original sale</param>
+        /// <param name="transactionCode">The transaction code of the original sale</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="model">Information about the refund to create</param>
+        public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, String include, RefundTransactionModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<TransactionModel>("post", path, model);
+        }
+
+
+        /// <summary>
         /// Perform multiple actions on a transaction;
         /// </summary>
         /// <remarks>
@@ -6031,12 +6127,12 @@ namespace Avalara.AvaTax.RestClient
         /// This API is available by invitation only.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="worksheetId">The unique id of the worksheet.</param>
-        public async Task<FileResult> GetFilingAttachmentAsync(Int32 companyId, Int64 worksheetId)
+        /// <param name="filingId">The unique id of the worksheet return.</param>
+        public async Task<FileResult> GetFilingAttachmentAsync(Int32 companyId, Int64 filingId)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/attachment");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingId}/attachment");
             path.ApplyField("companyId", companyId);
-            path.ApplyField("worksheetId", worksheetId);
+            path.ApplyField("filingId", filingId);
             return await RestCallAsync<FileResult>("get", path, null);
         }
 
@@ -6499,12 +6595,12 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
         /// <param name="id">The ID of the augmentation being edited.</param>
         /// <param name="model">The updated Augmentation.</param>
-        public async Task<FilingAugmentationModel> UpdateReturnAugmentationAsync(Int32 companyId, Int64 id, FilingAugmentationModel model)
+        public async Task<FilingModel> UpdateReturnAugmentationAsync(Int32 companyId, Int64 id, FilingAugmentationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingAugmentationModel>("put", path, model);
+            return await RestCallAsync<FilingModel>("put", path, model);
         }
 
 
@@ -7871,6 +7967,22 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of rate types for each country;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported rate type file types
+        ///This API is intended to be useful to identify all the different rate types.;
+        /// </remarks>
+        /// <param name="country"></param>
+        public async Task<FetchResult<RateTypeModel>> ListRateTypesByCountryAsync(String country)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/ratetypes");
+            path.ApplyField("country", country);
+            return await RestCallAsync<FetchResult<RateTypeModel>>("get", path, null);
+        }
+
+
+        /// <summary>
         /// List all ISO 3166 regions for a country;
         /// </summary>
         /// <remarks>
@@ -8984,12 +9096,22 @@ namespace Avalara.AvaTax.RestClient
         ///company's configuration and the data provided in this API call.
         ///
         ///A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        ///sales, purchases, inventory transfer, and returns (also called refunds).;
+        ///sales, purchases, inventory transfer, and returns (also called refunds).
+        ///You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///* Lines
+        ///* Details (implies lines)
+        ///* Summary (implies details)
+        ///* Addresses
+        /// 
+        ///If you don't specify '$include' parameter, it will include both details and addresses.;
         /// </remarks>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
         /// <param name="model">The transaction you wish to create</param>
-        public async Task<TransactionModel> CreateTransactionAsync(CreateTransactionModel model)
+        public async Task<TransactionModel> CreateTransactionAsync(String include, CreateTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
+            path.AddQuery("$include", include);
             return await RestCallAsync<TransactionModel>("post", path, model);
         }
 
@@ -9093,10 +9215,10 @@ namespace Avalara.AvaTax.RestClient
         ///This API is intended to help you determine whether you have the necessary subscription to use certain API calls
         ///within AvaTax.;
         /// </remarks>
-        public async Task<SubscriptionModel> ListMySubscriptionsAsync()
+        public async Task<FetchResult<SubscriptionModel>> ListMySubscriptionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            return await RestCallAsync<SubscriptionModel>("get", path, null);
+            return await RestCallAsync<FetchResult<SubscriptionModel>>("get", path, null);
         }
 
 

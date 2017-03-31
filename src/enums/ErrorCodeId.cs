@@ -137,6 +137,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        DateFormatError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoDefaultCompany,
+
+        /// <summary>
+        /// 
+        /// </summary>
         AuthenticationException,
 
         /// <summary>
@@ -457,6 +467,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        BearerTokenParseUserIdError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RetrieveUserError,
+
+        /// <summary>
+        /// 
+        /// </summary>
         BatchSalesAuditMustBeZippedError,
 
         /// <summary>
@@ -643,6 +663,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         TaxRateNotAvailableForFreeInThisCountry,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FilingCalendarChangeNotAllowed,
 
     }
 }

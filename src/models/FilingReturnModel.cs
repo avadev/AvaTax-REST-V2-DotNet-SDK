@@ -122,9 +122,19 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? consumerUseTaxableAmount { get; set; }
 
         /// <summary>
+        /// Total amount of adjustments on this return
+        /// </summary>
+        public Decimal? totalAdjustments { get; set; }
+
+        /// <summary>
         /// The Adjustments for this return.
         /// </summary>
         public List<FilingAdjustmentModel> adjustments { get; set; }
+
+        /// <summary>
+        /// Total amount of augmentations on this return
+        /// </summary>
+        public Decimal? totalAugmentations { get; set; }
 
         /// <summary>
         /// The Augmentations for this return.
