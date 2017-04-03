@@ -57,6 +57,11 @@ namespace Avalara.AvaTax.RestClient
         public String filingFrequencyCode { get; set; }
 
         /// <summary>
+        /// The filing frequency of the request
+        /// </summary>
+        public FilingFrequencyId? filingFrequencyId { get; set; }
+
+        /// <summary>
         /// An explanation for why this form cannot be added for the current cycle
         /// </summary>
         public String cycleUnavailableReason { get; set; }

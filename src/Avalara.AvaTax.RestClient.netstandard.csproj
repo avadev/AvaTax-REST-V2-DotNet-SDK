@@ -64,7 +64,6 @@
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
-    <Compile Include="enums\BoundaryLevelForJO.cs" />
     <Compile Include="enums\CompanyAccessLevel.cs" />
     <Compile Include="enums\DocumentStatus.cs" />
     <Compile Include="enums\DocumentType.cs" />
@@ -88,6 +87,7 @@
     <Compile Include="enums\PointOfSaleFileType.cs" />
     <Compile Include="enums\PointOfSalePartnerId.cs" />
     <Compile Include="enums\RateType.cs" />
+    <Compile Include="enums\RefundType.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />
     <Compile Include="enums\ScraperType.cs" />
@@ -194,8 +194,10 @@
     <Compile Include="models\PingResultModel.cs" />
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\RateModel.cs" />
+    <Compile Include="models\RateTypeModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
     <Compile Include="models\ReconstructedApiRequestResponseModel.cs" />
+    <Compile Include="models\RefundTransactionModel.cs" />
     <Compile Include="models\requiredFilingCalendarDataFieldModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\ResourceFileTypeModel.cs" />

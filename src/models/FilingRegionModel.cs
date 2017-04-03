@@ -54,7 +54,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The tax amount due.
         /// </summary>
-        public Decimal? taxAmountDue { get; set; }
+        public Decimal? taxDueAmount { get; set; }
+
+        /// <summary>
+        /// Total remittance amount of all returns in region
+        /// </summary>
+        public Decimal? totalRemittanceAmount { get; set; }
 
         /// <summary>
         /// The non-taxable amount.

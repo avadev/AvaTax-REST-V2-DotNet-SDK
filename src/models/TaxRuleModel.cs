@@ -74,9 +74,14 @@ namespace Avalara.AvaTax.RestClient
         public MatchingTaxType? taxTypeId { get; set; }
 
         /// <summary>
-        /// Indicates the rate type to which this rule applies.
+        /// (DEPRECATED) Enumerated rate type to which this rule applies. Please use rateTypeCode instead.
         /// </summary>
         public RateType? rateTypeId { get; set; }
+
+        /// <summary>
+        /// Indicates the code of the rate type that applies to this rule. Use `/api/v2/definitions/ratetypes` for a full list of rate type codes.
+        /// </summary>
+        public String rateTypeCode { get; set; }
 
         /// <summary>
         /// This type value determines the behavior of the tax rule.

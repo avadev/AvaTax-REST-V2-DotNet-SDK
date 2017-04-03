@@ -108,7 +108,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The boundary level of this override
         /// </summary>
-        public BoundaryLevelForJO? boundaryLevel { get; set; }
+        public BoundaryLevel? boundaryLevel { get; set; }
 
         /// <summary>
         /// True if this is a default boundary

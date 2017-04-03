@@ -189,9 +189,14 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? taxOverride { get; set; }
 
         /// <summary>
-        /// The rate type for this tax detail.
+        /// (DEPRECATED) The rate type for this tax detail. Please use rateTypeCode instead.
         /// </summary>
         public RateType? rateType { get; set; }
+
+        /// <summary>
+        /// Indicates the code of the rate type that was used to calculate this tax detail. Use `/api/v2/definitions/ratetypes` for a full list of rate type codes.
+        /// </summary>
+        public String rateTypeCode { get; set; }
 
         /// <summary>
         /// Number of units in this line item that were calculated to be taxable according to this rate detail.

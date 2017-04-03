@@ -137,6 +137,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        DateFormatError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoDefaultCompany,
+
+        /// <summary>
+        /// 
+        /// </summary>
         AuthenticationException,
 
         /// <summary>
@@ -332,6 +342,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidRateTypeCode,
+
+        /// <summary>
+        /// 
+        /// </summary>
         RateTypeNotSupported,
 
         /// <summary>
@@ -453,6 +468,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         NexusParentDateMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BearerTokenParseUserIdError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RetrieveUserError,
 
         /// <summary>
         /// 
