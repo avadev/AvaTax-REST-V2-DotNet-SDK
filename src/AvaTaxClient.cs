@@ -19,11 +19,14 @@ namespace Avalara.AvaTax.RestClient
     /// <remarks>
     /// This file contains all the basic behavior.  Individual APIs are in the other partial class.
     /// </remarks>
-    public partial class AvaTaxClient
+    public partial class AvaTaxClient : IDisposable
     {
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
+#if PORTABLE
+        private HttpClient _client;
+#endif
 
         #region Constructor
         /// <summary>
@@ -35,13 +38,18 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="environment"></param>
         public AvaTaxClient(string appName, string appVersion, string machineName, AvaTaxEnvironment environment)
         {
-            string envUri = null;
+            // Redo the client identifier
+            WithClientIdentifier(appName, appVersion, machineName);
+
+            // Setup the URI
             switch (environment) {
-                case AvaTaxEnvironment.Sandbox: envUri = Constants.AVATAX_SANDBOX_URL; break;
-                case AvaTaxEnvironment.Production: envUri = Constants.AVATAX_PRODUCTION_URL; break;
+                case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
+                case AvaTaxEnvironment.Production: _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL); break;
                 default: throw new Exception("Unrecognized Environment");
             }
-            SetupClient(appName, appVersion, machineName, new Uri(envUri));
+
+            // Redo the HTTP client
+            SetupClient();
         }
 
         /// <summary>
@@ -53,19 +61,28 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="customEnvironment"></param>
         public AvaTaxClient(string appName, string appVersion, string machineName, Uri customEnvironment)
         {
-            SetupClient(appName, appVersion, machineName, customEnvironment);
-        }
-
-        private void SetupClient(string appName, string appVersion, string machineName, Uri envUri)
-        {
-            _envUri = envUri;
-
-            // Setup client identifier
+            // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
-        }
-        #endregion
+            _envUri = customEnvironment;
 
-        #region Security
+            // Redo the HTTP client
+            SetupClient();
+        }
+
+        /// <summary>
+        /// Dispose HTTP client
+        /// </summary>
+        public void Dispose()
+        {
+#if PORTABLE
+            if (_client != null) {
+                _client.Dispose();
+            }
+#endif
+        }
+#endregion
+
+#region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -73,6 +90,9 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxClient WithSecurity(string headerString)
         {
             _credentials = headerString;
+
+            // Redo the HTTP client
+            SetupClient();
             return this;
         }
 
@@ -112,9 +132,13 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-        #endregion
+#endregion
 
-        #region Client Identification
+#region Client Identification
+
+#endregion
+
+#region Implementation
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -125,11 +149,38 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
         {
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
+
+            // Redo the HTTP client
+            SetupClient();
             return this;
         }
-        #endregion
 
-        #region Implementation
+        /// <summary>
+        /// Setup a new HTTP client object and dispose the old one
+        /// </summary>
+        private void SetupClient()
+        {
+#if PORTABLE
+            // Delete old client
+            if (_client != null) {
+                _client.Dispose();
+            }
+
+            // Construct new client
+            _client = new HttpClient();
+            _client.BaseAddress = _envUri;
+
+            // Add credentials
+            if (_credentials != null) {
+                _client.DefaultRequestHeaders.Add("Authorization", _credentials);
+            }
+            if (_clientHeader != null) {
+                _client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
+            }
+#else
+#endif
+        }
+
         private JsonSerializerSettings _serializer_settings = null;
         private JsonSerializerSettings SerializerSettings
         {
@@ -171,41 +222,33 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath uri, object payload = null)
         {
-            using (var client = new HttpClient()) {
-                client.BaseAddress = _envUri;
-                if (!String.IsNullOrEmpty(_credentials)) {
-                    client.DefaultRequestHeaders.Add("Authorization", _credentials);
-                }
-                client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
+            // Make the request
+            HttpResponseMessage result = null;
+            string json = null;
+            if (verb == "get") {
+                result = await _client.GetAsync(uri.ToString());
+            } else if (verb == "post") {
+                json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+            } else if (verb == "put") {
+                json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+            } else if (verb == "delete") {
+                result = await _client.DeleteAsync(uri.ToString());
+            }
 
-                // Make the request
-                HttpResponseMessage result = null;
-                string json = null;
-                if (verb == "get") {
-                    result = await client.GetAsync(uri.ToString());
-                } else if (verb == "post") {
-                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                    result = await client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-                } else if (verb == "put") {
-                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                    result = await client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-                } else if (verb == "delete") {
-                    result = await client.DeleteAsync(uri.ToString());
-                }
-
-                // Read the result
-                if (result.IsSuccessStatusCode) {
-                    return new FileResult()
-                    {
-                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
-                        Data = await result.Content.ReadAsByteArrayAsync()
-                    };
-                } else {
-                    var s = await result.Content.ReadAsStringAsync();
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                    throw new AvaTaxError(err);
-                }
+            // Read the result
+            if (result.IsSuccessStatusCode) {
+                return new FileResult()
+                {
+                    ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
+                    Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
+                    Data = await result.Content.ReadAsByteArrayAsync()
+                };
+            } else {
+                var s = await result.Content.ReadAsStringAsync();
+                var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                throw new AvaTaxError(err);
             }
         }
 
@@ -230,37 +273,28 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<string> RestCallStringAsync(string verb, AvaTaxPath uri, object payload = null)
         {
-            using (var client = new HttpClient()) {
-                client.BaseAddress = _envUri;
-                if (!String.IsNullOrEmpty(_credentials))
-                {
-                    client.DefaultRequestHeaders.Add("Authorization", _credentials);
-                }
-                client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
+            // Make the request
+            HttpResponseMessage result = null;
+            string json = null;
+            if (verb == "get") {
+                result = await _client.GetAsync(uri.ToString());
+            } else if (verb == "post") {
+                json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+            } else if (verb == "put") {
+                json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
+            } else if (verb == "delete") {
+                result = await _client.DeleteAsync(uri.ToString());
+            }
 
-                // Make the request
-                HttpResponseMessage result = null;
-                string json = null;
-                if (verb == "get") {
-                    result = await client.GetAsync(uri.ToString());
-                } else if (verb == "post") {
-                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                    result = await client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-                } else if (verb == "put") {
-                    json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                    result = await client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-                } else if (verb == "delete") {
-                    result = await client.DeleteAsync(uri.ToString());
-                }
-
-                // Read the result
-                var s = await result.Content.ReadAsStringAsync();
-                if (result.IsSuccessStatusCode) {
-                    return s;
-                } else {
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                    throw new AvaTaxError(err);
-                }
+            // Read the result
+            var s = await result.Content.ReadAsStringAsync();
+            if (result.IsSuccessStatusCode) {
+                return s;
+            } else {
+                var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                throw new AvaTaxError(err);
             }
         }
 
@@ -509,6 +543,6 @@ namespace Avalara.AvaTax.RestClient
             return contentDisposition;
         }
 
-        #endregion
+#endregion
     }
 }
