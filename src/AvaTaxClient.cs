@@ -191,20 +191,21 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<FileResult> RestCallFileAsync(HttpMethod verb, AvaTaxPath path, object content = null)
         {
-            HttpResponseMessage result = await RestCallAsync(verb, path, content);
+            using (var result = await RestCallAsync(verb, path, content)) {
 
-            // Read the result
-            if (result.IsSuccessStatusCode) {
-                return new FileResult()
-                {
-                    ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                    Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
-                    Data = await result.Content.ReadAsByteArrayAsync()
-                };
-            } else {
-                var s = await result.Content.ReadAsStringAsync();
-                var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                throw new AvaTaxError(err);
+                // Read the result
+                if (result.IsSuccessStatusCode) {
+                    return new FileResult()
+                    {
+                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
+                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
+                        Data = await result.Content.ReadAsByteArrayAsync()
+                    };
+                } else {
+                    var s = await result.Content.ReadAsStringAsync();
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    throw new AvaTaxError(err);
+                }
             }
         }
 
@@ -219,25 +220,25 @@ namespace Avalara.AvaTax.RestClient
         {
             // Setup the request
             var fullUri = new Uri(_envUri, path.ToString());
-            HttpRequestMessage request = new HttpRequestMessage(verb, fullUri);
+            using (var request = new HttpRequestMessage(verb, fullUri)) {
 
-            // Add credentials and client header
-            if (_credentials != null) {
-                request.Headers.Add("Authorization", _credentials);
-            }
-            if (_clientHeader != null) {
-                request.Headers.Add("X-Avalara-Client", _clientHeader);
-            }
+                // Add credentials and client header
+                if (_credentials != null) {
+                    request.Headers.Add("Authorization", _credentials);
+                }
+                if (_clientHeader != null) {
+                    request.Headers.Add("X-Avalara-Client", _clientHeader);
+                }
 
-            // Add payload
-            if (content != null) {
-                var json = JsonConvert.SerializeObject(content, SerializerSettings);
-                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-            }
+                // Add payload
+                if (content != null) {
+                    var json = JsonConvert.SerializeObject(content, SerializerSettings);
+                    request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+                }
 
-            // Send
-            var result = await _client.SendAsync(request);
-            return result;
+                // Send
+                return await _client.SendAsync(request);
+            }
         }
 
         /// <summary>
@@ -261,15 +262,16 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<string> RestCallStringAsync(HttpMethod verb, AvaTaxPath path, object content = null)
         {
-            var result = await RestCallAsync(verb, path, content);
+            using (var result = await RestCallAsync(verb, path, content)) {
 
-            // Read the result
-            var s = await result.Content.ReadAsStringAsync();
-            if (result.IsSuccessStatusCode) {
-                return s;
-            } else {
-                var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                throw new AvaTaxError(err);
+                // Read the result
+                var s = await result.Content.ReadAsStringAsync();
+                if (result.IsSuccessStatusCode) {
+                    return s;
+                } else {
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    throw new AvaTaxError(err);
+                }
             }
         }
 
