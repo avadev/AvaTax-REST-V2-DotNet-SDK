@@ -10,6 +10,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Converters;
+using System.Net.Http;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -19,13 +20,13 @@ namespace Avalara.AvaTax.RestClient
     /// <remarks>
     /// This file contains all the basic behavior.  Individual APIs are in the other partial class.
     /// </remarks>
-    public partial class AvaTaxClient : IDisposable
+    public partial class AvaTaxClient
     {
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
 #if PORTABLE
-        private HttpClient _client;
+        private static HttpClient _client = new HttpClient();
 #endif
 
         #region Constructor
@@ -67,18 +68,6 @@ namespace Avalara.AvaTax.RestClient
 
             // Redo the HTTP client
             SetupClient();
-        }
-
-        /// <summary>
-        /// Dispose HTTP client
-        /// </summary>
-        public void Dispose()
-        {
-#if PORTABLE
-            if (_client != null) {
-                _client.Dispose();
-            }
-#endif
         }
 #endregion
 
@@ -160,25 +149,6 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         private void SetupClient()
         {
-#if PORTABLE
-            // Delete old client
-            if (_client != null) {
-                _client.Dispose();
-            }
-
-            // Construct new client
-            _client = new HttpClient();
-            _client.BaseAddress = _envUri;
-
-            // Add credentials
-            if (_credentials != null) {
-                _client.DefaultRequestHeaders.Add("Authorization", _credentials);
-            }
-            if (_clientHeader != null) {
-                _client.DefaultRequestHeaders.Add("X-Avalara-Client", _clientHeader);
-            }
-#else
-#endif
         }
 
         private JsonSerializerSettings _serializer_settings = null;
@@ -204,12 +174,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private async Task<T> RestCallAsync<T>(string verb, AvaTaxPath uri, object payload = null)
+        private async Task<T> RestCallAsync<T>(HttpMethod verb, AvaTaxPath path, object content = null)
         {
-            var s = await RestCallStringAsync(verb, uri, payload);
+            var s = await RestCallStringAsync(verb, path, content);
             return JsonConvert.DeserializeObject<T>(s);
         }
 
@@ -217,25 +187,12 @@ namespace Avalara.AvaTax.RestClient
         /// Implementation of raw file-returning async API 
         /// </summary>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath uri, object payload = null)
+        private async Task<FileResult> RestCallFileAsync(HttpMethod verb, AvaTaxPath path, object content = null)
         {
-            // Make the request
-            HttpResponseMessage result = null;
-            string json = null;
-            if (verb == "get") {
-                result = await _client.GetAsync(uri.ToString());
-            } else if (verb == "post") {
-                json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-            } else if (verb == "put") {
-                json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-            } else if (verb == "delete") {
-                result = await _client.DeleteAsync(uri.ToString());
-            }
+            HttpResponseMessage result = await RestCallAsync(verb, path, content);
 
             // Read the result
             if (result.IsSuccessStatusCode) {
@@ -253,13 +210,45 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
+        /// Implementation of raw request API
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private async Task<HttpResponseMessage> RestCallAsync(HttpMethod verb, AvaTaxPath path, object content)
+        {
+            // Setup the request
+            var fullUri = new Uri(_envUri, path.ToString());
+            HttpRequestMessage request = new HttpRequestMessage(verb, fullUri);
+
+            // Add credentials and client header
+            if (_credentials != null) {
+                request.Headers.Add("Authorization", _credentials);
+            }
+            if (_clientHeader != null) {
+                request.Headers.Add("X-Avalara-Client", _clientHeader);
+            }
+
+            // Add payload
+            if (content != null) {
+                var json = JsonConvert.SerializeObject(content, SerializerSettings);
+                request.Content = new StringContent(json, Encoding.UTF8, "application/json");
+            }
+
+            // Send
+            var result = await _client.SendAsync(request);
+            return result;
+        }
+
+        /// <summary>
         /// Non-async method for downloading a file
         /// </summary>
         /// <param name="verb"></param>
         /// <param name="uri"></param>
         /// <param name="payload"></param>
         /// <returns></returns>
-        private FileResult RestCallFile(string verb, AvaTaxPath uri, object payload = null)
+        private FileResult RestCallFile(HttpMethod verb, AvaTaxPath uri, object payload = null)
         {
             return RestCallFileAsync(verb, uri, payload).Result;
         }
@@ -268,25 +257,12 @@ namespace Avalara.AvaTax.RestClient
         /// Implementation of raw string-returning async API 
         /// </summary>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath uri, object payload = null)
+        private async Task<string> RestCallStringAsync(HttpMethod verb, AvaTaxPath path, object content = null)
         {
-            // Make the request
-            HttpResponseMessage result = null;
-            string json = null;
-            if (verb == "get") {
-                result = await _client.GetAsync(uri.ToString());
-            } else if (verb == "post") {
-                json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                result = await _client.PostAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-            } else if (verb == "put") {
-                json = JsonConvert.SerializeObject(payload, SerializerSettings);
-                result = await _client.PutAsync(uri.ToString(), new StringContent(json, Encoding.UTF8, "application/json"));
-            } else if (verb == "delete") {
-                result = await _client.DeleteAsync(uri.ToString());
-            }
+            var result = await RestCallAsync(verb, path, content);
 
             // Read the result
             var s = await result.Content.ReadAsStringAsync();
@@ -302,12 +278,12 @@ namespace Avalara.AvaTax.RestClient
         /// Implementation of raw string-returning API
         /// </summary>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath uri, object payload = null)
+        private string RestCallString(HttpMethod verb, AvaTaxPath path, object content = null)
         {
-            return RestCallStringAsync(verb, uri, payload).Result;
+            return RestCallStringAsync(verb, path, content).Result;
         }
 
         /// <summary>
@@ -315,13 +291,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private T RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
+        private T RestCall<T>(HttpMethod verb, AvaTaxPath path, object content = null)
         {
             try {
-                return RestCallAsync<T>(verb, uri, payload).Result;
+                return RestCallAsync<T>(verb, path, content).Result;
 
             // Unroll single-exception aggregates for ease of use
             } catch (AggregateException ex) {
@@ -337,12 +313,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private T RestCall<T>(string verb, AvaTaxPath uri, object payload = null)
+        private T RestCall<T>(HttpMethod verb, AvaTaxPath relativePath, object content = null)
         {
-            var s = RestCallString(verb, uri, payload);
+            var s = RestCallString(verb, relativePath, content);
             return JsonConvert.DeserializeObject<T>(s);
         }
 
@@ -350,12 +326,12 @@ namespace Avalara.AvaTax.RestClient
         /// Direct implementation of client APIs to string values
         /// </summary>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private FileResult RestCallFile(string verb, AvaTaxPath uri, object payload = null)
+        private FileResult RestCallFile(HttpMethod verb, AvaTaxPath relativePath, object content = null)
         {
-            string path = CombinePath(_envUri.ToString(), uri.ToString());
+            string path = CombinePath(_envUri.ToString(), relativePath.ToString());
 
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
@@ -370,13 +346,13 @@ namespace Avalara.AvaTax.RestClient
             }
 
             // Convert the name-value pairs into a byte array
-            wr.Method = verb.ToUpper();
-            if (payload != null) {
+            wr.Method = verb.Method;
+            if (content != null) {
                 wr.ContentType = Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
 
                 // Encode the payload
-                var json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                var json = JsonConvert.SerializeObject(content, SerializerSettings);
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(json);
                 wr.ContentLength = data.Length;
@@ -447,12 +423,12 @@ namespace Avalara.AvaTax.RestClient
         /// Direct implementation of client APIs to string values
         /// </summary>
         /// <param name="verb"></param>
-        /// <param name="uri"></param>
-        /// <param name="payload"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
         /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath uri, object payload = null)
+        private string RestCallString(HttpMethod verb, AvaTaxPath relativePath, object content = null)
         {
-            string path = CombinePath(_envUri.ToString(), uri.ToString());
+            string path = CombinePath(_envUri.ToString(), relativePath.ToString());
 
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
@@ -467,13 +443,13 @@ namespace Avalara.AvaTax.RestClient
             }
 
             // Convert the name-value pairs into a byte array
-            wr.Method = verb.ToUpper();
-            if (payload != null) {
+            wr.Method = verb.Method;
+            if (content != null) {
                 wr.ContentType = Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
 
                 // Encode the payload
-                var json = JsonConvert.SerializeObject(payload, SerializerSettings);
+                var json = JsonConvert.SerializeObject(content, SerializerSettings);
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(json);
                 wr.ContentLength = data.Length;
