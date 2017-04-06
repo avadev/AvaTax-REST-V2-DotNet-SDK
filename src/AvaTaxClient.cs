@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 #if PORTABLE
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 #endif
 using System.Net;
