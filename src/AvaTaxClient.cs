@@ -28,6 +28,12 @@ namespace Avalara.AvaTax.RestClient
         private static HttpClient _client = new HttpClient();
 #endif
 
+        /// <summary>
+        /// Tracks the amount of time spent on the most recent API call
+        /// </summary>
+        public CallDuration LastCallTime { get; set; }
+
+
         #region Constructor
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
@@ -47,9 +53,6 @@ namespace Avalara.AvaTax.RestClient
                 case AvaTaxEnvironment.Production: _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL); break;
                 default: throw new Exception("Unrecognized Environment");
             }
-
-            // Redo the HTTP client
-            SetupClient();
         }
 
         /// <summary>
@@ -64,13 +67,10 @@ namespace Avalara.AvaTax.RestClient
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
             _envUri = customEnvironment;
-
-            // Redo the HTTP client
-            SetupClient();
         }
 #endregion
 
-#region Security
+        #region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -78,9 +78,6 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxClient WithSecurity(string headerString)
         {
             _credentials = headerString;
-
-            // Redo the HTTP client
-            SetupClient();
             return this;
         }
 
@@ -120,13 +117,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-#endregion
+        #endregion
 
-#region Client Identification
-
-#endregion
-
-#region Implementation
+        #region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -137,19 +130,68 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
         {
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
-
-            // Redo the HTTP client
-            SetupClient();
             return this;
+        }
+        #endregion
+
+        #region REST Call Interface
+#if PORTABLE
+        /// <summary>
+        /// Implementation of asynchronous client APIs
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
+        {
+            CallDuration cd = new CallDuration();
+            var s = await RestCallStringAsync(verb, relativePath, content, cd);
+            var o = JsonConvert.DeserializeObject<T>(s);
+            cd.FinishParse();
+            this.LastCallTime = cd;
+            return o;
+        }
+
+
+        /// <summary>
+        /// Direct implementation of client APIs
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
+        {
+            try {
+                return RestCallAsync<T>(verb, relativePath, content).Result;
+
+            // Unroll single-exception aggregates for ease of use
+            } catch (AggregateException ex) {
+                if (ex.InnerExceptions.Count == 1) {
+                    throw ex.InnerException;
+                }
+                throw ex;
+            }
         }
 
         /// <summary>
-        /// Setup a new HTTP client object and dispose the old one
+        /// Non-async method for downloading a file
         /// </summary>
-        private void SetupClient()
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        public FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
         {
+            return RestCallFileAsync(verb, relativePath, payload).Result;
         }
+#endif
+        #endregion
 
+        #region Implementation
         private JsonSerializerSettings _serializer_settings = null;
         private JsonSerializerSettings SerializerSettings
         {
@@ -166,22 +208,7 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 
-
 #if PORTABLE
-        /// <summary>
-        /// Implementation of asynchronous client APIs
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            var s = await RestCallStringAsync(verb, relativePath, content);
-            return JsonConvert.DeserializeObject<T>(s);
-        }
-
         /// <summary>
         /// Implementation of raw file-returning async API 
         /// </summary>
@@ -191,19 +218,27 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath relativePath, object content = null)
         {
-            using (var result = await InternalRestCallAsync(verb, relativePath, content)) {
+            CallDuration cd = new CallDuration();
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content)) {
 
                 // Read the result
                 if (result.IsSuccessStatusCode) {
-                    return new FileResult()
+                    var fr = new FileResult()
                     {
                         ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
                         Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
                         Data = await result.Content.ReadAsByteArrayAsync()
                     };
+                    cd.FinishParse();
+                    this.LastCallTime = cd;
+                    return fr;
+
+                // Handle exceptions and convert them to AvaTax results
                 } else {
                     var s = await result.Content.ReadAsStringAsync();
                     var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    cd.FinishParse();
+                    this.LastCallTime = cd;
                     throw new AvaTaxError(err);
                 }
             }
@@ -212,11 +247,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Implementation of raw request API
         /// </summary>
+        /// <param name="cd"></param>
         /// <param name="verb"></param>
         /// <param name="relativePath"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        private async Task<HttpResponseMessage> InternalRestCallAsync(string verb, AvaTaxPath relativePath, object content)
+        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb, AvaTaxPath relativePath, object content)
         {
             // Setup the request
             using (var request = new HttpRequestMessage()) {
@@ -238,39 +274,40 @@ namespace Avalara.AvaTax.RestClient
                 }
 
                 // Send
+                cd.FinishSetup();
                 return await _client.SendAsync(request);
             }
         }
 
         /// <summary>
-        /// Non-async method for downloading a file
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="payload"></param>
-        /// <returns></returns>
-        private FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
-        {
-            return RestCallFileAsync(verb, relativePath, payload).Result;
-        }
-
-        /// <summary>
         /// Implementation of raw string-returning async API 
         /// </summary>
+        /// <param name="cd"></param>
         /// <param name="verb"></param>
         /// <param name="relativePath"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null)
+        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null, CallDuration cd = null)
         {
-            using (var result = await InternalRestCallAsync(verb, relativePath, content)) {
+            if (cd == null) cd = new CallDuration();
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content)) {
 
                 // Read the result
                 var s = await result.Content.ReadAsStringAsync();
+
+                // Determine server duration
+                var sd = result.Headers.GetValues("serverduration").FirstOrDefault();
+                TimeSpan ServerDuration = new TimeSpan();
+                TimeSpan.TryParse(sd, out ServerDuration);
+                cd.FinishReceive(ServerDuration);
+
+                // Deserialize the result
                 if (result.IsSuccessStatusCode) {
                     return s;
                 } else {
                     var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    cd.FinishParse();
+                    this.LastCallTime = cd;
                     throw new AvaTaxError(err);
                 }
             }
@@ -286,28 +323,6 @@ namespace Avalara.AvaTax.RestClient
         private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
         {
             return RestCallStringAsync(verb, relativePath, content).Result;
-        }
-
-        /// <summary>
-        /// Direct implementation of client APIs
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            try {
-                return RestCallAsync<T>(verb, relativePath, content).Result;
-
-            // Unroll single-exception aggregates for ease of use
-            } catch (AggregateException ex) {
-                if (ex.InnerExceptions.Count == 1) {
-                    throw ex.InnerException;
-                }
-                throw ex;
-            }
         }
 #else
         /// <summary>

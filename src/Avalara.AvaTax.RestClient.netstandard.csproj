@@ -47,6 +47,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CallDuration.cs" />
     <Compile Include="AvaTaxApi.cs" />
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
