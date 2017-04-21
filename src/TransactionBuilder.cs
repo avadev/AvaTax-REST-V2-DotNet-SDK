@@ -71,7 +71,6 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
-
         /// <summary>
         /// Set a specific discount amount
         /// </summary>
@@ -201,7 +200,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="ai"></param>
         public static void SetAddress(AddressesModel addresses, TransactionAddressType type, AddressLocationInfo ai)
         {
-            switch (type) {
+            switch (type)
+            {
                 case TransactionAddressType.PointOfOrderAcceptance:
                     addresses.pointOfOrderAcceptance = ai;
                     break;
@@ -436,6 +436,194 @@ namespace Avalara.AvaTax.RestClient
             line.ref2 = ref2;
 
             // Continue building
+            return this;
+        }
+
+        /// <summary>
+        /// Set the transaction date
+        /// </summary>
+        /// <param name="date">The date of the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithDate(DateTime date)
+        {
+            _model.date = date;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the salesperson code
+        /// </summary>
+        /// <param name="salespersonCode">The salesperson code associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithSalespersonCode(string salespersonCode)
+        {
+            _model.salespersonCode = salespersonCode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the purchase order number
+        /// </summary>
+        /// <param name="purchaseOrderNumber">The purchase order number associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithPurchaseOrderNumber(string purchaseOrderNumber)
+        {
+            _model.purchaseOrderNo = purchaseOrderNumber;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the exemption number
+        /// </summary>
+        /// <param name="exemptionNumber">Theexemption associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithExemptionNumber(string exemptionNumber)
+        {
+            _model.exemptionNo = exemptionNumber;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the reference code.
+        /// 
+        /// Used to reference the original document for a return invoice.
+        /// </summary>
+        /// <param name="referenceCode">The reference code associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithReferenceCode(string referenceCode)
+        {
+            _model.referenceCode = referenceCode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the reporting location code.
+        /// 
+        /// Used to reference the sale location code (Outlet ID) for reporting purposes.
+        /// </summary>
+        /// <param name="reportingLocationCode">The reporting location code associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithReportingLocationCode(string reportingLocationCode)
+        {
+            _model.reportingLocationCode = reportingLocationCode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the batch code.
+        /// 
+        /// TODO: Is this something we want/need to expose?
+        /// </summary>
+        /// <param name="batchCode">The batch code associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithBatchCode(string batchCode)
+        {
+            _model.batchCode = batchCode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set a 3 character ISO 4217 currency code
+        /// </summary>
+        /// <param name="currencyCode">The currency code to be used with this transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithCurrencyCode(string currencyCode)
+        {
+            _model.currencyCode = currencyCode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the service mode of the transaction.
+        /// 
+        /// The mode can be set to:
+        /// Automatic (default), Local, or Remote. 
+        /// </summary>
+        /// <param name="serviceMode">The service mode of the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithServiceMode(ServiceMode serviceMode)
+        {
+            _model.serviceMode = serviceMode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the exchange rate of the transaction.
+        /// 
+        /// This is the exchange rate between this transaction's currency to the company's base currency.
+        /// </summary>
+        /// <param name="exchangeRate">The exchange rate between this transaction and the company base currency</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithExchangeRate(decimal exchangeRate)
+        {
+            _model.exchangeRate = exchangeRate;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the exchange rate date of the transaction.
+        /// 
+        /// This specifies the effective date of the exchange rate.
+        /// </summary>
+        /// <param name="exchangeRateEffectiveDate">The exchange rate effective date of this transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithExchangeRateEffectiveDate(DateTime exchangeRateEffectiveDate)
+        {
+            _model.exchangeRateEffectiveDate = exchangeRateEffectiveDate;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the point of sale lane code of the transaction
+        /// </summary>
+        /// <param name="posLaneCode">The point of sale lane code associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithPointOfSaleLaneCode(string posLaneCode)
+        {
+            _model.posLaneCode = posLaneCode;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the business identification number of the transaction
+        /// </summary>
+        /// <param name="businessIdentificationNumber">The business identification number associated with the company</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithBusinessIdentificationNumber(string businessIdentificationNumber)
+        {
+            _model.businessIdentificationNo = businessIdentificationNumber;
+            return this;
+        }
+
+        /// <summary>
+        /// Enable the `seller importer of record` flag
+        /// </summary>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithSellerImporterOfRecord()
+        {
+            _model.isSellerImporterOfRecord = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the description of the transaction
+        /// </summary>
+        /// <param name="description">The desciption of the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithDescription(string description)
+        {
+            _model.description = description;
+            return this;
+        }
+
+        /// <summary>
+        /// Set the email of the transaction
+        /// </summary>
+        /// <param name="email">The email associated with the transaction</param>
+        /// <returns>The TransactionBuilder object</returns>
+        public TransactionBuilder WithEmail(string email)
+        {
+            _model.email = email;
             return this;
         }
         #endregion
