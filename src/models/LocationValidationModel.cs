@@ -22,9 +22,9 @@ namespace Avalara.AvaTax.RestClient
     public class LocationValidationModel
     {
         /// <summary>
-        /// True if the location has a value for each jurisdiction-required setting.
-        ///The user is required to ensure that the values are correct according to the jurisdiction; this flag
-        ///does not indicate whether the taxing jurisdiction has accepted the data you have provided.
+        /// True if the location has a value for each jurisdiction-required setting.        ///
+        ///        ///The user is required to ensure that the values are correct according to the jurisdiction; this flag        ///
+        ///        ///does not indicate whether the taxing jurisdiction has accepted the data you have provided.
         /// </summary>
         public Boolean? settingsValidated { get; set; }
 

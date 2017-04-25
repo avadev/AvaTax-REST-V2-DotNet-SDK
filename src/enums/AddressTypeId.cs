@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// AddressTypeId
+    /// Indicates whether this address refers to a person or an business
     /// </summary>
     public enum AddressTypeId
     {
         /// <summary>
-        /// 
+        /// A business location, for example a store, warehouse, or office.
         /// </summary>
         Location,
 
         /// <summary>
-        /// 
+        /// A person's address who performs sales tasks for the company remotely from an office.
         /// </summary>
         Salesperson,
 

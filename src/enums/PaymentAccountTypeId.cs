@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// PaymentAccountTypeId
+    /// 
     /// </summary>
     public enum PaymentAccountTypeId
     {

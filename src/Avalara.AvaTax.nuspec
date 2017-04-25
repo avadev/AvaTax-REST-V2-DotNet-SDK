@@ -10,7 +10,7 @@
         <projectUrl>https://developer.avalara.com</projectUrl>
         <iconUrl>https://developer.avalara.com/public/images/favicon/A-Check-RGB.png</iconUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<copyright>(C) 2004-2016, Avalara, Inc.</copyright>
+		<copyright>(C) 2004-2017, Avalara, Inc.</copyright>
         <tags>tax Avalara AvaTax sales taxes ecommerce</tags>
         <dependencies>
             <group targetFramework=".NETStandard1.1">
@@ -22,6 +22,6 @@
     </metadata>
     <files>
         <file src="bin\Release\net20\Avalara*" target="lib\net20" />
-        <file src="bin\Release\dotnet\Avalara*" target="lib\dotnet" />
+        <file src="bin\Release\netstandard1.0\Avalara*" target="lib\netstandard1.0" />
     </files>
 </package>

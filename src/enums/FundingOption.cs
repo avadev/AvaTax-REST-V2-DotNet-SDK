@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// FundingOption
+    /// Filing Frequency types
     /// </summary>
     public enum FundingOption
     {
         /// <summary>
-        /// 
+        /// Pull
         /// </summary>
         Pull,
 
         /// <summary>
-        /// 
+        /// Wire
         /// </summary>
         Wire,
 

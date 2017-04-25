@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// AdjustmentPeriodTypeId
+    /// 
     /// </summary>
     public enum AdjustmentPeriodTypeId
     {

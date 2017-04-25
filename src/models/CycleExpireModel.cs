@@ -22,8 +22,8 @@ namespace Avalara.AvaTax.RestClient
     public class CycleExpireModel
     {
         /// <summary>
-        /// Whether or not the filing calendar can be expired.
-        ///e.g. if user makes end date of a calendar earlier than latest filing, this would be set to false.
+        /// Whether or not the filing calendar can be expired.        ///
+        ///        ///e.g. if user makes end date of a calendar earlier than latest filing, this would be set to false.
         /// </summary>
         public Boolean? success { get; set; }
 

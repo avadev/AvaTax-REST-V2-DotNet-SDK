@@ -15,22 +15,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// PointOfSaleFileType
+    /// Type of file request
     /// </summary>
     public enum PointOfSaleFileType
     {
         /// <summary>
-        /// 
+        /// File is in Javascript Object Notation format
         /// </summary>
         Json,
 
         /// <summary>
-        /// 
+        /// File is in Comma Separated Values format
         /// </summary>
         Csv,
 
         /// <summary>
-        /// 
+        /// File is in Extended Markup Language format
         /// </summary>
         Xml,
 

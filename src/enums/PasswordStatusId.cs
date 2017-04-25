@@ -20,17 +20,17 @@ namespace Avalara.AvaTax.RestClient
     public enum PasswordStatusId
     {
         /// <summary>
-        /// 
+        /// UserCannotChange
         /// </summary>
         UserCannotChange,
 
         /// <summary>
-        /// 
+        /// UserCanChange
         /// </summary>
         UserCanChange,
 
         /// <summary>
-        /// 
+        /// UserMustChange
         /// </summary>
         UserMustChange,
 

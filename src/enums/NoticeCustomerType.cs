@@ -15,32 +15,32 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// NoticeCustomerType
+    /// Filing Frequency types
     /// </summary>
     public enum NoticeCustomerType
     {
         /// <summary>
-        /// 
+        /// AvaTax Returns
         /// </summary>
         AvaTaxReturns,
 
         /// <summary>
-        /// 
+        /// Stand Alone
         /// </summary>
         StandAlone,
 
         /// <summary>
-        /// 
+        /// Strategic
         /// </summary>
         Strategic,
 
         /// <summary>
-        /// 
+        /// SST
         /// </summary>
         SST,
 
         /// <summary>
-        /// 
+        /// TrustFile
         /// </summary>
         TrustFile,
 

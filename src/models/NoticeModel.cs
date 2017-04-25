@@ -17,9 +17,9 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a letter received from a tax authority regarding tax filing.
-        ///These letters often have the warning "Notice" printed at the top, which is why
-        ///they are called "Notices".
+    /// Represents a letter received from a tax authority regarding tax filing.        ///
+        ///        ///These letters often have the warning "Notice" printed at the top, which is why        ///
+        ///        ///they are called "Notices".
     /// </summary>
     public class NoticeModel
     {
@@ -36,7 +36,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The status id of the notice
         /// </summary>
-        public Int32? statusId { get; set; }
+        public Int32 statusId { get; set; }
 
         /// <summary>
         /// The status of the notice
@@ -46,12 +46,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The received date of the notice
         /// </summary>
-        public DateTime? receivedDate { get; set; }
+        public DateTime receivedDate { get; set; }
 
         /// <summary>
         /// The closed date of the notice
         /// </summary>
         public DateTime? closedDate { get; set; }
+
+        /// <summary>
+        /// The total remmitance amount for the notice
+        /// </summary>
+        public Decimal? totalRemit { get; set; }
 
         /// <summary>
         /// NoticeCustomerTypeID can be retrieved from the definitions API
@@ -111,7 +116,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The notice reason id
         /// </summary>
-        public Int32? reasonId { get; set; }
+        public Int32 reasonId { get; set; }
 
         /// <summary>
         /// The notice reason

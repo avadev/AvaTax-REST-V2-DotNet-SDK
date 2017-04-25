@@ -15,22 +15,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// OutletTypeId
+    /// A list of possible OutletTypeIds.
     /// </summary>
     public enum OutletTypeId
     {
         /// <summary>
-        /// 
+        /// File a single return
         /// </summary>
         None,
 
         /// <summary>
-        /// 
+        /// File a single return with consolidated information about outlets
         /// </summary>
         Schedule,
 
         /// <summary>
-        /// 
+        /// File a separate form for each outlet
         /// </summary>
         Duplicate,
 

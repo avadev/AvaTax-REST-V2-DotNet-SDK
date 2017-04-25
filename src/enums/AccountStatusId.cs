@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// AccountStatusId
+    /// Status of an Avalara account
     /// </summary>
     public enum AccountStatusId
     {
         /// <summary>
-        /// 
+        /// This account is not currently active.
         /// </summary>
         Inactive,
 
         /// <summary>
-        /// 
+        /// This account is active and in use.
         /// </summary>
         Active,
 
         /// <summary>
-        /// 
+        /// This account is flagged as a test account and may be temporary.
         /// </summary>
         Test,
 
         /// <summary>
-        /// 
+        /// The account is new and is currently in the onboarding process.
         /// </summary>
         New,
 

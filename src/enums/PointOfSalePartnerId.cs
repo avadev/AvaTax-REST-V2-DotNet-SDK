@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// PointOfSalePartnerId
+    /// 
     /// </summary>
     public enum PointOfSalePartnerId
     {

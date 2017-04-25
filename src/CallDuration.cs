@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+#if PORTABLE
 using System.Threading.Tasks;
+using System.Linq;
+#endif
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -31,7 +33,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public TimeSpan ParseDuration { get; set; }
 
-        #region Implementation
+#region Implementation
         /// <summary>
         /// Constructor
         /// </summary>
@@ -86,9 +88,7 @@ namespace Avalara.AvaTax.RestClient
         {
             return $"Setup: {SetupDuration} Server: {ServerDuration} Transit: {TransitDuration} Parse: {ParseDuration}";
         }
-        #endregion
 
-        #region Implementation
         /// <summary>
         /// Keep track of time since last checkpoint
         /// </summary>
@@ -105,6 +105,6 @@ namespace Avalara.AvaTax.RestClient
             _checkpoint = newCheckpoint;
             return ts;
         }
-        #endregion
+#endregion
     }
 }

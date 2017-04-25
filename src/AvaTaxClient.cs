@@ -33,6 +33,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public CallDuration LastCallTime { get; set; }
 
+        /// <summary>
+        /// Returns the version of the SDK that was compiled
+        /// </summary>
+#if PORTABLE
+        public static readonly string SDK_TYPE = "PORTABLE";
+#endif
+#if NET20
+        public static readonly string SDK_TYPE = "NET20";
+#endif
 
         #region Constructor
         /// <summary>

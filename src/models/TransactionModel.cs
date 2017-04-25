@@ -52,10 +52,10 @@ namespace Avalara.AvaTax.RestClient
         public DocumentStatus? status { get; set; }
 
         /// <summary>
-        /// The type of the transaction. For Returns customers, a transaction type of "Invoice" will be reported to the tax authorities.
-        ///A sales transaction represents a sale from the company to a customer. A purchase transaction represents a purchase made by the company.
-        ///A return transaction represents a customer who decided to request a refund after purchasing a product from the company. An inventory 
-        ///transfer transaction represents goods that were moved from one location of the company to another location without changing ownership.
+        /// The type of the transaction. For Returns customers, a transaction type of "Invoice" will be reported to the tax authorities.        ///
+        ///        ///A sales transaction represents a sale from the company to a customer. A purchase transaction represents a purchase made by the company.        ///
+        ///        ///A return transaction represents a customer who decided to request a refund after purchasing a product from the company. An inventory         ///
+        ///        ///transfer transaction represents goods that were moved from one location of the company to another location without changing ownership.
         /// </summary>
         public DocumentType? type { get; set; }
 
@@ -90,8 +90,8 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? reconciled { get; set; }
 
         /// <summary>
-        /// If this transaction was made from a specific reporting location, this is the code string of the location.
-        ///For customers using Returns, this indicates how tax will be reported according to different locations on the tax forms.
+        /// If this transaction was made from a specific reporting location, this is the code string of the location.        ///
+        ///        ///For customers using Returns, this indicates how tax will be reported according to different locations on the tax forms.
         /// </summary>
         public String locationCode { get; set; }
 
@@ -176,8 +176,8 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
-        /// If this transaction was adjusted, this indicates the version number of this transaction. Incremented each time the transaction
-        ///is adjusted.
+        /// If this transaction was adjusted, this indicates the version number of this transaction. Incremented each time the transaction        ///
+        ///        ///is adjusted.
         /// </summary>
         public Int32? version { get; set; }
 

@@ -17,10 +17,10 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// This object is used to keep track of custom information about a company.
-        ///A setting can refer to any type of data you need to remember about this company object.
-        ///When creating this object, you may define your own "set", "name", and "value" parameters.
-        ///To define your own values, please choose a "set" name that begins with "X-" to indicate an extension.
+    /// This object is used to keep track of custom information about a company.        ///
+        ///        ///A setting can refer to any type of data you need to remember about this company object.        ///
+        ///        ///When creating this object, you may define your own "set", "name", and "value" parameters.        ///
+        ///        ///To define your own values, please choose a "set" name that begins with "X-" to indicate an extension.
     /// </summary>
     public class SettingModel
     {

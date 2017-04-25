@@ -27,8 +27,8 @@ namespace Avalara.AvaTax.RestClient
         public TaxOverrideType? type { get; set; }
 
         /// <summary>
-        /// Indicates a total override of the calculated tax on the document. AvaTax will distribute
-        ///the override across all the lines.
+        /// Indicates a total override of the calculated tax on the document. AvaTax will distribute        ///
+        ///        ///the override across all the lines.
         /// </summary>
         public Decimal? taxAmount { get; set; }
 

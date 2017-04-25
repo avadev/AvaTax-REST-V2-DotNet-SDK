@@ -67,24 +67,24 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isActive { get; set; }
 
         /// <summary>
-        /// For United States companies, this field contains your Taxpayer Identification Number. 
-        ///This is a nine digit number that is usually called an EIN for an Employer Identification Number if this company is a corporation, 
-        ///or SSN for a Social Security Number if this company is a person.
-        ///This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services, 
-        ///but it is optional if you do not subscribe to either of those services.
+        /// For United States companies, this field contains your Taxpayer Identification Number.         ///
+        ///        ///This is a nine digit number that is usually called an EIN for an Employer Identification Number if this company is a corporation,         ///
+        ///        ///or SSN for a Social Security Number if this company is a person.        ///
+        ///        ///This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services,         ///
+        ///        ///but it is optional if you do not subscribe to either of those services.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
 
         /// <summary>
-        /// Set this flag to true to give this company its own unique tax profile.
-        ///If this flag is true, this company will have its own Nexus, TaxRule, TaxCode, and Item definitions.
-        ///If this flag is false, this company will inherit all profile values from its parent.
+        /// Set this flag to true to give this company its own unique tax profile.        ///
+        ///        ///If this flag is true, this company will have its own Nexus, TaxRule, TaxCode, and Item definitions.        ///
+        ///        ///If this flag is false, this company will inherit all profile values from its parent.
         /// </summary>
         public Boolean? hasProfile { get; set; }
 
         /// <summary>
-        /// Set this flag to true if this company must file its own tax returns.
-        ///For users who have Returns enabled, this flag turns on monthly Worksheet generation for the company.
+        /// Set this flag to true if this company must file its own tax returns.        ///
+        ///        ///For users who have Returns enabled, this flag turns on monthly Worksheet generation for the company.
         /// </summary>
         public Boolean? isReportingEntity { get; set; }
 
@@ -114,8 +114,8 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? warningsEnabled { get; set; }
 
         /// <summary>
-        /// Set this flag to true to indicate that this company is a test company.
-        ///If you have Returns enabled, Test companies will not file tax returns and can be used for validation purposes.
+        /// Set this flag to true to indicate that this company is a test company.        ///
+        ///        ///If you have Returns enabled, Test companies will not file tax returns and can be used for validation purposes.
         /// </summary>
         public Boolean? isTest { get; set; }
 
@@ -125,8 +125,8 @@ namespace Avalara.AvaTax.RestClient
         public TaxDependencyLevelId? taxDependencyLevelId { get; set; }
 
         /// <summary>
-        /// Set this value to true to indicate that you are still working to finish configuring this company.
-        ///While this value is true, no tax reporting will occur and the company will not be usable for transactions.
+        /// Set this value to true to indicate that you are still working to finish configuring this company.        ///
+        ///        ///While this value is true, no tax reporting will occur and the company will not be usable for transactions.
         /// </summary>
         public Boolean? inProgress { get; set; }
 

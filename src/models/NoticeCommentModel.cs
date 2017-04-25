@@ -24,15 +24,15 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this notice.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// 
+        /// The ID of the notice this comment is attached too
         /// </summary>
         public Int32 noticeId { get; set; }
 
         /// <summary>
-        /// 
+        /// The date this comment was entered
         /// </summary>
         public DateTime? date { get; set; }
 
@@ -59,7 +59,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// taxNoticeCommentType
         /// </summary>
-        public String commentType { get; set; }
+        public CommentType commentType { get; set; }
 
         /// <summary>
         /// TaxNoticeCommentLink

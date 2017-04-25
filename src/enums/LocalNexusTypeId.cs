@@ -15,22 +15,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// LocalNexusTypeId
+    /// Describes nexus type id
     /// </summary>
     public enum LocalNexusTypeId
     {
         /// <summary>
-        /// 
+        /// Selected
         /// </summary>
         Selected,
 
         /// <summary>
-        /// 
+        /// StateAdministered
         /// </summary>
         StateAdministered,
 
         /// <summary>
-        /// 
+        /// All
         /// </summary>
         All,
 

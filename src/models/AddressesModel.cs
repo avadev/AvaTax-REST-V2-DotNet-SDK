@@ -42,8 +42,8 @@ namespace Avalara.AvaTax.RestClient
         public AddressLocationInfo pointOfOrderOrigin { get; set; }
 
         /// <summary>
-        /// The place of business where you accept/approve the customer’s order,
-        ///thereby becoming contractually obligated to make the sale.
+        /// The place of business where you accept/approve the customer’s order,        ///
+        ///        ///thereby becoming contractually obligated to make the sale.
         /// </summary>
         public AddressLocationInfo pointOfOrderAcceptance { get; set; }
 

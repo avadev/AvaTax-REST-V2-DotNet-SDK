@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// ErrorCodeId
+    /// Represents a error code message
     /// </summary>
     public enum ErrorCodeId
     {
         /// <summary>
-        /// 
+        /// Server has a configuration or setup problem
         /// </summary>
         ServerConfiguration,
 
         /// <summary>
-        /// 
+        /// User doesn't have rights to this account or company
         /// </summary>
         AccountInvalidException,
 
@@ -35,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         CompanyInvalidException,
 
         /// <summary>
-        /// 
+        /// Use this error message when the user is trying to fetch a single object and the object either does not exist or cannot be seen by the current user.
         /// </summary>
         EntityNotFoundError,
 
@@ -482,6 +482,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidConfigurationSetting,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidConfigurationValue,
+
+        /// <summary>
+        /// Batch errors
+        /// </summary>
         BatchSalesAuditMustBeZippedError,
 
         /// <summary>
@@ -495,7 +505,7 @@ namespace Avalara.AvaTax.RestClient
         BatchInvalidFileTypeError,
 
         /// <summary>
-        /// 
+        /// Point Of Sale API exceptions
         /// </summary>
         PointOfSaleFileSize,
 
@@ -505,7 +515,7 @@ namespace Avalara.AvaTax.RestClient
         PointOfSaleSetup,
 
         /// <summary>
-        /// 
+        /// Errors in Soap V1 Passthrough / GetTax calls
         /// </summary>
         GetTaxError,
 
@@ -580,17 +590,17 @@ namespace Avalara.AvaTax.RestClient
         InvalidDocumentTypesToFetch,
 
         /// <summary>
-        /// 
+        /// Represents a malformed document fetch command
         /// </summary>
         BadDocumentFetch,
 
         /// <summary>
-        /// 
+        /// Represents a SQL server timeout error / deadlock error
         /// </summary>
         ServerUnreachable,
 
         /// <summary>
-        /// 
+        /// Partner API error codes
         /// </summary>
         SubscriptionRequired,
 
@@ -620,7 +630,7 @@ namespace Avalara.AvaTax.RestClient
         FreeTrialNotAvailable,
 
         /// <summary>
-        /// 
+        /// Refund API error codes
         /// </summary>
         InvalidDocumentStatusForRefund,
 
@@ -665,9 +675,49 @@ namespace Avalara.AvaTax.RestClient
         RefundPercentageOutOfRange,
 
         /// <summary>
-        /// 
+        /// Free API error codes
         /// </summary>
         TaxRateNotAvailableForFreeInThisCountry,
+
+        /// <summary>
+        /// Filing Calendar Error Codes
+        /// </summary>
+        FilingCalendarCannotBeDeleted,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidEffectiveDate,
+
+        /// <summary>
+        /// Location error codes
+        /// </summary>
+        QuestionNotNeededForThisAddress,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        QuestionNotValidForThisAddress,
+
+        /// <summary>
+        /// Create or update transaction error codes
+        /// </summary>
+        CannotModifyLockedTransaction,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LineAlreadyExists,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LineDoesNotExist,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LinesNotSpecified,
 
     }
 }
