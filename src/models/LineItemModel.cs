@@ -92,7 +92,12 @@ namespace Avalara.AvaTax.RestClient
         public String description { get; set; }
 
         /// <summary>
-        /// BusinessIdentificationNo
+        /// VAT business identification number for the customer for this line item. If you leave this field empty,
+        /// this line item will use whatever business identification number you provided at the transaction level.
+        /// 
+        /// If you specify a VAT business identification number for the customer in this transaction and you have also set up
+        /// a business identification number for your company during company setup, this transaction will be treated as a 
+        /// business-to-business transaction for VAT purposes and it will be calculated according to VAT tax rules.
         /// </summary>
         public String businessIdentificationNo { get; set; }
 
@@ -102,8 +107,8 @@ namespace Avalara.AvaTax.RestClient
         public TaxOverrideModel taxOverride { get; set; }
 
         /// <summary>
-        /// Special parameters that apply to this line within this transaction.        ///
-        ///        ///To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
+        /// Special parameters that apply to this line within this transaction.
+        /// To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
 

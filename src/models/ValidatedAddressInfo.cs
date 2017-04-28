@@ -22,13 +22,13 @@ namespace Avalara.AvaTax.RestClient
     public class ValidatedAddressInfo
     {
         /// <summary>
-        /// Address type code. One of:         ///
-        ///        ///* F - Firm or company address        ///
-        ///        ///* G - General Delivery address        ///
-        ///        ///* H - High-rise or business complex        ///
-        ///        ///* P - PO Box address        ///
-        ///        ///* R - Rural route address        ///
-        ///        ///* S - Street or residential address
+        /// Address type code. One of: 
+        /// * F - Firm or company address
+        /// * G - General Delivery address
+        /// * H - High-rise or business complex
+        /// * P - PO Box address
+        /// * R - Rural route address
+        /// * S - Street or residential address
         /// </summary>
         public String addressType { get; set; }
 

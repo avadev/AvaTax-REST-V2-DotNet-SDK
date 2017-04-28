@@ -26,27 +26,27 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Indicates the entity is voluntarily collecting tax (default)
-        /// 
-        /// This has replaced Collect
+        ///  
+        ///  This has replaced Collect
         /// </summary>
         SalesOrSellersUseTax,
 
         /// <summary>
         /// Indicates the entity is required to collect tax in the state
-        /// 
-        /// This has replaced Legal
+        ///  
+        ///  This has replaced Legal
         /// </summary>
         SalesTax,
 
         /// <summary>
         /// Indicates the entity is registered as a Volunteer in an SST state.
-        /// Only your SST administrator may set this option.
+        ///  Only your SST administrator may set this option.
         /// </summary>
         SSTVolunteer,
 
         /// <summary>
         /// Indicates the entity is registered as a Non-Volunteer in an SST state.
-        /// Only your SST administrator may set this option.
+        ///  Only your SST administrator may set this option.
         /// </summary>
         SSTNonVolunteer,
 

@@ -32,16 +32,16 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The month of the filing period for this tax filing.         ///
-        ///        ///The filing period represents the year and month of the last day of taxes being reported on this filing.         ///
-        ///        ///For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
+        /// The month of the filing period for this tax filing. 
+        /// The filing period represents the year and month of the last day of taxes being reported on this filing. 
+        /// For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
         /// </summary>
         public Byte? month { get; set; }
 
         /// <summary>
-        /// The year of the filing period for this tax filing.        ///
-        ///        ///The filing period represents the year and month of the last day of taxes being reported on this filing.         ///
-        ///        ///For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
+        /// The year of the filing period for this tax filing.
+        /// The filing period represents the year and month of the last day of taxes being reported on this filing. 
+        /// For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
         /// </summary>
         public Int16? year { get; set; }
 

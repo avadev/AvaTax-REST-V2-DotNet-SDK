@@ -490,6 +490,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidConfigurationValue,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidEnumValue,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -688,6 +693,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidEffectiveDate,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NonOutletForm,
 
         /// <summary>
         /// Location error codes

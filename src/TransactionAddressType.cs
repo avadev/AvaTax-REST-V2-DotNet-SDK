@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 /*
  * AvaTax API Client Library

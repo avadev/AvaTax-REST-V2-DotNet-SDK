@@ -32,8 +32,8 @@ namespace Avalara.AvaTax.RestClient
         public String message { get; set; }
 
         /// <summary>
-        /// Whether or not the user should be warned of a change, because some changes are risky and may be being done not in accordance with jurisdiction rules.        ///
-        ///        ///For example, user would be warned if user changes filing frequency to new frequency with a start date during an accrual month of the existing frequency.
+        /// Whether or not the user should be warned of a change, because some changes are risky and may be being done not in accordance with jurisdiction rules.
+        /// For example, user would be warned if user changes filing frequency to new frequency with a start date during an accrual month of the existing frequency.
         /// </summary>
         public Boolean? customerMustApprove { get; set; }
 

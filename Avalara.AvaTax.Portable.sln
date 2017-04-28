@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netstandard", "netstandard", "{B2853177-1857-4F2D-957D-2C46E23FF8E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalara.AvaTax.RestClient.netstandard", "src\Avalara.AvaTax.RestClient.netstandard.csproj", "{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalara.AvaTax.netstandard", "src\Avalara.AvaTax.netstandard.csproj", "{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Avalara.AvaTax.RestClient.netstandard", "tests\netstandard\Tests.Avalara.AvaTax.RestClient.netstandard.csproj", "{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Avalara.AvaTax.netstandard", "tests\netstandard\Tests.Avalara.AvaTax.netstandard.csproj", "{CC417F2D-AB4A-4B6C-85A0-C2C3E9520909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

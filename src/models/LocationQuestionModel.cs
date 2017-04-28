@@ -32,8 +32,8 @@ namespace Avalara.AvaTax.RestClient
         public String question { get; set; }
 
         /// <summary>
-        /// If additional information is available about the location setting, this contains descriptive text to help        ///
-        ///        ///you identify the correct value to provide in this setting.
+        /// If additional information is available about the location setting, this contains descriptive text to help
+        /// you identify the correct value to provide in this setting.
         /// </summary>
         public String description { get; set; }
 

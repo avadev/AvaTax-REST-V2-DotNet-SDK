@@ -16,7 +16,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Jurisdiction boundary precision level found for address. This depends on the accuracy of the address
-        /// as well as the precision level of the state provided jurisdiction boundaries.
+    ///  as well as the precision level of the state provided jurisdiction boundaries.
     /// </summary>
     public enum BoundaryLevel
     {

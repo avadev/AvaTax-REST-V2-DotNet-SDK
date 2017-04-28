@@ -17,8 +17,8 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a commitment to file a tax return on a recurring basis.        ///
-        ///        ///Only used if you subscribe to Avalara Returns.
+    /// Represents a commitment to file a tax return on a recurring basis.
+    /// Only used if you subscribe to Avalara Returns.
     /// </summary>
     public class FilingRequestModel
     {

@@ -17,9 +17,9 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a letter received from a tax authority regarding tax filing.        ///
-        ///        ///These letters often have the warning "Notice" printed at the top, which is why        ///
-        ///        ///they are called "Notices".
+    /// Represents a letter received from a tax authority regarding tax filing.
+    /// These letters often have the warning "Notice" printed at the top, which is why
+    /// they are called "Notices".
     /// </summary>
     public class NoticeModel
     {

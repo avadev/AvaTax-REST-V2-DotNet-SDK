@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Document deleted - If committed, document status will be changed to Cancelled. If not committed, document will be
-        /// deleted.
+        ///  deleted.
         /// </summary>
         DocDeleted,
 

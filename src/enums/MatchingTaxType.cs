@@ -16,8 +16,8 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// This data type is only used when an object must "Match" tax types. By specifying options here,
-        /// you can indicate which tax types will match for the purposes of this object.
-        /// For example, if you specify BothSalesAndUseTax, this value matches with both sales and seller's use tax.
+    ///  you can indicate which tax types will match for the purposes of this object.
+    ///  For example, if you specify BothSalesAndUseTax, this value matches with both sales and seller's use tax.
     /// </summary>
     public enum MatchingTaxType
     {

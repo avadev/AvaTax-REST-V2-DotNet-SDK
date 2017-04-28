@@ -37,14 +37,14 @@ namespace Avalara.AvaTax.RestClient
         public String itemCode { get; set; }
 
         /// <summary>
-        /// The unique ID number of the tax code that is applied when selling this item.        ///
-        ///        ///When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
+        /// The unique ID number of the tax code that is applied when selling this item.
+        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
-        /// The unique code string of the Tax Code that is applied when selling this item.        ///
-        ///        ///When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
+        /// The unique code string of the Tax Code that is applied when selling this item.
+        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
         /// </summary>
         public String taxCode { get; set; }
 

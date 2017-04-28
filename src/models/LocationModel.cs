@@ -17,8 +17,8 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A location where this company does business.        ///
-        ///        ///Some jurisdictions may require you to list all locations where your company does business.
+    /// A location where this company does business.
+    /// Some jurisdictions may require you to list all locations where your company does business.
     /// </summary>
     public class LocationModel
     {
@@ -153,9 +153,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
-        /// Extra information required by certain jurisdictions for filing.        ///
-        ///        ///For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions".         ///
-        ///        ///To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
+        /// Extra information required by certain jurisdictions for filing.
+        /// For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions". 
+        /// To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
         /// </summary>
         public List<LocationSettingModel> settings { get; set; }
 

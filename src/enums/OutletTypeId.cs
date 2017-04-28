@@ -15,24 +15,31 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A list of possible OutletTypeIds.
+    /// Indicates the behavior of a tax form for a company with multiple places of business.
+    ///  
+    ///  Some tax authorities require that a separate form must be filed for each place of business.
     /// </summary>
     public enum OutletTypeId
     {
         /// <summary>
-        /// File a single return
+        /// File a single return per cycle for your entire business.
         /// </summary>
         None,
 
         /// <summary>
-        /// File a single return with consolidated information about outlets
+        /// You may file separate forms for each outlet; contact the tax authority for more details about location based reporting requirements.
         /// </summary>
         Schedule,
 
         /// <summary>
-        /// File a separate form for each outlet
+        /// You may file separate forms for each outlet; contact the tax authority for more details about location based reporting requirements.
         /// </summary>
         Duplicate,
+
+        /// <summary>
+        /// File a single return, but you must have a line item for each place of business.
+        /// </summary>
+        Consolidated,
 
     }
 }

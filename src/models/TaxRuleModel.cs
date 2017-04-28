@@ -32,14 +32,14 @@ namespace Avalara.AvaTax.RestClient
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// The unique ID number of the tax code for this rule.        ///
-        ///        ///When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
+        /// The unique ID number of the tax code for this rule.
+        /// When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
-        /// The code string of the tax code for this rule.        ///
-        ///        ///When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
+        /// The code string of the tax code for this rule.
+        /// When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
         /// </summary>
         public String taxCode { get; set; }
 
@@ -84,10 +84,10 @@ namespace Avalara.AvaTax.RestClient
         public String rateTypeCode { get; set; }
 
         /// <summary>
-        /// This type value determines the behavior of the tax rule.        ///
-        ///        ///You can specify that this rule controls the product's taxability or exempt / nontaxable status, the product's rate         ///
-        ///        ///(for example, if you have been granted an official ruling for your product's rate that differs from the official rate),         ///
-        ///        ///or other types of behavior.
+        /// This type value determines the behavior of the tax rule.
+        /// You can specify that this rule controls the product's taxability or exempt / nontaxable status, the product's rate 
+        /// (for example, if you have been granted an official ruling for your product's rate that differs from the official rate), 
+        /// or other types of behavior.
         /// </summary>
         public TaxRuleTypeId? taxRuleTypeId { get; set; }
 
