@@ -36,11 +36,14 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version of the SDK that was compiled
         /// </summary>
-#if PORTABLE
-        public static readonly string SDK_TYPE = "PORTABLE";
+#if NET45
+        public static string SDK_TYPE { get { return "NET45"; } }
+#endif
+#if PORTABLE && !NET45
+        public static string SDK_TYPE { get { return "PORTABLE"; } }
 #endif
 #if NET20
-        public static readonly string SDK_TYPE = "NET20";
+        public static string SDK_TYPE { get { return "NET20"; } }
 #endif
 
         #region Constructor

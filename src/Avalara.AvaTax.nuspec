@@ -27,8 +27,8 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\net20\*" target="lib\net20" />
-        <file src="bin\Release\net45\*" target="lib\net45" />
-        <file src="bin\Release\netstandard1.0\*" target="lib\netstandard1.0" />
+        <file src="bin\Release\net20\Avalara*" target="lib\net20" />
+        <file src="bin\Release\net45\Avalara*" target="lib\net45" />
+        <file src="bin\Release\netstandard1.0\Avalara*" target="lib\netstandard1.0" />
     </files>
 </package>
