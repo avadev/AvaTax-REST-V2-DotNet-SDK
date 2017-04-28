@@ -7,9 +7,9 @@ install:
   - nuget install NUnit -Version 3.6.0 -OutputDirectory nunit
   - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
 script:
-  - xbuild restore Avalara.AvaTax.Net20.sln
-  - xbuild restore Avalara.AvaTax.net45.sln
-  - xbuild restore Avalara.AvaTax.Portable.sln
+  - xbuild Avalara.AvaTax.Net20.sln
+  - xbuild Avalara.AvaTax.net45.sln
+  - xbuild Avalara.AvaTax.Portable.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net20/bin/Debug/Tests.Avalara.AvaTax.RestClient.net20.dll
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/netstandard/bin/Debug/Tests.Avalara.AvaTax.RestClient.net45.dll
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/netstandard/bin/Debug/Tests.Avalara.AvaTax.RestClient.netstandard.dll
