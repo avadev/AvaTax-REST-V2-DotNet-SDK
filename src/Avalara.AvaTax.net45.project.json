@@ -4,10 +4,9 @@
     "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
-    ".NETFramework,Version=v4.5": {}
+    "net45": {}
   },
   "runtimes": {
-    "win": { 
-    }
+    "win": {}
   }
 }
