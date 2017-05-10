@@ -495,6 +495,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidEnumValue,
 
         /// <summary>
+        /// 
+        /// </summary>
+        TaxCodeAssociatedTaxRule,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotSwitchAccountId,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,

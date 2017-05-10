@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.5.0-509
+ * @version    17.5.0-67
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.5.0-509"; } }
+        public static string API_VERSION { get { return "17.5.0-67"; } }
 
 #region Methods
 
@@ -47,6 +47,28 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
             return RestCall<LicenseKeyModel>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Activate an account by accepting terms and conditions
+        /// </summary>
+        /// <remarks>
+        /// Activate the account specified by the unique accountId number.
+        /// 
+        /// This activation request can only be called by account administrators. You must indicate 
+        /// that you have read and accepted Avalara's terms and conditions to call this API.
+        /// 
+        /// If you have not read or accepted the terms and conditions, this API call will return the
+        /// unchanged account model.
+        /// </remarks>
+        /// <param name="id">The ID of the account to activate</param>
+        /// <param name="model">The activation request</param>
+        public AccountModel ActivateAccount(Int32 id, ActivateAccountModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
+            path.ApplyField("id", id);
+            return RestCall<AccountModel>("Post", path, model);
         }
 
 
@@ -4959,6 +4981,28 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
             return await RestCallAsync<LicenseKeyModel>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Activate an account by accepting terms and conditions;
+        /// </summary>
+        /// <remarks>
+        /// Activate the account specified by the unique accountId number.
+        /// 
+        /// This activation request can only be called by account administrators. You must indicate 
+        /// that you have read and accepted Avalara's terms and conditions to call this API.
+        /// 
+        /// If you have not read or accepted the terms and conditions, this API call will return the
+        /// unchanged account model.;
+        /// </remarks>
+        /// <param name="id">The ID of the account to activate</param>
+        /// <param name="model">The activation request</param>
+        public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
+            path.ApplyField("id", id);
+            return await RestCallAsync<AccountModel>("Post", path, model);
         }
 
 
