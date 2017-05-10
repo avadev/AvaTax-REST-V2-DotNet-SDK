@@ -115,6 +115,7 @@
     <Compile Include="AvaTaxClient.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
     <Compile Include="models\AccountModel.cs" />
+    <Compile Include="models\ActivateAccountModel.cs" />
     <Compile Include="models\AddressesModel.cs" />
     <Compile Include="models\AddressInfo.cs" />
     <Compile Include="models\AddressLocationInfo.cs" />
