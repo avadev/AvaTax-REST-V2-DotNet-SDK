@@ -20,32 +20,32 @@ namespace Avalara.AvaTax.RestClient
     public enum TaxRuleTypeId
     {
         /// <summary>
-        /// 
+        /// RateRule
         /// </summary>
         RateRule,
 
         /// <summary>
-        /// 
+        /// RateOverrideRule
         /// </summary>
         RateOverrideRule,
 
         /// <summary>
-        /// 
+        /// BaseRule
         /// </summary>
         BaseRule,
 
         /// <summary>
-        /// 
+        /// ExemptEntityRule
         /// </summary>
         ExemptEntityRule,
 
         /// <summary>
-        /// 
+        /// ProductTaxabilityRule
         /// </summary>
         ProductTaxabilityRule,
 
         /// <summary>
-        /// 
+        /// NexusRule
         /// </summary>
         NexusRule,
 

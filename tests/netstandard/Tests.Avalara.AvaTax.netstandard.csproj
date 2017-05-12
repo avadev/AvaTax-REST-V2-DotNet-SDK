@@ -59,6 +59,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BatchTests.cs" />
+    <Compile Include="FreeTaxRatesTest.cs" />
     <Compile Include="NexusTests.cs" />
     <Compile Include="TransactionTests.cs" />
   </ItemGroup>
@@ -73,7 +74,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Avalara.AvaTax.RestClient.netstandard.csproj">
+    <ProjectReference Include="..\..\src\Avalara.AvaTax.netstandard.csproj">
       <Project>{917bdeca-be80-4b2e-b69e-7f5e67ae84c3}</Project>
       <Name>Avalara.AvaTax.RestClient.netstandard</Name>
     </ProjectReference>

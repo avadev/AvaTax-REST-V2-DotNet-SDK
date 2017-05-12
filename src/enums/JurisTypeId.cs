@@ -15,32 +15,32 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// JurisTypeId
+    /// Types of jurisdiction referenced in a transaction
     /// </summary>
     public enum JurisTypeId
     {
         /// <summary>
-        /// 
+        /// State
         /// </summary>
         STA,
 
         /// <summary>
-        /// 
+        /// County
         /// </summary>
         CTY,
 
         /// <summary>
-        /// 
+        /// City
         /// </summary>
         CIT,
 
         /// <summary>
-        /// 
+        /// Special
         /// </summary>
         STJ,
 
         /// <summary>
-        /// 
+        /// Country
         /// </summary>
         CNT,
 

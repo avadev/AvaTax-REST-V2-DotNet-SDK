@@ -82,7 +82,8 @@ namespace Avalara.AvaTax.RestClient
         public String stateAssignedNo { get; set; }
 
         /// <summary>
-        /// The type of nexus that this company is declaring.
+        /// (DEPRECATED) The type of nexus that this company is declaring.
+        /// Please use NexusTaxTypeGroupId instead.
         /// </summary>
         public NexusTypeId? nexusTypeId { get; set; }
 
@@ -93,13 +94,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// True if you are also declaring local nexus within this jurisdiction.
-        ///Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
+        /// Many U.S. states have options for declaring nexus in local jurisdictions as well as within the state.
         /// </summary>
         public Boolean? hasLocalNexus { get; set; }
 
         /// <summary>
         /// If you are declaring local nexus within this jurisdiction, this indicates whether you are declaring only 
-        ///a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
+        /// a specified list of local jurisdictions, all state-administered local jurisdictions, or all local jurisdictions.
         /// </summary>
         public LocalNexusTypeId? localNexusTypeId { get; set; }
 
@@ -115,7 +116,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// For the United States, this flag indicates whether this particular nexus falls within a U.S. State that participates 
-        ///in the Streamlined Sales Tax program. For countries other than the US, this flag is null.
+        /// in the Streamlined Sales Tax program. For countries other than the US, this flag is null.
         /// </summary>
         public Boolean? streamlinedSalesTax { get; set; }
 
@@ -138,6 +139,12 @@ namespace Avalara.AvaTax.RestClient
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// The type of nexus that this company is declaring.Replaces NexusTypeId.
+        /// Use /api/v2/definitions/nexustaxtypegroup for a list of tax type groups.
+        /// </summary>
+        public String nexusTaxTypeGroup { get; set; }
 
 
         /// <summary>

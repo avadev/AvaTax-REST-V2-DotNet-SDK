@@ -20,22 +20,22 @@ namespace Avalara.AvaTax.RestClient
     public enum TaxDependencyLevelId
     {
         /// <summary>
-        /// 
+        /// Document
         /// </summary>
         Document,
 
         /// <summary>
-        /// 
+        /// State
         /// </summary>
         State,
 
         /// <summary>
-        /// 
+        /// TaxRegion
         /// </summary>
         TaxRegion,
 
         /// <summary>
-        /// 
+        /// Address
         /// </summary>
         Address,
 

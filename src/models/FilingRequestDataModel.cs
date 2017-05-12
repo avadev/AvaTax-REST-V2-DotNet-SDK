@@ -18,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a commitment to file a tax return on a recurring basis.
-        ///Only used if you subscribe to Avalara Returns.
+    /// Only used if you subscribe to Avalara Returns.
     /// </summary>
     public class FilingRequestDataModel
     {
@@ -60,7 +60,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Filing cycle effective date of the request
         /// </summary>
-        public DateTime? effDate { get; set; }
+        public DateTime effDate { get; set; }
 
         /// <summary>
         /// Filing cycle end date of the request

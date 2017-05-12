@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Returns
+    /// Filing Returns Model
     /// </summary>
     public class FilingReturnModel
     {
@@ -27,9 +27,19 @@ namespace Avalara.AvaTax.RestClient
         public Int64? id { get; set; }
 
         /// <summary>
+        /// The region id that this return belongs too
+        /// </summary>
+        public Int64? filingRegionId { get; set; }
+
+        /// <summary>
         /// The unique ID number of the filing calendar associated with this return.
         /// </summary>
         public Int64? filingCalendarId { get; set; }
+
+        /// <summary>
+        /// The resourceFileId of the return. Will be null if not available.
+        /// </summary>
+        public Int64? resourceFileId { get; set; }
 
         /// <summary>
         /// Tax Authority ID of this return
@@ -50,6 +60,16 @@ namespace Avalara.AvaTax.RestClient
         /// The date the return was filed by Avalara.
         /// </summary>
         public DateTime? filedDate { get; set; }
+
+        /// <summary>
+        /// The start date of this return
+        /// </summary>
+        public DateTime? startPeriod { get; set; }
+
+        /// <summary>
+        /// The end date of this return
+        /// </summary>
+        public DateTime? endPeriod { get; set; }
 
         /// <summary>
         /// The sales amount.
@@ -90,6 +110,11 @@ namespace Avalara.AvaTax.RestClient
         /// The tax amount.
         /// </summary>
         public Decimal? taxAmount { get; set; }
+
+        /// <summary>
+        /// The amount collected by avalara for this return
+        /// </summary>
+        public Decimal? collectAmount { get; set; }
 
         /// <summary>
         /// The tax due amount.
@@ -145,6 +170,35 @@ namespace Avalara.AvaTax.RestClient
         /// Accrual type of the return
         /// </summary>
         public AccrualType? accrualType { get; set; }
+
+        /// <summary>
+        /// The month of the filing period for this tax filing. 
+        /// The filing period represents the year and month of the last day of taxes being reported on this filing. 
+        /// For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
+        /// </summary>
+        public Byte? month { get; set; }
+
+        /// <summary>
+        /// The year of the filing period for this tax filing.
+        /// The filing period represents the year and month of the last day of taxes being reported on this filing. 
+        /// For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
+        /// </summary>
+        public Int32? year { get; set; }
+
+        /// <summary>
+        /// The date when this record was created.
+        /// </summary>
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// The User ID of the user who created this record.
+        /// </summary>
+        public Int32? createdUserId { get; set; }
+
+        /// <summary>
+        /// The date/time when this record was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
 
 
         /// <summary>

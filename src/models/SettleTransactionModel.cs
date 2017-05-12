@@ -18,8 +18,8 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Settle this transaction with your ledger by executing one or many actions against that transaction. 
-        ///You may use this endpoint to verify the transaction, change the transaction's code, and commit the transaction for reporting purposes.
-        ///This endpoint may be used to execute any or all of these actions at once.
+    /// You may use this endpoint to verify the transaction, change the transaction's code, and commit the transaction for reporting purposes.
+    /// This endpoint may be used to execute any or all of these actions at once.
     /// </summary>
     public class SettleTransactionModel
     {
@@ -35,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// To use the "Settle" endpoint to commit a transaction for reporting purposes, fill out this value.
-        ///If you use Avalara Returns, committing a transaction will cause that transaction to be filed.
+        /// If you use Avalara Returns, committing a transaction will cause that transaction to be filed.
         /// </summary>
         public CommitTransactionModel commit { get; set; }
 

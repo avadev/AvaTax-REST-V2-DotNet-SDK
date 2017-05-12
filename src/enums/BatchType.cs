@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// BatchType
+    /// The type of data contained in this batch
     /// </summary>
     public enum BatchType
     {
@@ -70,7 +70,8 @@ namespace Avalara.AvaTax.RestClient
         TaxRuleImport,
 
         /// <summary>
-        /// 
+        /// This batch type represents tax transaction data being uploaded to AvaTax. Each line in the batch represents a single transaction
+        ///  or a line in a multi-line transaction. For reference, see [Batched Transactions in REST v2](http://developer.avalara.com/blog/2016/10/24/batch-transaction-upload-in-rest-v2)
         /// </summary>
         TransactionImport,
 

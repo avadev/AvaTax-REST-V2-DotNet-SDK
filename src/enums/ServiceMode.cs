@@ -15,22 +15,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// ServiceMode
+    /// Service modes for tax calculation when using an AvaLocal server.
     /// </summary>
     public enum ServiceMode
     {
         /// <summary>
-        /// 
+        /// Automatically use local or remote (default)
         /// </summary>
         Automatic,
 
         /// <summary>
-        /// 
+        /// Local server only
         /// </summary>
         Local,
 
         /// <summary>
-        /// 
+        /// Remote server only
         /// </summary>
         Remote,
 

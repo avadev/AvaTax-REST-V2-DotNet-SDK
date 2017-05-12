@@ -22,19 +22,19 @@ namespace Avalara.AvaTax.RestClient
     public class CreateTransactionModel
     {
         /// <summary>
-        /// Document Type
+        /// Document Type: if not specified, a document with type of SalesOrder will be created by default
         /// </summary>
         public DocumentType? type { get; set; }
 
         /// <summary>
         /// Transaction Code - the internal reference code used by the client application. This is used for operations such as
-        ///Get, Adjust, Settle, and Void. If you leave the transaction code blank, a GUID will be assigned to each transaction.
+        /// Get, Adjust, Settle, and Void. If you leave the transaction code blank, a GUID will be assigned to each transaction.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
         /// Company Code - Specify the code of the company creating this transaction here. If you leave this value null,
-        ///your account's default company will be used instead.
+        /// your account's default company will be used instead.
         /// </summary>
         public String companyCode { get; set; }
 
@@ -54,17 +54,21 @@ namespace Avalara.AvaTax.RestClient
         public String customerCode { get; set; }
 
         /// <summary>
-        /// Customer Usage Type - The client application customer or usage type.
+        /// Customer Usage Type - The client application customer or usage type. For a list of 
+        /// available usage types, see `/api/v2/definitions/entityusecodes`.
         /// </summary>
         public String customerUsageType { get; set; }
 
         /// <summary>
-        /// Discount - The discount amount to apply to the document.
+        /// Discount - The discount amount to apply to the document. This value will be applied only to lines
+        /// that have the `discounted` flag set to true. If no lines have `discounted` set to true, this discount
+        /// cannot be applied.
         /// </summary>
         public Decimal? discount { get; set; }
 
         /// <summary>
         /// Purchase Order Number for this document
+        /// This is required for single use exemption certificates to match the order and invoice with the certificate.
         /// </summary>
         public String purchaseOrderNo { get; set; }
 
@@ -85,7 +89,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Special parameters for this transaction.
-        ///To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
+        /// To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
 
@@ -100,7 +104,8 @@ namespace Avalara.AvaTax.RestClient
         public String reportingLocationCode { get; set; }
 
         /// <summary>
-        /// Causes the document to be committed if true.
+        /// Causes the document to be committed if true. This option is only applicable for invoice document 
+        /// types, not orders.
         /// </summary>
         public Boolean? commit { get; set; }
 
@@ -120,7 +125,8 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
-        /// Specifies whether the tax calculation is handled Local, Remote, or Automatic (default)
+        /// Specifies whether the tax calculation is handled Local, Remote, or Automatic (default). This only 
+        /// applies when using an AvaLocal server.
         /// </summary>
         public ServiceMode? serviceMode { get; set; }
 
@@ -140,7 +146,12 @@ namespace Avalara.AvaTax.RestClient
         public String posLaneCode { get; set; }
 
         /// <summary>
-        /// BusinessIdentificationNo
+        /// VAT business identification number for the customer for this transaction. This number will be used for all lines 
+        /// in the transaction, except for those lines where you have defined a different business identification number.
+        /// 
+        /// If you specify a VAT business identification number for the customer in this transaction and you have also set up
+        /// a business identification number for your company during company setup, this transaction will be treated as a 
+        /// business-to-business transaction for VAT purposes and it will be calculated according to VAT tax rules.
         /// </summary>
         public String businessIdentificationNo { get; set; }
 

@@ -2,17 +2,23 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Avalara.AvaTax</id>
-        <version>2.17.4.60</version>
+        <version>17.5.0.67</version>
         <title>Avalara AvaTax SDK</title>
-        <description>Software Development Kit for Avalara's AvaTax suite of business tax calculation and processing services.  Uses the REST v2 API.</description>
+        <description>Add world-class tax estimation and calculation to your project with Avalara's AvaTax suite of APIs and services.</description>
         <authors>Ted Spence, Zhenya Frolov</authors>
         <language>en-US</language>
         <projectUrl>https://developer.avalara.com</projectUrl>
         <iconUrl>https://developer.avalara.com/public/images/favicon/A-Check-RGB.png</iconUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<copyright>(C) 2004-2016, Avalara, Inc.</copyright>
+		<copyright>(C) 2004-2017, Avalara, Inc.</copyright>
         <tags>tax Avalara AvaTax sales taxes ecommerce</tags>
         <dependencies>
+            <group targetFramework="net20">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
+            <group targetFramework="net45">
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
+            </group>
             <group targetFramework=".NETStandard1.1">
                 <dependency id="NETStandard.Library" version="1.6.0" />
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
@@ -22,6 +28,7 @@
     </metadata>
     <files>
         <file src="bin\Release\net20\Avalara*" target="lib\net20" />
-        <file src="bin\Release\dotnet\Avalara*" target="lib\dotnet" />
+        <file src="bin\Release\net45\Avalara*" target="lib\net45" />
+        <file src="bin\Release\netstandard1.0\Avalara*" target="lib\netstandard1.0" />
     </files>
 </package>

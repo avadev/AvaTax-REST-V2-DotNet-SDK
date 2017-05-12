@@ -27,6 +27,11 @@ namespace Avalara.AvaTax.RestClient
         public Int64? id { get; set; }
 
         /// <summary>
+        /// The filing id that this region belongs too
+        /// </summary>
+        public Int64? filingId { get; set; }
+
+        /// <summary>
         /// The two-character ISO-3166 code for the country.
         /// </summary>
         public String country { get; set; }
@@ -55,6 +60,11 @@ namespace Avalara.AvaTax.RestClient
         /// The tax amount due.
         /// </summary>
         public Decimal? taxDueAmount { get; set; }
+
+        /// <summary>
+        /// The amount collected by Avalara for this region
+        /// </summary>
+        public Decimal? collectAmount { get; set; }
 
         /// <summary>
         /// Total remittance amount of all returns in region
@@ -115,6 +125,26 @@ namespace Avalara.AvaTax.RestClient
         /// A list of tax returns in this region.
         /// </summary>
         public List<FilingsCheckupSuggestedFormModel> suggestReturns { get; set; }
+
+        /// <summary>
+        /// The date when this record was created.
+        /// </summary>
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// The User ID of the user who created this record.
+        /// </summary>
+        public Int32? createdUserId { get; set; }
+
+        /// <summary>
+        /// The date/time when this record was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// The user ID of the user who last modified this record.
+        /// </summary>
+        public Int32? modifiedUserId { get; set; }
 
 
         /// <summary>

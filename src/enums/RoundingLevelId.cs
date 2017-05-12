@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// RoundingLevelId
+    /// Choice of rounding level for a transaction
     /// </summary>
     public enum RoundingLevelId
     {
         /// <summary>
-        /// 
+        /// Round tax on each line separately
         /// </summary>
         Line,
 
         /// <summary>
-        /// 
+        /// Round tax at the document level
         /// </summary>
         Document,
 

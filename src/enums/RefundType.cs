@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// RefundType
+    /// Refund types
     /// </summary>
     public enum RefundType
     {
         /// <summary>
-        /// 
+        /// Refund the whole transaction.
         /// </summary>
         Full,
 
         /// <summary>
-        /// 
+        /// Refund only specific lines from the original a transaction.
         /// </summary>
         Partial,
 
         /// <summary>
-        /// 
+        /// Only refund the tax part of the transaction.
         /// </summary>
         TaxOnly,
 
         /// <summary>
-        /// 
+        /// Refund a percentage of the value of this transaction.
         /// </summary>
         Percentage,
 

@@ -18,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a request for a free trial account for AvaTax.
-        ///Free trial accounts are only available on the Sandbox environment.
+    /// Free trial accounts are only available on the Sandbox environment.
     /// </summary>
     public class FreeTrialRequestModel
     {
@@ -39,7 +39,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The company or organizational name for this free trial. If this account is for personal use, it is acceptable 
-        ///to use your full name here.
+        /// to use your full name here.
         /// </summary>
         public String company { get; set; }
 

@@ -43,7 +43,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// For the United States, this flag indicates whether a U.S. State participates in the Streamlined
-        ///Sales Tax program. For countries other than the US, this flag is null.
+        /// Sales Tax program. For countries other than the US, this flag is null.
         /// </summary>
         public Boolean? streamlinedSalesTax { get; set; }
 

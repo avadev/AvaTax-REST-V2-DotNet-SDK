@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Set this value to true to reset the license key for this account.
-        ///This license key reset function will only work when called using the credentials of the account administrator of this account.
+        /// This license key reset function will only work when called using the credentials of the account administrator of this account.
         /// </summary>
         public Boolean confirmResetLicenseKey { get; set; }
 

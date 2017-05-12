@@ -20,17 +20,17 @@ namespace Avalara.AvaTax.RestClient
     public enum Sourcing
     {
         /// <summary>
-        /// 
+        /// Mixed sourcing, for states that do both origin and destination calculation
         /// </summary>
         Mixed,
 
         /// <summary>
-        /// 
+        /// Destination
         /// </summary>
         Destination,
 
         /// <summary>
-        /// 
+        /// Origin
         /// </summary>
         Origin,
 

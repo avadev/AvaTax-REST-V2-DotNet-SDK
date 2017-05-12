@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// If you wish to use the address of an existing location for this company, specify the address here.
-        ///Otherwise, leave this value empty.
+        /// Otherwise, leave this value empty.
         /// </summary>
         public String locationCode { get; set; }
 

@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// CompanyAccessLevel
+    /// Indicates the level of companies that can be accessed
     /// </summary>
     public enum CompanyAccessLevel
     {
         /// <summary>
-        /// 
+        /// No permission to access companies.
         /// </summary>
         None,
 
         /// <summary>
-        /// 
+        /// Permission to access a single company and its children.
         /// </summary>
         SingleCompany,
 
         /// <summary>
-        /// 
+        /// Permission to access all companies in a single account.
         /// </summary>
         SingleAccount,
 
         /// <summary>
-        /// 
+        /// Permission to access all companies in all accounts. Reserved for system administration tasks.
         /// </summary>
         AllCompanies,
 

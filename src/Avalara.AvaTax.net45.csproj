@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BB6B21A0-91B3-43B2-BF4C-531D0504120A}</ProjectGuid>
+    <ProjectGuid>{66CED0CA-099D-4DB6-8DAC-5C84D575A4C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Avalara.AvaTax.RestClient.net20</RootNamespace>
-    <AssemblyName>Avalara.AvaTax.RestClient.net20</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <RootNamespace>Avalara.AvaTax.RestClient.net45</RootNamespace>
+    <AssemblyName>Avalara.AvaTax.RestClient.net45</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -17,27 +17,30 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\net20\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\Debug\net45\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;PORTABLE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\net20\Avalara.AvaTax.RestClient.net20.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\net20\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>bin\Release\net45\</OutputPath>
+    <DefineConstants>TRACE;PORTABLE;NET45</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\net20\Avalara.AvaTax.RestClient.net20.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +52,7 @@
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
     <Compile Include="AvaTaxPath.cs" />
+    <Compile Include="CallDuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="enums\AccountStatusId.cs" />
     <Compile Include="enums\AccrualType.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
+    <Compile Include="enums\CommentType.cs" />
     <Compile Include="enums\CompanyAccessLevel.cs" />
     <Compile Include="enums\DocumentStatus.cs" />
     <Compile Include="enums\DocumentType.cs" />
@@ -101,7 +106,6 @@
     <Compile Include="enums\TaxRuleTypeId.cs" />
     <Compile Include="enums\TaxType.cs" />
     <Compile Include="enums\TextCase.cs" />
-    <Compile Include="enums\TransactionAddressType.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
     <Compile Include="enums\WorksheetTypeId.cs" />
     <Compile Include="ErrorInfo.cs" />
@@ -109,15 +113,19 @@
     <Compile Include="ErrorTargetCode.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
+    <Compile Include="models\AccountConfigurationModel.cs" />
     <Compile Include="models\AccountModel.cs" />
+    <Compile Include="models\ActivateAccountModel.cs" />
     <Compile Include="models\AddressesModel.cs" />
     <Compile Include="models\AddressInfo.cs" />
     <Compile Include="models\AddressLocationInfo.cs" />
     <Compile Include="models\AddressResolutionModel.cs" />
     <Compile Include="models\AddressValidationInfo.cs" />
+    <Compile Include="models\AddTransactionLineModel.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
     <Compile Include="models\AuditTransactionModel.cs" />
+    <Compile Include="models\AvaFileFormModel.cs" />
     <Compile Include="models\AvaTaxMessage.cs" />
     <Compile Include="models\BatchFileModel.cs" />
     <Compile Include="models\BatchModel.cs" />
@@ -125,10 +133,12 @@
     <Compile Include="models\BulkLockTransactionResult.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
     <Compile Include="models\CommitTransactionModel.cs" />
+    <Compile Include="models\CompanyConfigurationModel.cs" />
     <Compile Include="models\CompanyInitializationModel.cs" />
     <Compile Include="models\CompanyModel.cs" />
     <Compile Include="models\ContactModel.cs" />
     <Compile Include="models\CoordinateInfo.cs" />
+    <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
     <Compile Include="models\CycleAddOptionModel.cs" />
     <Compile Include="models\CycleEditOptionModel.cs" />
@@ -172,6 +182,7 @@
     <Compile Include="models\NewAccountRequestModel.cs" />
     <Compile Include="models\NexusByTaxFormModel.cs" />
     <Compile Include="models\NexusModel.cs" />
+    <Compile Include="models\NexusTaxTypeGroupModel.cs" />
     <Compile Include="models\NoticeCommentModel.cs" />
     <Compile Include="models\NoticeCustomerFundingOptionModel.cs" />
     <Compile Include="models\NoticeCustomerTypeModel.cs" />
@@ -196,6 +207,7 @@
     <Compile Include="models\RebuildFilingsModel.cs" />
     <Compile Include="models\ReconstructedApiRequestResponseModel.cs" />
     <Compile Include="models\RefundTransactionModel.cs" />
+    <Compile Include="models\RemoveTransactionLineModel.cs" />
     <Compile Include="models\requiredFilingCalendarDataFieldModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\ResourceFileTypeModel.cs" />
@@ -216,6 +228,8 @@
     <Compile Include="models\TaxOverrideModel.cs" />
     <Compile Include="models\TaxRateModel.cs" />
     <Compile Include="models\TaxRuleModel.cs" />
+    <Compile Include="models\TaxSubTypeModel.cs" />
+    <Compile Include="models\TaxTypeGroupModel.cs" />
     <Compile Include="models\TransactionAddressModel.cs" />
     <Compile Include="models\TransactionLineDetailModel.cs" />
     <Compile Include="models\TransactionLineLocationTypeModel.cs" />
@@ -229,6 +243,7 @@
     <Compile Include="models\ValidatedAddressInfo.cs" />
     <Compile Include="models\VerifyTransactionModel.cs" />
     <Compile Include="models\VoidTransactionModel.cs" />
+    <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
