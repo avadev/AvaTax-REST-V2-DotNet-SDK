@@ -5,53 +5,46 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{917BDECA-BE80-4B2E-B69E-7F5E67AE84C3}</ProjectGuid>
+    <ProjectGuid>{192FBA6A-33E4-4B8A-951C-AD9F84C86603}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Avalara.AvaTax.RestClient</RootNamespace>
-    <AssemblyName>Avalara.AvaTax.RestClient</AssemblyName>
+    <AssemblyName>Avalara.AvaTax.netstandard10</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <NoStdLib>false</NoStdLib>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\netstandard1.0\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;PORTABLE</DefineConstants>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD11;PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\netstandard1.0\Avalara.AvaTax.RestClient.XML</DocumentationFile>
-    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\netstandard1.0\</OutputPath>
-    <DefineConstants>TRACE;PORTABLE</DefineConstants>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETSTANDARD11;PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\netstandard1.0\Avalara.AvaTax.RestClient.XML</DocumentationFile>
-    <NoStdLib>false</NoStdLib>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
-    </Reference>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\GlobalAssemblyInfo.cs">
-      <Link>GlobalAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="CallDuration.cs" />
     <Compile Include="AvaTaxApi.cs" />
+    <Compile Include="AvaTaxClient.cs" />
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
     <Compile Include="AvaTaxPath.cs" />
+    <Compile Include="CallDuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="enums\AccountStatusId.cs" />
     <Compile Include="enums\AccrualType.cs" />
@@ -112,7 +105,6 @@
     <Compile Include="ErrorTargetCode.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
-    <Compile Include="AvaTaxClient.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\ActivateAccountModel.cs" />
@@ -248,10 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <None Include="project.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

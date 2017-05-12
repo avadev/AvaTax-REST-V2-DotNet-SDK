@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "netstandard", "netstandard", "{B2853177-1857-4F2D-957D-2C46E23FF8E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2CE693CE-0BAD-4131-B17B-681C423FCADE}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalara.AvaTax.netstandard11", "src\Avalara.AvaTax.netstandard11.csproj", "{192FBA6A-33E4-4B8A-951C-AD9F84C86603}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Avalara.AvaTax.netstandard11", "tests\netstandard\Tests.Avalara.AvaTax.netstandard11.csproj", "{E77B6F98-0E41-43CA-9DEA-033E5C0FECF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{192FBA6A-33E4-4B8A-951C-AD9F84C86603}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{192FBA6A-33E4-4B8A-951C-AD9F84C86603}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{192FBA6A-33E4-4B8A-951C-AD9F84C86603}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{192FBA6A-33E4-4B8A-951C-AD9F84C86603}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E77B6F98-0E41-43CA-9DEA-033E5C0FECF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E77B6F98-0E41-43CA-9DEA-033E5C0FECF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E77B6F98-0E41-43CA-9DEA-033E5C0FECF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E77B6F98-0E41-43CA-9DEA-033E5C0FECF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{192FBA6A-33E4-4B8A-951C-AD9F84C86603} = {B2853177-1857-4F2D-957D-2C46E23FF8E6}
+		{E77B6F98-0E41-43CA-9DEA-033E5C0FECF2} = {B2853177-1857-4F2D-957D-2C46E23FF8E6}
+	EndGlobalSection
+EndGlobal
