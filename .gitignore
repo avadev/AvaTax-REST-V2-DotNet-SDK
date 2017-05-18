@@ -251,4 +251,3 @@ paket-files/
 .idea/
 *.sln.iml
 *project.lock.json
-nuget.exe
