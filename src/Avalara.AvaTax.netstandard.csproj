@@ -110,6 +110,7 @@
     <Compile Include="ErrorInfo.cs" />
     <Compile Include="ErrorResult.cs" />
     <Compile Include="ErrorTargetCode.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
     <Compile Include="AvaTaxClient.cs" />
@@ -243,6 +244,8 @@
     <Compile Include="models\ValidatedAddressInfo.cs" />
     <Compile Include="models\VerifyTransactionModel.cs" />
     <Compile Include="models\VoidTransactionModel.cs" />
+    <Compile Include="State.cs" />
+    <Compile Include="Synchronously.cs" />
     <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
   </ItemGroup>
