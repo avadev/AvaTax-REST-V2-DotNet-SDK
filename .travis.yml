@@ -3,10 +3,11 @@ solution: Avalara.AvaTax.netstandard11.sln
 dist: trusty
 sudo: required
 dotnet: 1.0.1
-mono: none
+mono: latest
 install:
-  - dotnet restore Avalara.AvaTax.Net20.sln
-  - dotnet restore Avalara.AvaTax.net45.sln
+  - sudo apt-get install -y gtk-sharp2
+  - nuget restore Avalara.AvaTax.Net20.sln
+  - nuget restore Avalara.AvaTax.net45.sln
   - dotnet restore Avalara.AvaTax.netstandard11.sln
   - nuget install NUnit -Version 3.6.0 -OutputDirectory nunit
   - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
