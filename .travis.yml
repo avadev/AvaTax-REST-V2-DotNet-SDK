@@ -16,7 +16,7 @@ script:
   - xbuild Avalara.AvaTax.net45.sln
   - dotnet build Avalara.AvaTax.netstandard11.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net20/bin/Debug/Tests.Avalara.AvaTax.RestClient.net20.dll
-  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/netstandard/bin/Debug/Tests.Avalara.AvaTax.net45.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net45/bin/Debug/Tests.Avalara.AvaTax.net45.dll
   - dotnet test ./tests/netstandard/Tests.Avalara.AvaTax.netstandard11.csproj
 after_success:
   - echo "Branch is $TRAVIS_BRANCH"
