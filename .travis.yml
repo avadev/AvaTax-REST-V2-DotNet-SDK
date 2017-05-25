@@ -1,9 +1,9 @@
 language: csharp
-solution: Avalara.AvaTax.Portable.sln
+solution: Avalara.AvaTax.netstandard11.sln
 install:
-  - nuget restore Avalara.AvaTax.Net20.sln
-  - nuget restore Avalara.AvaTax.net45.sln
-  - nuget restore Avalara.AvaTax.netstandard11.sln
+  - dotnet restore Avalara.AvaTax.Net20.sln
+  - dotnet restore Avalara.AvaTax.net45.sln
+  - dotnet restore Avalara.AvaTax.netstandard11.sln
   - nuget install NUnit -Version 3.6.0 -OutputDirectory nunit
   - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
 script:

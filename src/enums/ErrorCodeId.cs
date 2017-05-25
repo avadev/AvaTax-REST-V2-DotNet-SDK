@@ -505,6 +505,21 @@ namespace Avalara.AvaTax.RestClient
         CannotSwitchAccountId,
 
         /// <summary>
+        /// 
+        /// </summary>
+        RequestIncomplete,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccountNotNew,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PasswordLengthInvalid,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
