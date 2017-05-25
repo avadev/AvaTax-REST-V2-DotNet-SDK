@@ -73,32 +73,43 @@ namespace Avalara.AvaTax.RestClient
             return true;
         }
 
-        internal static byte[] ReadToEnd(Stream body)
+        internal static byte[] ReadToEnd(Stream stream)
         {
             const int BUFFER_SIZE = 1024;
-            var chunks = new List<byte>();
-            var totalBytes = 0;
-            var bytesRead = 0;
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int read = 0;
 
-            do
+            int chunk;
+            while ((chunk = stream.Read(buffer, read, buffer.Length - read)) > 0)
             {
-                var buffer = new byte[BUFFER_SIZE];
-                bytesRead = body.Read(buffer, 0, BUFFER_SIZE);
-                if (bytesRead == BUFFER_SIZE)
+                read += chunk;
+
+                // If we've reached the end of our buffer, check to see if there's
+                // any more information
+                if (read == buffer.Length)
                 {
-                    chunks.AddRange(buffer);
-                }
-                else
-                {
-                    for (int i = 0; i < bytesRead; i++)
+                    int nextByte = stream.ReadByte();
+
+                    // End of stream? If so, we're done
+                    if (nextByte == -1)
                     {
-                        chunks.Add(buffer[i]);
+                        return buffer;
                     }
+
+                    // Nope. Resize the buffer, put in the byte we've just
+                    // read, and continue
+                    byte[] newBuffer = new byte[buffer.Length * 2];
+                    Array.Copy(buffer, newBuffer, buffer.Length);
+                    newBuffer[read] = (byte)nextByte;
+                    buffer = newBuffer;
+                    read++;
                 }
-                totalBytes += bytesRead;
-            } while (bytesRead > 0);
-            var data = chunks.ToArray();
-            return data;
+            }
+            // Buffer is now too big. Shrink it.
+            byte[] ret = new byte[read];
+            Array.Copy(buffer, ret, read);
+            return ret;
+
         }
 
 

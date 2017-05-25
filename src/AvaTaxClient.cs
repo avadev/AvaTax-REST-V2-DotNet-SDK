@@ -21,9 +21,11 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
+        private readonly JsonSerializer _serializer;
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
+        private ILog _logger;
 #if PORTABLE
         private static HttpClient _client = new HttpClient();
 #endif
@@ -52,6 +54,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>.Net 20 does not define a Func delegate.</remarks>
         public delegate TResult Func<in T, out TResult>(T arg);
+
+        /// <summary>
+        /// Encapsulates a method that has two parameters and returns a value of the type
+        /// specified by the TResult parameter.
+        /// </summary>
+        /// <remarks>.Net 20 does not define a Func delegate.</remarks>
+        public delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
 #endif
 
         #region Constructor
@@ -77,7 +86,14 @@ namespace Avalara.AvaTax.RestClient
         {
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
+            WithLogging(new NullLogger());
+
             _envUri = customEnvironment;
+            
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Converters.Add(new StringEnumConverter());
+            _serializer = JsonSerializer.Create(settings);
         }
 
 
@@ -157,6 +173,16 @@ namespace Avalara.AvaTax.RestClient
         }
         #endregion
 
+        public AvaTaxClient WithLogging(ILog logger)
+        {
+            if (logger == null)
+            {
+                throw new ArgumentNullException("logger", "Parameter 'logger' is null");
+            }
+            _logger = new DelegatingLogger(logger);
+            return this;
+        }
+        
         #region REST Call Interface
 #if PORTABLE
         /// <summary>
@@ -212,23 +238,6 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Implementation
-        private JsonSerializerSettings _serializer_settings = null;
-        private JsonSerializerSettings SerializerSettings
-        {
-            get
-            {
-                if (_serializer_settings == null)
-                {
-                    lock (this)
-                    {
-                        _serializer_settings = new JsonSerializerSettings();
-                        _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
-                        _serializer_settings.Converters.Add(new StringEnumConverter());
-                    }
-                }
-                return _serializer_settings;
-            }
-        }
 
 #if PORTABLE
 
@@ -236,60 +245,96 @@ namespace Avalara.AvaTax.RestClient
             string verb, AvaTaxPath relativePath, object content,
             Func<HttpResponseMessage, Task<T>> responseHandler)
         {
-            CallDuration cd = new CallDuration();
-            // Setup the request
-            using (var request = new HttpRequestMessage())
+            CallDuration duration = new CallDuration();
+            LogEntry entry = new LogEntry();
+            try
             {
-                request.Method = new HttpMethod(verb);
-                request.RequestUri = new Uri(_envUri, relativePath.ToString());
-
-                // Add credentials and client header
-                if (_credentials != null)
+                using (var request = new HttpRequestMessage())
                 {
-                    request.Headers.Add("Authorization", _credentials);
-                }
-                if (_clientHeader != null)
-                {
-                    request.Headers.Add("X-Avalara-Client", _clientHeader);
-                }
+                    request.Method = new HttpMethod(verb);
+                    entry.Request.Method = verb;
+                    request.RequestUri = new Uri(_envUri, relativePath.ToString());
+                    entry.Request.RequestUri = request.RequestUri;
 
-                // Add payload
-                if (content != null)
-                {
-                    var json = JsonConvert.SerializeObject(content, SerializerSettings);
-
-                    // Property Encoding.UTF8 returns a UTF8Encoding object with Byte Order Mark (BOM) enabled. 
-                    // In the documentation Microsoft recognize it is not needed or recommended. The BOM is unexpected
-                    // by AvaTax APIs
-                    // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
-                    request.Content = new StringContent(json, new UTF8Encoding(false, true), "application/json");
-                }
-
-                // Send
-                cd.FinishSetup();
-
-                using (var response = await _client.SendAsync(request)
-                    .ConfigureAwait(false))
-                {
-                    Extensions.FinishReceive(cd, response);
-
-                    if (response.IsSuccessStatusCode)
+                    // Add credentials and client header
+                    if (_credentials != null)
                     {
-                        var result = await responseHandler(response)
-                            .ConfigureAwait(false);
-
-                        cd.FinishParse();
-                        this.LastCallTime = cd;
-                        return result;
+                        request.Headers.Add("Authorization", _credentials);
+                        entry.Request.Headers.Add("Authorization", new string('*', _credentials.Length));
+                    }
+                    if (_clientHeader != null)
+                    {
+                        request.Headers.Add(Constants.AVALARA_CLIENT_HEADER, _clientHeader);
+                        entry.Request.Headers.Add(Constants.AVALARA_CLIENT_HEADER, _clientHeader);
+                    }
+                    if (content != null)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        using (var textWriter = new StringWriter(sb))
+                        using (var jsonWriter = new JsonTextWriter(textWriter))
+                        {
+                            _serializer.Serialize(jsonWriter, content);
+                        }
+                        // Property Encoding.UTF8 returns a UTF8Encoding object with Byte Order Mark (BOM) enabled. 
+                        // In the documentation Microsoft recognize it is not needed or recommended. The BOM is unexpected
+                        // by AvaTax APIs
+                        // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
+                        request.Content = new StringContent(sb.ToString(), new UTF8Encoding(false, true), "application/json");
+                        entry.Request.Body = sb.ToString();
                     }
 
+                    // Send
+                    duration.FinishSetup();
 
-                    var s = await response.Content.ReadAsStringAsync()
-                        .ConfigureAwait(false);
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-                    throw new AvaTaxError(err);
+                    using (var response = await _client.SendAsync(request)
+                        .ConfigureAwait(false))
+                    {
+                        Extensions.FinishReceive(duration, response);
+
+                        if (_logger.IsEnabled)
+                        {
+                            foreach (var header in response.Headers)
+                            {
+                                entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
+                            }
+                            foreach (var header in response.Content.Headers)
+                            {
+                                entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
+                            }
+                            entry.Response.StatusCode = (int)response.StatusCode;
+                            entry.Response.Body = await response.Content.ReadAsStringAsync()
+                                .ConfigureAwait(false);
+
+                        }
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var result = await responseHandler(response)
+                                .ConfigureAwait(false);
+
+                            duration.FinishParse();
+                            this.LastCallTime = duration;
+                            return result;
+                        }
+                        var error = await BodyAsObjectAsync<ErrorResult>(response)
+                            .ConfigureAwait(false);
+                        duration.FinishParse();
+                        this.LastCallTime = duration;
+                        throw new AvaTaxError(error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                entry.Exception = ex;
+                throw;
+            }
+            finally
+            {
+                if (_logger.IsEnabled)
+                {
+                    entry.CallDuration = duration;
+                    _logger.Write(entry);
                 }
             }
         }
@@ -297,64 +342,76 @@ namespace Avalara.AvaTax.RestClient
 
         private T ExecuteRestCall<T>(
             string verb, AvaTaxPath relativePath, object content,
-            Func<HttpWebResponse, T> responseHandler)
+            Func<HttpWebResponse, Stream, T> responseHandler)
         {
-            CallDuration cd = new CallDuration();
-
-            var request = (HttpWebRequest)WebRequest.Create(new Uri(_envUri, relativePath.ToString()));
-
-            // Construct the basic auth, if required
-            if (!String.IsNullOrEmpty(_credentials))
+            CallDuration duration = new CallDuration();
+            LogEntry entry = new LogEntry();
+            try
             {
-                request.Headers[HttpRequestHeader.Authorization] = _credentials;
-            }
-            if (!String.IsNullOrEmpty(_clientHeader))
-            {
-                request.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
-            }
-            request.Method = verb;
+                var request = (HttpWebRequest)WebRequest.Create(new Uri(_envUri, relativePath.ToString()));
 
-            if (content != null)
-            {
-                request.ContentType = "application/json; charset=utf-8";
+                entry.Request.RequestUri = request.RequestUri;
+                entry.Request.Method = verb;
+
+                // Construct the basic auth, if required
+                if (!String.IsNullOrEmpty(_credentials))
+                {
+                    request.Headers[HttpRequestHeader.Authorization] = _credentials;
+                    entry.Request.Headers.Add("Authorization", new string('*', _credentials.Length));
+                }
+                if (!String.IsNullOrEmpty(_clientHeader))
+                {
+                    request.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
+                    entry.Request.Headers.Add(Constants.AVALARA_CLIENT_HEADER, _clientHeader);
+                }
+                request.Method = verb;
+
 #if NET20 || NET45
                 request.ServicePoint.Expect100Continue = false;
 #endif
-
-                using (var stream =
-#if PORTABLE && !NET45
-                // The PCL profile does not provide a GetRequestStream and because it is bad 
-                // practice to block when using the Event-based Asynchronous (EAP) Pattern with
-                // .Wait(), .Result, or .GetAwaiter().GetResult() due to deadlock issues in 
-                // UI and ASP.Net contexts it is necessary to rely on the Asynchronous 
-                // Programming Model (APM) Pattern to ensure deadlocks are not encountered. 
-                // 
-                // Explains why blocking using .Result is undesirable. (https://msdn.microsoft.com/en-us/magazine/mt238404)
-                // Provides a set of Best Practices for async/await. (https://msdn.microsoft.com/magazine/jj991977)
-                // Explains what SynchronizationContexts are. (https://msdn.microsoft.com/en-us/magazine/gg598924.aspx)
-                new Synchronously<HttpWebRequest, object, Stream>(request.BeginGetRequestStream, RequestStreamCallback)
-                    .Execute(request, null)
-#else
-                request.GetRequestStream()
-#endif
-                )
-                // Property Encoding.UTF8 returns a UTF8Encoding object with Byte Order Mark (BOM) enabled. 
-                // In the documentation Microsoft recognize it is not needed or recommended. The BOM is unexpected
-                // by AvaTax APIs
-                // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
-                using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true)))
+                if (content != null)
                 {
-                    JsonSerializer serializer = JsonSerializer.Create(SerializerSettings);
-                    serializer.Serialize(writer, content);
-                    writer.Flush();
-                    stream.Flush();
+                    if (_logger.IsEnabled)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        using (var textWriter = new StringWriter(sb))
+                        using (var jsonWriter = new JsonTextWriter(textWriter))
+                        {
+                            _serializer.Serialize(jsonWriter, content);
+                        }
+                        entry.Request.Body = sb.ToString();
+                    }
+                    request.ContentType = "application/json; charset=utf-8";
+
+                    using (var stream =
+#if PORTABLE && !NET45
+                        // The PCL profile does not provide a GetRequestStream and because it is bad 
+                        // practice to block when using the Event-based Asynchronous (EAP) Pattern with
+                        // .Wait(), .Result, or .GetAwaiter().GetResult() due to deadlock issues in 
+                        // UI and ASP.Net contexts it is necessary to rely on the Asynchronous 
+                        // Programming Model (APM) Pattern to ensure deadlocks are not encountered. 
+                        // 
+                        // Explains why blocking is undesirable with async/await. (https://msdn.microsoft.com/en-us/magazine/mt238404)
+                        // Provides a set of best practices for async/await. (https://msdn.microsoft.com/magazine/jj991977)
+                        // Explains what SynchronizationContexts are. (https://msdn.microsoft.com/en-us/magazine/gg598924.aspx)
+                        new Synchronously<HttpWebRequest, object, Stream>(request.BeginGetRequestStream, RequestStreamCallback)
+                            .Execute(request, null)
+#else
+                        request.GetRequestStream()
+#endif
+                    )
+                    // Property Encoding.UTF8 returns a UTF8Encoding object with Byte Order Mark (BOM) enabled. 
+                    // In the documentation Microsoft recognize it is not needed or recommended. The BOM is unexpected
+                    // by AvaTax APIs
+                    // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
+                    using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true)))
+                    {
+                        _serializer.Serialize(writer, content);
+                    }
                 }
-            }
 
-            cd.FinishSetup();
+                duration.FinishSetup();
 
-            try
-            {
                 using (var response =
 #if PORTABLE && !NET45
                     // The PCL profile does not provide a GetRequestStream and because it is bad 
@@ -363,8 +420,8 @@ namespace Avalara.AvaTax.RestClient
                     // UI and ASP.Net contexts it is necessary to rely on the Asynchronous 
                     // Programming Model (APM) Pattern to ensure deadlocks are not encountered. 
                     // 
-                    // Explains why blocking using .Result is undesirable. (https://msdn.microsoft.com/en-us/magazine/mt238404)
-                    // Provides a set of Best Practices for async/await. (https://msdn.microsoft.com/magazine/jj991977)
+                    // Explains why blocking is undesirable with async/await. (https://msdn.microsoft.com/en-us/magazine/mt238404)
+                    // Provides a set of best practices for async/await. (https://msdn.microsoft.com/magazine/jj991977)
                     // Explains what SynchronizationContexts are. (https://msdn.microsoft.com/en-us/magazine/gg598924.aspx)
                     new Synchronously<HttpWebRequest, object, HttpWebResponse>(
                             request.BeginGetResponse, ResponseCallback)
@@ -374,27 +431,48 @@ namespace Avalara.AvaTax.RestClient
 #endif
                     )
                 {
-                    Extensions.FinishReceive(cd, response);
+                    Extensions.FinishReceive(duration, response);
+                    byte[] body = null;
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        body = Extensions.ReadToEnd(stream);
+                    }
+
+                    if (_logger.IsEnabled)
+                    {
+                        foreach (string header in response.Headers.AllKeys)
+                        {
+                            string value = response.Headers[header];
+                            entry.Response.Headers.Add(header, value);
+                        }
+                        entry.Response.StatusCode = (int)response.StatusCode;
+                        using (var stream = new MemoryStream(body, 0, body.Length, false))
+                        {
+                            entry.Response.Body = BodyAsString(response, stream);
+                        }
+                    }
 
                     if (Extensions.IsSuccessStatusCode(response))
                     {
-                        var result = responseHandler(response);
-
-                        cd.FinishParse();
-                        this.LastCallTime = cd;
+                        T result;
+                        using (var stream = new MemoryStream(body, 0, body.Length, false))
+                        {
+                            result = responseHandler(response, stream);
+                        }
+                        duration.FinishParse();
+                        this.LastCallTime = duration;
                         return result;
                     }
-
-                    using (var stream = response.GetResponseStream())
-                    using (var reader = new StreamReader(stream))
-                    using (var jsonReader = new JsonTextReader(reader))
+                    ErrorResult error;
+                    using (var stream = new MemoryStream(body, 0, body.Length, false))
                     {
-                        JsonSerializer serializer = new JsonSerializer();
-                        var err = serializer.Deserialize<ErrorResult>(jsonReader);
-                        cd.FinishParse();
-                        this.LastCallTime = cd;
-                        throw new AvaTaxError(err);
+                        error = BodyAsObject<ErrorResult>(response, stream);
                     }
+
+                    duration.FinishParse();
+                    this.LastCallTime = duration;
+                    throw new AvaTaxError(error);
+
                 }
             }
             catch (WebException webex)
@@ -402,23 +480,39 @@ namespace Avalara.AvaTax.RestClient
                 HttpWebResponse response = webex.Response as HttpWebResponse;
                 if (response != null)
                 {
+                    ErrorResult error = null;
                     using (Stream stream = response.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(stream))
                     {
-                        var errString = reader.ReadToEnd();
-                        var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                        cd.FinishParse();
-                        this.LastCallTime = cd;
-                        throw new AvaTaxError(err);
+                        error = BodyAsObject<ErrorResult>(response, stream);
                     }
+
+                    duration.FinishParse();
+                    this.LastCallTime = duration;
+                    var exception = new AvaTaxError(error, webex);
+                    entry.Exception = exception;
+                    throw exception;
                 }
 
-                cd.FinishParse();
-                this.LastCallTime = cd;
+                duration.FinishParse();
+                this.LastCallTime = duration;
 
+                entry.Exception = webex;
                 // If we can't parse it as an AvaTax error, just throw
                 // use throw instead of throw ex. This ensures the call stack is not reset in the exception.
                 throw;
+            }
+            catch (Exception ex)
+            {
+                entry.Exception = ex;
+                throw;
+            }
+            finally
+            {
+                if (_logger.IsEnabled)
+                {
+                    entry.CallDuration = duration;
+                    _logger.Write(entry);
+                }
             }
         }
 
@@ -458,11 +552,10 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 #endif
-
-        private static T BodyAsObject<T>(HttpWebResponse response)
+        private static T BodyAsObject<T>(HttpWebResponse response, Stream body)
         {
-            using (var body = response.GetResponseStream())
-            using (var reader = new System.IO.StreamReader(body))
+
+            using (var reader = new StreamReader(body, new UTF8Encoding(false, true)))
             using (var jsonReader = new JsonTextReader(reader))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -478,36 +571,30 @@ namespace Avalara.AvaTax.RestClient
                 ContentType = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
                 Filename = GetDispositionFilename(response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
                 Data = await response.Content.ReadAsByteArrayAsync()
-                    .ConfigureAwait(false)
+                   .ConfigureAwait(false)
             };
         }
 #endif
-        private static FileResult BodyAsFile(HttpWebResponse response)
+        private static FileResult BodyAsFile(HttpWebResponse response, Stream body)
         {
-            using (var body = response.GetResponseStream())
+
+            return new FileResult()
             {
-                byte[] data = Extensions.ReadToEnd(body);
-                return new FileResult()
-                {
-                    ContentType = response.Headers["Content-Type"].ToString(),
-                    Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
-                    Data = data
-                };
-
-            }
+                ContentType = response.Headers["Content-Type"].ToString(),
+                Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
+                Data = Extensions.ReadToEnd(body)
+            };
         }
-#if PORTABLE
 
+#if PORTABLE
         private static async Task<string> BodyAsStringAsync(HttpResponseMessage response)
         {
             return await response.Content.ReadAsStringAsync();
         }
 #endif
-
-        private static string BodyAsString(HttpWebResponse response)
+        private static string BodyAsString(HttpWebResponse response, Stream body)
         {
-            using (var body = response.GetResponseStream())
-            using (var reader = new StreamReader(body))
+            using (var reader = new StreamReader(body, new UTF8Encoding(false, true)))
             {
                 return reader.ReadToEnd();
             }
