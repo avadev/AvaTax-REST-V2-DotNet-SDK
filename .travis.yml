@@ -14,10 +14,10 @@ install:
 script:
   - xbuild Avalara.AvaTax.Net20.sln
   - xbuild Avalara.AvaTax.net45.sln
-  - xbuild Avalara.AvaTax.netstandard11.sln
+  - dotnet build Avalara.AvaTax.netstandard11.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net20/bin/Debug/Tests.Avalara.AvaTax.RestClient.net20.dll
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/netstandard/bin/Debug/Tests.Avalara.AvaTax.net45.dll
-  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/netstandard/bin/Debug/netstandard1.6/Tests.Avalara.AvaTax.RestClient.netstandard.dll
+  - dotnet test ./tests/netstandard/Tests.Avalara.AvaTax.netstandard11.csproj
 after_success:
   - echo "Branch is $TRAVIS_BRANCH"
   - echo "Pull Request is $TRAVIS_PULL_REQUEST_BRANCH"
