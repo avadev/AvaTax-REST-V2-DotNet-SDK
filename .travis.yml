@@ -1,5 +1,6 @@
 language: csharp
 solution: Avalara.AvaTax.netstandard11.sln
+dist: trusty
 install:
   - dotnet restore Avalara.AvaTax.Net20.sln
   - dotnet restore Avalara.AvaTax.net45.sln
