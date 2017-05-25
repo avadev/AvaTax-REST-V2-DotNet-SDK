@@ -39,8 +39,8 @@ namespace Avalara.AvaTax.RestClient
 #if NET45
         public static string SDK_TYPE { get { return "NET45"; } }
 #endif
-#if PORTABLE && !NET45
-        public static string SDK_TYPE { get { return "PORTABLE"; } }
+#if NETSTANDARD11
+        public static string SDK_TYPE { get { return "NETSTANDARD11"; } }
 #endif
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
@@ -82,7 +82,7 @@ namespace Avalara.AvaTax.RestClient
         }
 #endregion
 
-        #region Security
+#region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -129,9 +129,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-        #endregion
+#endregion
 
-        #region Client Identification
+#region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -144,9 +144,9 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-        #endregion
+#endregion
 
-        #region REST Call Interface
+#region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -201,9 +201,9 @@ namespace Avalara.AvaTax.RestClient
             return RestCallFileAsync(verb, relativePath, payload).Result;
         }
 #endif
-        #endregion
+#endregion
 
-        #region Implementation
+#region Implementation
         private JsonSerializerSettings _serializer_settings = null;
         private JsonSerializerSettings SerializerSettings
         {

@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
@@ -23,8 +22,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         {
             try {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Name,
-                    typeof(TransactionTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
+                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));

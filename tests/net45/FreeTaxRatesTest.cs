@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,8 +13,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         public async Task FreeTaxRates()
         {
             // Create a client and set up authentication
-            var client = new AvaTaxClient(typeof(TransactionTests).Name,
-                typeof(TransactionTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
+            var client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+                typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                 Environment.MachineName,
                 AvaTaxEnvironment.Sandbox)
                 .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));

@@ -22,7 +22,7 @@ namespace Avalara.AvaTax.RestClient
     public class RefundTransactionModel
     {
         /// <summary>
-        /// the committed transaction code to be refunded
+        /// the transaction code for this refund
         /// </summary>
         public String refundTransactionCode { get; set; }
 
@@ -45,6 +45,11 @@ namespace Avalara.AvaTax.RestClient
         /// Process refund for these lines
         /// </summary>
         public List<String> refundLines { get; set; }
+
+        /// <summary>
+        /// Reference code for this refund
+        /// </summary>
+        public String referenceCode { get; set; }
 
 
         /// <summary>
