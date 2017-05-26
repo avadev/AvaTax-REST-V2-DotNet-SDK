@@ -159,7 +159,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
         {
             CallDuration cd = new CallDuration();
-            var s = await RestCallStringAsync(verb, relativePath, content, cd);
+            var s = await RestCallStringAsync(verb, relativePath, content, cd).ConfigureAwait(false);
             var o = JsonConvert.DeserializeObject<T>(s);
             cd.FinishParse();
             this.LastCallTime = cd;
@@ -231,7 +231,7 @@ namespace Avalara.AvaTax.RestClient
         private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath relativePath, object content = null)
         {
             CallDuration cd = new CallDuration();
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content)) {
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content).ConfigureAwait(false)) {
 
                 // Read the result
                 if (result.IsSuccessStatusCode) {
@@ -239,7 +239,7 @@ namespace Avalara.AvaTax.RestClient
                     {
                         ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
                         Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
-                        Data = await result.Content.ReadAsByteArrayAsync()
+                        Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
                     };
                     cd.FinishParse();
                     this.LastCallTime = cd;
@@ -247,7 +247,7 @@ namespace Avalara.AvaTax.RestClient
 
                 // Handle exceptions and convert them to AvaTax results
                 } else {
-                    var s = await result.Content.ReadAsStringAsync();
+                    var s = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var err = JsonConvert.DeserializeObject<ErrorResult>(s);
                     cd.FinishParse();
                     this.LastCallTime = cd;
@@ -287,7 +287,7 @@ namespace Avalara.AvaTax.RestClient
 
                 // Send
                 cd.FinishSetup();
-                return await _client.SendAsync(request);
+                return await _client.SendAsync(request).ConfigureAwait(false);
             }
         }
 
@@ -302,10 +302,10 @@ namespace Avalara.AvaTax.RestClient
         private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null, CallDuration cd = null)
         {
             if (cd == null) cd = new CallDuration();
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content)) {
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content).ConfigureAwait(false)) {
 
                 // Read the result
-                var s = await result.Content.ReadAsStringAsync();
+                var s = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 // Determine server duration
                 var sd = result.Headers.GetValues("serverduration").FirstOrDefault();
