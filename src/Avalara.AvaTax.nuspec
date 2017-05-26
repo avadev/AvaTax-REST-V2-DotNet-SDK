@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Avalara.AvaTax</id>
-        <version>17.5.2.77</version>
+        <version>17.5.2.82</version>
         <title>Avalara AvaTax SDK</title>
         <description>Add world-class tax estimation and calculation to your project with Avalara's AvaTax suite of APIs and services.</description>
         <authors>Ted Spence, Zhenya Frolov</authors>
@@ -19,16 +19,16 @@
             <group targetFramework="net45">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
-            <group targetFramework=".NETStandard1.1">
-                <dependency id="NETStandard.Library" version="1.6.0" />
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
-                <dependency id="Microsoft.NETCore.Portable.Compatibility" version="1.0.1" />
+            <group targetFramework=".NETStandard1.6">
+                <dependency id="NETStandard.Library" version="1.6.1" />
+                <dependency id="Newtonsoft.Json" version="10.0.2" />
+                <dependency id="System.Net.Http" version="4.3.2" />
             </group>
         </dependencies>
     </metadata>
     <files>
         <file src="bin\Release\net20\Avalara*" target="lib\net20" />
         <file src="bin\Release\net45\Avalara*" target="lib\net45" />
-        <file src="bin\Release\netstandard1.0\Avalara*" target="lib\netstandard1.0" />
+        <file src="bin\Release\netstandard1.6\Avalara*" target="lib\netstandard16" />
     </files>
 </package>
