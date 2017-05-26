@@ -39,8 +39,8 @@ namespace Avalara.AvaTax.RestClient
 #if NET45
         public static string SDK_TYPE { get { return "NET45"; } }
 #endif
-#if NETSTANDARD11
-        public static string SDK_TYPE { get { return "NETSTANDARD11"; } }
+#if NETSTANDARD1_6
+        public static string SDK_TYPE { get { return "NETSTANDARD1_6"; } }
 #endif
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
