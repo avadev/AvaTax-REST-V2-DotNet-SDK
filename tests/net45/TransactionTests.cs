@@ -1,7 +1,6 @@
 ﻿using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
 using System;
-using System.Reflection;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -22,8 +21,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             try
             {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Name,
-                    typeof(TransactionTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
+                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -96,6 +95,9 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
         #endregion
 
+        /// <summary>
+        /// To debug this application, call app must be called with args[0] as username and args[1] as password
+        /// </summary>
         [Test]
         public void TransactionWorkflow()
         {
@@ -133,47 +135,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
         }
 
-        [Test]
-        public void TransactionWorkFlow_Async()
-        {
-            Nito.AsyncEx.AsyncContext.Run(async () =>
-            {
-                // Execute a transaction
-                var transaction = await new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
-                        "98104", "US")
-                    .WithLine(100.0m, 1, "P0000000")
-                    .WithLine(200m)
-                    .WithExemptLine(50m, "NT")
-                    .WithLineReference("Special Line Reference!", "Also this!")
-                    .CreateAsync();
-                    
-
-                // Ensure this transaction was created, and has three lines, and has some tax
-                Assert.NotNull(transaction, "Transaction should have been created");
-                Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
-                Assert.True(transaction.lines.Count == 3, "Transaction should have three lines");
-                Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
-
-                // Now commit that transaction
-                var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, new CommitTransactionModel() { commit = true });
-
-                // Ensure that this transaction was committed
-                Assert.NotNull(commitResult, "Should have been able to call CommitTransaction");
-                Assert.True(commitResult.status == DocumentStatus.Committed, "Transaction should have been committed");
-
-                // Now void the transaction
-                var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, new VoidTransactionModel()
-                {
-                    code = VoidReasonCode.DocVoided
-                });
-
-                // Ensure that the transaction was voided
-                Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
-                Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
-            });
-        }
-        
         [Test]
         public void TaxOverrideExample()
         {

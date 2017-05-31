@@ -2,10 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -26,8 +23,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             try
             {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Name,
-                    typeof(TransactionTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
+                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -102,7 +99,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// 
         /// </summary>
         [Test]
-        public async Task BatchesWorkflow()
+        public void BatchesWorkflow()
         {
             // Raw batch CSV string.
             const string transactionImport = @"ProcessCode,DocCode,DocType,DocDate,CompanyCode,CustomerCode,EntityUseCode,LineNo,TaxCode,TaxDate,ItemCode,Description,Qty,Amount,Discount,Ref1,Ref2,ExemptionNo,RevAcct,DestAddress,DestCity,DestRegion,DestPostalCode,DestCountry,OrigAddress,OrigCity,OrigRegion,OrigPostalCode,OrigCountry,LocationCode,SalesPersonCode,PurchaseOrderNo,CurrencyCode,ExchangeRate,ExchangeRateEffDate,PaymentDate,TaxIncluded,DestTaxRegion,OrigTaxRegion,Taxable,TaxType,TotalTax,CountryName,CountryCode,CountryRate,CountryTax,StateName,StateCode,StateRate,StateTax,CountyName,CountyCode,CountyRate,CountyTax,CityName,CityCode,CityRate,CityTax,Other1Name,Other1Code,Other1Rate,Other1Tax,Other2Name,Other2Code,Other2Rate,Other2Tax,Other3Name,Other3Code,Other3Rate,Other3Tax,Other4Name,Other4Code,Other4Rate,Other4Tax,ReferenceCode,BuyersVATNo
@@ -145,7 +142,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 BatchModel batchFetchResult = null;
                 for (var i = 1; i < 6; ++i)
                 {
-                    await Task.Delay(i * 1000);
+                    System.Threading.Thread.Sleep(i * 1000);
 
                     batchFetchResult = Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
                     Assert.NotNull(batchFetchResult, "Batch fetch unsuccessful.");
@@ -159,7 +156,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 var processing = true;
                 for (var i = 1; i < 11; ++i)
                 {
-                    await Task.Delay(i * 1000);
+                    System.Threading.Thread.Sleep(i * 1000);
 
                     batchFetchResult = Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
                     Assert.NotNull(batchFetchResult, "Batch fetch unsuccessful.");

@@ -41,8 +41,8 @@ namespace Avalara.AvaTax.RestClient
 #if NET45
         public static string SDK_TYPE { get { return "NET45"; } }
 #endif
-#if PORTABLE && !NET45
-        public static string SDK_TYPE { get { return "PORTABLE"; } }
+#if NETSTANDARD1_6
+        public static string SDK_TYPE { get { return "NETSTANDARD1_6"; } }
 #endif
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
@@ -63,7 +63,7 @@ namespace Avalara.AvaTax.RestClient
         public delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
 #endif
 
-        #region Constructor
+#region Constructor
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
         /// </summary>
@@ -107,9 +107,9 @@ namespace Avalara.AvaTax.RestClient
                 default: throw new Exception("Unrecognized Environment");
             }
         }
-        #endregion
+#endregion
 
-        #region Security
+#region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -156,9 +156,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-        #endregion
+#endregion
 
-        #region Client Identification
+#region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -171,7 +171,7 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-        #endregion
+#endregion
 
         public AvaTaxClient WithLogging(ILog logger)
         {
@@ -183,7 +183,7 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
         
-        #region REST Call Interface
+#region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -235,9 +235,9 @@ namespace Avalara.AvaTax.RestClient
             return ExecuteRestCall(verb, relativePath, payload, BodyAsFile);
         }
 
-        #endregion
+#endregion
 
-        #region Implementation
+#region Implementation
 
 #if PORTABLE
 
