@@ -10,7 +10,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The raw error message from the client
         /// </summary>
-        public ErrorResult error { get; private set; }
+        public ErrorResult error { get; set; }
 
         /// <summary>
         /// Constructs an error object for an API call
@@ -18,11 +18,6 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="err"></param>
         public AvaTaxError(ErrorResult err)
             : base("Error return by AvaTax Rest Api")
-        {
-            this.error = err;
-        }
-
-        public AvaTaxError(ErrorResult err, Exception inner) : base("Error return by AvaTax Rest Api", inner)
         {
             this.error = err;
         }

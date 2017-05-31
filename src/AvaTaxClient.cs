@@ -488,7 +488,7 @@ namespace Avalara.AvaTax.RestClient
 
                     duration.FinishParse();
                     this.LastCallTime = duration;
-                    var exception = new AvaTaxError(error, webex);
+                    var exception = new AvaTaxError(error);
                     entry.Exception = exception;
                     throw exception;
                 }
