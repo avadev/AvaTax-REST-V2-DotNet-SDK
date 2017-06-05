@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,8 +40,17 @@ namespace Tests.Avalara.AvaTax
 
                 Logger.Setup(o => o.Write(It.IsAny<LogEntry>()))
                     .Callback<LogEntry>((data) => LoggerCallback(data));
-
+#if NETCOREAPP1_1
                 // Create a client and set up authentication
+                Client = new AvaTaxClient(typeof(LoggingTests).GetTypeInfo().Assembly.FullName,
+                    typeof(LoggingTests).GetTypeInfo().Assembly.GetName().Version.ToString(),
+                    Environment.MachineName,
+                    AvaTaxEnvironment.Sandbox)
+                    //.WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+                    .WithSecurity(ACCOUNT_ID, LICENSE_KEY)
+                    .WithLogging(Logger.Object);
+#else
+                 // Create a client and set up authentication
                 Client = new AvaTaxClient(typeof(LoggingTests).Assembly.FullName,
                     typeof(LoggingTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
@@ -48,6 +58,8 @@ namespace Tests.Avalara.AvaTax
                     //.WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
                     .WithSecurity(ACCOUNT_ID, LICENSE_KEY)
                     .WithLogging(Logger.Object);
+#endif
+
 
                 // Verify that we can ping successfully
                 var pingResult = Client.Ping();
@@ -117,7 +129,7 @@ namespace Tests.Avalara.AvaTax
                 Assert.Fail("Exception in TearDown: " + ex);
             }
         }
-        #endregion
+#endregion
 
 
 
@@ -160,45 +172,43 @@ namespace Tests.Avalara.AvaTax
         }
 
         [Test]
-        public void Asynchronous()
+        public async Task Asynchronous()
         {
-            Nito.AsyncEx.AsyncContext.Run(async () =>
+            List<LogEntry> logged = new List<LogEntry>();
+            LoggerCallback = (entry) =>
             {
-                List<LogEntry> logged = new List<LogEntry>();
-                LoggerCallback = (entry) =>
-                {
-                    logged.Add(entry);
-                };
-                Logger.ResetCalls();
-                // Execute a transaction
-                var transaction = await new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
-                        "98104", "US")
-                    .WithLine(100.0m, 1, "P0000000")
-                    .WithLine(200m)
-                    .WithExemptLine(50m, "NT")
-                    .WithLineReference("Special Line Reference!", "Also this!")
-                    .CreateAsync();
+                logged.Add(entry);
+            };
+            Logger.ResetCalls();
+            // Execute a transaction
+            var transaction = await new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
+                .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!")
+                .CreateAsync();
 
 
-                // Ensure this transaction was created, and has three lines, and has some tax
-                Assert.NotNull(transaction, "Transaction should have been created");
-                Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
-                Assert.True(transaction.lines.Count == 3, "Transaction should have three lines");
-                Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
+            // Ensure this transaction was created, and has three lines, and has some tax
+            Assert.NotNull(transaction, "Transaction should have been created");
+            Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
+            Assert.True(transaction.lines.Count == 3, "Transaction should have three lines");
+            Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
 
-                Assert.AreEqual(1, logged.Count, "A single logged message should be returned");
-                Assert.NotNull(logged.FirstOrDefault().Request, "Request Information is missing");
-                Assert.AreEqual(2, logged.First().Request.Headers.Count, "Request: Expected 2 request headers");
-                Assert.AreEqual("Post", logged.First().Request.Method, "Request: Expected Http Method to be Post");
-                Assert.AreEqual("/api/v2/transactions/create", logged.First().Request.RequestUri.PathAndQuery, "Request uri is incorrect");
-                Assert.AreEqual(489, logged.First().Request.Body.Length, "Request Body is not the correct length");
-                Assert.NotNull(logged.First().Response, "Response Information is missing");
-                Assert.AreEqual(8, logged.First().Response.Headers.Count, "Response: Expected 8 response headers");
-                Assert.AreEqual(201, logged.First().Response.StatusCode, "Response: Expected a 201 status code");
-                //Assert.AreEqual(13892, logged.First().Response.Body.Length, "Response Body is not the correct length");
-                Logger.Verify(o => o.Write(It.IsAny<LogEntry>()), Times.Once);
-            });
+            Assert.AreEqual(1, logged.Count, "A single logged message should be returned");
+            Assert.NotNull(logged.FirstOrDefault().Request, "Request Information is missing");
+            Assert.AreEqual(2, logged.First().Request.Headers.Count, "Request: Expected 2 request headers");
+            Assert.AreEqual("Post", logged.First().Request.Method, "Request: Expected Http Method to be Post");
+            Assert.AreEqual("/api/v2/transactions/create", logged.First().Request.RequestUri.PathAndQuery, "Request uri is incorrect");
+            Assert.AreEqual(489, logged.First().Request.Body.Length, "Request Body is not the correct length");
+            Assert.NotNull(logged.First().Response, "Response Information is missing");
+            Assert.AreEqual(8, logged.First().Response.Headers.Count, "Response: Expected 8 response headers");
+            Assert.AreEqual(201, logged.First().Response.StatusCode, "Response: Expected a 201 status code");
+            //Assert.AreEqual(13892, logged.First().Response.Body.Length, "Response Body is not the correct length");
+            Logger.Verify(o => o.Write(It.IsAny<LogEntry>()), Times.Once);
+
         }
     }
 }
