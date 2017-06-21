@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A single transaction - for example, a sales invoice or purchase order.
+    /// This object represents a single transaction; for example, a sales invoice or purchase order.
     /// </summary>
     public class TransactionModel
     {
@@ -90,10 +90,18 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? reconciled { get; set; }
 
         /// <summary>
-        /// If this transaction was made from a specific reporting location, this is the code string of the location.
-        /// For customers using Returns, this indicates how tax will be reported according to different locations on the tax forms.
+        /// (DEPRECATED) This field has been replaced by the reportingLocationCode field
+        /// In order to ensure consistency of field names, Please use reportingLocationCode instead.
         /// </summary>
         public String locationCode { get; set; }
+
+        /// <summary>
+        /// If this transaction was made from a specific reporting location, this is the code string of the location.
+        /// For customers using Returns, this indicates how tax will be reported according to different locations on the tax forms.
+        /// In another words, this code does not affect the address of a transaction, it instead affects which tax return it will be reported on.
+        /// Both locationCode and reportingLocationCode refer to LocationCode in Document table, if both are set, reportingLocationCode wins
+        /// </summary>
+        public String reportingLocationCode { get; set; }
 
         /// <summary>
         /// The customer-supplied purchase order number of this transaction.
@@ -212,7 +220,7 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isSellerImporterOfRecord { get; set; }
 
         /// <summary>
-        /// Description of this transaction.
+        /// Description of this transaction. Field permits unicode values.
         /// </summary>
         public String description { get; set; }
 

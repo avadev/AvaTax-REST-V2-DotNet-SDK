@@ -20,17 +20,21 @@ namespace Avalara.AvaTax.RestClient
     public enum LocalNexusTypeId
     {
         /// <summary>
-        /// Selected
+        /// Only the specific nexus objects declared for this company are declared.
         /// </summary>
         Selected,
 
         /// <summary>
-        /// StateAdministered
+        /// Customer declares nexus in all state administered taxing authorities.
+        ///  
+        ///  This value only takes effect if you set `hasLocalNexus` = true.
         /// </summary>
         StateAdministered,
 
         /// <summary>
-        /// All
+        /// Customer declares nexus in all local taxing authorities. 
+        ///  
+        ///  This value only takes effect if you set `hasLocalNexus` = true.
         /// </summary>
         All,
 

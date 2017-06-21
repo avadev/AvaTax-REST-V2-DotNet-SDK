@@ -27,12 +27,13 @@ namespace Avalara.AvaTax.RestClient
         public Int64? id { get; set; }
 
         /// <summary>
-        /// The service category of this property. Some properties may require that you subscribe to certain features of avatax before they can be used.
+        /// The category grouping of this parameter. When your user interface displays a large number of parameters, they should
+        /// be grouped by their category value.
         /// </summary>
         public String category { get; set; }
 
         /// <summary>
-        /// The name of the property. To use this property, add a field on the "properties" object of a /api/v2/companies/(code)/transactions/create call.
+        /// The name of the property. To use this property, add a field on the `parameters` object of a `/api/v2/transactions/create` call.
         /// </summary>
         public String name { get; set; }
 
@@ -42,9 +43,27 @@ namespace Avalara.AvaTax.RestClient
         public ParameterBagDataType? dataType { get; set; }
 
         /// <summary>
-        /// A full description of this property.
+        /// Help text to be shown to the user when they are filling out this parameter. Help text may include HTML links to additional
+        /// content with more information about a parameter.
         /// </summary>
-        public String description { get; set; }
+        public String helpText { get; set; }
+
+        /// <summary>
+        /// A list of service types to which this parameter applies.
+        /// </summary>
+        public List<String> serviceTypes { get; set; }
+
+        /// <summary>
+        /// The prompt you should use when displaying this parameter to a user. For example, if your user interface displays a
+        /// parameter in a text box, this is the label you should use to identify that text box.
+        /// </summary>
+        public String prompt { get; set; }
+
+        /// <summary>
+        /// If your user interface permits client-side validation of parameters, this string is a regular expression you can use
+        /// to validate the user's data entry prior to submitting a tax request.
+        /// </summary>
+        public String regularExpression { get; set; }
 
 
         /// <summary>

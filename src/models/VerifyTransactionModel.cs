@@ -23,16 +23,22 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// Transaction Date - The date on the invoice, purchase order, etc.
+        ///  
+        /// This is used to verify data consistency with the client application.
         /// </summary>
         public DateTime? verifyTransactionDate { get; set; }
 
         /// <summary>
         /// Total Amount - The total amount (not including tax) for the document.
+        ///  
+        /// This is used to verify data consistency with the client application.
         /// </summary>
         public Decimal? verifyTotalAmount { get; set; }
 
         /// <summary>
         /// Total Tax - The total tax for the document.
+        ///  
+        /// This is used to verify data consistency with the client application.
         /// </summary>
         public Decimal? verifyTotalTax { get; set; }
 
