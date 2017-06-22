@@ -17,22 +17,22 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate Model
+    /// Indicates one element of a sales tax rate.
     /// </summary>
     public class RateModel
     {
         /// <summary>
-        /// Rate
+        /// The sales tax rate for general tangible personal property in this jurisdiction.
         /// </summary>
         public Decimal? rate { get; set; }
 
         /// <summary>
-        /// Name
+        /// A readable name of the tax or taxing jurisdiction related to this tax rate.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// Type
+        /// The type of jurisdiction associated with this tax rate.
         /// </summary>
         public JurisdictionType? type { get; set; }
 

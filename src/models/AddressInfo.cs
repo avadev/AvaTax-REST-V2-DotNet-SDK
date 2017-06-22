@@ -17,52 +17,52 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an address to resolve.
+    /// Represents a base address element.
     /// </summary>
     public class AddressInfo
     {
         /// <summary>
-        /// Line1
+        /// First line of the street address
         /// </summary>
         public String line1 { get; set; }
 
         /// <summary>
-        /// Line2
+        /// Second line of the street address
         /// </summary>
         public String line2 { get; set; }
 
         /// <summary>
-        /// Line3
+        /// Third line of the street address
         /// </summary>
         public String line3 { get; set; }
 
         /// <summary>
-        /// City
+        /// City component of the address
         /// </summary>
         public String city { get; set; }
 
         /// <summary>
-        /// State / Province / Region
+        /// State / Province / Region component of the address.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// Two character ISO 3166 Country Code
+        /// Two character ISO 3166 Country Code. Call `ListCountries` for a list of ISO 3166 country codes.
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// Postal Code / Zip Code
+        /// Postal Code / Zip Code component of the address.
         /// </summary>
         public String postalCode { get; set; }
 
         /// <summary>
-        /// Geospatial latitude measurement
+        /// Geospatial latitude measurement, in Decimal Degrees floating point format.
         /// </summary>
         public Decimal? latitude { get; set; }
 
         /// <summary>
-        /// Geospatial longitude measurement
+        /// Geospatial longitude measurement, in Decimal Degrees floating point format.
         /// </summary>
         public Decimal? longitude { get; set; }
 
