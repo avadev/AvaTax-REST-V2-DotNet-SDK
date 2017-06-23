@@ -131,14 +131,17 @@ namespace Tests.Avalara.AvaTax
             };
             Logger.ResetCalls();
             // Execute a transaction
-            var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+            var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
                 .WithLine(100.0m, 1, "P0000000")
                 .WithLine(200m)
                 .WithExemptLine(50m, "NT")
-                .WithLineReference("Special Line Reference!", "Also this!")
-                .Create();
+                .WithLineReference("Special Line Reference!", "Also this!");
+
+            var model = builder.GetCreateTransactionModel();
+
+            var transaction = Client.CreateTransaction(null, model);
 
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");
@@ -151,7 +154,7 @@ namespace Tests.Avalara.AvaTax
             Assert.AreEqual(2, logged.First().Request.Headers.Count, "Request: Expected 2 request headers");
             Assert.AreEqual("Post", logged.First().Request.Method, "Request: Expected Http Method to be Post");
             Assert.AreEqual("/api/v2/transactions/create", logged.First().Request.RequestUri.PathAndQuery, "Request uri is incorrect");
-            Assert.AreEqual(489, logged.First().Request.Body.Length, "Request Body is not the correct length");
+            Assert.AreSame(model, logged.First().Request.Body, "Request Body is not correct");
             Assert.NotNull(logged.First().Response, "Response Information is missing");
             Assert.AreEqual(8, logged.First().Response.Headers.Count, "Response: Expected 8 response headers");
             Assert.AreEqual(201, logged.First().Response.StatusCode, "Response: Expected a 201 status code");
@@ -171,15 +174,17 @@ namespace Tests.Avalara.AvaTax
                 };
                 Logger.ResetCalls();
                 // Execute a transaction
-                var transaction = await new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                     .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                         "98104", "US")
                     .WithLine(100.0m, 1, "P0000000")
                     .WithLine(200m)
                     .WithExemptLine(50m, "NT")
-                    .WithLineReference("Special Line Reference!", "Also this!")
-                    .CreateAsync();
+                    .WithLineReference("Special Line Reference!", "Also this!");
+                    
+                var model = builder.GetCreateTransactionModel();
 
+                var transaction = await Client.CreateTransactionAsync(null, model);
 
                 // Ensure this transaction was created, and has three lines, and has some tax
                 Assert.NotNull(transaction, "Transaction should have been created");
@@ -192,7 +197,7 @@ namespace Tests.Avalara.AvaTax
                 Assert.AreEqual(2, logged.First().Request.Headers.Count, "Request: Expected 2 request headers");
                 Assert.AreEqual("Post", logged.First().Request.Method, "Request: Expected Http Method to be Post");
                 Assert.AreEqual("/api/v2/transactions/create", logged.First().Request.RequestUri.PathAndQuery, "Request uri is incorrect");
-                Assert.AreEqual(489, logged.First().Request.Body.Length, "Request Body is not the correct length");
+                Assert.AreEqual(model, logged.First().Request.Body, "Request Body is not correct");
                 Assert.NotNull(logged.First().Response, "Response Information is missing");
                 Assert.AreEqual(8, logged.First().Response.Headers.Count, "Response: Expected 8 response headers");
                 Assert.AreEqual(201, logged.First().Response.StatusCode, "Response: Expected a 201 status code");

@@ -16,7 +16,7 @@ namespace Avalara.AvaTax.RestClient
         public Dictionary<string, string> Headers { get; set; }
         public string Method { get; set; }
         public Uri RequestUri { get; set; }
-        public string Body { get; set; }
+        public object Body { get; set; }
     }
 
 }

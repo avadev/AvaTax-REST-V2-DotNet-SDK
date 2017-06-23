@@ -63,7 +63,7 @@ namespace Avalara.AvaTax.RestClient
         public delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
 #endif
 
-#region Constructor
+        #region Constructor
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
         /// </summary>
@@ -89,7 +89,7 @@ namespace Avalara.AvaTax.RestClient
             WithLogging(new NullLogger());
 
             _envUri = customEnvironment;
-            
+
             var settings = new JsonSerializerSettings();
             settings.NullValueHandling = NullValueHandling.Ignore;
             settings.Converters.Add(new StringEnumConverter());
@@ -107,9 +107,9 @@ namespace Avalara.AvaTax.RestClient
                 default: throw new Exception("Unrecognized Environment");
             }
         }
-#endregion
+        #endregion
 
-#region Security
+        #region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -156,9 +156,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-#endregion
+        #endregion
 
-#region Client Identification
+        #region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -171,7 +171,7 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-#endregion
+        #endregion
 
         public AvaTaxClient WithLogging(ILog logger)
         {
@@ -182,8 +182,8 @@ namespace Avalara.AvaTax.RestClient
             _logger = new DelegatingLogger(logger);
             return this;
         }
-        
-#region REST Call Interface
+
+        #region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -235,9 +235,9 @@ namespace Avalara.AvaTax.RestClient
             return ExecuteRestCall(verb, relativePath, payload, BodyAsFile);
         }
 
-#endregion
+        #endregion
 
-#region Implementation
+        #region Implementation
 
 #if PORTABLE
 
@@ -280,7 +280,7 @@ namespace Avalara.AvaTax.RestClient
                         // by AvaTax APIs
                         // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
                         request.Content = new StringContent(sb.ToString(), new UTF8Encoding(false, true), "application/json");
-                        entry.Request.Body = sb.ToString();
+                        entry.Request.Body = content;
                     }
 
                     // Send
@@ -302,22 +302,26 @@ namespace Avalara.AvaTax.RestClient
                                 entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
                             }
                             entry.Response.StatusCode = (int)response.StatusCode;
-                            entry.Response.Body = await response.Content.ReadAsStringAsync()
-                                .ConfigureAwait(false);
-
                         }
 
                         if (response.IsSuccessStatusCode)
                         {
                             var result = await responseHandler(response)
                                 .ConfigureAwait(false);
-
+                            if (_logger.IsEnabled)
+                            {
+                                entry.Response.Body = result;
+                            }
                             duration.FinishParse();
                             this.LastCallTime = duration;
                             return result;
                         }
                         var error = await BodyAsObjectAsync<ErrorResult>(response)
                             .ConfigureAwait(false);
+                        if (_logger.IsEnabled)
+                        {
+                            entry.Response.Body = error;
+                        }
                         duration.FinishParse();
                         this.LastCallTime = duration;
                         throw new AvaTaxError(error);
@@ -373,13 +377,7 @@ namespace Avalara.AvaTax.RestClient
                 {
                     if (_logger.IsEnabled)
                     {
-                        StringBuilder sb = new StringBuilder();
-                        using (var textWriter = new StringWriter(sb))
-                        using (var jsonWriter = new JsonTextWriter(textWriter))
-                        {
-                            _serializer.Serialize(jsonWriter, content);
-                        }
-                        entry.Request.Body = sb.ToString();
+                        entry.Request.Body = content;
                     }
                     request.ContentType = "application/json; charset=utf-8";
 
@@ -446,10 +444,6 @@ namespace Avalara.AvaTax.RestClient
                             entry.Response.Headers.Add(header, value);
                         }
                         entry.Response.StatusCode = (int)response.StatusCode;
-                        using (var stream = new MemoryStream(body, 0, body.Length, false))
-                        {
-                            entry.Response.Body = BodyAsString(response, stream);
-                        }
                     }
 
                     if (Extensions.IsSuccessStatusCode(response))
@@ -461,6 +455,10 @@ namespace Avalara.AvaTax.RestClient
                         }
                         duration.FinishParse();
                         this.LastCallTime = duration;
+                        if (_logger.IsEnabled)
+                        {
+                            entry.Response.Body = result;
+                        }
                         return result;
                     }
                     ErrorResult error;
@@ -468,7 +466,10 @@ namespace Avalara.AvaTax.RestClient
                     {
                         error = BodyAsObject<ErrorResult>(response, stream);
                     }
-
+                    if (_logger.IsEnabled)
+                    {
+                        entry.Response.Body = error;
+                    }
                     duration.FinishParse();
                     this.LastCallTime = duration;
                     throw new AvaTaxError(error);
@@ -485,7 +486,10 @@ namespace Avalara.AvaTax.RestClient
                     {
                         error = BodyAsObject<ErrorResult>(response, stream);
                     }
-
+                    if (_logger.IsEnabled)
+                    {
+                        entry.Response.Body = error;
+                    }
                     duration.FinishParse();
                     this.LastCallTime = duration;
                     var exception = new AvaTaxError(error);
