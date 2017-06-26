@@ -246,7 +246,7 @@ namespace Avalara.AvaTax.RestClient
             Func<HttpResponseMessage, Task<T>> responseHandler)
         {
             CallDuration duration = new CallDuration();
-            LogEntry entry = new LogEntry();
+            LogEntry entry = new LogEntry() { Level = LogEntryLevel.Information };
             try
             {
                 using (var request = new HttpRequestMessage())
@@ -291,37 +291,30 @@ namespace Avalara.AvaTax.RestClient
                     {
                         Extensions.FinishReceive(duration, response);
 
-                        if (_logger.IsEnabled)
+                        foreach (var header in response.Headers)
                         {
-                            foreach (var header in response.Headers)
-                            {
-                                entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
-                            }
-                            foreach (var header in response.Content.Headers)
-                            {
-                                entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
-                            }
-                            entry.Response.StatusCode = (int)response.StatusCode;
+                            entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
                         }
+                        foreach (var header in response.Content.Headers)
+                        {
+                            entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
+                        }
+                        entry.Response.StatusCode = (int)response.StatusCode;
 
                         if (response.IsSuccessStatusCode)
                         {
                             var result = await responseHandler(response)
                                 .ConfigureAwait(false);
-                            if (_logger.IsEnabled)
-                            {
-                                entry.Response.Body = result;
-                            }
+                            entry.Response.Body = result;
                             duration.FinishParse();
                             this.LastCallTime = duration;
                             return result;
                         }
+
                         var error = await BodyAsObjectAsync<ErrorResult>(response)
                             .ConfigureAwait(false);
-                        if (_logger.IsEnabled)
-                        {
-                            entry.Response.Body = error;
-                        }
+                        entry.Level = LogEntryLevel.Error;
+                        entry.Response.Body = error;
                         duration.FinishParse();
                         this.LastCallTime = duration;
                         throw new AvaTaxError(error);
@@ -330,6 +323,7 @@ namespace Avalara.AvaTax.RestClient
             }
             catch (Exception ex)
             {
+                entry.Level = LogEntryLevel.Error;
                 entry.Exception = ex;
                 throw;
             }
@@ -349,7 +343,7 @@ namespace Avalara.AvaTax.RestClient
             Func<HttpWebResponse, Stream, T> responseHandler)
         {
             CallDuration duration = new CallDuration();
-            LogEntry entry = new LogEntry();
+            LogEntry entry = new LogEntry() { Level = LogEntryLevel.Information };
             try
             {
                 var request = (HttpWebRequest)WebRequest.Create(new Uri(_envUri, relativePath.ToString()));
@@ -375,10 +369,7 @@ namespace Avalara.AvaTax.RestClient
 #endif
                 if (content != null)
                 {
-                    if (_logger.IsEnabled)
-                    {
-                        entry.Request.Body = content;
-                    }
+                    entry.Request.Body = content;
                     request.ContentType = "application/json; charset=utf-8";
 
                     using (var stream =
@@ -430,20 +421,18 @@ namespace Avalara.AvaTax.RestClient
                     )
                 {
                     Extensions.FinishReceive(duration, response);
+
+                    entry.Response.StatusCode = (int)response.StatusCode;
+                    foreach (string header in response.Headers.AllKeys)
+                    {
+                        string value = response.Headers[header];
+                        entry.Response.Headers.Add(header, value);
+                    }
+
                     byte[] body = null;
                     using (Stream stream = response.GetResponseStream())
                     {
                         body = Extensions.ReadToEnd(stream);
-                    }
-
-                    if (_logger.IsEnabled)
-                    {
-                        foreach (string header in response.Headers.AllKeys)
-                        {
-                            string value = response.Headers[header];
-                            entry.Response.Headers.Add(header, value);
-                        }
-                        entry.Response.StatusCode = (int)response.StatusCode;
                     }
 
                     if (Extensions.IsSuccessStatusCode(response))
@@ -455,10 +444,8 @@ namespace Avalara.AvaTax.RestClient
                         }
                         duration.FinishParse();
                         this.LastCallTime = duration;
-                        if (_logger.IsEnabled)
-                        {
-                            entry.Response.Body = result;
-                        }
+                        entry.Response.Body = result;
+
                         return result;
                     }
                     ErrorResult error;
@@ -466,18 +453,19 @@ namespace Avalara.AvaTax.RestClient
                     {
                         error = BodyAsObject<ErrorResult>(response, stream);
                     }
-                    if (_logger.IsEnabled)
-                    {
-                        entry.Response.Body = error;
-                    }
+
+                    entry.Level = LogEntryLevel.Error;
+                    entry.Response.Body = error;
                     duration.FinishParse();
                     this.LastCallTime = duration;
-                    throw new AvaTaxError(error);
-
+                    var exception = new AvaTaxError(error);
+                    entry.Exception = exception;
+                    throw exception;
                 }
             }
             catch (WebException webex)
             {
+
                 HttpWebResponse response = webex.Response as HttpWebResponse;
                 if (response != null)
                 {
@@ -486,10 +474,9 @@ namespace Avalara.AvaTax.RestClient
                     {
                         error = BodyAsObject<ErrorResult>(response, stream);
                     }
-                    if (_logger.IsEnabled)
-                    {
-                        entry.Response.Body = error;
-                    }
+
+                    entry.Level = LogEntryLevel.Error;
+                    entry.Response.Body = error;
                     duration.FinishParse();
                     this.LastCallTime = duration;
                     var exception = new AvaTaxError(error);
@@ -497,9 +484,9 @@ namespace Avalara.AvaTax.RestClient
                     throw exception;
                 }
 
+                entry.Level = LogEntryLevel.Error;
                 duration.FinishParse();
                 this.LastCallTime = duration;
-
                 entry.Exception = webex;
                 // If we can't parse it as an AvaTax error, just throw
                 // use throw instead of throw ex. This ensures the call stack is not reset in the exception.
@@ -507,6 +494,7 @@ namespace Avalara.AvaTax.RestClient
             }
             catch (Exception ex)
             {
+                entry.Level = LogEntryLevel.Error;
                 entry.Exception = ex;
                 throw;
             }

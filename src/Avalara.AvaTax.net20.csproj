@@ -33,12 +33,11 @@
     <DocumentationFile>bin\Release\net20\Avalara.AvaTax.RestClient.net20.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
@@ -114,6 +113,7 @@
     <Compile Include="Logging\DelegatingLogger.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LogEntryLevel.cs" />
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Logging\Request.cs" />
     <Compile Include="Logging\Response.cs" />
@@ -252,6 +252,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

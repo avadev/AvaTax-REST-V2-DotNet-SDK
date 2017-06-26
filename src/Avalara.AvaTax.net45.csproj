@@ -119,6 +119,7 @@
     <Compile Include="Logging\DelegatingLogger.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LogEntryLevel.cs" />
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Logging\Request.cs" />
     <Compile Include="Logging\Response.cs" />

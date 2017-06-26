@@ -19,6 +19,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Request Request { get; private set; }
 
+        /// <summary>
+        /// The severity associated with this log entry.
+        /// </summary>
+        public LogEntryLevel Level { get; set; }
 
         /// <summary>
         /// The Response received from AvaTax
