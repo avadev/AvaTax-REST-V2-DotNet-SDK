@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
 
 /*
  * AvaTax API Client Library
@@ -16,36 +17,43 @@ using Newtonsoft.Json;
 
 namespace Avalara.AvaTax.RestClient
 {
+    [Guid("dd6509cd-77b0-4dee-b6c7-b97c4dd64f57")]
+    [ComVisible(true)]
     /// <summary>
     /// Address Resolution Model
-    /// </summary>
+    /// </summary>    
     public class AddressResolutionModel
     {
+        [DispId(1)]
         /// <summary>
         /// The original address
         /// </summary>
         public AddressInfo address { get; set; }
-
+        [DispId(2)]
         /// <summary>
         /// The validated address or addresses
         /// </summary>
         public List<ValidatedAddressInfo> validatedAddresses { get; set; }
 
+        [DispId(3)]
         /// <summary>
         /// The geospatial coordinates of this address
         /// </summary>
         public CoordinateInfo coordinates { get; set; }
 
+        [DispId(4)]
         /// <summary>
         /// The resolution quality of the geospatial coordinates
         /// </summary>
         public ResolutionQuality? resolutionQuality { get; set; }
 
+        [DispId(5)]
         /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
         public List<TaxAuthorityInfo> taxAuthorities { get; set; }
 
+        [DispId(6)]
         /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>

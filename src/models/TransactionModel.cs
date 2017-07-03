@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Runtime.InteropServices;
+using System.Collections;
 
 /*
  * AvaTax API Client Library
@@ -16,21 +18,26 @@ using Newtonsoft.Json;
 
 namespace Avalara.AvaTax.RestClient
 {
+    [Guid("3a1ce78a-e421-44eb-88c5-b287cd309f7f")]
+    [ComVisible(true)]
     /// <summary>
     /// A single transaction - for example, a sales invoice or purchase order.
     /// </summary>
     public class TransactionModel
     {
+        [DispId(1)]
         /// <summary>
         /// The unique ID number of this transaction.
         /// </summary>
         public Int64? id { get; set; }
 
+         [DispId(2)]
         /// <summary>
         /// A unique customer-provided code identifying this transaction.
         /// </summary>
         public String code { get; set; }
 
+         [DispId(3)]
         /// <summary>
         /// The unique ID number of the company that recorded this transaction.
         /// </summary>
@@ -241,10 +248,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public DateTime? taxDate { get; set; }
 
+         [DispId(100)] // this should be assigned to all properties in the class
         /// <summary>
+        /// some consumers do not understand List enumerables, hence we mimic the list using array. Please check implementation
         /// Optional: A list of line items in this transaction. To fetch this list, add the query string "?$include=Lines" or "?$include=Details" to your URL.
         /// </summary>
-        public List<TransactionLineModel> lines { get; set; }
+        public TransactionLinesModel lines { get; set; }
 
         /// <summary>
         /// Optional: A list of line items in this transaction. To fetch this list, add the query string "?$include=Addresses" to your URL.
@@ -284,6 +293,146 @@ namespace Avalara.AvaTax.RestClient
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this, new JsonSerializerSettings() { Formatting = Formatting.Indented });
+        }
+    }
+
+    [Guid("57c191fc-548c-4161-b42d-6db3bb85ad85")]
+    [ComVisible(true)]
+    public class TransactionLinesModel : BaseArrayList
+    {
+        //   public int LineNo { get; set; }
+
+        internal TransactionLinesModel() { }
+
+        /// <include file='TaxSvc.Doc.xml' path='adapter/Lines/members[@name="Add"]/*' />
+        [DispId(30)]
+        public void Add(TransactionLineModel line)
+        {
+            //we hide the base member so that we can strongly type our parameter
+            try
+            {
+                base.Add(line);
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException("line", "Cannot add a null line to the collection.");
+            }
+
+        }
+
+        /// <include file='TaxSvc.Doc.xml' path='adapter/Lines/members[@name="this"]/*' />
+        [DispId(0)]
+        public new TransactionLineModel this[int index]
+        {
+            get
+            {
+                //we hide the base member so that we can strongly type our returned object
+                return (TransactionLineModel)base[index];
+            }
+        }
+
+        /// <include file='TaxSvc.Doc.xml' path='adapter/Lines/members[@name="Clear"]/*' />
+        [DispId(31)]
+        public new void Clear()
+        {
+            base.Clear();
+        }
+
+        /// <include file='TaxSvc.Doc.xml' path='adapter/Lines/members[@name="GetItemByNo"]/*' />
+        [DispId(32)]
+        public TransactionLineModel GetItemByNo(string lineNo)
+        {
+            TransactionLineModel item = null;
+
+            foreach (TransactionLineModel line in base.List)
+            {
+                if (line.lineNumber == lineNo)
+                {
+                    item = line;
+                    break;
+                }
+            }
+
+            return item;
+        }
+
+    }
+
+    [Guid("e8760780-5b11-4945-923c-57ac3217c616")]
+    [ComVisible(true)]
+    public class BaseArrayList
+    {
+        //Wrap an arraylist in our own class to limit the methods available
+        //    and control inputs (force to be of strongly typed).
+        ArrayList _list = new ArrayList();
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/common/members[@name="InternalConstructor"]/*' />
+        internal BaseArrayList()
+        {
+            //not publicly creatable
+        }
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/BaseCollection/members[@name="List"]/*' />
+        //no dispatch id because protected
+        protected ArrayList List
+        {
+            get { return _list; }
+        }
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/BaseCollection/members[@name="GetEnumerator"]/*' />
+        [DispId(-4)]
+        public virtual System.Collections.IEnumerator GetEnumerator()
+        {
+            return _list.GetEnumerator();
+        }
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/BaseCollection/members[@name="Count"]/*' />
+        [DispId(20)]
+        public virtual int Count
+        {
+            get
+            {
+                return _list.Count;
+            }
+        }
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/BaseCollection/members[@name="this"]/*' />
+        //no dispatch id because protected
+        protected virtual Object this[int index]
+        {
+            get
+            {
+                return _list[index];
+            }
+        }
+
+        //Any class derived from BaseCollection must implement its own Add function and invoke this one
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/BaseCollection/members[@name="Add"]/*' />
+        //no dipatch id because protected
+        protected virtual void Add(Object item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item", "A null object cannot be added to a collection.");
+            }
+            _list.Add(item);
+        }
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/BaseCollection/members[@name="Clear"]/*' />
+        //no dispatch id because protected
+        protected void Clear()
+        {
+            if (_list != null)
+            {
+                _list.Clear();
+            }
+        }
+
+        /// <include file='Avalara.AvaTax.Adapter.Doc.xml' path='adapter/common/members[@name="Finalize"]/*' />
+        ~BaseArrayList()
+        {
+            Clear();
+            _list = null;
         }
     }
 }
