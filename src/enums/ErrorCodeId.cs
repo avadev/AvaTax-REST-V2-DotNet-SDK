@@ -252,6 +252,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        CannotAssignUserToCompany,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MustAssignUserToCompany,
+
+        /// <summary>
+        /// 
+        /// </summary>
         ModelStateInvalid,
 
         /// <summary>
@@ -520,6 +530,16 @@ namespace Avalara.AvaTax.RestClient
         PasswordLengthInvalid,
 
         /// <summary>
+        /// 
+        /// </summary>
+        LocalNexusConflict,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidEcmsOverrideCode,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -625,6 +645,11 @@ namespace Avalara.AvaTax.RestClient
         BadDocumentFetch,
 
         /// <summary>
+        /// 
+        /// </summary>
+        CannotChangeFilingStatus,
+
+        /// <summary>
         /// Represents a SQL server timeout error / deadlock error
         /// </summary>
         ServerUnreachable,
@@ -658,6 +683,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         FreeTrialNotAvailable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccountExistsDifferentEmail,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AvalaraIdentityApiError,
 
         /// <summary>
         /// Refund API error codes
@@ -725,6 +760,11 @@ namespace Avalara.AvaTax.RestClient
         NonOutletForm,
 
         /// <summary>
+        /// 
+        /// </summary>
+        OverlappingFilingCalendar,
+
+        /// <summary>
         /// Location error codes
         /// </summary>
         QuestionNotNeededForThisAddress,
@@ -753,6 +793,41 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         LinesNotSpecified,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidBusinessType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotModifyExemptCert,
+
+        /// <summary>
+        /// Multi company error codes
+        /// </summary>
+        TransactionNotCancelled,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TooManyTransactionLines,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OnlyTaxDateOverrideIsAllowed,
+
+        /// <summary>
+        /// Communications Tax error codes
+        /// </summary>
+        CommsConfigClientIdMissing,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CommsConfigClientIdBadValue,
 
     }
 }

@@ -55,9 +55,12 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     postalCode = "98110",
                     region = "WA",
                     taxpayerIdNumber = "123456789",
-                    name = "SatanicTheHedghog",
+                    name = "Bob's Hardware Store",
                     title = "Owner/CEO"
                 });
+
+                // Add a delay after creating a company
+                System.Threading.Thread.Sleep(6 * 1000);
 
                 // Assert that company setup succeeded
                 Assert.NotNull(TestCompany, "Test company should be created");

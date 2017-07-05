@@ -27,7 +27,9 @@ namespace Avalara.AvaTax.RestClient
         public AdjustmentReason adjustmentReason { get; set; }
 
         /// <summary>
-        /// If the AdjustmentReason is "Other", specify the reason here
+        /// If the AdjustmentReason is "Other", specify the reason here.
+        /// 
+        /// This is required when the AdjustmentReason is 8 (Other).
         /// </summary>
         public String adjustmentDescription { get; set; }
 

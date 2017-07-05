@@ -54,6 +54,9 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                     title = "Owner/CEO"
                 });
 
+                // Add a delay after creating a company
+                System.Threading.Thread.Sleep(6 * 1000);
+
                 // Assert that company setup succeeded
                 Assert.NotNull(TestCompany, "Test company should be created");
                 Assert.True(TestCompany.nexus.Count > 0, "Test company should have nexus");

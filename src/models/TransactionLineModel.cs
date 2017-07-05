@@ -87,7 +87,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? exemptCertId { get; set; }
 
         /// <summary>
-        /// If this line item was exempt, this string contains the word 'Exempt'.
+        /// If this line item was exempt, this string contains the word `Exempt`.
         /// </summary>
         public String exemptNo { get; set; }
 

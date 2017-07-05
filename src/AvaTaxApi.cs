@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.5.2-77
+ * @version    17.6.0-89
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.5.2-77"; } }
+        public static string API_VERSION { get { return "17.6.0-89"; } }
 
 #region Methods
 
@@ -339,6 +339,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Change the filing status of this company
+        /// </summary>
+        /// <remarks>
+        /// Changes the current filing status of this company.
+        /// 
+        /// For customers using Avalara's Managed Returns Service, each company within their account can request
+        /// for Avalara to file tax returns on their behalf. Avalara compliance team members will review all
+        /// requested filing calendars prior to beginning filing tax returns on behalf of this company.
+        /// 
+        /// The following changes may be requested through this API:
+        /// 
+        /// * If a company is in `NotYetFiling` status, the customer may request this be changed to `FilingRequested`.
+        /// * Avalara compliance team members may change a company from `FilingRequested` to `FirstFiling`.
+        /// * Avalara compliance team members may change a company from `FirstFiling` to `Active`.
+        /// 
+        /// All other status changes must be requested through the Avalara customer support team.
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        public String ChangeFilingStatus(Int32 id, FilingStatusChangeModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
+            path.ApplyField("id", id);
+            return RestCallString("Post", path, model);
+        }
+
+
+        /// <summary>
         /// Quick setup for a company with a single physical address
         /// </summary>
         /// <remarks>
@@ -434,6 +462,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * TaxCodes
         ///  * TaxRules
         ///  * UPC
+        ///  * ECMS
         /// </remarks>
         /// <param name="id">The ID of the company to retrieve.</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -473,6 +502,33 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Get this company's filing status
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the current filing status of this company.
+        /// 
+        /// For customers using Avalara's Managed Returns Service, each company within their account can request
+        /// for Avalara to file tax returns on their behalf. Avalara compliance team members will review all
+        /// requested filing calendars prior to beginning filing tax returns on behalf of this company.
+        /// 
+        /// A company's filing status can be one of the following values:
+        /// 
+        /// * `NoReporting` - This company is not configured to report tax returns; instead, it reports through a parent company.
+        /// * `NotYetFiling` - This company has not yet begun filing tax returns through Avalara's Managed Returns Service.
+        /// * `FilingRequested` - The company has requested to begin filing tax returns, but Avalara's compliance team has not yet begun filing.
+        /// * `FirstFiling` - The company has recently filing tax returns and is in a new status.
+        /// * `Active` - The company is currently active and is filing tax returns via Avalara Managed Returns.
+        /// </remarks>
+        /// <param name="id"></param>
+        public String GetFilingStatus(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
+            path.ApplyField("id", id);
+            return RestCallString("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Check managed returns funding configuration for a company
         /// </summary>
         /// <remarks>
@@ -508,6 +564,7 @@ namespace Avalara.AvaTax.RestClient
         /// * TaxCodes
         /// * TaxRules
         /// * UPC
+        /// * ECMS
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -705,54 +762,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve the full list of Avalara-supported nexus for a country and region.
-        /// </summary>
-        /// <remarks>
-        /// Returns all Avalara-supported nexus for the specified country and region.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.
-        /// </remarks>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        public FetchResult<NexusModel> ApiV2DefinitionsNexusByCountryByRegionGet(String country, String region)
-        {
-            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve the full list of Avalara-supported nexus for a country.
-        /// </summary>
-        /// <remarks>
-        /// Returns all Avalara-supported nexus for the specified country.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
-        /// </remarks>
-        /// <param name="country"></param>
-        public FetchResult<NexusModel> ApiV2DefinitionsNexusByCountryGet(String country)
-        {
-            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
-            path.ApplyField("country", country);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve the full list of Avalara-supported nexus for all countries and regions.
-        /// </summary>
-        /// <remarks>
-        /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.
-        /// </remarks>
-        public FetchResult<NexusModel> ApiV2DefinitionsNexusGet()
-        {
-            var path = new AvaTaxPath("/api/v2/definitions/nexus");
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
-        }
-
-
-        /// <summary>
         /// Test whether a form supports online login verification
         /// </summary>
         /// <remarks>
@@ -779,6 +788,50 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/avafileforms");
             return RestCall<FetchResult<AvaFileFormModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of communications transactiontypes
+        /// </summary>
+        /// <remarks>
+        /// Returns full list of communications transaction types which
+        /// are accepted in communication tax calculation requests.
+        /// </remarks>
+        /// <param name="id"></param>
+        public FetchResult<CommunicationsTSPairModel> ListCommunicationsServiceTypes(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes/{id}/servicetypes");
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<CommunicationsTSPairModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of communications transactiontypes
+        /// </summary>
+        /// <remarks>
+        /// Returns full list of communications transaction types which
+        /// are accepted in communication tax calculation requests.
+        /// </remarks>
+        public FetchResult<CommunicationsTransactionTypeModel> ListCommunicationsTransactionTypes()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes");
+            return RestCall<FetchResult<CommunicationsTransactionTypeModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of communications transaction/service type pairs
+        /// </summary>
+        /// <remarks>
+        /// Returns full list of communications transaction/service type pairs which
+        /// are accepted in communication tax calculation requests.
+        /// </remarks>
+        public FetchResult<CommunicationsTSPairModel> ListCommunicationsTSPairs()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/communications/tspairs");
+            return RestCall<FetchResult<CommunicationsTSPairModel>>("Get", path, null);
         }
 
 
@@ -913,6 +966,20 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of Avalara-supported nexus for all countries and regions.
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.
+        /// </remarks>
+        public FetchResult<NexusModel> ListNexus()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus");
+            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// List all nexus that apply to a specific address.
         /// </summary>
         /// <remarks>
@@ -939,6 +1006,40 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported nexus for a country.
+        /// </summary>
+        /// <remarks>
+        /// Returns all Avalara-supported nexus for the specified country.
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
+        /// </remarks>
+        /// <param name="country"></param>
+        public FetchResult<NexusModel> ListNexusByCountry(String country)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
+            path.ApplyField("country", country);
+            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported nexus for a country and region.
+        /// </summary>
+        /// <remarks>
+        /// Returns all Avalara-supported nexus for the specified country and region.
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.
+        /// </remarks>
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        public FetchResult<NexusModel> ListNexusByCountryAndRegion(String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
             return RestCall<FetchResult<NexusModel>>("Get", path, null);
         }
 
@@ -1335,67 +1436,80 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve a single filing calendar
+        /// Approve existing Filing Request
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// The filing request must be in the "ChangeRequest" status to be approved.
         /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
-        /// <param name="id">The primary key of this filing calendar</param>
-        public FilingCalendarModel ApiV2CompaniesByCompanyIdFilingcalendarsByIdGet(Int32 companyId, Int32 id)
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing request object</param>
+        public FilingRequestModel ApproveFilingRequest(Int32 companyId, Int32 id)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingCalendarModel>("Get", path, null);
+            return RestCall<FilingRequestModel>("Post", path, null);
         }
 
 
         /// <summary>
-        /// Retrieve all filing calendars for this company
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<FilingCalendarModel> ApiV2CompaniesByCompanyIdFilingcalendarsGet(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingCalendarModel>>("Get", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests for this company
+        /// Cancel existing Filing Request
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
         /// A "filing request" represents a request to change an existing filing calendar. Filing requests
         /// are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<FilingRequestModel> ApiV2CompaniesByCompanyIdFilingrequestsGet(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing request object</param>
+        public FilingRequestModel CancelFilingRequest(Int32 companyId, Int32 id)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
             path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingRequestModel>>("Get", path, null);
+            path.ApplyField("id", id);
+            return RestCall<FilingRequestModel>("Post", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a new filing request to cancel a filing calendar
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
+        /// <param name="id">The unique ID number of the filing calendar to cancel</param>
+        /// <param name="model">The cancellation request for this filing calendar</param>
+        public FilingRequestModel CancelFilingRequests(Int32 companyId, Int32 id, List<FilingRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FilingRequestModel>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Create a new filing request to create a filing calendar
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
+        /// <param name="model">Information about the proposed new filing calendar</param>
+        public FilingRequestModel CreateFilingRequests(Int32 companyId, List<FilingRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
+            path.ApplyField("companyId", companyId);
+            return RestCall<FilingRequestModel>("Post", path, model);
         }
 
 
@@ -1472,22 +1586,19 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Edit existing Filing Calendar's Notes
+        /// Retrieve a single filing calendar
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// This API only allows updating of internal notes and company filing instructions.
-        /// All other updates must go through a filing request at this time.
         /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        /// <param name="model">The filing calendar model you are wishing to update with.</param>
-        public FilingCalendarModel FilingCalendarUpdate(Int32 companyId, Int32 id, FilingCalendarModel model)
+        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
+        /// <param name="id">The primary key of this filing calendar</param>
+        public FilingCalendarModel GetFilingCalendar(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingCalendarModel>("Put", path, model);
+            return RestCall<FilingCalendarModel>("Get", path, null);
         }
 
 
@@ -1501,7 +1612,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this filing calendar</param>
         /// <param name="id">The primary key of this filing calendar</param>
-        public FilingRequestModel filingRequests(Int32 companyId, Int32 id)
+        public FilingRequestModel GetFilingRequest(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
@@ -1511,134 +1622,50 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create a new filing request to create a filing calendar
+        /// Retrieve all filing calendars for this company
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns these batches</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<FilingCalendarModel> ListFilingCalendars(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<FilingCalendarModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all filing requests for this company
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
         /// A "filing request" represents a request to change an existing filing calendar. Filing requests
         /// are reviewed and validated by Avalara Compliance before being implemented.
         /// </remarks>
-        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
-        /// <param name="model">Information about the proposed new filing calendar</param>
-        public FilingRequestModel FilingRequestsAdd(Int32 companyId, List<FilingRequestModel> model)
+        /// <param name="companyId">The ID of the company that owns these batches</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<FilingRequestModel> ListFilingRequests(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
             path.ApplyField("companyId", companyId);
-            return RestCall<FilingRequestModel>("Post", path, model);
-        }
-
-
-        /// <summary>
-        /// Approve existing Filing Request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// The filing request must be in the "ChangeRequest" status to be approved.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public FilingRequestModel FilingRequestsApprove(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, null);
-        }
-
-
-        /// <summary>
-        /// Cancel existing Filing Request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public FilingRequestModel FilingRequestsCancel(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, null);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to cancel a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to cancel</param>
-        /// <param name="model">The cancellation request for this filing calendar</param>
-        public FilingRequestModel FilingRequestsNewCancel(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, model);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to edit a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to edit</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public FilingRequestModel FilingRequestsNewEdit(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, model);
-        }
-
-
-        /// <summary>
-        /// Edit existing Filing Request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public FilingRequestModel FilingRequestsUpdate(Int32 companyId, Int32 id, FilingRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Put", path, model);
-        }
-
-
-        /// <summary>
-        /// Gets the request status and Login Result
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// </remarks>
-        /// <param name="jobId">The unique ID number of this login request</param>
-        public LoginVerificationOutputModel loginVerificationGet(Int32 jobId)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
-            path.ApplyField("jobId", jobId);
-            return RestCall<LoginVerificationOutputModel>("Get", path, null);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<FilingRequestModel>>("Get", path, null);
         }
 
 
@@ -1647,12 +1674,32 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
+        /// 
+        /// This API verifies that a customer has submitted correct login credentials for a tax authority's online filing system.
         /// </remarks>
         /// <param name="model">The model of the login information we are verifying</param>
-        public LoginVerificationOutputModel loginVerificationPost(LoginVerificationInputModel model)
+        public LoginVerificationOutputModel LoginVerificationRequest(LoginVerificationInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
             return RestCall<LoginVerificationOutputModel>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Gets the request status and Login Result
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// This API checks the status of a login verification request. It may only be called by authorized users from the account 
+        /// that initially requested the login verification.
+        /// </remarks>
+        /// <param name="jobId">The unique ID number of this login request</param>
+        public LoginVerificationOutputModel LoginVerificationStatus(Int32 jobId)
+        {
+            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
+            path.ApplyField("jobId", jobId);
+            return RestCall<LoginVerificationOutputModel>("Get", path, null);
         }
 
 
@@ -1700,6 +1747,70 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<FilingRequestModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a new filing request to edit a filing calendar
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// 
+        /// Certain users may not update filing calendars directly. Instead, they may submit an edit request
+        /// to modify the value of a filing calendar using this API.
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
+        /// <param name="id">The unique ID number of the filing calendar to edit</param>
+        /// <param name="model">A list of filing calendar edits to be made</param>
+        public FilingRequestModel RequestFilingCalendarUpdate(Int32 companyId, Int32 id, List<FilingRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FilingRequestModel>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Edit existing Filing Calendar's Notes
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// This API only allows updating of internal notes and company filing instructions.
+        /// All other updates must go through a filing request at this time.
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing calendar object</param>
+        /// <param name="model">The filing calendar model you are wishing to update with.</param>
+        public FilingCalendarModel UpdateFilingCalendar(Int32 companyId, Int32 id, FilingCalendarModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FilingCalendarModel>("Put", path, model);
+        }
+
+
+        /// <summary>
+        /// Edit existing Filing Request
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing request object</param>
+        /// <param name="model">A list of filing calendar edits to be made</param>
+        public FilingRequestModel UpdateFilingRequest(Int32 companyId, Int32 id, FilingRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FilingRequestModel>("Put", path, model);
         }
 
 
@@ -1897,12 +2008,12 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// This API is available by invitation only.
         /// </remarks>
-        /// <param name="worksheetId">The unique id of the worksheet.</param>
+        /// <param name="filingsId">The unique id of the worksheet.</param>
         /// <param name="companyId">The unique ID of the company that owns the worksheet.</param>
-        public FilingsCheckupModel FilingsCheckupReport(Int32 worksheetId, Int32 companyId)
+        public FilingsCheckupModel FilingsCheckupReport(Int32 filingsId, Int32 companyId)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/checkup");
-            path.ApplyField("worksheetId", worksheetId);
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
+            path.ApplyField("filingsId", filingsId);
             path.ApplyField("companyId", companyId);
             return RestCall<FilingsCheckupModel>("Get", path, null);
         }
@@ -2085,6 +2196,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a list of filings for the specified company in the year and month of a given filing period. 
+        /// This gets the basic information from the filings and doesn't include anything extra.
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns these batches</param>
+        /// <param name="endPeriodMonth">The month of the period you are trying to retrieve</param>
+        /// <param name="endPeriodYear">The year of the period you are trying to retrieve</param>
+        /// <param name="frequency">The frequency of the return you are trying to retrieve</param>
+        /// <param name="status">The status of the return(s) you are trying to retrieve</param>
+        /// <param name="country">The country of the return(s) you are trying to retrieve</param>
+        /// <param name="region">The region of the return(s) you are trying to retrieve</param>
+        public FetchResult<FilingReturnModelBasic> GetFilingsReturns(Int32 companyId, Int32? endPeriodMonth, Int32? endPeriodYear, FilingFrequencyId? frequency, FilingStatusId? status, String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("endPeriodMonth", endPeriodMonth);
+            path.AddQuery("endPeriodYear", endPeriodYear);
+            path.AddQuery("frequency", frequency);
+            path.AddQuery("status", status);
+            path.AddQuery("country", country);
+            path.AddQuery("region", region);
+            return RestCall<FetchResult<FilingReturnModelBasic>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Rebuild a set of filings for the specified company in the given filing period.
         /// </summary>
         /// <remarks>
@@ -2243,11 +2382,15 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// However, this API is currently limited for US only
         /// 
-        /// Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
-        /// rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
-        /// support for scenarios including, but not limited to:
+        /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
+        /// response code 429 - `Too Many Requests`.
+        /// 
+        /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
+        /// location in the United States only. 
+        /// 
+        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
+        /// which supports features including, but not limited to:
         /// 
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -2290,11 +2433,15 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// However, this API is currently limited for US only
         /// 
-        /// Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
-        /// rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
-        /// support for scenarios including, but not limited to:
+        /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
+        /// response code 429 - `Too Many Requests`.
+        /// 
+        /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
+        /// location in the United States only. 
+        /// 
+        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
+        /// which supports features including, but not limited to:
         /// 
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -2636,36 +2783,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return RestCall<JurisdictionOverrideModel>("Put", path, model);
-        }
-
-
-        /// <summary>
-        /// Point of sale data file generation
-        /// </summary>
-        /// <remarks>
-        /// Builds a point-of-sale data file containing tax rates and rules for this location, containing tax rates for all
-        /// items defined for this company. This data file can be used to correctly calculate tax in the event a 
-        /// point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to a maximum of 7500 items.
-        /// </remarks>
-        /// <param name="companyId">The ID number of the company that owns this location.</param>
-        /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
-        /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
-        /// <param name="format">The format of the file (JSON by default)</param>
-        /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
-        /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public FileResult BuildPointOfSaleDataForLocation(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.AddQuery("date", date);
-            path.AddQuery("format", format);
-            path.AddQuery("partnerId", partnerId);
-            path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return RestCallFile("Get", path, null);
         }
 
 
@@ -3126,6 +3243,50 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete a single responsibility
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Mark the existing notice object at this URL as deleted.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="noticeId">The ID of the notice you wish to delete.</param>
+        /// <param name="id">The ID of the responsibility you wish to delete.</param>
+        public List<ErrorDetail> DeleteResponsibilities(Int32 companyId, Int32 noticeId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeId}/responsibilities/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeId", noticeId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("Delete", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single root cause.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Mark the existing notice object at this URL as deleted.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="noticeId">The ID of the notice you wish to delete.</param>
+        /// <param name="id">The ID of the root cause you wish to delete.</param>
+        public List<ErrorDetail> DeleteRootCauses(Int32 companyId, Int32 noticeId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeId}/rootcauses/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeId", noticeId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("Delete", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve a single attachment
         /// </summary>
         /// <remarks>
@@ -3358,24 +3519,6 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
             return RestCall<NewAccountModel>("Post", path, model);
-        }
-
-
-        /// <summary>
-        /// Point of sale data file generation
-        /// </summary>
-        /// <remarks>
-        /// Builds a point-of-sale data file containing tax rates and rules for items and locations that can be used
-        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios.
-        /// </remarks>
-        /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
-        public FileResult BuildPointOfSaleDataFile(PointOfSaleDataRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return RestCallFile("Post", path, model);
         }
 
 
@@ -3983,6 +4126,65 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<TaxCodeModel>("Put", path, model);
+        }
+
+
+        /// <summary>
+        /// Build a multi-location tax content file
+        /// </summary>
+        /// <remarks>
+        /// Builds a tax content file containing information useful for a retail point-of-sale solution.
+        /// 
+        /// This file contains tax rates and rules for items and locations that can be used
+        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// 
+        /// This data file can be customized for specific partner devices and usage conditions.
+        /// 
+        /// The result of this API is the file you requested in the format you requested using the `responseType` field.
+        /// 
+        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
+        /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
+        /// </remarks>
+        /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
+        public FileResult BuildTaxContentFile(PointOfSaleDataRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
+            return RestCallFile("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Build a tax content file for a single location
+        /// </summary>
+        /// <remarks>
+        /// Builds a tax content file containing information useful for a retail point-of-sale solution.
+        /// 
+        /// This file contains tax rates and rules for all items for a single location. Data from this API
+        /// can be used to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// 
+        /// This data file can be customized for specific partner devices and usage conditions.
+        /// 
+        /// The result of this API is the file you requested in the format you requested using the `responseType` field.
+        /// 
+        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
+        /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company that owns this location.</param>
+        /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
+        /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
+        /// <param name="format">The format of the file (JSON by default)</param>
+        /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
+        /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
+        public FileResult BuildTaxContentFileForLocation(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("date", date);
+            path.AddQuery("format", format);
+            path.AddQuery("partnerId", partnerId);
+            path.AddQuery("includeJurisCodes", includeJurisCodes);
+            return RestCallFile("Get", path, null);
         }
 
 
@@ -5273,6 +5475,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Change the filing status of this company;
+        /// </summary>
+        /// <remarks>
+        /// Changes the current filing status of this company.
+        /// 
+        /// For customers using Avalara's Managed Returns Service, each company within their account can request
+        /// for Avalara to file tax returns on their behalf. Avalara compliance team members will review all
+        /// requested filing calendars prior to beginning filing tax returns on behalf of this company.
+        /// 
+        /// The following changes may be requested through this API:
+        /// 
+        /// * If a company is in `NotYetFiling` status, the customer may request this be changed to `FilingRequested`.
+        /// * Avalara compliance team members may change a company from `FilingRequested` to `FirstFiling`.
+        /// * Avalara compliance team members may change a company from `FirstFiling` to `Active`.
+        /// 
+        /// All other status changes must be requested through the Avalara customer support team.;
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        public async Task<String> ChangeFilingStatusAsync(Int32 id, FilingStatusChangeModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
+            path.ApplyField("id", id);
+            return await RestCallStringAsync("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Quick setup for a company with a single physical address;
         /// </summary>
         /// <remarks>
@@ -5367,7 +5597,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * Settings
         ///  * TaxCodes
         ///  * TaxRules
-        ///  * UPC;
+        ///  * UPC
+        ///  * ECMS;
         /// </remarks>
         /// <param name="id">The ID of the company to retrieve.</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -5407,6 +5638,33 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Get this company's filing status;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the current filing status of this company.
+        /// 
+        /// For customers using Avalara's Managed Returns Service, each company within their account can request
+        /// for Avalara to file tax returns on their behalf. Avalara compliance team members will review all
+        /// requested filing calendars prior to beginning filing tax returns on behalf of this company.
+        /// 
+        /// A company's filing status can be one of the following values:
+        /// 
+        /// * `NoReporting` - This company is not configured to report tax returns; instead, it reports through a parent company.
+        /// * `NotYetFiling` - This company has not yet begun filing tax returns through Avalara's Managed Returns Service.
+        /// * `FilingRequested` - The company has requested to begin filing tax returns, but Avalara's compliance team has not yet begun filing.
+        /// * `FirstFiling` - The company has recently filing tax returns and is in a new status.
+        /// * `Active` - The company is currently active and is filing tax returns via Avalara Managed Returns.;
+        /// </remarks>
+        /// <param name="id"></param>
+        public async Task<String> GetFilingStatusAsync(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
+            path.ApplyField("id", id);
+            return await RestCallStringAsync("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Check managed returns funding configuration for a company;
         /// </summary>
         /// <remarks>
@@ -5441,7 +5699,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Settings
         /// * TaxCodes
         /// * TaxRules
-        /// * UPC;
+        /// * UPC
+        /// * ECMS;
         /// </remarks>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -5639,54 +5898,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve the full list of Avalara-supported nexus for a country and region.;
-        /// </summary>
-        /// <remarks>
-        /// Returns all Avalara-supported nexus for the specified country and region.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.;
-        /// </remarks>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        public async Task<FetchResult<NexusModel>> ApiV2DefinitionsNexusByCountryByRegionGetAsync(String country, String region)
-        {
-            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve the full list of Avalara-supported nexus for a country.;
-        /// </summary>
-        /// <remarks>
-        /// Returns all Avalara-supported nexus for the specified country.
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
-        /// </remarks>
-        /// <param name="country"></param>
-        public async Task<FetchResult<NexusModel>> ApiV2DefinitionsNexusByCountryGetAsync(String country)
-        {
-            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
-            path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve the full list of Avalara-supported nexus for all countries and regions.;
-        /// </summary>
-        /// <remarks>
-        /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
-        /// </remarks>
-        public async Task<FetchResult<NexusModel>> ApiV2DefinitionsNexusGetAsync()
-        {
-            var path = new AvaTaxPath("/api/v2/definitions/nexus");
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
         /// Test whether a form supports online login verification;
         /// </summary>
         /// <remarks>
@@ -5713,6 +5924,50 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/avafileforms");
             return await RestCallAsync<FetchResult<AvaFileFormModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of communications transactiontypes;
+        /// </summary>
+        /// <remarks>
+        /// Returns full list of communications transaction types which
+        /// are accepted in communication tax calculation requests.;
+        /// </remarks>
+        /// <param name="id"></param>
+        public async Task<FetchResult<CommunicationsTSPairModel>> ListCommunicationsServiceTypesAsync(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes/{id}/servicetypes");
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of communications transactiontypes;
+        /// </summary>
+        /// <remarks>
+        /// Returns full list of communications transaction types which
+        /// are accepted in communication tax calculation requests.;
+        /// </remarks>
+        public async Task<FetchResult<CommunicationsTransactionTypeModel>> ListCommunicationsTransactionTypesAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes");
+            return await RestCallAsync<FetchResult<CommunicationsTransactionTypeModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of communications transaction/service type pairs;
+        /// </summary>
+        /// <remarks>
+        /// Returns full list of communications transaction/service type pairs which
+        /// are accepted in communication tax calculation requests.;
+        /// </remarks>
+        public async Task<FetchResult<CommunicationsTSPairModel>> ListCommunicationsTSPairsAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/communications/tspairs");
+            return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -5847,6 +6102,20 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of Avalara-supported nexus for all countries and regions.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
+        /// </remarks>
+        public async Task<FetchResult<NexusModel>> ListNexusAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus");
+            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// List all nexus that apply to a specific address.;
         /// </summary>
         /// <remarks>
@@ -5873,6 +6142,40 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported nexus for a country.;
+        /// </summary>
+        /// <remarks>
+        /// Returns all Avalara-supported nexus for the specified country.
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
+        /// </remarks>
+        /// <param name="country"></param>
+        public async Task<FetchResult<NexusModel>> ListNexusByCountryAsync(String country)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
+            path.ApplyField("country", country);
+            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported nexus for a country and region.;
+        /// </summary>
+        /// <remarks>
+        /// Returns all Avalara-supported nexus for the specified country and region.
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.;
+        /// </remarks>
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        public async Task<FetchResult<NexusModel>> ListNexusByCountryAndRegionAsync(String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
             return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6269,67 +6572,80 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve a single filing calendar;
+        /// Approve existing Filing Request;
         /// </summary>
         /// <remarks>
-        /// This API is available by invitation only.;
+        /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// The filing request must be in the "ChangeRequest" status to be approved.;
         /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
-        /// <param name="id">The primary key of this filing calendar</param>
-        public async Task<FilingCalendarModel> ApiV2CompaniesByCompanyIdFilingcalendarsByIdGetAsync(Int32 companyId, Int32 id)
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing request object</param>
+        public async Task<FilingRequestModel> ApproveFilingRequestAsync(Int32 companyId, Int32 id)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingCalendarModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("Post", path, null).ConfigureAwait(false);
         }
 
 
         /// <summary>
-        /// Retrieve all filing calendars for this company;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<FilingCalendarModel>> ApiV2CompaniesByCompanyIdFilingcalendarsGetAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("Get", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests for this company;
+        /// Cancel existing Filing Request;
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
         /// A "filing request" represents a request to change an existing filing calendar. Filing requests
         /// are reviewed and validated by Avalara Compliance before being implemented.;
         /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<FilingRequestModel>> ApiV2CompaniesByCompanyIdFilingrequestsGetAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing request object</param>
+        public async Task<FilingRequestModel> CancelFilingRequestAsync(Int32 companyId, Int32 id)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
             path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingRequestModel>>("Get", path, null).ConfigureAwait(false);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FilingRequestModel>("Post", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create a new filing request to cancel a filing calendar;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
+        /// <param name="id">The unique ID number of the filing calendar to cancel</param>
+        /// <param name="model">The cancellation request for this filing calendar</param>
+        public async Task<FilingRequestModel> CancelFilingRequestsAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create a new filing request to create a filing calendar;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
+        /// <param name="model">Information about the proposed new filing calendar</param>
+        public async Task<FilingRequestModel> CreateFilingRequestsAsync(Int32 companyId, List<FilingRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
         }
 
 
@@ -6406,22 +6722,19 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Edit existing Filing Calendar's Notes;
+        /// Retrieve a single filing calendar;
         /// </summary>
         /// <remarks>
-        /// This API is available by invitation only.
-        /// This API only allows updating of internal notes and company filing instructions.
-        /// All other updates must go through a filing request at this time.;
+        /// This API is available by invitation only.;
         /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        /// <param name="model">The filing calendar model you are wishing to update with.</param>
-        public async Task<FilingCalendarModel> FilingCalendarUpdateAsync(Int32 companyId, Int32 id, FilingCalendarModel model)
+        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
+        /// <param name="id">The primary key of this filing calendar</param>
+        public async Task<FilingCalendarModel> GetFilingCalendarAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingCalendarModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingCalendarModel>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -6435,7 +6748,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this filing calendar</param>
         /// <param name="id">The primary key of this filing calendar</param>
-        public async Task<FilingRequestModel> filingRequestsAsync(Int32 companyId, Int32 id)
+        public async Task<FilingRequestModel> GetFilingRequestAsync(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
@@ -6445,134 +6758,50 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create a new filing request to create a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
-        /// <param name="model">Information about the proposed new filing calendar</param>
-        public async Task<FilingRequestModel> FilingRequestsAddAsync(Int32 companyId, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
-            path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Approve existing Filing Request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// The filing request must be in the "ChangeRequest" status to be approved.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public async Task<FilingRequestModel> FilingRequestsApproveAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Cancel existing Filing Request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public async Task<FilingRequestModel> FilingRequestsCancelAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to cancel a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to cancel</param>
-        /// <param name="model">The cancellation request for this filing calendar</param>
-        public async Task<FilingRequestModel> FilingRequestsNewCancelAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to edit a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to edit</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public async Task<FilingRequestModel> FilingRequestsNewEditAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Edit existing Filing Request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public async Task<FilingRequestModel> FilingRequestsUpdateAsync(Int32 companyId, Int32 id, FilingRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Put", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Gets the request status and Login Result;
+        /// Retrieve all filing calendars for this company;
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.;
         /// </remarks>
-        /// <param name="jobId">The unique ID number of this login request</param>
-        public async Task<LoginVerificationOutputModel> loginVerificationGetAsync(Int32 jobId)
+        /// <param name="companyId">The ID of the company that owns these batches</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<FilingCalendarModel>> ListFilingCalendarsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
-            path.ApplyField("jobId", jobId);
-            return await RestCallAsync<LoginVerificationOutputModel>("Get", path, null).ConfigureAwait(false);
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<FilingCalendarModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all filing requests for this company;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns these batches</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<FilingRequestModel>> ListFilingRequestsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<FilingRequestModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -6580,13 +6809,33 @@ namespace Avalara.AvaTax.RestClient
         /// New request for getting for validating customer's login credentials;
         /// </summary>
         /// <remarks>
-        /// This API is available by invitation only.;
+        /// This API is available by invitation only.
+        /// 
+        /// This API verifies that a customer has submitted correct login credentials for a tax authority's online filing system.;
         /// </remarks>
         /// <param name="model">The model of the login information we are verifying</param>
-        public async Task<LoginVerificationOutputModel> loginVerificationPostAsync(LoginVerificationInputModel model)
+        public async Task<LoginVerificationOutputModel> LoginVerificationRequestAsync(LoginVerificationInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
             return await RestCallAsync<LoginVerificationOutputModel>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Gets the request status and Login Result;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// This API checks the status of a login verification request. It may only be called by authorized users from the account 
+        /// that initially requested the login verification.;
+        /// </remarks>
+        /// <param name="jobId">The unique ID number of this login request</param>
+        public async Task<LoginVerificationOutputModel> LoginVerificationStatusAsync(Int32 jobId)
+        {
+            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
+            path.ApplyField("jobId", jobId);
+            return await RestCallAsync<LoginVerificationOutputModel>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -6634,6 +6883,70 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<FilingRequestModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create a new filing request to edit a filing calendar;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.
+        /// 
+        /// Certain users may not update filing calendars directly. Instead, they may submit an edit request
+        /// to modify the value of a filing calendar using this API.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
+        /// <param name="id">The unique ID number of the filing calendar to edit</param>
+        /// <param name="model">A list of filing calendar edits to be made</param>
+        public async Task<FilingRequestModel> RequestFilingCalendarUpdateAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Edit existing Filing Calendar's Notes;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// This API only allows updating of internal notes and company filing instructions.
+        /// All other updates must go through a filing request at this time.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing calendar object</param>
+        /// <param name="model">The filing calendar model you are wishing to update with.</param>
+        public async Task<FilingCalendarModel> UpdateFilingCalendarAsync(Int32 companyId, Int32 id, FilingCalendarModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FilingCalendarModel>("Put", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Edit existing Filing Request;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
+        /// are reviewed and validated by Avalara Compliance before being implemented.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
+        /// <param name="id">The unique ID of the filing request object</param>
+        /// <param name="model">A list of filing calendar edits to be made</param>
+        public async Task<FilingRequestModel> UpdateFilingRequestAsync(Int32 companyId, Int32 id, FilingRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FilingRequestModel>("Put", path, model).ConfigureAwait(false);
         }
 
 
@@ -6831,12 +7144,12 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// This API is available by invitation only.;
         /// </remarks>
-        /// <param name="worksheetId">The unique id of the worksheet.</param>
+        /// <param name="filingsId">The unique id of the worksheet.</param>
         /// <param name="companyId">The unique ID of the company that owns the worksheet.</param>
-        public async Task<FilingsCheckupModel> FilingsCheckupReportAsync(Int32 worksheetId, Int32 companyId)
+        public async Task<FilingsCheckupModel> FilingsCheckupReportAsync(Int32 filingsId, Int32 companyId)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{worksheetId}/checkup");
-            path.ApplyField("worksheetId", worksheetId);
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
+            path.ApplyField("filingsId", filingsId);
             path.ApplyField("companyId", companyId);
             return await RestCallAsync<FilingsCheckupModel>("Get", path, null).ConfigureAwait(false);
         }
@@ -7019,6 +7332,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a list of filings for the specified company in the year and month of a given filing period. 
+        /// This gets the basic information from the filings and doesn't include anything extra.;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns these batches</param>
+        /// <param name="endPeriodMonth">The month of the period you are trying to retrieve</param>
+        /// <param name="endPeriodYear">The year of the period you are trying to retrieve</param>
+        /// <param name="frequency">The frequency of the return you are trying to retrieve</param>
+        /// <param name="status">The status of the return(s) you are trying to retrieve</param>
+        /// <param name="country">The country of the return(s) you are trying to retrieve</param>
+        /// <param name="region">The region of the return(s) you are trying to retrieve</param>
+        public async Task<FetchResult<FilingReturnModelBasic>> GetFilingsReturnsAsync(Int32 companyId, Int32? endPeriodMonth, Int32? endPeriodYear, FilingFrequencyId? frequency, FilingStatusId? status, String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("endPeriodMonth", endPeriodMonth);
+            path.AddQuery("endPeriodYear", endPeriodYear);
+            path.AddQuery("frequency", frequency);
+            path.AddQuery("status", status);
+            path.AddQuery("country", country);
+            path.AddQuery("region", region);
+            return await RestCallAsync<FetchResult<FilingReturnModelBasic>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Rebuild a set of filings for the specified company in the given filing period.;
         /// </summary>
         /// <remarks>
@@ -7177,11 +7518,15 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// However, this API is currently limited for US only
         /// 
-        /// Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
-        /// rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
-        /// support for scenarios including, but not limited to:
+        /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
+        /// response code 429 - `Too Many Requests`.
+        /// 
+        /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
+        /// location in the United States only. 
+        /// 
+        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
+        /// which supports features including, but not limited to:
         /// 
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -7224,11 +7569,15 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// However, this API is currently limited for US only
         /// 
-        /// Note that the TaxRates API assumes the sale of general tangible personal property when estimating the sales tax
-        /// rate for a specified address. Avalara provides the `CreateTransaction` API, which provides extensive tax calculation 
-        /// support for scenarios including, but not limited to:
+        /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
+        /// response code 429 - `Too Many Requests`.
+        /// 
+        /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
+        /// location in the United States only. 
+        /// 
+        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
+        /// which supports features including, but not limited to:
         /// 
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -7570,36 +7919,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return await RestCallAsync<JurisdictionOverrideModel>("Put", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Point of sale data file generation;
-        /// </summary>
-        /// <remarks>
-        /// Builds a point-of-sale data file containing tax rates and rules for this location, containing tax rates for all
-        /// items defined for this company. This data file can be used to correctly calculate tax in the event a 
-        /// point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to a maximum of 7500 items.;
-        /// </remarks>
-        /// <param name="companyId">The ID number of the company that owns this location.</param>
-        /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
-        /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
-        /// <param name="format">The format of the file (JSON by default)</param>
-        /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
-        /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public async Task<FileResult> BuildPointOfSaleDataForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.AddQuery("date", date);
-            path.AddQuery("format", format);
-            path.AddQuery("partnerId", partnerId);
-            path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -8060,6 +8379,50 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete a single responsibility;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Mark the existing notice object at this URL as deleted.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="noticeId">The ID of the notice you wish to delete.</param>
+        /// <param name="id">The ID of the responsibility you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteResponsibilitiesAsync(Int32 companyId, Int32 noticeId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeId}/responsibilities/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeId", noticeId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single root cause.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Mark the existing notice object at this URL as deleted.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="noticeId">The ID of the notice you wish to delete.</param>
+        /// <param name="id">The ID of the root cause you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteRootCausesAsync(Int32 companyId, Int32 noticeId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeId}/rootcauses/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeId", noticeId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve a single attachment;
         /// </summary>
         /// <remarks>
@@ -8292,24 +8655,6 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
             return await RestCallAsync<NewAccountModel>("Post", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Point of sale data file generation;
-        /// </summary>
-        /// <remarks>
-        /// Builds a point-of-sale data file containing tax rates and rules for items and locations that can be used
-        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
-        /// This data file can be customized for specific partner devices and usage conditions.
-        /// The result of this API is the file you requested in the format you requested using the 'responseType' field.
-        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios.;
-        /// </remarks>
-        /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
-        public async Task<FileResult> BuildPointOfSaleDataFileAsync(PointOfSaleDataRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
         }
 
 
@@ -8917,6 +9262,65 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<TaxCodeModel>("Put", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Build a multi-location tax content file;
+        /// </summary>
+        /// <remarks>
+        /// Builds a tax content file containing information useful for a retail point-of-sale solution.
+        /// 
+        /// This file contains tax rates and rules for items and locations that can be used
+        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// 
+        /// This data file can be customized for specific partner devices and usage conditions.
+        /// 
+        /// The result of this API is the file you requested in the format you requested using the `responseType` field.
+        /// 
+        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
+        /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.;
+        /// </remarks>
+        /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
+        public async Task<FileResult> BuildTaxContentFileAsync(PointOfSaleDataRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
+            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Build a tax content file for a single location;
+        /// </summary>
+        /// <remarks>
+        /// Builds a tax content file containing information useful for a retail point-of-sale solution.
+        /// 
+        /// This file contains tax rates and rules for all items for a single location. Data from this API
+        /// can be used to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// 
+        /// This data file can be customized for specific partner devices and usage conditions.
+        /// 
+        /// The result of this API is the file you requested in the format you requested using the `responseType` field.
+        /// 
+        /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
+        /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.;
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company that owns this location.</param>
+        /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
+        /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
+        /// <param name="format">The format of the file (JSON by default)</param>
+        /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
+        /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
+        public async Task<FileResult> BuildTaxContentFileForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("date", date);
+            path.AddQuery("format", format);
+            path.AddQuery("partnerId", partnerId);
+            path.AddQuery("includeJurisCodes", includeJurisCodes);
+            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
         }
 
 

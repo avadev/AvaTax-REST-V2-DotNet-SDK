@@ -17,29 +17,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about a tax authority relevant for an address.
+    /// 
     /// </summary>
-    public class TaxAuthorityInfo
+    public class EcmsDetailTaxCodeModel
     {
         /// <summary>
-        /// A unique ID number assigned by Avalara to this tax authority.
+        /// Id of the exempt certificate detail tax code
         /// </summary>
-        public String avalaraId { get; set; }
+        public Int32? exemptCertDetailTaxCodeId { get; set; }
 
         /// <summary>
-        /// The friendly jurisdiction name for this tax authority.
+        /// exempt certificate detail id
         /// </summary>
-        public String jurisdictionName { get; set; }
+        public Int32? exemptCertDetailId { get; set; }
 
         /// <summary>
-        /// The type of jurisdiction referenced by this tax authority.
+        /// tax code id
         /// </summary>
-        public JurisdictionType? jurisdictionType { get; set; }
-
-        /// <summary>
-        /// An Avalara-assigned signature code for this tax authority.
-        /// </summary>
-        public String signatureCode { get; set; }
+        public Int32? taxCodeId { get; set; }
 
 
         /// <summary>

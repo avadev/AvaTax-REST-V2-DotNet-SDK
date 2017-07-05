@@ -17,29 +17,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about a tax authority relevant for an address.
+    /// Represents a change request for filing status for a company
     /// </summary>
-    public class TaxAuthorityInfo
+    public class FilingStatusChangeModel
     {
         /// <summary>
-        /// A unique ID number assigned by Avalara to this tax authority.
+        /// Indicates the filing status you are requesting for this company
         /// </summary>
-        public String avalaraId { get; set; }
-
-        /// <summary>
-        /// The friendly jurisdiction name for this tax authority.
-        /// </summary>
-        public String jurisdictionName { get; set; }
-
-        /// <summary>
-        /// The type of jurisdiction referenced by this tax authority.
-        /// </summary>
-        public JurisdictionType? jurisdictionType { get; set; }
-
-        /// <summary>
-        /// An Avalara-assigned signature code for this tax authority.
-        /// </summary>
-        public String signatureCode { get; set; }
+        public CompanyFilingStatus? requestedStatus { get; set; }
 
 
         /// <summary>

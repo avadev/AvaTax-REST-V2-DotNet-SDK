@@ -17,59 +17,59 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// TextCase info for input address
+    /// 
     /// </summary>
-    public class AddressValidationInfo
+    public class EcmsDetailModel
     {
         /// <summary>
-        /// Specify the text case for the validated address result. If not specified, will return uppercase.
+        /// detail id
         /// </summary>
-        public TextCase? textCase { get; set; }
+        public Int32 exemptCertDetailId { get; set; }
 
         /// <summary>
-        /// First line of the street address
+        /// exempt certificate id
         /// </summary>
-        public String line1 { get; set; }
+        public Int32 exemptCertId { get; set; }
 
         /// <summary>
-        /// Second line of the street address
+        /// State FIPS
         /// </summary>
-        public String line2 { get; set; }
+        public String stateFips { get; set; }
 
         /// <summary>
-        /// Third line of the street address
-        /// </summary>
-        public String line3 { get; set; }
-
-        /// <summary>
-        /// City component of the address
-        /// </summary>
-        public String city { get; set; }
-
-        /// <summary>
-        /// State / Province / Region component of the address.
+        /// Region or State
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// Two character ISO 3166 Country Code. Call `ListCountries` for a list of ISO 3166 country codes.
+        /// ID number
+        /// </summary>
+        public String idNo { get; set; }
+
+        /// <summary>
+        /// Country that this exempt certificate is for
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// Postal Code / Zip Code component of the address.
+        /// End date of this exempt certificate
         /// </summary>
-        public String postalCode { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// Geospatial latitude measurement, in Decimal Degrees floating point format.
+        /// ID type of this exempt certificate
         /// </summary>
-        public Decimal? latitude { get; set; }
+        public String idType { get; set; }
 
         /// <summary>
-        /// Geospatial longitude measurement, in Decimal Degrees floating point format.
+        /// Is the tax code list an exculsion list?
         /// </summary>
-        public Decimal? longitude { get; set; }
+        public Byte? isTaxCodeListExclusionList { get; set; }
+
+        /// <summary>
+        /// optional: list of tax code associated with this exempt certificate detail
+        /// </summary>
+        public List<EcmsDetailTaxCodeModel> taxCodes { get; set; }
 
 
         /// <summary>

@@ -37,12 +37,19 @@ namespace Avalara.AvaTax.RestClient
         public Decimal amount { get; set; }
 
         /// <summary>
-        /// Specify any differences for addresses between this line and the rest of the document
+        /// The addresses to use for this transaction line.
+        /// 
+        /// If you set this value to `null`, or if you omit this element from your API call, then instead the transaction
+        /// will use the `addresses` from the document level.
+        /// 
+        /// If you specify any other value besides `null`, only addresses specified for this line will be used for this line.
         /// </summary>
         public AddressesModel addresses { get; set; }
 
         /// <summary>
         /// Tax Code - System or Custom Tax Code.
+        ///  
+        /// You can use your own tax code mapping or standard Avalara tax codes. For a full list of tax codes, see `ListTaxCodes`.
         /// </summary>
         public String taxCode { get; set; }
 
