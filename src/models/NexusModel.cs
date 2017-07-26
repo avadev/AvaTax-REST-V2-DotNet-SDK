@@ -146,6 +146,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String nexusTaxTypeGroup { get; set; }
 
+        /// <summary>
+        /// The tax authority id associated with the jurisdiction the nexus is for
+        /// </summary>
+        public Int64? taxAuthorityId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

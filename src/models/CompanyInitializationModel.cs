@@ -114,6 +114,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String faxNumber { get; set; }
 
+        /// <summary>
+        /// Parent Company ID
+        /// </summary>
+        public Int32? parentCompanyId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

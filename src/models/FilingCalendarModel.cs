@@ -33,9 +33,25 @@ namespace Avalara.AvaTax.RestClient
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// The name of the tax form to file.
+        /// DEPRECATED - The legacy return name of the tax form to file. Please use `taxFormCode` instead.
         /// </summary>
         public String returnName { get; set; }
+
+        /// <summary>
+        /// The two character ISO 3166 country code of the country that issued the tax form for this filing calendar.
+        /// </summary>
+        public String formCountry { get; set; }
+
+        /// <summary>
+        /// The two or three character ISO 3166 code of the region / state / province that issued the tax form for this filing calendar.
+        /// </summary>
+        public String formRegion { get; set; }
+
+        /// <summary>
+        /// The Avalara standard tax form code of the tax form for this filing calendar. The first two characters of the tax form code
+        /// are the ISO 3166 country code of the country that issued this form.
+        /// </summary>
+        public String taxFormCode { get; set; }
 
         /// <summary>
         /// If this calendar is for a location-specific tax return, specify the location code here. To file for all locations, leave this value NULL.
@@ -78,35 +94,77 @@ namespace Avalara.AvaTax.RestClient
         public String employerIdentificationNumber { get; set; }
 
         /// <summary>
-        /// The first line of the physical address to be used when filing this tax return.
+        /// DEPRECATED - The first line of the mailing address that will be used when filling out this tax return.
+        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String line1 { get; set; }
 
         /// <summary>
-        /// The second line of the physical address to be used when filing this tax return.
+        /// DEPRECATED - The second line of the mailing address that will be used when filling out this tax return.
         /// Please note that some tax forms do not support multiple address lines.
+        /// 
+        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String line2 { get; set; }
 
         /// <summary>
-        /// The city name of the physical address to be used when filing this tax return.
+        /// DEPRECATED - The city name of the mailing address that will be used when filling out this tax return.
+        /// 
+        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String city { get; set; }
 
         /// <summary>
-        /// The state, region, or province of the physical address to be used when filing this tax return.
+        /// DEPRECATED - The state, region, or province of the mailing address that will be used when filling out this tax return.
+        /// 
+        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// The postal code or zip code of the physical address to be used when filing this tax return.
+        /// DEPRECATED - The postal code or zip code of the mailing address that will be used when filling out this tax return.
+        /// 
+        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String postalCode { get; set; }
 
         /// <summary>
-        /// The two character ISO-3166 country code of the physical address to be used when filing this return.
+        /// DEPRECATED - The two character ISO-3166 country code of the mailing address that will be used when filling out this tax return.
+        /// 
+        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String country { get; set; }
+
+        /// <summary>
+        /// The first line of the mailing address that will be used when filling out this tax return.
+        /// </summary>
+        public String mailingAddressLine1 { get; set; }
+
+        /// <summary>
+        /// The second line of the mailing address that will be used when filling out this tax return.
+        /// Please note that some tax forms do not support multiple address lines.
+        /// </summary>
+        public String mailingAddressLine2 { get; set; }
+
+        /// <summary>
+        /// The city name of the mailing address that will be used when filling out this tax return.
+        /// </summary>
+        public String mailingAddressCity { get; set; }
+
+        /// <summary>
+        /// The state, region, or province of the mailing address that will be used when filling out this tax return.
+        /// </summary>
+        public String mailingAddressRegion { get; set; }
+
+        /// <summary>
+        /// The postal code or zip code of the mailing address that will be used when filling out this tax return.
+        /// </summary>
+        public String mailingAddressPostalCode { get; set; }
+
+        /// <summary>
+        /// The two character ISO-3166 country code of the mailing address that will be used when filling out this tax return.
+        /// </summary>
+        public String mailingAddressCountry { get; set; }
 
         /// <summary>
         /// The phone number to be used when filing this return.

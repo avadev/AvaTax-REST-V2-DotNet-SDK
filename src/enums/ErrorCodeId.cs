@@ -555,6 +555,21 @@ namespace Avalara.AvaTax.RestClient
         BatchInvalidFileTypeError,
 
         /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotSaveBatchFile,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotGetBatchFile,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotDeleteBatchFile,
+
+        /// <summary>
         /// Point Of Sale API exceptions
         /// </summary>
         PointOfSaleFileSize,
@@ -803,6 +818,36 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CannotModifyExemptCert,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CertCaptureFieldValidationError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CertCaptureError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MissingRequiredFields,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CertCaptureNotConfiguredError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AddCustomersForCertificateError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AddCertificatesForCustomerError,
 
         /// <summary>
         /// Multi company error codes
