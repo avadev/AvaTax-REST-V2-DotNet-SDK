@@ -93,6 +93,7 @@
     <Compile Include="enums\ParameterBagDataType.cs" />
     <Compile Include="enums\PasswordStatusId.cs" />
     <Compile Include="enums\PaymentAccountTypeId.cs" />
+    <Compile Include="enums\PaymentType.cs" />
     <Compile Include="enums\PointOfSaleFileType.cs" />
     <Compile Include="enums\PointOfSalePartnerId.cs" />
     <Compile Include="enums\RateType.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="models\BatchModel.cs" />
     <Compile Include="models\BulkLockTransactionModel.cs" />
     <Compile Include="models\BulkLockTransactionResult.cs" />
+    <Compile Include="models\CertificateModel.cs" />
+    <Compile Include="models\CertificateTaxCodeModel.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
     <Compile Include="models\CommitTransactionModel.cs" />
     <Compile Include="models\CommunicationsTransactionTypeModel.cs" />
@@ -149,6 +152,7 @@
     <Compile Include="models\CreateMultiCompanyTransactionModel.cs" />
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
+    <Compile Include="models\CustomerModel.cs" />
     <Compile Include="models\CycleAddOptionModel.cs" />
     <Compile Include="models\CycleEditOptionModel.cs" />
     <Compile Include="models\CycleExpireModel.cs" />
@@ -158,6 +162,7 @@
     <Compile Include="models\EcmsModel.cs" />
     <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
+    <Compile Include="models\ExposureZoneModel.cs" />
     <Compile Include="models\FilingAdjustmentModel.cs" />
     <Compile Include="models\FilingAnswerModel.cs" />
     <Compile Include="models\FilingAugmentationModel.cs" />
@@ -165,6 +170,7 @@
     <Compile Include="models\FilingCalendarModel.cs" />
     <Compile Include="models\FilingFrequencyModel.cs" />
     <Compile Include="models\FilingModel.cs" />
+    <Compile Include="models\FilingPaymentModel.cs" />
     <Compile Include="models\FilingRegionModel.cs" />
     <Compile Include="models\FilingRequestDataModel.cs" />
     <Compile Include="models\FilingRequestModel.cs" />
@@ -217,6 +223,7 @@
     <Compile Include="models\PasswordChangeModel.cs" />
     <Compile Include="models\PingResultModel.cs" />
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
+    <Compile Include="models\PoNumberModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RateTypeModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
