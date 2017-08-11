@@ -17,54 +17,54 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents one file in a batch upload.
+    /// A model for return payments.
     /// </summary>
-    public class BatchFileModel
+    public class FilingPaymentModel
     {
         /// <summary>
-        /// The unique ID number assigned to this batch file.
+        /// The unique ID number for the payment.
         /// </summary>
-        public Int32? id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
-        /// The unique ID number of the batch that this file belongs to.
+        /// The filing return id that this applies too
         /// </summary>
-        public Int32? batchId { get; set; }
+        public Int64? filingId { get; set; }
 
         /// <summary>
-        /// Logical Name of file (e.g. "Input" or "Error").
+        /// The payment amount.
         /// </summary>
-        public String name { get; set; }
+        public Decimal paymentAmount { get; set; }
 
         /// <summary>
-        /// Content of the batch file.
+        /// The type of the payment.
         /// </summary>
-        public Byte[] content { get; set; }
+        public PaymentType type { get; set; }
 
         /// <summary>
-        /// Size of content, in bytes.
+        /// Whether or not the payment has been calculated.
         /// </summary>
-        public Int32? contentLength { get; set; }
+        public Boolean? isCalculated { get; set; }
 
         /// <summary>
-        /// Content mime type (e.g. text/csv). This is used for HTTP downloading.
+        /// The date when this record was created.
         /// </summary>
-        public String contentType { get; set; }
+        public DateTime? createdDate { get; set; }
 
         /// <summary>
-        /// File extension (e.g. CSV).
+        /// The User ID of the user who created this record.
         /// </summary>
-        public String fileExtension { get; set; }
+        public Int32? createdUserId { get; set; }
 
         /// <summary>
-        /// Path to the file - name/S3 key
+        /// The date/time when this record was last modified.
         /// </summary>
-        public String filePath { get; set; }
+        public DateTime? modifiedDate { get; set; }
 
         /// <summary>
-        /// Number of errors that occurred when processing this file.
+        /// The user ID of the user who last modified this record.
         /// </summary>
-        public Int32? errorCount { get; set; }
+        public Int32? modifiedUserId { get; set; }
 
 
         /// <summary>

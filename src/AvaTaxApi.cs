@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.6.0-89
+ * @version    17.7.0-96
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.6.0-89"; } }
+        public static string API_VERSION { get { return "17.7.0-96"; } }
 
 #region Methods
 
@@ -63,11 +63,13 @@ namespace Avalara.AvaTax.RestClient
         /// unchanged account model.
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
         /// <param name="model">The activation request</param>
-        public AccountModel ActivateAccount(Int32 id, ActivateAccountModel model)
+        public AccountModel ActivateAccount(Int32 id, String include, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return RestCall<AccountModel>("Post", path, model);
         }
 
@@ -208,10 +210,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new batch objects attached to this company.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        /// When you create a batch, it is added to the AvaTaxBatch.Batch table and will be processed in the order it was received.
         /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Each batch object may have one or more file objects attached.
+        /// Each batch object may have one or more file objects (currently only one file is supported).
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
@@ -227,7 +228,7 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single batch
         /// </summary>
         /// <remarks>
-        /// Mark the existing batch object at this URL as deleted.
+        /// 
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="id">The ID of the batch you wish to delete.</param>
@@ -472,6 +473,19 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return RestCall<CompanyModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        public FetchResult<CompanyModel> GetCompany()
+        {
+            var path = new AvaTaxPath("/api/v2/companies/mrs");
+            return RestCall<FetchResult<CompanyModel>>("Get", path, null);
         }
 
 
@@ -769,10 +783,18 @@ namespace Avalara.AvaTax.RestClient
         /// to automatically verify their login and password.
         /// </remarks>
         /// <param name="form">The name of the form you would like to verify. This can be the tax form code or the legacy return name</param>
-        public FetchResult<SkyscraperStatusModel> GetLoginVerifierByForm(String form)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<SkyscraperStatusModel> GetLoginVerifierByForm(String form, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers/{form}");
             path.ApplyField("form", form);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<SkyscraperStatusModel>>("Get", path, null);
         }
 
@@ -784,9 +806,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported AvaFile Forms
         /// This API is intended to be useful to identify all the different AvaFile Forms
         /// </remarks>
-        public FetchResult<AvaFileFormModel> ListAvaFileForms()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<AvaFileFormModel> ListAvaFileForms(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/avafileforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<AvaFileFormModel>>("Get", path, null);
         }
 
@@ -799,10 +829,18 @@ namespace Avalara.AvaTax.RestClient
         /// are accepted in communication tax calculation requests.
         /// </remarks>
         /// <param name="id"></param>
-        public FetchResult<CommunicationsTSPairModel> ListCommunicationsServiceTypes(Int32 id)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CommunicationsTSPairModel> ListCommunicationsServiceTypes(Int32 id, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes/{id}/servicetypes");
             path.ApplyField("id", id);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<CommunicationsTSPairModel>>("Get", path, null);
         }
 
@@ -814,9 +852,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns full list of communications transaction types which
         /// are accepted in communication tax calculation requests.
         /// </remarks>
-        public FetchResult<CommunicationsTransactionTypeModel> ListCommunicationsTransactionTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CommunicationsTransactionTypeModel> ListCommunicationsTransactionTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<CommunicationsTransactionTypeModel>>("Get", path, null);
         }
 
@@ -828,9 +874,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns full list of communications transaction/service type pairs which
         /// are accepted in communication tax calculation requests.
         /// </remarks>
-        public FetchResult<CommunicationsTSPairModel> ListCommunicationsTSPairs()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CommunicationsTSPairModel> ListCommunicationsTSPairs(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/communications/tspairs");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<CommunicationsTSPairModel>>("Get", path, null);
         }
 
@@ -843,9 +897,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a country for 
         /// a shipping address.
         /// </remarks>
-        public FetchResult<IsoCountryModel> ListCountries()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<IsoCountryModel> ListCountries(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<IsoCountryModel>>("Get", path, null);
         }
 
@@ -860,9 +922,17 @@ namespace Avalara.AvaTax.RestClient
         /// In order to facilitate correct reporting of your taxes, you are encouraged to select the proper entity use codes for
         /// all transactions that are exempt.
         /// </remarks>
-        public FetchResult<EntityUseCodeModel> ListEntityUseCodes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<EntityUseCodeModel> ListEntityUseCodes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/entityusecodes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<EntityUseCodeModel>>("Get", path, null);
         }
 
@@ -874,10 +944,42 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported filing frequencies.
         /// This API is intended to be useful to identify all the different filing frequencies that can be used in notices.
         /// </remarks>
-        public FetchResult<FilingFrequencyModel> ListFilingFrequencies()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<FilingFrequencyModel> ListFilingFrequencies(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/filingfrequencies");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<FilingFrequencyModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List jurisdictions based on the filter provided
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all Avalara-supported taxing jurisdictions.
+        /// 
+        /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
+        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01'
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<JurisdictionModel> ListJurisdictions(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<JurisdictionModel>>("Get", path, null);
         }
 
 
@@ -900,7 +1002,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
-        public FetchResult<JurisdictionOverrideModel> ListJurisdictionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<JurisdictionOverrideModel> ListJurisdictionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictionsnearaddress");
             path.AddQuery("line1", line1);
@@ -910,6 +1016,10 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<JurisdictionOverrideModel>>("Get", path, null);
         }
 
@@ -934,7 +1044,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The country part of this location's address.</param>
         /// <param name="latitude">Optionally identify the location via latitude/longitude instead of via address.</param>
         /// <param name="longitude">Optionally identify the location via latitude/longitude instead of via address.</param>
-        public FetchResult<LocationQuestionModel> ListLocationQuestionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<LocationQuestionModel> ListLocationQuestionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/locationquestions");
             path.AddQuery("line1", line1);
@@ -946,6 +1060,10 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<LocationQuestionModel>>("Get", path, null);
         }
 
@@ -958,9 +1076,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify whether the user should be allowed
         /// to automatically verify their login and password.
         /// </remarks>
-        public FetchResult<SkyscraperStatusModel> ListLoginVerifiers()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<SkyscraperStatusModel> ListLoginVerifiers(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<SkyscraperStatusModel>>("Get", path, null);
         }
 
@@ -972,9 +1098,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.
         /// </remarks>
-        public FetchResult<NexusModel> ListNexus()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusModel> ListNexus(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NexusModel>>("Get", path, null);
         }
 
@@ -996,7 +1130,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
-        public FetchResult<NexusModel> ListNexusByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusModel> ListNexusByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byaddress");
             path.AddQuery("line1", line1);
@@ -1006,6 +1144,10 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NexusModel>>("Get", path, null);
         }
 
@@ -1017,11 +1159,19 @@ namespace Avalara.AvaTax.RestClient
         /// Returns all Avalara-supported nexus for the specified country.
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
         /// </remarks>
-        /// <param name="country"></param>
-        public FetchResult<NexusModel> ListNexusByCountry(String country)
+        /// <param name="country">The country in which you want to fetch the system nexus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusModel> ListNexusByCountry(String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
             path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NexusModel>>("Get", path, null);
         }
 
@@ -1035,11 +1185,19 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        public FetchResult<NexusModel> ListNexusByCountryAndRegion(String country, String region)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusModel> ListNexusByCountryAndRegion(String country, String region, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
             path.ApplyField("country", country);
             path.ApplyField("region", region);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NexusModel>>("Get", path, null);
         }
 
@@ -1061,10 +1219,18 @@ namespace Avalara.AvaTax.RestClient
         /// form in order to better understand how the form will be filled out.
         /// </remarks>
         /// <param name="formCode">The form code that we are looking up the nexus for</param>
-        public NexusByTaxFormModel ListNexusByFormCode(String formCode)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public NexusByTaxFormModel ListNexusByFormCode(String formCode, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
             path.ApplyField("formCode", formCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<NexusByTaxFormModel>("Get", path, null);
         }
 
@@ -1076,9 +1242,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported nexus tax type groups
         /// This API is intended to be useful to identify all the different tax sub-types.
         /// </remarks>
-        public FetchResult<NexusTaxTypeGroupModel> ListNexusTaxTypeGroups()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusTaxTypeGroupModel> ListNexusTaxTypeGroups(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexustaxtypegroups");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NexusTaxTypeGroupModel>>("Get", path, null);
         }
 
@@ -1090,9 +1264,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice customer funding options.
         /// This API is intended to be useful to identify all the different notice customer funding options that can be used in notices.
         /// </remarks>
-        public FetchResult<NoticeCustomerFundingOptionModel> ListNoticeCustomerFundingOptions()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeCustomerFundingOptionModel> ListNoticeCustomerFundingOptions(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticecustomerfundingoptions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeCustomerFundingOptionModel>>("Get", path, null);
         }
 
@@ -1104,9 +1286,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice customer types.
         /// This API is intended to be useful to identify all the different notice customer types.
         /// </remarks>
-        public FetchResult<NoticeCustomerTypeModel> ListNoticeCustomerTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeCustomerTypeModel> ListNoticeCustomerTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticecustomertypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeCustomerTypeModel>>("Get", path, null);
         }
 
@@ -1118,9 +1308,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice filing types.
         /// This API is intended to be useful to identify all the different notice filing types that can be used in notices.
         /// </remarks>
-        public FetchResult<NoticeFilingTypeModel> ListNoticeFilingtypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeFilingTypeModel> ListNoticeFilingtypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticefilingtypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeFilingTypeModel>>("Get", path, null);
         }
 
@@ -1132,9 +1330,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice priorities.
         /// This API is intended to be useful to identify all the different notice priorities that can be used in notices.
         /// </remarks>
-        public FetchResult<NoticePriorityModel> ListNoticePriorities()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticePriorityModel> ListNoticePriorities(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticepriorities");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticePriorityModel>>("Get", path, null);
         }
 
@@ -1146,9 +1352,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice reasons.
         /// This API is intended to be useful to identify all the different tax notice reasons.
         /// </remarks>
-        public FetchResult<NoticeReasonModel> ListNoticeReasons()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeReasonModel> ListNoticeReasons(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticereasons");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeReasonModel>>("Get", path, null);
         }
 
@@ -1160,9 +1374,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice responsibility ids
         /// This API is intended to be useful to identify all the different tax notice responsibilities.
         /// </remarks>
-        public FetchResult<NoticeResponsibilityModel> ListNoticeResponsibilities()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeResponsibilityModel> ListNoticeResponsibilities(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticeresponsibilities");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeResponsibilityModel>>("Get", path, null);
         }
 
@@ -1174,9 +1396,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice root causes
         /// This API is intended to be useful to identify all the different tax notice root causes.
         /// </remarks>
-        public FetchResult<NoticeRootCauseModel> ListNoticeRootCauses()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeRootCauseModel> ListNoticeRootCauses(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticerootcauses");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeRootCauseModel>>("Get", path, null);
         }
 
@@ -1188,9 +1418,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice statuses.
         /// This API is intended to be useful to identify all the different tax notice statuses.
         /// </remarks>
-        public FetchResult<NoticeStatusModel> ListNoticeStatuses()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeStatusModel> ListNoticeStatuses(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticestatuses");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeStatusModel>>("Get", path, null);
         }
 
@@ -1202,9 +1440,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice types.
         /// This API is intended to be useful to identify all the different notice types that can be used in notices.
         /// </remarks>
-        public FetchResult<NoticeTypeModel> ListNoticeTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NoticeTypeModel> ListNoticeTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticetypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NoticeTypeModel>>("Get", path, null);
         }
 
@@ -1217,9 +1463,17 @@ namespace Avalara.AvaTax.RestClient
         /// This list of parameters is available for use when configuring your transaction.
         /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.
         /// </remarks>
-        public FetchResult<ParameterModel> ListParameters()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ParameterModel> ListParameters(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/parameters");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<ParameterModel>>("Get", path, null);
         }
 
@@ -1231,9 +1485,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported permission types.
         /// This API is intended to be useful to identify the capabilities of a particular user logon.
         /// </remarks>
-        public FetchResult<String> ListPermissions()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<String> ListPermissions(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<String>>("Get", path, null);
         }
 
@@ -1246,10 +1508,18 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify all the different rate types.
         /// </remarks>
         /// <param name="country"></param>
-        public FetchResult<RateTypeModel> ListRateTypesByCountry(String country)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<RateTypeModel> ListRateTypesByCountry(String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/ratetypes");
             path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<RateTypeModel>>("Get", path, null);
         }
 
@@ -1262,9 +1532,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
         /// within the country for a shipping addresses.
         /// </remarks>
-        public FetchResult<IsoRegionModel> ListRegions()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<IsoRegionModel> ListRegions(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/regions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<IsoRegionModel>>("Get", path, null);
         }
 
@@ -1277,11 +1555,19 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
         /// within the country for a shipping addresses.
         /// </remarks>
-        /// <param name="country"></param>
-        public FetchResult<IsoRegionModel> ListRegionsByCountry(String country)
+        /// <param name="country">The country of which you want to fetch ISO 3166 regions</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<IsoRegionModel> ListRegionsByCountry(String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/regions");
             path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<IsoRegionModel>>("Get", path, null);
         }
 
@@ -1293,9 +1579,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported resource file types
         /// This API is intended to be useful to identify all the different resource file types.
         /// </remarks>
-        public FetchResult<ResourceFileTypeModel> ListResourceFileTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ResourceFileTypeModel> ListResourceFileTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/resourcefiletypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<ResourceFileTypeModel>>("Get", path, null);
         }
 
@@ -1308,9 +1602,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when designing a user interface for selecting the security role of a user account.
         /// Some security roles are restricted for Avalara internal use.
         /// </remarks>
-        public FetchResult<SecurityRoleModel> ListSecurityRoles()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<SecurityRoleModel> ListSecurityRoles(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/securityroles");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<SecurityRoleModel>>("Get", path, null);
         }
 
@@ -1324,9 +1626,17 @@ namespace Avalara.AvaTax.RestClient
         /// You may always contact Avalara's sales department for information on available products or services.
         /// You cannot change your subscriptions directly through the API.
         /// </remarks>
-        public FetchResult<SubscriptionTypeModel> ListSubscriptionTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<SubscriptionTypeModel> ListSubscriptionTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/subscriptiontypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<SubscriptionTypeModel>>("Get", path, null);
         }
 
@@ -1338,9 +1648,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax authorities.
         /// This API is intended to be useful to identify all the different authorities that receive tax.
         /// </remarks>
-        public FetchResult<TaxAuthorityModel> ListTaxAuthorities()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxAuthorityModel> ListTaxAuthorities(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorities");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxAuthorityModel>>("Get", path, null);
         }
 
@@ -1354,9 +1672,17 @@ namespace Avalara.AvaTax.RestClient
         /// Customers who subscribe to Avalara Managed Returns Service can request these forms to be filed automatically 
         /// based on the customer's AvaTax data.
         /// </remarks>
-        public FetchResult<TaxAuthorityFormModel> ListTaxAuthorityForms()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxAuthorityFormModel> ListTaxAuthorityForms(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorityforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxAuthorityFormModel>>("Get", path, null);
         }
 
@@ -1368,9 +1694,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax authority types.
         /// This API is intended to be useful to identify all the different authority types.
         /// </remarks>
-        public FetchResult<TaxAuthorityTypeModel> ListTaxAuthorityTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxAuthorityTypeModel> ListTaxAuthorityTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthoritytypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxAuthorityTypeModel>>("Get", path, null);
         }
 
@@ -1385,9 +1719,17 @@ namespace Avalara.AvaTax.RestClient
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// </remarks>
-        public FetchResult<TaxCodeModel> ListTaxCodes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxCodeModel> ListTaxCodes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxcodes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxCodeModel>>("Get", path, null);
         }
 
@@ -1400,9 +1742,17 @@ namespace Avalara.AvaTax.RestClient
         /// A 'Tax Code Type' represents a broad category of tax codes, and is less detailed than a single TaxCode.
         /// This API is intended to be useful for broadly searching for tax codes by tax code type.
         /// </remarks>
-        public TaxCodeTypesModel ListTaxCodeTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public TaxCodeTypesModel ListTaxCodeTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxcodetypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<TaxCodeTypesModel>("Get", path, null);
         }
 
@@ -1414,9 +1764,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax sub-types
         /// This API is intended to be useful to identify all the different tax sub-types.
         /// </remarks>
-        public FetchResult<TaxSubTypeModel> ListTaxSubTypes()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxSubTypeModel> ListTaxSubTypes(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxsubtypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxSubTypeModel>>("Get", path, null);
         }
 
@@ -1428,9 +1786,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax type groups
         /// This API is intended to be useful to identify all the different tax type groups.
         /// </remarks>
-        public FetchResult<TaxTypeGroupModel> ListTaxTypeGroups()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxTypeGroupModel> ListTaxTypeGroups(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxtypegroups");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxTypeGroupModel>>("Get", path, null);
         }
 
@@ -1632,7 +1998,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<FilingCalendarModel> ListFilingCalendars(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="returnCountry">A comma separated list of countries</param>
+        /// <param name="returnRegion">A comma separated list of regions</param>
+        public FetchResult<FilingCalendarModel> ListFilingCalendars(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
             path.ApplyField("companyId", companyId);
@@ -1640,6 +2008,8 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("returnCountry", returnCountry);
+            path.AddQuery("returnRegion", returnRegion);
             return RestCall<FetchResult<FilingCalendarModel>>("Get", path, null);
         }
 
@@ -1713,13 +2083,17 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<FilingCalendarModel> QueryFilingCalendars(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="returnCountry"></param>
+        /// <param name="returnRegion"></param>
+        public FetchResult<FilingCalendarModel> QueryFilingCalendars(String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("returnCountry", returnCountry);
+            path.AddQuery("returnRegion", returnRegion);
             return RestCall<FetchResult<FilingCalendarModel>>("Get", path, null);
         }
 
@@ -1960,6 +2334,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add an payment to a given filing.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
+        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        /// Sometimes may be a manual change in tax liability similar to an augmentation.
+        /// This API creates a new payment for an existing tax filing.
+        /// This API can only be used when the filing has not yet been approved.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
+        /// <param name="year">The year of the filing's filing period being adjusted.</param>
+        /// <param name="month">The month of the filing's filing period being adjusted.</param>
+        /// <param name="country">The two-character ISO-3166 code for the country of the filing being adjusted.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="formCode">The unique code of the form being adjusted.</param>
+        /// <param name="model">A list of Payments to be created for the specified filing.</param>
+        public List<FilingPaymentModel> CreateReturnPayment(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingPaymentModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/payment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("year", year);
+            path.ApplyField("month", month);
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.ApplyField("formCode", formCode);
+            return RestCall<List<FilingPaymentModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
         /// Delete an adjustment for a given filing.
         /// </summary>
         /// <remarks>
@@ -1996,6 +2401,28 @@ namespace Avalara.AvaTax.RestClient
         public List<ErrorDetail> DeleteReturnAugmentation(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("Delete", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete an payment for a given filing.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
+        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        /// Sometimes may be a manual change in tax liability similar to an augmentation.
+        /// This API deletes an payment for an existing tax filing.
+        /// This API can only be used when the filing has been unapproved.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
+        /// <param name="id">The ID of the payment being deleted.</param>
+        public List<ErrorDetail> DeleteReturnPayment(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("Delete", path, null);
@@ -2096,6 +2523,25 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             return RestCallFile("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a filing for the specified company and id.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        /// based on filing frequency of filing.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="id">The id of the filing return your retrieving</param>
+        public FetchResult<FilingReturnModel> GetFilingReturn(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<FilingReturnModel>>("Get", path, null);
         }
 
 
@@ -2346,6 +2792,29 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<FilingModel>("Put", path, model);
+        }
+
+
+        /// <summary>
+        /// Edit an payment for a given filing.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
+        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        /// Sometimes may be a manual change in tax liability similar to an augmentation.
+        /// This API modifies an payment for an existing tax filing.
+        /// This API can only be used when the filing has not yet been approved.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
+        /// <param name="id">The ID of the payment being edited.</param>
+        /// <param name="model">The updated Payment.</param>
+        public FilingPaymentModel UpdateReturnPayment(Int32 companyId, Int64 id, FilingPaymentModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FilingPaymentModel>("Put", path, model);
         }
 
 
@@ -2828,14 +3297,20 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * LocationSettings
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
-        public LocationModel GetLocation(Int32 companyId, Int32 id)
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        public LocationModel GetLocation(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return RestCall<LocationModel>("Get", path, null);
         }
 
@@ -2852,6 +3327,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * LocationSettings
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -2884,6 +3362,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * LocationSettings
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
@@ -5199,11 +5681,13 @@ namespace Avalara.AvaTax.RestClient
         /// unchanged account model.;
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
         /// <param name="model">The activation request</param>
-        public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
+        public async Task<AccountModel> ActivateAccountAsync(Int32 id, String include, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return await RestCallAsync<AccountModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -5344,10 +5828,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new batch objects attached to this company.
-        /// A batch object is a large collection of API calls stored in a compact file.
-        /// When you create a batch, it is added to the AvaTax Batch Queue and will be processed in the order it was received.
+        /// When you create a batch, it is added to the AvaTaxBatch.Batch table and will be processed in the order it was received.
         /// You may fetch a batch to check on its status and retrieve the results of the batch operation.
-        /// Each batch object may have one or more file objects attached.;
+        /// Each batch object may have one or more file objects (currently only one file is supported).;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="model">The batch you wish to create.</param>
@@ -5363,7 +5846,7 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single batch;
         /// </summary>
         /// <remarks>
-        /// Mark the existing batch object at this URL as deleted.;
+        /// ;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this batch.</param>
         /// <param name="id">The ID of the batch you wish to delete.</param>
@@ -5608,6 +6091,19 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return await RestCallAsync<CompanyModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// ;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        public async Task<FetchResult<CompanyModel>> GetCompanyAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/companies/mrs");
+            return await RestCallAsync<FetchResult<CompanyModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -5905,10 +6401,18 @@ namespace Avalara.AvaTax.RestClient
         /// to automatically verify their login and password.;
         /// </remarks>
         /// <param name="form">The name of the form you would like to verify. This can be the tax form code or the legacy return name</param>
-        public async Task<FetchResult<SkyscraperStatusModel>> GetLoginVerifierByFormAsync(String form)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<SkyscraperStatusModel>> GetLoginVerifierByFormAsync(String form, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers/{form}");
             path.ApplyField("form", form);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -5920,9 +6424,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported AvaFile Forms
         /// This API is intended to be useful to identify all the different AvaFile Forms;
         /// </remarks>
-        public async Task<FetchResult<AvaFileFormModel>> ListAvaFileFormsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<AvaFileFormModel>> ListAvaFileFormsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/avafileforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<AvaFileFormModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -5935,10 +6447,18 @@ namespace Avalara.AvaTax.RestClient
         /// are accepted in communication tax calculation requests.;
         /// </remarks>
         /// <param name="id"></param>
-        public async Task<FetchResult<CommunicationsTSPairModel>> ListCommunicationsServiceTypesAsync(Int32 id)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CommunicationsTSPairModel>> ListCommunicationsServiceTypesAsync(Int32 id, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes/{id}/servicetypes");
             path.ApplyField("id", id);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -5950,9 +6470,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns full list of communications transaction types which
         /// are accepted in communication tax calculation requests.;
         /// </remarks>
-        public async Task<FetchResult<CommunicationsTransactionTypeModel>> ListCommunicationsTransactionTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CommunicationsTransactionTypeModel>> ListCommunicationsTransactionTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/communications/transactiontypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<CommunicationsTransactionTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -5964,9 +6492,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns full list of communications transaction/service type pairs which
         /// are accepted in communication tax calculation requests.;
         /// </remarks>
-        public async Task<FetchResult<CommunicationsTSPairModel>> ListCommunicationsTSPairsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CommunicationsTSPairModel>> ListCommunicationsTSPairsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/communications/tspairs");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -5979,9 +6515,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a country for 
         /// a shipping address.;
         /// </remarks>
-        public async Task<FetchResult<IsoCountryModel>> ListCountriesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<IsoCountryModel>> ListCountriesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<IsoCountryModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -5996,9 +6540,17 @@ namespace Avalara.AvaTax.RestClient
         /// In order to facilitate correct reporting of your taxes, you are encouraged to select the proper entity use codes for
         /// all transactions that are exempt.;
         /// </remarks>
-        public async Task<FetchResult<EntityUseCodeModel>> ListEntityUseCodesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<EntityUseCodeModel>> ListEntityUseCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/entityusecodes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<EntityUseCodeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6010,10 +6562,42 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported filing frequencies.
         /// This API is intended to be useful to identify all the different filing frequencies that can be used in notices.;
         /// </remarks>
-        public async Task<FetchResult<FilingFrequencyModel>> ListFilingFrequenciesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<FilingFrequencyModel>> ListFilingFrequenciesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/filingfrequencies");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<FilingFrequencyModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List jurisdictions based on the filter provided;
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all Avalara-supported taxing jurisdictions.
+        /// 
+        /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
+        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01';
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<JurisdictionModel>> ListJurisdictionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<JurisdictionModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -6036,7 +6620,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
-        public async Task<FetchResult<JurisdictionOverrideModel>> ListJurisdictionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<JurisdictionOverrideModel>> ListJurisdictionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictionsnearaddress");
             path.AddQuery("line1", line1);
@@ -6046,6 +6634,10 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6070,7 +6662,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="country">The country part of this location's address.</param>
         /// <param name="latitude">Optionally identify the location via latitude/longitude instead of via address.</param>
         /// <param name="longitude">Optionally identify the location via latitude/longitude instead of via address.</param>
-        public async Task<FetchResult<LocationQuestionModel>> ListLocationQuestionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<LocationQuestionModel>> ListLocationQuestionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/locationquestions");
             path.AddQuery("line1", line1);
@@ -6082,6 +6678,10 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<LocationQuestionModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6094,9 +6694,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify whether the user should be allowed
         /// to automatically verify their login and password.;
         /// </remarks>
-        public async Task<FetchResult<SkyscraperStatusModel>> ListLoginVerifiersAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<SkyscraperStatusModel>> ListLoginVerifiersAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/filingcalendars/loginverifiers");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6108,9 +6716,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of all Avalara-supported nexus for all countries and regions. 
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
         /// </remarks>
-        public async Task<FetchResult<NexusModel>> ListNexusAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusModel>> ListNexusAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6132,7 +6748,11 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
-        public async Task<FetchResult<NexusModel>> ListNexusByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusModel>> ListNexusByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byaddress");
             path.AddQuery("line1", line1);
@@ -6142,6 +6762,10 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6153,11 +6777,19 @@ namespace Avalara.AvaTax.RestClient
         /// Returns all Avalara-supported nexus for the specified country.
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
         /// </remarks>
-        /// <param name="country"></param>
-        public async Task<FetchResult<NexusModel>> ListNexusByCountryAsync(String country)
+        /// <param name="country">The country in which you want to fetch the system nexus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusModel>> ListNexusByCountryAsync(String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}");
             path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6171,11 +6803,19 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        public async Task<FetchResult<NexusModel>> ListNexusByCountryAndRegionAsync(String country, String region)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusModel>> ListNexusByCountryAndRegionAsync(String country, String region, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/{country}/{region}");
             path.ApplyField("country", country);
             path.ApplyField("region", region);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6197,10 +6837,18 @@ namespace Avalara.AvaTax.RestClient
         /// form in order to better understand how the form will be filled out.;
         /// </remarks>
         /// <param name="formCode">The form code that we are looking up the nexus for</param>
-        public async Task<NexusByTaxFormModel> ListNexusByFormCodeAsync(String formCode)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<NexusByTaxFormModel> ListNexusByFormCodeAsync(String formCode, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
             path.ApplyField("formCode", formCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<NexusByTaxFormModel>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6212,9 +6860,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported nexus tax type groups
         /// This API is intended to be useful to identify all the different tax sub-types.;
         /// </remarks>
-        public async Task<FetchResult<NexusTaxTypeGroupModel>> ListNexusTaxTypeGroupsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusTaxTypeGroupModel>> ListNexusTaxTypeGroupsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexustaxtypegroups");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NexusTaxTypeGroupModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6226,9 +6882,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice customer funding options.
         /// This API is intended to be useful to identify all the different notice customer funding options that can be used in notices.;
         /// </remarks>
-        public async Task<FetchResult<NoticeCustomerFundingOptionModel>> ListNoticeCustomerFundingOptionsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeCustomerFundingOptionModel>> ListNoticeCustomerFundingOptionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticecustomerfundingoptions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeCustomerFundingOptionModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6240,9 +6904,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice customer types.
         /// This API is intended to be useful to identify all the different notice customer types.;
         /// </remarks>
-        public async Task<FetchResult<NoticeCustomerTypeModel>> ListNoticeCustomerTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeCustomerTypeModel>> ListNoticeCustomerTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticecustomertypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeCustomerTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6254,9 +6926,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice filing types.
         /// This API is intended to be useful to identify all the different notice filing types that can be used in notices.;
         /// </remarks>
-        public async Task<FetchResult<NoticeFilingTypeModel>> ListNoticeFilingtypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeFilingTypeModel>> ListNoticeFilingtypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticefilingtypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeFilingTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6268,9 +6948,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice priorities.
         /// This API is intended to be useful to identify all the different notice priorities that can be used in notices.;
         /// </remarks>
-        public async Task<FetchResult<NoticePriorityModel>> ListNoticePrioritiesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticePriorityModel>> ListNoticePrioritiesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticepriorities");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticePriorityModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6282,9 +6970,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice reasons.
         /// This API is intended to be useful to identify all the different tax notice reasons.;
         /// </remarks>
-        public async Task<FetchResult<NoticeReasonModel>> ListNoticeReasonsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeReasonModel>> ListNoticeReasonsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticereasons");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeReasonModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6296,9 +6992,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice responsibility ids
         /// This API is intended to be useful to identify all the different tax notice responsibilities.;
         /// </remarks>
-        public async Task<FetchResult<NoticeResponsibilityModel>> ListNoticeResponsibilitiesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeResponsibilityModel>> ListNoticeResponsibilitiesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticeresponsibilities");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeResponsibilityModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6310,9 +7014,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice root causes
         /// This API is intended to be useful to identify all the different tax notice root causes.;
         /// </remarks>
-        public async Task<FetchResult<NoticeRootCauseModel>> ListNoticeRootCausesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeRootCauseModel>> ListNoticeRootCausesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticerootcauses");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeRootCauseModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6324,9 +7036,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice statuses.
         /// This API is intended to be useful to identify all the different tax notice statuses.;
         /// </remarks>
-        public async Task<FetchResult<NoticeStatusModel>> ListNoticeStatusesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeStatusModel>> ListNoticeStatusesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticestatuses");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeStatusModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6338,9 +7058,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax notice types.
         /// This API is intended to be useful to identify all the different notice types that can be used in notices.;
         /// </remarks>
-        public async Task<FetchResult<NoticeTypeModel>> ListNoticeTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NoticeTypeModel>> ListNoticeTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/noticetypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NoticeTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6353,9 +7081,17 @@ namespace Avalara.AvaTax.RestClient
         /// This list of parameters is available for use when configuring your transaction.
         /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.;
         /// </remarks>
-        public async Task<FetchResult<ParameterModel>> ListParametersAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ParameterModel>> ListParametersAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/parameters");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<ParameterModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6367,9 +7103,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported permission types.
         /// This API is intended to be useful to identify the capabilities of a particular user logon.;
         /// </remarks>
-        public async Task<FetchResult<String>> ListPermissionsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<String>> ListPermissionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<String>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6382,10 +7126,18 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify all the different rate types.;
         /// </remarks>
         /// <param name="country"></param>
-        public async Task<FetchResult<RateTypeModel>> ListRateTypesByCountryAsync(String country)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<RateTypeModel>> ListRateTypesByCountryAsync(String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/ratetypes");
             path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<RateTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6398,9 +7150,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
         /// within the country for a shipping addresses.;
         /// </remarks>
-        public async Task<FetchResult<IsoRegionModel>> ListRegionsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<IsoRegionModel>> ListRegionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/regions");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<IsoRegionModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6413,11 +7173,19 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when presenting a dropdown box in your website to allow customers to select a region 
         /// within the country for a shipping addresses.;
         /// </remarks>
-        /// <param name="country"></param>
-        public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAsync(String country)
+        /// <param name="country">The country of which you want to fetch ISO 3166 regions</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAsync(String country, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/regions");
             path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<IsoRegionModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6429,9 +7197,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported resource file types
         /// This API is intended to be useful to identify all the different resource file types.;
         /// </remarks>
-        public async Task<FetchResult<ResourceFileTypeModel>> ListResourceFileTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ResourceFileTypeModel>> ListResourceFileTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/resourcefiletypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<ResourceFileTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6444,9 +7220,17 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful when designing a user interface for selecting the security role of a user account.
         /// Some security roles are restricted for Avalara internal use.;
         /// </remarks>
-        public async Task<FetchResult<SecurityRoleModel>> ListSecurityRolesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<SecurityRoleModel>> ListSecurityRolesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/securityroles");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<SecurityRoleModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6460,9 +7244,17 @@ namespace Avalara.AvaTax.RestClient
         /// You may always contact Avalara's sales department for information on available products or services.
         /// You cannot change your subscriptions directly through the API.;
         /// </remarks>
-        public async Task<FetchResult<SubscriptionTypeModel>> ListSubscriptionTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<SubscriptionTypeModel>> ListSubscriptionTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/subscriptiontypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6474,9 +7266,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax authorities.
         /// This API is intended to be useful to identify all the different authorities that receive tax.;
         /// </remarks>
-        public async Task<FetchResult<TaxAuthorityModel>> ListTaxAuthoritiesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxAuthorityModel>> ListTaxAuthoritiesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorities");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxAuthorityModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6490,9 +7290,17 @@ namespace Avalara.AvaTax.RestClient
         /// Customers who subscribe to Avalara Managed Returns Service can request these forms to be filed automatically 
         /// based on the customer's AvaTax data.;
         /// </remarks>
-        public async Task<FetchResult<TaxAuthorityFormModel>> ListTaxAuthorityFormsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxAuthorityFormModel>> ListTaxAuthorityFormsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthorityforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxAuthorityFormModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6504,9 +7312,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax authority types.
         /// This API is intended to be useful to identify all the different authority types.;
         /// </remarks>
-        public async Task<FetchResult<TaxAuthorityTypeModel>> ListTaxAuthorityTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxAuthorityTypeModel>> ListTaxAuthorityTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxauthoritytypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxAuthorityTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6521,9 +7337,17 @@ namespace Avalara.AvaTax.RestClient
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.;
         /// </remarks>
-        public async Task<FetchResult<TaxCodeModel>> ListTaxCodesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxCodeModel>> ListTaxCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxcodes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxCodeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6536,9 +7360,17 @@ namespace Avalara.AvaTax.RestClient
         /// A 'Tax Code Type' represents a broad category of tax codes, and is less detailed than a single TaxCode.
         /// This API is intended to be useful for broadly searching for tax codes by tax code type.;
         /// </remarks>
-        public async Task<TaxCodeTypesModel> ListTaxCodeTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<TaxCodeTypesModel> ListTaxCodeTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxcodetypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<TaxCodeTypesModel>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6550,9 +7382,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax sub-types
         /// This API is intended to be useful to identify all the different tax sub-types.;
         /// </remarks>
-        public async Task<FetchResult<TaxSubTypeModel>> ListTaxSubTypesAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxSubTypeModel>> ListTaxSubTypesAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxsubtypes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6564,9 +7404,17 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported tax type groups
         /// This API is intended to be useful to identify all the different tax type groups.;
         /// </remarks>
-        public async Task<FetchResult<TaxTypeGroupModel>> ListTaxTypeGroupsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxTypeGroupModel>> ListTaxTypeGroupsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxtypegroups");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxTypeGroupModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6768,7 +7616,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<FilingCalendarModel>> ListFilingCalendarsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="returnCountry">A comma separated list of countries</param>
+        /// <param name="returnRegion">A comma separated list of regions</param>
+        public async Task<FetchResult<FilingCalendarModel>> ListFilingCalendarsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
             path.ApplyField("companyId", companyId);
@@ -6776,6 +7626,8 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("returnCountry", returnCountry);
+            path.AddQuery("returnRegion", returnRegion);
             return await RestCallAsync<FetchResult<FilingCalendarModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -6849,13 +7701,17 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<FilingCalendarModel>> QueryFilingCalendarsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="returnCountry"></param>
+        /// <param name="returnRegion"></param>
+        public async Task<FetchResult<FilingCalendarModel>> QueryFilingCalendarsAsync(String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("returnCountry", returnCountry);
+            path.AddQuery("returnRegion", returnRegion);
             return await RestCallAsync<FetchResult<FilingCalendarModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -7096,6 +7952,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add an payment to a given filing.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
+        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        /// Sometimes may be a manual change in tax liability similar to an augmentation.
+        /// This API creates a new payment for an existing tax filing.
+        /// This API can only be used when the filing has not yet been approved.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
+        /// <param name="year">The year of the filing's filing period being adjusted.</param>
+        /// <param name="month">The month of the filing's filing period being adjusted.</param>
+        /// <param name="country">The two-character ISO-3166 code for the country of the filing being adjusted.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="formCode">The unique code of the form being adjusted.</param>
+        /// <param name="model">A list of Payments to be created for the specified filing.</param>
+        public async Task<List<FilingPaymentModel>> CreateReturnPaymentAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingPaymentModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/payment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("year", year);
+            path.ApplyField("month", month);
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.ApplyField("formCode", formCode);
+            return await RestCallAsync<List<FilingPaymentModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Delete an adjustment for a given filing.;
         /// </summary>
         /// <remarks>
@@ -7132,6 +8019,28 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<ErrorDetail>> DeleteReturnAugmentationAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete an payment for a given filing.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
+        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        /// Sometimes may be a manual change in tax liability similar to an augmentation.
+        /// This API deletes an payment for an existing tax filing.
+        /// This API can only be used when the filing has been unapproved.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
+        /// <param name="id">The ID of the payment being deleted.</param>
+        public async Task<List<ErrorDetail>> DeleteReturnPaymentAsync(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
@@ -7232,6 +8141,25 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a filing for the specified company and id.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        /// based on filing frequency of filing.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="id">The id of the filing return your retrieving</param>
+        public async Task<FetchResult<FilingReturnModel>> GetFilingReturnAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<FilingReturnModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -7482,6 +8410,29 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<FilingModel>("Put", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Edit an payment for a given filing.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
+        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites. 
+        /// Sometimes may be a manual change in tax liability similar to an augmentation.
+        /// This API modifies an payment for an existing tax filing.
+        /// This API can only be used when the filing has not yet been approved.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
+        /// <param name="id">The ID of the payment being edited.</param>
+        /// <param name="model">The updated Payment.</param>
+        public async Task<FilingPaymentModel> UpdateReturnPaymentAsync(Int32 companyId, Int64 id, FilingPaymentModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FilingPaymentModel>("Put", path, model).ConfigureAwait(false);
         }
 
 
@@ -7963,15 +8914,21 @@ namespace Avalara.AvaTax.RestClient
         /// An 'Location' represents a physical address where a company does business.
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
-        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.;
+        /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * LocationSettings;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
-        public async Task<LocationModel> GetLocationAsync(Int32 companyId, Int32 id)
+        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        public async Task<LocationModel> GetLocationAsync(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return await RestCallAsync<LocationModel>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -7987,7 +8944,10 @@ namespace Avalara.AvaTax.RestClient
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * LocationSettings;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -8019,7 +8979,11 @@ namespace Avalara.AvaTax.RestClient
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * LocationSettings;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>

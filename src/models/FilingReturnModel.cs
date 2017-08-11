@@ -167,6 +167,16 @@ namespace Avalara.AvaTax.RestClient
         public List<FilingAugmentationModel> augmentations { get; set; }
 
         /// <summary>
+        /// Total amount of payments on this return
+        /// </summary>
+        public Decimal? totalPayments { get; set; }
+
+        /// <summary>
+        /// The payments for this return.
+        /// </summary>
+        public List<FilingPaymentModel> payments { get; set; }
+
+        /// <summary>
         /// Accrual type of the return
         /// </summary>
         public AccrualType? accrualType { get; set; }

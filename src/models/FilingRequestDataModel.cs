@@ -28,9 +28,15 @@ namespace Avalara.AvaTax.RestClient
         public Int64? companyReturnId { get; set; }
 
         /// <summary>
-        /// The return name of the requested calendar
+        /// DEPRECATED - The legacy return name of the requested calendar.
         /// </summary>
         public String returnName { get; set; }
+
+        /// <summary>
+        /// The Avalara standard tax form code of the tax form for this filing calendar. The first two characters of the tax form code
+        /// are the ISO 3166 country code of the country that issued this form.
+        /// </summary>
+        public String taxFormCode { get; set; }
 
         /// <summary>
         /// The filing frequency of the request
@@ -73,7 +79,12 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isClone { get; set; }
 
         /// <summary>
-        /// The region this request is for
+        /// The two character ISO 3166 country code of the country that issued the tax form for this filing calendar.
+        /// </summary>
+        public String country { get; set; }
+
+        /// <summary>
+        /// The two or three character ISO 3166 code of the region / state / province that issued the tax form for this filing calendar.
         /// </summary>
         public String region { get; set; }
 

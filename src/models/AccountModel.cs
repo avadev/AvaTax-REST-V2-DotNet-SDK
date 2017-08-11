@@ -76,6 +76,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<UserModel> users { get; set; }
 
+        /// <summary>
+        /// The account license
+        /// </summary>
+        public String licenseKey { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

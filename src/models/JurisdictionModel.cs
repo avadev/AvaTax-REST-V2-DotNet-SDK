@@ -61,6 +61,56 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Decimal? useRate { get; set; }
 
+        /// <summary>
+        /// The city name of this jurisdiction
+        /// </summary>
+        public String city { get; set; }
+
+        /// <summary>
+        /// The county name of this jurisdiction
+        /// </summary>
+        public String county { get; set; }
+
+        /// <summary>
+        /// The Country name of this jurisdiction
+        /// </summary>
+        public String country { get; set; }
+
+        /// <summary>
+        /// A short name of the jurisidiction
+        /// </summary>
+        public String shortName { get; set; }
+
+        /// <summary>
+        /// State FIPS code
+        /// </summary>
+        public String stateFips { get; set; }
+
+        /// <summary>
+        /// County FIPS code
+        /// </summary>
+        public String countyFips { get; set; }
+
+        /// <summary>
+        /// City FIPS code
+        /// </summary>
+        public String placeFips { get; set; }
+
+        /// <summary>
+        /// Unique AvaTax Id of this Jurisdiction
+        /// </summary>
+        public Int32? id { get; set; }
+
+        /// <summary>
+        /// The date this jurisdiction starts to take effect on tax calculations
+        /// </summary>
+        public DateTime? effectiveDate { get; set; }
+
+        /// <summary>
+        /// The date this jurisdiction stops to take effect on tax calculations
+        /// </summary>
+        public DateTime? endDate { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
