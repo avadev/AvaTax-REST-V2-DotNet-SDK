@@ -22,32 +22,31 @@ namespace Avalara.AvaTax.RestClient
     public class CustomerModel
     {
         /// <summary>
-        /// Unique ID number assigned to each company by Avalara.
+        /// Unique ID number of this customer.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The unique ID number of the AvaTax company that maintains this customer record.
+        /// The unique ID number of the AvaTax company that recorded this customer.
         /// </summary>
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// TODO
+        /// The unique code identifying this customer. Must be unique within your company.
+        /// 
+        /// This code should be used in the `customerCode` field of any call that creates or adjusts a transaction
+        /// in order to ensure that all exemptions that apply to this customer are correctly considered.
         /// </summary>
-        public Int32? clientId { get; set; }
+        public String customerCode { get; set; }
 
         /// <summary>
-        /// A number by which this customer is known by your system. Must be unique within your company.
-        /// </summary>
-        public String customerNumber { get; set; }
-
-        /// <summary>
-        /// Alternate Id
+        /// A customer-configurable alternate ID number for this customer. You may set this value to match any
+        /// other system that would like to reference this customer record.
         /// </summary>
         public String alternateId { get; set; }
 
         /// <summary>
-        /// Customer name
+        /// A friendly name identifying this customer.
         /// </summary>
         public String name { get; set; }
 
@@ -58,47 +57,47 @@ namespace Avalara.AvaTax.RestClient
         public String attnName { get; set; }
 
         /// <summary>
-        /// First line of the street address
+        /// First line of the street address of this customer.
         /// </summary>
         public String line1 { get; set; }
 
         /// <summary>
-        /// Second line of the street address
+        /// Second line of the street address of this customer.
         /// </summary>
         public String line2 { get; set; }
 
         /// <summary>
-        /// City component of the address
+        /// City component of the street address of this customer.
         /// </summary>
         public String city { get; set; }
 
         /// <summary>
-        /// Postal Code / Zip Code component of the address.
+        /// Postal Code / Zip Code component of the address of this customer.
         /// </summary>
         public String postalCode { get; set; }
 
         /// <summary>
-        /// Customer phone number
+        /// The main phone number for this customer.
         /// </summary>
         public String phoneNumber { get; set; }
 
         /// <summary>
-        /// Customer fax number
+        /// The fax phone number for this customer, if any.
         /// </summary>
         public String faxNumber { get; set; }
 
         /// <summary>
-        /// Customer email
+        /// The main email address for this customer.
         /// </summary>
         public String emailAddress { get; set; }
 
         /// <summary>
-        /// Customer contact name
+        /// The name of the main contact person for this customer.
         /// </summary>
         public String contactName { get; set; }
 
         /// <summary>
-        /// When last transaction was happened,
+        /// Date when this customer last executed a transaction.
         /// </summary>
         public DateTime? lastTransaction { get; set; }
 
@@ -113,22 +112,22 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? modifiedDate { get; set; }
 
         /// <summary>
-        /// Two character ISO 3166 county code for this country
+        /// Two character ISO 3166 county code for the country component of the address of this customer.
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// Two or three character ISO 3166 region, province, or state name
+        /// Two or three character ISO 3166 region, province, or state name of the address of this customer.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// TODO
+        /// True if this customer record is specifically used for bill-to purposes.
         /// </summary>
         public Boolean? isBill { get; set; }
 
         /// <summary>
-        /// TODO
+        /// True if this customer record is specifically used for ship-to purposes.
         /// </summary>
         public Boolean? isShip { get; set; }
 
@@ -139,7 +138,8 @@ namespace Avalara.AvaTax.RestClient
         public String taxpayerIdNumber { get; set; }
 
         /// <summary>
-        /// A list of exemption certficates that apply to this customer.
+        /// A list of exemption certficates that apply to this customer. You can fetch this data by specifying 
+        /// `$include=certificates` when calling a customer fetch API.
         /// </summary>
         public List<CertificateModel> certificates { get; set; }
 

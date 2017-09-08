@@ -46,6 +46,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String limitations { get; set; }
 
+        /// <summary>
+        /// The license key of the account that was created
+        /// </summary>
+        public String licenseKey { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

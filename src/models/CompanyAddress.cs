@@ -17,20 +17,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents information about a type of telecommunications transaction
+    /// Company Address Information
     /// </summary>
-    public class CommunicationsTransactionTypeModel
+    public class CompanyAddress
     {
         /// <summary>
-        /// The numeric Id of the transaction type.
+        /// Address Line1
         /// </summary>
-        public Int32 transactionTypeId { get; set; }
+        public String line { get; set; }
 
         /// <summary>
-        /// The name of the transaction type.
+        /// City
         /// </summary>
-        [JsonProperty(PropertyName = "AvaTax.Communications.TransactionType")]
-        public String TransactionType { get; set; }
+        public String city { get; set; }
+
+        /// <summary>
+        /// Two character ISO 3166 Region code for this company's primary business location.
+        /// </summary>
+        public String region { get; set; }
+
+        /// <summary>
+        /// Two character ISO 3166 Country code for this company's primary business location.
+        /// </summary>
+        public String country { get; set; }
+
+        /// <summary>
+        /// Postal Code
+        /// </summary>
+        public String postalCode { get; set; }
 
 
         /// <summary>

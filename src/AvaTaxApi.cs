@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.7.0-96
+ * @version    17.8.1-722
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.7.0-96"; } }
+        public static string API_VERSION { get { return "17.8.1-722"; } }
 
 #region Methods
 
@@ -63,7 +63,7 @@ namespace Avalara.AvaTax.RestClient
         /// unchanged account model.
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Elements to include when fetching the account</param>
         /// <param name="model">The activation request</param>
         public AccountModel ActivateAccount(Int32 id, String include, ActivateAccountModel model)
         {
@@ -85,7 +85,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Users
         /// </remarks>
         /// <param name="id">The ID of the account to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of special fetch options</param>
         public AccountModel GetAccount(Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
@@ -293,7 +293,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -323,7 +323,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -336,6 +336,464 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<BatchModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create a CertExpress invitation
+        /// </summary>
+        /// <remarks>
+        /// Creates an invitation for a customer to self-report certificates using the CertExpress website.
+        /// 
+        /// This invitation is delivered by your choice of method, or you can present a hyperlink to the user
+        /// directly in your connector. Your customer will be redirected to https://app.certexpress.com/ where
+        /// they can follow a step-by-step guide to enter information about their exemption certificates. The
+        /// certificates entered will be recorded and automatically linked to their customer record.
+        /// 
+        /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
+        /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
+        /// your company so that they can be used for tax exemptions.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that will record certificates</param>
+        /// <param name="customerCode">The number of the customer where the request is sent to</param>
+        /// <param name="model">the requests to send out to customers</param>
+        public List<CertExpressInvitationStatusModel> CreateCertExpressInvitation(Int32 companyId, String customerCode, List<CreateCertExpressInvitationModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return RestCall<List<CertExpressInvitationStatusModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single CertExpress invitation
+        /// </summary>
+        /// <remarks>
+        /// Retrieve an existing CertExpress invitation sent to a customer.
+        /// 
+        /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
+        /// they will automatically be recorded to your company and linked to the customer record.
+        /// 
+        /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
+        /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
+        /// your company so that they can be used for tax exemptions.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
+        /// <param name="customerCode">The number of the customer where the request is sent to</param>
+        /// <param name="id">The unique ID number of this CertExpress invitation</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. No options are defined at this time.</param>
+        public CertExpressInvitationModel GetCertExpressInvitation(Int32 companyId, String customerCode, Int32 id, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.ApplyField("id", id);
+            path.AddQuery("$include", include);
+            return RestCall<CertExpressInvitationModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List CertExpress invitations
+        /// </summary>
+        /// <remarks>
+        /// Retrieve CertExpress invitations sent by this company.
+        /// 
+        /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
+        /// they will automatically be recorded to your company and linked to the customer record.
+        /// 
+        /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
+        /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
+        /// your company so that they can be used for tax exemptions.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        ///  
+        ///  No options are defined at this time.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CertExpressInvitationModel> ListCertExpressInvitations(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certexpressinvites");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CertExpressInvitationModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create certificates for this company
+        /// </summary>
+        /// <remarks>
+        /// Record one or more certificates document for this company.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// When you create a certificate, it will be processed by Avalara and will become available for use in
+        /// calculating tax exemptions when processing is complete. For a certificate to be used in calculating exemptions,
+        /// it must have the following:
+        /// 
+        /// * A list of exposure zones indicating where the certificate is valid
+        /// * A link to the customer that is allowed to use this certificate
+        /// * Your tax transaction must contain the correct customer code
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company recording this certificate</param>
+        /// <param name="model">Certificates to be created</param>
+        public List<CertificateModel> CreateCertificates(Int32 companyId, List<CertificateModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
+            path.ApplyField("companyId", companyId);
+            return RestCall<List<CertificateModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Revoke and delete a certificate
+        /// </summary>
+        /// <remarks>
+        /// Revoke the certificate identified by this URL, then delete it.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// Revoked certificates can no longer be used.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        public CertificateModel DeleteCertificate(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<CertificateModel>("Delete", path, null);
+        }
+
+
+        /// <summary>
+        /// Download an image for this certificate
+        /// </summary>
+        /// <remarks>
+        /// Download an image or PDF file for this certificate.
+        /// 
+        /// This API can be used to download either a single-page preview of the certificate or a full PDF document.
+        /// To retrieve a preview image, set the `$type` parameter to `Jpeg` and the `$page` parameter to `1`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="page">If you choose `$type`=`Jpeg`, you must specify which page number to retrieve.</param>
+        /// <param name="type">The data format in which to retrieve the certificate image</param>
+        public FileResult DownloadCertificateImage(Int32 companyId, Int32 id, Int32? page, CertificatePreviewType? type)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("$page", page);
+            path.AddQuery("$type", type);
+            return RestCallFile("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single certificate
+        /// </summary>
+        /// <remarks>
+        /// Get the current certificate identified by this URL.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Customers - Retrieves the list of customers linked to the certificate.
+        /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        /// * Attributes - Retrieves all attributes applied to the certificate.
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * Customers - Retrieves the list of customers linked to the certificate.
+        ///  * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        ///  * Attributes - Retrieves all attributes applied to the certificate.</param>
+        public CertificateModel GetCertificate(Int32 companyId, Int32 id, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("$include", include);
+            return RestCall<CertificateModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Link attributes to a certificate
+        /// </summary>
+        /// <remarks>
+        /// Link one or many attributes to a certificate.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
+        /// certificate at any time. The full list of defined attributes may be found using `ListCertificateAttributes`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of attributes to link to this certificate.</param>
+        public FetchResult<CertificateAttributeModel> LinkAttributesToCertificate(Int32 companyId, Int32 id, List<CertificateAttributeModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<CertificateAttributeModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Link customers to a certificate
+        /// </summary>
+        /// <remarks>
+        /// Link one or more customers to an existing certificate.
+        /// 
+        /// Customers and certificates must be linked before a customer can make use of a certificate to obtain
+        /// a tax exemption in AvaTax. Since some certificates may cover more than one business entity, a certificate
+        /// can be connected to multiple customer records using the `LinkCustomersToCertificate` API.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of customers needed be added to the Certificate for exemption</param>
+        public FetchResult<CustomerModel> LinkCustomersToCertificate(Int32 companyId, Int32 id, LinkCustomersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<CustomerModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// List all attributes applied to this certificate
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the list of attributes that are linked to this certificate.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
+        /// certificate at any time. The full list of defined attributes may be found using `/api/v2/definitions/certificateattributes`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        public FetchResult<CertificateAttributeModel> ListAttributesForCertificate(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<CertificateAttributeModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List customers linked to this certificate
+        /// </summary>
+        /// <remarks>
+        /// List all customers linked to this certificate.
+        /// 
+        /// Customers must be linked to a certificate in order to make use of its tax exemption features. You
+        /// can link or unlink customers to a certificate at any time.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        ///  No options are currently available when fetching customers.</param>
+        public FetchResult<CustomerModel> ListCustomersForCertificate(Int32 companyId, Int32 id, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("$include", include);
+            return RestCall<FetchResult<CustomerModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List all certificates for a company
+        /// </summary>
+        /// <remarks>
+        /// List all certificates recorded by a company
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Customers - Retrieves the list of customers linked to the certificate.
+        /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        /// * Attributes - Retrieves all attributes applied to the certificate.
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company to search</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * Customers - Retrieves the list of customers linked to the certificate.
+        ///  * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        ///  * Attributes - Retrieves all attributes applied to the certificate.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CertificateModel> QueryCertificates(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CertificateModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Unlink attributes from a certificate
+        /// </summary>
+        /// <remarks>
+        /// Unlink one or many attributes from a certificate.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
+        /// certificate at any time. The full list of defined attributes may be found using `ListCertificateAttributes`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of attributes to unlink from this certificate.</param>
+        public FetchResult<CertificateAttributeModel> UnlinkAttributesFromCertificate(Int32 companyId, Int32 id, List<CertificateAttributeModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<CertificateAttributeModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Unlink customers from a certificate
+        /// </summary>
+        /// <remarks>
+        /// Unlinks one or more customers from a certificate.
+        /// 
+        /// Unlinking a certificate from a customer will prevent the certificate from being used to generate
+        /// tax exemptions for the customer in the future. If any previous transactions for this customer had
+        /// used this linked certificate, those transactions will be unchanged and will still have a link to the
+        /// exemption certificate in question.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of customers to unlink from this certificate</param>
+        public FetchResult<CustomerModel> UnlinkCustomersFromCertificate(Int32 companyId, Int32 id, LinkCustomersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<FetchResult<CustomerModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Update a single certificate
+        /// </summary>
+        /// <remarks>
+        /// Replace the certificate identified by this URL with a new one.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The new certificate object that will replace the existing one</param>
+        public CertificateModel UpdateCertificate(Int32 companyId, Int32 id, CertificateModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<CertificateModel>("Put", path, model);
+        }
+
+
+        /// <summary>
+        /// Upload an image or PDF attachment for this certificate
+        /// </summary>
+        /// <remarks>
+        /// Upload an image or PDF attachment for this certificate.
+        /// 
+        /// Image attachments can be of the format `PDF`, `JPEG`, `TIFF`, or `PNG`. To upload a multi-page image, please
+        /// use the `PDF` data type.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="file">The exemption certificate file you wanted to upload. Accepted formats are: PDF, JPEG, TIFF, PNG.</param>
+        public String UploadCertificateImage(Int32 companyId, Int32 id, FileResult file)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCallString("Post", path, null);
         }
 
 
@@ -463,29 +921,18 @@ namespace Avalara.AvaTax.RestClient
         ///  * TaxCodes
         ///  * TaxRules
         ///  * UPC
-        ///  * ECMS
         /// </remarks>
         /// <param name="id">The ID of the company to retrieve.</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        ///  
+        ///  * Child objects - Specify one or more of the following to retrieve objects related to each company: "Contacts", "FilingCalendars", "Items", "Locations", "Nexus", "TaxCodes", or "TaxRules".
+        ///  * Deleted objects - Specify "FetchDeleted" to retrieve information about previously deleted objects.</param>
         public CompanyModel GetCompany(Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return RestCall<CompanyModel>("Get", path, null);
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        public FetchResult<CompanyModel> GetCompany()
-        {
-            var path = new AvaTaxPath("/api/v2/companies/mrs");
-            return RestCall<FetchResult<CompanyModel>>("Get", path, null);
         }
 
 
@@ -561,6 +1008,21 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a list of MRS Companies with account
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Get a list of companies with an active MRS service.
+        /// </remarks>
+        public FetchResult<CompanyModel> ListMrsCompanies()
+        {
+            var path = new AvaTaxPath("/api/v2/companies/mrs");
+            return RestCall<FetchResult<CompanyModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve all companies
         /// </summary>
         /// <remarks>
@@ -578,9 +1040,8 @@ namespace Avalara.AvaTax.RestClient
         /// * TaxCodes
         /// * TaxRules
         /// * UPC
-        /// * ECMS
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -708,7 +1169,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these contacts</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -737,7 +1198,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -772,6 +1233,254 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<ContactModel>("Put", path, model);
+        }
+
+
+        /// <summary>
+        /// Create customers for this company
+        /// </summary>
+        /// <remarks>
+        /// Create one or more customers for this company.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="model">The list of customer objects to be created</param>
+        public List<CustomerModel> CreateCustomers(Int32 companyId, List<CustomerModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
+            path.ApplyField("companyId", companyId);
+            return RestCall<List<CustomerModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a customer record
+        /// </summary>
+        /// <remarks>
+        /// Deletes the customer object referenced by this URL.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        public CustomerModel DeleteCustomer(Int32 companyId, String customerCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return RestCall<CustomerModel>("Delete", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single customer
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the customer identified by this URL.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this customer object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="include">Specify optional additional objects to include in this fetch request</param>
+        public CustomerModel GetCustomer(Int32 companyId, String customerCode, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.AddQuery("$include", include);
+            return RestCall<CustomerModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Link certificates to a customer
+        /// </summary>
+        /// <remarks>
+        /// Link one or more certificates to a customer.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of certificates to link to this customer</param>
+        public FetchResult<CertificateModel> LinkCertificatesToCustomer(Int32 companyId, String customerCode, LinkCertificatesModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return RestCall<FetchResult<CertificateModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// List certificates linked to a customer
+        /// </summary>
+        /// <remarks>
+        /// List all certificates linked to a customer.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * Customers - Retrieves the list of customers linked to the certificate.
+        ///  * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        ///  * Attributes - Retrieves all attributes applied to the certificate.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CertificateModel> ListCertificatesForCustomer(Int32 companyId, String customerCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CertificateModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List active certificates for a location
+        /// </summary>
+        /// <remarks>
+        /// List valid certificates linked to a customer in a particular country and region.
+        /// 
+        /// This API is intended to help identify whether a customer has already provided a certificate that
+        /// applies to a particular country and region. This API is intended to help you remind a customer
+        /// when they have or have not provided copies of their exemption certificates to you during the sales
+        /// order process. 
+        /// 
+        /// If a customer does not have a certificate on file and they wish to provide one, you should send the customer
+        /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
+        /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="country">Search for certificates matching this country. Uses the ISO 3166 two character country code.</param>
+        /// <param name="region">Search for certificates matching this region. Uses the ISO 3166 two or three character state, region, or province code.</param>
+        public ExemptionStatusModel ListValidCertificatesForCustomer(Int32 companyId, String customerCode, String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/{country}/{region}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            return RestCall<ExemptionStatusModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List all customers for this company
+        /// </summary>
+        /// <remarks>
+        /// List all customers recorded by this company matching the specified criteria.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CustomerModel> QueryCustomers(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CustomerModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Unlink certificates from a customer
+        /// </summary>
+        /// <remarks>
+        /// Remove one or more certificates to a customer.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of certificates to link to this customer</param>
+        public FetchResult<CertificateModel> UnlinkCertificatesFromCustomer(Int32 companyId, String customerCode, LinkCertificatesModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return RestCall<FetchResult<CertificateModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Update a single customer
+        /// </summary>
+        /// <remarks>
+        /// Replace the customer object at this URL with a new record.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The new customer model that will replace the existing record at this URL</param>
+        public CustomerModel UpdateCustomer(Int32 companyId, String customerCode, CustomerModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return RestCall<CustomerModel>("Put", path, model);
         }
 
 
@@ -822,13 +1531,85 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List certificate attributes used by a company
+        /// </summary>
+        /// <remarks>
+        /// List the certificate attributes defined by a company.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
+        /// certificate at any time.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CertificateAttributeModel> ListCertificateAttributes(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/certificateattributes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CertificateAttributeModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List certificate attributes used by a company
+        /// </summary>
+        /// <remarks>
+        /// List the certificate exempt reasons defined by a company.
+        /// 
+        /// An exemption reason defines why a certificate allows a customer to be exempt
+        /// for purposes of tax calculation.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ExemptionReasonModel> ListCertificateExemptReasons(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/certificateexemptreasons");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ExemptionReasonModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List certificate exposure zones used by a company
+        /// </summary>
+        /// <remarks>
+        /// List the certificate exposure zones defined by a company.
+        /// 
+        /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
+        /// authority or other legal entity to which a certificate may apply.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ExposureZoneModel> ListCertificateExposureZones(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/certificateexposurezones");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ExposureZoneModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of communications transactiontypes
         /// </summary>
         /// <remarks>
         /// Returns full list of communications transaction types which
         /// are accepted in communication tax calculation requests.
         /// </remarks>
-        /// <param name="id"></param>
+        /// <param name="id">The transaction type ID to examine</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -909,6 +1690,31 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<IsoCountryModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List certificate exposure zones used by a company
+        /// </summary>
+        /// <remarks>
+        /// List available cover letters that can be used when sending invitation to use CertExpress to upload certificates.
+        /// 
+        /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
+        /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
+        /// certificates directly; this cover letter explains why the invitation was sent.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CoverLetterModel> ListCoverLetters(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/coverletters");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CoverLetterModel>>("Get", path, null);
         }
 
 
@@ -1507,7 +2313,7 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported rate type file types
         /// This API is intended to be useful to identify all the different rate types.
         /// </remarks>
-        /// <param name="country"></param>
+        /// <param name="country">The country to examine for rate types</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -2083,8 +2889,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry"></param>
-        /// <param name="returnRegion"></param>
+        /// <param name="returnCountry">If specified, fetches only filing calendars that apply to tax filings in this specific country. Uses ISO 3166 country codes.</param>
+        /// <param name="returnRegion">If specified, fetches only filing calendars that apply to tax filings in this specific region. Uses ISO 3166 region codes.</param>
         public FetchResult<FilingCalendarModel> QueryFilingCalendars(String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars");
@@ -3049,7 +3855,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3077,7 +3883,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3189,7 +3995,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this override</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3221,7 +4027,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3304,7 +4110,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         public LocationModel GetLocation(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
@@ -3333,7 +4139,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3368,7 +4174,7 @@ namespace Avalara.AvaTax.RestClient
         /// * LocationSettings
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3526,7 +4332,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3557,7 +4363,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3901,7 +4707,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3931,7 +4737,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3992,9 +4798,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is for use by partner onboarding services customers only.
+        /// 
+        /// Avalara invites select partners to refer new customers to the AvaTax service using the onboarding features
+        /// of AvaTax. These partners can create accounts for new customers using this API.
+        /// 
         /// Calling this API creates an account with the specified product subscriptions, but does not configure billing.
         /// The customer will receive information from Avalara about how to configure billing for their account.
         /// You should call this API when a customer has requested to begin using Avalara services.
+        /// 
+        /// If the newly created account owner wishes, they can confirm that they have read and agree to the Avalara
+        /// terms and conditions. If they do so, they can receive a license key as part of this API and their
+        /// API will be created in `Active` status. If the customer has not yet read and accepted these terms and
+        /// conditions, the account will be created in `New` status and they can receive a license key by logging
+        /// onto AvaTax and reviewing terms and conditions online.
         /// </remarks>
         /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
         public NewAccountModel RequestNewAccount(NewAccountRequestModel model)
@@ -4158,7 +4974,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -4241,6 +5057,22 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Export a report accurate to the line level
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="model"></param>
+        public FileResult ExportDocumentLine(Int32 companyId, ExportDocumentLineModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
+            path.ApplyField("companyId", companyId);
+            return RestCallFile("Post", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new setting
         /// </summary>
         /// <remarks>
@@ -4319,7 +5151,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these settings</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4352,7 +5184,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4540,7 +5372,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4571,7 +5403,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4671,6 +5503,35 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Download a file listing tax rates by postal code
+        /// </summary>
+        /// <remarks>
+        /// Download a CSV file containing all five digit postal codes in the United States and their sales
+        /// and use tax rates for tangible personal property.
+        /// 
+        /// This rates file is intended to be used as a default for tax calculation when your software cannot
+        /// call the `CreateTransaction` API call. When using this file, your software will be unable to
+        /// handle complex tax rules such as:
+        /// 
+        /// * Zip+9 - This tax file does not contain 
+        /// * Different product types - This tax file contains tangible personal property tax rates only.
+        /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
+        /// * Threshold-based taxes - This tax file does not contain information about thresholds.
+        /// 
+        /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
+        /// to reconcile the actual transaction and determine the difference between the estimated general tax
+        /// rate and the final transaction tax.
+        /// </remarks>
+        /// <param name="date">The date for which</param>
+        public FileResult DownloadTaxRatesByZipCode(DateTime date)
+        {
+            var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
+            path.ApplyField("date", date);
+            return RestCallFile("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Create a new tax rule
         /// </summary>
         /// <remarks>
@@ -4743,7 +5604,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax rules</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4774,7 +5635,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4819,25 +5680,27 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Add lines to an existing unlocked transaction.
-        /// 
-        /// The `AddLines` API allows you to add additional transaction lines to existing transaction, so that customer will
-        /// be able to append multiple calls together and form an extremely large transaction. If customer does not specify line number
-        /// in the lines to be added, a new random Guid string will be generated for line number. If customer are not satisfied with
-        /// the line number for the transaction lines, they can turn on the renumber switch to have REST v2 automatically renumber all 
-        /// transaction lines for them, in this case, the line number becomes: "1", "2", "3", ...
-        /// 
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
-        /// * Lines
-        /// * Details (implies lines)
-        /// * Summary (implies details)
-        /// * Addresses
+        ///  The `AddLines` API allows you to add additional transaction lines to existing transaction, so that customer will
+        ///  be able to append multiple calls together and form an extremely large transaction. If customer does not specify line number
+        ///  in the lines to be added, a new random Guid string will be generated for line number. If customer are not satisfied with
+        ///  the line number for the transaction lines, they can turn on the renumber switch to have REST v2 automatically renumber all 
+        ///  transaction lines for them, in this case, the line number becomes: "1", "2", "3", ...
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.
+        ///  A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///  sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///  * Lines
+        ///  * Details (implies lines)
+        ///  * Summary (implies details)
+        ///  * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
+        /// 
+        ///  If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be added</param>
         public TransactionModel AddLines(String include, AddTransactionLineModel model)
         {
@@ -5022,10 +5885,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.
+        /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create</param>
         public TransactionModel CreateOrAdjustTransaction(String include, CreateOrAdjustTransactionModel model)
         {
@@ -5055,10 +5920,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.
+        /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create</param>
         public TransactionModel CreateTransaction(String include, CreateTransactionModel model)
         {
@@ -5073,22 +5940,24 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Remove lines to an existing unlocked transaction.
-        /// 
-        /// The `DeleteLines` API allows you to remove transaction lines from existing unlocked transaction, so that customer will
-        /// be able to delete transaction lines and adjust original transaction the way they like
-        /// 
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
-        /// * Lines
-        /// * Details (implies lines)
-        /// * Summary (implies details)
-        /// * Addresses
+        ///  The `DeleteLines` API allows you to remove transaction lines from existing unlocked transaction, so that customer will
+        ///  be able to delete transaction lines and adjust original transaction the way they like
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.
+        ///  A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///  sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///  * Lines
+        ///  * Details (implies lines)
+        ///  * Summary (implies details)
+        ///  * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
+        /// 
+        ///  If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be removed</param>
         public TransactionModel DeleteLines(String include, RemoveTransactionLineModel model)
         {
@@ -5111,10 +5980,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         public TransactionModel GetTransactionByCode(String companyCode, String transactionCode, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}");
@@ -5138,11 +6009,13 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">The transaction type to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         public TransactionModel GetTransactionByCodeAndType(String companyCode, String transactionCode, DocumentType documentType, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/types/{documentType}");
@@ -5169,9 +6042,11 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         public TransactionModel GetTransactionById(Int64 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
@@ -5198,9 +6073,11 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -5262,12 +6139,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.
+        /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
         /// <param name="companyCode">The code of the company that made the original sale</param>
         /// <param name="transactionCode">The transaction code of the original sale</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">Information about the refund to create</param>
         public TransactionModel RefundTransaction(String companyCode, String transactionCode, String include, RefundTransactionModel model)
         {
@@ -5404,7 +6283,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these UPCs</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5432,7 +6311,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5478,7 +6357,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="id">The ID of the user to retrieve.</param>
         /// <param name="accountId">The accountID of the user you wish to get.</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Optional fetch commands.</param>
         public UserModel GetUser(Int32 id, Int32 accountId, String include)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
@@ -5531,7 +6410,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
         /// <param name="accountId">The accountID of the user you wish to list.</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Optional fetch commands.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -5559,7 +6438,7 @@ namespace Avalara.AvaTax.RestClient
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Optional fetch commands.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -5681,7 +6560,7 @@ namespace Avalara.AvaTax.RestClient
         /// unchanged account model.;
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Elements to include when fetching the account</param>
         /// <param name="model">The activation request</param>
         public async Task<AccountModel> ActivateAccountAsync(Int32 id, String include, ActivateAccountModel model)
         {
@@ -5703,7 +6582,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Users;
         /// </remarks>
         /// <param name="id">The ID of the account to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of special fetch options</param>
         public async Task<AccountModel> GetAccountAsync(Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
@@ -5911,7 +6790,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these batches</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5941,7 +6820,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5954,6 +6833,464 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<BatchModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create a CertExpress invitation;
+        /// </summary>
+        /// <remarks>
+        /// Creates an invitation for a customer to self-report certificates using the CertExpress website.
+        /// 
+        /// This invitation is delivered by your choice of method, or you can present a hyperlink to the user
+        /// directly in your connector. Your customer will be redirected to https://app.certexpress.com/ where
+        /// they can follow a step-by-step guide to enter information about their exemption certificates. The
+        /// certificates entered will be recorded and automatically linked to their customer record.
+        /// 
+        /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
+        /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
+        /// your company so that they can be used for tax exemptions.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that will record certificates</param>
+        /// <param name="customerCode">The number of the customer where the request is sent to</param>
+        /// <param name="model">the requests to send out to customers</param>
+        public async Task<List<CertExpressInvitationStatusModel>> CreateCertExpressInvitationAsync(Int32 companyId, String customerCode, List<CreateCertExpressInvitationModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return await RestCallAsync<List<CertExpressInvitationStatusModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single CertExpress invitation;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve an existing CertExpress invitation sent to a customer.
+        /// 
+        /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
+        /// they will automatically be recorded to your company and linked to the customer record.
+        /// 
+        /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
+        /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
+        /// your company so that they can be used for tax exemptions.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
+        /// <param name="customerCode">The number of the customer where the request is sent to</param>
+        /// <param name="id">The unique ID number of this CertExpress invitation</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. No options are defined at this time.</param>
+        public async Task<CertExpressInvitationModel> GetCertExpressInvitationAsync(Int32 companyId, String customerCode, Int32 id, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.ApplyField("id", id);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<CertExpressInvitationModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List CertExpress invitations;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve CertExpress invitations sent by this company.
+        /// 
+        /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
+        /// they will automatically be recorded to your company and linked to the customer record.
+        /// 
+        /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
+        /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
+        /// your company so that they can be used for tax exemptions.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        ///  
+        ///  No options are defined at this time.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CertExpressInvitationModel>> ListCertExpressInvitationsAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certexpressinvites");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CertExpressInvitationModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create certificates for this company;
+        /// </summary>
+        /// <remarks>
+        /// Record one or more certificates document for this company.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// When you create a certificate, it will be processed by Avalara and will become available for use in
+        /// calculating tax exemptions when processing is complete. For a certificate to be used in calculating exemptions,
+        /// it must have the following:
+        /// 
+        /// * A list of exposure zones indicating where the certificate is valid
+        /// * A link to the customer that is allowed to use this certificate
+        /// * Your tax transaction must contain the correct customer code;
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company recording this certificate</param>
+        /// <param name="model">Certificates to be created</param>
+        public async Task<List<CertificateModel>> CreateCertificatesAsync(Int32 companyId, List<CertificateModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<List<CertificateModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Revoke and delete a certificate;
+        /// </summary>
+        /// <remarks>
+        /// Revoke the certificate identified by this URL, then delete it.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// Revoked certificates can no longer be used.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        public async Task<CertificateModel> DeleteCertificateAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<CertificateModel>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Download an image for this certificate;
+        /// </summary>
+        /// <remarks>
+        /// Download an image or PDF file for this certificate.
+        /// 
+        /// This API can be used to download either a single-page preview of the certificate or a full PDF document.
+        /// To retrieve a preview image, set the `$type` parameter to `Jpeg` and the `$page` parameter to `1`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="page">If you choose `$type`=`Jpeg`, you must specify which page number to retrieve.</param>
+        /// <param name="type">The data format in which to retrieve the certificate image</param>
+        public async Task<FileResult> DownloadCertificateImageAsync(Int32 companyId, Int32 id, Int32? page, CertificatePreviewType? type)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("$page", page);
+            path.AddQuery("$type", type);
+            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single certificate;
+        /// </summary>
+        /// <remarks>
+        /// Get the current certificate identified by this URL.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Customers - Retrieves the list of customers linked to the certificate.
+        /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        /// * Attributes - Retrieves all attributes applied to the certificate.;
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * Customers - Retrieves the list of customers linked to the certificate.
+        ///  * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        ///  * Attributes - Retrieves all attributes applied to the certificate.</param>
+        public async Task<CertificateModel> GetCertificateAsync(Int32 companyId, Int32 id, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<CertificateModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Link attributes to a certificate;
+        /// </summary>
+        /// <remarks>
+        /// Link one or many attributes to a certificate.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
+        /// certificate at any time. The full list of defined attributes may be found using `ListCertificateAttributes`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of attributes to link to this certificate.</param>
+        public async Task<FetchResult<CertificateAttributeModel>> LinkAttributesToCertificateAsync(Int32 companyId, Int32 id, List<CertificateAttributeModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Link customers to a certificate;
+        /// </summary>
+        /// <remarks>
+        /// Link one or more customers to an existing certificate.
+        /// 
+        /// Customers and certificates must be linked before a customer can make use of a certificate to obtain
+        /// a tax exemption in AvaTax. Since some certificates may cover more than one business entity, a certificate
+        /// can be connected to multiple customer records using the `LinkCustomersToCertificate` API.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of customers needed be added to the Certificate for exemption</param>
+        public async Task<FetchResult<CustomerModel>> LinkCustomersToCertificateAsync(Int32 companyId, Int32 id, LinkCustomersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<CustomerModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all attributes applied to this certificate;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the list of attributes that are linked to this certificate.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
+        /// certificate at any time. The full list of defined attributes may be found using `/api/v2/definitions/certificateattributes`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        public async Task<FetchResult<CertificateAttributeModel>> ListAttributesForCertificateAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List customers linked to this certificate;
+        /// </summary>
+        /// <remarks>
+        /// List all customers linked to this certificate.
+        /// 
+        /// Customers must be linked to a certificate in order to make use of its tax exemption features. You
+        /// can link or unlink customers to a certificate at any time.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        ///  No options are currently available when fetching customers.</param>
+        public async Task<FetchResult<CustomerModel>> ListCustomersForCertificateAsync(Int32 companyId, Int32 id, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<FetchResult<CustomerModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all certificates for a company;
+        /// </summary>
+        /// <remarks>
+        /// List all certificates recorded by a company
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Customers - Retrieves the list of customers linked to the certificate.
+        /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        /// * Attributes - Retrieves all attributes applied to the certificate.;
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company to search</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * Customers - Retrieves the list of customers linked to the certificate.
+        ///  * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        ///  * Attributes - Retrieves all attributes applied to the certificate.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CertificateModel>> QueryCertificatesAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CertificateModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Unlink attributes from a certificate;
+        /// </summary>
+        /// <remarks>
+        /// Unlink one or many attributes from a certificate.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
+        /// certificate at any time. The full list of defined attributes may be found using `ListCertificateAttributes`.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of attributes to unlink from this certificate.</param>
+        public async Task<FetchResult<CertificateAttributeModel>> UnlinkAttributesFromCertificateAsync(Int32 companyId, Int32 id, List<CertificateAttributeModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Unlink customers from a certificate;
+        /// </summary>
+        /// <remarks>
+        /// Unlinks one or more customers from a certificate.
+        /// 
+        /// Unlinking a certificate from a customer will prevent the certificate from being used to generate
+        /// tax exemptions for the customer in the future. If any previous transactions for this customer had
+        /// used this linked certificate, those transactions will be unchanged and will still have a link to the
+        /// exemption certificate in question.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The list of customers to unlink from this certificate</param>
+        public async Task<FetchResult<CustomerModel>> UnlinkCustomersFromCertificateAsync(Int32 companyId, Int32 id, LinkCustomersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<FetchResult<CustomerModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a single certificate;
+        /// </summary>
+        /// <remarks>
+        /// Replace the certificate identified by this URL with a new one.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The new certificate object that will replace the existing one</param>
+        public async Task<CertificateModel> UpdateCertificateAsync(Int32 companyId, Int32 id, CertificateModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<CertificateModel>("Put", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Upload an image or PDF attachment for this certificate;
+        /// </summary>
+        /// <remarks>
+        /// Upload an image or PDF attachment for this certificate.
+        /// 
+        /// Image attachments can be of the format `PDF`, `JPEG`, `TIFF`, or `PNG`. To upload a multi-page image, please
+        /// use the `PDF` data type.
+        /// 
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
+        /// log onto the administrative website for the product you purchased.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="file">The exemption certificate file you wanted to upload. Accepted formats are: PDF, JPEG, TIFF, PNG.</param>
+        public async Task<String> UploadCertificateImageAsync(Int32 companyId, Int32 id, FileResult file)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallStringAsync("Post", path, null).ConfigureAwait(false);
         }
 
 
@@ -6080,30 +7417,19 @@ namespace Avalara.AvaTax.RestClient
         ///  * Settings
         ///  * TaxCodes
         ///  * TaxRules
-        ///  * UPC
-        ///  * ECMS;
+        ///  * UPC;
         /// </remarks>
         /// <param name="id">The ID of the company to retrieve.</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        ///  
+        ///  * Child objects - Specify one or more of the following to retrieve objects related to each company: "Contacts", "FilingCalendars", "Items", "Locations", "Nexus", "TaxCodes", or "TaxRules".
+        ///  * Deleted objects - Specify "FetchDeleted" to retrieve information about previously deleted objects.</param>
         public async Task<CompanyModel> GetCompanyAsync(Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return await RestCallAsync<CompanyModel>("Get", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// ;
-        /// </summary>
-        /// <remarks>
-        /// ;
-        /// </remarks>
-        public async Task<FetchResult<CompanyModel>> GetCompanyAsync()
-        {
-            var path = new AvaTaxPath("/api/v2/companies/mrs");
-            return await RestCallAsync<FetchResult<CompanyModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -6179,6 +7505,21 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a list of MRS Companies with account;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Get a list of companies with an active MRS service.;
+        /// </remarks>
+        public async Task<FetchResult<CompanyModel>> ListMrsCompaniesAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/companies/mrs");
+            return await RestCallAsync<FetchResult<CompanyModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve all companies;
         /// </summary>
         /// <remarks>
@@ -6195,10 +7536,9 @@ namespace Avalara.AvaTax.RestClient
         /// * Settings
         /// * TaxCodes
         /// * TaxRules
-        /// * UPC
-        /// * ECMS;
+        /// * UPC;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -6326,7 +7666,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these contacts</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -6355,7 +7695,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -6390,6 +7730,254 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<ContactModel>("Put", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create customers for this company;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more customers for this company.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="model">The list of customer objects to be created</param>
+        public async Task<List<CustomerModel>> CreateCustomersAsync(Int32 companyId, List<CustomerModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<List<CustomerModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a customer record;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the customer object referenced by this URL.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        public async Task<CustomerModel> DeleteCustomerAsync(Int32 companyId, String customerCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return await RestCallAsync<CustomerModel>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single customer;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the customer identified by this URL.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this customer object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Certificates - Fetch a list of certificates linked to this customer.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="include">Specify optional additional objects to include in this fetch request</param>
+        public async Task<CustomerModel> GetCustomerAsync(Int32 companyId, String customerCode, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<CustomerModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Link certificates to a customer;
+        /// </summary>
+        /// <remarks>
+        /// Link one or more certificates to a customer.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of certificates to link to this customer</param>
+        public async Task<FetchResult<CertificateModel>> LinkCertificatesToCustomerAsync(Int32 companyId, String customerCode, LinkCertificatesModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return await RestCallAsync<FetchResult<CertificateModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List certificates linked to a customer;
+        /// </summary>
+        /// <remarks>
+        /// List all certificates linked to a customer.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * Customers - Retrieves the list of customers linked to the certificate.
+        ///  * PoNumbers - Retrieves all PO numbers tied to the certificate.
+        ///  * Attributes - Retrieves all attributes applied to the certificate.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CertificateModel>> ListCertificatesForCustomerAsync(Int32 companyId, String customerCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CertificateModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List active certificates for a location;
+        /// </summary>
+        /// <remarks>
+        /// List valid certificates linked to a customer in a particular country and region.
+        /// 
+        /// This API is intended to help identify whether a customer has already provided a certificate that
+        /// applies to a particular country and region. This API is intended to help you remind a customer
+        /// when they have or have not provided copies of their exemption certificates to you during the sales
+        /// order process. 
+        /// 
+        /// If a customer does not have a certificate on file and they wish to provide one, you should send the customer
+        /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
+        /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="country">Search for certificates matching this country. Uses the ISO 3166 two character country code.</param>
+        /// <param name="region">Search for certificates matching this region. Uses the ISO 3166 two or three character state, region, or province code.</param>
+        public async Task<ExemptionStatusModel> ListValidCertificatesForCustomerAsync(Int32 companyId, String customerCode, String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/{country}/{region}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            return await RestCallAsync<ExemptionStatusModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all customers for this company;
+        /// </summary>
+        /// <remarks>
+        /// List all customers recorded by this company matching the specified criteria.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        /// 
+        /// * Certificates - Fetch a list of certificates linked to this customer.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CustomerModel>> QueryCustomersAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CustomerModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Unlink certificates from a customer;
+        /// </summary>
+        /// <remarks>
+        /// Remove one or more certificates to a customer.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of certificates to link to this customer</param>
+        public async Task<FetchResult<CertificateModel>> UnlinkCertificatesFromCustomerAsync(Int32 companyId, String customerCode, LinkCertificatesModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return await RestCallAsync<FetchResult<CertificateModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a single customer;
+        /// </summary>
+        /// <remarks>
+        /// Replace the customer object at this URL with a new record.
+        /// 
+        /// A customer object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The new customer model that will replace the existing record at this URL</param>
+        public async Task<CustomerModel> UpdateCustomerAsync(Int32 companyId, String customerCode, CustomerModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            return await RestCallAsync<CustomerModel>("Put", path, model).ConfigureAwait(false);
         }
 
 
@@ -6440,13 +8028,85 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List certificate attributes used by a company;
+        /// </summary>
+        /// <remarks>
+        /// List the certificate attributes defined by a company.
+        /// 
+        /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
+        /// certificate at any time.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CertificateAttributeModel>> ListCertificateAttributesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/certificateattributes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List certificate attributes used by a company;
+        /// </summary>
+        /// <remarks>
+        /// List the certificate exempt reasons defined by a company.
+        /// 
+        /// An exemption reason defines why a certificate allows a customer to be exempt
+        /// for purposes of tax calculation.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ExemptionReasonModel>> ListCertificateExemptReasonsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/certificateexemptreasons");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ExemptionReasonModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List certificate exposure zones used by a company;
+        /// </summary>
+        /// <remarks>
+        /// List the certificate exposure zones defined by a company.
+        /// 
+        /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
+        /// authority or other legal entity to which a certificate may apply.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ExposureZoneModel>> ListCertificateExposureZonesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/certificateexposurezones");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ExposureZoneModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of communications transactiontypes;
         /// </summary>
         /// <remarks>
         /// Returns full list of communications transaction types which
         /// are accepted in communication tax calculation requests.;
         /// </remarks>
-        /// <param name="id"></param>
+        /// <param name="id">The transaction type ID to examine</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -6527,6 +8187,31 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<IsoCountryModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List certificate exposure zones used by a company;
+        /// </summary>
+        /// <remarks>
+        /// List available cover letters that can be used when sending invitation to use CertExpress to upload certificates.
+        /// 
+        /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
+        /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
+        /// certificates directly; this cover letter explains why the invitation was sent.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CoverLetterModel>> ListCoverLettersAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/coverletters");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CoverLetterModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -7125,7 +8810,7 @@ namespace Avalara.AvaTax.RestClient
         /// Returns the full list of Avalara-supported rate type file types
         /// This API is intended to be useful to identify all the different rate types.;
         /// </remarks>
-        /// <param name="country"></param>
+        /// <param name="country">The country to examine for rate types</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -7701,8 +9386,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry"></param>
-        /// <param name="returnRegion"></param>
+        /// <param name="returnCountry">If specified, fetches only filing calendars that apply to tax filings in this specific country. Uses ISO 3166 country codes.</param>
+        /// <param name="returnRegion">If specified, fetches only filing calendars that apply to tax filings in this specific region. Uses ISO 3166 region codes.</param>
         public async Task<FetchResult<FilingCalendarModel>> QueryFilingCalendarsAsync(String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars");
@@ -8667,7 +10352,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8695,7 +10380,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8807,7 +10492,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="accountId">The ID of the account that owns this override</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8839,7 +10524,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8922,7 +10607,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         public async Task<LocationModel> GetLocationAsync(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
@@ -8951,7 +10636,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8986,7 +10671,7 @@ namespace Avalara.AvaTax.RestClient
         /// * LocationSettings;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9144,7 +10829,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9175,7 +10860,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9519,7 +11204,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9549,7 +11234,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9610,9 +11295,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is for use by partner onboarding services customers only.
+        /// 
+        /// Avalara invites select partners to refer new customers to the AvaTax service using the onboarding features
+        /// of AvaTax. These partners can create accounts for new customers using this API.
+        /// 
         /// Calling this API creates an account with the specified product subscriptions, but does not configure billing.
         /// The customer will receive information from Avalara about how to configure billing for their account.
-        /// You should call this API when a customer has requested to begin using Avalara services.;
+        /// You should call this API when a customer has requested to begin using Avalara services.
+        /// 
+        /// If the newly created account owner wishes, they can confirm that they have read and agree to the Avalara
+        /// terms and conditions. If they do so, they can receive a license key as part of this API and their
+        /// API will be created in `Active` status. If the customer has not yet read and accepted these terms and
+        /// conditions, the account will be created in `New` status and they can receive a license key by logging
+        /// onto AvaTax and reviewing terms and conditions online.;
         /// </remarks>
         /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
         public async Task<NewAccountModel> RequestNewAccountAsync(NewAccountRequestModel model)
@@ -9776,7 +11471,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -9859,6 +11554,22 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Export a report accurate to the line level;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="model"></param>
+        public async Task<FileResult> ExportDocumentLineAsync(Int32 companyId, ExportDocumentLineModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Create a new setting;
         /// </summary>
         /// <remarks>
@@ -9937,7 +11648,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these settings</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9970,7 +11681,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -10158,7 +11869,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -10189,7 +11900,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -10289,6 +12000,35 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Download a file listing tax rates by postal code;
+        /// </summary>
+        /// <remarks>
+        /// Download a CSV file containing all five digit postal codes in the United States and their sales
+        /// and use tax rates for tangible personal property.
+        /// 
+        /// This rates file is intended to be used as a default for tax calculation when your software cannot
+        /// call the `CreateTransaction` API call. When using this file, your software will be unable to
+        /// handle complex tax rules such as:
+        /// 
+        /// * Zip+9 - This tax file does not contain 
+        /// * Different product types - This tax file contains tangible personal property tax rates only.
+        /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
+        /// * Threshold-based taxes - This tax file does not contain information about thresholds.
+        /// 
+        /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
+        /// to reconcile the actual transaction and determine the difference between the estimated general tax
+        /// rate and the final transaction tax.;
+        /// </remarks>
+        /// <param name="date">The date for which</param>
+        public async Task<FileResult> DownloadTaxRatesByZipCodeAsync(DateTime date)
+        {
+            var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
+            path.ApplyField("date", date);
+            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Create a new tax rule;
         /// </summary>
         /// <remarks>
@@ -10361,7 +12101,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these tax rules</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -10392,7 +12132,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -10437,25 +12177,27 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Add lines to an existing unlocked transaction.
-        /// 
-        /// The `AddLines` API allows you to add additional transaction lines to existing transaction, so that customer will
-        /// be able to append multiple calls together and form an extremely large transaction. If customer does not specify line number
-        /// in the lines to be added, a new random Guid string will be generated for line number. If customer are not satisfied with
-        /// the line number for the transaction lines, they can turn on the renumber switch to have REST v2 automatically renumber all 
-        /// transaction lines for them, in this case, the line number becomes: "1", "2", "3", ...
-        /// 
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
-        /// * Lines
-        /// * Details (implies lines)
-        /// * Summary (implies details)
-        /// * Addresses
+        ///  The `AddLines` API allows you to add additional transaction lines to existing transaction, so that customer will
+        ///  be able to append multiple calls together and form an extremely large transaction. If customer does not specify line number
+        ///  in the lines to be added, a new random Guid string will be generated for line number. If customer are not satisfied with
+        ///  the line number for the transaction lines, they can turn on the renumber switch to have REST v2 automatically renumber all 
+        ///  transaction lines for them, in this case, the line number becomes: "1", "2", "3", ...
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.;
+        ///  A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///  sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///  * Lines
+        ///  * Details (implies lines)
+        ///  * Summary (implies details)
+        ///  * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
+        /// 
+        ///  If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be added</param>
         public async Task<TransactionModel> AddLinesAsync(String include, AddTransactionLineModel model)
         {
@@ -10640,10 +12382,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.;
+        /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create</param>
         public async Task<TransactionModel> CreateOrAdjustTransactionAsync(String include, CreateOrAdjustTransactionModel model)
         {
@@ -10673,10 +12417,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.;
+        /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create</param>
         public async Task<TransactionModel> CreateTransactionAsync(String include, CreateTransactionModel model)
         {
@@ -10691,22 +12437,24 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Remove lines to an existing unlocked transaction.
-        /// 
-        /// The `DeleteLines` API allows you to remove transaction lines from existing unlocked transaction, so that customer will
-        /// be able to delete transaction lines and adjust original transaction the way they like
-        /// 
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
-        /// * Lines
-        /// * Details (implies lines)
-        /// * Summary (implies details)
-        /// * Addresses
+        ///  The `DeleteLines` API allows you to remove transaction lines from existing unlocked transaction, so that customer will
+        ///  be able to delete transaction lines and adjust original transaction the way they like
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.;
+        ///  A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        ///  sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// 
+        ///  * Lines
+        ///  * Details (implies lines)
+        ///  * Summary (implies details)
+        ///  * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
+        /// 
+        ///  If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be removed</param>
         public async Task<TransactionModel> DeleteLinesAsync(String include, RemoveTransactionLineModel model)
         {
@@ -10728,11 +12476,13 @@ namespace Avalara.AvaTax.RestClient
         /// * Lines
         /// * Details (implies lines)
         /// * Summary (implies details)
-        /// * Addresses;
+        /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size);
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         public async Task<TransactionModel> GetTransactionByCodeAsync(String companyCode, String transactionCode, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}");
@@ -10755,12 +12505,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Lines
         /// * Details (implies lines)
         /// * Summary (implies details)
-        /// * Addresses;
+        /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size);
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
         /// <param name="documentType">The transaction type to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         public async Task<TransactionModel> GetTransactionByCodeAndTypeAsync(String companyCode, String transactionCode, DocumentType documentType, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/types/{documentType}");
@@ -10786,10 +12538,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Lines
         /// * Details (implies lines)
         /// * Summary (implies details)
-        /// * Addresses;
+        /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size);
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         public async Task<TransactionModel> GetTransactionByIdAsync(Int64 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
@@ -10815,10 +12569,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Lines
         /// * Details (implies lines)
         /// * Summary (implies details)
-        /// * Addresses;
+        /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size);
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -10880,12 +12636,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Details (implies lines)
         /// * Summary (implies details)
         /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// If you don't specify '$include' parameter, it will include both details and addresses.;
+        /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
         /// <param name="companyCode">The code of the company that made the original sale</param>
         /// <param name="transactionCode">The transaction code of the original sale</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">Information about the refund to create</param>
         public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, String include, RefundTransactionModel model)
         {
@@ -11022,7 +12780,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these UPCs</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11050,7 +12808,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11096,7 +12854,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="id">The ID of the user to retrieve.</param>
         /// <param name="accountId">The accountID of the user you wish to get.</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Optional fetch commands.</param>
         public async Task<UserModel> GetUserAsync(Int32 id, Int32 accountId, String include)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
@@ -11149,7 +12907,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="accountId">The accountID of the user you wish to list.</param>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Optional fetch commands.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -11177,7 +12935,7 @@ namespace Avalara.AvaTax.RestClient
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
-        /// <param name="include">A comma separated list of child objects to return underneath the primary object.</param>
+        /// <param name="include">Optional fetch commands.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>

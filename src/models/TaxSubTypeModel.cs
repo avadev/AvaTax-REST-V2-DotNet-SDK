@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents a tax subtype
     /// </summary>
     public class TaxSubTypeModel
     {

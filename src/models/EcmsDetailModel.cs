@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents an ECMS record, used internally by AvaTax to track information about exemptions.
     /// </summary>
     public class EcmsDetailModel
     {

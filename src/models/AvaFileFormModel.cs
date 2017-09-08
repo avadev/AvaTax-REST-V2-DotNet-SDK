@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents information about a tax form known to Avalara
     /// </summary>
     public class AvaFileFormModel
     {

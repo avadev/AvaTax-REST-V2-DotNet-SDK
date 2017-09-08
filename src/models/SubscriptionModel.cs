@@ -24,20 +24,21 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this subscription.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the account this subscription belongs to.
         /// </summary>
-        public Int32 accountId { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
-        /// The unique ID number of the service that the account is subscribed to.
+        /// The unique ID number of the service that the account is subscribed to. If this is provided, subscription description is ignored.
         /// </summary>
         public Int32? subscriptionTypeId { get; set; }
 
         /// <summary>
-        /// A friendly description of the service that the account is subscribed to.
+        /// A friendly description of the service that the account is subscribed to. You can either provide the subscription type Id or this but not both. If 
+        /// subscription type Id is provided, then this information is ignored and this field will be updated with the information from subscription type id.
         /// </summary>
         public String subscriptionDescription { get; set; }
 

@@ -23,31 +23,9 @@ namespace Avalara.AvaTax.RestClient
     public class NewAccountRequestModel
     {
         /// <summary>
-        /// The list of products to which this account would like to subscribe.
+        /// Offer with which the partner account needs to be created
         /// </summary>
-        public List<String> products { get; set; }
-
-        /// <summary>
-        /// The name of the connector that will be the primary method of access used to call the account created.
-        /// For a list of available connectors, please contact your Avalara representative.
-        /// </summary>
-        public String connectorName { get; set; }
-
-        /// <summary>
-        /// An approved partner account can be referenced when provisioning an account, allowing a link between 
-        /// the partner and the provisioned account.
-        /// </summary>
-        public String parentAccountNumber { get; set; }
-
-        /// <summary>
-        /// Identifies a referring partner for the assessment of referral-based commissions.
-        /// </summary>
-        public String referrerId { get; set; }
-
-        /// <summary>
-        /// Zuora-generated Payment ID to which the new account should be associated. For free trial accounts, an empty string is acceptable.
-        /// </summary>
-        public String paymentMethodId { get; set; }
+        public String offer { get; set; }
 
         /// <summary>
         /// The date on which the account should take effect. If null, defaults to today.
@@ -63,6 +41,11 @@ namespace Avalara.AvaTax.RestClient
         /// Account Name
         /// </summary>
         public String accountName { get; set; }
+
+        /// <summary>
+        /// Website of the partner account being created
+        /// </summary>
+        public String website { get; set; }
 
         /// <summary>
         /// First Name of the primary contact person for this account
@@ -95,6 +78,33 @@ namespace Avalara.AvaTax.RestClient
         /// the default created user, and the user will not be challenged to change their password upon login to the Admin Console.
         /// </summary>
         public String userPassword { get; set; }
+
+        /// <summary>
+        /// Normal - If a welcome email needs to be generated for the user.
+        /// Suppressed - If no welcome email needs to be generated for the user.
+        /// Custom - If a custom welcome email needs to be generated for the user.
+        /// </summary>
+        public WelcomeEmail? welcomeEmail { get; set; }
+
+        /// <summary>
+        /// Address information of the account being created.
+        /// </summary>
+        public CompanyAddress companyAddress { get; set; }
+
+        /// <summary>
+        /// Properties of the primary contact person for this account
+        /// </summary>
+        public List<String> properties { get; set; }
+
+        /// <summary>
+        /// Set this to true if and only if the owner of the newly created account accepts Avalara's terms and conditions for your account.
+        /// </summary>
+        public Boolean? acceptAvalaraTermsAndConditions { get; set; }
+
+        /// <summary>
+        /// Set this to true if and only if the owner of the newly created account has fully read Avalara's terms and conditions for your account.
+        /// </summary>
+        public Boolean? haveReadAvalaraTermsAndConditions { get; set; }
 
 
         /// <summary>

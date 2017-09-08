@@ -17,20 +17,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents information about a type of telecommunications transaction
+    /// Represents a customer to whom you sell products and/or services.
     /// </summary>
-    public class CommunicationsTransactionTypeModel
+    public class LinkCustomersModel
     {
         /// <summary>
-        /// The numeric Id of the transaction type.
+        /// An array of customerCodes that are exempted by this certificate
         /// </summary>
-        public Int32 transactionTypeId { get; set; }
-
-        /// <summary>
-        /// The name of the transaction type.
-        /// </summary>
-        [JsonProperty(PropertyName = "AvaTax.Communications.TransactionType")]
-        public String TransactionType { get; set; }
+        public List<String> customers { get; set; }
 
 
         /// <summary>
