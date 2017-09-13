@@ -17,56 +17,66 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about a physical area or zone in which a certificate can apply.
-    /// An exposure zone for an exemption certificate will generally be a tax authority such
-    /// as a state, country, or local government entity.
+    /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
+    /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
+    /// certificates directly; this cover letter explains why the invitation was sent.
     /// </summary>
-    public class ExposureZoneModel
+    public class CoverLetterModel
     {
         /// <summary>
-        /// A unique ID number representing this exposure zone.
+        /// A unique ID number representing a cover letter sent with a CertExpress invitation.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The unique ID number of the AvaTax company that recorded this customer.
+        /// The unique ID number of the AvaTax company that received this certificate.
         /// </summary>
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The short name of this exposure zone, suitable for use in a drop-down list.
+        /// The title used when sending the cover letter.
         /// </summary>
-        public String name { get; set; }
+        public String title { get; set; }
 
         /// <summary>
-        /// A tag indicating
+        /// The subject message used when sending the cover letter via email.
         /// </summary>
-        public String tag { get; set; }
+        public String subject { get; set; }
 
         /// <summary>
-        /// A more complete description of this exposure zone, suitable for use as a tooltip or help text.
+        /// A full description of the cover letter's contents and message.
         /// </summary>
         public String description { get; set; }
 
         /// <summary>
         /// The date when this record was created.
         /// </summary>
-        public DateTime? created { get; set; }
+        public DateTime? createdDate { get; set; }
 
         /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
-        public DateTime? modified { get; set; }
+        public DateTime? modifiedDate { get; set; }
 
         /// <summary>
-        /// Two or three character ISO 3166 region, province, or state name of this exposure zone.
+        /// Is this cover letter active
         /// </summary>
-        public String region { get; set; }
+        public Boolean? active { get; set; }
 
         /// <summary>
-        /// Two character ISO 3166 county code for the country component of this exposure zone.
+        /// How many pages this cover letter encompasses
         /// </summary>
-        public String country { get; set; }
+        public Int32? pageCount { get; set; }
+
+        /// <summary>
+        /// The file name of the cover letter template
+        /// </summary>
+        public String templateFilename { get; set; }
+
+        /// <summary>
+        /// The version number of the template
+        /// </summary>
+        public Int32? version { get; set; }
 
 
         /// <summary>

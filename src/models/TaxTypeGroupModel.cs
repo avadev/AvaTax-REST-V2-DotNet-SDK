@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents a tax type group
     /// </summary>
     public class TaxTypeGroupModel
     {

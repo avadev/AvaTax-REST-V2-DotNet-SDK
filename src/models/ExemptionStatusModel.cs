@@ -17,20 +17,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents information about a type of telecommunications transaction
+    /// Indicates the customer's exemption status in a specific country and region.
     /// </summary>
-    public class CommunicationsTransactionTypeModel
+    public class ExemptionStatusModel
     {
         /// <summary>
-        /// The numeric Id of the transaction type.
+        /// The exemption status of this customer in this country/region.
         /// </summary>
-        public Int32 transactionTypeId { get; set; }
+        public String status { get; set; }
 
         /// <summary>
-        /// The name of the transaction type.
+        /// Certificate if the customer is exempted
         /// </summary>
-        [JsonProperty(PropertyName = "AvaTax.Communications.TransactionType")]
-        public String TransactionType { get; set; }
+        public CertificateModel certificate { get; set; }
 
 
         /// <summary>

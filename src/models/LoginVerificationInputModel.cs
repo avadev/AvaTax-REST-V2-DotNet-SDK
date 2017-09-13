@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// CompanyId that we are verifying the login information for
         /// </summary>
-        public Int32? companyId { get; set; }
+        public Int32 companyId { get; set; }
 
         /// <summary>
         /// AccountId of the login verification

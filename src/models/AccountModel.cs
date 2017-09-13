@@ -27,6 +27,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32 id { get; set; }
 
         /// <summary>
+        /// For system registrar use only.
+        /// </summary>
+        public String crmid { get; set; }
+
+        /// <summary>
         /// The name of this account.
         /// </summary>
         public String name { get; set; }

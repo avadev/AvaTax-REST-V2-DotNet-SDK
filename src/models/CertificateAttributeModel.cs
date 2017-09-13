@@ -17,24 +17,32 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a group of tax types
+    /// A certificate attribute can be thought of as a feature or flag that is applied to a certificate.
+    /// A single certificate can be linked to zero, one, or many certificate attributes. The full list of 
+    /// attributes can be obtained by calling the `ListCertificateAttributes` API.
     /// </summary>
-    public class NexusTaxTypeGroupModel
+    public class CertificateAttributeModel
     {
         /// <summary>
-        /// The unique ID number of this nexus tax type group.
+        /// A unique ID number representing this certificate attribute.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The unique human readable Id of this nexus tax type group.
+        /// A friendly readable name for this certificate attribute.
         /// </summary>
-        public String nexusTaxTypeGroupId { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The description of this nexus tax type group.
+        /// A full help text description of the certificate attribute.
         /// </summary>
         public String description { get; set; }
+
+        /// <summary>
+        /// This value is true if this is a system-defined certificate attribute. System-defined attributes
+        /// cannot be modified or deleted on the CertCapture website.
+        /// </summary>
+        public Boolean? isSystemCode { get; set; }
 
 
         /// <summary>

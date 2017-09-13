@@ -17,20 +17,21 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents information about a type of telecommunications transaction
+    /// An exemption reason defines why a certificate allows a customer to be exempt
+    /// for purposes of tax calculation. For a full list of defined exemption reasons,
+    /// please call the `ListCertificateExemptionReasons` API.
     /// </summary>
-    public class CommunicationsTransactionTypeModel
+    public class ExemptionReasonModel
     {
         /// <summary>
-        /// The numeric Id of the transaction type.
+        /// A unique ID number representing this exemption reason.
         /// </summary>
-        public Int32 transactionTypeId { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The name of the transaction type.
+        /// A friendly name describing this exemption reason.
         /// </summary>
-        [JsonProperty(PropertyName = "AvaTax.Communications.TransactionType")]
-        public String TransactionType { get; set; }
+        public String name { get; set; }
 
 
         /// <summary>

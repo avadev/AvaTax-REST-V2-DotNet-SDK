@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents a transaction/service type pair for telecommunications tax
     /// </summary>
     public class CommunicationsTSPairModel
     {

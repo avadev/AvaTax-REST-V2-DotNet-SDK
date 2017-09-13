@@ -30,6 +30,11 @@ namespace Avalara.AvaTax.RestClient
         Bottle,
 
         /// <summary>
+        /// EWaste tax type
+        /// </summary>
+        EWaste,
+
+        /// <summary>
         /// Consumer Use Tax
         /// </summary>
         ConsumerUse,

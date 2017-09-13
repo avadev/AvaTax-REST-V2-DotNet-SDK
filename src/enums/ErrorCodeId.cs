@@ -540,6 +540,26 @@ namespace Avalara.AvaTax.RestClient
         InvalidEcmsOverrideCode,
 
         /// <summary>
+        /// 
+        /// </summary>
+        AccountDoesNotExist,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        IncorrectFieldValue,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LeadingOrTrailingException,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -578,6 +598,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         PointOfSaleSetup,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidInputDate,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RequestedFileNotExist,
 
         /// <summary>
         /// Errors in Soap V1 Passthrough / GetTax calls
@@ -683,16 +713,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvitationOnly,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ZTBListConnectorFail,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ZTBCreateSubscriptionsFail,
 
         /// <summary>
         /// 
@@ -810,7 +830,7 @@ namespace Avalara.AvaTax.RestClient
         LinesNotSpecified,
 
         /// <summary>
-        /// 
+        /// Exempt cert error codes
         /// </summary>
         InvalidBusinessType,
 
@@ -842,12 +862,52 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AddCustomersForCertificateError,
+        AddRelationshipsError,
 
         /// <summary>
         /// 
         /// </summary>
-        AddCertificatesForCustomerError,
+        MissingExposureZone,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ConflictingExposureZone,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MissingFieldToCreateExposureZone,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MissingExemptReason,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidExemptReason,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidCertCaptureOperation,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ConflictingFields,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidPdfOrImageFile,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidCoverLetterTitle,
 
         /// <summary>
         /// Multi company error codes
@@ -873,6 +933,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CommsConfigClientIdBadValue,
+
+        /// <summary>
+        /// BizTech API error codes
+        /// </summary>
+        BizTechCustomerAccountFailure,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BizTechOpportunityCreationFailure,
 
     }
 }

@@ -29,12 +29,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// TaxNoticeId
         /// </summary>
-        public Int32? noticeId { get; set; }
+        public Int32 noticeId { get; set; }
 
         /// <summary>
         /// TaxNoticeRootCauseId
         /// </summary>
-        public Int32? taxNoticeRootCauseId { get; set; }
+        public Int32 taxNoticeRootCauseId { get; set; }
 
         /// <summary>
         /// The description name of this root cause

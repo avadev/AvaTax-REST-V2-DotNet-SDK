@@ -17,20 +17,21 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents information about a type of telecommunications transaction
+    /// Represent what is the current status of certificate request
     /// </summary>
-    public class CommunicationsTransactionTypeModel
+    public class CertExpressInvitationStatusModel
     {
         /// <summary>
-        /// The numeric Id of the transaction type.
+        /// The status of the CertExpress invitation for this customer. If this status says
         /// </summary>
-        public Int32 transactionTypeId { get; set; }
+        public CertExpressInvitationStatus? status { get; set; }
 
         /// <summary>
-        /// The name of the transaction type.
+        /// The CertExpress invitation for the customer. If you specified an email address in the invitation
+        /// request, this invitation will be sent via email. Otherwise, you are expected to direct the customer
+        /// using a hyperlink directly in your application.
         /// </summary>
-        [JsonProperty(PropertyName = "AvaTax.Communications.TransactionType")]
-        public String TransactionType { get; set; }
+        public CertExpressInvitationModel invitation { get; set; }
 
 
         /// <summary>

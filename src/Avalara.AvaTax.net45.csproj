@@ -42,7 +42,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +68,9 @@
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
+    <Compile Include="enums\CertExpressInvitationStatus.cs" />
+    <Compile Include="enums\CertificatePreviewType.cs" />
+    <Compile Include="enums\CertificateRequestDeliveryMethod.cs" />
     <Compile Include="enums\CommentType.cs" />
     <Compile Include="enums\CompanyAccessLevel.cs" />
     <Compile Include="enums\CompanyFilingStatus.cs" />
@@ -98,6 +101,9 @@
     <Compile Include="enums\PointOfSalePartnerId.cs" />
     <Compile Include="enums\RateType.cs" />
     <Compile Include="enums\RefundType.cs" />
+    <Compile Include="enums\ReportDateFilter.cs" />
+    <Compile Include="enums\ReportDocType.cs" />
+    <Compile Include="enums\ReportFormat.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />
     <Compile Include="enums\ScraperType.cs" />
@@ -114,6 +120,7 @@
     <Compile Include="enums\TaxType.cs" />
     <Compile Include="enums\TextCase.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
+    <Compile Include="enums\WelcomeEmail.cs" />
     <Compile Include="enums\WorksheetTypeId.cs" />
     <Compile Include="ErrorInfo.cs" />
     <Compile Include="ErrorResult.cs" />
@@ -138,17 +145,23 @@
     <Compile Include="models\BatchModel.cs" />
     <Compile Include="models\BulkLockTransactionModel.cs" />
     <Compile Include="models\BulkLockTransactionResult.cs" />
+    <Compile Include="models\CertExpressInvitationModel.cs" />
+    <Compile Include="models\CertExpressInvitationStatusModel.cs" />
+    <Compile Include="models\CertificateAttributeModel.cs" />
     <Compile Include="models\CertificateModel.cs" />
     <Compile Include="models\CertificateTaxCodeModel.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
     <Compile Include="models\CommitTransactionModel.cs" />
     <Compile Include="models\CommunicationsTransactionTypeModel.cs" />
     <Compile Include="models\CommunicationsTSPairModel.cs" />
+    <Compile Include="models\CompanyAddress.cs" />
     <Compile Include="models\CompanyConfigurationModel.cs" />
     <Compile Include="models\CompanyInitializationModel.cs" />
     <Compile Include="models\CompanyModel.cs" />
     <Compile Include="models\ContactModel.cs" />
     <Compile Include="models\CoordinateInfo.cs" />
+    <Compile Include="models\CoverLetterModel.cs" />
+    <Compile Include="models\CreateCertExpressInvitationModel.cs" />
     <Compile Include="models\CreateMultiCompanyTransactionModel.cs" />
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
@@ -162,6 +175,9 @@
     <Compile Include="models\EcmsModel.cs" />
     <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
+    <Compile Include="models\ExemptionReasonModel.cs" />
+    <Compile Include="models\ExemptionStatusModel.cs" />
+    <Compile Include="models\ExportDocumentLineModel.cs" />
     <Compile Include="models\ExposureZoneModel.cs" />
     <Compile Include="models\FilingAdjustmentModel.cs" />
     <Compile Include="models\FilingAnswerModel.cs" />
@@ -191,6 +207,8 @@
     <Compile Include="models\JurisdictionOverrideModel.cs" />
     <Compile Include="models\LicenseKeyModel.cs" />
     <Compile Include="models\LineItemModel.cs" />
+    <Compile Include="models\LinkCertificatesModel.cs" />
+    <Compile Include="models\LinkCustomersModel.cs" />
     <Compile Include="models\LocationModel.cs" />
     <Compile Include="models\LocationQuestionModel.cs" />
     <Compile Include="models\LocationSettingModel.cs" />
