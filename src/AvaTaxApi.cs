@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.8.1-722
+ * @version    17.8.1-120
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.8.1-722"; } }
+        public static string API_VERSION { get { return "17.8.1-120"; } }
 
 #region Methods
 
@@ -5498,35 +5498,6 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return RestCallFile("Get", path, null);
-        }
-
-
-        /// <summary>
-        /// Download a file listing tax rates by postal code
-        /// </summary>
-        /// <remarks>
-        /// Download a CSV file containing all five digit postal codes in the United States and their sales
-        /// and use tax rates for tangible personal property.
-        /// 
-        /// This rates file is intended to be used as a default for tax calculation when your software cannot
-        /// call the `CreateTransaction` API call. When using this file, your software will be unable to
-        /// handle complex tax rules such as:
-        /// 
-        /// * Zip+9 - This tax file does not contain 
-        /// * Different product types - This tax file contains tangible personal property tax rates only.
-        /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
-        /// * Threshold-based taxes - This tax file does not contain information about thresholds.
-        /// 
-        /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
-        /// to reconcile the actual transaction and determine the difference between the estimated general tax
-        /// rate and the final transaction tax.
-        /// </remarks>
-        /// <param name="date">The date for which</param>
-        public FileResult DownloadTaxRatesByZipCode(DateTime date)
-        {
-            var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
-            path.ApplyField("date", date);
             return RestCallFile("Get", path, null);
         }
 
@@ -11995,35 +11966,6 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Download a file listing tax rates by postal code;
-        /// </summary>
-        /// <remarks>
-        /// Download a CSV file containing all five digit postal codes in the United States and their sales
-        /// and use tax rates for tangible personal property.
-        /// 
-        /// This rates file is intended to be used as a default for tax calculation when your software cannot
-        /// call the `CreateTransaction` API call. When using this file, your software will be unable to
-        /// handle complex tax rules such as:
-        /// 
-        /// * Zip+9 - This tax file does not contain 
-        /// * Different product types - This tax file contains tangible personal property tax rates only.
-        /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
-        /// * Threshold-based taxes - This tax file does not contain information about thresholds.
-        /// 
-        /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
-        /// to reconcile the actual transaction and determine the difference between the estimated general tax
-        /// rate and the final transaction tax.;
-        /// </remarks>
-        /// <param name="date">The date for which</param>
-        public async Task<FileResult> DownloadTaxRatesByZipCodeAsync(DateTime date)
-        {
-            var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
-            path.ApplyField("date", date);
             return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
         }
 

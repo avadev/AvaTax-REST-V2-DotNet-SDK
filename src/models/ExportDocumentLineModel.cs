@@ -22,19 +22,19 @@ namespace Avalara.AvaTax.RestClient
     public class ExportDocumentLineModel
     {
         /// <summary>
-        /// The output format: CSV, XML, etc.
+        /// The output format: CSV, XML, etc. If no preference, report will be in CSV format.
         /// </summary>
         public ReportFormat? format { get; set; }
 
         /// <summary>
-        /// The start date filter for report execution
+        /// The start date filter for report execution. If no date provided, same date of last month will be used as the startDate.
         /// </summary>
-        public DateTime startDate { get; set; }
+        public DateTime? startDate { get; set; }
 
         /// <summary>
-        /// The end date filter for report execution
+        /// The end date filter for report execution. If no date provided, today's date will be used as the endDate.
         /// </summary>
-        public DateTime endDate { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
         /// The transactions in the country you wish to run a report:
@@ -45,20 +45,19 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
-        /// The transactions in which state you wish to run a report:
-        /// use "ALL" for all states
+        /// The state associated with the transactions you wish to run a report on: use "ALL" for all states.
         /// </summary>
         public String state { get; set; }
 
         /// <summary>
-        /// The way your date filter operates on: "RD" for Reporting Date, "DD" for Document Date, "TD" for Tax Date, "PD" for Payment Date
+        /// The type of date to filter your transactions
         /// </summary>
-        public String dateFilter { get; set; }
+        public ReportDateFilter? dateFilter { get; set; }
 
         /// <summary>
-        /// The transaction type you want to run a report: "S" for Sales, "C" for Consumer Use
+        /// The transaction type you want to run a report on
         /// </summary>
-        public String docType { get; set; }
+        public ReportDocType? docType { get; set; }
 
         /// <summary>
         /// Format of dates in your rendered report. Example: "MM/dd/yyyy"
