@@ -55,23 +55,29 @@ namespace Avalara.AvaTax.RestClient
             List<Task> allTasks = new List<Task>();
             using (SemaphoreSlim semaphore = new SemaphoreSlim(concurrency)) {
 
-                // Run all your tasks
-                foreach (var model in models) {
-                    await semaphore.WaitAsync();
-                    allTasks.Add(Task.Run(async () => {
-                        try {
-                            var transaction = await client.CreateTransactionAsync(include, model);
-                            lock (result) {
-                                result.TransactionsCreated.Add(transaction);
+                // Run all your tasks, except for the null ones
+                if (models != null) {
+                    foreach (var model in models) {
+                        if (model == null) continue;
+
+                        // Obtain a semaphore and add one task
+                        await semaphore.WaitAsync();
+                        allTasks.Add(Task.Run(async () =>
+                        {
+                            try {
+                                var transaction = await client.CreateTransactionAsync(include, model);
+                                lock (result) {
+                                    result.TransactionsCreated.Add(transaction);
+                                }
+                            } catch (AvaTaxError err) {
+                                lock (result) {
+                                    result.Errors.Add(err);
+                                }
+                            } finally {
+                                semaphore.Release();
                             }
-                        } catch (AvaTaxError err) {
-                            lock (result) {
-                                result.Errors.Add(err);
-                            }
-                        } finally {
-                            semaphore.Release();
-                        }
-                    }));
+                        }));
+                    }
                 }
 
                 // Wait until everything is done
