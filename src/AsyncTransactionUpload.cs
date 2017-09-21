@@ -41,7 +41,10 @@ namespace Avalara.AvaTax.RestClient
         public static async Task<ThreadedTransactionResult> CreateMultipleTransactions(AvaTaxClient client, List<CreateTransactionModel> models, string include, int concurrency)
         {
             // Limit concurrency to a sensible maximum
-            if (concurrency > 10) throw new Exception("Please do not run more than 10 threads simultaneously.");
+            if (concurrency < 1 || concurrency > 10) {
+                concurrency = 10;
+                System.Diagnostics.Debug.WriteLine("Please do not run more than 10 threads simultaneously.");
+            }
 
             // Prepare our result
             var result = new ThreadedTransactionResult();
@@ -57,13 +60,15 @@ namespace Avalara.AvaTax.RestClient
                     await semaphore.WaitAsync();
                     allTasks.Add(Task.Run(async () => {
                         try {
-                            System.Diagnostics.Debug.WriteLine($"Beginning {model.code}");
-                            var transaction = await client.CreateTransactionAsync(null, model);
-                            result.TransactionsCreated.Add(transaction);
+                            var transaction = await client.CreateTransactionAsync(include, model);
+                            lock (result) {
+                                result.TransactionsCreated.Add(transaction);
+                            }
                         } catch (AvaTaxError err) {
-                            result.Errors.Add(err);
+                            lock (result) {
+                                result.Errors.Add(err);
+                            }
                         } finally {
-                            System.Diagnostics.Debug.WriteLine($"Finishing {model.code}");
                             semaphore.Release();
                         }
                     }));
