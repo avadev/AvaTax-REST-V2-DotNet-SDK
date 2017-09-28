@@ -560,6 +560,36 @@ namespace Avalara.AvaTax.RestClient
         LeadingOrTrailingException,
 
         /// <summary>
+        /// 
+        /// </summary>
+        NotEnoughAddressesInfo,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ReportNotInitiated,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FailedToBuildReport,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ReportNotFinished,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FailedToUploadReport,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FailedToDownloadReport,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -685,6 +715,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidDocumentTypesToFetch,
 
         /// <summary>
+        /// 
+        /// </summary>
+        TimeoutRequested,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidAddress,
+
+        /// <summary>
         /// Represents a malformed document fetch command
         /// </summary>
         BadDocumentFetch,
@@ -728,6 +768,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         AvalaraIdentityApiError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidIPAddress,
 
         /// <summary>
         /// Refund API error codes
@@ -943,6 +988,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         BizTechOpportunityCreationFailure,
+
+        /// <summary>
+        /// Account Activate error codes
+        /// </summary>
+        AccountInNewStatusException,
 
     }
 }

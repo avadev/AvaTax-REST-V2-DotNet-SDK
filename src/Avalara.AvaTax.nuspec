@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Avalara.AvaTax</id>
-        <version>17.8.1.120</version>
+        <version>17.9.0.126</version>
         <title>Avalara AvaTax SDK</title>
         <description>Add world-class tax estimation and calculation to your project with Avalara's AvaTax suite of APIs and services.</description>
         <authors>Ted Spence, Zhenya Frolov</authors>

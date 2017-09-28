@@ -48,5 +48,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Active,
 
+        /// <summary>
+        /// This company has not been configured for compliance
+        /// </summary>
+        NotConfiguredForCompliance,
+
     }
 }

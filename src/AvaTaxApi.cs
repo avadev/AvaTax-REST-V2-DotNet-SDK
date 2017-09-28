@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.8.1-120
+ * @version    17.9.0-126
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.8.1-120"; } }
+        public static string API_VERSION { get { return "17.9.0-126"; } }
 
 #region Methods
 
@@ -37,8 +37,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Resets the existing license key for this account to a new key.
+        /// 
         /// To reset your account, you must specify the ID of the account you wish to reset and confirm the action.
+        /// 
+        /// This API is only available to account administrators for the account in question, and may only be called after
+        /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
+        /// please log onto the AvaTax website or call the `ActivateAccount` API.
+        /// 
         /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
+        /// 
+        /// When you call this API, all account administrators for this account will receive an email with the newly updated license key.
+        /// The email will specify which user reset the license key and it will contain the new key to use to update your connectors.
         /// </remarks>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">A request confirming that you wish to reset the license key of this account.</param>
@@ -58,6 +67,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// This activation request can only be called by account administrators. You must indicate 
         /// that you have read and accepted Avalara's terms and conditions to call this API.
+        /// 
+        /// Once you have activated your account, use the `AccountResetLicenseKey` API to generate
+        /// a license key for your account.
         /// 
         /// If you have not read or accepted the terms and conditions, this API call will return the
         /// unchanged account model.
@@ -840,6 +852,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This API only provides a limited subset of functionality compared to the 'Create Company' API call. 
         /// If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.
+        /// Please allow 1 minute before making transactions using the company.
         /// </remarks>
         /// <param name="model">Information about the company you wish to create.</param>
         public CompanyModel CompanyInitialize(CompanyInitializationModel model)
@@ -2668,6 +2681,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a filing calendar
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only and only available for users with Compliance access
+        /// A "filing request" represents information that compliance uses to file a return
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
+        /// <param name="model">Filing calendars that will be added</param>
+        public FilingCalendarModel CreateFilingCalendars(Int32 companyId, List<FilingCalendarModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
+            path.ApplyField("companyId", companyId);
+            return RestCall<FilingCalendarModel>("Post", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new filing request to create a filing calendar
         /// </summary>
         /// <remarks>
@@ -2955,12 +2985,10 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Edit existing Filing Calendar's Notes
+        /// Edit existing Filing Calendar
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
-        /// This API only allows updating of internal notes and company filing instructions.
-        /// All other updates must go through a filing request at this time.
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing calendar object</param>
@@ -3531,7 +3559,7 @@ namespace Avalara.AvaTax.RestClient
         /// Rebuild a set of filings for the specified company in the given filing period, country and region.
         /// </summary>
         /// <remarks>
-        /// This API is available by invitation only.
+        /// This API is available by invitation only.audit.CheckAuthorizationReturns(null, companyId);
         /// Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
         /// Rebuilding has to be done whenever a customer adds transactions to a filing. 
         /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
@@ -4241,6 +4269,7 @@ namespace Avalara.AvaTax.RestClient
         /// Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
         /// '/api/v2/definitions/nexus' endpoint.
         /// You may only define nexus matching the official list of declared nexus.
+        /// Please allow 1 minute before start using the created Nexus in your transactions.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
@@ -4257,6 +4286,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks the existing nexus object at this URL as deleted.
+        /// Please allow 1 minute to stop collecting tax in your transaction on the deleted Nexus.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="id">The ID of the nexus you wish to delete.</param>
@@ -4393,6 +4423,7 @@ namespace Avalara.AvaTax.RestClient
         /// You may only define nexus matching the official list of declared nexus.
         /// All data from the existing object will be replaced with data in the object you PUT. 
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// Please allow 1 minute to start seeing your updated Nexus taking effect on your transactions.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
         /// <param name="id">The ID of the nexus you wish to update</param>
@@ -4810,7 +4841,7 @@ namespace Avalara.AvaTax.RestClient
         /// terms and conditions. If they do so, they can receive a license key as part of this API and their
         /// API will be created in `Active` status. If the customer has not yet read and accepted these terms and
         /// conditions, the account will be created in `New` status and they can receive a license key by logging
-        /// onto AvaTax and reviewing terms and conditions online.
+        /// onto the AvaTax website and reviewing terms and conditions online.
         /// </remarks>
         /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
         public NewAccountModel RequestNewAccount(NewAccountRequestModel model)
@@ -5057,18 +5088,127 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Export a report accurate to the line level
+        /// Download a report
         /// </summary>
         /// <remarks>
+        /// This API downloads the file associated with a report.
         /// 
+        /// If the report is not yet complete, you will receive a `ReportNotFinished` error. To check if a report is complete,
+        /// use the `GetReport` API.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// This API works for all report types.
         /// </remarks>
-        /// <param name="companyId"></param>
-        /// <param name="model"></param>
+        /// <param name="id">The unique ID number of this report</param>
+        public FileResult DownloadReport(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
+            path.ApplyField("id", id);
+            return RestCallFile("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Intiate and download an ExportDocumentLine report
+        /// </summary>
+        /// <remarks>
+        /// This API is deprecated. 
+        /// 
+        /// Please use the asynchronous reports APIs:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company to report on.</param>
+        /// <param name="model">Options that may be configured to customize the report.</param>
         public FileResult ExportDocumentLine(Int32 companyId, ExportDocumentLineModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
             path.ApplyField("companyId", companyId);
             return RestCallFile("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single report
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single report by its unique ID number.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// This API call returns information about any report type.
+        /// </remarks>
+        /// <param name="id">The unique ID number of the report to retrieve</param>
+        public ReportModel GetReport(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/reports/{id}");
+            path.ApplyField("id", id);
+            return RestCall<ReportModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Initiate an ExportDocumentLine report task
+        /// </summary>
+        /// <remarks>
+        /// Begins running an `ExportDocumentLine` report task and returns the identity of the report.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// The `ExportDocumentLine` report produces information about invoice lines recorded within your account.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company to report on.</param>
+        /// <param name="model">Options that may be configured to customize the report.</param>
+        public FileResult InitiateExportDocumentLineReport(Int32 companyId, ExportDocumentLineModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
+            path.ApplyField("companyId", companyId);
+            return RestCallFile("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// List all report tasks for account
+        /// </summary>
+        /// <remarks>
+        /// List all report tasks for your account.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// This API call returns information about all report types across your entire account.
+        /// </remarks>
+        public FetchResult<ReportModel> ListReports()
+        {
+            var path = new AvaTaxPath("/api/v2/reports");
+            return RestCall<FetchResult<ReportModel>>("Get", path, null);
         }
 
 
@@ -5458,6 +5598,8 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
+        /// 
+        /// NOTE: This API does not work for Tennessee tax holiday scenarios.
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
         public FileResult BuildTaxContentFile(PointOfSaleDataRequestModel model)
@@ -5482,6 +5624,8 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
+        /// 
+        /// NOTE: This API does not work for Tennessee tax holiday scenarios.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that owns this location.</param>
         /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
@@ -5715,7 +5859,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Retrieve audit information about a transaction stored in AvaTax.
         ///  
-        /// The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        /// The `AuditTransaction` API retrieves audit information related to a specific transaction. This audit 
         /// information includes the following:
         /// 
         /// * The `CompanyId` of the company that created the transaction
@@ -5746,7 +5890,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Retrieve audit information about a transaction stored in AvaTax.
         ///  
-        /// The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        /// The `AuditTransaction` API retrieves audit information related to a specific transaction. This audit 
         /// information includes the following:
         /// 
         /// * The `CompanyId` of the company that created the transaction
@@ -5837,16 +5981,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create a new transaction
+        /// Create or adjust a transaction
         /// </summary>
         /// <remarks>
-        /// Records a new transaction or adjust an existing in AvaTax.
+        /// Records a new transaction or adjust an existing transaction in AvaTax.
         /// 
-        /// The `CreateOrAdjustTransaction` endpoint is used to create a new transaction if the input transaction does not exist
-        /// or if there exists a transaction identified by code, the original transaction will be adjusted by using the meta data 
-        /// in the input transaction
+        /// The `CreateOrAdjustTransaction` endpoint is used to create a new transaction or update an existing one. This API
+        /// can help you create an idempotent service that creates transactions 
+        /// If there exists a transaction identified by code, the original transaction will be adjusted by using the meta data 
+        /// in the input transaction.
         /// 
-        /// If you don't specify type in the provided data, a new transaction with type of SalesOrder will be recorded by default.
+        /// The `CreateOrAdjustTransaction` API cannot modify any transaction that has been reported to a tax authority using 
+        /// the Avalara Managed Returns Service or any other tax filing service. If you call this API to attempt to modify
+        /// a transaction that has been reported on a tax filing, you will receive the error `CannotModifyLockedTransaction`.
+        /// 
+        /// To generate a refund for a transaction, use the `RefundTransaction` API.
+        ///  
+        /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         /// 
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
@@ -5858,11 +6009,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
-        /// <param name="model">The transaction you wish to create</param>
+        /// <param name="model">The transaction you wish to create or adjust</param>
         public TransactionModel CreateOrAdjustTransaction(String include, CreateOrAdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
@@ -5881,7 +6033,13 @@ namespace Avalara.AvaTax.RestClient
         /// and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
         /// company's configuration and the data provided in this API call.
         /// 
-        /// If you don't specify type in the provided data, a new transaction with type of SalesOrder will be recorded by default.
+        /// The `CreateTransaction` API will report an error if a committed transaction already exists with the same `code`. To
+        /// avoid this error, use the `CreateOrAdjustTransaction` API - it will create the transaction if it does not exist, or
+        /// update it if it does exist.
+        /// 
+        /// To generate a refund for a transaction, use the `RefundTransaction` API.
+        /// 
+        /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         /// 
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
@@ -5893,6 +6051,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
@@ -5942,10 +6101,14 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single transaction by code
         /// </summary>
         /// <remarks>
-        /// Get the current transaction identified by this URL.
+        /// Get the current `SalesInvoice` transaction identified by this URL.
+        /// 
+        /// To fetch other kinds of transactions, use `GetTransactionByCodeAndType`.
+        /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
-        /// the transaction will be attached to the 'history' data field.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// the transaction will be attached to the `history` data field.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
         /// * Details (implies lines)
@@ -5972,9 +6135,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the current transaction identified by this URL.
+        /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
-        /// the transaction will be attached to the 'history' data field.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// the transaction will be attached to the `history` data field.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
         /// * Details (implies lines)
@@ -6102,8 +6267,21 @@ namespace Avalara.AvaTax.RestClient
         /// for a previously created `SalesInvoice` transaction. You can choose to create a full or partial refund, and
         /// specify individual line items from the original sale for refund.
         /// 
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        /// The `RefundTransaction` API ensures that the tax amount you refund to the customer exactly matches the tax that
+        /// was calculated during the original transaction, regardless of any changes to your company's configuration, rules,
+        /// nexus, or any other setting.
+        /// 
+        /// This API is intended to be a shortcut to allow you to quickly and accurately generate a refund for the following 
+        /// common refund scenarios:
+        /// 
+        /// * A full refund of a previous sale
+        /// * Refunding the tax that was charged on a previous sale, when the customer provides an exemption certificate after the purchase
+        /// * Refunding one or more items (lines) from a previous sale
+        /// * Granting a customer a percentage refund of a previous sale
+        /// 
+        /// For more complex scenarios than the ones above, please use `CreateTransaction` with document type `ReturnInvoice` to
+        /// create a custom refund transaction.
+        /// 
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -6505,8 +6683,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Resets the existing license key for this account to a new key.
+        /// 
         /// To reset your account, you must specify the ID of the account you wish to reset and confirm the action.
-        /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.;
+        /// 
+        /// This API is only available to account administrators for the account in question, and may only be called after
+        /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
+        /// please log onto the AvaTax website or call the `ActivateAccount` API.
+        /// 
+        /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
+        /// 
+        /// When you call this API, all account administrators for this account will receive an email with the newly updated license key.
+        /// The email will specify which user reset the license key and it will contain the new key to use to update your connectors.;
         /// </remarks>
         /// <param name="id">The ID of the account you wish to update.</param>
         /// <param name="model">A request confirming that you wish to reset the license key of this account.</param>
@@ -6526,6 +6713,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// This activation request can only be called by account administrators. You must indicate 
         /// that you have read and accepted Avalara's terms and conditions to call this API.
+        /// 
+        /// Once you have activated your account, use the `AccountResetLicenseKey` API to generate
+        /// a license key for your account.
         /// 
         /// If you have not read or accepted the terms and conditions, this API call will return the
         /// unchanged account model.;
@@ -7307,7 +7497,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Activate the company
         ///  
         /// This API only provides a limited subset of functionality compared to the 'Create Company' API call. 
-        /// If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.;
+        /// If you need additional features or options not present in this 'Quick Setup' API call, please use the full 'Create Company' call instead.
+        /// Please allow 1 minute before making transactions using the company.;
         /// </remarks>
         /// <param name="model">Information about the company you wish to create.</param>
         public async Task<CompanyModel> CompanyInitializeAsync(CompanyInitializationModel model)
@@ -9136,6 +9327,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a filing calendar;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only and only available for users with Compliance access
+        /// A "filing request" represents information that compliance uses to file a return;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
+        /// <param name="model">Filing calendars that will be added</param>
+        public async Task<FilingCalendarModel> CreateFilingCalendarsAsync(Int32 companyId, List<FilingCalendarModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FilingCalendarModel>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Create a new filing request to create a filing calendar;
         /// </summary>
         /// <remarks>
@@ -9423,12 +9631,10 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Edit existing Filing Calendar's Notes;
+        /// Edit existing Filing Calendar;
         /// </summary>
         /// <remarks>
-        /// This API is available by invitation only.
-        /// This API only allows updating of internal notes and company filing instructions.
-        /// All other updates must go through a filing request at this time.;
+        /// This API is available by invitation only.;
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
         /// <param name="id">The unique ID of the filing calendar object</param>
@@ -9999,7 +10205,7 @@ namespace Avalara.AvaTax.RestClient
         /// Rebuild a set of filings for the specified company in the given filing period, country and region.;
         /// </summary>
         /// <remarks>
-        /// This API is available by invitation only.
+        /// This API is available by invitation only.audit.CheckAuthorizationReturns(null, companyId);
         /// Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
         /// Rebuilding has to be done whenever a customer adds transactions to a filing. 
         /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
@@ -10708,7 +10914,8 @@ namespace Avalara.AvaTax.RestClient
         /// in all jurisdictions affected by your transactions.
         /// Note that not all fields within a nexus can be updated; Avalara publishes a list of all defined nexus at the
         /// '/api/v2/definitions/nexus' endpoint.
-        /// You may only define nexus matching the official list of declared nexus.;
+        /// You may only define nexus matching the official list of declared nexus.
+        /// Please allow 1 minute before start using the created Nexus in your transactions.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="model">The nexus you wish to create.</param>
@@ -10724,7 +10931,8 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single nexus;
         /// </summary>
         /// <remarks>
-        /// Marks the existing nexus object at this URL as deleted.;
+        /// Marks the existing nexus object at this URL as deleted.
+        /// Please allow 1 minute to stop collecting tax in your transaction on the deleted Nexus.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="id">The ID of the nexus you wish to delete.</param>
@@ -10860,7 +11068,8 @@ namespace Avalara.AvaTax.RestClient
         /// '/api/v2/definitions/nexus' endpoint.
         /// You may only define nexus matching the official list of declared nexus.
         /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// Please allow 1 minute to start seeing your updated Nexus taking effect on your transactions.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this nexus belongs to.</param>
         /// <param name="id">The ID of the nexus you wish to update</param>
@@ -11278,7 +11487,7 @@ namespace Avalara.AvaTax.RestClient
         /// terms and conditions. If they do so, they can receive a license key as part of this API and their
         /// API will be created in `Active` status. If the customer has not yet read and accepted these terms and
         /// conditions, the account will be created in `New` status and they can receive a license key by logging
-        /// onto AvaTax and reviewing terms and conditions online.;
+        /// onto the AvaTax website and reviewing terms and conditions online.;
         /// </remarks>
         /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
         public async Task<NewAccountModel> RequestNewAccountAsync(NewAccountRequestModel model)
@@ -11525,18 +11734,127 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Export a report accurate to the line level;
+        /// Download a report;
         /// </summary>
         /// <remarks>
-        /// ;
+        /// This API downloads the file associated with a report.
+        /// 
+        /// If the report is not yet complete, you will receive a `ReportNotFinished` error. To check if a report is complete,
+        /// use the `GetReport` API.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// This API works for all report types.;
         /// </remarks>
-        /// <param name="companyId"></param>
-        /// <param name="model"></param>
+        /// <param name="id">The unique ID number of this report</param>
+        public async Task<FileResult> DownloadReportAsync(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
+            path.ApplyField("id", id);
+            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Intiate and download an ExportDocumentLine report;
+        /// </summary>
+        /// <remarks>
+        /// This API is deprecated. 
+        /// 
+        /// Please use the asynchronous reports APIs:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company to report on.</param>
+        /// <param name="model">Options that may be configured to customize the report.</param>
         public async Task<FileResult> ExportDocumentLineAsync(Int32 companyId, ExportDocumentLineModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
             path.ApplyField("companyId", companyId);
             return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single report;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single report by its unique ID number.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// This API call returns information about any report type.;
+        /// </remarks>
+        /// <param name="id">The unique ID number of the report to retrieve</param>
+        public async Task<ReportModel> GetReportAsync(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/reports/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<ReportModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Initiate an ExportDocumentLine report task;
+        /// </summary>
+        /// <remarks>
+        /// Begins running an `ExportDocumentLine` report task and returns the identity of the report.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// The `ExportDocumentLine` report produces information about invoice lines recorded within your account.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company to report on.</param>
+        /// <param name="model">Options that may be configured to customize the report.</param>
+        public async Task<FileResult> InitiateExportDocumentLineReportAsync(Int32 companyId, ExportDocumentLineModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all report tasks for account;
+        /// </summary>
+        /// <remarks>
+        /// List all report tasks for your account.
+        /// 
+        /// Reports are run as asynchronous report tasks on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run an asynchronous report, you should follow these steps:
+        /// 
+        /// * Begin a report by calling the report's Initiate API. There is a separate initiate API call for each report type.
+        /// * In the result of the Initiate API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
+        /// 
+        /// This API call returns information about all report types across your entire account.;
+        /// </remarks>
+        public async Task<FetchResult<ReportModel>> ListReportsAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/reports");
+            return await RestCallAsync<FetchResult<ReportModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -11925,7 +12243,9 @@ namespace Avalara.AvaTax.RestClient
         /// The result of this API is the file you requested in the format you requested using the `responseType` field.
         /// 
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
-        /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.;
+        /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
+        /// 
+        /// NOTE: This API does not work for Tennessee tax holiday scenarios.;
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
         public async Task<FileResult> BuildTaxContentFileAsync(PointOfSaleDataRequestModel model)
@@ -11949,7 +12269,9 @@ namespace Avalara.AvaTax.RestClient
         /// The result of this API is the file you requested in the format you requested using the `responseType` field.
         /// 
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
-        /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.;
+        /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
+        /// 
+        /// NOTE: This API does not work for Tennessee tax holiday scenarios.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that owns this location.</param>
         /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
@@ -12183,7 +12505,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Retrieve audit information about a transaction stored in AvaTax.
         ///  
-        /// The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        /// The `AuditTransaction` API retrieves audit information related to a specific transaction. This audit 
         /// information includes the following:
         /// 
         /// * The `CompanyId` of the company that created the transaction
@@ -12214,7 +12536,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Retrieve audit information about a transaction stored in AvaTax.
         ///  
-        /// The 'AuditTransaction' endpoint retrieves audit information related to a specific transaction. This audit 
+        /// The `AuditTransaction` API retrieves audit information related to a specific transaction. This audit 
         /// information includes the following:
         /// 
         /// * The `CompanyId` of the company that created the transaction
@@ -12305,16 +12627,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create a new transaction;
+        /// Create or adjust a transaction;
         /// </summary>
         /// <remarks>
-        /// Records a new transaction or adjust an existing in AvaTax.
+        /// Records a new transaction or adjust an existing transaction in AvaTax.
         /// 
-        /// The `CreateOrAdjustTransaction` endpoint is used to create a new transaction if the input transaction does not exist
-        /// or if there exists a transaction identified by code, the original transaction will be adjusted by using the meta data 
-        /// in the input transaction
+        /// The `CreateOrAdjustTransaction` endpoint is used to create a new transaction or update an existing one. This API
+        /// can help you create an idempotent service that creates transactions 
+        /// If there exists a transaction identified by code, the original transaction will be adjusted by using the meta data 
+        /// in the input transaction.
         /// 
-        /// If you don't specify type in the provided data, a new transaction with type of SalesOrder will be recorded by default.
+        /// The `CreateOrAdjustTransaction` API cannot modify any transaction that has been reported to a tax authority using 
+        /// the Avalara Managed Returns Service or any other tax filing service. If you call this API to attempt to modify
+        /// a transaction that has been reported on a tax filing, you will receive the error `CannotModifyLockedTransaction`.
+        /// 
+        /// To generate a refund for a transaction, use the `RefundTransaction` API.
+        ///  
+        /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         /// 
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
@@ -12326,11 +12655,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
-        /// <param name="model">The transaction you wish to create</param>
+        /// <param name="model">The transaction you wish to create or adjust</param>
         public async Task<TransactionModel> CreateOrAdjustTransactionAsync(String include, CreateOrAdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
@@ -12349,7 +12679,13 @@ namespace Avalara.AvaTax.RestClient
         /// and rates to apply to all line items in this transaction, and reports the total tax calculated by AvaTax based on your
         /// company's configuration and the data provided in this API call.
         /// 
-        /// If you don't specify type in the provided data, a new transaction with type of SalesOrder will be recorded by default.
+        /// The `CreateTransaction` API will report an error if a committed transaction already exists with the same `code`. To
+        /// avoid this error, use the `CreateOrAdjustTransaction` API - it will create the transaction if it does not exist, or
+        /// update it if it does exist.
+        /// 
+        /// To generate a refund for a transaction, use the `RefundTransaction` API.
+        /// 
+        /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         /// 
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
@@ -12361,6 +12697,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
@@ -12410,10 +12747,14 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single transaction by code;
         /// </summary>
         /// <remarks>
-        /// Get the current transaction identified by this URL.
+        /// Get the current `SalesInvoice` transaction identified by this URL.
+        /// 
+        /// To fetch other kinds of transactions, use `GetTransactionByCodeAndType`.
+        /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
-        /// the transaction will be attached to the 'history' data field.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// the transaction will be attached to the `history` data field.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
         /// * Details (implies lines)
@@ -12440,9 +12781,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the current transaction identified by this URL.
+        /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code, and previous revisions of
-        /// the transaction will be attached to the 'history' data field.
-        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        /// the transaction will be attached to the `history` data field.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
         /// * Details (implies lines)
@@ -12570,8 +12913,21 @@ namespace Avalara.AvaTax.RestClient
         /// for a previously created `SalesInvoice` transaction. You can choose to create a full or partial refund, and
         /// specify individual line items from the original sale for refund.
         /// 
-        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
-        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        /// The `RefundTransaction` API ensures that the tax amount you refund to the customer exactly matches the tax that
+        /// was calculated during the original transaction, regardless of any changes to your company's configuration, rules,
+        /// nexus, or any other setting.
+        /// 
+        /// This API is intended to be a shortcut to allow you to quickly and accurately generate a refund for the following 
+        /// common refund scenarios:
+        /// 
+        /// * A full refund of a previous sale
+        /// * Refunding the tax that was charged on a previous sale, when the customer provides an exemption certificate after the purchase
+        /// * Refunding one or more items (lines) from a previous sale
+        /// * Granting a customer a percentage refund of a previous sale
+        /// 
+        /// For more complex scenarios than the ones above, please use `CreateTransaction` with document type `ReturnInvoice` to
+        /// create a custom refund transaction.
+        /// 
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines

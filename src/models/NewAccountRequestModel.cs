@@ -92,6 +92,11 @@ namespace Avalara.AvaTax.RestClient
         public CompanyAddress companyAddress { get; set; }
 
         /// <summary>
+        /// Company code to be assigned to the company created for this account.
+        /// </summary>
+        public String companyCode { get; set; }
+
+        /// <summary>
         /// Properties of the primary contact person for this account
         /// </summary>
         public List<String> properties { get; set; }

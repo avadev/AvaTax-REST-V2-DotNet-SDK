@@ -196,7 +196,7 @@ namespace Avalara.AvaTax.RestClient
         public List<UPCModel> upcs { get; set; }
 
         /// <summary>
-        /// Optional: A list of exempt certificates defined for this company. To fetch this list, add the query string "?$include=UPCs" to your URL.
+        /// DEPRECATED - Please use the `ListCertificates` API.
         /// </summary>
         public List<EcmsModel> exemptCerts { get; set; }
 

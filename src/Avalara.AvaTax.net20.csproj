@@ -243,6 +243,8 @@
     <Compile Include="models\ReconstructedApiRequestResponseModel.cs" />
     <Compile Include="models\RefundTransactionModel.cs" />
     <Compile Include="models\RemoveTransactionLineModel.cs" />
+    <Compile Include="models\ReportModel.cs" />
+    <Compile Include="models\ReportParametersModel.cs" />
     <Compile Include="models\requiredFilingCalendarDataFieldModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\ResourceFileTypeModel.cs" />

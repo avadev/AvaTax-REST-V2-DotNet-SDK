@@ -132,9 +132,14 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? nonTaxableDueAmount { get; set; }
 
         /// <summary>
-        /// Consumer use tax liability.
+        /// Consumer use tax liability during the period.
         /// </summary>
         public Decimal? consumerUseTaxAmount { get; set; }
+
+        /// <summary>
+        /// Consumer use tax liability accrued during the period.
+        /// </summary>
+        public Decimal? consumerUseTaxDueAmount { get; set; }
 
         /// <summary>
         /// Consumer use non-taxable amount.
