@@ -86,7 +86,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public override string ToString()
         {
-            return $"Setup: {SetupDuration} Server: {ServerDuration} Transit: {TransitDuration} Parse: {ParseDuration}";
+            return "Setup: {SetupDuration} Server: {ServerDuration} Transit: {TransitDuration} Parse: {ParseDuration}";
         }
 
         /// <summary>
