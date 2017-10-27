@@ -1,6 +1,8 @@
 ﻿using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -204,6 +206,32 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null);
             Assert.NotNull(fetchBack);
             Assert.AreEqual(aComplexTransactionCode, fetchBack.code);
+        }
+
+
+        /// <summary>
+        /// Test the async threading behavior
+        /// </summary>
+        [Test]
+        public async Task VerifyMultiCreate()
+        {
+            // Create a list of 100 unique transactions
+            List<CreateTransactionModel> list = new List<CreateTransactionModel>();
+            for (int i = 0; i < 100; i++) {
+                var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "DEFAULT")
+                    .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA", "98104", "US")
+                    .WithLine(100.0m, 1, "P0000000")
+                    .WithLine(200m);
+                var model = builder.GetCreateTransactionModel();
+                model.code = Guid.NewGuid().ToString();
+                list.Add(model);
+            }
+
+            // Build them using the multi-threaded class
+            DateTime start = DateTime.UtcNow;
+            var result = await AsyncTransactionUpload.CreateMultipleTransactions(Client, list, "DocumentOnly", 10);
+            var ts = DateTime.UtcNow - start;
+            System.Diagnostics.Debug.WriteLine(ts.ToString());
         }
     }
 }

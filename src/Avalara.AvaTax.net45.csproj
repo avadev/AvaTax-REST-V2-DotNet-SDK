@@ -285,6 +285,7 @@
     <Compile Include="models\ValidatedAddressInfo.cs" />
     <Compile Include="models\VerifyTransactionModel.cs" />
     <Compile Include="models\VoidTransactionModel.cs" />
+    <Compile Include="AsyncTransactionUpload.cs" />
     <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
   </ItemGroup>
