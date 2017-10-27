@@ -17,6 +17,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="err"></param>
         public AvaTaxError(ErrorResult err)
+            : base("Error return by AvaTax Rest Api")
         {
             this.error = err;
         }

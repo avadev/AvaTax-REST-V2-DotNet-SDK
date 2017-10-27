@@ -21,9 +21,11 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
+        private readonly JsonSerializer _serializer;
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
+        private ILog _logger;
 #if PORTABLE
         private static HttpClient _client = new HttpClient();
 #endif
@@ -44,6 +46,21 @@ namespace Avalara.AvaTax.RestClient
 #endif
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
+
+        /// <summary>
+        /// Encapsulates a method that has one parameter and returns a value of the type
+        /// specified by the TResult parameter.To browse the .NET Framework source code for
+        /// this type, see the Reference Source.
+        /// </summary>
+        /// <remarks>.Net 20 does not define a Func delegate.</remarks>
+        public delegate TResult Func<in T, out TResult>(T arg);
+
+        /// <summary>
+        /// Encapsulates a method that has two parameters and returns a value of the type
+        /// specified by the TResult parameter.
+        /// </summary>
+        /// <remarks>.Net 20 does not define a Func delegate.</remarks>
+        public delegate TResult Func<in T1, in T2, out TResult>(T1 arg1, T2 arg2);
 #endif
 
         #region Constructor
@@ -55,17 +72,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="machineName"></param>
         /// <param name="environment"></param>
         public AvaTaxClient(string appName, string appVersion, string machineName, AvaTaxEnvironment environment)
-        {
-            // Redo the client identifier
-            WithClientIdentifier(appName, appVersion, machineName);
-
-            // Setup the URI
-            switch (environment) {
-                case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
-                case AvaTaxEnvironment.Production: _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL); break;
-                default: throw new Exception("Unrecognized Environment");
-            }
-        }
+            : this(appName, appVersion, machineName, GetEnvironmentEnpoint(environment))
+        { }
 
         /// <summary>
         /// Generate a client that connects to a custom server
@@ -78,11 +86,30 @@ namespace Avalara.AvaTax.RestClient
         {
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
-            _envUri = customEnvironment;
-        }
-#endregion
+            WithLogging(new NullLogger());
 
-#region Security
+            _envUri = customEnvironment;
+
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+            settings.Converters.Add(new StringEnumConverter());
+            _serializer = JsonSerializer.Create(settings);
+        }
+
+
+        private static Uri GetEnvironmentEnpoint(AvaTaxEnvironment environment)
+        {
+            // Setup the URI
+            switch (environment)
+            {
+                case AvaTaxEnvironment.Sandbox: return new Uri(Constants.AVATAX_SANDBOX_URL);
+                case AvaTaxEnvironment.Production: return new Uri(Constants.AVATAX_PRODUCTION_URL);
+                default: throw new Exception("Unrecognized Environment");
+            }
+        }
+        #endregion
+
+        #region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -129,9 +156,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-#endregion
+        #endregion
 
-#region Client Identification
+        #region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -144,9 +171,19 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-#endregion
+        #endregion
 
-#region REST Call Interface
+        public AvaTaxClient WithLogging(ILog logger)
+        {
+            if (logger == null)
+            {
+                throw new ArgumentNullException("logger", "Parameter 'logger' is null");
+            }
+            _logger = new DelegatingLogger(logger);
+            return this;
+        }
+
+        #region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -158,15 +195,11 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
         {
-            CallDuration cd = new CallDuration();
-            var s = await RestCallStringAsync(verb, relativePath, content, cd).ConfigureAwait(false);
-            var o = JsonConvert.DeserializeObject<T>(s);
-            cd.FinishParse();
-            this.LastCallTime = cd;
-            return o;
+            return await ExecuteRestCallAsync(verb, relativePath, content, BodyAsObjectAsync<T>)
+                .ConfigureAwait(false);
         }
 
-
+#endif
         /// <summary>
         /// Direct implementation of client APIs
         /// </summary>
@@ -177,17 +210,18 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
         {
-            try {
-                return RestCallAsync<T>(verb, relativePath, content).Result;
-
-            // Unroll single-exception aggregates for ease of use
-            } catch (AggregateException ex) {
-                if (ex.InnerExceptions.Count == 1) {
-                    throw ex.InnerException;
-                }
-                throw ex;
-            }
+            return ExecuteRestCall<T>(verb, relativePath, content, BodyAsObject<T>);
         }
+
+
+#if PORTABLE
+        public async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath relativePath, object payload = null)
+        {
+            return await ExecuteRestCallAsync<FileResult>(verb, relativePath, payload, BodyAsFileAsync)
+                .ConfigureAwait(false);
+        }
+
+#endif
 
         /// <summary>
         /// Non-async method for downloading a file
@@ -198,356 +232,382 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
         {
-            return RestCallFileAsync(verb, relativePath, payload).Result;
+            return ExecuteRestCall(verb, relativePath, payload, BodyAsFile);
         }
-#endif
-#endregion
 
-#region Implementation
-        private JsonSerializerSettings _serializer_settings = null;
-        private JsonSerializerSettings SerializerSettings
+        #endregion
+
+        #region Implementation
+
+#if PORTABLE
+
+        private async Task<T> ExecuteRestCallAsync<T>(
+            string verb, AvaTaxPath relativePath, object content,
+            Func<HttpResponseMessage, Task<T>> responseHandler)
         {
-            get
+            CallDuration duration = new CallDuration();
+            LogEntry entry = new LogEntry() { Level = LogEntryLevel.Information };
+            try
             {
-                if (_serializer_settings == null) {
-                    lock (this) {
-                        _serializer_settings = new JsonSerializerSettings();
-                        _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
-                        _serializer_settings.Converters.Add(new StringEnumConverter());
+                using (var request = new HttpRequestMessage())
+                {
+                    request.Method = new HttpMethod(verb);
+                    entry.Request.Method = verb;
+                    request.RequestUri = new Uri(_envUri, relativePath.ToString());
+                    entry.Request.RequestUri = request.RequestUri;
+
+                    // Add credentials and client header
+                    if (_credentials != null)
+                    {
+                        request.Headers.Add("Authorization", _credentials);
+                        entry.Request.Headers.Add("Authorization", new string('*', _credentials.Length));
+                    }
+                    if (_clientHeader != null)
+                    {
+                        request.Headers.Add(Constants.AVALARA_CLIENT_HEADER, _clientHeader);
+                        entry.Request.Headers.Add(Constants.AVALARA_CLIENT_HEADER, _clientHeader);
+                    }
+                    if (content != null)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        using (var textWriter = new StringWriter(sb))
+                        using (var jsonWriter = new JsonTextWriter(textWriter))
+                        {
+                            _serializer.Serialize(jsonWriter, content);
+                        }
+                        // Property Encoding.UTF8 returns a UTF8Encoding object with Byte Order Mark (BOM) enabled. 
+                        // In the documentation Microsoft recognize it is not needed or recommended. The BOM is unexpected
+                        // by AvaTax APIs
+                        // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
+                        request.Content = new StringContent(sb.ToString(), new UTF8Encoding(false, true), "application/json");
+                        entry.Request.Body = content;
+                    }
+
+                    // Send
+                    duration.FinishSetup();
+
+                    using (var response = await _client.SendAsync(request)
+                        .ConfigureAwait(false))
+                    {
+                        Extensions.FinishReceive(duration, response);
+
+                        foreach (var header in response.Headers)
+                        {
+                            entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
+                        }
+                        foreach (var header in response.Content.Headers)
+                        {
+                            entry.Response.Headers.Add(header.Key, string.Join(", ", header.Value));
+                        }
+                        entry.Response.StatusCode = (int)response.StatusCode;
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var result = await responseHandler(response)
+                                .ConfigureAwait(false);
+                            entry.Response.Body = result;
+                            duration.FinishParse();
+                            this.LastCallTime = duration;
+                            return result;
+                        }
+
+                        var error = await BodyAsObjectAsync<ErrorResult>(response)
+                            .ConfigureAwait(false);
+                        entry.Level = LogEntryLevel.Error;
+                        entry.Response.Body = error;
+                        duration.FinishParse();
+                        this.LastCallTime = duration;
+                        throw new AvaTaxError(error);
                     }
                 }
-                return _serializer_settings;
+            }
+            catch (Exception ex)
+            {
+                entry.Level = LogEntryLevel.Error;
+                entry.Exception = ex;
+                throw;
+            }
+            finally
+            {
+                if (_logger.IsEnabled)
+                {
+                    entry.CallDuration = duration;
+                    _logger.Write(entry);
+                }
+            }
+        }
+#endif
+
+        private T ExecuteRestCall<T>(
+            string verb, AvaTaxPath relativePath, object content,
+            Func<HttpWebResponse, Stream, T> responseHandler)
+        {
+            CallDuration duration = new CallDuration();
+            LogEntry entry = new LogEntry() { Level = LogEntryLevel.Information };
+            try
+            {
+                var request = (HttpWebRequest)WebRequest.Create(new Uri(_envUri, relativePath.ToString()));
+
+                entry.Request.RequestUri = request.RequestUri;
+                entry.Request.Method = verb;
+
+                // Construct the basic auth, if required
+                if (!String.IsNullOrEmpty(_credentials))
+                {
+                    request.Headers[HttpRequestHeader.Authorization] = _credentials;
+                    entry.Request.Headers.Add("Authorization", new string('*', _credentials.Length));
+                }
+                if (!String.IsNullOrEmpty(_clientHeader))
+                {
+                    request.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
+                    entry.Request.Headers.Add(Constants.AVALARA_CLIENT_HEADER, _clientHeader);
+                }
+                request.Method = verb;
+
+#if NET20 || NET45
+                request.ServicePoint.Expect100Continue = false;
+#endif
+                if (content != null)
+                {
+                    entry.Request.Body = content;
+                    request.ContentType = "application/json; charset=utf-8";
+
+                    using (var stream =
+#if PORTABLE && !NET45
+                        // The PCL profile does not provide a GetRequestStream and because it is bad 
+                        // practice to block when using the Event-based Asynchronous (EAP) Pattern with
+                        // .Wait(), .Result, or .GetAwaiter().GetResult() due to deadlock issues in 
+                        // UI and ASP.Net contexts it is necessary to rely on the Asynchronous 
+                        // Programming Model (APM) Pattern to ensure deadlocks are not encountered. 
+                        // 
+                        // Explains why blocking is undesirable with async/await. (https://msdn.microsoft.com/en-us/magazine/mt238404)
+                        // Provides a set of best practices for async/await. (https://msdn.microsoft.com/magazine/jj991977)
+                        // Explains what SynchronizationContexts are. (https://msdn.microsoft.com/en-us/magazine/gg598924.aspx)
+                        new Synchronously<HttpWebRequest, object, Stream>(request.BeginGetRequestStream, RequestStreamCallback)
+                            .Execute(request, null)
+#else
+                        request.GetRequestStream()
+#endif
+                    )
+                    // Property Encoding.UTF8 returns a UTF8Encoding object with Byte Order Mark (BOM) enabled. 
+                    // In the documentation Microsoft recognize it is not needed or recommended. The BOM is unexpected
+                    // by AvaTax APIs
+                    // https://msdn.microsoft.com/en-us/library/system.text.utf8encoding.getpreamble(v=vs.110).aspx#Remarks
+                    using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true)))
+                    {
+                        _serializer.Serialize(writer, content);
+                    }
+                }
+
+                duration.FinishSetup();
+
+                using (var response =
+#if PORTABLE && !NET45
+                    // The PCL profile does not provide a GetRequestStream and because it is bad 
+                    // practice to block when using the Event-based Asynchronous (EAP) Pattern with
+                    // .Wait(), .Result, or .GetAwaiter().GetResult() due to deadlock issues in 
+                    // UI and ASP.Net contexts it is necessary to rely on the Asynchronous 
+                    // Programming Model (APM) Pattern to ensure deadlocks are not encountered. 
+                    // 
+                    // Explains why blocking is undesirable with async/await. (https://msdn.microsoft.com/en-us/magazine/mt238404)
+                    // Provides a set of best practices for async/await. (https://msdn.microsoft.com/magazine/jj991977)
+                    // Explains what SynchronizationContexts are. (https://msdn.microsoft.com/en-us/magazine/gg598924.aspx)
+                    new Synchronously<HttpWebRequest, object, HttpWebResponse>(
+                            request.BeginGetResponse, ResponseCallback)
+                        .Execute(request, null)
+#else
+                    (HttpWebResponse)request.GetResponse()
+#endif
+                    )
+                {
+                    Extensions.FinishReceive(duration, response);
+
+                    entry.Response.StatusCode = (int)response.StatusCode;
+                    foreach (string header in response.Headers.AllKeys)
+                    {
+                        string value = response.Headers[header];
+                        entry.Response.Headers.Add(header, value);
+                    }
+
+                    byte[] body = null;
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        body = Extensions.ReadToEnd(stream);
+                    }
+
+                    if (Extensions.IsSuccessStatusCode(response))
+                    {
+                        T result;
+                        using (var stream = new MemoryStream(body, 0, body.Length, false))
+                        {
+                            result = responseHandler(response, stream);
+                        }
+                        duration.FinishParse();
+                        this.LastCallTime = duration;
+                        entry.Response.Body = result;
+
+                        return result;
+                    }
+                    ErrorResult error;
+                    using (var stream = new MemoryStream(body, 0, body.Length, false))
+                    {
+                        error = BodyAsObject<ErrorResult>(response, stream);
+                    }
+
+                    entry.Level = LogEntryLevel.Error;
+                    entry.Response.Body = error;
+                    duration.FinishParse();
+                    this.LastCallTime = duration;
+                    var exception = new AvaTaxError(error);
+                    entry.Exception = exception;
+                    throw exception;
+                }
+            }
+            catch (WebException webex)
+            {
+
+                HttpWebResponse response = webex.Response as HttpWebResponse;
+                if (response != null)
+                {
+                    ErrorResult error = null;
+                    using (Stream stream = response.GetResponseStream())
+                    {
+                        error = BodyAsObject<ErrorResult>(response, stream);
+                    }
+
+                    entry.Level = LogEntryLevel.Error;
+                    entry.Response.Body = error;
+                    duration.FinishParse();
+                    this.LastCallTime = duration;
+                    var exception = new AvaTaxError(error);
+                    entry.Exception = exception;
+                    throw exception;
+                }
+
+                entry.Level = LogEntryLevel.Error;
+                duration.FinishParse();
+                this.LastCallTime = duration;
+                entry.Exception = webex;
+                // If we can't parse it as an AvaTax error, just throw
+                // use throw instead of throw ex. This ensures the call stack is not reset in the exception.
+                throw;
+            }
+            catch (Exception ex)
+            {
+                entry.Level = LogEntryLevel.Error;
+                entry.Exception = ex;
+                throw;
+            }
+            finally
+            {
+                if (_logger.IsEnabled)
+                {
+                    entry.CallDuration = duration;
+                    _logger.Write(entry);
+                }
+            }
+        }
+
+
+#if PORTABLE && !NET45
+
+        /// <summary>
+        /// The callback method executed when getting the request stream.
+        /// </summary>
+        /// <param name="state"></param>
+        private Stream RequestStreamCallback(State<HttpWebRequest, object> state)
+        {
+            return state.Sender.EndGetRequestStream(state.AsynchronousResult);
+        }
+
+        /// <summary>
+        /// The callback method executed when getting the response
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        private HttpWebResponse ResponseCallback(State<HttpWebRequest, object> state)
+        {
+            return (HttpWebResponse)state.Sender.EndGetResponse(state.AsynchronousResult);
+        }
+#endif
+
+#if PORTABLE
+        private static async Task<T> BodyAsObjectAsync<T>(HttpResponseMessage response)
+        {
+            using (var body = await response.Content.ReadAsStreamAsync()
+                .ConfigureAwait(false))
+            using (var reader = new System.IO.StreamReader(body))
+            using (var jsonReader = new JsonTextReader(reader))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                return serializer.Deserialize<T>(jsonReader);
+            }
+        }
+#endif
+        private static T BodyAsObject<T>(HttpWebResponse response, Stream body)
+        {
+
+            using (var reader = new StreamReader(body, new UTF8Encoding(false, true)))
+            using (var jsonReader = new JsonTextReader(reader))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                return serializer.Deserialize<T>(jsonReader);
             }
         }
 
 #if PORTABLE
-        /// <summary>
-        /// Implementation of raw file-returning async API 
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath relativePath, object content = null)
+        private static async Task<FileResult> BodyAsFileAsync(HttpResponseMessage response)
         {
-            CallDuration cd = new CallDuration();
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content).ConfigureAwait(false)) {
-
-                // Read the result
-                if (result.IsSuccessStatusCode) {
-                    var fr = new FileResult()
-                    {
-                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
-                        Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
-                    };
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-                    return fr;
-
-                // Handle exceptions and convert them to AvaTax results
-                } else {
-                    var s = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-                    throw new AvaTaxError(err);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Implementation of raw request API
-        /// </summary>
-        /// <param name="cd"></param>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb, AvaTaxPath relativePath, object content)
-        {
-            // Setup the request
-            using (var request = new HttpRequestMessage()) {
-                request.Method = new HttpMethod(verb);
-                request.RequestUri = new Uri(_envUri, relativePath.ToString());
-
-                // Add credentials and client header
-                if (_credentials != null) {
-                    request.Headers.Add("Authorization", _credentials);
-                }
-                if (_clientHeader != null) {
-                    request.Headers.Add("X-Avalara-Client", _clientHeader);
-                }
-
-                // Add payload
-                if (content != null) {
-                    var json = JsonConvert.SerializeObject(content, SerializerSettings);
-                    request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-                }
-
-                // Send
-                cd.FinishSetup();
-                return await _client.SendAsync(request).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Implementation of raw string-returning async API 
-        /// </summary>
-        /// <param name="cd"></param>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null, CallDuration cd = null)
-        {
-            if (cd == null) cd = new CallDuration();
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content).ConfigureAwait(false)) {
-
-                // Read the result
-                var s = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                // Determine server duration
-                var sd = result.Headers.GetValues("serverduration").FirstOrDefault();
-                TimeSpan ServerDuration = new TimeSpan();
-                TimeSpan.TryParse(sd, out ServerDuration);
-                cd.FinishReceive(ServerDuration);
-
-                // Deserialize the result
-                if (result.IsSuccessStatusCode) {
-                    return s;
-                } else {
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-                    throw new AvaTaxError(err);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Implementation of raw string-returning API
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            return RestCallStringAsync(verb, relativePath, content).Result;
-        }
-#else
-        /// <summary>
-        /// Direct implementation of client APIs to object values
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            var s = RestCallString(verb, relativePath, content);
-            return JsonConvert.DeserializeObject<T>(s);
-        }
-
-        /// <summary>
-        /// Direct implementation of client APIs to string values
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private FileResult RestCallFile(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            string path = CombinePath(_envUri.ToString(), relativePath.ToString());
-
-            // Use HttpWebRequest so we can get a decent response
-            var wr = (HttpWebRequest)WebRequest.Create(path);
-            wr.Proxy = null;
-
-            // Construct the basic auth, if required
-            if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
-            }
-            if (!String.IsNullOrEmpty(_clientHeader)) {
-                wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
-            }
-
-            // Convert the name-value pairs into a byte array
-            wr.Method = verb;
-            if (content != null) {
-                wr.ContentType = Constants.JSON_MIME_TYPE;
-                wr.ServicePoint.Expect100Continue = false;
-
-                // Encode the payload
-                var json = JsonConvert.SerializeObject(content, SerializerSettings);
-                var encoding = new UTF8Encoding();
-                byte[] data = encoding.GetBytes(json);
-                wr.ContentLength = data.Length;
-
-                // Call the server
-                using (var s = wr.GetRequestStream()) {
-                    s.Write(data, 0, data.Length);
-                    s.Close();
-                }
-            }
-
-            // Transmit, and get back the response, save it to a temp file
-            try {
-                using (var response = wr.GetResponse()) {
-                    using (var inStream = response.GetResponseStream()) {
-                        const int BUFFER_SIZE = 1024;
-                        var chunks = new List<byte>();
-                        var totalBytes = 0; 
-                        var bytesRead = 0;
-
-                        do
-                        {
-                            var buffer = new byte[BUFFER_SIZE];
-                            bytesRead = inStream.Read(buffer, 0, BUFFER_SIZE);
-                            if (bytesRead == BUFFER_SIZE) {
-                                chunks.AddRange(buffer);
-                            } else {
-                                for (int i = 0; i < bytesRead; i++) {
-                                    chunks.Add(buffer[i]);
-                                }
-                            }
-                            totalBytes += bytesRead;
-                        } while (bytesRead > 0);
-        
-                        if(totalBytes <= 0) {
-                            throw new IOException("Response contained no data");
-                        }
-
-                        // Here's your file result
-                        return new FileResult()
-                        {
-                            ContentType = response.Headers["Content-Type"].ToString(),
-                            Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
-                            Data = chunks.ToArray()
-                        };
-                    }
-                }
-
-                // Catch a web exception
-            } catch (WebException webex) {
-                HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
-                if (httpWebResponse != null) {
-                    using (Stream stream = httpWebResponse.GetResponseStream()) {
-                        using (StreamReader reader = new StreamReader(stream)) {
-                            var errString = reader.ReadToEnd();
-                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                            throw new AvaTaxError(err);
-                        }
-                    }
-                }
-
-                // If we can't parse it as an AvaTax error, just throw
-                throw webex;
-            }
-        }
-
-        /// <summary>
-        /// Direct implementation of client APIs to string values
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            string path = CombinePath(_envUri.ToString(), relativePath.ToString());
-
-            // Use HttpWebRequest so we can get a decent response
-            var wr = (HttpWebRequest)WebRequest.Create(path);
-            wr.Proxy = null;
-
-            // Construct the basic auth, if required
-            if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
-            }
-            if (!String.IsNullOrEmpty(_clientHeader)) {
-                wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
-            }
-
-            // Convert the name-value pairs into a byte array
-            wr.Method = verb;
-            if (content != null) {
-                wr.ContentType = Constants.JSON_MIME_TYPE;
-                wr.ServicePoint.Expect100Continue = false;
-
-                // Encode the payload
-                var json = JsonConvert.SerializeObject(content, SerializerSettings);
-                var encoding = new UTF8Encoding();
-                byte[] data = encoding.GetBytes(json);
-                wr.ContentLength = data.Length;
-
-                // Call the server
-                using (var s = wr.GetRequestStream()) {
-                    s.Write(data, 0, data.Length);
-                    s.Close();
-                }
-            }
-
-            // Transmit, and get back the response, save it to a temp file
-            try {
-                using (var response = wr.GetResponse()) {
-                    using (var inStream = response.GetResponseStream()) {
-                        using (var reader = new StreamReader(inStream)) {
-                            return reader.ReadToEnd();
-                        }
-                    }
-
-                }
-
-            // Catch a web exception
-            } catch (WebException webex) {
-                HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
-                if (httpWebResponse != null) {
-                    using (Stream stream = httpWebResponse.GetResponseStream()) {
-                        using (StreamReader reader = new StreamReader(stream)) {
-                            var errString = reader.ReadToEnd();
-                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                            throw new AvaTaxError(err);
-                        }
-                    }
-                }
-
-                // If we can't parse it as an AvaTax error, just throw
-                throw webex;
-            }
-        }
-
-        private string CombinePath(string url1, string url2)
-        {
-            var endslash = url1.EndsWith("/");
-            var startslash = url2.StartsWith("/");
-            if (endslash && startslash) {
-                return url1 + url2.Substring(1);
-            } else if (!endslash && !startslash) {
-                return url1 + "/" + url2;
-            } else {
-                return url1 + url2;
-            }
+            return new FileResult()
+            {
+                ContentType = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
+                Filename = GetDispositionFilename(response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
+                Data = await response.Content.ReadAsByteArrayAsync()
+                   .ConfigureAwait(false)
+            };
         }
 #endif
+        private static FileResult BodyAsFile(HttpWebResponse response, Stream body)
+        {
+
+            return new FileResult()
+            {
+                ContentType = response.Headers["Content-Type"].ToString(),
+                Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
+                Data = Extensions.ReadToEnd(body)
+            };
+        }
+
+#if PORTABLE
+        private static async Task<string> BodyAsStringAsync(HttpResponseMessage response)
+        {
+            return await response.Content.ReadAsStringAsync();
+        }
+#endif
+        private static string BodyAsString(HttpWebResponse response, Stream body)
+        {
+            using (var reader = new StreamReader(body, new UTF8Encoding(false, true)))
+            {
+                return reader.ReadToEnd();
+            }
+        }
 
         /// <summary>
         /// Shortcut to parse a content disposition to determine attachment filename
         /// </summary>
         /// <param name="contentDisposition"></param>
         /// <returns></returns>
-        private string GetDispositionFilename(string contentDisposition)
+        private static string GetDispositionFilename(string contentDisposition)
         {
             const string filename = "filename=";
             int index = contentDisposition.LastIndexOf(filename, StringComparison.OrdinalIgnoreCase);
-            if (index > -1) {
+            if (index > -1)
+            {
                 return contentDisposition.Substring(index + filename.Length);
             }
             return contentDisposition;
         }
 
-#endregion
+        #endregion
     }
 }

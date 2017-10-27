@@ -33,12 +33,13 @@
     <DocumentationFile>bin\Release\net20\Avalara.AvaTax.RestClient.net20.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
@@ -120,8 +121,16 @@
     <Compile Include="ErrorInfo.cs" />
     <Compile Include="ErrorResult.cs" />
     <Compile Include="ErrorTargetCode.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
+    <Compile Include="Logging\DelegatingLogger.cs" />
+    <Compile Include="Logging\ILog.cs" />
+    <Compile Include="Logging\LogEntry.cs" />
+    <Compile Include="Logging\LogEntryLevel.cs" />
+    <Compile Include="Logging\NullLogger.cs" />
+    <Compile Include="Logging\Request.cs" />
+    <Compile Include="Logging\Response.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\ActivateAccountModel.cs" />
@@ -285,6 +294,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

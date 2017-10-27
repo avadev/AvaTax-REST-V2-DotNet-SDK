@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -64,7 +65,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.True(TestCompany.locations.Count > 0, "Test company should have locations");
 
                 // Shouldn't fail
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Assert.Fail("Exception in SetUp: " + ex);
             }
@@ -92,16 +94,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.False(disableResult.isActive, "Company should have been deactivated");
 
                 // Shouldn't fail
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Assert.Fail("Exception in TearDown: " + ex);
             }
         }
         #endregion
 
-        /// <summary>
-        /// To debug this application, call app must be called with args[0] as username and args[1] as password
-        /// </summary>
         [Test]
         public void TransactionWorkflow()
         {
@@ -137,6 +137,46 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Ensure that the transaction was voided
             Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
+        }
+
+        [Test]
+        public async Task TransactionWorkFlow_Async()
+        {
+
+            // Execute a transaction
+            var transaction = await new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
+                .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!")
+                .CreateAsync();
+
+
+            // Ensure this transaction was created, and has three lines, and has some tax
+            Assert.NotNull(transaction, "Transaction should have been created");
+            Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
+            Assert.True(transaction.lines.Count == 3, "Transaction should have three lines");
+            Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
+
+            // Now commit that transaction
+            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, new CommitTransactionModel() { commit = true });
+
+            // Ensure that this transaction was committed
+            Assert.NotNull(commitResult, "Should have been able to call CommitTransaction");
+            Assert.True(commitResult.status == DocumentStatus.Committed, "Transaction should have been committed");
+
+            // Now void the transaction
+            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, new VoidTransactionModel()
+            {
+                code = VoidReasonCode.DocVoided
+            });
+
+            // Ensure that the transaction was voided
+            Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
+            Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
+
         }
 
         [Test]

@@ -22,7 +22,9 @@ function Build-Solution {
 
 Build-Solution -solution 'Avalara.AvaTax.Net20.sln'
 Build-Solution -solution 'Avalara.AvaTax.Net45.sln'
-Build-Solution -solution 'Avalara.AvaTax.Portable.sln'
+
+dotnet restore Avalara.AvaTax.netstandard11.sln
+dotnet build Avalara.AvaTax.netstandard11.sln -c Release
 
 
 Write-Host ""
