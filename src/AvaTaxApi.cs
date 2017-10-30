@@ -4866,7 +4866,7 @@ namespace Avalara.AvaTax.RestClient
         public String ChangePassword(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            return RestCallString("Put", path, model);
+            return ExecuteRestCall("Put", path, model, BodyAsString);
         }
 
 
@@ -5039,7 +5039,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            return RestCallString("Post", path, model);
+            return ExecuteRestCall("Post", path, model, BodyAsString);
         }
 
 
@@ -6701,7 +6701,8 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            return await RestCallAsync<LicenseKeyModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<LicenseKeyModel>("Post", path, model)
+                .ConfigureAwait(false);
         }
 
 
@@ -11512,7 +11513,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<String> ChangePasswordAsync(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            return await RestCallStringAsync("Put", path, model).ConfigureAwait(false);
+            return await ExecuteRestCallAsync("Put", path, model, BodyAsStringAsync).ConfigureAwait(false);
         }
 
 
@@ -11685,7 +11686,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            return await RestCallStringAsync("Post", path, model).ConfigureAwait(false);
+            return await ExecuteRestCallAsync("Post", path, model, BodyAsStringAsync).ConfigureAwait(false);
         }
 
 
