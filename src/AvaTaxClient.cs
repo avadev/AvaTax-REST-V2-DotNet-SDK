@@ -308,10 +308,10 @@ namespace Avalara.AvaTax.RestClient
                 var s = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 // Determine server duration
-                var sd = result.Headers.GetValues("serverduration").FirstOrDefault();
-                TimeSpan ServerDuration = new TimeSpan();
-                TimeSpan.TryParse(sd, out ServerDuration);
-                cd.FinishReceive(ServerDuration);
+                var sd = DetectDuration(result, "serverduration");
+                var dd = DetectDuration(result, "dataduration");
+                var td = DetectDuration(result, "serviceduration");
+                cd.FinishReceive(sd, dd, td);
 
                 // Deserialize the result
                 if (result.IsSuccessStatusCode) {
@@ -323,6 +323,21 @@ namespace Avalara.AvaTax.RestClient
                     throw new AvaTaxError(err);
                 }
             }
+        }
+
+        private TimeSpan? DetectDuration(HttpResponseMessage result, string name)
+        {
+            IEnumerable<string> values = null;
+            if (result.Headers.TryGetValues(name, out values)) {
+                var firstHeader = values.FirstOrDefault();
+                if (firstHeader != null) {
+                    TimeSpan duration = default(TimeSpan);
+                    if (TimeSpan.TryParse(firstHeader, out duration)) {
+                        return duration;
+                    }
+                }
+            }
+            return null;
         }
 
         /// <summary>
