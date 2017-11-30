@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -22,13 +23,13 @@ namespace Avalara.AvaTax.RestClient
     public class CreateTransactionModel
     {
         /// <summary>
-        /// Transaction Code - the internal reference code used by the client application. This is used for operations such as
+        /// The internal reference code used by the client application. This is used for operations such as
         /// Get, Adjust, Settle, and Void. If you leave the transaction code blank, a GUID will be assigned to each transaction.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
-        /// Document line items list
+        /// A list of line items that will appear on this transaction.
         /// </summary>
         public List<LineItemModel> lines { get; set; }
 
@@ -66,10 +67,17 @@ namespace Avalara.AvaTax.RestClient
         public String customerCode { get; set; }
 
         /// <summary>
-        /// Customer Usage Type - The client application customer or usage type. For a list of 
+        /// DEPRECATED - Customer Usage Type - The client application customer or usage type. For a list of 
         /// available usage types, see `/api/v2/definitions/entityusecodes`.
+        /// Please use entityUseCode instead.
         /// </summary>
         public String customerUsageType { get; set; }
+
+        /// <summary>
+        /// Entity Use Code - The client application customer or usage type. For a list of 
+        /// available usage types, see `/api/v2/definitions/entityusecodes`.
+        /// </summary>
+        public String entityUseCode { get; set; }
 
         /// <summary>
         /// Discount - The discount amount to apply to the document. This value will be applied only to lines

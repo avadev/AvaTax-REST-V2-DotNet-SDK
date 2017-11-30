@@ -12,30 +12,39 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Settle this transaction with your ledger by executing one or many actions against that transaction. 
+    /// 
     /// You may use this endpoint to verify the transaction, change the transaction's code, and commit the transaction for reporting purposes.
     /// This endpoint may be used to execute any or all of these actions at once.
     /// </summary>
     public class SettleTransactionModel
     {
         /// <summary>
-        /// To use the "Settle" endpoint to verify a transaction, fill out this value.
+        /// To verify this transaction, you may provide information in this field.
+        /// 
+        /// If you leave this field null, the transaction will not be verified.
         /// </summary>
         public VerifyTransactionModel verify { get; set; }
 
         /// <summary>
-        /// To use the "Settle" endpoint to change a transaction's code, fill out this value.
+        /// To change the code for this transaction, you may provide information in this field.
+        /// 
+        /// If you leave this field null, the transaction's code will not be changed.
         /// </summary>
         public ChangeTransactionCodeModel changeCode { get; set; }
 
         /// <summary>
-        /// To use the "Settle" endpoint to commit a transaction for reporting purposes, fill out this value.
-        /// If you use Avalara Returns, committing a transaction will cause that transaction to be filed.
+        /// To commit this transaction so that it can be reported on a tax filing, you may provide information in this field.
+        /// 
+        /// If you leave this field null, the transaction's commit status will not be changed.
+        /// 
+        /// If you use Avalara's Managed Returns Service, committing a transaction will allow that transaction to be filed.
         /// </summary>
         public CommitTransactionModel commit { get; set; }
 
