@@ -45,6 +45,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AvaTaxApi.cs" />
+    <Compile Include="AvaTaxAPIClient.cs" />
     <Compile Include="AvaTaxClient.cs" />
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
@@ -122,6 +123,10 @@
     <Compile Include="ErrorTargetCode.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
+    <Compile Include="GenericRestClient\JSONBasedRestClient\RESTClient.ASynchronous.cs" />
+    <Compile Include="GenericRestClient\JSONBasedRestClient\RESTClient.cs" />
+    <Compile Include="GenericRestClient\JSONBasedRestClient\RESTClient.Synchronous.cs" />
+    <Compile Include="GenericRestClient\SupportClasses.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\ActivateAccountModel.cs" />
@@ -129,6 +134,7 @@
     <Compile Include="models\AddressInfo.cs" />
     <Compile Include="models\AddressLocationInfo.cs" />
     <Compile Include="models\AddressResolutionModel.cs" />
+    <Compile Include="models\AddressResolutionResponse.cs" />
     <Compile Include="models\AddressValidationInfo.cs" />
     <Compile Include="models\AddTransactionLineModel.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
