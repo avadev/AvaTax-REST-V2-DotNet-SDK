@@ -12,33 +12,41 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Verify this transaction by matching it to values in your accounting system.
+    /// 
+    /// You may specify one or more of the following fields to verify: `date`, `totalAmount`, or `totalTax`.
+    /// This call will report an error if there is any difference between the data stored in AvaTax and
+    /// the data stored in your accounting system.
     /// </summary>
     public class VerifyTransactionModel
     {
         /// <summary>
-        /// Transaction Date - The date on the invoice, purchase order, etc.
-        ///  
-        /// This is used to verify data consistency with the client application.
+        /// Set this value if you wish to verify a match between `verifyTransactionDate` and
+        /// the `documentDate` value on the transaction recorded in AvaTax.
+        /// 
+        /// If you leave this field empty, we will skip verification for this field.
         /// </summary>
         public DateTime? verifyTransactionDate { get; set; }
 
         /// <summary>
-        /// Total Amount - The total amount (not including tax) for the document.
-        ///  
-        /// This is used to verify data consistency with the client application.
+        /// Set this value if you wish to verify a match between `verifyTotalAmount` and
+        /// the `totalAmount` value on the transaction recorded in AvaTax.
+        /// 
+        /// If you leave this field empty, we will skip verification for this field.
         /// </summary>
         public Decimal? verifyTotalAmount { get; set; }
 
         /// <summary>
-        /// Total Tax - The total tax for the document.
-        ///  
-        /// This is used to verify data consistency with the client application.
+        /// Set this value if you wish to verify a match between `verifyTotalTax` and
+        /// the `totalTax` value on the transaction recorded in AvaTax.
+        /// 
+        /// If you leave this field empty, we will skip verification for this field.
         /// </summary>
         public Decimal? verifyTotalTax { get; set; }
 

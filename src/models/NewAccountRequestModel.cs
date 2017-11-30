@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -93,6 +94,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Company code to be assigned to the company created for this account.
+        /// If no company code is provided, this will be defaulted to "DEFAULT" company code.
         /// </summary>
         public String companyCode { get; set; }
 

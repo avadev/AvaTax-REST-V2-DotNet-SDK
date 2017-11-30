@@ -10,6 +10,7 @@ using System;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -78,6 +79,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         StringLengthError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MaxStringLengthError,
 
         /// <summary>
         /// 
@@ -590,6 +596,26 @@ namespace Avalara.AvaTax.RestClient
         FailedToDownloadReport,
 
         /// <summary>
+        /// 
+        /// </summary>
+        MalformedFilterException,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExpectedConjunctionError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CriteriaNotSupportedError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CompanyAccountAndParentAccountMismatch,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -618,6 +644,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         BatchCannotDeleteBatchFile,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchMustContainOneFile,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MissingBatchFileContent,
 
         /// <summary>
         /// Point Of Sale API exceptions
@@ -725,6 +761,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidAddress,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidPostalCode,
+
+        /// <summary>
         /// Represents a malformed document fetch command
         /// </summary>
         BadDocumentFetch,
@@ -818,6 +859,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         RefundPercentageOutOfRange,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RefundPercentageMissing,
 
         /// <summary>
         /// Free API error codes
@@ -955,19 +1001,64 @@ namespace Avalara.AvaTax.RestClient
         InvalidCoverLetterTitle,
 
         /// <summary>
-        /// Multi company error codes
+        /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
 
         /// <summary>
         /// 
         /// </summary>
-        TooManyTransactionLines,
+        TooManyTransactions,
 
         /// <summary>
         /// 
         /// </summary>
         OnlyTaxDateOverrideIsAllowed,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TransactionAlreadyExists,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DateMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentStatusForVerify,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TotalAmountMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TotalTaxMismatch,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentStatusForCommit,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MultiDocumentPartiallyLocked,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TransactionIsCommitted,
 
         /// <summary>
         /// Communications Tax error codes
@@ -993,6 +1084,11 @@ namespace Avalara.AvaTax.RestClient
         /// Account Activate error codes
         /// </summary>
         AccountInNewStatusException,
+
+        /// <summary>
+        /// Worksheet Exception
+        /// </summary>
+        WorksheetException,
 
     }
 }

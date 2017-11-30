@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -42,9 +43,15 @@ namespace Avalara.AvaTax.RestClient
         public Int32? boundaryOverrideId { get; set; }
 
         /// <summary>
-        /// The customer usage type for this line item. Usage type often affects taxability rules.
+        /// DEPRECATED - The customer usage type for this line item. Usage type often affects taxability rules.
+        /// Please use entityUseCode instead.
         /// </summary>
         public String customerUsageType { get; set; }
+
+        /// <summary>
+        /// The entity use code for this line item. Usage type often affects taxability rules.
+        /// </summary>
+        public String entityUseCode { get; set; }
 
         /// <summary>
         /// A description of the item or service represented by this line.
@@ -206,7 +213,11 @@ namespace Avalara.AvaTax.RestClient
         public String taxOverrideReason { get; set; }
 
         /// <summary>
-        /// True if tax was included in the purchase price of the item.
+        /// Indicates whether the `amount` for this line already includes tax.
+        /// 
+        /// If this value is `true`, the final price of this line including tax will equal the value in `amount`. 
+        /// 
+        /// If this value is `null` or `false`, the final price will equal `amount` plus whatever taxes apply to this line.
         /// </summary>
         public Boolean? taxIncluded { get; set; }
 

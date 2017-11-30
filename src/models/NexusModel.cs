@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -32,12 +33,29 @@ namespace Avalara.AvaTax.RestClient
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// The two character ISO-3166 country code of the country in which this company declared nexus.
+        /// Name or ISO 3166 code identifying the country in which this company declared nexus.
+        /// 
+        /// This field supports many different country identifiers:
+        ///  * Two character ISO 3166 codes
+        ///  * Three character ISO 3166 codes
+        ///  * Fully spelled out names of the country in ISO supported languages
+        ///  * Common alternative spellings for many countries
+        /// 
+        /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// The two or three character ISO region code of the region, state, or province in which this company declared nexus.
+        /// Name or ISO 3166 code identifying the region within the country.
+        /// 
+        /// If the `jurisTypeId` field is set to `CNT` or `Country`, this field can be left blank.
+        /// 
+        /// This field supports many different region identifiers:
+        ///  * Two and three character ISO 3166 region codes
+        ///  * Fully spelled out names of the region in ISO supported languages
+        ///  * Common alternative spellings for many regions
+        /// 
+        /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
 
@@ -82,8 +100,18 @@ namespace Avalara.AvaTax.RestClient
         public String stateAssignedNo { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) The type of nexus that this company is declaring.
-        /// Please use NexusTaxTypeGroupId instead.
+        /// The type of nexus that this company is declaring.
+        /// 
+        /// If you are voluntarily declaring nexus in a jurisdiction, you should select `SalesOrSellersUseTax` for your
+        /// nexus type option. This option allows you to calculate tax correctly whether you are selling in-state or
+        /// shipping from an out-of-state location.
+        /// 
+        /// If you are legally obligated to declare nexus due to physical presence or other sufficient nexus, you
+        /// should select `SalesTax`. This indicates that, as a legal requirement, your company must always collect
+        /// and remit full sales tax in this jurisdiction.
+        /// 
+        /// If you are participating in the Streamlined Sales Tax program, your SST administrator will select nexus
+        /// settings for you in all SST jurisdictions. Do not select any SST options by yourself.
         /// </summary>
         public NexusTypeId? nexusTypeId { get; set; }
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -22,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     public class RateTypeModel
     {
         /// <summary>
-        /// The unique ID number of this tax authority.
+        /// The unique ID number of this rate type.
         /// </summary>
         public String id { get; set; }
 

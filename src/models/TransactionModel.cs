@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -70,9 +71,15 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
-        /// The customer usage type for this transaction. Customer usage types often affect exemption or taxability rules.
+        /// DEPRECATED - The customer usage type for this transaction. Customer usage types often affect exemption or taxability rules.
+        /// Please use entityUseCode instead.
         /// </summary>
         public String customerUsageType { get; set; }
+
+        /// <summary>
+        /// The entity use code for this transaction. Entity use codes often affect exemption or taxability rules.
+        /// </summary>
+        public String entityUseCode { get; set; }
 
         /// <summary>
         /// CustomerVendorCode
@@ -216,6 +223,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// If true, this seller was considered the importer of record of a product shipped internationally.
+        /// 
+        /// If this transaction is not an international transaction, this field may be left blank.
+        /// 
+        /// The "importer of record" is liable to pay customs and import duties for products shipped internationally. If 
+        /// you specify that the seller is the importer of record, then estimates of customs and import duties will be added
+        /// as tax details to the transaction. Otherwise, the buyer is considered the importer of record, and customs
+        /// and import duties will not be added to the tax details for this transaction.
         /// </summary>
         public Boolean? isSellerImporterOfRecord { get; set; }
 
@@ -263,11 +277,6 @@ namespace Avalara.AvaTax.RestClient
         /// Optional: A list of location types in this transaction. To fetch this list, add the query string "?$include=Addresses" to your URL.
         /// </summary>
         public List<TransactionLocationTypeModel> locationTypes { get; set; }
-
-        /// <summary>
-        /// If this transaction has been adjusted, this list contains all the previous versions of the document.
-        /// </summary>
-        public List<TransactionModel> history { get; set; }
 
         /// <summary>
         /// Contains a summary of tax on this transaction.

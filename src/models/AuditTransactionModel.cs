@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -25,6 +26,11 @@ namespace Avalara.AvaTax.RestClient
         /// Unique ID number of the company that created this transaction
         /// </summary>
         public Int32? companyId { get; set; }
+
+        /// <summary>
+        /// Reconstructed API request/response
+        /// </summary>
+        public ReconstructedApiRequestResponseModel reconstructed { get; set; }
 
         /// <summary>
         /// Server timestamp, in UTC, of the date/time when the original transaction was created
@@ -45,11 +51,6 @@ namespace Avalara.AvaTax.RestClient
         /// Original API request/response
         /// </summary>
         public OriginalApiRequestResponseModel original { get; set; }
-
-        /// <summary>
-        /// Reconstructed API request/response
-        /// </summary>
-        public ReconstructedApiRequestResponseModel reconstructed { get; set; }
 
 
         /// <summary>
