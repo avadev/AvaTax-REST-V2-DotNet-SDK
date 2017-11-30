@@ -166,6 +166,37 @@ namespace Avalara.AvaTax.RestClient
             return o;
         }
 
+        /// <summary>
+        /// Implementation of asynchronous client APIs
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public async Task<T> RestCallAsyncWithStatusCode<T>(string verb, AvaTaxPath relativePath, object content = null) where T : ErrorCodeBase, new()
+        {
+            CallDuration cd = new CallDuration();
+            T o = new T();
+            try
+            {
+                var s = await RestCallStringAsyncWithStatusCode(verb, relativePath, content, cd).ConfigureAwait(false);
+                o = JsonConvert.DeserializeObject<T>(s);
+                cd.FinishParse();
+                this.LastCallTime = cd;
+                o.StatusCode = cd.ResponseCode;
+            }
+            catch (AvaTaxError e)
+            {
+                o.StatusCode = e.StatusCode;
+                o.errorResult = e.error;
+            }
+            catch (Exception ex)
+            {
+                ((ErrorCodeBase)o).StatusCode = HttpStatusCode.InternalServerError;
+            }
+            return o;
+        }
 
         /// <summary>
         /// Direct implementation of client APIs
@@ -180,12 +211,34 @@ namespace Avalara.AvaTax.RestClient
             try {
                 return RestCallAsync<T>(verb, relativePath, content).Result;
 
-            // Unroll single-exception aggregates for ease of use
+                // Unroll single-exception aggregates for ease of use
             } catch (AggregateException ex) {
                 if (ex.InnerExceptions.Count == 1) {
                     throw ex.InnerException;
                 }
                 throw ex;
+            }
+        }
+        /// <summary>
+        /// Direct implementation of client APIs
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public T RestCallWithStatusCode<T>(string verb, AvaTaxPath relativePath, object content = null) where T : ErrorCodeBase, new()
+        {
+            try
+            {
+                return RestCallAsyncWithStatusCode<T>(verb, relativePath, content).Result;
+                // Unroll single-exception aggregates for ease of use
+            }
+            catch (AggregateException ex)
+            {
+                T o = new T();
+                o.StatusCode = HttpStatusCode.InternalServerError;
+                return o;
             }
         }
 
@@ -326,6 +379,45 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
+        /// Implementation of raw string-returning async API 
+        /// </summary>
+        /// <param name="cd"></param>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private async Task<string> RestCallStringAsyncWithStatusCode(string verb, AvaTaxPath relativePath, object content = null, CallDuration cd = null)
+        {
+            if (cd == null) cd = new CallDuration();
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, content).ConfigureAwait(false))
+            {
+
+                // Read the result
+                var s = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                // Determine server duration
+                var sd = result.Headers.GetValues("serverduration").FirstOrDefault();
+                TimeSpan ServerDuration = new TimeSpan();
+                TimeSpan.TryParse(sd, out ServerDuration);
+                cd.FinishReceive(ServerDuration);
+
+                // Deserialize the result
+                if (result.IsSuccessStatusCode)
+                {
+                    cd.ResponseCode = result.StatusCode;
+                    return s;
+                }
+                else
+                {
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(s);
+                    cd.FinishParse();
+                    this.LastCallTime = cd;
+                    var errObj = new AvaTaxError(err);
+                    errObj.StatusCode = result.StatusCode;
+                    throw errObj;
+                }
+            }
+        }
         /// Implementation of raw string-returning API
         /// </summary>
         /// <param name="verb"></param>

@@ -9,7 +9,7 @@ namespace Avalara.AvaTax.RestClient
     /// Represents a result set fetched from AvaTax
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FetchResult<T>
+    public class FetchResult<T> : ErrorCodeBase
     {
         /// <summary>
         /// The number of rows returned by your query, prior to pagination.
@@ -46,6 +46,7 @@ namespace Avalara.AvaTax.RestClient
             this.value = newlist;
         }
 
+        public List<AvaTaxMessage> messages { get; set; }
         /// <summary>
         /// Converts the result set to a printable text object
         /// </summary>

@@ -213,7 +213,7 @@ namespace Avalara.AvaTax.RestClient
         public AddressResolutionModel ResolveAddressPost(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            return RestCall<AddressResolutionModel>("Post", path, model);
+            return RestCallWithStatusCode<AddressResolutionModel>("Post", path, model);
         }
 
 
@@ -440,7 +440,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CertExpressInvitationModel>>("Get", path, null);
+            return RestCallWithStatusCode<FetchResult<CertExpressInvitationModel>>("Get", path, null);
         }
 
 
@@ -858,7 +858,7 @@ namespace Avalara.AvaTax.RestClient
         public CompanyModel CompanyInitialize(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            return RestCall<CompanyModel>("Post", path, model);
+            return RestCallWithStatusCode<CompanyModel>("Post", path, model);
         }
 
 
@@ -1067,7 +1067,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CompanyModel>>("Get", path, null);
+            return RestCallWithStatusCode<FetchResult<CompanyModel>>("Get", path, null);
         }
 
 
@@ -1380,7 +1380,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CertificateModel>>("Get", path, null);
+            return RestCallWithStatusCode<FetchResult<CertificateModel>>("Get", path, null);
         }
 
 
@@ -1410,7 +1410,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<ExemptionStatusModel>("Get", path, null);
+            return RestCallWithStatusCode<ExemptionStatusModel>("Get", path, null);
         }
 
 
@@ -6061,7 +6061,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCallWithStatusCode<TransactionModel>("Post", path, model);
         }
 
 
@@ -6227,7 +6227,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TransactionModel>>("Get", path, null);
+            return RestCallWithStatusCode<FetchResult<TransactionModel>>("Get", path, null);
         }
 
 
@@ -6321,7 +6321,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/settle");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCallWithStatusCode<TransactionModel>("Post", path, model);
         }
 
 
@@ -6364,7 +6364,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCallWithStatusCode<TransactionModel>("Post", path, model);
         }
 
 
@@ -6653,7 +6653,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<SubscriptionModel> ListMySubscriptions()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            return RestCall<FetchResult<SubscriptionModel>>("Get", path, null);
+            return RestCallWithStatusCode<FetchResult<SubscriptionModel>>("Get", path, null);
         }
 
 

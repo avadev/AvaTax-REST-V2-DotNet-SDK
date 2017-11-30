@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// A company or business entity.
     /// </summary>
-    public class CompanyModel
+    public class CompanyModel : ErrorCodeBase
     {
         /// <summary>
         /// The unique ID number of this company.
@@ -199,6 +199,7 @@ namespace Avalara.AvaTax.RestClient
         /// DEPRECATED - Please use the `ListCertificates` API.
         /// </summary>
         public List<EcmsModel> exemptCerts { get; set; }
+        public List<AvaTaxMessage> messages { get; set; }
 
 
         /// <summary>
