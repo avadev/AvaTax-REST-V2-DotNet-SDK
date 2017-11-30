@@ -17,19 +17,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about a previously created transaction
+    /// Information about a previously created MultiDocument transaction
     /// </summary>
-    public class AuditTransactionModel
+    public class AuditMultiDocumentModel
     {
         /// <summary>
-        /// Unique ID number of the company that created this transaction
+        /// Reconstructed API request/response pair that can be used to adjust or re-create this MultiDocument transaction.
         /// </summary>
-        public Int32? companyId { get; set; }
+        public ReconstructedMultiDocumentModel reconstructed { get; set; }
 
         /// <summary>
-        /// Reconstructed API request/response
+        /// Represents the unique code of this MultiDocument transaction.
+        /// 
+        /// A MultiDocument transaction is uniquely identified by its `accountId`, `code`, and `type`.
         /// </summary>
-        public ReconstructedApiRequestResponseModel reconstructed { get; set; }
+        public String code { get; set; }
+
+        /// <summary>
+        /// Represents the document type of this MultiDocument transaction. For more information about
+        /// document types, see [DocumentType](https://developer.avalara.com/api-reference/avatax/rest/v2/models/enums/DocumentType/).
+        /// 
+        /// A MultiDocument transaction is uniquely identified by its `accountId`, `code`, and `type`.
+        /// </summary>
+        public DocumentType? type { get; set; }
 
         /// <summary>
         /// Server timestamp, in UTC, of the date/time when the original transaction was created

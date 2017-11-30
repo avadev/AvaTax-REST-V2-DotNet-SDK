@@ -17,39 +17,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about a previously created transaction
+    /// Status of an Avalara Managed Returns funding configuration for a company
     /// </summary>
-    public class AuditTransactionModel
+    public class FundingConfigurationModel
     {
         /// <summary>
-        /// Unique ID number of the company that created this transaction
+        /// CompanyID
         /// </summary>
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// Reconstructed API request/response
+        /// Domain
         /// </summary>
-        public ReconstructedApiRequestResponseModel reconstructed { get; set; }
+        public String systemType { get; set; }
 
         /// <summary>
-        /// Server timestamp, in UTC, of the date/time when the original transaction was created
+        /// Recipient
         /// </summary>
-        public DateTime? serverTimestamp { get; set; }
+        public String currency { get; set; }
 
         /// <summary>
-        /// Length of time the original API call took
+        /// Sender
         /// </summary>
-        public DateTime? serverDuration { get; set; }
+        public Boolean? isFundingSetup { get; set; }
 
         /// <summary>
-        /// api call status
+        /// DocumentKey
         /// </summary>
-        public ApiCallStatus? apiCallStatus { get; set; }
+        public String fundingMethod { get; set; }
 
         /// <summary>
-        /// Original API request/response
+        /// LastPolled
         /// </summary>
-        public OriginalApiRequestResponseModel original { get; set; }
+        public DateTime? lastUpdated { get; set; }
 
 
         /// <summary>

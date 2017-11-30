@@ -17,24 +17,26 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate type Model
+    /// Replace an existing MultiDocument transaction recorded in AvaTax with a new one.
     /// </summary>
-    public class RateTypeModel
+    public class AdjustMultiDocumentModel
     {
         /// <summary>
-        /// The unique ID number of this rate type.
+        /// A reason code indicating why this adjustment was made
         /// </summary>
-        public String id { get; set; }
+        public AdjustmentReason adjustmentReason { get; set; }
 
         /// <summary>
-        /// Description of this rate type.
+        /// If the AdjustmentReason is "Other", specify the reason here.
+        /// 
+        /// This is required when the AdjustmentReason is 8 (Other).
         /// </summary>
-        public String description { get; set; }
+        public String adjustDescription { get; set; }
 
         /// <summary>
-        /// Country code for this rate type
+        /// Replace the current MultiDocument transaction with tax data calculated for this new MultiDocument transaction
         /// </summary>
-        public String country { get; set; }
+        public CreateMultiDocumentModel newTransaction { get; set; }
 
 
         /// <summary>

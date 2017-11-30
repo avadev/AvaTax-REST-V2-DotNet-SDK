@@ -17,14 +17,30 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Verify this transaction by matching it to values in your accounting system.
+    /// Verify that a MultiDocument object matches the information in your accounting system.
     /// 
-    /// You may specify one or more of the following fields to verify: `date`, `totalAmount`, or `totalTax`.
-    /// This call will report an error if there is any difference between the data stored in AvaTax and
-    /// the data stored in your accounting system.
+    /// If all attributes of the MultiDocument object match the values in your request, the
+    /// MultiDocument object will be moved to the document status `Posted`.
+    /// 
+    /// For more information on document status, see [DocumentStatus](https://developer.avalara.com/api-reference/avatax/rest/v2/models/enums/DocumentStatus/).
     /// </summary>
-    public class VerifyTransactionModel
+    public class VerifyMultiDocumentModel
     {
+        /// <summary>
+        /// Represents the unique code of this MultiDocument transaction.
+        /// 
+        /// A MultiDocument transaction is uniquely identified by its `accountId`, `code`, and `type`.
+        /// </summary>
+        public String code { get; set; }
+
+        /// <summary>
+        /// Represents the document type of this MultiDocument transaction. For more information about
+        /// document types, see [DocumentType](https://developer.avalara.com/api-reference/avatax/rest/v2/models/enums/DocumentType/).
+        /// 
+        /// A MultiDocument transaction is uniquely identified by its `accountId`, `code`, and `type`.
+        /// </summary>
+        public DocumentType type { get; set; }
+
         /// <summary>
         /// Set this value if you wish to verify a match between `verifyTransactionDate` and
         /// the `documentDate` value on the transaction recorded in AvaTax.

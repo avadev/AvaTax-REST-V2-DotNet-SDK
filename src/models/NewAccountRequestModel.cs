@@ -93,6 +93,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Company code to be assigned to the company created for this account.
+        /// If no company code is provided, this will be defaulted to "DEFAULT" company code.
         /// </summary>
         public String companyCode { get; set; }
 

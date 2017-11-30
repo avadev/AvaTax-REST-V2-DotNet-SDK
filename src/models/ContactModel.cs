@@ -77,7 +77,14 @@ namespace Avalara.AvaTax.RestClient
         public String city { get; set; }
 
         /// <summary>
-        /// The state, region, or province of the postal mailing address of this contact.
+        /// Name or ISO 3166 code identifying the region within the country.
+        /// 
+        /// This field supports many different region identifiers:
+        ///  * Two and three character ISO 3166 region codes
+        ///  * Fully spelled out names of the region in ISO supported languages
+        ///  * Common alternative spellings for many regions
+        /// 
+        /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
 
@@ -87,7 +94,15 @@ namespace Avalara.AvaTax.RestClient
         public String postalCode { get; set; }
 
         /// <summary>
-        /// The ISO 3166 two-character country code of the postal mailing address of this contact.
+        /// Name or ISO 3166 code identifying the country.
+        /// 
+        /// This field supports many different country identifiers:
+        ///  * Two character ISO 3166 codes
+        ///  * Three character ISO 3166 codes
+        ///  * Fully spelled out names of the country in ISO supported languages
+        ///  * Common alternative spellings for many countries
+        /// 
+        /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
         /// </summary>
         public String country { get; set; }
 
