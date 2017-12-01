@@ -24,6 +24,16 @@ namespace Avalara.AvaTax.RestClient
         public TimeSpan ServerDuration { get; set; }
 
         /// <summary>
+        /// Tracks the amount of time the service engine took processing the request
+        /// </summary>
+        public TimeSpan ServiceDuration { get; set; }
+
+        /// <summary>
+        /// Tracks the amount of time the data caching engine took processing the request
+        /// </summary>
+        public TimeSpan DataDuration { get; set; }
+
+        /// <summary>
         /// Tracks the amount of time the API call was in flight
         /// </summary>
         public TimeSpan TransitDuration { get; set; }
@@ -65,11 +75,13 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Call this when the API call has returned all its results
         /// </summary>
-        public void FinishReceive(TimeSpan serverDuration)
+        public void FinishReceive(TimeSpan? serverDuration, TimeSpan? dataDuration, TimeSpan? serviceDuration)
         {
             var ts = Checkpoint();
-            ServerDuration = serverDuration;
-            TransitDuration = ts - serverDuration;
+            if (serverDuration != null) ServerDuration = serverDuration.Value;
+            if (dataDuration != null) DataDuration = dataDuration.Value;
+            if (serviceDuration != null) ServiceDuration = serviceDuration.Value;
+            TransitDuration = ts - ServerDuration;
         }
 
         /// <summary>
@@ -86,7 +98,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public override string ToString()
         {
-            return $"Setup: {SetupDuration} Server: {ServerDuration} Transit: {TransitDuration} Parse: {ParseDuration}";
+            return $"Setup: {SetupDuration} Server: {ServerDuration} [Service: {ServiceDuration} Data: {DataDuration}] Transit: {TransitDuration} Parse: {ParseDuration}";
         }
 
         /// <summary>
