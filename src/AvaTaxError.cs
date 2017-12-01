@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -8,6 +9,11 @@ namespace Avalara.AvaTax.RestClient
     public class AvaTaxError : Exception
     {
         /// <summary>
+        /// The HTTP status code
+        /// </summary>
+        public HttpStatusCode statusCode { get; set; }
+
+        /// <summary>
         /// The raw error message from the client
         /// </summary>
         public ErrorResult error { get; set; }
@@ -16,9 +22,11 @@ namespace Avalara.AvaTax.RestClient
         /// Constructs an error object for an API call
         /// </summary>
         /// <param name="err"></param>
-        public AvaTaxError(ErrorResult err)
+        /// <param name="code"></param>
+        public AvaTaxError(ErrorResult err, HttpStatusCode code)
         {
             this.error = err;
+            this.statusCode = code;
         }
     }
 }
