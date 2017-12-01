@@ -453,7 +453,7 @@ namespace Avalara.AvaTax.RestClient
                         using (StreamReader reader = new StreamReader(stream)) {
                             var errString = reader.ReadToEnd();
                             var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                            throw new AvaTaxError(err);
+                            throw new AvaTaxError(err, httpWebResponse.StatusCode);
                         }
                     }
                 }
@@ -524,7 +524,7 @@ namespace Avalara.AvaTax.RestClient
                         using (StreamReader reader = new StreamReader(stream)) {
                             var errString = reader.ReadToEnd();
                             var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                            throw new AvaTaxError(err);
+                            throw new AvaTaxError(err, httpWebResponse.StatusCode);
                         }
                     }
                 }
