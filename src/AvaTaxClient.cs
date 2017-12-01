@@ -251,7 +251,7 @@ namespace Avalara.AvaTax.RestClient
                     var err = JsonConvert.DeserializeObject<ErrorResult>(s);
                     cd.FinishParse();
                     this.LastCallTime = cd;
-                    throw new AvaTaxError(err);
+                    throw new AvaTaxError(err, result.StatusCode);
                 }
             }
         }
@@ -320,7 +320,7 @@ namespace Avalara.AvaTax.RestClient
                     var err = JsonConvert.DeserializeObject<ErrorResult>(s);
                     cd.FinishParse();
                     this.LastCallTime = cd;
-                    throw new AvaTaxError(err);
+                    throw new AvaTaxError(err, result.StatusCode);
                 }
             }
         }
