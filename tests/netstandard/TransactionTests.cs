@@ -1,6 +1,7 @@
 ﻿using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
 using System;
+using System.Net;
 using System.Reflection;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
@@ -137,6 +138,20 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Ensure that the transaction was voided
             Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
+        }
+
+
+        [Test]
+        public void TestError()
+        {
+            var err = Assert.Throws<AvaTaxError>(() =>
+            {
+                // This transaction has no lines - should produce an error
+                var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                    .Create();
+            });
+            Assert.NotNull(err);
+            Assert.AreEqual(err.statusCode, HttpStatusCode.BadRequest);
         }
 
         [Test]
