@@ -36,15 +36,21 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version of the SDK that was compiled
         /// </summary>
+        public static string SDK_TYPE
+        {
+            get
+            {
 #if NET45
-        public static string SDK_TYPE { get { return "NET45"; } }
+                return "NET45";
+#elif NETSTANDARD1_3
+                return "NETSTANDARD1_3";
+#elif NET20
+                return "NET20";
+#else
+                return "UNKNOWN";
 #endif
-#if NETSTANDARD1_6
-        public static string SDK_TYPE { get { return "NETSTANDARD1_6"; } }
-#endif
-#if NET20
-        public static string SDK_TYPE { get { return "NET20"; } }
-#endif
+            }
+        }
 
         #region Constructor
         /// <summary>
@@ -80,9 +86,9 @@ namespace Avalara.AvaTax.RestClient
             WithClientIdentifier(appName, appVersion, machineName);
             _envUri = customEnvironment;
         }
-#endregion
+        #endregion
 
-#region Security
+        #region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -129,9 +135,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-#endregion
+        #endregion
 
-#region Client Identification
+        #region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -144,29 +150,10 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-#endregion
+        #endregion
 
-#region REST Call Interface
+        #region REST Call Interface
 #if PORTABLE
-        /// <summary>
-        /// Implementation of asynchronous client APIs
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        public async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            CallDuration cd = new CallDuration();
-            var s = await RestCallStringAsync(verb, relativePath, content, cd).ConfigureAwait(false);
-            var o = JsonConvert.DeserializeObject<T>(s);
-            cd.FinishParse();
-            this.LastCallTime = cd;
-            return o;
-        }
-
-
         /// <summary>
         /// Direct implementation of client APIs
         /// </summary>
@@ -175,7 +162,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="relativePath"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        public T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
+        private T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
         {
             try {
                 return RestCallAsync<T>(verb, relativePath, content).Result;
@@ -196,31 +183,55 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="relativePath"></param>
         /// <param name="payload"></param>
         /// <returns></returns>
-        public FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
+        private FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
         {
-            return RestCallFileAsync(verb, relativePath, payload).Result;
-        }
-#endif
-#endregion
-
-#region Implementation
-        private JsonSerializerSettings _serializer_settings = null;
-        private JsonSerializerSettings SerializerSettings
-        {
-            get
-            {
-                if (_serializer_settings == null) {
-                    lock (this) {
-                        _serializer_settings = new JsonSerializerSettings();
-                        _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
-                        _serializer_settings.Converters.Add(new StringEnumConverter());
-                    }
+            try {
+                return RestCallFileAsync(verb, relativePath, payload).Result;
+            } catch (AggregateException ex) {
+                if (ex.InnerExceptions.Count == 1) {
+                    throw ex.InnerException;
                 }
-                return _serializer_settings;
+                throw ex;
             }
         }
 
-#if PORTABLE
+        /// <summary>
+        /// Implementation of raw string-returning API
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
+        {
+            try {
+                return RestCallStringAsync(verb, relativePath, content).Result;
+            } catch (AggregateException ex) {
+                if (ex.InnerExceptions.Count == 1) {
+                    throw ex.InnerException;
+                }
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Implementation of asynchronous client APIs
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
+        {
+            CallDuration cd = new CallDuration();
+            var s = await RestCallStringAsync(verb, relativePath, content, cd).ConfigureAwait(false);
+            var o = JsonConvert.DeserializeObject<T>(s);
+            cd.FinishParse();
+            this.LastCallTime = cd;
+            return o;
+        }
+
         /// <summary>
         /// Implementation of raw file-returning async API 
         /// </summary>
@@ -325,6 +336,14 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 
+        /// <summary>
+        /// Determine the duration of a call from components in the header
+        /// 
+        /// This function is not compatible with Net20
+        /// </summary>
+        /// <param name="result"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private TimeSpan? DetectDuration(HttpResponseMessage result, string name)
         {
             IEnumerable<string> values = null;
@@ -338,18 +357,6 @@ namespace Avalara.AvaTax.RestClient
                 }
             }
             return null;
-        }
-
-        /// <summary>
-        /// Implementation of raw string-returning API
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            return RestCallStringAsync(verb, relativePath, content).Result;
         }
 #else
         /// <summary>
@@ -533,20 +540,44 @@ namespace Avalara.AvaTax.RestClient
                 throw webex;
             }
         }
+#endif
+        #endregion
 
-        private string CombinePath(string url1, string url2)
+        #region Helper Functions
+        /// <summary>
+        /// Combine two URLs safely
+        /// </summary>
+        /// <param name="serverUrl"></param>
+        /// <param name="pathUrl"></param>
+        /// <returns></returns>
+        private string CombinePath(string serverUrl, string pathUrl)
         {
-            var endslash = url1.EndsWith("/");
-            var startslash = url2.StartsWith("/");
+            var endslash = serverUrl.EndsWith("/");
+            var startslash = pathUrl.StartsWith("/");
             if (endslash && startslash) {
-                return url1 + url2.Substring(1);
+                return serverUrl + pathUrl.Substring(1);
             } else if (!endslash && !startslash) {
-                return url1 + "/" + url2;
+                return serverUrl + "/" + pathUrl;
             } else {
-                return url1 + url2;
+                return serverUrl + pathUrl;
             }
         }
-#endif
+
+        private JsonSerializerSettings _serializer_settings = null;
+        private JsonSerializerSettings SerializerSettings
+        {
+            get
+            {
+                if (_serializer_settings == null) {
+                    lock (this) {
+                        _serializer_settings = new JsonSerializerSettings();
+                        _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
+                        _serializer_settings.Converters.Add(new StringEnumConverter());
+                    }
+                }
+                return _serializer_settings;
+            }
+        }
 
         /// <summary>
         /// Shortcut to parse a content disposition to determine attachment filename
@@ -562,7 +593,6 @@ namespace Avalara.AvaTax.RestClient
             }
             return contentDisposition;
         }
-
-#endregion
+        #endregion
     }
 }
