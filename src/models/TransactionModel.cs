@@ -151,6 +151,11 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? totalExempt { get; set; }
 
         /// <summary>
+        /// The total amount of discounts applied to all lines within this transaction.
+        /// </summary>
+        public Decimal? totalDiscount { get; set; }
+
+        /// <summary>
         /// The total tax calculated for all lines in this transaction.
         /// </summary>
         public Decimal? totalTax { get; set; }

@@ -23,32 +23,43 @@ namespace Avalara.AvaTax.RestClient
     public class RefundTransactionModel
     {
         /// <summary>
-        /// the transaction code for this refund
+        /// The transaction code for the refund. This code will be saved to the `ReturnInvoice` transaction, and does not need to match the code of the original sale.
         /// </summary>
         public String refundTransactionCode { get; set; }
 
         /// <summary>
-        /// The date of the refund. If null, today's date will be used
+        /// The date of the refund. For customers using Avalara's Managed Returns Service, this date controls the month in which the refund
+        /// transaction will be reported on a tax filing.
         /// </summary>
-        public DateTime? refundDate { get; set; }
+        public DateTime refundDate { get; set; }
 
         /// <summary>
-        /// Type of this refund
+        /// Type of this refund. 
+        /// 
+        /// To submit a full refund, specify `Full`. 
+        /// 
+        /// To refund only specific lines from the transaction, specify `Partial` and indicate the lines you wish to apply in the `refundLines` field.
+        /// 
+        /// To refund the tax that was paid in the previous transaction, specify `TaxOnly`.
+        /// 
+        /// To issue a percentage-based discount, specify `Percentage`.
         /// </summary>
         public RefundType? refundType { get; set; }
 
         /// <summary>
-        /// Percentage for refund
+        /// The percentage for refund.
+        /// 
+        /// This value only applies if you choose `refundType = Percentage` or `refundType = Partial`.
         /// </summary>
         public Decimal? refundPercentage { get; set; }
 
         /// <summary>
-        /// Process refund for these lines
+        /// If you chose a refund of type `Partial`, this indicates which lines from the original transaction are being refunded.
         /// </summary>
         public List<String> refundLines { get; set; }
 
         /// <summary>
-        /// Reference code for this refund
+        /// A user-defined reference field containing information about this refund.
         /// </summary>
         public String referenceCode { get; set; }
 

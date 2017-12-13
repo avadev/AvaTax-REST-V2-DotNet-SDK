@@ -38,6 +38,11 @@ namespace Avalara.AvaTax.RestClient
         public Int64? filingId { get; set; }
 
         /// <summary>
+        /// The resourceFileId of the return
+        /// </summary>
+        public Int64? resourceFileId { get; set; }
+
+        /// <summary>
         /// The region id that this return belongs too
         /// </summary>
         public Int64? filingRegionId { get; set; }
