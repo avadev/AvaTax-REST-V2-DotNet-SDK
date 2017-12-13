@@ -165,4 +165,4 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.NotNull(errorResult);
         }
     }
-} 
+}
