@@ -2,7 +2,7 @@ language: csharp
 solution: Avalara.AvaTax.netstandard11.sln
 dist: trusty
 sudo: required
-dotnet: 1.0.0-preview2-003131
+dotnet: 1.0.0-preview2-003133
 mono: latest
 install:
   - sudo apt-get install -y gtk-sharp2
