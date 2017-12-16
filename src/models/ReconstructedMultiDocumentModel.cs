@@ -17,24 +17,15 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate type Model
+    /// Contains information about the original API request and response that created
+    /// a MultiDocument object.
     /// </summary>
-    public class RateTypeModel
+    public class ReconstructedMultiDocumentModel
     {
         /// <summary>
-        /// The unique ID number of this rate type.
+        /// The original request that was used to create a MultiDocument object.
         /// </summary>
-        public String id { get; set; }
-
-        /// <summary>
-        /// Description of this rate type.
-        /// </summary>
-        public String description { get; set; }
-
-        /// <summary>
-        /// Country code for this rate type
-        /// </summary>
-        public String country { get; set; }
+        public CreateMultiDocumentModel request { get; set; }
 
 
         /// <summary>

@@ -51,6 +51,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String licenseKey { get; set; }
 
+        /// <summary>
+        /// The payment url where the payment method can be set up
+        /// </summary>
+        public String paymentUrl { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

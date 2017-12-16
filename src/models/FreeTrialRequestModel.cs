@@ -48,6 +48,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String phone { get; set; }
 
+        /// <summary>
+        /// Campaign identifier for Notification purpose
+        /// </summary>
+        public String campaign { get; set; }
+
+        /// <summary>
+        /// The Address information of the account
+        /// </summary>
+        public CompanyAddress companyAddress { get; set; }
+
+        /// <summary>
+        /// Website of the company or user requesting a free trial
+        /// </summary>
+        public String website { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

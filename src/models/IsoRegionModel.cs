@@ -32,7 +32,9 @@ namespace Avalara.AvaTax.RestClient
         public String code { get; set; }
 
         /// <summary>
-        /// The full name, using localized characters, for this region
+        /// The full name, using localized characters, for this region, in uppercase.
+        /// 
+        /// For names in proper or formal case, or for names in other languages, please examine the `localizedNames` element for an appropriate name.
         /// </summary>
         public String name { get; set; }
 
@@ -46,6 +48,13 @@ namespace Avalara.AvaTax.RestClient
         /// Sales Tax program. For countries other than the US, this flag is null.
         /// </summary>
         public Boolean? streamlinedSalesTax { get; set; }
+
+        /// <summary>
+        /// A list of localized names in a variety of languages.
+        /// 
+        /// This list is maintained by the International Standards Organization.
+        /// </summary>
+        public List<IsoLocalizedName> localizedNames { get; set; }
 
 
         /// <summary>

@@ -54,9 +54,15 @@ namespace Avalara.AvaTax.RestClient
         public String taxCode { get; set; }
 
         /// <summary>
-        /// Customer Usage Type - The client application customer or usage type.
+        /// DEPERECATED - Customer Usage Type - The client application customer or usage type.
+        /// Please use entityUseCode instead.
         /// </summary>
         public String customerUsageType { get; set; }
+
+        /// <summary>
+        /// Entity Use Code - The client application customer or usage type.
+        /// </summary>
+        public String entityUseCode { get; set; }
 
         /// <summary>
         /// Item Code (SKU)
@@ -74,7 +80,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? discounted { get; set; }
 
         /// <summary>
-        /// Indicates if line has Tax Included; defaults to false
+        /// Indicates whether the `amount` for this line already includes tax.
+        /// 
+        /// If this value is `true`, the final price of this line including tax will equal the value in `amount`. 
+        /// 
+        /// If this value is `null` or `false`, the final price will equal `amount` plus whatever taxes apply to this line.
         /// </summary>
         public Boolean? taxIncluded { get; set; }
 

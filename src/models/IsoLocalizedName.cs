@@ -17,24 +17,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Rate type Model
+    /// Represents a language-specific localized name of a particular geographic entity such
+    /// as a country or a region.
     /// </summary>
-    public class RateTypeModel
+    public class IsoLocalizedName
     {
         /// <summary>
-        /// The unique ID number of this rate type.
+        /// The two-character alphanumeric code identifying the language in which this name is used.
+        /// 
+        /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
         /// </summary>
-        public String id { get; set; }
+        public String languageAlpha2Code { get; set; }
 
         /// <summary>
-        /// Description of this rate type.
+        /// The three-character alphanumeric code identifying the language in which this name is used.
+        /// 
+        /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
         /// </summary>
-        public String description { get; set; }
+        public String languageAlpha3Code { get; set; }
 
         /// <summary>
-        /// Country code for this rate type
+        /// The name of this geographic entity as known in this language.
         /// </summary>
-        public String country { get; set; }
+        public String name { get; set; }
 
 
         /// <summary>
