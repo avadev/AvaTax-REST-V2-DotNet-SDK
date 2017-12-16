@@ -15,6 +15,7 @@ using System.Threading.Tasks;
  *
  * @author     Ted Spence <ted.spence@avalara.com>
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
+ * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
  * @version    17.12.0-147
