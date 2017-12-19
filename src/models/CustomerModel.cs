@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// Represents a customer to whom you sell products and/or services.
     /// </summary>
-    public class CustomerModel
+    public class CustomerModel : ErrorCodeBase
     {
         /// <summary>
         /// Unique ID number of this customer.
@@ -143,6 +143,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CertificateModel> certificates { get; set; }
 
+        public List<AvaTaxMessage> messages { get; set; }
 
         /// <summary>
         /// Convert this object to a JSON string of itself

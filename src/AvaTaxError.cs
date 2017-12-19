@@ -8,6 +8,7 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class AvaTaxError : Exception
     {
+        public HttpStatusCode StatusCode { get; set; }
         /// <summary>
         /// The HTTP status code
         /// </summary>

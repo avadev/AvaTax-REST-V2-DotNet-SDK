@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// Indicates the customer's exemption status in a specific country and region.
     /// </summary>
-    public class ExemptionStatusModel
+    public class ExemptionStatusModel : ErrorCodeBase
     {
         /// <summary>
         /// The exemption status of this customer in this country/region.
@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public CertificateModel certificate { get; set; }
 
-
+        public List<AvaTaxMessage> messages { get; set; }
         /// <summary>
         /// Convert this object to a JSON string of itself
         /// </summary>

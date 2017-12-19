@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// This object represents a single transaction; for example, a sales invoice or purchase order.
     /// </summary>
-    public class TransactionModel
+    public class TransactionModel: ErrorCodeBase
     {
         /// <summary>
         /// The unique ID number of this transaction.

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Net;
 #if PORTABLE
 using System.Threading.Tasks;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace Avalara.AvaTax.RestClient
         /// Tracks the amount of time it took to parse results from the API call
         /// </summary>
         public TimeSpan ParseDuration { get; set; }
+        public HttpStatusCode ResponseCode { get; set; }
 
 #region Implementation
         /// <summary>

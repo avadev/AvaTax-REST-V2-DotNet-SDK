@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// Address Resolution Model
     /// </summary>
-    public class AddressResolutionModel
+    public class AddressResolutionModel : ErrorCodeBase
     {
         /// <summary>
         /// The original address
