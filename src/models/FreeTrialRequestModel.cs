@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -47,6 +48,21 @@ namespace Avalara.AvaTax.RestClient
         /// The phone number of the person requesting the free trial.
         /// </summary>
         public String phone { get; set; }
+
+        /// <summary>
+        /// Campaign identifier for Notification purpose
+        /// </summary>
+        public String campaign { get; set; }
+
+        /// <summary>
+        /// The Address information of the account
+        /// </summary>
+        public CompanyAddress companyAddress { get; set; }
+
+        /// <summary>
+        /// Website of the company or user requesting a free trial
+        /// </summary>
+        public String website { get; set; }
 
 
         /// <summary>

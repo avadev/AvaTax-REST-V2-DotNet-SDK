@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -35,6 +36,11 @@ namespace Avalara.AvaTax.RestClient
         /// The filing id that this return belongs too
         /// </summary>
         public Int64? filingId { get; set; }
+
+        /// <summary>
+        /// The resourceFileId of the return
+        /// </summary>
+        public Int64? resourceFileId { get; set; }
 
         /// <summary>
         /// The region id that this return belongs too

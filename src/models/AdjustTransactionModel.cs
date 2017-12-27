@@ -12,12 +12,13 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to adjust tax for a previously existing transaction
+    /// Replace an existing transaction recorded in AvaTax with a new one.
     /// </summary>
     public class AdjustTransactionModel
     {

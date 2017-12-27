@@ -10,9 +10,14 @@ namespace Avalara.AvaTax.RestClient
     public class ErrorInfo
     {
         /// <summary>
-        /// Type of error that occurred
+        /// Type of error that occurred.
         /// </summary>
-        public ErrorCodeId? code { get; set; }
+        /// <remarks>
+        /// This value is captured as a string so that if the server adds new error codes it will still parse.
+        /// 
+        /// You can compare this value to the ErrorCodeId enumeration.
+        /// </remarks>
+        public String code { get; set; }
 
         /// <summary>
         /// Short one-line message to summaryize what went wrong
@@ -22,7 +27,10 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// What object or service caused the error?
         /// </summary>
-        public ErrorTargetCode? target { get; set; }
+        /// <remarks>
+        /// This value is captured as a string so that if the server adds new error targets it will still parse.
+        /// </remarks>
+        public String target { get; set; }
 
         /// <summary>
         /// Array of detailed error messages

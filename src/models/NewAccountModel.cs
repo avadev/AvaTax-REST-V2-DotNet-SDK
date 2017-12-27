@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
+ * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -50,6 +51,11 @@ namespace Avalara.AvaTax.RestClient
         /// The license key of the account that was created
         /// </summary>
         public String licenseKey { get; set; }
+
+        /// <summary>
+        /// The payment url where the payment method can be set up
+        /// </summary>
+        public String paymentUrl { get; set; }
 
 
         /// <summary>
