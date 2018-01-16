@@ -1,4 +1,5 @@
 ﻿using Avalara.AvaTax.RestClient;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Reflection;
@@ -105,6 +106,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [Test]
         public void TransactionWorkflow()
         {
+            Client.CallCompleted += Client_CallCompleted;
+
             // Execute a transaction
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
@@ -137,6 +140,11 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Ensure that the transaction was voided
             Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
+        }
+
+        private void Client_CallCompleted(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(e));
         }
 
         [Test]
