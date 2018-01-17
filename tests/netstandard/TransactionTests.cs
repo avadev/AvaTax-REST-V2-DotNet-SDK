@@ -108,6 +108,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
+            var tfn = System.IO.Path.GetTempFileName();
+            Client.LogToFile(tfn);
 
             // Execute a transaction
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
@@ -124,6 +126,9 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.True(String.Equals(lastEvent.HttpVerb, "POST", StringComparison.CurrentCultureIgnoreCase));
             Assert.True(String.Equals(lastEvent.RequestUri.ToString(), "https://sandbox-rest.avatax.com/api/v2/transactions/create", StringComparison.CurrentCultureIgnoreCase));
             Assert.AreEqual(lastEvent.Code, HttpStatusCode.Created);
+
+            // Verify that the log file was created
+            Assert.True(System.IO.File.Exists(tfn));
 
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");

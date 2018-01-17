@@ -632,6 +632,33 @@ namespace Avalara.AvaTax.RestClient
         {
             CallCompleted?.Invoke(this, e);
         }
+
+        /// <summary>
+        /// Enable logging to a file
+        /// </summary>
+        /// <param name="logFileName"></param>
+        public void LogToFile(string logFileName)
+        {
+            _logFileName = logFileName;
+            CallCompleted += LogFile_CallCompleted;
+        }
+
+        private string _logFileName = null;
+        private void LogFile_CallCompleted(object sender, EventArgs e)
+        {
+            var evt = e as AvaTaxCallEventArgs;
+
+            // Write to disk
+            var g = Guid.NewGuid().ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestBody}\r\n");
+            if (evt.ResponseString != null) {
+                sb.Append($"=== RESPONSE {g}: {evt.Code} Type: JSON ===\r\n{evt.ResponseString}\r\n=== END {g} ===\r\n");
+            } else {
+                sb.Append($"=== RESPONSE {g}: {evt.Code} Type: FILE ===\r\n{evt.ResponseBody?.Length} bytes\r\n=== END {g} ===\r\n");
+            }
+            File.AppendAllText(_logFileName, sb.ToString(), Encoding.UTF8);
+        }
         #endregion
     }
 }
