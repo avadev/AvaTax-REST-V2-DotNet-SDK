@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.Net;
 using System.Reflection;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
@@ -118,6 +119,12 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 .WithLineReference("Special Line Reference!", "Also this!")
                 .Create();
 
+            // Verify that the call was captured and logged
+            Assert.NotNull(lastEvent);
+            Assert.True(String.Equals(lastEvent.HttpVerb, "POST", StringComparison.CurrentCultureIgnoreCase));
+            Assert.True(String.Equals(lastEvent.RequestUri.ToString(), "https://sandbox-rest.avatax.com/api/v2/transactions/create", StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(lastEvent.Code, HttpStatusCode.Created);
+
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");
             Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
@@ -142,9 +149,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
         }
 
+        private AvaTaxCallEventArgs lastEvent = null;
         private void Client_CallCompleted(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(JsonConvert.SerializeObject(e));
+            lastEvent = e as AvaTaxCallEventArgs;
         }
 
         [Test]
