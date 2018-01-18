@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -222,9 +221,22 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? taxIncluded { get; set; }
 
         /// <summary>
-        /// Optional: A list of tax details for this line item. To fetch this list, add the query string "?$include=Details" to your URL.
+        /// Optional: A list of tax details for this line item. 
+        /// 
+        /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `details` collection are intended to be 
+        /// displayed to the customer and charged as a 'tax' on the invoice.
+        /// 
+        /// To fetch this list, add the query string `?$include=Details` to your URL.
         /// </summary>
         public List<TransactionLineDetailModel> details { get; set; }
+
+        /// <summary>
+        /// Optional: A list of non-passthrough tax details for this line item.
+        /// 
+        /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `nonPassthroughDetails` collection are 
+        /// taxes that must be paid directly by the company and not shown to the customer.
+        /// </summary>
+        public List<TransactionLineDetailModel> nonPassthroughDetails { get; set; }
 
         /// <summary>
         /// Optional: A list of location types for this line item. To fetch this list, add the query string "?$include=LineLocationTypes" to your URL.
@@ -235,6 +247,17 @@ namespace Avalara.AvaTax.RestClient
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
+
+        /// <summary>
+        /// The cross-border harmonized system code (HSCode) used to calculate tariffs and duties for this line item. 
+        /// For a full list of HS codes, see `ListCrossBorderCodes()`.
+        /// </summary>
+        public String hsCode { get; set; }
+
+        /// <summary>
+        /// Indicates the cost of insurance and freight for this line.
+        /// </summary>
+        public Decimal? costInsuranceFreight { get; set; }
 
 
         /// <summary>

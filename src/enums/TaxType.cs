@@ -10,7 +10,6 @@ using System;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -34,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         /// EWaste tax type
         /// </summary>
         EWaste,
+
+        /// <summary>
+        /// LandedCost tax type
+        /// </summary>
+        LandedCost,
 
         /// <summary>
         /// Consumer Use Tax

@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -78,6 +77,14 @@ namespace Avalara.AvaTax.RestClient
         /// assist customers.
         /// </summary>
         public String website { get; set; }
+
+        /// <summary>
+        /// Payment Method to be associated with the account.
+        /// 
+        /// This is strictly to be used internally unless your Avalara business development manager specifically asks you to provide this value
+        /// while attempting to create an account.
+        /// </summary>
+        public String paymentMethodId { get; set; }
 
         /// <summary>
         /// First name of the primary contact person for this account

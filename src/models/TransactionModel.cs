@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -227,6 +226,9 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? exchangeRate { get; set; }
 
         /// <summary>
+        /// By default, the value is null, when the value is null, the value can be set at nexus level and used.
+        /// If the value is not null, it will override the value at nexus level.
+        /// 
         /// If true, this seller was considered the importer of record of a product shipped internationally.
         /// 
         /// If this transaction is not an international transaction, this field may be left blank.

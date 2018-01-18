@@ -12,10 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
-<<<<<<< HEAD
-=======
- * @author Greg Hester
->>>>>>> 5772f82e9b5d7d2aa37973d9dec53f2633b41978
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -40,17 +36,23 @@ namespace Avalara.AvaTax.RestClient
         public String reportingLocationCode { get; set; }
 
         /// <summary>
-        /// Line number within this document
+        /// The line number of this line within the document. This can be any text that is useful to you, such as numeric line numbers, alphabetic line numbers, or other text.
         /// </summary>
         public String number { get; set; }
 
         /// <summary>
-        /// Quantity of items in this line
+        /// Quantity of items in this line. This quantity value should always be a positive value representing the quantity of product that changed hands, even when handling returns or refunds.
+        /// 
+        /// If not provided, or if set to zero, the quantity value is assumed to be one (1).
         /// </summary>
-        public Decimal quantity { get; set; }
+        public Decimal? quantity { get; set; }
 
         /// <summary>
-        /// Total amount for this line
+        /// Total amount for this line. The amount represents the net currency value that changed hands from the customer (represented by the `customerCode` field) to the company (represented by the `companyCode`) field.
+        /// 
+        /// For sale transactions, this value must be positive. It indicates the amount of money paid by the customer to the company.
+        /// 
+        /// For refund or return transactions, this value must be negative.
         /// </summary>
         public Decimal amount { get; set; }
 
@@ -72,28 +74,32 @@ namespace Avalara.AvaTax.RestClient
         public String taxCode { get; set; }
 
         /// <summary>
-        /// DEPERECATED - Customer Usage Type - The client application customer or usage type.
-        /// Please use entityUseCode instead.
+        /// DEPRECATED - Please use `entityUseCode` instead.
         /// </summary>
         public String customerUsageType { get; set; }
 
         /// <summary>
-        /// Entity Use Code - The client application customer or usage type.
+        /// Entity Use Code - The client application customer or usage type. This field allows you to designate a type of usage that 
+        /// may make this transaction considered exempt by reason of exempt usage.
+        /// 
+        /// For a list of entity use codes, see the Definitions API `ListEntityUseCodes`.
         /// </summary>
         public String entityUseCode { get; set; }
 
         /// <summary>
-        /// Item Code (SKU)
+        /// Item Code (SKU). If you provide an `itemCode` field, the AvaTax API will look up the item you created with the `CreateItems` API call
+        /// and use all the information available about that item for this transaction.
         /// </summary>
         public String itemCode { get; set; }
 
         /// <summary>
-        /// Exemption number for this line
+        /// Exemption certificate number for this line.
         /// </summary>
         public String exemptionCode { get; set; }
 
         /// <summary>
-        /// True if the document discount should be applied to this line
+        /// True if the document discount should be applied to this line. If this value is false, or not provided, discounts will not be 
+        /// applied to this line even if they are specified on the root `discount` element.
         /// </summary>
         public Boolean? discounted { get; set; }
 
@@ -107,22 +113,30 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? taxIncluded { get; set; }
 
         /// <summary>
-        /// Revenue Account
+        /// Revenue Account (Customer Defined Field).
+        /// 
+        /// This field is available for you to use to provide whatever information your implementation requires. It does not affect tax calculation.
         /// </summary>
         public String revenueAccount { get; set; }
 
         /// <summary>
-        /// Reference 1 - Client specific reference field
+        /// Ref1 (Customer Defined Field)
+        /// 
+        /// This field is available for you to use to provide whatever information your implementation requires. It does not affect tax calculation.
         /// </summary>
         public String ref1 { get; set; }
 
         /// <summary>
-        /// Reference 2 - Client specific reference field
+        /// Ref2 (Customer Defined Field)
+        /// 
+        /// This field is available for you to use to provide whatever information your implementation requires. It does not affect tax calculation.
         /// </summary>
         public String ref2 { get; set; }
 
         /// <summary>
-        /// Item description. This is required for SST transactions if an unmapped ItemCode is used.
+        /// Item description.
+        /// 
+        /// For Streamlined Sales Tax (SST) customers, this field is required if an unmapped `itemCode` is used.
         /// </summary>
         public String description { get; set; }
 
@@ -137,15 +151,24 @@ namespace Avalara.AvaTax.RestClient
         public String businessIdentificationNo { get; set; }
 
         /// <summary>
-        /// Specifies a tax override for this line
+        /// Specifies a tax override for this line.
         /// </summary>
         public TaxOverrideModel taxOverride { get; set; }
 
         /// <summary>
         /// Special parameters that apply to this line within this transaction.
-        /// To get a full list of available parameters, please use the /api/v2/definitions/parameters endpoint.
+        /// 
+        /// To get a full list of available parameters, please use the `ListParameters` API.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
+
+        /// <summary>
+        /// The Item code for Custom Duty / Global Import tax determination
+        /// Harmonized Tariff System code for this transaction.
+        /// 
+        /// For a list of harmonized tariff codes, see the Definitions API for harmonized tariff codes.
+        /// </summary>
+        public String hsCode { get; set; }
 
 
         /// <summary>

@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -200,6 +199,16 @@ namespace Avalara.AvaTax.RestClient
         /// DEPRECATED - Please use the `ListCertificates` API.
         /// </summary>
         public List<EcmsModel> exemptCerts { get; set; }
+
+        /// <summary>
+        /// The unique identifier of the mini-one-stop-shop used for Value Added Tax (VAT) processing.
+        /// </summary>
+        public String mossId { get; set; }
+
+        /// <summary>
+        /// The country code of the mini-one-stop-shop used for Value Added Tax (VAT) processing.
+        /// </summary>
+        public String mossCountry { get; set; }
 
 
         /// <summary>

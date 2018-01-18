@@ -12,10 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
-<<<<<<< HEAD
-=======
- * @author Greg Hester
->>>>>>> 5772f82e9b5d7d2aa37973d9dec53f2633b41978
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -49,6 +45,11 @@ namespace Avalara.AvaTax.RestClient
         /// The taxpayer identification number for the company
         /// </summary>
         public String tin { get; set; }
+
+        /// <summary>
+        /// The company code for the company
+        /// </summary>
+        public String companyCode { get; set; }
 
 
         /// <summary>

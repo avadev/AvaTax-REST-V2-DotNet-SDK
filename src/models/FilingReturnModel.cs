@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -156,6 +155,21 @@ namespace Avalara.AvaTax.RestClient
         /// Total amount of adjustments on this return
         /// </summary>
         public Decimal? totalAdjustments { get; set; }
+
+        /// <summary>
+        /// The amount of sales excluded from the liability calculation
+        /// </summary>
+        public Decimal? excludedSalesAmount { get; set; }
+
+        /// <summary>
+        /// The amount of non-taxable sales excluded from the liability calculation
+        /// </summary>
+        public Decimal? excludedNonTaxableAmount { get; set; }
+
+        /// <summary>
+        /// The amount of tax excluded from the liability calculation
+        /// </summary>
+        public Decimal? excludedTaxAmount { get; set; }
 
         /// <summary>
         /// The Adjustments for this return.

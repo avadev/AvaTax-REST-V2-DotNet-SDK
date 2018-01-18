@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -170,6 +169,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * Common alternative spellings for many regions
         /// 
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
+        /// NOTE: Region is not required for non-US countries because the user may be either creating a Country-level or Region-level rule.
         /// </summary>
         public String region { get; set; }
 
@@ -217,6 +217,31 @@ namespace Avalara.AvaTax.RestClient
         /// Id for RateTypeTaxTypeMapping object
         /// </summary>
         public Int32? rateTypeTaxTypeMappingId { get; set; }
+
+        /// <summary>
+        /// Indicates the expression to use to determine whether this tax rule generates a non-passthrough tax.
+        /// 
+        /// Non-passthrough taxes are taxes that cannot be charged to the customer.
+        /// </summary>
+        public String nonPassthroughExpression { get; set; }
+
+        /// <summary>
+        /// The currency code to use for this rule.
+        /// </summary>
+        public String currencyCode { get; set; }
+
+        /// <summary>
+        /// For rules that only apply to one tax code program, this value indicates what program should be used for implementing this rule.
+        /// </summary>
+        public Int32? preferredProgramId { get; set; }
+
+        /// <summary>
+        /// For tax rules that are calculated using units of measurement, this indicates the unit of measurement type
+        /// used to calculate the amounts for this rule.
+        /// 
+        /// For a list of units of measurement, please call `ListUnitsOfMeasurement()`.
+        /// </summary>
+        public Int32? uomId { get; set; }
 
 
         /// <summary>
