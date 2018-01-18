@@ -36,6 +36,11 @@ namespace Avalara.AvaTax.RestClient
         EWaste,
 
         /// <summary>
+        /// LandedCost tax type
+        /// </summary>
+        LandedCost,
+
+        /// <summary>
         /// Consumer Use Tax
         /// </summary>
         ConsumerUse,

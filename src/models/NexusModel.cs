@@ -179,6 +179,20 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int64? taxAuthorityId { get; set; }
 
+        /// <summary>
+        /// For nexus declarations at the country level, specifies whether this company is considered the importer of record in this nexus region.
+        /// 
+        /// Some taxes only apply if the seller is the importer of record for a product. In cases where companies are working together to
+        /// ship products, there may be mutual agreement as to which company is the entity designated as importer of record. The importer
+        /// of record will then be the company designated to pay taxes marked as being obligated to the importer of record.
+        /// 
+        /// Set this value to `true` to consider your company as the importer of record and collect these taxes. Leave this value as false
+        /// or null and taxes will be calculated as if your company is not the importer of record.
+        /// 
+        /// This value may also be set during each transaction API call. See `CreateTransaction()` for more information.
+        /// </summary>
+        public Boolean? isSellerImporterOfRecord { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

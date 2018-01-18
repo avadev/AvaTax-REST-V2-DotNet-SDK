@@ -110,5 +110,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         AvaBottle,
 
+        /// <summary>
+        /// MRSComplianceManager
+        /// </summary>
+        MRSComplianceManager,
+
     }
 }

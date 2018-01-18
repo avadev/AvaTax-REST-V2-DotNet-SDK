@@ -154,6 +154,7 @@
     <Compile Include="models\CommunicationsTSPairModel.cs" />
     <Compile Include="models\CompanyAddress.cs" />
     <Compile Include="models\CompanyConfigurationModel.cs" />
+    <Compile Include="models\CompanyDistanceThresholdModel.cs" />
     <Compile Include="models\CompanyInitializationModel.cs" />
     <Compile Include="models\CompanyModel.cs" />
     <Compile Include="models\ContactModel.cs" />
@@ -195,11 +196,13 @@
     <Compile Include="models\FilingsCheckupModel.cs" />
     <Compile Include="models\FilingsCheckupSuggestedFormModel.cs" />
     <Compile Include="models\FilingStatusChangeModel.cs" />
+    <Compile Include="models\FormMasterModel.cs" />
     <Compile Include="models\FreeTrialRequestModel.cs" />
     <Compile Include="models\FundingConfigurationModel.cs" />
     <Compile Include="models\FundingESignMethodReturn.cs" />
     <Compile Include="models\FundingInitiateModel.cs" />
     <Compile Include="models\FundingStatusModel.cs" />
+    <Compile Include="models\HsCodeModel.cs" />
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoLocalizedName.cs" />
     <Compile Include="models\IsoRegionModel.cs" />
@@ -246,6 +249,7 @@
     <Compile Include="models\PingResultModel.cs" />
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\PoNumberModel.cs" />
+    <Compile Include="models\PostalCodeModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RateTypeModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
@@ -284,6 +288,7 @@
     <Compile Include="models\TransactionLocationTypeModel.cs" />
     <Compile Include="models\TransactionModel.cs" />
     <Compile Include="models\TransactionSummary.cs" />
+    <Compile Include="models\UomModel.cs" />
     <Compile Include="models\UPCModel.cs" />
     <Compile Include="models\UserEntitlementModel.cs" />
     <Compile Include="models\UserModel.cs" />

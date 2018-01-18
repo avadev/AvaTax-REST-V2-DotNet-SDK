@@ -122,14 +122,14 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
 
             // Now commit that transaction
-            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, new CommitTransactionModel { commit = true });
+            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, DocumentType.SalesInvoice, new CommitTransactionModel { commit = true });
 
             // Ensure that this transaction was committed
             Assert.NotNull(commitResult, "Should have been able to call CommitTransaction");
             Assert.True(commitResult.status == DocumentStatus.Committed, "Transaction should have been committed");
 
             // Now void the transaction
-            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, new VoidTransactionModel
+            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, DocumentType.SalesInvoice, new VoidTransactionModel
             {
                 code = VoidReasonCode.DocVoided
             });
