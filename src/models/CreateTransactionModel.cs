@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -190,7 +189,15 @@ namespace Avalara.AvaTax.RestClient
         public String businessIdentificationNo { get; set; }
 
         /// <summary>
-        /// Specifies if the Transaction has the seller as IsSellerImporterOfRecord.
+        /// Specifies if the transaction should have value-added and cross-border taxes calculated with the seller as the importer of record.
+        /// 
+        /// Some taxes only apply if the seller is the importer of record for a product. In cases where companies are working together to
+        /// ship products, there may be mutual agreement as to which company is the entity designated as importer of record. The importer
+        /// of record will then be the company designated to pay taxes marked as being obligated to the importer of record.
+        /// 
+        /// Set this value to `true` to consider your company as the importer of record and collect these taxes.
+        /// 
+        /// This value may also be set at the Nexus level. See `NexusModel` for more information.
         /// </summary>
         public Boolean? isSellerImporterOfRecord { get; set; }
 

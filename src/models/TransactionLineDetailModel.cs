@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -218,6 +217,13 @@ namespace Avalara.AvaTax.RestClient
         /// When calculating units, what basis of measurement did we use for calculating the units?
         /// </summary>
         public String unitOfBasis { get; set; }
+
+        /// <summary>
+        /// True if this value is a non-passthrough tax.
+        /// 
+        /// A non-passthrough tax is a tax that may not be charged to a customer; it must be paid directly by the company.
+        /// </summary>
+        public Boolean? isNonPassThru { get; set; }
 
 
         /// <summary>

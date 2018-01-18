@@ -10,7 +10,6 @@ using System;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -109,6 +108,11 @@ namespace Avalara.AvaTax.RestClient
         /// AvaBottle
         /// </summary>
         AvaBottle,
+
+        /// <summary>
+        /// MRSComplianceManager
+        /// </summary>
+        MRSComplianceManager,
 
     }
 }

@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -51,6 +50,11 @@ namespace Avalara.AvaTax.RestClient
         /// The ID number of the currently authenticated user's account, if any.
         /// </summary>
         public Int32? authenticatedAccountId { get; set; }
+
+        /// <summary>
+        /// The connected Salesforce account.
+        /// </summary>
+        public String crmid { get; set; }
 
 
         /// <summary>

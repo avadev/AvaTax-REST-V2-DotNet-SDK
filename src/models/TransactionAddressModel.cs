@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -58,7 +57,7 @@ namespace Avalara.AvaTax.RestClient
         public String city { get; set; }
 
         /// <summary>
-        /// The region, state, or province for the address.
+        /// The ISO 3166 region code. E.g., the second part of ISO 3166-2.
         /// </summary>
         public String region { get; set; }
 
@@ -68,7 +67,7 @@ namespace Avalara.AvaTax.RestClient
         public String postalCode { get; set; }
 
         /// <summary>
-        /// The country for the address.
+        /// The ISO 3166 country code
         /// </summary>
         public String country { get; set; }
 
@@ -78,12 +77,12 @@ namespace Avalara.AvaTax.RestClient
         public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// Latitude for this address (CALC - 13394)
+        /// Latitude for this address
         /// </summary>
         public String latitude { get; set; }
 
         /// <summary>
-        /// Longitude for this address (CALC - 13394)
+        /// Longitude for this address
         /// </summary>
         public String longitude { get; set; }
 

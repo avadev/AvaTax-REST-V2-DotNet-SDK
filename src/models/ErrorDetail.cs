@@ -12,7 +12,6 @@ using Newtonsoft.Json;
  *
  * @author Ted Spence
  * @author Zhenya Frolov
- * @author Greg Hester
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -25,10 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Name of the error or message.
         /// </summary>
-        /// <remarks>
-        /// This value is captured as a string so that if the server adds new error codes it will still parse.
-        /// </remarks>
-        public String code { get; set; }
+        public ErrorCodeId? code { get; set; }
 
         /// <summary>
         /// Unique ID number referring to this error or message.
