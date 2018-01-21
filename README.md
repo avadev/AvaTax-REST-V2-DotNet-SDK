@@ -55,11 +55,12 @@ public class Program
 
 # Capturing logs of API calls
 
-The DotNet SDK allows you to capture API requests and responses either using an event hook or by logging all API calls to disk:
+The DotNet SDK allows you to capture API requests and responses either using an event hook or by logging all API calls to disk.  You can use this feature to capture information about API call errors, or performance statistics, or anything else.
 
-```
+```csharp
 // You can capture logs to disk like this:
 client.LogToFile("c:\\logs\\avataxapi.log");
+
 // Or you can hook the client to capture information about every API call like this:
 client.CallCompleted += MyEventHandler;
 ```
