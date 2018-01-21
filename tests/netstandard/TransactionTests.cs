@@ -1,6 +1,8 @@
 ﻿using Avalara.AvaTax.RestClient;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.Net;
 using System.Reflection;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
@@ -105,6 +107,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [Test]
         public void TransactionWorkflow()
         {
+            Client.CallCompleted += Client_CallCompleted;
+            var tfn = System.IO.Path.GetTempFileName();
+            Client.LogToFile(tfn);
+
             // Execute a transaction
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
@@ -114,6 +120,15 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 .WithExemptLine(50m, "NT")
                 .WithLineReference("Special Line Reference!", "Also this!")
                 .Create();
+
+            // Verify that the call was captured and logged
+            Assert.NotNull(lastEvent);
+            Assert.True(String.Equals(lastEvent.HttpVerb, "POST", StringComparison.CurrentCultureIgnoreCase));
+            Assert.True(String.Equals(lastEvent.RequestUri.ToString(), "https://sandbox-rest.avatax.com/api/v2/transactions/create", StringComparison.CurrentCultureIgnoreCase));
+            Assert.AreEqual(lastEvent.Code, HttpStatusCode.Created);
+
+            // Verify that the log file was created
+            Assert.True(System.IO.File.Exists(tfn));
 
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");
@@ -137,6 +152,12 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Ensure that the transaction was voided
             Assert.NotNull(voidResult, "Should have been able to call VoidTransactoin");
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
+        }
+
+        private AvaTaxCallEventArgs lastEvent = null;
+        private void Client_CallCompleted(object sender, EventArgs e)
+        {
+            lastEvent = e as AvaTaxCallEventArgs;
         }
 
         [Test]
