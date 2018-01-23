@@ -158,6 +158,21 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? totalAdjustments { get; set; }
 
         /// <summary>
+        /// The amount of sales excluded from the liability calculation
+        /// </summary>
+        public Decimal? excludedSalesAmount { get; set; }
+
+        /// <summary>
+        /// The amount of non-taxable sales excluded from the liability calculation
+        /// </summary>
+        public Decimal? excludedNonTaxableAmount { get; set; }
+
+        /// <summary>
+        /// The amount of tax excluded from the liability calculation
+        /// </summary>
+        public Decimal? excludedTaxAmount { get; set; }
+
+        /// <summary>
         /// The Adjustments for this return.
         /// </summary>
         public List<FilingAdjustmentModel> adjustments { get; set; }
