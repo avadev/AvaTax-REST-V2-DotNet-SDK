@@ -18,29 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a language-specific localized name of a particular geographic entity such
-    /// as a country or a region.
+    /// Represents a PostalCode and its associated data like: country, region, effective dates, etc.
     /// </summary>
-    public class IsoLocalizedName
+    public class PostalCodeModel
     {
         /// <summary>
-        /// The two-character alphanumeric code identifying the language in which this name is used.
-        /// 
-        /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
+        /// Country this PostalCode locates in
         /// </summary>
-        public String languageAlpha2Code { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// The three-character alphanumeric code identifying the language in which this name is used.
-        /// 
-        /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
+        /// The Region/State/Province this PostalCode locates in
         /// </summary>
-        public String languageAlpha3Code { get; set; }
+        public String region { get; set; }
 
         /// <summary>
-        /// The name of this geographic entity as known in this language.
+        /// An Avalara assigned TaxRegion Id associated to the PostalCode
         /// </summary>
-        public String name { get; set; }
+        public Int32? taxRegionId { get; set; }
+
+        /// <summary>
+        /// The date when the PostalCode becomes effective
+        /// </summary>
+        public DateTime? effDate { get; set; }
+
+        /// <summary>
+        /// The date when the PostalCode becomes expired
+        /// </summary>
+        public DateTime? endDate { get; set; }
+
+        /// <summary>
+        /// The postalCode
+        /// </summary>
+        public String postalCode { get; set; }
 
 
         /// <summary>

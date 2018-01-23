@@ -616,6 +616,36 @@ namespace Avalara.AvaTax.RestClient
         CompanyAccountAndParentAccountMismatch,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidFileContentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidItemAttributeName,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        EcmsDisabled,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnknownConjunctionError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoLinesDiscounted,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FailedToDelete,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -838,7 +868,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        NullRefundPercentageAndLines,
+        RefundLinesRequired,
 
         /// <summary>
         /// 
@@ -1001,6 +1031,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidCoverLetterTitle,
 
         /// <summary>
+        /// 
+        /// </summary>
+        AccountNotProvisioned,
+
+        /// <summary>
         /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
@@ -1089,6 +1124,11 @@ namespace Avalara.AvaTax.RestClient
         /// Worksheet Exception
         /// </summary>
         WorksheetException,
+
+        /// <summary>
+        /// LandedCost Exception
+        /// </summary>
+        MissingSystemId,
 
     }
 }

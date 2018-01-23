@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    17.12.0-147
+ * @version    18.1.1-159
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "17.12.0-147"; } }
+        public static string API_VERSION { get { return "18.1.1-159"; } }
 
 #region Methods
 
@@ -366,6 +366,9 @@ namespace Avalara.AvaTax.RestClient
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -393,6 +396,9 @@ namespace Avalara.AvaTax.RestClient
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -423,6 +429,9 @@ namespace Avalara.AvaTax.RestClient
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
@@ -463,6 +472,9 @@ namespace Avalara.AvaTax.RestClient
         /// * A list of exposure zones indicating where the certificate is valid
         /// * A link to the customer that is allowed to use this certificate
         /// * Your tax transaction must contain the correct customer code
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
         /// <param name="model">Certificates to be created</param>
@@ -486,6 +498,9 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         /// 
         /// Revoked certificates can no longer be used.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -511,6 +526,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -543,6 +561,9 @@ namespace Avalara.AvaTax.RestClient
         /// * Customers - Retrieves the list of customers linked to the certificate.
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -574,6 +595,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -601,6 +625,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -627,6 +654,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -652,6 +682,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -683,6 +716,9 @@ namespace Avalara.AvaTax.RestClient
         /// * Customers - Retrieves the list of customers linked to the certificate.
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The ID number of the company to search</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
@@ -720,6 +756,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -748,6 +787,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -771,6 +813,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -797,6 +842,9 @@ namespace Avalara.AvaTax.RestClient
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -934,6 +982,26 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
             return RestCall<FundingConfigurationModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Check the funding configuration of a company
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        /// Returns the funding configuration of the requested company.
+        /// .
+        /// </remarks>
+        /// <param name="companyId">The unique identifier of the company</param>
+        /// <param name="currency">The currency of the funding. USD and CAD are the only valid currencies</param>
+        public List<FundingConfigurationModel> FundingConfigurationsByCompanyAndCurrency(Int32 companyId, String currency)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("currency", currency);
+            return RestCall<List<FundingConfigurationModel>>("Get", path, null);
         }
 
 
@@ -1279,6 +1347,9 @@ namespace Avalara.AvaTax.RestClient
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="model">The list of customer objects to be created</param>
@@ -1301,6 +1372,9 @@ namespace Avalara.AvaTax.RestClient
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1328,6 +1402,9 @@ namespace Avalara.AvaTax.RestClient
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1353,6 +1430,9 @@ namespace Avalara.AvaTax.RestClient
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1377,6 +1457,9 @@ namespace Avalara.AvaTax.RestClient
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1417,6 +1500,9 @@ namespace Avalara.AvaTax.RestClient
         /// If a customer does not have a certificate on file and they wish to provide one, you should send the customer
         /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
         /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1448,6 +1534,9 @@ namespace Avalara.AvaTax.RestClient
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
@@ -1479,6 +1568,9 @@ namespace Avalara.AvaTax.RestClient
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1503,6 +1595,9 @@ namespace Avalara.AvaTax.RestClient
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1513,6 +1608,32 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             return RestCall<CustomerModel>("Put", path, model);
+        }
+
+
+        /// <summary>
+        /// Lists all parents of an HS Code.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the specified HS code and all of its parents, reflecting all sections, chapters, headings, and subheadings
+        /// 
+        /// a list of HS Codes that are the parents and information branches of the HS Code for the given 
+        /// destination country, if lower detail is available. 
+        /// 
+        /// This API will include information branches if applicable. These do not have HS Codes and cannot be referenced,
+        /// but can contain information relevant to deciding the correct HS Code. 
+        /// 
+        /// This API is intended to be useful to review the descriptive hierarchy of an HS Code, which can be particularly helpful
+        /// when HS Codes can have multiple levels of generic descriptions.
+        /// </remarks>
+        /// <param name="country">The name or code of the destination country.</param>
+        /// <param name="hsCode">The partial or full HS Code for which you would like to view all of the parents.</param>
+        public FetchResult<HsCodeModel> GetCrossBorderCode(String country, String hsCode)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
+            path.ApplyField("country", country);
+            path.ApplyField("hsCode", hsCode);
+            return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
         }
 
 
@@ -1544,6 +1665,10 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve the full list of the AvaFile Forms available
         /// </summary>
         /// <remarks>
+        /// This API is deprecated. 
+        /// 
+        /// Please use the ListTaxForms API.
+        /// 
         /// Returns the full list of Avalara-supported AvaFile Forms
         /// This API is intended to be useful to identify all the different AvaFile Forms
         /// </remarks>
@@ -1570,6 +1695,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
         /// certificate at any time.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1594,6 +1722,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// An exemption reason defines why a certificate allows a customer to be exempt
         /// for purposes of tax calculation.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1618,6 +1749,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
         /// authority or other legal entity to which a certificate may apply.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1734,6 +1868,9 @@ namespace Avalara.AvaTax.RestClient
         /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
         /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
         /// certificates directly; this cover letter explains why the invitation was sent.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1747,6 +1884,48 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<CoverLetterModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Lists the next level of HS Codes given a destination country and HS Code prefix.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of HS Codes that are the children of the prefix for the given destination country, if 
+        /// additional children are available. 
+        /// 
+        /// HS Code is interchangeable with "tariff code" and definitions are generally unique to a destination country.
+        /// An HS Code describes an item and its eligibility/rate for tariffs. HS Codes are organized by 
+        /// Section/Chapter/Heading/Subheading/Classification.
+        /// 
+        /// This API is intended to be useful to identify the correct HS Code to use for your item.
+        /// </remarks>
+        /// <param name="country">The name or code of the destination country.</param>
+        /// <param name="hsCode">The Section or partial HS Code for which you would like to view the next level of HS Code detail, if more detail is available.</param>
+        public FetchResult<HsCodeModel> ListCrossBorderCodes(String country, String hsCode)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
+            path.ApplyField("country", country);
+            path.ApplyField("hsCode", hsCode);
+            return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List top level HS Code Sections.
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of top level HS Code Sections. Sections are the broadest level of detail for 
+        /// classifying tariff codes and the items to which they apply. HS Codes are organized 
+        /// by Section/Chapter/Heading/Subheading/Classification.
+        /// 
+        /// This API is intended to be useful to identify the top level Sections for 
+        /// further LandedCost HS Code lookups.
+        /// </remarks>
+        public FetchResult<HsCodeModel> ListCrossBorderSections()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
+            return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
         }
 
 
@@ -2357,6 +2536,27 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of Avalara-supported postal codes.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the list of Avalara-supported postal codes.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<PostalCodeModel> ListPostalCodes(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/postalcodes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<PostalCodeModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of rate types for each country
         /// </summary>
         /// <remarks>
@@ -2614,6 +2814,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of the Tax Forms available
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported Tax Forms
+        /// This API is intended to be useful to identify all the different Tax Forms
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<FormMasterModel> ListTaxForms(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/taxforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<FormMasterModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of tax sub types
         /// </summary>
         /// <remarks>
@@ -2654,6 +2876,175 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<TaxTypeGroupModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List all defined units of measurement
+        /// </summary>
+        /// <remarks>
+        /// List all units of measurement systems defined by Avalara.
+        /// 
+        /// A unit of measurement system is a method of measuring a quantity, such as distance, mass, or others.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<UomModel> ListUnitOfMeasurement(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/unitofmeasurements");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<UomModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Create one or more DistanceThreshold objects
+        /// </summary>
+        /// <remarks>
+        /// Create one or more DistanceThreshold objects for this company.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
+        /// <param name="model">The DistanceThreshold object or objects you wish to create.</param>
+        public List<CompanyDistanceThresholdModel> CreateDistanceThreshold(Int32 companyId, List<CompanyDistanceThresholdModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
+            path.ApplyField("companyId", companyId);
+            return RestCall<List<CompanyDistanceThresholdModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a single DistanceThreshold object
+        /// </summary>
+        /// <remarks>
+        /// Marks the DistanceThreshold object identified by this URL as deleted.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
+        /// <param name="id">The unique ID number of the DistanceThreshold object you wish to delete.</param>
+        public List<ErrorDetail> DeleteDistanceThreshold(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("Delete", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single DistanceThreshold
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single DistanceThreshold object defined by this URL.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this DistanceThreshold object</param>
+        /// <param name="id">The unique ID number referring to this DistanceThreshold object</param>
+        public CompanyDistanceThresholdModel GetDistanceThreshold(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<CompanyDistanceThresholdModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all DistanceThresholds for this company.
+        /// </summary>
+        /// <remarks>
+        /// Lists all DistanceThreshold objects that belong to this company.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company whose DistanceThreshold objects you wish to list.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CompanyDistanceThresholdModel> ListDistanceThresholds(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all DistanceThreshold objects
+        /// </summary>
+        /// <remarks>
+        /// Lists all DistanceThreshold objects that belong to this company.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CompanyDistanceThresholdModel> QueryDistanceThresholds(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/distancethresholds");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a DistanceThreshold object
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing DistanceThreshold object at this URL with an updated object.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        ///  
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold object.</param>
+        /// <param name="id">The unique ID number of the DistanceThreshold object to replace.</param>
+        /// <param name="model">The new DistanceThreshold object to store.</param>
+        public CompanyDistanceThresholdModel UpdateDistanceThreshold(Int32 companyId, Int64 id, CompanyDistanceThresholdModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<CompanyDistanceThresholdModel>("Put", path, model);
         }
 
 
@@ -3888,6 +4279,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates one or more new item objects attached to this company.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
@@ -3904,6 +4301,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks the item object at this URL as deleted.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
@@ -3921,7 +4324,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the item object identified by this URL.
-        /// An 'Item' represents a product or service that your company offers for sale.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
@@ -3940,10 +4348,18 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// List all items defined for the current company.
         /// 
-        /// An 'Item' represents a product or service that your company offers for sale.
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Attributes
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -3969,10 +4385,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple item objects across all companies.
-        /// An 'Item' represents a product or service that your company offers for sale.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Attributes
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
@@ -3995,7 +4420,14 @@ namespace Avalara.AvaTax.RestClient
         /// Update a single item
         /// </summary>
         /// <remarks>
-        /// Replace the existing item object at this URL with an updated object.
+        /// Replace the existing `Item` object at this URL with an updated object.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        /// 
         /// All data from the existing object will be replaced with data in the object you PUT. 
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// </remarks>
@@ -6361,12 +6793,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to change document code. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The code change request you wish to execute</param>
-        public TransactionModel ChangeTransactionCode(String companyCode, String transactionCode, ChangeTransactionCodeModel model)
+        public TransactionModel ChangeTransactionCode(String companyCode, String transactionCode, DocumentType? documentType, ChangeTransactionCodeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/changecode");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -6383,12 +6817,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to commit. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public TransactionModel CommitTransaction(String companyCode, String transactionCode, CommitTransactionModel model)
+        public TransactionModel CommitTransaction(String companyCode, String transactionCode, DocumentType? documentType, CommitTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/commit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -6674,12 +7110,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to lock</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to lock. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The lock request you wish to execute</param>
-        public TransactionModel LockTransaction(String companyCode, String transactionCode, LockTransactionModel model)
+        public TransactionModel LockTransaction(String companyCode, String transactionCode, DocumentType? documentType, LockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/lock");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -6723,13 +7161,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The code of the company that made the original sale</param>
         /// <param name="transactionCode">The transaction code of the original sale</param>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to refund. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">Information about the refund to create</param>
-        public TransactionModel RefundTransaction(String companyCode, String transactionCode, String include, RefundTransactionModel model)
+        public TransactionModel RefundTransaction(String companyCode, String transactionCode, String include, DocumentType? documentType, RefundTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -6738,16 +7178,25 @@ namespace Avalara.AvaTax.RestClient
         /// Perform multiple actions on a transaction
         /// </summary>
         /// <remarks>
-        /// Performs the same functions as /verify, /changecode, and /commit. You may specify one or many actions in each call to this endpoint.
+        /// Performs one or more actions against the current transaction uniquely identified by this URL.
+        /// 
+        /// The `SettleTransaction` API call can perform the work of `ChangeCode`, `VerifyTransaction`, and `CommitTransaction`.
+        /// 
+        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        /// 
+        /// This API is available for users who want to execute more than one action at a time.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
-        /// <param name="model">The settle request containing the actions you wish to execute</param>
-        public TransactionModel SettleTransaction(String companyCode, String transactionCode, SettleTransactionModel model)
+        /// <param name="documentType">(Optional): The document type of the transaction to settle. If not provided, the default is SalesInvoice.</param>
+        /// <param name="model">The data from an external system to reconcile against AvaTax</param>
+        public TransactionModel SettleTransaction(String companyCode, String transactionCode, DocumentType? documentType, SettleTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/settle");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -6757,18 +7206,22 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Verifies that the transaction uniquely identified by this URL matches certain expected values.
+        /// 
         /// If the transaction does not match these expected values, this API will return an error code indicating which value did not match.
+        /// 
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
-        /// <param name="model">The settle request you wish to execute</param>
-        public TransactionModel VerifyTransaction(String companyCode, String transactionCode, VerifyTransactionModel model)
+        /// <param name="documentType">(Optional): The document type of the transaction to verify. If not provided, the default is SalesInvoice.</param>
+        /// <param name="model">The data from an external system to reconcile against AvaTax</param>
+        public TransactionModel VerifyTransaction(String companyCode, String transactionCode, DocumentType? documentType, VerifyTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/verify");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -6785,12 +7238,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to void. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The void request you wish to execute</param>
-        public TransactionModel VoidTransaction(String companyCode, String transactionCode, VoidTransactionModel model)
+        public TransactionModel VoidTransaction(String companyCode, String transactionCode, DocumentType? documentType, VoidTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -7461,7 +7916,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
-        /// your company so that they can be used for tax exemptions.;
+        /// your company so that they can be used for tax exemptions.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -7488,7 +7946,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
-        /// your company so that they can be used for tax exemptions.;
+        /// your company so that they can be used for tax exemptions.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -7518,7 +7979,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
-        /// your company so that they can be used for tax exemptions.;
+        /// your company so that they can be used for tax exemptions.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
@@ -7558,7 +8022,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * A list of exposure zones indicating where the certificate is valid
         /// * A link to the customer that is allowed to use this certificate
-        /// * Your tax transaction must contain the correct customer code;
+        /// * Your tax transaction must contain the correct customer code
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
         /// <param name="model">Certificates to be created</param>
@@ -7581,7 +8048,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// Revoked certificates can no longer be used.;
+        /// Revoked certificates can no longer be used.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7606,7 +8076,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7638,7 +8111,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Customers - Retrieves the list of customers linked to the certificate.
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
-        /// * Attributes - Retrieves all attributes applied to the certificate.;
+        /// * Attributes - Retrieves all attributes applied to the certificate.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7669,7 +8145,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7696,7 +8175,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7722,7 +8204,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7747,7 +8232,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7778,7 +8266,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Customers - Retrieves the list of customers linked to the certificate.
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
-        /// * Attributes - Retrieves all attributes applied to the certificate.;
+        /// * Attributes - Retrieves all attributes applied to the certificate.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company to search</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
@@ -7815,7 +8306,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7843,7 +8337,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7866,7 +8363,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -7892,7 +8392,10 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
-        /// log onto the administrative website for the product you purchased.;
+        /// log onto the administrative website for the product you purchased.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8030,6 +8533,26 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
             return await RestCallAsync<FundingConfigurationModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Check the funding configuration of a company;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// Requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
+        /// Returns the funding configuration of the requested company.
+        /// .;
+        /// </remarks>
+        /// <param name="companyId">The unique identifier of the company</param>
+        /// <param name="currency">The currency of the funding. USD and CAD are the only valid currencies</param>
+        public async Task<List<FundingConfigurationModel>> FundingConfigurationsByCompanyAndCurrencyAsync(Int32 companyId, String currency)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("currency", currency);
+            return await RestCallAsync<List<FundingConfigurationModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -8374,7 +8897,10 @@ namespace Avalara.AvaTax.RestClient
         /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
-        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="model">The list of customer objects to be created</param>
@@ -8396,7 +8922,10 @@ namespace Avalara.AvaTax.RestClient
         /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
-        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8423,7 +8952,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         /// 
-        /// * Certificates - Fetch a list of certificates linked to this customer.;
+        /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8448,7 +8980,10 @@ namespace Avalara.AvaTax.RestClient
         /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
-        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8472,7 +9007,10 @@ namespace Avalara.AvaTax.RestClient
         /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
-        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8512,7 +9050,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// If a customer does not have a certificate on file and they wish to provide one, you should send the customer
         /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
-        /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.;
+        /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8543,7 +9084,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         /// 
-        /// * Certificates - Fetch a list of certificates linked to this customer.;
+        /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
@@ -8574,7 +9118,10 @@ namespace Avalara.AvaTax.RestClient
         /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
-        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8598,7 +9145,10 @@ namespace Avalara.AvaTax.RestClient
         /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
         /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
-        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.;
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8609,6 +9159,32 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             return await RestCallAsync<CustomerModel>("Put", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Lists all parents of an HS Code.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the specified HS code and all of its parents, reflecting all sections, chapters, headings, and subheadings
+        /// 
+        /// a list of HS Codes that are the parents and information branches of the HS Code for the given 
+        /// destination country, if lower detail is available. 
+        /// 
+        /// This API will include information branches if applicable. These do not have HS Codes and cannot be referenced,
+        /// but can contain information relevant to deciding the correct HS Code. 
+        /// 
+        /// This API is intended to be useful to review the descriptive hierarchy of an HS Code, which can be particularly helpful
+        /// when HS Codes can have multiple levels of generic descriptions.;
+        /// </remarks>
+        /// <param name="country">The name or code of the destination country.</param>
+        /// <param name="hsCode">The partial or full HS Code for which you would like to view all of the parents.</param>
+        public async Task<FetchResult<HsCodeModel>> GetCrossBorderCodeAsync(String country, String hsCode)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
+            path.ApplyField("country", country);
+            path.ApplyField("hsCode", hsCode);
+            return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -8640,6 +9216,10 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve the full list of the AvaFile Forms available;
         /// </summary>
         /// <remarks>
+        /// This API is deprecated. 
+        /// 
+        /// Please use the ListTaxForms API.
+        /// 
         /// Returns the full list of Avalara-supported AvaFile Forms
         /// This API is intended to be useful to identify all the different AvaFile Forms;
         /// </remarks>
@@ -8665,7 +9245,10 @@ namespace Avalara.AvaTax.RestClient
         /// List the certificate attributes defined by a company.
         /// 
         /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
-        /// certificate at any time.;
+        /// certificate at any time.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -8689,7 +9272,10 @@ namespace Avalara.AvaTax.RestClient
         /// List the certificate exempt reasons defined by a company.
         /// 
         /// An exemption reason defines why a certificate allows a customer to be exempt
-        /// for purposes of tax calculation.;
+        /// for purposes of tax calculation.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -8713,7 +9299,10 @@ namespace Avalara.AvaTax.RestClient
         /// List the certificate exposure zones defined by a company.
         /// 
         /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
-        /// authority or other legal entity to which a certificate may apply.;
+        /// authority or other legal entity to which a certificate may apply.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -8829,7 +9418,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
         /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
-        /// certificates directly; this cover letter explains why the invitation was sent.;
+        /// certificates directly; this cover letter explains why the invitation was sent.
+        /// 
+        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
+        /// (as your account gets provisioned). Thank you for your patience.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -8843,6 +9435,48 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<CoverLetterModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Lists the next level of HS Codes given a destination country and HS Code prefix.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of HS Codes that are the children of the prefix for the given destination country, if 
+        /// additional children are available. 
+        /// 
+        /// HS Code is interchangeable with "tariff code" and definitions are generally unique to a destination country.
+        /// An HS Code describes an item and its eligibility/rate for tariffs. HS Codes are organized by 
+        /// Section/Chapter/Heading/Subheading/Classification.
+        /// 
+        /// This API is intended to be useful to identify the correct HS Code to use for your item.;
+        /// </remarks>
+        /// <param name="country">The name or code of the destination country.</param>
+        /// <param name="hsCode">The Section or partial HS Code for which you would like to view the next level of HS Code detail, if more detail is available.</param>
+        public async Task<FetchResult<HsCodeModel>> ListCrossBorderCodesAsync(String country, String hsCode)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
+            path.ApplyField("country", country);
+            path.ApplyField("hsCode", hsCode);
+            return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List top level HS Code Sections.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of top level HS Code Sections. Sections are the broadest level of detail for 
+        /// classifying tariff codes and the items to which they apply. HS Codes are organized 
+        /// by Section/Chapter/Heading/Subheading/Classification.
+        /// 
+        /// This API is intended to be useful to identify the top level Sections for 
+        /// further LandedCost HS Code lookups.;
+        /// </remarks>
+        public async Task<FetchResult<HsCodeModel>> ListCrossBorderSectionsAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
+            return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -9453,6 +10087,27 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of Avalara-supported postal codes.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the list of Avalara-supported postal codes.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<PostalCodeModel>> ListPostalCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/postalcodes");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<PostalCodeModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of rate types for each country;
         /// </summary>
         /// <remarks>
@@ -9710,6 +10365,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the full list of the Tax Forms available;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported Tax Forms
+        /// This API is intended to be useful to identify all the different Tax Forms;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<FormMasterModel>> ListTaxFormsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/taxforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<FormMasterModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of tax sub types;
         /// </summary>
         /// <remarks>
@@ -9750,6 +10427,175 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<TaxTypeGroupModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all defined units of measurement;
+        /// </summary>
+        /// <remarks>
+        /// List all units of measurement systems defined by Avalara.
+        /// 
+        /// A unit of measurement system is a method of measuring a quantity, such as distance, mass, or others.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<UomModel>> ListUnitOfMeasurementAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/unitofmeasurements");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<UomModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create one or more DistanceThreshold objects;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more DistanceThreshold objects for this company.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
+        /// <param name="model">The DistanceThreshold object or objects you wish to create.</param>
+        public async Task<List<CompanyDistanceThresholdModel>> CreateDistanceThresholdAsync(Int32 companyId, List<CompanyDistanceThresholdModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<List<CompanyDistanceThresholdModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single DistanceThreshold object;
+        /// </summary>
+        /// <remarks>
+        /// Marks the DistanceThreshold object identified by this URL as deleted.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold</param>
+        /// <param name="id">The unique ID number of the DistanceThreshold object you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteDistanceThresholdAsync(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single DistanceThreshold;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single DistanceThreshold object defined by this URL.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this DistanceThreshold object</param>
+        /// <param name="id">The unique ID number referring to this DistanceThreshold object</param>
+        public async Task<CompanyDistanceThresholdModel> GetDistanceThresholdAsync(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<CompanyDistanceThresholdModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all DistanceThresholds for this company.;
+        /// </summary>
+        /// <remarks>
+        /// Lists all DistanceThreshold objects that belong to this company.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company whose DistanceThreshold objects you wish to list.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CompanyDistanceThresholdModel>> ListDistanceThresholdsAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all DistanceThreshold objects;
+        /// </summary>
+        /// <remarks>
+        /// Lists all DistanceThreshold objects that belong to this company.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CompanyDistanceThresholdModel>> QueryDistanceThresholdsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/distancethresholds");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a DistanceThreshold object;
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing DistanceThreshold object at this URL with an updated object.
+        /// 
+        /// A company-distance-threshold model indicates the distance between a company
+        /// and the taxing borders of various countries. Distance thresholds are necessary
+        /// to correctly calculate some value-added taxes.
+        ///  
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID number of the company that owns this DistanceThreshold object.</param>
+        /// <param name="id">The unique ID number of the DistanceThreshold object to replace.</param>
+        /// <param name="model">The new DistanceThreshold object to store.</param>
+        public async Task<CompanyDistanceThresholdModel> UpdateDistanceThresholdAsync(Int32 companyId, Int64 id, CompanyDistanceThresholdModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<CompanyDistanceThresholdModel>("Put", path, model).ConfigureAwait(false);
         }
 
 
@@ -10983,7 +11829,13 @@ namespace Avalara.AvaTax.RestClient
         /// Create a new item;
         /// </summary>
         /// <remarks>
-        /// Creates one or more new item objects attached to this company.;
+        /// Creates one or more new item objects attached to this company.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
@@ -10999,7 +11851,13 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single item;
         /// </summary>
         /// <remarks>
-        /// Marks the item object at this URL as deleted.;
+        /// Marks the item object at this URL as deleted.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
@@ -11017,7 +11875,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the item object identified by this URL.
-        /// An 'Item' represents a product or service that your company offers for sale.;
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
@@ -11036,10 +11899,18 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// List all items defined for the current company.
         /// 
-        /// An 'Item' represents a product or service that your company offers for sale.
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Attributes;
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -11065,10 +11936,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple item objects across all companies.
-        /// An 'Item' represents a product or service that your company offers for sale.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Attributes;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
@@ -11091,7 +11971,14 @@ namespace Avalara.AvaTax.RestClient
         /// Update a single item;
         /// </summary>
         /// <remarks>
-        /// Replace the existing item object at this URL with an updated object.
+        /// Replace the existing `Item` object at this URL with an updated object.
+        /// 
+        /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
+        /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
+        /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
+        /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        /// 
         /// All data from the existing object will be replaced with data in the object you PUT. 
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
         /// </remarks>
@@ -13457,12 +14344,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to change document code. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The code change request you wish to execute</param>
-        public async Task<TransactionModel> ChangeTransactionCodeAsync(String companyCode, String transactionCode, ChangeTransactionCodeModel model)
+        public async Task<TransactionModel> ChangeTransactionCodeAsync(String companyCode, String transactionCode, DocumentType? documentType, ChangeTransactionCodeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/changecode");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -13479,12 +14368,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to commit. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The commit request you wish to execute</param>
-        public async Task<TransactionModel> CommitTransactionAsync(String companyCode, String transactionCode, CommitTransactionModel model)
+        public async Task<TransactionModel> CommitTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, CommitTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/commit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -13770,12 +14661,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to lock</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to lock. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The lock request you wish to execute</param>
-        public async Task<TransactionModel> LockTransactionAsync(String companyCode, String transactionCode, LockTransactionModel model)
+        public async Task<TransactionModel> LockTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, LockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/lock");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -13819,13 +14712,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The code of the company that made the original sale</param>
         /// <param name="transactionCode">The transaction code of the original sale</param>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to refund. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">Information about the refund to create</param>
-        public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, String include, RefundTransactionModel model)
+        public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, String include, DocumentType? documentType, RefundTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -13834,16 +14729,25 @@ namespace Avalara.AvaTax.RestClient
         /// Perform multiple actions on a transaction;
         /// </summary>
         /// <remarks>
-        /// Performs the same functions as /verify, /changecode, and /commit. You may specify one or many actions in each call to this endpoint.;
+        /// Performs one or more actions against the current transaction uniquely identified by this URL.
+        /// 
+        /// The `SettleTransaction` API call can perform the work of `ChangeCode`, `VerifyTransaction`, and `CommitTransaction`.
+        /// 
+        /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
+        /// sales, purchases, inventory transfer, and returns (also called refunds).
+        /// 
+        /// This API is available for users who want to execute more than one action at a time.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
-        /// <param name="model">The settle request containing the actions you wish to execute</param>
-        public async Task<TransactionModel> SettleTransactionAsync(String companyCode, String transactionCode, SettleTransactionModel model)
+        /// <param name="documentType">(Optional): The document type of the transaction to settle. If not provided, the default is SalesInvoice.</param>
+        /// <param name="model">The data from an external system to reconcile against AvaTax</param>
+        public async Task<TransactionModel> SettleTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, SettleTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/settle");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -13853,18 +14757,22 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Verifies that the transaction uniquely identified by this URL matches certain expected values.
+        /// 
         /// If the transaction does not match these expected values, this API will return an error code indicating which value did not match.
+        /// 
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
-        /// <param name="model">The settle request you wish to execute</param>
-        public async Task<TransactionModel> VerifyTransactionAsync(String companyCode, String transactionCode, VerifyTransactionModel model)
+        /// <param name="documentType">(Optional): The document type of the transaction to verify. If not provided, the default is SalesInvoice.</param>
+        /// <param name="model">The data from an external system to reconcile against AvaTax</param>
+        public async Task<TransactionModel> VerifyTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, VerifyTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/verify");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -13881,12 +14789,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to void. If not provided, the default is SalesInvoice.</param>
         /// <param name="model">The void request you wish to execute</param>
-        public async Task<TransactionModel> VoidTransactionAsync(String companyCode, String transactionCode, VoidTransactionModel model)
+        public async Task<TransactionModel> VoidTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, VoidTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
