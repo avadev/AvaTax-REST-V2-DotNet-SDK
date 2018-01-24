@@ -52,6 +52,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? authenticatedAccountId { get; set; }
 
+        /// <summary>
+        /// The connected Salesforce account.
+        /// </summary>
+        public String crmid { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

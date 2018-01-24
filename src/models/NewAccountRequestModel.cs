@@ -80,6 +80,14 @@ namespace Avalara.AvaTax.RestClient
         public String website { get; set; }
 
         /// <summary>
+        /// Payment Method to be associated with the account.
+        /// 
+        /// This is strictly to be used internally unless your Avalara business development manager specifically asks you to provide this value
+        /// while attempting to create an account.
+        /// </summary>
+        public String paymentMethodId { get; set; }
+
+        /// <summary>
         /// First name of the primary contact person for this account
         /// </summary>
         public String firstName { get; set; }
