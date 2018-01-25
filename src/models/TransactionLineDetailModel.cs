@@ -219,6 +219,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String unitOfBasis { get; set; }
 
+        /// <summary>
+        /// True if this value is a non-passthrough tax.
+        /// 
+        /// A non-passthrough tax is a tax that may not be charged to a customer; it must be paid directly by the company.
+        /// </summary>
+        public Boolean? isNonPassThru { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
