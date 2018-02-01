@@ -21,12 +21,10 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
+#region Private Variables
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
-#if PORTABLE
-        private static HttpClient _client = new HttpClient();
-#endif
 
         /// <summary>
         /// Tracks the amount of time spent on the most recent API call
@@ -45,8 +43,12 @@ namespace Avalara.AvaTax.RestClient
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
 #endif
+#if PORTABLE
+        private static HttpClient _client = new HttpClient();
+#endif
+#endregion
 
-        #region Constructor
+#region Constructor
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
         /// </summary>
@@ -144,26 +146,75 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-#endregion
+        #endregion
 
 #region REST Call Interface
 #if PORTABLE
         /// <summary>
-        /// Implementation of asynchronous client APIs
+        /// Unified function for REST calls
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        public async Task<T> RestCallAsync<T>(string verb, AvaTaxPath relativePath, object content = null)
+        /// <param name="verb">The HTTP verb to use</param>
+        /// <param name="relativePath">The relative path from the server</param>
+        /// <param name="jsonContent">The JSON request body, if any</param>
+        /// <param name="byteContent">The octet-stream body, if any</param>
+        /// <returns>Information about the AvaTax call</returns>
+        public async Task<AvaTaxCallResult> RestCallAsync(string verb, AvaTaxPath relativePath, string jsonContent, byte[] byteContent)
         {
-            CallDuration cd = new CallDuration();
-            var s = await RestCallStringAsync(verb, relativePath, content, cd).ConfigureAwait(false);
-            var o = JsonConvert.DeserializeObject<T>(s);
-            cd.FinishParse();
-            this.LastCallTime = cd;
-            return o;
+            // Begin counting duration
+            var cd = new CallDuration();
+            var internalResult = new AvaTaxCallResult();
+
+            // Setup the request
+            using (var request = new HttpRequestMessage()) {
+                request.Method = new HttpMethod(verb);
+                request.RequestUri = new Uri(_envUri, relativePath.ToString());
+
+                // Add credentials and client header
+                if (_credentials != null) {
+                    request.Headers.Add("Authorization", _credentials);
+                }
+                if (_clientHeader != null) {
+                    request.Headers.Add("X-Avalara-Client", _clientHeader);
+                }
+
+                // Add payload
+                if (jsonContent != null) {
+                    request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                } else if (byteContent != null) {
+                    request.Content = new ByteArrayContent(byteContent);
+                }
+
+                // Send the request to the server and await the response
+                cd.FinishSetup();
+                using (var result = await _client.SendAsync(request).ConfigureAwait(false)) {
+
+                    // Gather information about the result
+                    internalResult.ResponseContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                    internalResult.ResponseFileName = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
+                    internalResult.Code = result.StatusCode;
+
+                    // Collect result as either bytes or string
+                    if (internalResult.ResponseContentType == "application/json" || internalResult.ResponseContentType == "text/plain") {
+                        internalResult.ResponseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    } else {
+                        internalResult.ResponseBytes = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    }
+
+                    // Determine server duration
+                    var sd = DetectDuration(result, "serverduration");
+                    var dd = DetectDuration(result, "dataduration");
+                    var td = DetectDuration(result, "serviceduration");
+                    cd.FinishReceive(sd, dd, td);
+
+                    // Capture timings
+                    cd.FinishParse();
+                    this.LastCallTime = cd;
+
+                    // Here are your results - both for direct callers and for event listeners
+                    OnCallCompleted(internalResult);
+                    return internalResult;
+                }
+            }
         }
 
 
@@ -190,169 +241,11 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Non-async method for downloading a file
+        /// Private function to capture duration information from an API call
         /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="payload"></param>
+        /// <param name="result"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        public FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
-        {
-            return RestCallFileAsync(verb, relativePath, payload).Result;
-        }
-#endif
-#endregion
-
-#region Implementation
-        private JsonSerializerSettings _serializer_settings = null;
-        private JsonSerializerSettings SerializerSettings
-        {
-            get
-            {
-                if (_serializer_settings == null) {
-                    lock (this) {
-                        _serializer_settings = new JsonSerializerSettings();
-                        _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
-                        _serializer_settings.Converters.Add(new StringEnumConverter());
-                    }
-                }
-                return _serializer_settings;
-            }
-        }
-
-#if PORTABLE
-        /// <summary>
-        /// Implementation of raw file-returning async API 
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            CallDuration cd = new CallDuration();
-
-            // Convert the JSON payload, if any
-            string jsonPayload = null;
-            if (content != null) {
-                jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
-            }
-
-            // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)) {
-
-                // Read the result
-                if (result.IsSuccessStatusCode) {
-                    var fr = new FileResult()
-                    {
-                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
-                        Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
-                    };
-
-                    // Capture timings
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-
-                    // Capture information about this API call and make it available for logging
-                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb, Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseBody = fr.Data, Duration = cd };
-                    OnCallCompleted(eventargs);
-                    return fr;
-
-                // Handle exceptions and convert them to AvaTax results
-                } else {
-                    var errorResponseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(errorResponseString);
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-
-                    // Capture information about this API call error and make it available for logging
-                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb, Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = errorResponseString, Duration = cd };
-                    OnCallCompleted(eventargs);
-                    throw new AvaTaxError(err, result.StatusCode);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Implementation of raw request API
-        /// </summary>
-        /// <param name="cd"></param>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="jsonPayload"></param>
-        /// <returns></returns>
-        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb, AvaTaxPath relativePath, string jsonPayload)
-        {
-            // Setup the request
-            using (var request = new HttpRequestMessage()) {
-                request.Method = new HttpMethod(verb);
-                request.RequestUri = new Uri(_envUri, relativePath.ToString());
-
-                // Add credentials and client header
-                if (_credentials != null) {
-                    request.Headers.Add("Authorization", _credentials);
-                }
-                if (_clientHeader != null) {
-                    request.Headers.Add("X-Avalara-Client", _clientHeader);
-                }
-
-                // Add payload
-                if (jsonPayload != null) {
-                    request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-                }
-
-                // Send
-                cd.FinishSetup();
-                return await _client.SendAsync(request).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary>
-        /// Implementation of raw string-returning async API 
-        /// </summary>
-        /// <param name="cd"></param>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null, CallDuration cd = null)
-        {
-            if (cd == null) cd = new CallDuration();
-
-            // Convert the JSON payload, if any
-            string jsonPayload = null;
-            if (content != null) {
-                jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
-            }
-
-            // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)) {
-
-                // Read the result
-                var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                // Determine server duration
-                var sd = DetectDuration(result, "serverduration");
-                var dd = DetectDuration(result, "dataduration");
-                var td = DetectDuration(result, "serviceduration");
-                cd.FinishReceive(sd, dd, td);
-
-                // Capture information about this API call and make it available for logging
-                var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb, Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = responseString, Duration = cd };
-                OnCallCompleted(eventargs);
-
-                // Deserialize the result
-                if (result.IsSuccessStatusCode) {
-                    return responseString;
-                } else {
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(responseString);
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-                    throw new AvaTaxError(err, result.StatusCode);
-                }
-            }
-        }
         private TimeSpan? DetectDuration(HttpResponseMessage result, string name)
         {
             IEnumerable<string> values = null;
@@ -367,19 +260,11 @@ namespace Avalara.AvaTax.RestClient
             }
             return null;
         }
+#endif
+        #endregion
 
-        /// <summary>
-        /// Implementation of raw string-returning API
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            return RestCallStringAsync(verb, relativePath, content).Result;
-        }
-#else
+        #region Implementation
+#if !PORTABLE
         /// <summary>
         /// Direct implementation of client APIs to object values
         /// </summary>
@@ -473,7 +358,7 @@ namespace Avalara.AvaTax.RestClient
                         };
 
                         // Track the API call
-                        var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseBody = fr.Data, RequestUri = new Uri(path) };
+                        var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseBody = fr.Data, RequestUri = new Uri(path) };
                         OnCallCompleted(eventargs);
                         return fr;
                     }
@@ -488,7 +373,7 @@ namespace Avalara.AvaTax.RestClient
                             var errString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
+                            var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
                             OnCallCompleted(eventargs);
 
                             // Pass on the error
@@ -554,7 +439,7 @@ namespace Avalara.AvaTax.RestClient
                             var responseString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = responseString, RequestUri = new Uri(path) };
+                            var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseString = responseString, RequestUri = new Uri(path) };
                             OnCallCompleted(eventargs);
 
                             // Here's the results
@@ -572,7 +457,7 @@ namespace Avalara.AvaTax.RestClient
                             var errString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
+                            var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
                             OnCallCompleted(eventargs);
 
                             // Here's the results
@@ -646,12 +531,12 @@ namespace Avalara.AvaTax.RestClient
         private string _logFileName = null;
         private void LogFile_CallCompleted(object sender, EventArgs e)
         {
-            var evt = e as AvaTaxCallEventArgs;
+            var evt = e as AvaTaxCallResult;
 
             // Write to disk
             var g = Guid.NewGuid().ToString();
             StringBuilder sb = new StringBuilder();
-            sb.Append($"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestBody}\r\n");
+            sb.Append($"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestBodyString}\r\n");
             if (evt.ResponseString != null) {
                 sb.Append($"=== RESPONSE {g}: {evt.Code} Type: JSON ===\r\n{evt.ResponseString}\r\n=== END {g} ===\r\n");
             } else {

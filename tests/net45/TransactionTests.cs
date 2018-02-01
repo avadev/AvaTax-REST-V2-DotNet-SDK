@@ -147,10 +147,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.True(voidResult.status == DocumentStatus.Cancelled, "Transaction should have been voided");
         }
 
-        private AvaTaxCallEventArgs lastEvent = null;
+        private AvaTaxCallResult lastEvent = null;
         private void Client_CallCompleted(object sender, EventArgs e)
         {
-            lastEvent = e as AvaTaxCallEventArgs;
+            lastEvent = e as AvaTaxCallResult;
         }
 
         [Test]
