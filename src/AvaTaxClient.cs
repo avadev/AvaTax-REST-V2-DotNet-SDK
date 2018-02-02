@@ -18,8 +18,13 @@ namespace Avalara.AvaTax.RestClient
     /// <remarks>
     /// This file contains all the basic behavior.  Individual APIs are in the other partial class.
     /// </remarks>
-    public partial class AvaTaxClient
+    public class AvaTaxClient
     {
+        /// <summary>
+        /// Returns the version number of the API used to generate this class
+        /// </summary>
+        public static string API_VERSION { get { return ""; } }
+
         #region Private Variables
         private string _credentials;
         private string _clientHeader;
@@ -154,10 +159,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="verb"></param>
         /// <param name="relativePath"></param>
-        /// <param name="jsonContent"></param>
-        /// <param name="byteContent"></param>
+        /// <param name="requestBody"></param>
         /// <returns></returns>
-        protected AvaTaxCallResult RestCall(string verb, AvaTaxPath relativePath, object requestBody)
+        public AvaTaxCallResult RestCall(string verb, AvaTaxPath relativePath, object requestBody)
         {
             return RestCallAsync(verb, relativePath, requestBody).Result;
         }
@@ -169,7 +173,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="relativePath">The relative path from the server</param>
         /// <param name="requestBody">The object or byte array being sent in the payload, if any</param>
         /// <returns>Information about the AvaTax call</returns>
-        protected async Task<AvaTaxCallResult> RestCallAsync(string verb, AvaTaxPath relativePath, object requestBody)
+        public async Task<AvaTaxCallResult> RestCallAsync(string verb, AvaTaxPath relativePath, object requestBody)
         {
             // Begin counting duration
             var cd = new CallDuration();
@@ -540,11 +544,11 @@ namespace Avalara.AvaTax.RestClient
             // Write to disk
             var g = Guid.NewGuid().ToString();
             StringBuilder sb = new StringBuilder();
-            sb.Append($"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestBodyString}\r\n");
+            sb.Append($"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestString}\r\n");
             if (evt.ResponseString != null) {
                 sb.Append($"=== RESPONSE {g}: {evt.Code} Type: JSON ===\r\n{evt.ResponseString}\r\n=== END {g} ===\r\n");
             } else {
-                sb.Append($"=== RESPONSE {g}: {evt.Code} Type: FILE ===\r\n{evt.ResponseBody?.Length} bytes\r\n=== END {g} ===\r\n");
+                sb.Append($"=== RESPONSE {g}: {evt.Code} Type: FILE ===\r\n{evt.ResponseBytes?.Length} bytes\r\n=== END {g} ===\r\n");
             }
             File.AppendAllText(_logFileName, sb.ToString(), Encoding.UTF8);
         }

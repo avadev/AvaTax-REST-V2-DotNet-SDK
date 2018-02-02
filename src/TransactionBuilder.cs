@@ -14,7 +14,7 @@ namespace Avalara.AvaTax.RestClient
     {
         private CreateTransactionModel _model;
         private int _line_number;
-        private AvaTaxClient _client;
+        private AvaTaxAsyncClient _client;
 
         #region Constructor
         /// <summary>
@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The code of the company for this transaction</param>
         /// <param name="type">The type of transaction to create</param>
         /// <param name="customerCode">The customer code for this transaction</param>
-        public TransactionBuilder(AvaTaxClient client, string companyCode, DocumentType type, string customerCode)
+        public TransactionBuilder(AvaTaxAsyncClient client, string companyCode, DocumentType type, string customerCode)
         {
             _model = new CreateTransactionModel
             {
