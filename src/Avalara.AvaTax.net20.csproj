@@ -45,7 +45,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AvaTaxApi.cs" />
-    <Compile Include="AvaTaxCallEventArgs.cs" />
+    <Compile Include="AvaTaxCallResult.cs" />
     <Compile Include="AvaTaxClient.cs" />
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />

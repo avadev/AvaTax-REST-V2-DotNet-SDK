@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-#if PORTABLE
+#if NET45 || NETSTANDARD1_6
 using System.Threading.Tasks;
 #endif
 
@@ -647,7 +647,7 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Create 
-#if PORTABLE
+#if NET45 || NETSTANDARD1_6
         /// <summary>
         /// Create this transaction
         /// </summary>

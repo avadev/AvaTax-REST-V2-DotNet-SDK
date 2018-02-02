@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-#if PORTABLE
+#if NETSTANDARD || NET45
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 #endif
-using System.Net;
 using System.Text;
-using Newtonsoft.Json;
 using System.IO;
-using Newtonsoft.Json.Converters;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -43,7 +40,7 @@ namespace Avalara.AvaTax.RestClient
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
 #endif
-#if PORTABLE
+#if NET45 || NETSTANDARD1_6
         private static HttpClient _client = new HttpClient();
 #endif
 #endregion
@@ -149,7 +146,7 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
 #region REST Call Interface
-#if PORTABLE
+#if NETSTANDARD || NET45
         /// <summary>
         /// Unified function for REST calls
         /// </summary>
@@ -264,7 +261,7 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Implementation
-#if !PORTABLE
+#if NET20
         /// <summary>
         /// Direct implementation of client APIs to object values
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-#if PORTABLE
+#if NET45 || NETSTANDARD1_6
 using System.Threading.Tasks;
 using System.Linq;
 #endif

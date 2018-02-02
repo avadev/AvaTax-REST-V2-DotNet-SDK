@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-#if PORTABLE
+#if NET45 || NETSTANDARD1_6
 using System.Net.Http;
 using System.Threading.Tasks;
 #endif
@@ -7600,7 +7600,7 @@ namespace Avalara.AvaTax.RestClient
 #endregion
 
 #region Asynchronous
-#if PORTABLE
+#if NET45 || NETSTANDARD1_6
 
         /// <summary>
         /// Reset this account's license key;
