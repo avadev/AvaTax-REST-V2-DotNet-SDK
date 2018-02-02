@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-#if NETSTANDARD || NET45
+#if NETSTANDARD1_6 || NET45
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 #endif
 using System.Text;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -18,7 +20,7 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
-#region Private Variables
+        #region Private Variables
         private string _credentials;
         private string _clientHeader;
         private Uri _envUri;
@@ -43,9 +45,9 @@ namespace Avalara.AvaTax.RestClient
 #if NET45 || NETSTANDARD1_6
         private static HttpClient _client = new HttpClient();
 #endif
-#endregion
+        #endregion
 
-#region Constructor
+        #region Constructor
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
         /// </summary>
@@ -79,9 +81,9 @@ namespace Avalara.AvaTax.RestClient
             WithClientIdentifier(appName, appVersion, machineName);
             _envUri = customEnvironment;
         }
-#endregion
+        #endregion
 
-#region Security
+        #region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -128,9 +130,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-#endregion
+        #endregion
 
-#region Client Identification
+        #region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -145,17 +147,29 @@ namespace Avalara.AvaTax.RestClient
         }
         #endregion
 
-#region REST Call Interface
-#if NETSTANDARD || NET45
+        #region REST Call Interface
+#if NETSTANDARD1_6 || NET45
+        /// <summary>
+        /// Shortcut for non-async methods; provides compatibility with Net20 method signature
+        /// </summary>
+        /// <param name="verb"></param>
+        /// <param name="relativePath"></param>
+        /// <param name="jsonContent"></param>
+        /// <param name="byteContent"></param>
+        /// <returns></returns>
+        protected AvaTaxCallResult RestCall(string verb, AvaTaxPath relativePath, object requestBody)
+        {
+            return RestCallAsync(verb, relativePath, requestBody).Result;
+        }
+
         /// <summary>
         /// Unified function for REST calls
         /// </summary>
         /// <param name="verb">The HTTP verb to use</param>
         /// <param name="relativePath">The relative path from the server</param>
-        /// <param name="jsonContent">The JSON request body, if any</param>
-        /// <param name="byteContent">The octet-stream body, if any</param>
+        /// <param name="requestBody">The object or byte array being sent in the payload, if any</param>
         /// <returns>Information about the AvaTax call</returns>
-        public async Task<AvaTaxCallResult> RestCallAsync(string verb, AvaTaxPath relativePath, string jsonContent, byte[] byteContent)
+        protected async Task<AvaTaxCallResult> RestCallAsync(string verb, AvaTaxPath relativePath, object requestBody)
         {
             // Begin counting duration
             var cd = new CallDuration();
@@ -175,10 +189,13 @@ namespace Avalara.AvaTax.RestClient
                 }
 
                 // Add payload
-                if (jsonContent != null) {
-                    request.Content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                } else if (byteContent != null) {
-                    request.Content = new ByteArrayContent(byteContent);
+                if (requestBody != null) {
+                    if (requestBody is byte[]) {
+                        request.Content = new ByteArrayContent(requestBody as byte[]);
+                    } else {
+                        var str = JsonConvert.SerializeObject(requestBody, GetSerializerSettings());
+                        request.Content = new StringContent(str, Encoding.UTF8, "application/json");
+                    }
                 }
 
                 // Send the request to the server and await the response
@@ -214,27 +231,17 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 
-
-        /// <summary>
-        /// Direct implementation of client APIs
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        public T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
+        private JsonSerializerSettings _serializer_settings = null;
+        private JsonSerializerSettings GetSerializerSettings()
         {
-            try {
-                return RestCallAsync<T>(verb, relativePath, content).Result;
-
-            // Unroll single-exception aggregates for ease of use
-            } catch (AggregateException ex) {
-                if (ex.InnerExceptions.Count == 1) {
-                    throw ex.InnerException;
+            if (_serializer_settings == null) {
+                lock (this) {
+                    _serializer_settings = new JsonSerializerSettings();
+                    _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
+                    _serializer_settings.Converters.Add(new StringEnumConverter());
                 }
-                throw ex;
             }
+            return _serializer_settings;
         }
 
         /// <summary>

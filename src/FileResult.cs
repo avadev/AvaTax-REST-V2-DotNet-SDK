@@ -20,5 +20,16 @@ namespace Avalara.AvaTax.RestClient
         /// MIME type of the file
         /// </summary>
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="r"></param>
+        public FileResult(AvaTaxCallResult r)
+        {
+            Data = r.ResponseBytes;
+            Filename = r.ResponseFileName;
+            ContentType = r.ResponseContentType;
+        }
     }
 }

@@ -81,5 +81,36 @@ namespace Avalara.AvaTax.RestClient
             // Decode this object
             return JsonConvert.DeserializeObject<T>(ResponseString);
         }
+
+        /// <summary>
+        /// Returns true if this call result contains an error
+        /// </summary>
+        /// <returns></returns>
+        public bool IsError()
+        {
+            var codeNum = (int)Code;
+            return (codeNum >= 400 && codeNum < 600);
+        }
+
+        /// <summary>
+        /// Returns the error object for this API call
+        /// </summary>
+        /// <returns></returns>
+        public AvaTaxError GetError()
+        {
+            if (IsError()) {
+                return Deserialize<AvaTaxError>();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Check if this result represents an error
+        /// </summary>
+        public void CheckAndThrow()
+        {
+            var err = GetError();
+            if (err != null) throw err;
+        }
     }
 }
