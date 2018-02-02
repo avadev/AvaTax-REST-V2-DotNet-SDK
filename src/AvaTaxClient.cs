@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Net;
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -152,7 +153,7 @@ namespace Avalara.AvaTax.RestClient
         }
         #endregion
 
-        #region REST Call Interface
+        #region REST Call Interface (Net45 / NetStandard)
 #if NETSTANDARD1_6 || NET45
         /// <summary>
         /// Shortcut for non-async methods; provides compatibility with Net20 method signature
@@ -235,19 +236,6 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 
-        private JsonSerializerSettings _serializer_settings = null;
-        private JsonSerializerSettings GetSerializerSettings()
-        {
-            if (_serializer_settings == null) {
-                lock (this) {
-                    _serializer_settings = new JsonSerializerSettings();
-                    _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
-                    _serializer_settings.Converters.Add(new StringEnumConverter());
-                }
-            }
-            return _serializer_settings;
-        }
-
         /// <summary>
         /// Private function to capture duration information from an API call
         /// </summary>
@@ -271,7 +259,7 @@ namespace Avalara.AvaTax.RestClient
 #endif
         #endregion
 
-        #region Implementation
+        #region REST Call Interface (Net20)
 #if NET20
         /// <summary>
         /// Direct implementation of client APIs to object values
@@ -281,21 +269,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="relativePath"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        private T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
+        public AvaTaxCallResult RestCall(string verb, AvaTaxPath relativePath, object content = null)
         {
-            var s = RestCallString(verb, relativePath, content);
-            return JsonConvert.DeserializeObject<T>(s);
-        }
-
-        /// <summary>
-        /// Direct implementation of client APIs to string values
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private FileResult RestCallFile(string verb, AvaTaxPath relativePath, object content = null)
-        {
+            AvaTaxCallResult result = new AvaTaxCallResult();
             string path = CombinePath(_envUri.ToString(), relativePath.ToString());
             string jsonPayload = null;
 
@@ -318,7 +294,7 @@ namespace Avalara.AvaTax.RestClient
                 wr.ServicePoint.Expect100Continue = false;
 
                 // Encode the payload
-                jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
+                jsonPayload = JsonConvert.SerializeObject(content, GetSerializerSettings());
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(jsonPayload);
                 wr.ContentLength = data.Length;
@@ -332,128 +308,53 @@ namespace Avalara.AvaTax.RestClient
 
             // Transmit, and get back the response, save it to a temp file
             try {
-                using (var response = wr.GetResponse()) {
-                    using (var inStream = response.GetResponseStream()) {
-                        const int BUFFER_SIZE = 1024;
-                        var chunks = new List<byte>();
-                        var totalBytes = 0; 
-                        var bytesRead = 0;
+                using (var response = (HttpWebResponse)wr.GetResponse()) {
+                    result.ResponseContentType = response.Headers["Content-Type"].ToString();
+                    result.Code = response.StatusCode;
 
-                        do
-                        {
-                            var buffer = new byte[BUFFER_SIZE];
-                            bytesRead = inStream.Read(buffer, 0, BUFFER_SIZE);
-                            if (bytesRead == BUFFER_SIZE) {
-                                chunks.AddRange(buffer);
-                            } else {
-                                for (int i = 0; i < bytesRead; i++) {
-                                    chunks.Add(buffer[i]);
-                                }
+                    // Begin reading the stream
+                    using (var inStream = response.GetResponseStream()) {
+    
+                        // Is it a string response?
+                        if (String.Equals(result.ResponseContentType, "application/json") || String.Equals(result.ResponseContentType, "text/plain")) {
+                            using (var reader = new StreamReader(inStream)) {
+                                result.ResponseString = reader.ReadToEnd();
                             }
-                            totalBytes += bytesRead;
-                        } while (bytesRead > 0);
-        
-                        if(totalBytes <= 0) {
-                            throw new IOException("Response contained no data");
-                        }
 
-                        // Here's your file result
-                        var fr = new FileResult()
-                        {
-                            ContentType = response.Headers["Content-Type"].ToString(),
-                            Filename = GetDispositionFilename(response.Headers["Content-Disposition"].ToString()),
-                            Data = chunks.ToArray()
-                        };
+                        // Otherwise it's a file response
+                        } else {
+                            const int BUFFER_SIZE = 1024;
+                            var chunks = new List<byte>();
+                            var totalBytes = 0;
+                            var bytesRead = 0;
 
-                        // Track the API call
-                        var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseBody = fr.Data, RequestUri = new Uri(path) };
-                        OnCallCompleted(eventargs);
-                        return fr;
-                    }
-                }
+                            do {
+                                var buffer = new byte[BUFFER_SIZE];
+                                bytesRead = inStream.Read(buffer, 0, BUFFER_SIZE);
+                                if (bytesRead == BUFFER_SIZE) {
+                                    chunks.AddRange(buffer);
+                                } else {
+                                    for (int i = 0; i < bytesRead; i++) {
+                                        chunks.Add(buffer[i]);
+                                    }
+                                }
+                                totalBytes += bytesRead;
+                            } while (bytesRead > 0);
 
-                // Catch a web exception
-            } catch (WebException webex) {
-                HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
-                if (httpWebResponse != null) {
-                    using (Stream stream = httpWebResponse.GetResponseStream()) {
-                        using (StreamReader reader = new StreamReader(stream)) {
-                            var errString = reader.ReadToEnd();
+                            // Was the result empty?
+                            if (totalBytes <= 0) {
+                                throw new IOException("Response contained no data");
+                            }
 
-                            // Track the API call
-                            var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
-                            OnCallCompleted(eventargs);
-
-                            // Pass on the error
-                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                            throw new AvaTaxError(err, httpWebResponse.StatusCode);
+                            // Save results to the object
+                            result.ResponseBytes = chunks.ToArray();
+                            result.ResponseFileName = GetDispositionFilename(response.Headers["Content-Disposition"].ToString());
                         }
                     }
-                }
 
-                // If we can't parse it as an AvaTax error, just throw
-                throw webex;
-            }
-        }
-
-        /// <summary>
-        /// Direct implementation of client APIs to string values
-        /// </summary>
-        /// <param name="verb"></param>
-        /// <param name="relativePath"></param>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
-        {
-            string path = CombinePath(_envUri.ToString(), relativePath.ToString());
-            string jsonPayload = null;
-
-            // Use HttpWebRequest so we can get a decent response
-            var wr = (HttpWebRequest)WebRequest.Create(path);
-            wr.Proxy = null;
-
-            // Construct the basic auth, if required
-            if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
-            }
-            if (!String.IsNullOrEmpty(_clientHeader)) {
-                wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
-            }
-
-            // Convert the name-value pairs into a byte array
-            wr.Method = verb;
-            if (content != null) {
-                wr.ContentType = Constants.JSON_MIME_TYPE;
-                wr.ServicePoint.Expect100Continue = false;
-
-                // Encode the payload
-                jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
-                var encoding = new UTF8Encoding();
-                byte[] data = encoding.GetBytes(jsonPayload);
-                wr.ContentLength = data.Length;
-
-                // Call the server
-                using (var s = wr.GetRequestStream()) {
-                    s.Write(data, 0, data.Length);
-                    s.Close();
-                }
-            }
-
-            // Transmit, and get back the response, save it to a temp file
-            try {
-                using (var response = wr.GetResponse()) {
-                    using (var inStream = response.GetResponseStream()) {
-                        using (var reader = new StreamReader(inStream)) {
-                            var responseString = reader.ReadToEnd();
-
-                            // Track the API call
-                            var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseString = responseString, RequestUri = new Uri(path) };
-                            OnCallCompleted(eventargs);
-
-                            // Here's the results
-                            return responseString;
-                        }
-                    }
+                    // Track the API call
+                    OnCallCompleted(result);
+                    return result;
                 }
 
             // Catch a web exception
@@ -462,20 +363,17 @@ namespace Avalara.AvaTax.RestClient
                 if (httpWebResponse != null) {
                     using (Stream stream = httpWebResponse.GetResponseStream()) {
                         using (StreamReader reader = new StreamReader(stream)) {
-                            var errString = reader.ReadToEnd();
+                            result.Code = httpWebResponse.StatusCode;
+                            result.ResponseString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallResult() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBodyString = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
-                            OnCallCompleted(eventargs);
-
-                            // Here's the results
-                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
-                            throw new AvaTaxError(err, httpWebResponse.StatusCode);
+                            OnCallCompleted(result);
+                            return result;
                         }
                     }
                 }
 
-                // If we can't parse it as an AvaTax error, just throw
+                // If we can't parse it as a server-side error with an HTTP response, just throw
                 throw webex;
             }
         }
@@ -493,6 +391,24 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 #endif
+
+        private JsonSerializerSettings _serializer_settings = null;
+
+        /// <summary>
+        /// Fetch a standard JSON serializer
+        /// </summary>
+        /// <returns></returns>
+        private JsonSerializerSettings GetSerializerSettings()
+        {
+            if (_serializer_settings == null) {
+                lock (this) {
+                    _serializer_settings = new JsonSerializerSettings();
+                    _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
+                    _serializer_settings.Converters.Add(new StringEnumConverter());
+                }
+            }
+            return _serializer_settings;
+        }
 
         /// <summary>
         /// Shortcut to parse a content disposition to determine attachment filename
