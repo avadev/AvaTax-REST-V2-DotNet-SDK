@@ -654,7 +654,9 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public async Task<TransactionModel> CreateAsync()
         {
-            return await _client.CreateTransactionAsync(null, _model).ConfigureAwait(false);
+            var r = _client.CreateTransaction(null, _model);
+            r.CheckAndThrow();
+            return r.Deserialize<TransactionModel>();
         }
 
         /// <summary>
@@ -663,7 +665,9 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public TransactionModel Create()
         {
-            return _client.CreateTransaction(null, _model);
+            var r = _client.CreateTransaction(null, _model);
+            r.CheckAndThrow();
+            return r.Deserialize<TransactionModel>();
         }
 #else
         /// <summary>
