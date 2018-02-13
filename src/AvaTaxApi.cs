@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 /*
  * AvaTax Software Development Kit for C#
  *
- * (c) 2004-2017 Avalara, Inc.
+ * (c) 2004-2018 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
  * @author     Ted Spence <ted.spence@avalara.com>
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @author     Greg Hester <greg.hester@avalara.com>
- * @copyright  2004-2017 Avalara, Inc.
+ * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
  * @version    18.2.0-167
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK

@@ -10,7 +10,7 @@
         <projectUrl>https://developer.avalara.com</projectUrl>
         <iconUrl>https://developer.avalara.com/public/images/favicon/A-Check-RGB.png</iconUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
-		<copyright>(C) 2004-2017, Avalara, Inc.</copyright>
+		<copyright>(C) 2004-2018, Avalara, Inc.</copyright>
         <tags>tax Avalara AvaTax sales taxes ecommerce</tags>
         <dependencies>
             <group targetFramework="net20">
