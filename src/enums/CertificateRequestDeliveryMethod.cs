@@ -21,17 +21,20 @@ namespace Avalara.AvaTax.RestClient
     public enum CertificateRequestDeliveryMethod
     {
         /// <summary>
-        /// Emailing the request to recipients
+        /// The invitation will be sent via email to the recipient's email address.
         /// </summary>
         Email,
 
         /// <summary>
-        /// Faxing the request to recipients
+        /// The invitation will be sent via facsimile to the recipient's facsimile phone number.
+        ///  
+        ///  Facsimile transmission make take time to process and deliver via phone lines.
         /// </summary>
         Fax,
 
         /// <summary>
-        /// Downloading the request
+        /// The request will be processed and turned into a web link (URL) which the user can click on to visit the CertExpress site and immediately
+        ///  begin entering data about their certificates.
         /// </summary>
         Download,
 

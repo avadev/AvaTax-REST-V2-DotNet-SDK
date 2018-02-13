@@ -42,21 +42,27 @@ namespace Avalara.AvaTax.RestClient
         /// You may optionally specify a list of exposure zones to request in this CertExpress invitation. If you list 
         /// more than one exposure zone, the customer will be prompted to provide an exemption certificate for each one. 
         /// If you do not provide a list of exposure zones, the customer will be prompted to select an exposure zone.
-        /// For a list of available exposure zones, please call `ListExposureZones`.
+        /// 
+        /// For a list of available exposure zones, please call `ListCertificateExposureZones`.
         /// </summary>
         public List<Int32> exposureZones { get; set; }
 
         /// <summary>
         /// You may optionally specify a list of exemption reasons to pre-populate in this CertExpress invitation.
         /// If you list exemption reasons, the customer will have part of their form already filled in when they visit
-        /// the CertExpress website. For a list of available exemption reasons, please call `ListCertificateExemptReasons`.
+        /// the CertExpress website. 
+        /// 
+        /// For a list of available exemption reasons, please call `ListCertificateExemptReasons`.
         /// </summary>
         public List<Int32> exemptReasons { get; set; }
 
         /// <summary>
-        /// Specify the type of invitation. CertExpress invitations can be delivered via email, PDF download, or
-        /// facsimile. If you specify facsimile, the invitation will be sent via fax to the customer's fax number
-        /// on file.
+        /// Specify the type of invitation. CertExpress invitations can be delivered via email, web link, or
+        /// facsimile. 
+        /// 
+        /// * If you specify `Email`, the invitation will be delivered via email. Please ask the customer to ensure that 
+        /// * If you specify `Fax`, the invitation will be sent via fax to the customer's fax number on file.
+        /// * If you specify `Download`, the invitation will be prepared as a web link that you can display to the customer.
         /// </summary>
         public CertificateRequestDeliveryMethod? deliveryMethod { get; set; }
 
