@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2017 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.1.2-161
+ * @version    18.2.0-167
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.1.2-161"; } }
+        public static string API_VERSION { get { return "18.2.0-167"; } }
 
 #region Methods
 
@@ -367,8 +367,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -397,8 +399,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -430,8 +434,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
@@ -473,8 +479,10 @@ namespace Avalara.AvaTax.RestClient
         /// * A link to the customer that is allowed to use this certificate
         /// * Your tax transaction must contain the correct customer code
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
         /// <param name="model">Certificates to be created</param>
@@ -499,8 +507,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// Revoked certificates can no longer be used.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -527,8 +537,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -562,8 +574,10 @@ namespace Avalara.AvaTax.RestClient
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -583,6 +597,27 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Check a company's exemption certificate status.
+        /// </summary>
+        /// <remarks>
+        /// Checks whether this company is configured to use exemption certificates in AvaTax.
+        /// 
+        /// Exemption certificates are tracked through a different auditable data store than the one that 
+        /// holds AvaTax transactions. To use the AvaTax exemption certificate document store, please call
+        /// `GetCertificateSetup` to see if your company is configured to use the exemption certificate
+        /// document store. To request setup, please call `RequestCertificateSetup` and your company will
+        /// be configured with data storage in the auditable certificate system.
+        /// </remarks>
+        /// <param name="companyId">The company ID to check</param>
+        public ProvisionStatusModel GetCertificateSetup(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
+            path.ApplyField("companyId", companyId);
+            return RestCall<ProvisionStatusModel>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Link attributes to a certificate
         /// </summary>
         /// <remarks>
@@ -596,8 +631,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -626,8 +663,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -655,8 +694,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -683,8 +724,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -717,8 +760,10 @@ namespace Avalara.AvaTax.RestClient
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company to search</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
@@ -744,6 +789,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Request setup of exemption certificates for this company.
+        /// </summary>
+        /// <remarks>
+        /// Requests the setup of exemption certificates for this company.
+        /// 
+        /// Exemption certificates are tracked through a different auditable data store than the one that 
+        /// holds AvaTax transactions. To use the AvaTax exemption certificate document store, please call
+        /// `GetCertificateSetup` to see if your company is configured to use the exemption certificate
+        /// document store. To request setup, please call `RequestCertificateSetup` and your company will
+        /// be configured with data storage in the auditable certificate system.
+        /// 
+        /// This API will return the current status of exemption certificate setup for this company.
+        /// </remarks>
+        /// <param name="companyId"></param>
+        public ProvisionStatusModel RequestCertificateSetup(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
+            path.ApplyField("companyId", companyId);
+            return RestCall<ProvisionStatusModel>("Post", path, null);
+        }
+
+
+        /// <summary>
         /// Unlink attributes from a certificate
         /// </summary>
         /// <remarks>
@@ -757,8 +825,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -788,8 +858,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -814,8 +886,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -843,8 +917,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -1348,8 +1424,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="model">The list of customer objects to be created</param>
@@ -1373,8 +1451,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1403,8 +1483,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1431,8 +1513,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1458,8 +1542,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1501,8 +1587,10 @@ namespace Avalara.AvaTax.RestClient
         /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
         /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1535,8 +1623,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
@@ -1569,8 +1659,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1596,8 +1688,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1696,8 +1790,8 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
         /// certificate at any time.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1723,8 +1817,8 @@ namespace Avalara.AvaTax.RestClient
         /// An exemption reason defines why a certificate allows a customer to be exempt
         /// for purposes of tax calculation.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1750,8 +1844,8 @@ namespace Avalara.AvaTax.RestClient
         /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
         /// authority or other legal entity to which a certificate may apply.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1869,8 +1963,8 @@ namespace Avalara.AvaTax.RestClient
         /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
         /// certificates directly; this cover letter explains why the invitation was sent.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1926,6 +2020,30 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
             return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// List all ISO 4217 currencies supported by AvaTax.
+        /// </summary>
+        /// <remarks>
+        /// Lists all ISO 4217 currencies supported by AvaTax.
+        /// 
+        /// This API produces a list of currency codes that can be used when calling AvaTax. The values from this API can be used to fill out the
+        /// `currencyCode` field in a `CreateTransactionModel`.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CurrencyModel> ListCurrencies(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/currencies");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CurrencyModel>>("Get", path, null);
         }
 
 
@@ -2557,6 +2675,35 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List all customs duty programs recognized by AvaTax
+        /// </summary>
+        /// <remarks>
+        /// List all preferred customs duty programs recognized by AvaTax.
+        /// 
+        /// A customs duty program is an optional program you can use to obtain favorable treatment from customs and duty agents.
+        /// An example of a preferred program is NAFTA, which provides preferential rates for products being shipped from neighboring
+        /// countries.
+        /// 
+        /// To select a preferred program for calculating customs and duty rates, call this API to find the appropriate code for your
+        /// preferred program. Next, set the parameter `AvaTax.LC.PreferredProgram` in your `CreateTransaction` call to the code of
+        /// the program.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<PreferredProgramModel> ListPreferredPrograms(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/preferredprograms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<PreferredProgramModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of rate types for each country
         /// </summary>
         /// <remarks>
@@ -2997,7 +3144,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve all DistanceThreshold objects
         /// </summary>
         /// <remarks>
-        /// Lists all DistanceThreshold objects that belong to this company.
+        /// Lists all DistanceThreshold objects that belong to this account.
         /// 
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
@@ -6468,7 +6615,7 @@ namespace Avalara.AvaTax.RestClient
         /// call the `CreateTransaction` API call. When using this file, your software will be unable to
         /// handle complex tax rules such as:
         /// 
-        /// * Zip+9 - This tax file does not contain 
+        /// * Zip+4 - This tax file contains five digit zip codes only.
         /// * Different product types - This tax file contains tangible personal property tax rates only.
         /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
         /// * Threshold-based taxes - This tax file does not contain information about thresholds.
@@ -6476,6 +6623,8 @@ namespace Avalara.AvaTax.RestClient
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
         /// rate and the final transaction tax.
+        /// 
+        /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.
         /// </remarks>
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
         public FileResult DownloadTaxRatesByZipCode(DateTime date)
@@ -6683,12 +6832,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to adjust.</param>
         /// <param name="model">The adjustment you wish to make</param>
-        public TransactionModel AdjustTransaction(String companyCode, String transactionCode, AdjustTransactionModel model)
+        public TransactionModel AdjustTransaction(String companyCode, String transactionCode, DocumentType? documentType, AdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/adjust");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -7936,8 +8087,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -7966,8 +8119,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -7999,8 +8154,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
@@ -8042,8 +8199,10 @@ namespace Avalara.AvaTax.RestClient
         /// * A link to the customer that is allowed to use this certificate
         /// * Your tax transaction must contain the correct customer code
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
         /// <param name="model">Certificates to be created</param>
@@ -8068,8 +8227,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// Revoked certificates can no longer be used.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8096,8 +8257,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8131,8 +8294,10 @@ namespace Avalara.AvaTax.RestClient
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8152,6 +8317,27 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Check a company's exemption certificate status.;
+        /// </summary>
+        /// <remarks>
+        /// Checks whether this company is configured to use exemption certificates in AvaTax.
+        /// 
+        /// Exemption certificates are tracked through a different auditable data store than the one that 
+        /// holds AvaTax transactions. To use the AvaTax exemption certificate document store, please call
+        /// `GetCertificateSetup` to see if your company is configured to use the exemption certificate
+        /// document store. To request setup, please call `RequestCertificateSetup` and your company will
+        /// be configured with data storage in the auditable certificate system.;
+        /// </remarks>
+        /// <param name="companyId">The company ID to check</param>
+        public async Task<ProvisionStatusModel> GetCertificateSetupAsync(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<ProvisionStatusModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Link attributes to a certificate;
         /// </summary>
         /// <remarks>
@@ -8165,8 +8351,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8195,8 +8383,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8224,8 +8414,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8252,8 +8444,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8286,8 +8480,10 @@ namespace Avalara.AvaTax.RestClient
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company to search</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
@@ -8313,6 +8509,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Request setup of exemption certificates for this company.;
+        /// </summary>
+        /// <remarks>
+        /// Requests the setup of exemption certificates for this company.
+        /// 
+        /// Exemption certificates are tracked through a different auditable data store than the one that 
+        /// holds AvaTax transactions. To use the AvaTax exemption certificate document store, please call
+        /// `GetCertificateSetup` to see if your company is configured to use the exemption certificate
+        /// document store. To request setup, please call `RequestCertificateSetup` and your company will
+        /// be configured with data storage in the auditable certificate system.
+        /// 
+        /// This API will return the current status of exemption certificate setup for this company.;
+        /// </remarks>
+        /// <param name="companyId"></param>
+        public async Task<ProvisionStatusModel> RequestCertificateSetupAsync(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<ProvisionStatusModel>("Post", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Unlink attributes from a certificate;
         /// </summary>
         /// <remarks>
@@ -8326,8 +8545,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8357,8 +8578,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8383,8 +8606,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8412,8 +8637,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -8917,8 +9144,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="model">The list of customer objects to be created</param>
@@ -8942,8 +9171,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -8972,8 +9203,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -9000,8 +9233,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -9027,8 +9262,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -9070,8 +9307,10 @@ namespace Avalara.AvaTax.RestClient
         /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
         /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -9104,8 +9343,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
@@ -9138,8 +9379,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -9165,8 +9408,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -9265,8 +9510,8 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
         /// certificate at any time.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -9292,8 +9537,8 @@ namespace Avalara.AvaTax.RestClient
         /// An exemption reason defines why a certificate allows a customer to be exempt
         /// for purposes of tax calculation.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -9319,8 +9564,8 @@ namespace Avalara.AvaTax.RestClient
         /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
         /// authority or other legal entity to which a certificate may apply.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -9438,8 +9683,8 @@ namespace Avalara.AvaTax.RestClient
         /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
         /// certificates directly; this cover letter explains why the invitation was sent.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.;
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -9495,6 +9740,30 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
             return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all ISO 4217 currencies supported by AvaTax.;
+        /// </summary>
+        /// <remarks>
+        /// Lists all ISO 4217 currencies supported by AvaTax.
+        /// 
+        /// This API produces a list of currency codes that can be used when calling AvaTax. The values from this API can be used to fill out the
+        /// `currencyCode` field in a `CreateTransactionModel`.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CurrencyModel>> ListCurrenciesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/currencies");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CurrencyModel>>("Get", path, null).ConfigureAwait(false);
         }
 
 
@@ -10126,6 +10395,35 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List all customs duty programs recognized by AvaTax;
+        /// </summary>
+        /// <remarks>
+        /// List all preferred customs duty programs recognized by AvaTax.
+        /// 
+        /// A customs duty program is an optional program you can use to obtain favorable treatment from customs and duty agents.
+        /// An example of a preferred program is NAFTA, which provides preferential rates for products being shipped from neighboring
+        /// countries.
+        /// 
+        /// To select a preferred program for calculating customs and duty rates, call this API to find the appropriate code for your
+        /// preferred program. Next, set the parameter `AvaTax.LC.PreferredProgram` in your `CreateTransaction` call to the code of
+        /// the program.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<PreferredProgramModel>> ListPreferredProgramsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/preferredprograms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<PreferredProgramModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of rate types for each country;
         /// </summary>
         /// <remarks>
@@ -10566,7 +10864,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve all DistanceThreshold objects;
         /// </summary>
         /// <remarks>
-        /// Lists all DistanceThreshold objects that belong to this company.
+        /// Lists all DistanceThreshold objects that belong to this account.
         /// 
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
@@ -14037,14 +14335,16 @@ namespace Avalara.AvaTax.RestClient
         /// call the `CreateTransaction` API call. When using this file, your software will be unable to
         /// handle complex tax rules such as:
         /// 
-        /// * Zip+9 - This tax file does not contain 
+        /// * Zip+4 - This tax file contains five digit zip codes only.
         /// * Different product types - This tax file contains tangible personal property tax rates only.
         /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
         /// * Threshold-based taxes - This tax file does not contain information about thresholds.
         /// 
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
-        /// rate and the final transaction tax.;
+        /// rate and the final transaction tax.
+        /// 
+        /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.;
         /// </remarks>
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
         public async Task<FileResult> DownloadTaxRatesByZipCodeAsync(DateTime date)
@@ -14252,12 +14552,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to adjust.</param>
         /// <param name="model">The adjustment you wish to make</param>
-        public async Task<TransactionModel> AdjustTransactionAsync(String companyCode, String transactionCode, AdjustTransactionModel model)
+        public async Task<TransactionModel> AdjustTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, AdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/adjust");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 

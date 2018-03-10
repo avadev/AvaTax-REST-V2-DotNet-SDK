@@ -260,6 +260,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Decimal? costInsuranceFreight { get; set; }
 
+        /// <summary>
+        /// Indicates the VAT code for this line item.
+        /// </summary>
+        public String vatCode { get; set; }
+
+        /// <summary>
+        /// Indicates the VAT number type for this line item.
+        /// </summary>
+        public Int32? vatNumberTypeId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -173,6 +173,66 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? excludedTaxAmount { get; set; }
 
         /// <summary>
+        /// The amount of carry over sales applied to the liability calculation
+        /// </summary>
+        public Decimal? carryOverSalesAmount { get; set; }
+
+        /// <summary>
+        /// The amount of carry over non taxable sales applied to the liability calculation
+        /// </summary>
+        public Decimal? carryOverNonTaxableAmount { get; set; }
+
+        /// <summary>
+        /// The amount of carry over sales tax applied to the liability calculation
+        /// </summary>
+        public Decimal? carryOverTaxAmount { get; set; }
+
+        /// <summary>
+        /// The amount of carry over consumer use tax applied to the liability calculation
+        /// </summary>
+        public Decimal? carryOverConsumerUseTaxAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of total tax accrued in the current active period
+        /// </summary>
+        public Decimal? taxAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of sales accrued in the current active period
+        /// </summary>
+        public Decimal? salesAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of nontaxable sales accrued in the current active period
+        /// </summary>
+        public Decimal? nonTaxableAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of sales tax accrued in the current active period
+        /// </summary>
+        public Decimal? salesTaxAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of sellers use tax accrued in the current active period
+        /// </summary>
+        public Decimal? sellersUseTaxAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of consumer use tax accrued in the current active period
+        /// </summary>
+        public Decimal? consumerUseTaxAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of consumer use taxable sales accrued in the current active period
+        /// </summary>
+        public Decimal? consumerUseTaxableAccrualAmount { get; set; }
+
+        /// <summary>
+        /// The total amount of consumer use non taxable sales accrued in the current active period
+        /// </summary>
+        public Decimal? consumerUseNonTaxableAccrualAmount { get; set; }
+
+        /// <summary>
         /// The Adjustments for this return.
         /// </summary>
         public List<FilingAdjustmentModel> adjustments { get; set; }

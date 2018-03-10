@@ -623,11 +623,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        InvalidItemAttributeName,
-
-        /// <summary>
-        /// 
-        /// </summary>
         EcmsDisabled,
 
         /// <summary>
@@ -644,6 +639,31 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         FailedToDelete,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CircularCompanyHierarchies,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DuplicateEntry,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DuplicateFieldNameInOrderBy,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotAdjustDocumentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UserNoAccess,
 
         /// <summary>
         /// Batch errors
@@ -898,7 +918,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Free API error codes
         /// </summary>
-        TaxRateNotAvailableForFreeInThisCountry,
+        MustUseCreateTransaction,
 
         /// <summary>
         /// Filing Calendar Error Codes
@@ -1124,11 +1144,6 @@ namespace Avalara.AvaTax.RestClient
         /// Worksheet Exception
         /// </summary>
         WorksheetException,
-
-        /// <summary>
-        /// LandedCost Exception
-        /// </summary>
-        MissingSystemId,
 
     }
 }

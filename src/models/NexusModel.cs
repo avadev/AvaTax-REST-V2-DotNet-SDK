@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the company that declared nexus.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
         /// Name or ISO 3166 code identifying the country in which this company declared nexus.
