@@ -56,7 +56,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            return RestCall<LicenseKeyModel>("Post", path, model);
+            return RestCall<LicenseKeyModel>("POST", path, model);
         }
 
 
@@ -83,7 +83,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<AccountModel>("Post", path, model);
+            return RestCall<AccountModel>("POST", path, model);
         }
 
 
@@ -104,7 +104,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<AccountModel>("Get", path, null);
+            return RestCall<AccountModel>("GET", path, null);
         }
 
 
@@ -130,7 +130,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            return RestCall<List<AccountConfigurationModel>>("Get", path, null);
+            return RestCall<List<AccountConfigurationModel>>("GET", path, null);
         }
 
 
@@ -157,7 +157,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            return RestCall<List<AccountConfigurationModel>>("Post", path, model);
+            return RestCall<List<AccountConfigurationModel>>("POST", path, model);
         }
 
 
@@ -195,7 +195,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("textCase", textCase);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
-            return RestCall<AddressResolutionModel>("Get", path, null);
+            return RestCall<AddressResolutionModel>("GET", path, null);
         }
 
 
@@ -214,7 +214,7 @@ namespace Avalara.AvaTax.RestClient
         public AddressResolutionModel ResolveAddressPost(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            return RestCall<AddressResolutionModel>("Post", path, model);
+            return RestCall<AddressResolutionModel>("POST", path, model);
         }
 
 
@@ -233,7 +233,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<BatchModel>>("Post", path, model);
+            return RestCall<List<BatchModel>>("POST", path, model);
         }
 
 
@@ -250,7 +250,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -269,7 +269,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -289,7 +289,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<BatchModel>("Get", path, null);
+            return RestCall<BatchModel>("GET", path, null);
         }
 
 
@@ -319,7 +319,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<BatchModel>>("Get", path, null);
+            return RestCall<FetchResult<BatchModel>>("GET", path, null);
         }
 
 
@@ -348,7 +348,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<BatchModel>>("Get", path, null);
+            return RestCall<FetchResult<BatchModel>>("GET", path, null);
         }
 
 
@@ -380,7 +380,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return RestCall<List<CertExpressInvitationStatusModel>>("Post", path, model);
+            return RestCall<List<CertExpressInvitationStatusModel>>("POST", path, model);
         }
 
 
@@ -415,7 +415,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<CertExpressInvitationModel>("Get", path, null);
+            return RestCall<CertExpressInvitationModel>("GET", path, null);
         }
 
 
@@ -456,7 +456,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CertExpressInvitationModel>>("Get", path, null);
+            return RestCall<FetchResult<CertExpressInvitationModel>>("GET", path, null);
         }
 
 
@@ -490,7 +490,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<CertificateModel>>("Post", path, model);
+            return RestCall<List<CertificateModel>>("POST", path, model);
         }
 
 
@@ -519,7 +519,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<CertificateModel>("Delete", path, null);
+            return RestCall<CertificateModel>("DELETE", path, null);
         }
 
 
@@ -553,7 +553,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -592,7 +592,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<CertificateModel>("Get", path, null);
+            return RestCall<CertificateModel>("GET", path, null);
         }
 
 
@@ -613,7 +613,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            return RestCall<ProvisionStatusModel>("Get", path, null);
+            return RestCall<ProvisionStatusModel>("GET", path, null);
         }
 
 
@@ -644,7 +644,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FetchResult<CertificateAttributeModel>>("Post", path, model);
+            return RestCall<FetchResult<CertificateAttributeModel>>("POST", path, model);
         }
 
 
@@ -676,7 +676,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FetchResult<CustomerModel>>("Post", path, model);
+            return RestCall<FetchResult<CustomerModel>>("POST", path, model);
         }
 
 
@@ -706,7 +706,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FetchResult<CertificateAttributeModel>>("Get", path, null);
+            return RestCall<FetchResult<CertificateAttributeModel>>("GET", path, null);
         }
 
 
@@ -739,7 +739,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<FetchResult<CustomerModel>>("Get", path, null);
+            return RestCall<FetchResult<CustomerModel>>("GET", path, null);
         }
 
 
@@ -784,7 +784,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CertificateModel>>("Get", path, null);
+            return RestCall<FetchResult<CertificateModel>>("GET", path, null);
         }
 
 
@@ -807,7 +807,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            return RestCall<ProvisionStatusModel>("Post", path, null);
+            return RestCall<ProvisionStatusModel>("POST", path, null);
         }
 
 
@@ -838,7 +838,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FetchResult<CertificateAttributeModel>>("Post", path, model);
+            return RestCall<FetchResult<CertificateAttributeModel>>("POST", path, model);
         }
 
 
@@ -871,7 +871,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FetchResult<CustomerModel>>("Post", path, model);
+            return RestCall<FetchResult<CustomerModel>>("POST", path, model);
         }
 
 
@@ -899,7 +899,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<CertificateModel>("Put", path, model);
+            return RestCall<CertificateModel>("PUT", path, model);
         }
 
 
@@ -930,7 +930,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCallString("Post", path, null);
+            return RestCallString("POST", path, null);
         }
 
 
@@ -958,7 +958,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            return RestCallString("Post", path, model);
+            return RestCallString("POST", path, model);
         }
 
 
@@ -983,7 +983,7 @@ namespace Avalara.AvaTax.RestClient
         public CompanyModel CompanyInitialize(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            return RestCall<CompanyModel>("Post", path, model);
+            return RestCall<CompanyModel>("POST", path, model);
         }
 
 
@@ -999,7 +999,7 @@ namespace Avalara.AvaTax.RestClient
         public List<CompanyModel> CreateCompanies(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            return RestCall<List<CompanyModel>>("Post", path, model);
+            return RestCall<List<CompanyModel>>("POST", path, model);
         }
 
 
@@ -1024,7 +1024,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding/setup");
             path.ApplyField("id", id);
-            return RestCall<FundingStatusModel>("Post", path, model);
+            return RestCall<FundingStatusModel>("POST", path, model);
         }
 
 
@@ -1039,7 +1039,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -1057,7 +1057,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            return RestCall<FundingConfigurationModel>("Get", path, null);
+            return RestCall<FundingConfigurationModel>("GET", path, null);
         }
 
 
@@ -1077,7 +1077,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            return RestCall<List<FundingConfigurationModel>>("Get", path, null);
+            return RestCall<List<FundingConfigurationModel>>("GET", path, null);
         }
 
 
@@ -1108,7 +1108,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<CompanyModel>("Get", path, null);
+            return RestCall<CompanyModel>("GET", path, null);
         }
 
 
@@ -1134,7 +1134,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            return RestCall<List<CompanyConfigurationModel>>("Get", path, null);
+            return RestCall<List<CompanyConfigurationModel>>("GET", path, null);
         }
 
 
@@ -1161,7 +1161,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            return RestCallString("Get", path, null);
+            return RestCallString("GET", path, null);
         }
 
 
@@ -1179,7 +1179,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            return RestCall<List<FundingStatusModel>>("Get", path, null);
+            return RestCall<List<FundingStatusModel>>("GET", path, null);
         }
 
 
@@ -1194,7 +1194,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<MrsCompanyModel> ListMrsCompanies()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            return RestCall<FetchResult<MrsCompanyModel>>("Get", path, null);
+            return RestCall<FetchResult<MrsCompanyModel>>("GET", path, null);
         }
 
 
@@ -1230,7 +1230,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CompanyModel>>("Get", path, null);
+            return RestCall<FetchResult<CompanyModel>>("GET", path, null);
         }
 
 
@@ -1257,7 +1257,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            return RestCall<List<CompanyConfigurationModel>>("Post", path, model);
+            return RestCall<List<CompanyConfigurationModel>>("POST", path, model);
         }
 
 
@@ -1276,7 +1276,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return RestCall<CompanyModel>("Put", path, model);
+            return RestCall<CompanyModel>("PUT", path, model);
         }
 
 
@@ -1294,7 +1294,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<ContactModel>>("Post", path, model);
+            return RestCall<List<ContactModel>>("POST", path, model);
         }
 
 
@@ -1311,7 +1311,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -1330,7 +1330,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ContactModel>("Get", path, null);
+            return RestCall<ContactModel>("GET", path, null);
         }
 
 
@@ -1358,7 +1358,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ContactModel>>("Get", path, null);
+            return RestCall<FetchResult<ContactModel>>("GET", path, null);
         }
 
 
@@ -1386,7 +1386,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ContactModel>>("Get", path, null);
+            return RestCall<FetchResult<ContactModel>>("GET", path, null);
         }
 
 
@@ -1408,7 +1408,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ContactModel>("Put", path, model);
+            return RestCall<ContactModel>("PUT", path, model);
         }
 
 
@@ -1435,7 +1435,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<CustomerModel>>("Post", path, model);
+            return RestCall<List<CustomerModel>>("POST", path, model);
         }
 
 
@@ -1463,7 +1463,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return RestCall<CustomerModel>("Delete", path, null);
+            return RestCall<CustomerModel>("DELETE", path, null);
         }
 
 
@@ -1497,7 +1497,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            return RestCall<CustomerModel>("Get", path, null);
+            return RestCall<CustomerModel>("GET", path, null);
         }
 
 
@@ -1526,7 +1526,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return RestCall<FetchResult<CertificateModel>>("Post", path, model);
+            return RestCall<FetchResult<CertificateModel>>("POST", path, model);
         }
 
 
@@ -1568,7 +1568,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CertificateModel>>("Get", path, null);
+            return RestCall<FetchResult<CertificateModel>>("GET", path, null);
         }
 
 
@@ -1603,7 +1603,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<ExemptionStatusModel>("Get", path, null);
+            return RestCall<ExemptionStatusModel>("GET", path, null);
         }
 
 
@@ -1643,7 +1643,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CustomerModel>>("Get", path, null);
+            return RestCall<FetchResult<CustomerModel>>("GET", path, null);
         }
 
 
@@ -1672,7 +1672,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return RestCall<FetchResult<CertificateModel>>("Post", path, model);
+            return RestCall<FetchResult<CertificateModel>>("POST", path, model);
         }
 
 
@@ -1701,7 +1701,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return RestCall<CustomerModel>("Put", path, model);
+            return RestCall<CustomerModel>("PUT", path, model);
         }
 
 
@@ -1727,7 +1727,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
 
@@ -1751,7 +1751,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SkyscraperStatusModel>>("Get", path, null);
+            return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
         }
 
 
@@ -1777,7 +1777,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<AvaFileFormModel>>("Get", path, null);
+            return RestCall<FetchResult<AvaFileFormModel>>("GET", path, null);
         }
 
 
@@ -1804,7 +1804,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CertificateAttributeModel>>("Get", path, null);
+            return RestCall<FetchResult<CertificateAttributeModel>>("GET", path, null);
         }
 
 
@@ -1831,7 +1831,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ExemptionReasonModel>>("Get", path, null);
+            return RestCall<FetchResult<ExemptionReasonModel>>("GET", path, null);
         }
 
 
@@ -1858,7 +1858,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ExposureZoneModel>>("Get", path, null);
+            return RestCall<FetchResult<ExposureZoneModel>>("GET", path, null);
         }
 
 
@@ -1882,7 +1882,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CommunicationsTSPairModel>>("Get", path, null);
+            return RestCall<FetchResult<CommunicationsTSPairModel>>("GET", path, null);
         }
 
 
@@ -1904,7 +1904,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CommunicationsTransactionTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<CommunicationsTransactionTypeModel>>("GET", path, null);
         }
 
 
@@ -1926,7 +1926,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CommunicationsTSPairModel>>("Get", path, null);
+            return RestCall<FetchResult<CommunicationsTSPairModel>>("GET", path, null);
         }
 
 
@@ -1949,7 +1949,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<IsoCountryModel>>("Get", path, null);
+            return RestCall<FetchResult<IsoCountryModel>>("GET", path, null);
         }
 
 
@@ -1977,7 +1977,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CoverLetterModel>>("Get", path, null);
+            return RestCall<FetchResult<CoverLetterModel>>("GET", path, null);
         }
 
 
@@ -2001,7 +2001,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
 
@@ -2019,7 +2019,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<HsCodeModel> ListCrossBorderSections()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
 
@@ -2043,7 +2043,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CurrencyModel>>("Get", path, null);
+            return RestCall<FetchResult<CurrencyModel>>("GET", path, null);
         }
 
 
@@ -2068,7 +2068,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<EntityUseCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<EntityUseCodeModel>>("GET", path, null);
         }
 
 
@@ -2090,7 +2090,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingFrequencyModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingFrequencyModel>>("GET", path, null);
         }
 
 
@@ -2114,7 +2114,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<JurisdictionModel>>("Get", path, null);
+            return RestCall<FetchResult<JurisdictionModel>>("GET", path, null);
         }
 
 
@@ -2155,7 +2155,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<JurisdictionOverrideModel>>("Get", path, null);
+            return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
 
@@ -2199,7 +2199,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<LocationQuestionModel>>("Get", path, null);
+            return RestCall<FetchResult<LocationQuestionModel>>("GET", path, null);
         }
 
 
@@ -2222,7 +2222,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SkyscraperStatusModel>>("Get", path, null);
+            return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
         }
 
 
@@ -2245,7 +2245,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
 
@@ -2299,7 +2299,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
 
@@ -2324,7 +2324,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
 
@@ -2351,7 +2351,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
 
@@ -2384,7 +2384,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<NexusByTaxFormModel>("Get", path, null);
+            return RestCall<NexusByTaxFormModel>("GET", path, null);
         }
 
 
@@ -2406,7 +2406,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusTaxTypeGroupModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusTaxTypeGroupModel>>("GET", path, null);
         }
 
 
@@ -2428,7 +2428,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeCustomerFundingOptionModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeCustomerFundingOptionModel>>("GET", path, null);
         }
 
 
@@ -2450,7 +2450,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeCustomerTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeCustomerTypeModel>>("GET", path, null);
         }
 
 
@@ -2472,7 +2472,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeFilingTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeFilingTypeModel>>("GET", path, null);
         }
 
 
@@ -2494,7 +2494,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticePriorityModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticePriorityModel>>("GET", path, null);
         }
 
 
@@ -2516,7 +2516,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeReasonModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeReasonModel>>("GET", path, null);
         }
 
 
@@ -2538,7 +2538,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeResponsibilityModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeResponsibilityModel>>("GET", path, null);
         }
 
 
@@ -2560,7 +2560,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeRootCauseModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeRootCauseModel>>("GET", path, null);
         }
 
 
@@ -2582,7 +2582,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeStatusModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeStatusModel>>("GET", path, null);
         }
 
 
@@ -2604,7 +2604,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeTypeModel>>("GET", path, null);
         }
 
 
@@ -2627,7 +2627,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ParameterModel>>("Get", path, null);
+            return RestCall<FetchResult<ParameterModel>>("GET", path, null);
         }
 
 
@@ -2649,7 +2649,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<String>>("Get", path, null);
+            return RestCall<FetchResult<String>>("GET", path, null);
         }
 
 
@@ -2670,7 +2670,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<PostalCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<PostalCodeModel>>("GET", path, null);
         }
 
 
@@ -2699,7 +2699,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<PreferredProgramModel>>("Get", path, null);
+            return RestCall<FetchResult<PreferredProgramModel>>("GET", path, null);
         }
 
 
@@ -2723,7 +2723,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<RateTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<RateTypeModel>>("GET", path, null);
         }
 
 
@@ -2746,7 +2746,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<IsoRegionModel>>("Get", path, null);
+            return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
 
 
@@ -2771,7 +2771,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<IsoRegionModel>>("Get", path, null);
+            return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
 
 
@@ -2793,7 +2793,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ResourceFileTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<ResourceFileTypeModel>>("GET", path, null);
         }
 
 
@@ -2816,7 +2816,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SecurityRoleModel>>("Get", path, null);
+            return RestCall<FetchResult<SecurityRoleModel>>("GET", path, null);
         }
 
 
@@ -2840,7 +2840,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SubscriptionTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<SubscriptionTypeModel>>("GET", path, null);
         }
 
 
@@ -2862,7 +2862,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxAuthorityModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxAuthorityModel>>("GET", path, null);
         }
 
 
@@ -2886,7 +2886,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxAuthorityFormModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxAuthorityFormModel>>("GET", path, null);
         }
 
 
@@ -2908,7 +2908,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxAuthorityTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxAuthorityTypeModel>>("GET", path, null);
         }
 
 
@@ -2933,7 +2933,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
 
@@ -2956,7 +2956,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<TaxCodeTypesModel>("Get", path, null);
+            return RestCall<TaxCodeTypesModel>("GET", path, null);
         }
 
 
@@ -2978,7 +2978,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FormMasterModel>>("Get", path, null);
+            return RestCall<FetchResult<FormMasterModel>>("GET", path, null);
         }
 
 
@@ -3000,7 +3000,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxSubTypeModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
 
@@ -3022,7 +3022,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxTypeGroupModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxTypeGroupModel>>("GET", path, null);
         }
 
 
@@ -3045,7 +3045,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<UomModel>>("Get", path, null);
+            return RestCall<FetchResult<UomModel>>("GET", path, null);
         }
 
 
@@ -3065,7 +3065,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<CompanyDistanceThresholdModel>>("Post", path, model);
+            return RestCall<List<CompanyDistanceThresholdModel>>("POST", path, model);
         }
 
 
@@ -3086,7 +3086,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -3107,7 +3107,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<CompanyDistanceThresholdModel>("Get", path, null);
+            return RestCall<CompanyDistanceThresholdModel>("GET", path, null);
         }
 
 
@@ -3136,7 +3136,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null);
+            return RestCall<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null);
         }
 
 
@@ -3166,7 +3166,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null);
+            return RestCall<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null);
         }
 
 
@@ -3191,7 +3191,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<CompanyDistanceThresholdModel>("Put", path, model);
+            return RestCall<CompanyDistanceThresholdModel>("PUT", path, model);
         }
 
 
@@ -3211,7 +3211,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, null);
+            return RestCall<FilingRequestModel>("POST", path, null);
         }
 
 
@@ -3230,7 +3230,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, null);
+            return RestCall<FilingRequestModel>("POST", path, null);
         }
 
 
@@ -3251,7 +3251,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, model);
+            return RestCall<FilingRequestModel>("POST", path, model);
         }
 
 
@@ -3268,7 +3268,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
             path.ApplyField("companyId", companyId);
-            return RestCall<FilingCalendarModel>("Post", path, model);
+            return RestCall<FilingCalendarModel>("POST", path, model);
         }
 
 
@@ -3286,7 +3286,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
             path.ApplyField("companyId", companyId);
-            return RestCall<FilingRequestModel>("Post", path, model);
+            return RestCall<FilingRequestModel>("POST", path, model);
         }
 
 
@@ -3303,7 +3303,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/options");
             path.ApplyField("companyId", companyId);
             path.AddQuery("formCode", formCode);
-            return RestCall<List<CycleAddOptionModel>>("Get", path, null);
+            return RestCall<List<CycleAddOptionModel>>("GET", path, null);
         }
 
 
@@ -3321,7 +3321,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/options");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<CycleEditOptionModel>("Post", path, model);
+            return RestCall<CycleEditOptionModel>("POST", path, model);
         }
 
 
@@ -3338,7 +3338,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<CycleExpireModel>("Get", path, null);
+            return RestCall<CycleExpireModel>("GET", path, null);
         }
 
 
@@ -3358,7 +3358,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -3375,7 +3375,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingCalendarModel>("Get", path, null);
+            return RestCall<FilingCalendarModel>("GET", path, null);
         }
 
 
@@ -3394,7 +3394,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Get", path, null);
+            return RestCall<FilingRequestModel>("GET", path, null);
         }
 
 
@@ -3421,7 +3421,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("returnCountry", returnCountry);
             path.AddQuery("returnRegion", returnRegion);
-            return RestCall<FetchResult<FilingCalendarModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingCalendarModel>>("GET", path, null);
         }
 
 
@@ -3446,7 +3446,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingRequestModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingRequestModel>>("GET", path, null);
         }
 
 
@@ -3462,7 +3462,7 @@ namespace Avalara.AvaTax.RestClient
         public LoginVerificationOutputModel LoginVerificationRequest(LoginVerificationInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
-            return RestCall<LoginVerificationOutputModel>("Post", path, model);
+            return RestCall<LoginVerificationOutputModel>("POST", path, model);
         }
 
 
@@ -3480,7 +3480,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
             path.ApplyField("jobId", jobId);
-            return RestCall<LoginVerificationOutputModel>("Get", path, null);
+            return RestCall<LoginVerificationOutputModel>("GET", path, null);
         }
 
 
@@ -3505,7 +3505,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("returnCountry", returnCountry);
             path.AddQuery("returnRegion", returnRegion);
-            return RestCall<FetchResult<FilingCalendarModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingCalendarModel>>("GET", path, null);
         }
 
 
@@ -3531,7 +3531,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingRequestModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingRequestModel>>("GET", path, null);
         }
 
 
@@ -3555,7 +3555,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Post", path, model);
+            return RestCall<FilingRequestModel>("POST", path, model);
         }
 
 
@@ -3573,7 +3573,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingCalendarModel>("Put", path, model);
+            return RestCall<FilingCalendarModel>("PUT", path, model);
         }
 
 
@@ -3593,7 +3593,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("Put", path, model);
+            return RestCall<FilingRequestModel>("PUT", path, model);
         }
 
 
@@ -3619,7 +3619,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<List<FilingModel>>("Post", path, model);
+            return RestCall<List<FilingModel>>("POST", path, model);
         }
 
 
@@ -3647,7 +3647,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return RestCall<List<FilingModel>>("Post", path, model);
+            return RestCall<List<FilingModel>>("POST", path, model);
         }
 
 
@@ -3677,7 +3677,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<List<FilingModel>>("Post", path, model);
+            return RestCall<List<FilingModel>>("POST", path, model);
         }
 
 
@@ -3708,7 +3708,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingAdjustmentModel>>("Post", path, model);
+            return RestCall<List<FilingAdjustmentModel>>("POST", path, model);
         }
 
 
@@ -3738,7 +3738,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingAugmentationModel>>("Post", path, model);
+            return RestCall<List<FilingAugmentationModel>>("POST", path, model);
         }
 
 
@@ -3769,7 +3769,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingPaymentModel>>("Post", path, model);
+            return RestCall<List<FilingPaymentModel>>("POST", path, model);
         }
 
 
@@ -3791,7 +3791,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -3812,7 +3812,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -3834,7 +3834,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -3851,7 +3851,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
             path.ApplyField("filingsId", filingsId);
             path.ApplyField("companyId", companyId);
-            return RestCall<FilingsCheckupModel>("Get", path, null);
+            return RestCall<FilingsCheckupModel>("GET", path, null);
         }
 
 
@@ -3870,7 +3870,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<FilingsCheckupModel>("Get", path, null);
+            return RestCall<FilingsCheckupModel>("GET", path, null);
         }
 
 
@@ -3889,7 +3889,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("filingReturnId", filingReturnId);
             path.AddQuery("fileId", fileId);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -3910,7 +3910,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -3931,7 +3931,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -3950,7 +3950,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FetchResult<FilingReturnModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingReturnModel>>("GET", path, null);
         }
 
 
@@ -3971,7 +3971,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<FetchResult<FilingModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingModel>>("GET", path, null);
         }
 
 
@@ -3994,7 +3994,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return RestCall<FetchResult<FilingModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingModel>>("GET", path, null);
         }
 
 
@@ -4019,7 +4019,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<FetchResult<FilingModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingModel>>("GET", path, null);
         }
 
 
@@ -4046,7 +4046,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return RestCall<FetchResult<FilingModel>>("Get", path, null);
+            return RestCall<FetchResult<FilingModel>>("GET", path, null);
         }
 
 
@@ -4076,7 +4076,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("region", region);
             path.AddQuery("filingCalendarId", filingCalendarId);
-            return RestCall<FetchResult<FilingReturnModelBasic>>("Get", path, null);
+            return RestCall<FetchResult<FilingReturnModelBasic>>("GET", path, null);
         }
 
 
@@ -4101,7 +4101,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return RestCall<FetchResult<FilingModel>>("Post", path, model);
+            return RestCall<FetchResult<FilingModel>>("POST", path, model);
         }
 
 
@@ -4128,7 +4128,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return RestCall<FetchResult<FilingModel>>("Post", path, model);
+            return RestCall<FetchResult<FilingModel>>("POST", path, model);
         }
 
 
@@ -4157,7 +4157,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return RestCall<FetchResult<FilingModel>>("Post", path, model);
+            return RestCall<FetchResult<FilingModel>>("POST", path, model);
         }
 
 
@@ -4180,7 +4180,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingAdjustmentModel>("Put", path, model);
+            return RestCall<FilingAdjustmentModel>("PUT", path, model);
         }
 
 
@@ -4202,7 +4202,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingModel>("Put", path, model);
+            return RestCall<FilingModel>("PUT", path, model);
         }
 
 
@@ -4225,7 +4225,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<FilingPaymentModel>("Put", path, model);
+            return RestCall<FilingPaymentModel>("PUT", path, model);
         }
 
 
@@ -4250,7 +4250,7 @@ namespace Avalara.AvaTax.RestClient
         public NewAccountModel RequestFreeTrial(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            return RestCall<NewAccountModel>("Post", path, model);
+            return RestCall<NewAccountModel>("POST", path, model);
         }
 
 
@@ -4316,7 +4316,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            return RestCall<TaxRateModel>("Get", path, null);
+            return RestCall<TaxRateModel>("GET", path, null);
         }
 
 
@@ -4367,7 +4367,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            return RestCall<TaxRateModel>("Get", path, null);
+            return RestCall<TaxRateModel>("GET", path, null);
         }
 
 
@@ -4393,7 +4393,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
-            return RestCall<FundingStatusModel>("Get", path, null);
+            return RestCall<FundingStatusModel>("GET", path, null);
         }
 
 
@@ -4417,7 +4417,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
             path.ApplyField("id", id);
-            return RestCall<FundingStatusModel>("Get", path, null);
+            return RestCall<FundingStatusModel>("GET", path, null);
         }
 
 
@@ -4439,7 +4439,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<ItemModel>>("Post", path, model);
+            return RestCall<List<ItemModel>>("POST", path, model);
         }
 
 
@@ -4462,7 +4462,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -4485,7 +4485,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ItemModel>("Get", path, null);
+            return RestCall<ItemModel>("GET", path, null);
         }
 
 
@@ -4523,7 +4523,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ItemModel>>("Get", path, null);
+            return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
 
@@ -4559,7 +4559,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ItemModel>>("Get", path, null);
+            return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
 
@@ -4586,7 +4586,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<ItemModel>("Put", path, model);
+            return RestCall<ItemModel>("PUT", path, model);
         }
 
 
@@ -4607,7 +4607,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            return RestCall<List<JurisdictionOverrideModel>>("Post", path, model);
+            return RestCall<List<JurisdictionOverrideModel>>("POST", path, model);
         }
 
 
@@ -4624,7 +4624,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -4646,7 +4646,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<JurisdictionOverrideModel>("Get", path, null);
+            return RestCall<JurisdictionOverrideModel>("GET", path, null);
         }
 
 
@@ -4679,7 +4679,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<JurisdictionOverrideModel>>("Get", path, null);
+            return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
 
@@ -4710,7 +4710,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<JurisdictionOverrideModel>>("Get", path, null);
+            return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
 
@@ -4728,7 +4728,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<JurisdictionOverrideModel>("Put", path, model);
+            return RestCall<JurisdictionOverrideModel>("PUT", path, model);
         }
 
 
@@ -4744,7 +4744,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<LocationModel>>("Post", path, model);
+            return RestCall<List<LocationModel>>("POST", path, model);
         }
 
 
@@ -4761,7 +4761,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -4788,7 +4788,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<LocationModel>("Get", path, null);
+            return RestCall<LocationModel>("GET", path, null);
         }
 
 
@@ -4823,7 +4823,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<LocationModel>>("Get", path, null);
+            return RestCall<FetchResult<LocationModel>>("GET", path, null);
         }
 
 
@@ -4857,7 +4857,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<LocationModel>>("Get", path, null);
+            return RestCall<FetchResult<LocationModel>>("GET", path, null);
         }
 
 
@@ -4877,7 +4877,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<LocationModel>("Put", path, model);
+            return RestCall<LocationModel>("PUT", path, model);
         }
 
 
@@ -4896,7 +4896,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<LocationValidationModel>("Get", path, null);
+            return RestCall<LocationValidationModel>("GET", path, null);
         }
 
 
@@ -4925,7 +4925,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            return RestCall<MultiDocumentModel>("Post", path, model);
+            return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
 
@@ -4955,7 +4955,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            return RestCall<AuditMultiDocumentModel>("Get", path, null);
+            return RestCall<AuditMultiDocumentModel>("GET", path, null);
         }
 
 
@@ -4976,7 +4976,7 @@ namespace Avalara.AvaTax.RestClient
         public MultiDocumentModel CommitMultiDocumentTransaction(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            return RestCall<MultiDocumentModel>("Post", path, model);
+            return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
 
@@ -5023,7 +5023,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            return RestCall<MultiDocumentModel>("Post", path, model);
+            return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
 
@@ -5053,7 +5053,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            return RestCall<MultiDocumentModel>("Get", path, null);
+            return RestCall<MultiDocumentModel>("GET", path, null);
         }
 
 
@@ -5090,7 +5090,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<MultiDocumentModel>("Get", path, null);
+            return RestCall<MultiDocumentModel>("GET", path, null);
         }
 
 
@@ -5131,7 +5131,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<MultiDocumentModel>>("Get", path, null);
+            return RestCall<FetchResult<MultiDocumentModel>>("GET", path, null);
         }
 
 
@@ -5186,7 +5186,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            return RestCall<MultiDocumentModel>("Post", path, model);
+            return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
 
@@ -5205,7 +5205,7 @@ namespace Avalara.AvaTax.RestClient
         public MultiDocumentModel VerifyMultiDocumentTransaction(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            return RestCall<MultiDocumentModel>("Post", path, model);
+            return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
 
@@ -5231,7 +5231,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            return RestCall<MultiDocumentModel>("Post", path, model);
+            return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
 
@@ -5255,7 +5255,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<NexusModel>>("Post", path, model);
+            return RestCall<List<NexusModel>>("POST", path, model);
         }
 
 
@@ -5273,7 +5273,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5294,7 +5294,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<NexusModel>("Get", path, null);
+            return RestCall<NexusModel>("GET", path, null);
         }
 
 
@@ -5321,7 +5321,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
-            return RestCall<NexusByTaxFormModel>("Get", path, null);
+            return RestCall<NexusByTaxFormModel>("GET", path, null);
         }
 
 
@@ -5353,7 +5353,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
 
@@ -5383,7 +5383,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NexusModel>>("Get", path, null);
+            return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
 
@@ -5411,7 +5411,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<NexusModel>("Put", path, model);
+            return RestCall<NexusModel>("PUT", path, model);
         }
 
 
@@ -5432,7 +5432,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/comments");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<NoticeCommentModel>>("Post", path, model);
+            return RestCall<List<NoticeCommentModel>>("POST", path, model);
         }
 
 
@@ -5454,7 +5454,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<NoticeFinanceModel>>("Post", path, model);
+            return RestCall<List<NoticeFinanceModel>>("POST", path, model);
         }
 
 
@@ -5475,7 +5475,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<NoticeResponsibilityDetailModel>>("Post", path, model);
+            return RestCall<List<NoticeResponsibilityDetailModel>>("POST", path, model);
         }
 
 
@@ -5496,7 +5496,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<NoticeRootCauseDetailModel>>("Post", path, model);
+            return RestCall<List<NoticeRootCauseDetailModel>>("POST", path, model);
         }
 
 
@@ -5515,7 +5515,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<NoticeModel>>("Post", path, model);
+            return RestCall<List<NoticeModel>>("POST", path, model);
         }
 
 
@@ -5535,7 +5535,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5557,7 +5557,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("noticeId", noticeId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5579,7 +5579,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("noticeId", noticeId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5597,7 +5597,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -5617,7 +5617,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<NoticeModel>("Get", path, null);
+            return RestCall<NoticeModel>("GET", path, null);
         }
 
 
@@ -5637,7 +5637,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/comments");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return RestCall<FetchResult<NoticeCommentModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeCommentModel>>("GET", path, null);
         }
 
 
@@ -5658,7 +5658,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return RestCall<FetchResult<NoticeFinanceModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeFinanceModel>>("GET", path, null);
         }
 
 
@@ -5678,7 +5678,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return RestCall<FetchResult<NoticeResponsibilityDetailModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeResponsibilityDetailModel>>("GET", path, null);
         }
 
 
@@ -5698,7 +5698,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return RestCall<FetchResult<NoticeRootCauseDetailModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeRootCauseDetailModel>>("GET", path, null);
         }
 
 
@@ -5729,7 +5729,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeModel>>("GET", path, null);
         }
 
 
@@ -5758,7 +5758,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<NoticeModel>>("Get", path, null);
+            return RestCall<FetchResult<NoticeModel>>("GET", path, null);
         }
 
 
@@ -5781,7 +5781,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<NoticeModel>("Put", path, model);
+            return RestCall<NoticeModel>("PUT", path, model);
         }
 
 
@@ -5798,7 +5798,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
             path.ApplyField("companyId", companyId);
-            return RestCallFile("Post", path, model);
+            return RestCallFile("POST", path, model);
         }
 
 
@@ -5825,7 +5825,7 @@ namespace Avalara.AvaTax.RestClient
         public NewAccountModel RequestNewAccount(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            return RestCall<NewAccountModel>("Post", path, model);
+            return RestCall<NewAccountModel>("POST", path, model);
         }
 
 
@@ -5844,7 +5844,7 @@ namespace Avalara.AvaTax.RestClient
         public String ChangePassword(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            return RestCallString("Put", path, model);
+            return RestCallString("PUT", path, model);
         }
 
 
@@ -5862,7 +5862,7 @@ namespace Avalara.AvaTax.RestClient
         public AccountModel CreateAccount(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            return RestCall<AccountModel>("Post", path, model);
+            return RestCall<AccountModel>("POST", path, model);
         }
 
 
@@ -5883,7 +5883,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            return RestCall<List<SubscriptionModel>>("Post", path, model);
+            return RestCall<List<SubscriptionModel>>("POST", path, model);
         }
 
 
@@ -5902,7 +5902,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5922,7 +5922,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5942,7 +5942,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -5976,7 +5976,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<AccountModel>>("Get", path, null);
+            return RestCall<FetchResult<AccountModel>>("GET", path, null);
         }
 
 
@@ -5997,7 +5997,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            return RestCallString("Post", path, model);
+            return RestCallString("POST", path, model);
         }
 
 
@@ -6016,7 +6016,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return RestCall<AccountModel>("Put", path, model);
+            return RestCall<AccountModel>("PUT", path, model);
         }
 
 
@@ -6041,7 +6041,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<SubscriptionModel>("Put", path, model);
+            return RestCall<SubscriptionModel>("PUT", path, model);
         }
 
 
@@ -6069,7 +6069,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -6092,7 +6092,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
             path.ApplyField("companyId", companyId);
-            return RestCallFile("Post", path, model);
+            return RestCallFile("POST", path, model);
         }
 
 
@@ -6117,7 +6117,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            return RestCall<ReportModel>("Get", path, null);
+            return RestCall<ReportModel>("GET", path, null);
         }
 
 
@@ -6143,7 +6143,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            return RestCallFile("Post", path, model);
+            return RestCallFile("POST", path, model);
         }
 
 
@@ -6166,7 +6166,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<ReportModel> ListReports()
         {
             var path = new AvaTaxPath("/api/v2/reports");
-            return RestCall<FetchResult<ReportModel>>("Get", path, null);
+            return RestCall<FetchResult<ReportModel>>("GET", path, null);
         }
 
 
@@ -6188,7 +6188,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<SettingModel>>("Post", path, model);
+            return RestCall<List<SettingModel>>("POST", path, model);
         }
 
 
@@ -6205,7 +6205,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -6228,7 +6228,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<SettingModel>("Get", path, null);
+            return RestCall<SettingModel>("GET", path, null);
         }
 
 
@@ -6262,7 +6262,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SettingModel>>("Get", path, null);
+            return RestCall<FetchResult<SettingModel>>("GET", path, null);
         }
 
 
@@ -6294,7 +6294,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SettingModel>>("Get", path, null);
+            return RestCall<FetchResult<SettingModel>>("GET", path, null);
         }
 
 
@@ -6320,7 +6320,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<SettingModel>("Put", path, model);
+            return RestCall<SettingModel>("PUT", path, model);
         }
 
 
@@ -6339,7 +6339,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return RestCall<SubscriptionModel>("Get", path, null);
+            return RestCall<SubscriptionModel>("GET", path, null);
         }
 
 
@@ -6367,7 +6367,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SubscriptionModel>>("Get", path, null);
+            return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
 
@@ -6393,7 +6393,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<SubscriptionModel>>("Get", path, null);
+            return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
 
@@ -6413,7 +6413,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<TaxCodeModel>>("Post", path, model);
+            return RestCall<List<TaxCodeModel>>("POST", path, model);
         }
 
 
@@ -6430,7 +6430,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -6451,7 +6451,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<TaxCodeModel>("Get", path, null);
+            return RestCall<TaxCodeModel>("GET", path, null);
         }
 
 
@@ -6483,7 +6483,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
 
@@ -6513,7 +6513,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxCodeModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
 
@@ -6537,7 +6537,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<TaxCodeModel>("Put", path, model);
+            return RestCall<TaxCodeModel>("PUT", path, model);
         }
 
 
@@ -6563,7 +6563,7 @@ namespace Avalara.AvaTax.RestClient
         public FileResult BuildTaxContentFile(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return RestCallFile("Post", path, model);
+            return RestCallFile("POST", path, model);
         }
 
 
@@ -6600,7 +6600,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -6631,7 +6631,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date);
-            return RestCallFile("Get", path, null);
+            return RestCallFile("GET", path, null);
         }
 
 
@@ -6651,7 +6651,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<TaxRuleModel>>("Post", path, model);
+            return RestCall<List<TaxRuleModel>>("POST", path, model);
         }
 
 
@@ -6668,7 +6668,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -6689,7 +6689,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<TaxRuleModel>("Get", path, null);
+            return RestCall<TaxRuleModel>("GET", path, null);
         }
 
 
@@ -6721,7 +6721,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxRuleModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxRuleModel>>("GET", path, null);
         }
 
 
@@ -6751,7 +6751,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TaxRuleModel>>("Get", path, null);
+            return RestCall<FetchResult<TaxRuleModel>>("GET", path, null);
         }
 
 
@@ -6775,7 +6775,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<TaxRuleModel>("Put", path, model);
+            return RestCall<TaxRuleModel>("PUT", path, model);
         }
 
 
@@ -6810,7 +6810,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -6840,7 +6840,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -6871,7 +6871,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            return RestCall<AuditTransactionModel>("Get", path, null);
+            return RestCall<AuditTransactionModel>("GET", path, null);
         }
 
 
@@ -6904,7 +6904,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            return RestCall<AuditTransactionModel>("Get", path, null);
+            return RestCall<AuditTransactionModel>("GET", path, null);
         }
 
 
@@ -6924,7 +6924,7 @@ namespace Avalara.AvaTax.RestClient
         public BulkLockTransactionResult BulkLockTransaction(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            return RestCall<BulkLockTransactionResult>("Post", path, model);
+            return RestCall<BulkLockTransactionResult>("POST", path, model);
         }
 
 
@@ -6954,7 +6954,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -6983,7 +6983,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7026,7 +7026,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7075,7 +7075,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7107,7 +7107,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7139,7 +7139,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Get", path, null);
+            return RestCall<TransactionModel>("GET", path, null);
         }
 
 
@@ -7171,7 +7171,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Get", path, null);
+            return RestCall<TransactionModel>("GET", path, null);
         }
 
 
@@ -7203,7 +7203,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return RestCall<TransactionModel>("Get", path, null);
+            return RestCall<TransactionModel>("GET", path, null);
         }
 
 
@@ -7248,7 +7248,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<TransactionModel>>("Get", path, null);
+            return RestCall<FetchResult<TransactionModel>>("GET", path, null);
         }
 
 
@@ -7278,7 +7278,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7330,7 +7330,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7359,7 +7359,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7386,7 +7386,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7415,7 +7415,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return RestCall<TransactionModel>("Post", path, model);
+            return RestCall<TransactionModel>("POST", path, model);
         }
 
 
@@ -7432,7 +7432,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            return RestCall<List<UPCModel>>("Post", path, model);
+            return RestCall<List<UPCModel>>("POST", path, model);
         }
 
 
@@ -7449,7 +7449,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("Delete", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -7467,7 +7467,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<UPCModel>("Get", path, null);
+            return RestCall<UPCModel>("GET", path, null);
         }
 
 
@@ -7496,7 +7496,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<UPCModel>>("Get", path, null);
+            return RestCall<FetchResult<UPCModel>>("GET", path, null);
         }
 
 
@@ -7523,7 +7523,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<UPCModel>>("Get", path, null);
+            return RestCall<FetchResult<UPCModel>>("GET", path, null);
         }
 
 
@@ -7544,7 +7544,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return RestCall<UPCModel>("Put", path, model);
+            return RestCall<UPCModel>("PUT", path, model);
         }
 
 
@@ -7568,7 +7568,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            return RestCall<List<UserModel>>("Post", path, model);
+            return RestCall<List<UserModel>>("POST", path, model);
         }
 
 
@@ -7588,7 +7588,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            return RestCall<UserModel>("Get", path, null);
+            return RestCall<UserModel>("GET", path, null);
         }
 
 
@@ -7619,7 +7619,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return RestCall<UserEntitlementModel>("Get", path, null);
+            return RestCall<UserEntitlementModel>("GET", path, null);
         }
 
 
@@ -7648,7 +7648,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<UserModel>>("Get", path, null);
+            return RestCall<FetchResult<UserModel>>("GET", path, null);
         }
 
 
@@ -7675,7 +7675,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<UserModel>>("Get", path, null);
+            return RestCall<FetchResult<UserModel>>("GET", path, null);
         }
 
 
@@ -7696,7 +7696,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return RestCall<UserModel>("Put", path, model);
+            return RestCall<UserModel>("PUT", path, model);
         }
 
 
@@ -7713,7 +7713,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            return RestCall<SubscriptionModel>("Get", path, null);
+            return RestCall<SubscriptionModel>("GET", path, null);
         }
 
 
@@ -7728,7 +7728,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<SubscriptionModel> ListMySubscriptions()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            return RestCall<FetchResult<SubscriptionModel>>("Get", path, null);
+            return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
 
@@ -7745,7 +7745,7 @@ namespace Avalara.AvaTax.RestClient
         public PingResultModel Ping()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            return RestCall<PingResultModel>("Get", path, null);
+            return RestCall<PingResultModel>("GET", path, null);
         }
 
 #endregion
@@ -7776,7 +7776,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            return await RestCallAsync<LicenseKeyModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<LicenseKeyModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -7803,7 +7803,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<AccountModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<AccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -7824,7 +7824,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<AccountModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<AccountModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -7850,7 +7850,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<AccountConfigurationModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<AccountConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -7877,7 +7877,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<AccountConfigurationModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<AccountConfigurationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -7915,7 +7915,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("textCase", textCase);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
-            return await RestCallAsync<AddressResolutionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<AddressResolutionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -7934,7 +7934,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<AddressResolutionModel> ResolveAddressPostAsync(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            return await RestCallAsync<AddressResolutionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<AddressResolutionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -7953,7 +7953,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<BatchModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<BatchModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -7970,7 +7970,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -7989,7 +7989,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8009,7 +8009,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<BatchModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<BatchModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8039,7 +8039,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<BatchModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<BatchModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8068,7 +8068,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<BatchModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<BatchModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8100,7 +8100,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return await RestCallAsync<List<CertExpressInvitationStatusModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<CertExpressInvitationStatusModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8135,7 +8135,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<CertExpressInvitationModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CertExpressInvitationModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8176,7 +8176,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CertExpressInvitationModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertExpressInvitationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8210,7 +8210,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<CertificateModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8239,7 +8239,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<CertificateModel>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CertificateModel>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -8273,7 +8273,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8312,7 +8312,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<CertificateModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CertificateModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8333,7 +8333,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<ProvisionStatusModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<ProvisionStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8364,7 +8364,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8396,7 +8396,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FetchResult<CustomerModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8426,7 +8426,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8459,7 +8459,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<FetchResult<CustomerModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CustomerModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8504,7 +8504,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CertificateModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8527,7 +8527,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<ProvisionStatusModel>("Post", path, null).ConfigureAwait(false);
+            return await RestCallAsync<ProvisionStatusModel>("POST", path, null).ConfigureAwait(false);
         }
 
 
@@ -8558,7 +8558,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8591,7 +8591,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FetchResult<CustomerModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8619,7 +8619,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<CertificateModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CertificateModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -8650,7 +8650,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallStringAsync("Post", path, null).ConfigureAwait(false);
+            return await RestCallStringAsync("POST", path, null).ConfigureAwait(false);
         }
 
 
@@ -8678,7 +8678,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            return await RestCallStringAsync("Post", path, model).ConfigureAwait(false);
+            return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8703,7 +8703,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<CompanyModel> CompanyInitializeAsync(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            return await RestCallAsync<CompanyModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CompanyModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8719,7 +8719,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<CompanyModel>> CreateCompaniesAsync(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            return await RestCallAsync<List<CompanyModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<CompanyModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8744,7 +8744,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding/setup");
             path.ApplyField("id", id);
-            return await RestCallAsync<FundingStatusModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FundingStatusModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8759,7 +8759,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -8777,7 +8777,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FundingConfigurationModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FundingConfigurationModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8797,7 +8797,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            return await RestCallAsync<List<FundingConfigurationModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<FundingConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8828,7 +8828,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<CompanyModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CompanyModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8854,7 +8854,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<CompanyConfigurationModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<CompanyConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8881,7 +8881,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            return await RestCallStringAsync("Get", path, null).ConfigureAwait(false);
+            return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8899,7 +8899,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<FundingStatusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<FundingStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8914,7 +8914,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            return await RestCallAsync<FetchResult<MrsCompanyModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<MrsCompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8950,7 +8950,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CompanyModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -8977,7 +8977,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<CompanyConfigurationModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<CompanyConfigurationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -8996,7 +8996,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<CompanyModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CompanyModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -9014,7 +9014,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<ContactModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<ContactModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -9031,7 +9031,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -9050,7 +9050,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ContactModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<ContactModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9078,7 +9078,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ContactModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ContactModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9106,7 +9106,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ContactModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ContactModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9128,7 +9128,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ContactModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<ContactModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -9155,7 +9155,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<CustomerModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -9183,7 +9183,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return await RestCallAsync<CustomerModel>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CustomerModel>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -9217,7 +9217,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            return await RestCallAsync<CustomerModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CustomerModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9246,7 +9246,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return await RestCallAsync<FetchResult<CertificateModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -9288,7 +9288,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CertificateModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9323,7 +9323,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<ExemptionStatusModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<ExemptionStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9363,7 +9363,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CustomerModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CustomerModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9392,7 +9392,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return await RestCallAsync<FetchResult<CertificateModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -9421,7 +9421,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return await RestCallAsync<CustomerModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CustomerModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -9447,7 +9447,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9471,7 +9471,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9497,7 +9497,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<AvaFileFormModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9524,7 +9524,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CertificateAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9551,7 +9551,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ExemptionReasonModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ExemptionReasonModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9578,7 +9578,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ExposureZoneModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ExposureZoneModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9602,7 +9602,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9624,7 +9624,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CommunicationsTransactionTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CommunicationsTransactionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9646,7 +9646,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9669,7 +9669,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<IsoCountryModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<IsoCountryModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9697,7 +9697,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CoverLetterModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CoverLetterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9721,7 +9721,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9739,7 +9739,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<HsCodeModel>> ListCrossBorderSectionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9763,7 +9763,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CurrencyModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CurrencyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9788,7 +9788,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<EntityUseCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<EntityUseCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9810,7 +9810,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingFrequencyModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingFrequencyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9834,7 +9834,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<JurisdictionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<JurisdictionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9875,7 +9875,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9919,7 +9919,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<LocationQuestionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<LocationQuestionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9942,7 +9942,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9965,7 +9965,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10019,7 +10019,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10044,7 +10044,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10071,7 +10071,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10104,7 +10104,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<NexusByTaxFormModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10126,7 +10126,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusTaxTypeGroupModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusTaxTypeGroupModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10148,7 +10148,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeCustomerFundingOptionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeCustomerFundingOptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10170,7 +10170,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeCustomerTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeCustomerTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10192,7 +10192,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeFilingTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeFilingTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10214,7 +10214,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticePriorityModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticePriorityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10236,7 +10236,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeReasonModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeReasonModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10258,7 +10258,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeResponsibilityModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeResponsibilityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10280,7 +10280,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeRootCauseModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeRootCauseModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10302,7 +10302,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeStatusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10324,7 +10324,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10347,7 +10347,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ParameterModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10369,7 +10369,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<String>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<String>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10390,7 +10390,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<PostalCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<PostalCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10419,7 +10419,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<PreferredProgramModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<PreferredProgramModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10443,7 +10443,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<RateTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<RateTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10466,7 +10466,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<IsoRegionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10491,7 +10491,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<IsoRegionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10513,7 +10513,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ResourceFileTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ResourceFileTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10536,7 +10536,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SecurityRoleModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SecurityRoleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10560,7 +10560,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10582,7 +10582,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxAuthorityModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxAuthorityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10606,7 +10606,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxAuthorityFormModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxAuthorityFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10628,7 +10628,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxAuthorityTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxAuthorityTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10653,7 +10653,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10676,7 +10676,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<TaxCodeTypesModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TaxCodeTypesModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10698,7 +10698,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FormMasterModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FormMasterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10720,7 +10720,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxSubTypeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10742,7 +10742,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxTypeGroupModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxTypeGroupModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10765,7 +10765,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<UomModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<UomModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10785,7 +10785,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<CompanyDistanceThresholdModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<CompanyDistanceThresholdModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -10806,7 +10806,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -10827,7 +10827,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<CompanyDistanceThresholdModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CompanyDistanceThresholdModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10856,7 +10856,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10886,7 +10886,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -10911,7 +10911,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<CompanyDistanceThresholdModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CompanyDistanceThresholdModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -10931,7 +10931,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("POST", path, null).ConfigureAwait(false);
         }
 
 
@@ -10950,7 +10950,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("POST", path, null).ConfigureAwait(false);
         }
 
 
@@ -10971,7 +10971,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -10988,7 +10988,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingCalendarModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingCalendarModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11006,7 +11006,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11023,7 +11023,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/options");
             path.ApplyField("companyId", companyId);
             path.AddQuery("formCode", formCode);
-            return await RestCallAsync<List<CycleAddOptionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<CycleAddOptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11041,7 +11041,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/options");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<CycleEditOptionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CycleEditOptionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11058,7 +11058,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<CycleExpireModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CycleExpireModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11078,7 +11078,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -11095,7 +11095,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingCalendarModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingCalendarModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11114,7 +11114,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11141,7 +11141,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("returnCountry", returnCountry);
             path.AddQuery("returnRegion", returnRegion);
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingCalendarModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11166,7 +11166,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingRequestModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingRequestModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11182,7 +11182,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<LoginVerificationOutputModel> LoginVerificationRequestAsync(LoginVerificationInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
-            return await RestCallAsync<LoginVerificationOutputModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<LoginVerificationOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11200,7 +11200,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
             path.ApplyField("jobId", jobId);
-            return await RestCallAsync<LoginVerificationOutputModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<LoginVerificationOutputModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11225,7 +11225,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("returnCountry", returnCountry);
             path.AddQuery("returnRegion", returnRegion);
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingCalendarModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11251,7 +11251,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingRequestModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingRequestModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11275,7 +11275,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11293,7 +11293,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingCalendarModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingCalendarModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -11313,7 +11313,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingRequestModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -11339,7 +11339,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<List<FilingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<FilingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11367,7 +11367,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return await RestCallAsync<List<FilingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<FilingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11397,7 +11397,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<List<FilingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<FilingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11428,7 +11428,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingAdjustmentModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<FilingAdjustmentModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11458,7 +11458,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingAugmentationModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<FilingAugmentationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11489,7 +11489,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingPaymentModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<FilingPaymentModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11511,7 +11511,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -11532,7 +11532,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -11554,7 +11554,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -11571,7 +11571,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
             path.ApplyField("filingsId", filingsId);
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingsCheckupModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingsCheckupModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11590,7 +11590,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FilingsCheckupModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingsCheckupModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11609,7 +11609,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("filingReturnId", filingReturnId);
             path.AddQuery("fileId", fileId);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11630,7 +11630,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11651,7 +11651,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11670,7 +11670,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FetchResult<FilingReturnModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingReturnModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11691,7 +11691,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FetchResult<FilingModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11714,7 +11714,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult<FilingModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11739,7 +11739,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<FetchResult<FilingModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11766,7 +11766,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return await RestCallAsync<FetchResult<FilingModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11796,7 +11796,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("region", region);
             path.AddQuery("filingCalendarId", filingCalendarId);
-            return await RestCallAsync<FetchResult<FilingReturnModelBasic>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingReturnModelBasic>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11821,7 +11821,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return await RestCallAsync<FetchResult<FilingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11848,7 +11848,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult<FilingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11877,7 +11877,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return await RestCallAsync<FetchResult<FilingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<FilingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11900,7 +11900,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingAdjustmentModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingAdjustmentModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -11922,7 +11922,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -11945,7 +11945,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FilingPaymentModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FilingPaymentModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -11970,7 +11970,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NewAccountModel> RequestFreeTrialAsync(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            return await RestCallAsync<NewAccountModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12036,7 +12036,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            return await RestCallAsync<TaxRateModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12087,7 +12087,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            return await RestCallAsync<TaxRateModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12113,7 +12113,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
-            return await RestCallAsync<FundingStatusModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12137,7 +12137,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<FundingStatusModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12159,7 +12159,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<ItemModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<ItemModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12182,7 +12182,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -12205,7 +12205,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ItemModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<ItemModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12243,7 +12243,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ItemModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12279,7 +12279,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ItemModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12306,7 +12306,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<ItemModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<ItemModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -12327,7 +12327,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<List<JurisdictionOverrideModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<JurisdictionOverrideModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12344,7 +12344,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -12366,7 +12366,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<JurisdictionOverrideModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<JurisdictionOverrideModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12399,7 +12399,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12430,7 +12430,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12448,7 +12448,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<JurisdictionOverrideModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<JurisdictionOverrideModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -12464,7 +12464,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<LocationModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<LocationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12481,7 +12481,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -12508,7 +12508,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<LocationModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<LocationModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12543,7 +12543,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<LocationModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<LocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12577,7 +12577,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<LocationModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<LocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12597,7 +12597,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<LocationModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<LocationModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -12616,7 +12616,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<LocationValidationModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<LocationValidationModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12645,7 +12645,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            return await RestCallAsync<MultiDocumentModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12675,7 +12675,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            return await RestCallAsync<AuditMultiDocumentModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<AuditMultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12696,7 +12696,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<MultiDocumentModel> CommitMultiDocumentTransactionAsync(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            return await RestCallAsync<MultiDocumentModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12743,7 +12743,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            return await RestCallAsync<MultiDocumentModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12773,7 +12773,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            return await RestCallAsync<MultiDocumentModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12810,7 +12810,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<MultiDocumentModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12851,7 +12851,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<MultiDocumentModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<MultiDocumentModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12906,7 +12906,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            return await RestCallAsync<MultiDocumentModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12925,7 +12925,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<MultiDocumentModel> VerifyMultiDocumentTransactionAsync(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            return await RestCallAsync<MultiDocumentModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12951,7 +12951,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            return await RestCallAsync<MultiDocumentModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12975,7 +12975,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<NexusModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<NexusModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -12993,7 +12993,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13014,7 +13014,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<NexusModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<NexusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13041,7 +13041,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
-            return await RestCallAsync<NexusByTaxFormModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13073,7 +13073,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13103,7 +13103,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NexusModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13131,7 +13131,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<NexusModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<NexusModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -13152,7 +13152,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/comments");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<NoticeCommentModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<NoticeCommentModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13174,7 +13174,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<NoticeFinanceModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<NoticeFinanceModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13195,7 +13195,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<NoticeResponsibilityDetailModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<NoticeResponsibilityDetailModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13216,7 +13216,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<NoticeRootCauseDetailModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<NoticeRootCauseDetailModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13235,7 +13235,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<NoticeModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<NoticeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13255,7 +13255,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13277,7 +13277,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("noticeId", noticeId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13299,7 +13299,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("noticeId", noticeId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13317,7 +13317,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13337,7 +13337,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<NoticeModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<NoticeModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13357,7 +13357,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/comments");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FetchResult<NoticeCommentModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeCommentModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13378,7 +13378,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FetchResult<NoticeFinanceModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeFinanceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13398,7 +13398,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FetchResult<NoticeResponsibilityDetailModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeResponsibilityDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13418,7 +13418,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FetchResult<NoticeRootCauseDetailModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeRootCauseDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13449,7 +13449,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13478,7 +13478,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<NoticeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<NoticeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13501,7 +13501,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<NoticeModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<NoticeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -13518,7 +13518,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13545,7 +13545,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NewAccountModel> RequestNewAccountAsync(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            return await RestCallAsync<NewAccountModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13564,7 +13564,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<String> ChangePasswordAsync(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            return await RestCallStringAsync("Put", path, model).ConfigureAwait(false);
+            return await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -13582,7 +13582,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<AccountModel> CreateAccountAsync(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            return await RestCallAsync<AccountModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<AccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13603,7 +13603,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<List<SubscriptionModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<SubscriptionModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13622,7 +13622,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13642,7 +13642,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13662,7 +13662,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13696,7 +13696,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<AccountModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<AccountModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13717,7 +13717,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            return await RestCallStringAsync("Post", path, model).ConfigureAwait(false);
+            return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13736,7 +13736,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<AccountModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<AccountModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -13761,7 +13761,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<SubscriptionModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<SubscriptionModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -13789,7 +13789,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13812,7 +13812,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13837,7 +13837,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            return await RestCallAsync<ReportModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<ReportModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13863,7 +13863,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13886,7 +13886,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<ReportModel>> ListReportsAsync()
         {
             var path = new AvaTaxPath("/api/v2/reports");
-            return await RestCallAsync<FetchResult<ReportModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<ReportModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13908,7 +13908,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<SettingModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<SettingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -13925,7 +13925,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -13948,7 +13948,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<SettingModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<SettingModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13982,7 +13982,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SettingModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SettingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14014,7 +14014,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SettingModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SettingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14040,7 +14040,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<SettingModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<SettingModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -14059,7 +14059,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return await RestCallAsync<SubscriptionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<SubscriptionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14087,7 +14087,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SubscriptionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14113,7 +14113,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<SubscriptionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14133,7 +14133,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<TaxCodeModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<TaxCodeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14150,7 +14150,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -14171,7 +14171,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<TaxCodeModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TaxCodeModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14203,7 +14203,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14233,7 +14233,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxCodeModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14257,7 +14257,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<TaxCodeModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TaxCodeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -14283,7 +14283,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FileResult> BuildTaxContentFileAsync(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return await RestCallAsync<FileResult>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14320,7 +14320,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14351,7 +14351,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date);
-            return await RestCallAsync<FileResult>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14371,7 +14371,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<TaxRuleModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<TaxRuleModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14388,7 +14388,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -14409,7 +14409,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<TaxRuleModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TaxRuleModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14441,7 +14441,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxRuleModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxRuleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14471,7 +14471,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TaxRuleModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TaxRuleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14495,7 +14495,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<TaxRuleModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TaxRuleModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -14530,7 +14530,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14560,7 +14560,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14591,7 +14591,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            return await RestCallAsync<AuditTransactionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<AuditTransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14624,7 +14624,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            return await RestCallAsync<AuditTransactionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<AuditTransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14644,7 +14644,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<BulkLockTransactionResult> BulkLockTransactionAsync(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            return await RestCallAsync<BulkLockTransactionResult>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<BulkLockTransactionResult>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14674,7 +14674,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14703,7 +14703,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14746,7 +14746,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14795,7 +14795,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14827,7 +14827,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -14859,7 +14859,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14891,7 +14891,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14923,7 +14923,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return await RestCallAsync<TransactionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14968,7 +14968,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<TransactionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<TransactionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14998,7 +14998,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15050,7 +15050,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15079,7 +15079,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15106,7 +15106,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15135,7 +15135,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15152,7 +15152,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            return await RestCallAsync<List<UPCModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<UPCModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15169,7 +15169,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -15187,7 +15187,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<UPCModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<UPCModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15216,7 +15216,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<UPCModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<UPCModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15243,7 +15243,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<UPCModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<UPCModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15264,7 +15264,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return await RestCallAsync<UPCModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<UPCModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -15288,7 +15288,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<List<UserModel>>("Post", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<UserModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15308,7 +15308,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            return await RestCallAsync<UserModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<UserModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15339,7 +15339,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<UserEntitlementModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<UserEntitlementModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15368,7 +15368,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<UserModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<UserModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15395,7 +15395,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<UserModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<UserModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15416,7 +15416,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return await RestCallAsync<UserModel>("Put", path, model).ConfigureAwait(false);
+            return await RestCallAsync<UserModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -15433,7 +15433,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            return await RestCallAsync<SubscriptionModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<SubscriptionModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15448,7 +15448,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<SubscriptionModel>> ListMySubscriptionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            return await RestCallAsync<FetchResult<SubscriptionModel>>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15465,7 +15465,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<PingResultModel> PingAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            return await RestCallAsync<PingResultModel>("Get", path, null).ConfigureAwait(false);
+            return await RestCallAsync<PingResultModel>("GET", path, null).ConfigureAwait(false);
         }
 
 #endif

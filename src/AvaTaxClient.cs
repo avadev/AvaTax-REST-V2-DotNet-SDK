@@ -255,7 +255,7 @@ namespace Avalara.AvaTax.RestClient
                     this.LastCallTime = cd;
 
                     // Capture information about this API call and make it available for logging
-                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb, Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseBody = fr.Data, Duration = cd };
+                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseBody = fr.Data, Duration = cd };
                     OnCallCompleted(eventargs);
                     return fr;
 
@@ -267,7 +267,7 @@ namespace Avalara.AvaTax.RestClient
                     this.LastCallTime = cd;
 
                     // Capture information about this API call error and make it available for logging
-                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb, Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = errorResponseString, Duration = cd };
+                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = errorResponseString, Duration = cd };
                     OnCallCompleted(eventargs);
                     throw new AvaTaxError(err, result.StatusCode);
                 }
@@ -339,7 +339,7 @@ namespace Avalara.AvaTax.RestClient
                 cd.FinishReceive(sd, dd, td);
 
                 // Capture information about this API call and make it available for logging
-                var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb, Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = responseString, Duration = cd };
+                var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = responseString, Duration = cd };
                 OnCallCompleted(eventargs);
 
                 // Deserialize the result
