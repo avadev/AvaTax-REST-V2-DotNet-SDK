@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the company to which this UPC belongs.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
         /// The 12-14 character Universal Product Code, European Article Number, or Global Trade Identification Number.

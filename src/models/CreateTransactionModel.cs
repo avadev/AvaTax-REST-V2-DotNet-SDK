@@ -63,6 +63,8 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Customer Code - The client application customer reference code.
+        /// Note: This field is case sensitive. To have exemption certificates apply, this value should
+        /// be the same as the one passed to create a customer.
         /// </summary>
         public String customerCode { get; set; }
 

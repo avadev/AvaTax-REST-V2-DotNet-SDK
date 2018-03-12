@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the company that operates at this location.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
         /// A code that identifies this location. Must be unique within your company.

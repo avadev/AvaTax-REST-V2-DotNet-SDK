@@ -33,7 +33,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the company this setting refers to.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
         /// A user-defined "set" containing this name-value pair.

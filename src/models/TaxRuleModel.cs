@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the company that owns this tax rule.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
         /// The unique ID number of the tax code for this rule.
@@ -170,7 +170,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * Common alternative spellings for many regions
         /// 
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
-        /// NOTE: Region is not required for non-US countries because the user may be either creating a Country-level or Region-level rule.
+        /// NOTE: Region is required for US and not required for non-US countries because the user may be either creating a Country-level or Region-level rule.
         /// </summary>
         public String region { get; set; }
 

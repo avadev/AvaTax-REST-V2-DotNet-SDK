@@ -70,6 +70,7 @@
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
+    <Compile Include="enums\CertCaptureProvisionStatus.cs" />
     <Compile Include="enums\CertExpressInvitationStatus.cs" />
     <Compile Include="enums\CertificatePreviewType.cs" />
     <Compile Include="enums\CertificateRequestDeliveryMethod.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="models\CreateMultiDocumentModel.cs" />
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
+    <Compile Include="models\CurrencyModel.cs" />
     <Compile Include="models\CustomerModel.cs" />
     <Compile Include="models\CycleAddOptionModel.cs" />
     <Compile Include="models\CycleEditOptionModel.cs" />
@@ -257,6 +259,8 @@
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\PoNumberModel.cs" />
     <Compile Include="models\PostalCodeModel.cs" />
+    <Compile Include="models\PreferredProgramModel.cs" />
+    <Compile Include="models\ProvisionStatusModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RateTypeModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
