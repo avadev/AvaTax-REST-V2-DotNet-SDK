@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.2.0-167
+ * @version    18.3.0-1049
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.2.0-167"; } }
+        public static string API_VERSION { get { return "18.3.0-1049"; } }
 
 #region Methods
 
@@ -215,6 +215,92 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return RestCall<AddressResolutionModel>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Create a new AvaFileForm
+        /// </summary>
+        /// <remarks>
+        /// Create one or more AvaFileForms
+        /// A 'AvaFileForm' represents a form supported by our returns team
+        /// </remarks>
+        /// <param name="model">The AvaFileForm you wish to create.</param>
+        public List<AvaFileFormModel> CreateAvaFileForms(List<AvaFileFormModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms");
+            return RestCall<List<AvaFileFormModel>>("Post", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a single AvaFileForm
+        /// </summary>
+        /// <remarks>
+        /// Marks the existing AvaFileForm object at this URL as deleted.
+        /// </remarks>
+        /// <param name="id">The ID of the AvaFileForm you wish to delete.</param>
+        public List<ErrorDetail> DeleteAvaFileForm(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("Delete", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single AvaFileForm
+        /// </summary>
+        /// <remarks>
+        /// Get the AvaFileForm object identified by this URL.
+        /// </remarks>
+        /// <param name="id">The primary key of this AvaFileForm</param>
+        public AvaFileFormModel GetAvaFileForm(String id)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
+            path.ApplyField("id", id);
+            return RestCall<AvaFileFormModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all AvaFileForms
+        /// </summary>
+        /// <remarks>
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<AvaFileFormModel> QueryAvaFileForms(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<AvaFileFormModel>>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a AvaFileForm
+        /// </summary>
+        /// <remarks>
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// </remarks>
+        /// <param name="id">The ID of the AvaFileForm you wish to update</param>
+        /// <param name="model">The AvaFileForm model you wish to update.</param>
+        public AvaFileFormModel UpdateAvaFileForm(Int32 id, AvaFileFormModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
+            path.ApplyField("id", id);
+            return RestCall<AvaFileFormModel>("Put", path, model);
         }
 
 
@@ -1482,6 +1568,7 @@ namespace Avalara.AvaTax.RestClient
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// * CustomFields - Fetch a list of custom fields associated to this customer.
         /// 
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
@@ -1996,11 +2083,19 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="country">The name or code of the destination country.</param>
         /// <param name="hsCode">The Section or partial HS Code for which you would like to view the next level of HS Code detail, if more detail is available.</param>
-        public FetchResult<HsCodeModel> ListCrossBorderCodes(String country, String hsCode)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<HsCodeModel> ListCrossBorderCodes(String country, String hsCode, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<HsCodeModel>>("Get", path, null);
         }
 
@@ -7115,9 +7210,12 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single transaction by code
         /// </summary>
         /// <remarks>
-        /// Get the current `SalesInvoice` transaction identified by this URL.
+        /// TODO: This part of documentation is updated per https://jira.avalara.com/browse/CALC-18948 and need DevDot team's review
         /// 
-        /// To fetch other kinds of transactions, use `GetTransactionByCodeAndType`.
+        /// Get the current transaction by company code and transaction code.
+        /// 
+        /// For compatibility purposes, when this API finds multiple transactions with the same transaction code, it will default to selecting
+        /// `SalesInvoices` transaction. To change this behavior, use the optional `documentType` parameter.
         /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code.
         /// 
@@ -7132,12 +7230,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to retrieve</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
-        public TransactionModel GetTransactionByCode(String companyCode, String transactionCode, String include)
+        public TransactionModel GetTransactionByCode(String companyCode, String transactionCode, DocumentType? documentType, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
             return RestCall<TransactionModel>("Get", path, null);
         }
@@ -7147,6 +7247,9 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single transaction by code
         /// </summary>
         /// <remarks>
+        /// TODO: This part of documentation is updated per https://jira.avalara.com/browse/CALC-18948 and need DevDot team's review
+        /// DEPRECATED: Please use the `GetTransactionByCode` API with the optional `documentType` parameter for fetching transactions.
+        /// 
         /// Get the current transaction identified by this URL.
         /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code.
@@ -7322,14 +7425,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="transactionCode">The transaction code of the original sale</param>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="documentType">(Optional): The document type of the transaction to refund. If not provided, the default is SalesInvoice.</param>
+        /// <param name="useTaxDateOverride">(Optional): If set to true, processes refund using taxDateOverride rather than taxAmountOverride (Note: taxAmountOverride is not allowed for SST states).</param>
         /// <param name="model">Information about the refund to create</param>
-        public TransactionModel RefundTransaction(String companyCode, String transactionCode, String include, DocumentType? documentType, RefundTransactionModel model)
+        public TransactionModel RefundTransaction(String companyCode, String transactionCode, String include, DocumentType? documentType, Boolean? useTaxDateOverride, RefundTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
+            path.AddQuery("useTaxDateOverride", useTaxDateOverride);
             return RestCall<TransactionModel>("Post", path, model);
         }
 
@@ -7624,17 +7729,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve users for this account
+        /// Get information about a username.
         /// </summary>
         /// <remarks>
-        /// List all user objects attached to this account.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// Use this endpoint to check for username availability. Ensure that the query string is url encoded.
+        /// TODO
         /// </remarks>
-        /// <param name="accountId">The accountID of the user you wish to list.</param>
-        /// <param name="include">Optional fetch commands.</param>
+        /// <param name="username">The username to search.</param>
+        public UsernameModel GetUsername(String username)
+        {
+            var path = new AvaTaxPath("/api/v2/usernames");
+            path.AddQuery("username", username);
+            return RestCall<UsernameModel>("Get", path, null);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId"></param>
+        /// <param name="include"></param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -7653,16 +7770,12 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve all users
+        /// 
         /// </summary>
         /// <remarks>
-        /// Get multiple user objects across all accounts.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
         /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// </remarks>
-        /// <param name="include">Optional fetch commands.</param>
+        /// <param name="include"></param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -7935,6 +8048,92 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return await RestCallAsync<AddressResolutionModel>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create a new AvaFileForm;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more AvaFileForms
+        /// A 'AvaFileForm' represents a form supported by our returns team;
+        /// </remarks>
+        /// <param name="model">The AvaFileForm you wish to create.</param>
+        public async Task<List<AvaFileFormModel>> CreateAvaFileFormsAsync(List<AvaFileFormModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms");
+            return await RestCallAsync<List<AvaFileFormModel>>("Post", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single AvaFileForm;
+        /// </summary>
+        /// <remarks>
+        /// Marks the existing AvaFileForm object at this URL as deleted.;
+        /// </remarks>
+        /// <param name="id">The ID of the AvaFileForm you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteAvaFileFormAsync(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("Delete", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single AvaFileForm;
+        /// </summary>
+        /// <remarks>
+        /// Get the AvaFileForm object identified by this URL.;
+        /// </remarks>
+        /// <param name="id">The primary key of this AvaFileForm</param>
+        public async Task<AvaFileFormModel> GetAvaFileFormAsync(String id)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<AvaFileFormModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all AvaFileForms;
+        /// </summary>
+        /// <remarks>
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<AvaFileFormModel>> QueryAvaFileFormsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<AvaFileFormModel>>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a AvaFileForm;
+        /// </summary>
+        /// <remarks>
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        /// </remarks>
+        /// <param name="id">The ID of the AvaFileForm you wish to update</param>
+        /// <param name="model">The AvaFileForm model you wish to update.</param>
+        public async Task<AvaFileFormModel> UpdateAvaFileFormAsync(Int32 id, AvaFileFormModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<AvaFileFormModel>("Put", path, model).ConfigureAwait(false);
         }
 
 
@@ -9202,6 +9401,7 @@ namespace Avalara.AvaTax.RestClient
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// * CustomFields - Fetch a list of custom fields associated to this customer.
         /// 
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
@@ -9716,11 +9916,19 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="country">The name or code of the destination country.</param>
         /// <param name="hsCode">The Section or partial HS Code for which you would like to view the next level of HS Code detail, if more detail is available.</param>
-        public async Task<FetchResult<HsCodeModel>> ListCrossBorderCodesAsync(String country, String hsCode)
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<HsCodeModel>> ListCrossBorderCodesAsync(String country, String hsCode, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<HsCodeModel>>("Get", path, null).ConfigureAwait(false);
         }
 
@@ -14835,9 +15043,12 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single transaction by code;
         /// </summary>
         /// <remarks>
-        /// Get the current `SalesInvoice` transaction identified by this URL.
+        /// TODO: This part of documentation is updated per https://jira.avalara.com/browse/CALC-18948 and need DevDot team's review
         /// 
-        /// To fetch other kinds of transactions, use `GetTransactionByCodeAndType`.
+        /// Get the current transaction by company code and transaction code.
+        /// 
+        /// For compatibility purposes, when this API finds multiple transactions with the same transaction code, it will default to selecting
+        /// `SalesInvoices` transaction. To change this behavior, use the optional `documentType` parameter.
         /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code.
         /// 
@@ -14852,12 +15063,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to retrieve</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
-        public async Task<TransactionModel> GetTransactionByCodeAsync(String companyCode, String transactionCode, String include)
+        public async Task<TransactionModel> GetTransactionByCodeAsync(String companyCode, String transactionCode, DocumentType? documentType, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
             return await RestCallAsync<TransactionModel>("Get", path, null).ConfigureAwait(false);
         }
@@ -14867,6 +15080,9 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single transaction by code;
         /// </summary>
         /// <remarks>
+        /// TODO: This part of documentation is updated per https://jira.avalara.com/browse/CALC-18948 and need DevDot team's review
+        /// DEPRECATED: Please use the `GetTransactionByCode` API with the optional `documentType` parameter for fetching transactions.
+        /// 
         /// Get the current transaction identified by this URL.
         /// 
         /// If this transaction was adjusted, the return value of this API will be the current transaction with this code.
@@ -15042,14 +15258,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="transactionCode">The transaction code of the original sale</param>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="documentType">(Optional): The document type of the transaction to refund. If not provided, the default is SalesInvoice.</param>
+        /// <param name="useTaxDateOverride">(Optional): If set to true, processes refund using taxDateOverride rather than taxAmountOverride (Note: taxAmountOverride is not allowed for SST states).</param>
         /// <param name="model">Information about the refund to create</param>
-        public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, String include, DocumentType? documentType, RefundTransactionModel model)
+        public async Task<TransactionModel> RefundTransactionAsync(String companyCode, String transactionCode, String include, DocumentType? documentType, Boolean? useTaxDateOverride, RefundTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/refund");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
+            path.AddQuery("useTaxDateOverride", useTaxDateOverride);
             return await RestCallAsync<TransactionModel>("Post", path, model).ConfigureAwait(false);
         }
 
@@ -15344,17 +15562,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve users for this account;
+        /// Get information about a username.;
         /// </summary>
         /// <remarks>
-        /// List all user objects attached to this account.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// Use this endpoint to check for username availability. Ensure that the query string is url encoded.
+        /// TODO;
         /// </remarks>
-        /// <param name="accountId">The accountID of the user you wish to list.</param>
-        /// <param name="include">Optional fetch commands.</param>
+        /// <param name="username">The username to search.</param>
+        public async Task<UsernameModel> GetUsernameAsync(String username)
+        {
+            var path = new AvaTaxPath("/api/v2/usernames");
+            path.AddQuery("username", username);
+            return await RestCallAsync<UsernameModel>("Get", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// ;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId"></param>
+        /// <param name="include"></param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
@@ -15373,16 +15603,12 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve all users;
+        /// ;
         /// </summary>
         /// <remarks>
-        /// Get multiple user objects across all accounts.
-        /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// ;
         /// </remarks>
-        /// <param name="include">Optional fetch commands.</param>
+        /// <param name="include"></param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>

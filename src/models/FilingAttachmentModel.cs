@@ -18,24 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// An attachment associated with a filing return
     /// </summary>
-    public class LocationSettingModel
+    public class FilingAttachmentModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The resourceFileId used to retrieve the attachment
         /// </summary>
-        public Int32? questionId { get; set; }
+        public Int32? resourceFileId { get; set; }
 
         /// <summary>
-        /// The name of the question
+        /// The description of the attachment
         /// </summary>
-        public String questionName { get; set; }
-
-        /// <summary>
-        /// The answer the user provided.
-        /// </summary>
-        public String value { get; set; }
+        public String description { get; set; }
 
 
         /// <summary>

@@ -277,6 +277,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? year { get; set; }
 
         /// <summary>
+        /// The attachments for this return.
+        /// </summary>
+        public List<FilingAttachmentModel> attachments { get; set; }
+
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }

@@ -103,6 +103,7 @@ namespace Avalara.AvaTax.RestClient
         /// The web link (URL) that a customer can click on or visit to begin using this CertExpress invitation. 
         /// 
         /// This value is only usable if the status of this invitation is `Ready` and the request was created with type `Download`.
+        /// NOTE: This link usually takes a few minutes to be available.
         /// </summary>
         public String requestLink { get; set; }
 

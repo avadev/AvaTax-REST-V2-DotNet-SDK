@@ -348,6 +348,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? modifiedUserId { get; set; }
 
+        /// <summary>
+        /// CompanyReturn settings for complext filing calendar
+        /// </summary>
+        public List<CompanyReturnSettingModel> settings { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

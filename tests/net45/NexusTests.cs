@@ -26,6 +26,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
+                    //new Uri("http://192.168.10.101:8020/"))
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
 
                 // Verify that we can ping successfully

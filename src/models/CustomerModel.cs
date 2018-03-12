@@ -161,6 +161,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CertificateModel> certificates { get; set; }
 
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public List<CustomFieldModel> customFields { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

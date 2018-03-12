@@ -82,9 +82,17 @@ namespace Avalara.AvaTax.RestClient
         public String entityUseCode { get; set; }
 
         /// <summary>
-        /// CustomerVendorCode
+        /// DEPRECATED - CustomerVendorCode
+        /// NOTE: Please use customerCode instead.
+        /// TODO: DevDot, please look into this documentation.
         /// </summary>
         public String customerVendorCode { get; set; }
+
+        /// <summary>
+        /// Unique code identifying the customer. 
+        /// TODO: DevDot, please look into this documentation.
+        /// </summary>
+        public String customerCode { get; set; }
 
         /// <summary>
         /// If this transaction was exempt, this field will contain the word "Exempt".
