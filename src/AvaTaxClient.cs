@@ -19,13 +19,8 @@ namespace Avalara.AvaTax.RestClient
     /// <remarks>
     /// This file contains all the basic behavior.  Individual APIs are in the other partial class.
     /// </remarks>
-    public class AvaTaxClient
+    public partial class AvaTaxClient
     {
-        /// <summary>
-        /// Returns the version number of the API used to generate this class
-        /// </summary>
-        public static string API_VERSION { get { return ""; } }
-
         #region Private Variables
         private string _credentials;
         private string _clientHeader;
