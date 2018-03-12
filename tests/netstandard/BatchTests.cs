@@ -21,7 +21,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// Create a company for use with these tests
         /// </summary>
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             try
             {
@@ -33,14 +33,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
 
                 // Verify that we can ping successfully
-                var pingResult = Client.Ping();
+                var pingResult = await Client.Ping();
 
                 // Assert that ping succeeded
                 Assert.NotNull(pingResult, "Should be able to call Ping");
                 Assert.True(pingResult.authenticated, "Environment variables should provide correct authentication");
 
                 // Create a basic company with nexus in the state of Washington
-                TestCompany = Client.CompanyInitialize(new CompanyInitializationModel()
+                TestCompany = await Client.CompanyInitialize(new CompanyInitializationModel()
                 {
                     city = "Bainbridge Island",
                     companyCode = Guid.NewGuid().ToString("N").Substring(0, 25),
@@ -78,16 +78,16 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// Any cleanup required goes here
         /// </summary>
         [TearDown]
-        public void TearDown()
+        public async Task TearDown()
         {
             try
             {
                 // Re-fetch the company
-                var company = Client.GetCompany(TestCompany.id, null);
+                var company = await Client.GetCompany(TestCompany.id, null);
 
                 // Flag this company as inactive
                 company.isActive = false;
-                var disableResult = Client.UpdateCompany(company.id, company);
+                var disableResult = await Client.UpdateCompany(company.id, company);
 
                 // Assert that it succeeded
                 Assert.NotNull(disableResult, "Should have been able to update this company");
@@ -139,7 +139,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Send the batch!
             try
             {
-                var batchResult = Client.CreateBatches(TestCompany.id, new List<BatchModel> { batchRequest });
+                var batchResult = await Client.CreateBatches(TestCompany.id, new List<BatchModel> { batchRequest });
                 Assert.NotNull(batchResult, "Batch not sent.");
                 Assert.True(batchResult.Count > 0, "No batches created.");
 
@@ -150,7 +150,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 {
                     await Task.Delay(i * 1000);
 
-                    batchFetchResult = Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
+                    batchFetchResult = await Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
                     Assert.NotNull(batchFetchResult, "Batch fetch unsuccessful.");
                     if (batchFetchResult.status.Value == BatchStatus.Waiting) continue;
                     waiting = false;
@@ -164,7 +164,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 {
                     await Task.Delay(i * 1000);
 
-                    batchFetchResult = Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
+                    batchFetchResult = await Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
                     Assert.NotNull(batchFetchResult, "Batch fetch unsuccessful.");
                     if (batchFetchResult.status.Value == BatchStatus.Processing) continue;
                     processing = false;
@@ -182,7 +182,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.AreEqual(9, batchFetchResult.currentRecord.Value);
 
                 // Alright. Time to download the sent batch file.
-                var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
+                var fileResult = await Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
                 Assert.NotNull(fileResult);
 
                 // Compare what we got back with what we sent.

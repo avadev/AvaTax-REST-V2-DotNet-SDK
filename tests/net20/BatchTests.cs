@@ -9,7 +9,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
     [TestFixture]
     public class BatchTests
     {
-        public AvaTaxClient Client { get; set; }
+        public AvaTaxCompatibleClient Client { get; set; }
         public string CompanyCode { get; set; }
         public CompanyModel TestCompany { get; set; }
 
@@ -23,14 +23,14 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             try
             {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+                Client = new AvaTaxCompatibleClient(typeof(TransactionTests).Assembly.FullName,
                     typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
 
                 // Verify that we can ping successfully
-                var pingResult = Client.Ping();
+                var pingResult = Client.Ping().Deserialize<PingResultModel>();
 
                 // Assert that ping succeeded
                 Assert.NotNull(pingResult, "Should be able to call Ping");

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -29,7 +30,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
 
                 // Verify that we can ping successfully
-                var pingResult = Client.Ping();
+                var pingResult = Client.Ping().Result;
 
                 // Assert that ping succeeded
                 Assert.NotNull(pingResult, "Should be able to call Ping");
@@ -53,7 +54,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     taxpayerIdNumber = "123456789",
                     name = "Bob's Greatest Popcorn",
                     title = "Owner/CEO"
-                });
+                }).Result;
 
                 // Assert that company setup succeeded
                 Assert.NotNull(TestCompany, "Test company should be created");
@@ -76,11 +77,11 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             try {
 
                 // Re-fetch the company
-                var company = Client.GetCompany(TestCompany.id, null);
+                var company = Client.GetCompany(TestCompany.id, null).Result;
 
                 // Flag this company as inactive
                 company.isActive = false;
-                var disableResult = Client.UpdateCompany(company.id, company);
+                var disableResult = Client.UpdateCompany(company.id, company).Result;
 
                 // Assert that it succeeded
                 Assert.NotNull(disableResult, "Should have been able to update this company");
@@ -94,7 +95,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         #endregion
 
         [Test]
-        public void CreateAndDeleteNexus()
+        public async Task CreateAndDeleteNexus()
         {
             var nexusModels = new List<NexusModel>();
 
@@ -139,12 +140,12 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             nexusModels.Add(stateNexus);
             nexusModels.Add(cityNexus);
 
-            var nexusModelsAdded = Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
+            var nexusModelsAdded = await Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
 
             // Get State nexus
             NexusModel getALNexus = null;
             try {
-                getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id);
+                getALNexus = await Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id);
             } catch (Exception) { }
             Assert.NotNull(getALNexus);
 
@@ -153,14 +154,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Get City Nexus
             NexusModel getCityNexus = null;
             try {
-                getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id);
+                getCityNexus = await Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id);
             } catch (Exception) { }
             Assert.NotNull(getALNexus);
 
             fetchedUSNexus.Add(getCityNexus);
 
             // Delete Nexus
-            var errorResult = Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id);
+            var errorResult = await Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id);
             Assert.NotNull(errorResult);
         }
     }

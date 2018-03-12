@@ -22,7 +22,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         {
             try {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+                Client = new AvaTaxCompatibleClient(typeof(TransactionTests).Assembly.FullName,
                     typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)

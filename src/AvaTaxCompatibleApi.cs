@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 /*
  * AvaTax Software Development Kit for C#
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2017 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,24 +16,21 @@ using System.Threading.Tasks;
  * @author     Ted Spence <ted.spence@avalara.com>
  * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
  * @author     Greg Hester <greg.hester@avalara.com>
- * @copyright  2004-2017 Avalara, Inc.
+ * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.1.2-161
+ * @version    18.2.0-167
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
 namespace Avalara.AvaTax.RestClient
 {
-    /// <summary>
-    /// The AvaTax compatible client always returns a predictable response object, the "AvaTaxCallResult".
-    /// The result object contains information about whether the call resulted in an error, and if so, what
-    /// data was in its response.  The caller is expected to use the object and determine how to handle
-    /// errors.
-    /// 
-    /// This class may be useful for programmers who prefer to use synchronous code or to not use exceptions.
-    /// </summary>
     public partial class AvaTaxCompatibleClient
     {
+        /// <summary>
+        /// Returns the version number of the API used to generate this class
+        /// </summary>
+        public static string API_VERSION { get { return "18.2.0-167"; } }
+
 #region Methods
 
         /// <summary>
@@ -59,7 +56,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -86,7 +83,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -107,7 +104,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -133,7 +130,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -160,7 +157,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -198,7 +195,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("textCase", textCase);
             path.AddQuery("latitude", latitude);
             path.AddQuery("longitude", longitude);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -217,7 +214,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult ResolveAddressPost(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -236,7 +233,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -253,7 +250,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -272,7 +269,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -292,7 +289,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -322,7 +319,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -351,7 +348,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -370,8 +367,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -381,7 +380,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -400,8 +399,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="customerCode">The number of the customer where the request is sent to</param>
@@ -414,7 +415,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -433,8 +434,10 @@ namespace Avalara.AvaTax.RestClient
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
@@ -453,7 +456,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -476,8 +479,10 @@ namespace Avalara.AvaTax.RestClient
         /// * A link to the customer that is allowed to use this certificate
         /// * Your tax transaction must contain the correct customer code
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
         /// <param name="model">Certificates to be created</param>
@@ -485,7 +490,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -502,8 +507,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// Revoked certificates can no longer be used.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -512,7 +519,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -530,8 +537,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -544,7 +553,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -565,8 +574,10 @@ namespace Avalara.AvaTax.RestClient
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -581,7 +592,28 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Check a company's exemption certificate status.
+        /// </summary>
+        /// <remarks>
+        /// Checks whether this company is configured to use exemption certificates in AvaTax.
+        /// 
+        /// Exemption certificates are tracked through a different auditable data store than the one that 
+        /// holds AvaTax transactions. To use the AvaTax exemption certificate document store, please call
+        /// `GetCertificateSetup` to see if your company is configured to use the exemption certificate
+        /// document store. To request setup, please call `RequestCertificateSetup` and your company will
+        /// be configured with data storage in the auditable certificate system.
+        /// </remarks>
+        /// <param name="companyId">The company ID to check</param>
+        public AvaTaxCallResult GetCertificateSetup(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
+            path.ApplyField("companyId", companyId);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -599,8 +631,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -610,7 +644,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -629,8 +663,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -640,7 +676,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -658,8 +694,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -668,7 +706,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -686,8 +724,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -699,7 +739,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -720,8 +760,10 @@ namespace Avalara.AvaTax.RestClient
         /// * PoNumbers - Retrieves all PO numbers tied to the certificate.
         /// * Attributes - Retrieves all attributes applied to the certificate.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company to search</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
@@ -742,7 +784,30 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Request setup of exemption certificates for this company.
+        /// </summary>
+        /// <remarks>
+        /// Requests the setup of exemption certificates for this company.
+        /// 
+        /// Exemption certificates are tracked through a different auditable data store than the one that 
+        /// holds AvaTax transactions. To use the AvaTax exemption certificate document store, please call
+        /// `GetCertificateSetup` to see if your company is configured to use the exemption certificate
+        /// document store. To request setup, please call `RequestCertificateSetup` and your company will
+        /// be configured with data storage in the auditable certificate system.
+        /// 
+        /// This API will return the current status of exemption certificate setup for this company.
+        /// </remarks>
+        /// <param name="companyId"></param>
+        public AvaTaxCallResult RequestCertificateSetup(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
+            path.ApplyField("companyId", companyId);
+            return _client.RestCall("POST", path, null);
         }
 
 
@@ -760,8 +825,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -771,7 +838,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -791,8 +858,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -802,7 +871,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -817,8 +886,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -828,7 +899,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -846,8 +917,10 @@ namespace Avalara.AvaTax.RestClient
         /// criteria you specify when you store the certificate. To view or manage your certificates directly, please 
         /// log onto the administrative website for the product you purchased.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
@@ -857,7 +930,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, null);
+            return _client.RestCall("POST", path, null);
         }
 
 
@@ -885,7 +958,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -910,7 +983,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult CompanyInitialize(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -926,7 +999,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult CreateCompanies(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -951,7 +1024,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding/setup");
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -966,7 +1039,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -984,7 +1057,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1004,7 +1077,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1035,7 +1108,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1061,7 +1134,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1088,7 +1161,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1106,7 +1179,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1121,7 +1194,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult ListMrsCompanies()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1157,7 +1230,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1184,7 +1257,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -1203,7 +1276,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -1221,7 +1294,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -1238,7 +1311,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -1257,7 +1330,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1285,7 +1358,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1313,7 +1386,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1335,7 +1408,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -1351,8 +1424,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="model">The list of customer objects to be created</param>
@@ -1360,7 +1435,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -1376,8 +1451,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1386,7 +1463,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -1406,8 +1483,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1418,7 +1497,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1434,8 +1513,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1445,7 +1526,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -1461,8 +1542,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1485,7 +1568,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1504,8 +1587,10 @@ namespace Avalara.AvaTax.RestClient
         /// a CertExpress invitation link so that the customer can upload proof of their exemption certificate. Please
         /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1518,7 +1603,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1538,8 +1623,10 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * Certificates - Fetch a list of certificates linked to this customer.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
@@ -1556,7 +1643,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1572,8 +1659,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1583,7 +1672,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -1599,8 +1688,10 @@ namespace Avalara.AvaTax.RestClient
         /// identify any certificates linked to this `customer` object. If any certificate applies to the transaction,
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
+        /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
@@ -1610,7 +1701,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -1636,7 +1727,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1660,7 +1751,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1686,7 +1777,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1699,8 +1790,8 @@ namespace Avalara.AvaTax.RestClient
         /// A certificate may have multiple attributes that control its behavior. You may apply or remove attributes to a
         /// certificate at any time.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1713,7 +1804,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1726,8 +1817,8 @@ namespace Avalara.AvaTax.RestClient
         /// An exemption reason defines why a certificate allows a customer to be exempt
         /// for purposes of tax calculation.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1740,7 +1831,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1753,8 +1844,8 @@ namespace Avalara.AvaTax.RestClient
         /// An exposure zone is a location where a certificate can be valid. Exposure zones may indicate a taxing
         /// authority or other legal entity to which a certificate may apply.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1767,7 +1858,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1791,7 +1882,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1813,7 +1904,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1835,7 +1926,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1858,7 +1949,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1872,8 +1963,8 @@ namespace Avalara.AvaTax.RestClient
         /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
         /// certificates directly; this cover letter explains why the invitation was sent.
         /// 
-        /// You may experience up to a three minute delay on your very first call to the exemption related endpoints 
-        /// (as your account gets provisioned). Thank you for your patience.
+        /// If you see the 'CertCaptureNotConfiguredError', please use CheckProvision and RequestProvision endpoints to
+        /// check and provision account.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
@@ -1886,7 +1977,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1910,7 +2001,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1928,7 +2019,31 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult ListCrossBorderSections()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all ISO 4217 currencies supported by AvaTax.
+        /// </summary>
+        /// <remarks>
+        /// Lists all ISO 4217 currencies supported by AvaTax.
+        /// 
+        /// This API produces a list of currency codes that can be used when calling AvaTax. The values from this API can be used to fill out the
+        /// `currencyCode` field in a `CreateTransactionModel`.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public AvaTaxCallResult ListCurrencies(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/currencies");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1953,7 +2068,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1975,7 +2090,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -1999,7 +2114,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2040,7 +2155,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2084,7 +2199,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2107,7 +2222,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2130,7 +2245,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2184,7 +2299,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2209,7 +2324,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2236,7 +2351,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2269,7 +2384,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2291,7 +2406,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2313,7 +2428,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2335,7 +2450,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2357,7 +2472,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2379,7 +2494,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2401,7 +2516,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2423,7 +2538,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2445,7 +2560,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2467,7 +2582,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2489,7 +2604,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2512,7 +2627,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2534,7 +2649,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2555,7 +2670,36 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all customs duty programs recognized by AvaTax
+        /// </summary>
+        /// <remarks>
+        /// List all preferred customs duty programs recognized by AvaTax.
+        /// 
+        /// A customs duty program is an optional program you can use to obtain favorable treatment from customs and duty agents.
+        /// An example of a preferred program is NAFTA, which provides preferential rates for products being shipped from neighboring
+        /// countries.
+        /// 
+        /// To select a preferred program for calculating customs and duty rates, call this API to find the appropriate code for your
+        /// preferred program. Next, set the parameter `AvaTax.LC.PreferredProgram` in your `CreateTransaction` call to the code of
+        /// the program.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public AvaTaxCallResult ListPreferredPrograms(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/preferredprograms");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2579,7 +2723,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2602,7 +2746,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2627,7 +2771,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2649,7 +2793,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2672,7 +2816,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2696,7 +2840,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2718,7 +2862,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2742,7 +2886,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2764,7 +2908,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2789,7 +2933,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2812,7 +2956,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2834,7 +2978,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2856,7 +3000,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2878,7 +3022,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2901,7 +3045,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2921,7 +3065,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -2942,7 +3086,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -2963,7 +3107,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -2992,7 +3136,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3000,7 +3144,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve all DistanceThreshold objects
         /// </summary>
         /// <remarks>
-        /// Lists all DistanceThreshold objects that belong to this company.
+        /// Lists all DistanceThreshold objects that belong to this account.
         /// 
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
@@ -3022,7 +3166,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3047,7 +3191,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -3067,7 +3211,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, null);
+            return _client.RestCall("POST", path, null);
         }
 
 
@@ -3086,7 +3230,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, null);
+            return _client.RestCall("POST", path, null);
         }
 
 
@@ -3107,7 +3251,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3124,7 +3268,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3142,7 +3286,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3159,7 +3303,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/options");
             path.ApplyField("companyId", companyId);
             path.AddQuery("formCode", formCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3177,7 +3321,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/options");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3194,7 +3338,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3214,7 +3358,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -3231,7 +3375,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3250,7 +3394,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3277,7 +3421,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("returnCountry", returnCountry);
             path.AddQuery("returnRegion", returnRegion);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3302,7 +3446,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3318,7 +3462,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult LoginVerificationRequest(LoginVerificationInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3336,7 +3480,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
             path.ApplyField("jobId", jobId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3361,7 +3505,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("returnCountry", returnCountry);
             path.AddQuery("returnRegion", returnRegion);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3387,7 +3531,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3411,7 +3555,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3429,7 +3573,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -3449,7 +3593,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -3475,7 +3619,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3503,7 +3647,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3533,7 +3677,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3564,7 +3708,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3594,7 +3738,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3625,7 +3769,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3647,7 +3791,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -3668,7 +3812,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -3690,7 +3834,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -3707,7 +3851,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
             path.ApplyField("filingsId", filingsId);
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3726,7 +3870,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3745,7 +3889,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("filingReturnId", filingReturnId);
             path.AddQuery("fileId", fileId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3766,7 +3910,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3787,7 +3931,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3806,7 +3950,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3827,7 +3971,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3850,7 +3994,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3875,7 +4019,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3902,7 +4046,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("country", country);
             path.ApplyField("region", region);
             path.ApplyField("formCode", formCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3932,7 +4076,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("region", region);
             path.AddQuery("filingCalendarId", filingCalendarId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -3957,7 +4101,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("year", year);
             path.ApplyField("month", month);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -3984,7 +4128,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             path.ApplyField("country", country);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4013,7 +4157,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("month", month);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4036,7 +4180,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -4058,7 +4202,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -4081,7 +4225,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -4106,7 +4250,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult RequestFreeTrial(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4172,7 +4316,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4223,7 +4367,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4249,7 +4393,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4273,7 +4417,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4295,7 +4439,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4318,7 +4462,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -4341,7 +4485,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4379,7 +4523,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4415,7 +4559,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4442,7 +4586,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -4463,7 +4607,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4480,7 +4624,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -4502,7 +4646,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4535,7 +4679,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4566,7 +4710,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4584,7 +4728,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -4600,7 +4744,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4617,7 +4761,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -4644,7 +4788,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4679,7 +4823,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4713,7 +4857,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4733,7 +4877,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -4752,7 +4896,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4781,7 +4925,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4811,7 +4955,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4832,7 +4976,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult CommitMultiDocumentTransaction(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4879,7 +5023,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -4909,7 +5053,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4946,7 +5090,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -4987,7 +5131,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5042,7 +5186,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5061,7 +5205,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult VerifyMultiDocumentTransaction(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5087,7 +5231,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5111,7 +5255,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5129,7 +5273,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5150,7 +5294,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5177,7 +5321,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5209,7 +5353,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5239,7 +5383,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5267,7 +5411,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -5288,7 +5432,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/comments");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5310,7 +5454,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5331,7 +5475,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5352,7 +5496,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5371,7 +5515,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5391,7 +5535,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5413,7 +5557,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("noticeId", noticeId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5435,7 +5579,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("noticeId", noticeId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5453,7 +5597,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5473,7 +5617,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5493,7 +5637,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/comments");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5514,7 +5658,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5534,7 +5678,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/responsibilities");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5554,7 +5698,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/rootcauses");
             path.ApplyField("id", id);
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5585,7 +5729,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5614,7 +5758,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5637,7 +5781,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -5654,7 +5798,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5681,7 +5825,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult RequestNewAccount(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5700,7 +5844,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult ChangePassword(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -5718,7 +5862,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult CreateAccount(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5739,7 +5883,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5758,7 +5902,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5778,7 +5922,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5798,7 +5942,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -5832,7 +5976,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5853,7 +5997,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5872,7 +6016,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -5897,7 +6041,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -5925,7 +6069,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5948,7 +6092,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -5973,7 +6117,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -5999,7 +6143,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6022,7 +6166,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult ListReports()
         {
             var path = new AvaTaxPath("/api/v2/reports");
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6044,7 +6188,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6061,7 +6205,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -6084,7 +6228,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6118,7 +6262,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6150,7 +6294,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6176,7 +6320,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -6195,7 +6339,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6223,7 +6367,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6249,7 +6393,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6269,7 +6413,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6286,7 +6430,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -6307,7 +6451,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6339,7 +6483,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6369,7 +6513,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6393,7 +6537,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -6419,7 +6563,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult BuildTaxContentFile(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6456,7 +6600,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6471,7 +6615,7 @@ namespace Avalara.AvaTax.RestClient
         /// call the `CreateTransaction` API call. When using this file, your software will be unable to
         /// handle complex tax rules such as:
         /// 
-        /// * Zip+9 - This tax file does not contain 
+        /// * Zip+4 - This tax file contains five digit zip codes only.
         /// * Different product types - This tax file contains tangible personal property tax rates only.
         /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
         /// * Threshold-based taxes - This tax file does not contain information about thresholds.
@@ -6479,13 +6623,15 @@ namespace Avalara.AvaTax.RestClient
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
         /// rate and the final transaction tax.
+        /// 
+        /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.
         /// </remarks>
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
         public AvaTaxCallResult DownloadTaxRatesByZipCode(DateTime date)
         {
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6505,7 +6651,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6522,7 +6668,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -6543,7 +6689,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6575,7 +6721,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6605,7 +6751,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6629,7 +6775,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -6664,7 +6810,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6686,13 +6832,15 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to adjust.</param>
         /// <param name="model">The adjustment you wish to make</param>
-        public AvaTaxCallResult AdjustTransaction(String companyCode, String transactionCode, AdjustTransactionModel model)
+        public AvaTaxCallResult AdjustTransaction(String companyCode, String transactionCode, DocumentType? documentType, AdjustTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/adjust");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            return _client.RestCall("Post", path, model);
+            path.AddQuery("documentType", documentType);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6723,7 +6871,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6756,7 +6904,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -6776,7 +6924,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult BulkLockTransaction(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6806,7 +6954,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6835,7 +6983,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6878,7 +7026,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6927,7 +7075,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6959,7 +7107,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -6991,7 +7139,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7023,7 +7171,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7055,7 +7203,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7100,7 +7248,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7130,7 +7278,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7182,7 +7330,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7211,7 +7359,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7238,7 +7386,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7267,7 +7415,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7284,7 +7432,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7301,7 +7449,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Delete", path, null);
+            return _client.RestCall("DELETE", path, null);
         }
 
 
@@ -7319,7 +7467,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7348,7 +7496,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7375,7 +7523,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7396,7 +7544,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -7420,7 +7568,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            return _client.RestCall("Post", path, model);
+            return _client.RestCall("POST", path, model);
         }
 
 
@@ -7440,7 +7588,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7471,7 +7619,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7500,7 +7648,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7527,7 +7675,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7548,7 +7696,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            return _client.RestCall("Put", path, model);
+            return _client.RestCall("PUT", path, model);
         }
 
 
@@ -7565,7 +7713,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7580,7 +7728,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult ListMySubscriptions()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 
@@ -7597,7 +7745,7 @@ namespace Avalara.AvaTax.RestClient
         public AvaTaxCallResult Ping()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            return _client.RestCall("Get", path, null);
+            return _client.RestCall("GET", path, null);
         }
 
 #endregion

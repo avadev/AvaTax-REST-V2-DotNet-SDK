@@ -12,7 +12,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         public void FreeTaxRates()
         {
             // Create a client and set up authentication
-            var client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
+            var client = new AvaTaxCompatibleClient(typeof(TransactionTests).Assembly.FullName,
                 typeof(TransactionTests).Assembly.GetName().Version.ToString(),
                 Environment.MachineName,
                 AvaTaxEnvironment.Sandbox)

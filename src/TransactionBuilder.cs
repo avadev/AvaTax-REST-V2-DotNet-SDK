@@ -14,7 +14,6 @@ namespace Avalara.AvaTax.RestClient
     {
         private CreateTransactionModel _model;
         private int _line_number;
-        private AvaTaxCompatibleClient _client;
 
         #region Constructor
         /// <summary>
@@ -24,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The code of the company for this transaction</param>
         /// <param name="type">The type of transaction to create</param>
         /// <param name="customerCode">The customer code for this transaction</param>
-        public TransactionBuilder(AvaTaxCompatibleClient client, string companyCode, DocumentType type, string customerCode)
+        public TransactionBuilder(string companyCode, DocumentType type, string customerCode)
         {
             _model = new CreateTransactionModel
             {
@@ -35,7 +34,6 @@ namespace Avalara.AvaTax.RestClient
                 lines = new List<LineItemModel>()
             };
             _line_number = 1;
-            _client = client;
         }
         #endregion
 
@@ -652,35 +650,21 @@ namespace Avalara.AvaTax.RestClient
         /// Create this transaction
         /// </summary>
         /// <returns></returns>
-        public async Task<TransactionModel> CreateAsync()
+        public async Task<TransactionModel> Create(AvaTaxClient client)
         {
-            var r = _client.CreateTransaction(null, _model);
-            r.CheckAndThrow();
-            return r.Deserialize<TransactionModel>();
-        }
-
-        /// <summary>
-        /// Create this transaction
-        /// </summary>
-        /// <returns></returns>
-        public TransactionModel Create()
-        {
-            var r = _client.CreateTransaction(null, _model);
-            r.CheckAndThrow();
-            return r.Deserialize<TransactionModel>();
-        }
-#else
-        /// <summary>
-        /// Create this transaction
-        /// </summary>
-        /// <returns></returns>
-        public TransactionModel Create()
-        {
-            var r = _client.CreateTransaction(null, _model);
-            r.CheckAndThrow();
-            return r.Deserialize<TransactionModel>();
+            return await client.CreateTransaction(null, _model);
         }
 #endif
+        /// <summary>
+        /// Create this transaction
+        /// </summary>
+        /// <returns></returns>
+        public TransactionModel Create(AvaTaxCompatibleClient client)
+        {
+            var r = client.CreateTransaction(null, _model);
+            r.CheckAndThrow();
+            return r.Deserialize<TransactionModel>();
+        }
 
         /// <summary>
         /// Return the current CreateTransactionModel but do not call AvaTax to record the transaction.

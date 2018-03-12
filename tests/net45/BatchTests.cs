@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -30,7 +31,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
 
                 // Verify that we can ping successfully
-                var pingResult = Client.Ping();
+                var pingResult = Client.Ping().Result;
 
                 // Assert that ping succeeded
                 Assert.NotNull(pingResult, "Should be able to call Ping");
@@ -54,7 +55,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     taxpayerIdNumber = "123456789",
                     name = "SatanicTheHedghog",
                     title = "Owner/CEO"
-                });
+                }).Result;
 
                 // Assert that company setup succeeded
                 Assert.NotNull(TestCompany, "Test company should be created");
@@ -77,11 +78,11 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             try
             {
                 // Re-fetch the company
-                var company = Client.GetCompany(TestCompany.id, null);
+                var company = Client.GetCompany(TestCompany.id, null).Result;
 
                 // Flag this company as inactive
                 company.isActive = false;
-                var disableResult = Client.UpdateCompany(company.id, company);
+                var disableResult = Client.UpdateCompany(company.id, company).Result;
 
                 // Assert that it succeeded
                 Assert.NotNull(disableResult, "Should have been able to update this company");
@@ -99,7 +100,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// 
         /// </summary>
         [Test]
-        public void BatchesWorkflow()
+        public async Task BatchesWorkflow()
         {
             // Raw batch CSV string.
             const string transactionImport = @"ProcessCode,DocCode,DocType,DocDate,CompanyCode,CustomerCode,EntityUseCode,LineNo,TaxCode,TaxDate,ItemCode,Description,Qty,Amount,Discount,Ref1,Ref2,ExemptionNo,RevAcct,DestAddress,DestCity,DestRegion,DestPostalCode,DestCountry,OrigAddress,OrigCity,OrigRegion,OrigPostalCode,OrigCountry,LocationCode,SalesPersonCode,PurchaseOrderNo,CurrencyCode,ExchangeRate,ExchangeRateEffDate,PaymentDate,TaxIncluded,DestTaxRegion,OrigTaxRegion,Taxable,TaxType,TotalTax,CountryName,CountryCode,CountryRate,CountryTax,StateName,StateCode,StateRate,StateTax,CountyName,CountyCode,CountyRate,CountyTax,CityName,CityCode,CityRate,CityTax,Other1Name,Other1Code,Other1Rate,Other1Tax,Other2Name,Other2Code,Other2Rate,Other2Tax,Other3Name,Other3Code,Other3Rate,Other3Tax,Other4Name,Other4Code,Other4Rate,Other4Tax,ReferenceCode,BuyersVATNo
@@ -133,7 +134,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Send the batch!
             try
             {
-                var batchResult = Client.CreateBatches(TestCompany.id, new List<BatchModel> { batchRequest });
+                var batchResult = await Client.CreateBatches(TestCompany.id, new List<BatchModel> { batchRequest });
                 Assert.NotNull(batchResult, "Batch not sent.");
                 Assert.True(batchResult.Count > 0, "No batches created.");
 
@@ -144,7 +145,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 {
                     System.Threading.Thread.Sleep(i * 1000);
 
-                    batchFetchResult = Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
+                    batchFetchResult = await Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
                     Assert.NotNull(batchFetchResult, "Batch fetch unsuccessful.");
                     if (batchFetchResult.status.Value == BatchStatus.Waiting) continue;
                     waiting = false;
@@ -158,7 +159,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 {
                     System.Threading.Thread.Sleep(i * 1000);
 
-                    batchFetchResult = Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
+                    batchFetchResult = await Client.GetBatch(TestCompany.id, batchResult[0].id.Value);
                     Assert.NotNull(batchFetchResult, "Batch fetch unsuccessful.");
                     if (batchFetchResult.status.Value == BatchStatus.Processing) continue;
                     processing = false;
@@ -171,7 +172,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     $"BatchId: {batchResult[0].id} should either complete or error out.");
 
                 // We should be able to get back the batch file we sent
-                var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
+                var fileResult = await Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
                 Assert.NotNull(fileResult);
 
                 // Compare what we got back with what we sent.

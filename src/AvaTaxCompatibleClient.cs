@@ -39,6 +39,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         private AvaTaxClient _client = null;
 
+        #region Constructor
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
         /// </summary>
@@ -62,5 +63,51 @@ namespace Avalara.AvaTax.RestClient
         {
             _client = new AvaTaxClient(appName, appVersion, machineName, customEnvironment);
         }
+        #endregion
+
+        #region Security
+        /// <summary>
+        /// Sets the default security header string
+        /// </summary>
+        /// <param name="headerString"></param>
+        public AvaTaxCompatibleClient WithSecurity(string headerString)
+        {
+            _client.WithSecurity(headerString);
+            return this;
+        }
+
+        /// <summary>
+        /// Set security using username/password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        public AvaTaxCompatibleClient WithSecurity(string username, string password)
+        {
+            _client.WithSecurity(username, password);
+            return this;
+        }
+
+        /// <summary>
+        /// Set security using AccountId / License Key
+        /// </summary>
+        /// <param name="accountId"></param>
+        /// <param name="licenseKey"></param>
+        public AvaTaxCompatibleClient WithSecurity(int accountId, string licenseKey)
+        {
+            _client.WithSecurity(accountId, licenseKey);
+            return this;
+        }
+
+        /// <summary>
+        /// Set security using a bearer token
+        /// </summary>
+        /// <param name="bearerToken"></param>
+        /// <returns></returns>
+        public AvaTaxCompatibleClient WithBearerToken(string bearerToken)
+        {
+            _client.WithBearerToken(bearerToken);
+            return this;
+        }
+        #endregion
     }
 }
