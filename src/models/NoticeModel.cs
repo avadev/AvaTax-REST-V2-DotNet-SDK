@@ -102,7 +102,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The filing type of the notice
         /// </summary>
-        public FilingTypeId? filingTypeId { get; set; }
+        public TaxNoticeFilingTypeId? filingTypeId { get; set; }
 
         /// <summary>
         /// The ticket reference number of the notice

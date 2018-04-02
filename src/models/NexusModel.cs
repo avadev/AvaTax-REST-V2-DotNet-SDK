@@ -60,9 +60,15 @@ namespace Avalara.AvaTax.RestClient
         public String region { get; set; }
 
         /// <summary>
-        /// The jurisdiction type of the jurisdiction in which this company declared nexus.
+        /// (DEPRECATED) The jurisdiction type of the jurisdiction in which this company declared nexus.
+        /// NOTE: Use jurisdictionTypeId instead.
         /// </summary>
         public JurisTypeId? jurisTypeId { get; set; }
+
+        /// <summary>
+        /// The type of the jurisdiction in which this company declared nexus.
+        /// </summary>
+        public JurisdictionType? jurisdictionTypeId { get; set; }
 
         /// <summary>
         /// The code identifying the jurisdiction in which this company declared nexus.

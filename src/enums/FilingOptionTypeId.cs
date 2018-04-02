@@ -16,34 +16,24 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Jurisdiction Type
+    /// A list of possible AvaFile filing option types.
     /// </summary>
-    public enum JurisdictionType
+    public enum FilingOptionTypeId
     {
         /// <summary>
-        /// Country
+        /// Denotes the tax return is being filed on paper.
         /// </summary>
-        Country,
+        Paper,
 
         /// <summary>
-        /// State
+        /// Denotes the form can be efiled optionally.
         /// </summary>
-        State,
+        OptionalEfile,
 
         /// <summary>
-        /// County
+        /// Denotes the form is being filed via efile.
         /// </summary>
-        County,
-
-        /// <summary>
-        /// City
-        /// </summary>
-        City,
-
-        /// <summary>
-        /// Special Tax Jurisdiction
-        /// </summary>
-        Special,
+        MandatoryEfile,
 
     }
 }
