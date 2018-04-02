@@ -25,6 +25,13 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If you wish to use the address of an existing location for this company, specify the address here.
         /// Otherwise, leave this value empty.
+        /// 
+        /// The `locationCode` field on this object allows you to quickly use the address of an existing `locationModel` object instead
+        /// of having to retype the address completely.
+        /// 
+        /// This field does not affect the behavior of transactions that must be filed on location-based tax returns. To specify how a
+        /// transaction will be reported on location-based tax returns, please see the `reportingLocationCode` field 
+        /// on the [CreateTransactionModel](https://developer.avalara.com/api-reference/avatax/rest/v2/models/CreateTransactionModel/) element.
         /// </summary>
         public String locationCode { get; set; }
 

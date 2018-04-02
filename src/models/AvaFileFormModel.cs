@@ -65,17 +65,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of the form being submitted
         /// </summary>
-        public Byte? formTypeId { get; set; }
+        public FormTypeId? formTypeId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Byte? filingOptionTypeId { get; set; }
+        public FilingOptionTypeId? filingOptionTypeId { get; set; }
 
         /// <summary>
         /// The type of the due date
         /// </summary>
-        public Byte? dueDateTypeId { get; set; }
+        public DueDateTypeId? dueDateTypeId { get; set; }
 
         /// <summary>
         /// Due date
@@ -85,7 +85,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        public Byte? efileDueDateTypeId { get; set; }
+        public DueDateTypeId? efileDueDateTypeId { get; set; }
 
         /// <summary>
         /// The date by when the E-filing should be submitted
@@ -105,7 +105,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The way system does the rounding
         /// </summary>
-        public Byte? roundingTypeId { get; set; }
+        public RoundingTypeId? roundingTypeId { get; set; }
+
+        /// <summary>
+        /// The outlet type of the form
+        /// </summary>
+        public OutletTypeId? outletTypeId { get; set; }
 
 
         /// <summary>

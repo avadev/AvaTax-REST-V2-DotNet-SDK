@@ -161,6 +161,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CertificateModel> certificates { get; set; }
 
+        /// <summary>
+        /// A list of custom fields defined on this customer. 
+        /// 
+        /// For more information about custom fields, see the [Avalara Help Center article about custom fields](https://help.avalara.com/0021_Avalara_CertCapture/All_About_CertCapture/Edit_or_Remove_Details_about_Customers).
+        /// </summary>
+        public List<CustomFieldModel> customFields { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

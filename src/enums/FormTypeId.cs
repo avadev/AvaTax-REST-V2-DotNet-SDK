@@ -16,74 +16,54 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// A list of possible AvaFile Form Types.
     /// </summary>
-    public enum AdjustmentTypeId
+    public enum FormTypeId
     {
         /// <summary>
-        /// 
+        /// Denotes the form type is Sales and Use Tax
         /// </summary>
-        Other,
+        SalesAndUse,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Sales Tax only
         /// </summary>
-        CurrentPeriodRounding,
+        Sales,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Sellers Use Tax only
         /// </summary>
-        PriorPeriodRounding,
+        SellersUse,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Lodging Tax only
         /// </summary>
-        CurrentPeriodDiscount,
+        Lodging,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Sales and Lodging Tax
         /// </summary>
-        PriorPeriodDiscount,
+        SalesAndLodging,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Consumer Use Tax only
         /// </summary>
-        CurrentPeriodCollection,
+        ConsumerUse,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Resort and Rental Tax
         /// </summary>
-        PriorPeriodCollection,
+        ResortAndRental,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Tourist and Rental Tax
         /// </summary>
-        Penalty,
+        TouristAndRental,
 
         /// <summary>
-        /// 
+        /// Denotes the form type is Prepayment
         /// </summary>
-        Interest,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Discount,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Rounding,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        CspFee,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        Marketplace,
+        Prepayment,
 
     }
 }

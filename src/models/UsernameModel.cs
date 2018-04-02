@@ -18,24 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// Information about a username.
     /// </summary>
-    public class LocationSettingModel
+    public class UsernameModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The username.
         /// </summary>
-        public Int32? questionId { get; set; }
+        public String username { get; set; }
 
         /// <summary>
-        /// The name of the question
+        /// Whether or not the username is taken.
         /// </summary>
-        public String questionName { get; set; }
-
-        /// <summary>
-        /// The answer the user provided.
-        /// </summary>
-        public String value { get; set; }
+        public Boolean? taken { get; set; }
 
 
         /// <summary>

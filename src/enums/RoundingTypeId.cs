@@ -16,34 +16,29 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Jurisdiction Type
+    /// Indicates the rounding behavior of a form
     /// </summary>
-    public enum JurisdictionType
+    public enum RoundingTypeId
     {
         /// <summary>
-        /// Country
+        /// There is no rounding on the return
         /// </summary>
-        Country,
+        None,
 
         /// <summary>
-        /// State
+        /// Round to the nearest whole number
         /// </summary>
-        State,
+        Nearest,
 
         /// <summary>
-        /// County
+        /// Always round up
         /// </summary>
-        County,
+        Up,
 
         /// <summary>
-        /// City
+        /// Always round down
         /// </summary>
-        City,
-
-        /// <summary>
-        /// Special Tax Jurisdiction
-        /// </summary>
-        Special,
+        Down,
 
     }
 }
