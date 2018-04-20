@@ -53,7 +53,13 @@ namespace Avalara.AvaTax.RestClient
         public DocumentStatus? status { get; set; }
 
         /// <summary>
-        /// The type of the transaction. For Returns customers, a transaction type of "Invoice" will be reported to the tax authorities.
+        /// The type of the transaction. 
+        /// 
+        /// Transactions of type `SalesOrder`, `ReturnOrder`, and so on are temporary estimates and will not be saved.
+        /// 
+        /// Transactions of type `SalesInvoice, `ReturnInvoice`, and so on are permanent transactions that can be reported to tax authorities
+        /// if they are in status `Committed`.
+        /// 
         /// A sales transaction represents a sale from the company to a customer. A purchase transaction represents a purchase made by the company.
         /// A return transaction represents a customer who decided to request a refund after purchasing a product from the company. An inventory 
         /// transfer transaction represents goods that were moved from one location of the company to another location without changing ownership.
@@ -82,9 +88,20 @@ namespace Avalara.AvaTax.RestClient
         public String entityUseCode { get; set; }
 
         /// <summary>
-        /// CustomerVendorCode
+        /// DEPRECATED - Please use `customerCode`.
+        /// 
+        /// This field has been renamed to `customerCode` to match documentation for other APIs related to exemption customers.
         /// </summary>
         public String customerVendorCode { get; set; }
+
+        /// <summary>
+        /// Unique code identifying the customer that requested this transaction. 
+        /// 
+        /// When you specify a `customerCode`, AvaTax will look to see if a customer exists with this code in the exemption certificate system.
+        /// If that customer exists, and if that customer has uploaded an exemption certificate that applies to this transaction, the relevant
+        /// parts of this transaction that can use the exemption certificate will be treated as exempt.
+        /// </summary>
+        public String customerCode { get; set; }
 
         /// <summary>
         /// If this transaction was exempt, this field will contain the word "Exempt".
@@ -103,10 +120,16 @@ namespace Avalara.AvaTax.RestClient
         public String locationCode { get; set; }
 
         /// <summary>
-        /// If this transaction was made from a specific reporting location, this is the code string of the location.
-        /// For customers using Returns, this indicates how tax will be reported according to different locations on the tax forms.
-        /// In another words, this code does not affect the address of a transaction, it instead affects which tax return it will be reported on.
-        /// Both locationCode and reportingLocationCode refer to LocationCode in Document table, if both are set, reportingLocationCode wins
+        /// For customers who use [location-based tax reporting](https://developer.avalara.com/avatax/dev-guide/locations/location-based-reporting), 
+        /// this field controls how this transaction will be filed for multi-location tax filings.
+        /// 
+        /// If you specify a non-null value for this field, AvaTax will ensure that this transaction is reported on the tax return associated 
+        /// with the [LocationModel](https://developer.avalara.com/api-reference/avatax/rest/v2/models/LocationModel/) identified by this code.
+        /// 
+        /// This field does not affect any addresses for the transaction. It only controls the tax filing behavior of this transaction.
+        /// 
+        /// If you are looking for information about how to set up addresses for a transaction, please see [Using Address Types](https://developer.avalara.com/avatax/dev-guide/customizing-transaction/address-types/) 
+        /// in the AvaTax Developer Guide.
         /// </summary>
         public String reportingLocationCode { get; set; }
 
@@ -156,7 +179,15 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? totalDiscount { get; set; }
 
         /// <summary>
-        /// The total tax calculated for all lines in this transaction.
+        /// The total tax for all lines in this transaction.
+        /// 
+        /// If you used a `taxOverride` of type `taxAmount` for any lines in this transaction, this value 
+        /// may be different than the amount of tax calculated by AvaTax. The amount of tax calculated by
+        /// AvaTax will be stored in the `totalTaxCalculated` field, whereas this field will contain the
+        /// total tax that was charged on the transaction.
+        /// 
+        /// You can compare the `totalTax` and `totalTaxCalculated` fields to check for any discrepancies
+        /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
         public Decimal? totalTax { get; set; }
 
@@ -166,7 +197,14 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? totalTaxable { get; set; }
 
         /// <summary>
-        /// If a tax override was applied to this transaction, indicates the amount of tax Avalara calculated for the transaction.
+        /// The amount of tax that AvaTax calculated for the transaction.
+        /// 
+        /// If you used a `taxOverride` of type `taxAmount` for any lines in this transaction, this value 
+        /// will still represent the amount that AvaTax calculated for this transaction, although the field
+        /// `totalTax` will be the total amount of tax after all overrides are applied.
+        /// 
+        /// You can compare the `totalTax` and `totalTaxCalculated` fields to check for any discrepancies
+        /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
         public Decimal? totalTaxCalculated { get; set; }
 
@@ -272,17 +310,20 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? taxDate { get; set; }
 
         /// <summary>
-        /// Optional: A list of line items in this transaction. To fetch this list, add the query string "?$include=Lines" or "?$include=Details" to your URL.
+        /// A list of line items in this transaction. To fetch this list, add the query string `?$include=Lines` or `?$include=Details` to your URL.
         /// </summary>
         public List<TransactionLineModel> lines { get; set; }
 
         /// <summary>
-        /// Optional: A list of line items in this transaction. To fetch this list, add the query string "?$include=Addresses" to your URL.
+        /// A list of line items in this transaction. To fetch this list, add the query string `?$include=Addresses` to your URL.
+        /// 
+        /// For more information about transaction addresses, please see [Using Address Types](https://developer.avalara.com/avatax/dev-guide/customizing-transaction/address-types/) 
+        /// in the AvaTax Developer Guide.
         /// </summary>
         public List<TransactionAddressModel> addresses { get; set; }
 
         /// <summary>
-        /// Optional: A list of location types in this transaction. To fetch this list, add the query string "?$include=Addresses" to your URL.
+        /// A list of location types in this transaction. To fetch this list, add the query string `?$include=Addresses` to your URL.
         /// </summary>
         public List<TransactionLocationTypeModel> locationTypes { get; set; }
 

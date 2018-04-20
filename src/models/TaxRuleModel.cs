@@ -60,9 +60,15 @@ namespace Avalara.AvaTax.RestClient
         public String jurisCode { get; set; }
 
         /// <summary>
-        /// The type of the jurisdiction to which this tax rule applies.
+        /// (DEPRECATED) The type of the jurisdiction to which this tax rule applies.
+        /// NOTE: Use jurisdictionTypeId instead.
         /// </summary>
         public JurisTypeId? jurisTypeId { get; set; }
+
+        /// <summary>
+        /// The type of the jurisdiction to which this tax rule applies.
+        /// </summary>
+        public JurisdictionType? jurisdictionTypeId { get; set; }
 
         /// <summary>
         /// DEPRECATED - The type of customer usage to which this rule applies.

@@ -18,24 +18,23 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// Contains information about nexus jurisdictions that were declared
+    /// as a result of a call to `DeclareNexusByAddress`. For each address,
+    /// this object model contains a list of the nexus objects that were declared
+    /// according to the geocoding that corresponds to this address.
     /// </summary>
-    public class LocationSettingModel
+    public class NexusByAddressModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The address that was provided by the user in the call to `DeclareNexusByAddress`
         /// </summary>
-        public Int32? questionId { get; set; }
+        public DeclareNexusByAddressModel address { get; set; }
 
         /// <summary>
-        /// The name of the question
+        /// List of all nexus objects that were affected by declaring nexus at the address specified
+        /// by `address`.
         /// </summary>
-        public String questionName { get; set; }
-
-        /// <summary>
-        /// The answer the user provided.
-        /// </summary>
-        public String value { get; set; }
+        public List<NexusModel> declaredNexus { get; set; }
 
 
         /// <summary>

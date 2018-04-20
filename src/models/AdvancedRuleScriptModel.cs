@@ -18,24 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// Represents an advanced rule script
     /// </summary>
-    public class LocationSettingModel
+    public class AdvancedRuleScriptModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The unique ID of the script
         /// </summary>
-        public Int32? questionId { get; set; }
+        public Int64 id { get; set; }
 
         /// <summary>
-        /// The name of the question
+        /// Account ID
         /// </summary>
-        public String questionName { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
-        /// The answer the user provided.
+        /// How to proceed if the rule crashes
         /// </summary>
-        public String value { get; set; }
+        public AdvancedRuleCrashBehavior? crashBehavior { get; set; }
+
+        /// <summary>
+        /// The type of script - request or response
+        /// </summary>
+        public AdvancedRuleScriptType? scriptType { get; set; }
+
+        /// <summary>
+        /// The JavaScript rule
+        /// </summary>
+        public String script { get; set; }
+
+        /// <summary>
+        /// The rule has been approved
+        /// </summary>
+        public Boolean? isApproved { get; set; }
 
 
         /// <summary>

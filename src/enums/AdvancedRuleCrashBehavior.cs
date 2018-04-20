@@ -16,34 +16,19 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Jurisdiction Type
+    /// 
     /// </summary>
-    public enum JurisdictionType
+    public enum AdvancedRuleCrashBehavior
     {
         /// <summary>
-        /// Country
+        /// 
         /// </summary>
-        Country,
+        FailOnError,
 
         /// <summary>
-        /// State
+        /// 
         /// </summary>
-        State,
-
-        /// <summary>
-        /// County
-        /// </summary>
-        County,
-
-        /// <summary>
-        /// City
-        /// </summary>
-        City,
-
-        /// <summary>
-        /// Special Tax Jurisdiction
-        /// </summary>
-        Special,
+        ProceedWithOriginal,
 
     }
 }

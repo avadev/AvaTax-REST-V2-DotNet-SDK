@@ -30,5 +30,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Salesperson,
 
+        /// <summary>
+        /// This location is a marketplace vendor that handles transactions on behalf of the company.
+        ///  When you select `Marketplace` as the address type for a location, you must then choose either
+        ///  `SellersRemitsTax` or `MarketplaceRemitsTax` to indicate which business entity is responsible
+        ///  for collecting and remitting tax for this location.
+        /// </summary>
+        Marketplace,
+
     }
 }

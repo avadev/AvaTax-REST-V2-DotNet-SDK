@@ -23,12 +23,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Account and company are provisioned
         /// </summary>
-        Finished,
-
-        /// <summary>
-        /// Account are not provisioned
-        /// </summary>
-        NotStarted,
+        Provisioned,
 
         /// <summary>
         /// Provision job is being queued
@@ -38,9 +33,9 @@ namespace Avalara.AvaTax.RestClient
         InProgress,
 
         /// <summary>
-        /// The account is put into provisioned queue.
+        /// 
         /// </summary>
-        Queued,
+        NotProvisioned,
 
     }
 }

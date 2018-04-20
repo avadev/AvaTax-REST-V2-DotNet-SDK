@@ -18,22 +18,22 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// A custom field provides extra information about a customer or certificate.
+    /// 
+    /// Custom fields are provided to permit you to store additional information about an exemption certificate or customer. They are available to 
+    /// support additional use cases beyond that supported directly by Avalara's exemption certificate software.
+    /// 
+    /// For more information about custom fields, see the [Avalara Help Center article about custom fields](https://help.avalara.com/0021_Avalara_CertCapture/All_About_CertCapture/Edit_or_Remove_Details_about_Customers).
     /// </summary>
-    public class LocationSettingModel
+    public class CustomFieldModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The name of the custom field.
         /// </summary>
-        public Int32? questionId { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The name of the question
-        /// </summary>
-        public String questionName { get; set; }
-
-        /// <summary>
-        /// The answer the user provided.
+        /// The value of the custom field.
         /// </summary>
         public String value { get; set; }
 

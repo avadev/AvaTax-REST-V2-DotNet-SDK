@@ -16,34 +16,19 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Jurisdiction Type
+    /// 
     /// </summary>
-    public enum JurisdictionType
+    public enum AdvancedRuleScriptType
     {
         /// <summary>
-        /// Country
+        /// 
         /// </summary>
-        Country,
+        RequestRule,
 
         /// <summary>
-        /// State
+        /// 
         /// </summary>
-        State,
-
-        /// <summary>
-        /// County
-        /// </summary>
-        County,
-
-        /// <summary>
-        /// City
-        /// </summary>
-        City,
-
-        /// <summary>
-        /// Special Tax Jurisdiction
-        /// </summary>
-        Special,
+        ResponseRule,
 
     }
 }

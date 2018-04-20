@@ -38,6 +38,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? accountId { get; set; }
 
+        /// <summary>
+        /// The AvaTax company represented by this status
+        /// </summary>
+        public Int32? companyId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

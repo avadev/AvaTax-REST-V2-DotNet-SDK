@@ -103,9 +103,15 @@ namespace Avalara.AvaTax.RestClient
         public String stateAssignedNo { get; set; }
 
         /// <summary>
-        /// The type of the jurisdiction to which this tax detail applies.
+        /// (DEPRECATED) The type of the jurisdiction to which this tax detail applies.
+        /// NOTE: Use jurisdictionTypeId instead.
         /// </summary>
         public JurisTypeId? jurisType { get; set; }
+
+        /// <summary>
+        /// The type of the jurisdiction in which this tax detail applies.
+        /// </summary>
+        public JurisdictionType? jurisdictionType { get; set; }
 
         /// <summary>
         /// The amount of this line item that was considered nontaxable in this tax detail.
@@ -161,6 +167,16 @@ namespace Avalara.AvaTax.RestClient
         /// The type of tax that was calculated. Depends on the company's nexus settings as well as the jurisdiction's tax laws.
         /// </summary>
         public TaxType? taxType { get; set; }
+
+        /// <summary>
+        /// The id of the tax subtype.
+        /// </summary>
+        public String taxSubTypeId { get; set; }
+
+        /// <summary>
+        /// The id of the tax type group.
+        /// </summary>
+        public String taxTypeGroupId { get; set; }
 
         /// <summary>
         /// The name of the tax against which this tax amount was calculated.

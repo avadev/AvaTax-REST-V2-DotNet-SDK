@@ -138,11 +138,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        CannotChangeCompanyCode,
-
-        /// <summary>
-        /// 
-        /// </summary>
         DateFormatError,
 
         /// <summary>
@@ -666,6 +661,21 @@ namespace Avalara.AvaTax.RestClient
         UserNoAccess,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidEntry,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TransactionAlreadyCancelled,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        QueryParameterOutOfRange,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -768,7 +778,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AddressIncomplete,
+        InvalidAddress,
 
         /// <summary>
         /// 
@@ -804,11 +814,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         TimeoutRequested,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        InvalidAddress,
 
         /// <summary>
         /// 
@@ -921,6 +926,11 @@ namespace Avalara.AvaTax.RestClient
         MustUseCreateTransaction,
 
         /// <summary>
+        /// 
+        /// </summary>
+        MustAcceptTermsAndConditions,
+
+        /// <summary>
         /// Filing Calendar Error Codes
         /// </summary>
         FilingCalendarCannotBeDeleted,
@@ -983,12 +993,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        CertCaptureFieldValidationError,
+        CertificatesFieldInvalid,
 
         /// <summary>
         /// 
         /// </summary>
-        CertCaptureError,
+        CertificatesError,
 
         /// <summary>
         /// 
@@ -998,7 +1008,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        CertCaptureNotConfiguredError,
+        CertificatesNotSetup,
 
         /// <summary>
         /// 
@@ -1033,7 +1043,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        InvalidCertCaptureOperation,
+        InvalidExemptionOperation,
 
         /// <summary>
         /// 
@@ -1144,6 +1154,66 @@ namespace Avalara.AvaTax.RestClient
         /// Worksheet Exception
         /// </summary>
         WorksheetException,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidAccountOverride,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccountOverrideNotAuthorized,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ParserFieldNotQueryableError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UsernameRequired,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidAuditMessage,
+
+        /// <summary>
+        /// Nexus validation error codes
+        /// </summary>
+        CannotDeleteParentBeforeChildNexus,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NexusChildDateMismatch,
+
+        /// <summary>
+        /// Advanced rule errors
+        /// </summary>
+        AdvancedRuleBadScript,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleBadCsvTable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleRequestRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleResponseRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentStatusToAddOrDeleteLines,
 
     }
 }

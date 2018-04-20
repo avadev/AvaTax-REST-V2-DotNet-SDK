@@ -16,34 +16,24 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Jurisdiction Type
+    /// A list of possible Due Date Types
     /// </summary>
-    public enum JurisdictionType
+    public enum DueDateTypeId
     {
         /// <summary>
-        /// Country
+        /// Denotes form is due on the due day
         /// </summary>
-        Country,
+        ByDay,
 
         /// <summary>
-        /// State
+        /// Denotes form is due by last day of the month
         /// </summary>
-        State,
+        ByLastDay,
 
         /// <summary>
-        /// County
+        /// Denotes form is due by second to last day of the month
         /// </summary>
-        County,
-
-        /// <summary>
-        /// City
-        /// </summary>
-        City,
-
-        /// <summary>
-        /// Special Tax Jurisdiction
-        /// </summary>
-        Special,
+        BySecondLastDay,
 
     }
 }

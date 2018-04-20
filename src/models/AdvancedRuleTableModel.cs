@@ -18,24 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// Represents an advanced rule table
     /// </summary>
-    public class LocationSettingModel
+    public class AdvancedRuleTableModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The unique ID of the table
         /// </summary>
-        public Int32? questionId { get; set; }
+        public Int64 id { get; set; }
 
         /// <summary>
-        /// The name of the question
+        /// Account ID
         /// </summary>
-        public String questionName { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
-        /// The answer the user provided.
+        /// The name of the table
         /// </summary>
-        public String value { get; set; }
+        public String csvTableName { get; set; }
+
+        /// <summary>
+        /// The CSV data
+        /// </summary>
+        public String csvTable { get; set; }
 
 
         /// <summary>
