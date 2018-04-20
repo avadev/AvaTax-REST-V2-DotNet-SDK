@@ -229,7 +229,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(aComplexTransactionCode, transaction.code);
 
             // Fetch the transaction back
-            var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null);
+            var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null, null);
             Assert.NotNull(fetchBack);
             Assert.AreEqual(aComplexTransactionCode, fetchBack.code);
         }
