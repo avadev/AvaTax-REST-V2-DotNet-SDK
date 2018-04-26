@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.4.0-185
+ * @version    18.4.3-191
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.4.0-185"; } }
+        public static string API_VERSION { get { return "18.4.3-191"; } }
 
 #region Methods
 
@@ -8529,92 +8529,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("scriptType", scriptType);
             return await RestCallAsync<AdvancedRuleScriptModel>("POST", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a new AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// Create one or more AvaFileForms
-        /// A 'AvaFileForm' represents a form supported by our returns team;
-        /// </remarks>
-        /// <param name="model">The AvaFileForm you wish to create.</param>
-        public async Task<List<AvaFileFormModel>> CreateAvaFileFormsAsync(List<AvaFileFormModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms");
-            return await RestCallAsync<List<AvaFileFormModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete a single AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// Marks the existing AvaFileForm object at this URL as deleted.;
-        /// </remarks>
-        /// <param name="id">The ID of the AvaFileForm you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteAvaFileFormAsync(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// Get the AvaFileForm object identified by this URL.;
-        /// </remarks>
-        /// <param name="id">The primary key of this AvaFileForm</param>
-        public async Task<AvaFileFormModel> GetAvaFileFormAsync(String id)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<AvaFileFormModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all AvaFileForms;
-        /// </summary>
-        /// <remarks>
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
-        /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<AvaFileFormModel>> QueryAvaFileFormsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms");
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Update a AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
-        /// </remarks>
-        /// <param name="id">The ID of the AvaFileForm you wish to update</param>
-        /// <param name="model">The AvaFileForm model you wish to update.</param>
-        public async Task<AvaFileFormModel> UpdateAvaFileFormAsync(Int32 id, AvaFileFormModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<AvaFileFormModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 

@@ -51,7 +51,7 @@ namespace Avalara.AvaTax.RestClient
         ///  and your company is responsible for collecting and remitting all taxes for transactions tied
         ///  to this location.
         /// </summary>
-        SellersRemitsTax,
+        SellerRemitsTax,
 
         /// <summary>
         /// The marketplace vendor collects and remits tax on your behalf for all transactions tied

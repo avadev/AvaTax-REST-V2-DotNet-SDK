@@ -1214,5 +1214,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidDocumentStatusToAddOrDeleteLines,
+
     }
 }
