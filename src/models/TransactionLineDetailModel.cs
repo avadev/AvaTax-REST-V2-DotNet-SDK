@@ -169,6 +169,16 @@ namespace Avalara.AvaTax.RestClient
         public TaxType? taxType { get; set; }
 
         /// <summary>
+        /// The id of the tax subtype.
+        /// </summary>
+        public String taxSubTypeId { get; set; }
+
+        /// <summary>
+        /// The id of the tax type group.
+        /// </summary>
+        public String taxTypeGroupId { get; set; }
+
+        /// <summary>
         /// The name of the tax against which this tax amount was calculated.
         /// </summary>
         public String taxName { get; set; }
