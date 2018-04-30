@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 #if PORTABLE
 using System.Threading.Tasks;
 using System.Linq;
@@ -49,7 +50,8 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public CallDuration()
         {
-            _checkpoint = DateTime.UtcNow;
+            _timer = new Stopwatch();
+            _timer.Start();
         }
 
         /// <summary>
@@ -104,7 +106,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Keep track of time since last checkpoint
         /// </summary>
-        private DateTime _checkpoint;
+        private Stopwatch _timer;
 
         /// <summary>
         /// Determine time since last checkpoint, and advance checkpoint
@@ -112,10 +114,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private TimeSpan Checkpoint()
         {
-            var newCheckpoint = DateTime.UtcNow;
-            var ts = newCheckpoint - _checkpoint;
-            _checkpoint = newCheckpoint;
-            return ts;
+            return _timer.Elapsed;
         }
 #endregion
     }
