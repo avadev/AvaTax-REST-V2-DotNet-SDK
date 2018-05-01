@@ -138,11 +138,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        CannotChangeCompanyCode,
-
-        /// <summary>
-        /// 
-        /// </summary>
         DateFormatError,
 
         /// <summary>
@@ -676,6 +671,11 @@ namespace Avalara.AvaTax.RestClient
         TransactionAlreadyCancelled,
 
         /// <summary>
+        /// 
+        /// </summary>
+        QueryParameterOutOfRange,
+
+        /// <summary>
         /// Batch errors
         /// </summary>
         BatchSalesAuditMustBeZippedError,
@@ -778,7 +778,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AddressIncomplete,
+        InvalidAddress,
 
         /// <summary>
         /// 
@@ -814,11 +814,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         TimeoutRequested,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        InvalidAddress,
 
         /// <summary>
         /// 
@@ -929,6 +924,11 @@ namespace Avalara.AvaTax.RestClient
         /// Free API error codes
         /// </summary>
         MustUseCreateTransaction,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MustAcceptTermsAndConditions,
 
         /// <summary>
         /// Filing Calendar Error Codes
@@ -1189,6 +1189,31 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         NexusChildDateMismatch,
+
+        /// <summary>
+        /// Advanced rule errors
+        /// </summary>
+        AdvancedRuleBadScript,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleBadCsvTable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleRequestRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleResponseRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentStatusToAddOrDeleteLines,
 
     }
 }

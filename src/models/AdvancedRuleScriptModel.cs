@@ -18,43 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ISO 3166 recognized country
+    /// Represents an advanced rule script
     /// </summary>
-    public class IsoCountryModel
+    public class AdvancedRuleScriptModel
     {
         /// <summary>
-        /// The two character ISO 3166 country code
+        /// The unique ID of the script
         /// </summary>
-        public String code { get; set; }
+        public Int64 id { get; set; }
 
         /// <summary>
-        /// The three character ISO 3166 country code
+        /// Account ID
         /// </summary>
-        public String alpha3Code { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
-        /// The full name of this country in uppercase.
-        /// 
-        /// For names in proper or formal case, or for names in other languages, please examine the `localizedNames` element for an appropriate name.
+        /// How to proceed if the rule crashes
         /// </summary>
-        public String name { get; set; }
+        public AdvancedRuleCrashBehavior? crashBehavior { get; set; }
 
         /// <summary>
-        /// True if this country is a member of the European Union
+        /// The type of script - request or response
         /// </summary>
-        public Boolean? isEuropeanUnion { get; set; }
+        public AdvancedRuleScriptType? scriptType { get; set; }
 
         /// <summary>
-        /// A list of localized names in a variety of languages.
-        /// 
-        /// This list is maintained by the International Standards Organization.
+        /// The JavaScript rule
         /// </summary>
-        public List<IsoLocalizedName> localizedNames { get; set; }
+        public String script { get; set; }
 
         /// <summary>
-        /// Whether or not this country requires a region in postal addresses.
+        /// The rule has been approved
         /// </summary>
-        public Boolean? addressesRequireRegion { get; set; }
+        public Boolean? isApproved { get; set; }
 
 
         /// <summary>

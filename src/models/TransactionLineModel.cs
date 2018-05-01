@@ -156,7 +156,14 @@ namespace Avalara.AvaTax.RestClient
         public Sourcing? sourcing { get; set; }
 
         /// <summary>
-        /// The amount of tax generated for this line item.
+        /// The tax for this line in this transaction.
+        /// 
+        /// If you used a `taxOverride` of type `taxAmount` for this line, this value 
+        /// will represent the amount of your override. AvaTax will still attempt to calculate the correct tax
+        /// for this line and will store that calculated value in the `taxCalculated` field.
+        /// 
+        /// You can compare the `tax` and `taxCalculated` fields to check for any discrepancies
+        /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
         public Decimal? tax { get; set; }
 
@@ -166,7 +173,14 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? taxableAmount { get; set; }
 
         /// <summary>
-        /// The tax calculated for this line by Avalara. If the transaction was calculated with a tax override, this amount will be different from the "tax" value.
+        /// The amount of tax that AvaTax calculated for the transaction.
+        /// 
+        /// If you used a `taxOverride` of type `taxAmount` for this line, there will be a difference between
+        /// the `tax` field which represents your override, and the `taxCalculated` field which represents the
+        /// amount of tax that AvaTax calculated for this line.
+        /// 
+        /// You can compare the `tax` and `taxCalculated` fields to check for any discrepancies
+        /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 

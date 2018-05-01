@@ -64,6 +64,8 @@
     <Compile Include="enums\AdjustmentPeriodTypeId.cs" />
     <Compile Include="enums\AdjustmentReason.cs" />
     <Compile Include="enums\AdjustmentTypeId.cs" />
+    <Compile Include="enums\AdvancedRuleCrashBehavior.cs" />
+    <Compile Include="enums\AdvancedRuleScriptType.cs" />
     <Compile Include="enums\ApiCallStatus.cs" />
     <Compile Include="enums\AuthenticationTypeId.cs" />
     <Compile Include="enums\BatchStatus.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="models\AddTransactionLineModel.cs" />
     <Compile Include="models\AdjustMultiDocumentModel.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
+    <Compile Include="models\AdvancedRuleScriptModel.cs" />
+    <Compile Include="models\AdvancedRuleTableModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
     <Compile Include="models\AuditMultiDocumentModel.cs" />
     <Compile Include="models\AuditTransactionModel.cs" />
@@ -185,6 +189,7 @@
     <Compile Include="models\CycleEditOptionModel.cs" />
     <Compile Include="models\CycleExpireModel.cs" />
     <Compile Include="models\CycleExpireOptionModel.cs" />
+    <Compile Include="models\DeclareNexusByAddressModel.cs" />
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
     <Compile Include="models\EcmsModel.cs" />
@@ -242,6 +247,7 @@
     <Compile Include="models\MultiDocumentModel.cs" />
     <Compile Include="models\NewAccountModel.cs" />
     <Compile Include="models\NewAccountRequestModel.cs" />
+    <Compile Include="models\NexusByAddressModel.cs" />
     <Compile Include="models\NexusByTaxFormModel.cs" />
     <Compile Include="models\NexusModel.cs" />
     <Compile Include="models\NexusTaxTypeGroupModel.cs" />
