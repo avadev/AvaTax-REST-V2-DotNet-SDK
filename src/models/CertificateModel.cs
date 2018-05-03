@@ -38,12 +38,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The date when this certificate was signed.
         /// </summary>
-        public DateTime? signedDate { get; set; }
+        public DateTime signedDate { get; set; }
 
         /// <summary>
         /// Expiration date when this certificate will no longer be valid.
         /// </summary>
-        public DateTime? expirationDate { get; set; }
+        public DateTime expirationDate { get; set; }
 
         /// <summary>
         /// File name for the image of this certificate.
@@ -85,7 +85,10 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isSingleCertificate { get; set; }
 
         /// <summary>
-        /// The exemption reason associated with this certificate.
+        /// The exemption reason associated with this certificate. For example, the reason code for exemption
+        /// for purposes of resale is `RESALE`.
+        ///  
+        /// For a list of exemption reasons, call `ListCertificateExemptReasons`.
         /// </summary>
         public ExemptionReasonModel exemptionReason { get; set; }
 

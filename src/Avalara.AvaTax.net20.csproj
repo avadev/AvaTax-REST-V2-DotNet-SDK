@@ -219,6 +219,7 @@
     <Compile Include="models\FundingInitiateModel.cs" />
     <Compile Include="models\FundingStatusModel.cs" />
     <Compile Include="models\HsCodeModel.cs" />
+    <Compile Include="models\InvoiceMessageModel.cs" />
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoLocalizedName.cs" />
     <Compile Include="models\IsoRegionModel.cs" />

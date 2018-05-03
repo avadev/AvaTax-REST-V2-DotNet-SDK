@@ -38,7 +38,7 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
-        /// They Scraper type
+        /// The Scraper type
         /// </summary>
         public ScraperType? scraperType { get; set; }
 

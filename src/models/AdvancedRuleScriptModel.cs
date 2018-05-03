@@ -52,6 +52,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isApproved { get; set; }
 
+        /// <summary>
+        /// The rule has been disabled
+        /// </summary>
+        public Boolean? isDisabled { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

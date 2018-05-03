@@ -951,16 +951,6 @@ namespace Avalara.AvaTax.RestClient
         OverlappingFilingCalendar,
 
         /// <summary>
-        /// Location error codes
-        /// </summary>
-        QuestionNotNeededForThisAddress,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        QuestionNotValidForThisAddress,
-
-        /// <summary>
         /// Create or update transaction error codes
         /// </summary>
         CannotModifyLockedTransaction,
@@ -1209,6 +1199,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         AdvancedRuleResponseRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleNotApproved,
 
         /// <summary>
         /// 
