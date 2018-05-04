@@ -333,9 +333,7 @@ namespace Avalara.AvaTax.RestClient
                 // Read the result
 
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var responseList = JsonConvert.DeserializeObject<List<ExportDocumentLineModel>>(responseString); //deserialize to a list of objects
-                var responseJson = responseList[0].ToString(); //extract the 1st item in the list and make it a string
-
+                
                 // Determine server duration
                 var sd = DetectDuration(result, "serverduration");
                 var dd = DetectDuration(result, "dataduration");
@@ -348,9 +346,9 @@ namespace Avalara.AvaTax.RestClient
 
                 // Deserialize the result
                 if (result.IsSuccessStatusCode) {
-                    return responseJson;  //return the new response string
+                    return responseString; 
                 } else {
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(responseJson);  //use new response string
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(responseString);  
                     cd.FinishParse();
                     this.LastCallTime = cd;
                     throw new AvaTaxError(err, result.StatusCode);
