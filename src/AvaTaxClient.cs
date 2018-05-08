@@ -327,13 +327,11 @@ namespace Avalara.AvaTax.RestClient
             }
 
             // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false))
-            {
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)){
 
                 // Read the result
 
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                
                 // Determine server duration
                 var sd = DetectDuration(result, "serverduration");
                 var dd = DetectDuration(result, "dataduration");
@@ -346,9 +344,9 @@ namespace Avalara.AvaTax.RestClient
 
                 // Deserialize the result
                 if (result.IsSuccessStatusCode) {
-                    return responseString; 
+                    return responseString;
                 } else {
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(responseString);  
+                    var err = JsonConvert.DeserializeObject<ErrorResult>(responseString);
                     cd.FinishParse();
                     this.LastCallTime = cd;
                     throw new AvaTaxError(err, result.StatusCode);
