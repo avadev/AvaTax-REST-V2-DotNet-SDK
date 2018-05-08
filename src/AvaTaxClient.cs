@@ -331,13 +331,13 @@ namespace Avalara.AvaTax.RestClient
 
                 // Read the result
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                
+
                 // Determine server duration
                 var sd = DetectDuration(result, "serverduration");
                 var dd = DetectDuration(result, "dataduration");
                 var td = DetectDuration(result, "serviceduration");
                 cd.FinishReceive(sd, dd, td);
-
+                
                 // Capture information about this API call and make it available for logging
                 var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = responseString, Duration = cd };
                 OnCallCompleted(eventargs);
