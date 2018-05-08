@@ -327,11 +327,11 @@ namespace Avalara.AvaTax.RestClient
             }
 
             // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)){
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)) {
 
                 // Read the result
-
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+                
                 // Determine server duration
                 var sd = DetectDuration(result, "serverduration");
                 var dd = DetectDuration(result, "dataduration");
