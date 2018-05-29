@@ -43,11 +43,6 @@ namespace Avalara.AvaTax.RestClient
         public ResolutionQuality? resolutionQuality { get; set; }
 
         /// <summary>
-        /// If AvaTax is able to calculate tax for a given address.
-        /// </summary>
-        public Boolean? ableToCalculateTax { get; set; }
-
-        /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
         public List<TaxAuthorityInfo> taxAuthorities { get; set; }

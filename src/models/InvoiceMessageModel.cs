@@ -27,6 +27,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String content { get; set; }
 
+        /// <summary>
+        /// The applicable tax line numbers and codes.
+        /// </summary>
+        public List<String> lineNumbers { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

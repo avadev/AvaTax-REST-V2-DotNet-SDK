@@ -115,5 +115,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         MRSComplianceManager,
 
+        /// <summary>
+        /// AvaBikeTax
+        /// </summary>
+        AvaBikeTax,
+
+        /// <summary>
+        /// AvaCheckoutBag
+        /// </summary>
+        AvaCheckoutBag,
+
+        /// <summary>
+        /// TFOCompliance
+        /// </summary>
+        TFOCompliance,
+
+        /// <summary>
+        /// Send Sales Rate file service
+        /// </summary>
+        SendSalesRateFile,
+
     }
 }

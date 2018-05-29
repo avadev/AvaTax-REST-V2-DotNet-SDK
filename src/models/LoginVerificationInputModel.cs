@@ -38,6 +38,11 @@ namespace Avalara.AvaTax.RestClient
         public String region { get; set; }
 
         /// <summary>
+        /// TaxFormCode for the verification request
+        /// </summary>
+        public String taxFormCode { get; set; }
+
+        /// <summary>
         /// Username that we are using for verification
         /// </summary>
         public String username { get; set; }
