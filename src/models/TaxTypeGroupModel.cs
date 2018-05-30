@@ -38,21 +38,24 @@ namespace Avalara.AvaTax.RestClient
         public String description { get; set; }
 
         /// <summary>
-        /// The name of the tab on the AvaTax Website for this tax type.
-        /// </summary>
-        public String tabName { get; set; }
-
-        /// <summary>
-        /// The unique ID number of the subscription service type that this tax type is tied to, if any.
-        /// If this field is null, this tax type is not tied to a particular subscription service leve.
+        /// If this tax type group requires a subscription, this contains the ID number of the subscription type required to use it.
         /// </summary>
         public Int32? subscriptionTypeId { get; set; }
 
         /// <summary>
-        /// A friendly description of the subscription service tied to this tax type, if any.
-        /// If this field is null, this tax type is not tied to a particular subscription service leve.
+        /// If this tax type group requires a subscription, this contains the friendly name of the subscription type required to use it.
         /// </summary>
         public String subscriptionDescription { get; set; }
+
+        /// <summary>
+        /// The name of the tab in the AvaTax website corresponding to this tax type group.
+        /// </summary>
+        public String tabName { get; set; }
+
+        /// <summary>
+        /// True if this tax type group is displayed in the user interface of the AvaTax website.
+        /// </summary>
+        public Boolean? showColumn { get; set; }
 
 
         /// <summary>

@@ -1056,6 +1056,11 @@ namespace Avalara.AvaTax.RestClient
         AccountNotProvisioned,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidRequestContentType,
+
+        /// <summary>
         /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
@@ -1209,6 +1214,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidDocumentStatusToAddOrDeleteLines,
+
+        /// <summary>
+        /// SendSales API errors
+        /// </summary>
+        UnsupportedFileFormat,
 
     }
 }

@@ -342,6 +342,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<AvaTaxMessage> messages { get; set; }
 
+        /// <summary>
+        /// Invoice messages associated with this document. Currently, this stores legally-required VAT messages.
+        /// </summary>
+        public List<InvoiceMessageModel> invoiceMessages { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

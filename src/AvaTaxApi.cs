@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.5.0-1204
+ * @version    18.5.1-208
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.5.0-1204"; } }
+        public static string API_VERSION { get { return "18.5.1-208"; } }
 
 #region Methods
 
@@ -6298,10 +6298,10 @@ namespace Avalara.AvaTax.RestClient
         /// When creating an account object you may attach subscriptions and users as part of the 'Create' call.
         /// </remarks>
         /// <param name="model">The account you wish to create.</param>
-        public AccountModel CreateAccount(AccountModel model)
+        public List<AccountModel> CreateAccount(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            return RestCall<AccountModel>("POST", path, model);
+            return RestCall<List<AccountModel>>("POST", path, model);
         }
 
 
@@ -7088,6 +7088,23 @@ namespace Avalara.AvaTax.RestClient
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
         /// rate and the final transaction tax.
+        /// 
+        /// The file provided by this API is in CSV format with the following columns:
+        /// 
+        /// * ZIP_CODE - The five digit zip code for this record.
+        /// * STATE_ABBREV - A valid two character US state abbreviation for this record. Zip codes may span multiple states.
+        /// * COUNTY_NAME - A valid county name for this record. Zip codes may span multiple counties.
+        /// * CITY_NAME - A valid city name for this record. Zip codes may span multiple cities.
+        /// * STATE_SALES_TAX - The state component of the sales tax rate.
+        /// * STATE_USE_TAX - The state component of the use tax rate.
+        /// * COUNTY_SALES_TAX - The county component of the sales tax rate.
+        /// * COUNTY_USE_TAX - The county component of the use tax rate.
+        /// * CITY_SALES_TAX - The city component of the sales tax rate.
+        /// * CITY_USE_TAX - The city component of the use tax rate.
+        /// * TOTAL_SALES_TAX - The total tax rate for sales tax for this postal code. This value may not equal the sum of the state/county/city due to special tax jurisdiction rules.
+        /// * TOTAL_USE_TAX - The total tax rate for use tax for this postal code. This value may not equal the sum of the state/county/city due to special tax jurisdiction rules.
+        /// * TAX_SHIPPING_ALONE - This column contains 'Y' if shipping is taxable.
+        /// * TAX_SHIPPING_AND_HANDLING_TOGETHER - This column contains 'Y' if shipping and handling are taxable when sent together.
         /// 
         /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.
         /// </remarks>
@@ -14530,10 +14547,10 @@ namespace Avalara.AvaTax.RestClient
         /// When creating an account object you may attach subscriptions and users as part of the 'Create' call.;
         /// </remarks>
         /// <param name="model">The account you wish to create.</param>
-        public async Task<AccountModel> CreateAccountAsync(AccountModel model)
+        public async Task<List<AccountModel>> CreateAccountAsync(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            return await RestCallAsync<AccountModel>("POST", path, model).ConfigureAwait(false);
+            return await RestCallAsync<List<AccountModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15320,6 +15337,23 @@ namespace Avalara.AvaTax.RestClient
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
         /// rate and the final transaction tax.
+        /// 
+        /// The file provided by this API is in CSV format with the following columns:
+        /// 
+        /// * ZIP_CODE - The five digit zip code for this record.
+        /// * STATE_ABBREV - A valid two character US state abbreviation for this record. Zip codes may span multiple states.
+        /// * COUNTY_NAME - A valid county name for this record. Zip codes may span multiple counties.
+        /// * CITY_NAME - A valid city name for this record. Zip codes may span multiple cities.
+        /// * STATE_SALES_TAX - The state component of the sales tax rate.
+        /// * STATE_USE_TAX - The state component of the use tax rate.
+        /// * COUNTY_SALES_TAX - The county component of the sales tax rate.
+        /// * COUNTY_USE_TAX - The county component of the use tax rate.
+        /// * CITY_SALES_TAX - The city component of the sales tax rate.
+        /// * CITY_USE_TAX - The city component of the use tax rate.
+        /// * TOTAL_SALES_TAX - The total tax rate for sales tax for this postal code. This value may not equal the sum of the state/county/city due to special tax jurisdiction rules.
+        /// * TOTAL_USE_TAX - The total tax rate for use tax for this postal code. This value may not equal the sum of the state/county/city due to special tax jurisdiction rules.
+        /// * TAX_SHIPPING_ALONE - This column contains 'Y' if shipping is taxable.
+        /// * TAX_SHIPPING_AND_HANDLING_TOGETHER - This column contains 'Y' if shipping and handling are taxable when sent together.
         /// 
         /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.;
         /// </remarks>

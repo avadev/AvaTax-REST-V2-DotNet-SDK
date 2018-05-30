@@ -27,15 +27,11 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Indicates the entity is voluntarily collecting tax (default)
-        ///  
-        ///  This has replaced Collect
         /// </summary>
         SalesOrSellersUseTax,
 
         /// <summary>
         /// Indicates the entity is required to collect tax in the state
-        ///  
-        ///  This has replaced Legal
         /// </summary>
         SalesTax,
 
