@@ -80,7 +80,11 @@ namespace Avalara.AvaTax.RestClient
         public String itemCode { get; set; }
 
         /// <summary>
-        /// Exemption certificate number for this line.
+        /// The customer Tax Id Number (tax_number) associated with a certificate - Sales tax calculation requests first determine if there is an applicable 
+        /// ECMS entry available, and will utilize it for exemption processing. If no applicable ECMS entry is available, the AvaTax service 
+        /// will determine if an Exemption Number field is populated or an Entity/Use Code is included in the sales tax calculation request, 
+        /// and will perform exemption processing using either of those two options.
+        /// Note: This is same as 'exemptNo' in TransactionModel.
         /// </summary>
         public String exemptionCode { get; set; }
 
