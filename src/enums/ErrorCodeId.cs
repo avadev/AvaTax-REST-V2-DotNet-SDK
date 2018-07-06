@@ -821,6 +821,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidPostalCode,
 
         /// <summary>
+        /// Subscription error codes
+        /// </summary>
+        InvalidSubscriptionDescription,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidSubscriptionTypeId,
+
+        /// <summary>
         /// Represents a malformed document fetch command
         /// </summary>
         BadDocumentFetch,
@@ -1061,6 +1071,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidRequestContentType,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ExemptionPaginationLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExemptionSortLimits,
+
+        /// <summary>
         /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
@@ -1129,16 +1149,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CommsConfigClientIdBadValue,
-
-        /// <summary>
-        /// BizTech API error codes
-        /// </summary>
-        BizTechCustomerAccountFailure,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        BizTechOpportunityCreationFailure,
 
         /// <summary>
         /// Account Activate error codes
@@ -1214,6 +1224,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidDocumentStatusToAddOrDeleteLines,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxRuleRequiresNexus,
 
         /// <summary>
         /// SendSales API errors

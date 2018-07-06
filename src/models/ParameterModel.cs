@@ -34,7 +34,7 @@ namespace Avalara.AvaTax.RestClient
         public String category { get; set; }
 
         /// <summary>
-        /// The name of the property. To use this property, add a field on the `parameters` object of a `/api/v2/transactions/create` call.
+        /// The name of the property. To use this property, add a field on the `parameters` object of a [CreateTransaction](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/) call.
         /// </summary>
         public String name { get; set; }
 
