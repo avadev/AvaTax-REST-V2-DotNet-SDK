@@ -18,54 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a verification request using Skyscraper for a company
+    /// Represents an advanced rule script
     /// </summary>
-    public class LoginVerificationInputModel
+    public class AdvancedRuleScriptModel
     {
         /// <summary>
-        /// CompanyId that we are verifying the login information for
+        /// The unique ID of the script
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int64 id { get; set; }
 
         /// <summary>
-        /// AccountId of the login verification
+        /// Account ID
         /// </summary>
-        public Int32 accountId { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
-        /// Region of the verification request
+        /// How to proceed if the rule crashes
         /// </summary>
-        public String region { get; set; }
+        public AdvancedRuleCrashBehavior? crashBehavior { get; set; }
 
         /// <summary>
-        /// TaxFormCode for the verification request
+        /// The type of script - request or response
         /// </summary>
-        public String taxFormCode { get; set; }
+        public AdvancedRuleScriptType? scriptType { get; set; }
 
         /// <summary>
-        /// Username that we are using for verification
+        /// The JavaScript rule
         /// </summary>
-        public String username { get; set; }
+        public String script { get; set; }
 
         /// <summary>
-        /// Password we are using for verification
+        /// The rule has been approved
         /// </summary>
-        public String password { get; set; }
+        public Boolean? isApproved { get; set; }
 
         /// <summary>
-        /// Additional options of the verification
+        /// The rule has been disabled
         /// </summary>
-        public String additionalOptions { get; set; }
-
-        /// <summary>
-        /// Bulk Request Id of the verification
-        /// </summary>
-        public Int32? bulkRequestId { get; set; }
-
-        /// <summary>
-        /// Priority of the verification request
-        /// </summary>
-        public Int32? priority { get; set; }
+        public Boolean? isDisabled { get; set; }
 
 
         /// <summary>

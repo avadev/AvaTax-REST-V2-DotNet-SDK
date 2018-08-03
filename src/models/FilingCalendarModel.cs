@@ -249,6 +249,11 @@ namespace Avalara.AvaTax.RestClient
         public Byte? prepayPercentage { get; set; }
 
         /// <summary>
+        /// If your company is required to make a prepayment that is designated by a fixed amount each period, please specify the amount here.
+        /// </summary>
+        public Decimal? fixedPrepaymentAmount { get; set; }
+
+        /// <summary>
         /// The type of tax to report on this return.
         /// </summary>
         public MatchingTaxType taxTypeId { get; set; }

@@ -157,42 +157,66 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
-        /// Optional: A list of contacts defined for this company. To fetch this list, add the query string "?$include=Contacts" to your URL.
+        /// Optional: A list of contacts defined for this company. To fetch this list, add the query string `?$include=Contacts` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<ContactModel> contacts { get; set; }
 
         /// <summary>
-        /// Optional: A list of items defined for this company. To fetch this list, add the query string "?$include=Items" to your URL.
+        /// Optional: A list of items defined for this company. To fetch this list, add the query string `?$include=Items` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<ItemModel> items { get; set; }
 
         /// <summary>
-        /// Optional: A list of locations defined for this company. To fetch this list, add the query string "?$include=Locations" to your URL.
+        /// Optional: A list of locations defined for this company. To fetch this list, add the query string `?$include=Locations` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<LocationModel> locations { get; set; }
 
         /// <summary>
-        /// Optional: A list of nexus defined for this company. To fetch this list, add the query string "?$include=Nexus" to your URL.
+        /// Optional: A list of nexus defined for this company. To fetch this list, add the query string `?$include=Nexus` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<NexusModel> nexus { get; set; }
 
         /// <summary>
-        /// Optional: A list of settings defined for this company. To fetch this list, add the query string "?$include=Settings" to your URL.
+        /// Optional: A list of settings defined for this company. To fetch this list, add the query string `?$include=Settings` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<SettingModel> settings { get; set; }
 
         /// <summary>
-        /// Optional: A list of tax codes defined for this company. To fetch this list, add the query string "?$include=TaxCodes" to your URL.
+        /// Optional: A list of tax codes defined for this company. To fetch this list, add the query string `?$include=TaxCodes` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<TaxCodeModel> taxCodes { get; set; }
 
         /// <summary>
-        /// Optional: A list of tax rules defined for this company. To fetch this list, add the query string "?$include=TaxRules" to your URL.
+        /// Optional: A list of tax rules defined for this company. To fetch this list, add the query string `?$include=TaxRules` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<TaxRuleModel> taxRules { get; set; }
 
         /// <summary>
-        /// Optional: A list of UPCs defined for this company. To fetch this list, add the query string "?$include=UPCs" to your URL.
+        /// Optional: A list of UPCs defined for this company. To fetch this list, add the query string `?$include=UPCs` to your URL.
+        /// 
+        /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
+        /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<UPCModel> upcs { get; set; }
 

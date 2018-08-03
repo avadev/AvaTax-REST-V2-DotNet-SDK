@@ -18,24 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ECMS record, used internally by AvaTax to track information about exemptions.
+    /// Use this object to provide an address and date range where your company does business.
+    /// This address will be used to determine what jurisdictions you should declare nexus and
+    /// calculate tax.
     /// </summary>
-    public class EcmsDetailModel
+    public class DeclareNexusByAddressModel
     {
         /// <summary>
-        /// Unique, system-assigned identifier of a ExemptCertDetail record.
+        /// The earliest date on which your company does business at this address. If you omit
+        /// a value in this field, nexus will be declared at the earliest possible date for this
+        /// jurisdiction.
         /// </summary>
-        public Int32 exemptCertDetailId { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// The calc_id associated with a certificate in CertCapture.
+        /// The date on which your company stopped doing business at this address, or empty if
+        /// your company has no plans to stop doing business at this address.
         /// </summary>
-        public Int32 exemptCertId { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// State FIPS
+        /// Specify the text case for the validated address result. If not specified, will return uppercase.
         /// </summary>
-        public String stateFips { get; set; }
+        public TextCase? textCase { get; set; }
+
+        /// <summary>
+        /// First line of the street address
+        /// </summary>
+        public String line1 { get; set; }
+
+        /// <summary>
+        /// Second line of the street address
+        /// </summary>
+        public String line2 { get; set; }
+
+        /// <summary>
+        /// Third line of the street address
+        /// </summary>
+        public String line3 { get; set; }
+
+        /// <summary>
+        /// City component of the address
+        /// </summary>
+        public String city { get; set; }
 
         /// <summary>
         /// Name or ISO 3166 code identifying the region within the country.
@@ -48,11 +73,6 @@ namespace Avalara.AvaTax.RestClient
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
-
-        /// <summary>
-        /// The customer Tax Id Number (tax_number) associated with a certificate. This is same as exemptionNo in Transactions.
-        /// </summary>
-        public String idNo { get; set; }
 
         /// <summary>
         /// Name or ISO 3166 code identifying the country.
@@ -68,25 +88,19 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
-        /// End date of this exempt certificate
+        /// Postal Code / Zip Code component of the address.
         /// </summary>
-        public DateTime? endDate { get; set; }
+        public String postalCode { get; set; }
 
         /// <summary>
-        /// The type of idNo (tax_number) associated with a certificate.
-        /// Example: Driver's Licence Number, Permit Number.
+        /// Geospatial latitude measurement, in Decimal Degrees floating point format.
         /// </summary>
-        public String idType { get; set; }
+        public Decimal? latitude { get; set; }
 
         /// <summary>
-        /// Is the tax code list an exculsion list?
+        /// Geospatial longitude measurement, in Decimal Degrees floating point format.
         /// </summary>
-        public Byte? isTaxCodeListExclusionList { get; set; }
-
-        /// <summary>
-        /// optional: list of tax code associated with this exempt certificate detail
-        /// </summary>
-        public List<EcmsDetailTaxCodeModel> taxCodes { get; set; }
+        public Decimal? longitude { get; set; }
 
 
         /// <summary>

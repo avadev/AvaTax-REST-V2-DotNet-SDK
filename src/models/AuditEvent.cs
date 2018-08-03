@@ -18,54 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a verification request using Skyscraper for a company
+    /// 
     /// </summary>
-    public class LoginVerificationInputModel
+    public class AuditEvent
     {
         /// <summary>
-        /// CompanyId that we are verifying the login information for
+        /// 
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int64? auditEventId { get; set; }
 
         /// <summary>
-        /// AccountId of the login verification
+        /// 
         /// </summary>
-        public Int32 accountId { get; set; }
+        public Int64? transactionId { get; set; }
 
         /// <summary>
-        /// Region of the verification request
+        /// 
         /// </summary>
-        public String region { get; set; }
+        public Byte[] auditEventLevelId { get; set; }
 
         /// <summary>
-        /// TaxFormCode for the verification request
+        /// 
         /// </summary>
-        public String taxFormCode { get; set; }
+        public DateTime? eventTimestamp { get; set; }
 
         /// <summary>
-        /// Username that we are using for verification
+        /// 
         /// </summary>
-        public String username { get; set; }
+        public String source { get; set; }
 
         /// <summary>
-        /// Password we are using for verification
+        /// 
         /// </summary>
-        public String password { get; set; }
+        public String summary { get; set; }
 
         /// <summary>
-        /// Additional options of the verification
+        /// 
         /// </summary>
-        public String additionalOptions { get; set; }
-
-        /// <summary>
-        /// Bulk Request Id of the verification
-        /// </summary>
-        public Int32? bulkRequestId { get; set; }
-
-        /// <summary>
-        /// Priority of the verification request
-        /// </summary>
-        public Int32? priority { get; set; }
+        public String details { get; set; }
 
 
         /// <summary>

@@ -169,6 +169,16 @@ namespace Avalara.AvaTax.RestClient
         public TaxType? taxType { get; set; }
 
         /// <summary>
+        /// The id of the tax subtype.
+        /// </summary>
+        public String taxSubTypeId { get; set; }
+
+        /// <summary>
+        /// The id of the tax type group.
+        /// </summary>
+        public String taxTypeGroupId { get; set; }
+
+        /// <summary>
         /// The name of the tax against which this tax amount was calculated.
         /// </summary>
         public String taxName { get; set; }
@@ -201,7 +211,7 @@ namespace Avalara.AvaTax.RestClient
         public RateType? rateType { get; set; }
 
         /// <summary>
-        /// Indicates the code of the rate type that was used to calculate this tax detail. Use `/api/v2/definitions/ratetypes` for a full list of rate type codes.
+        /// Indicates the code of the rate type that was used to calculate this tax detail. Use [ListRateTypesByCountry](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListRateTypesByCountry/) API for a full list of rate type codes.
         /// </summary>
         public String rateTypeCode { get; set; }
 

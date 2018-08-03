@@ -111,9 +111,59 @@ namespace Avalara.AvaTax.RestClient
         AvaBottle,
 
         /// <summary>
+        /// AvaComms
+        /// </summary>
+        AvaComms,
+
+        /// <summary>
+        /// AvaEWaste
+        /// </summary>
+        AvaEWaste,
+
+        /// <summary>
+        /// AvaExemptTier1
+        /// </summary>
+        AvaExemptTier1,
+
+        /// <summary>
+        /// AvaExemptTier2
+        /// </summary>
+        AvaExemptTier2,
+
+        /// <summary>
+        /// AvaExemptTier3
+        /// </summary>
+        AvaExemptTier3,
+
+        /// <summary>
+        /// AvaExemptTier4
+        /// </summary>
+        AvaExemptTier4,
+
+        /// <summary>
         /// MRSComplianceManager
         /// </summary>
         MRSComplianceManager,
+
+        /// <summary>
+        /// AvaBikeTax
+        /// </summary>
+        AvaBikeTax,
+
+        /// <summary>
+        /// AvaCheckoutBag
+        /// </summary>
+        AvaCheckoutBag,
+
+        /// <summary>
+        /// TFOCompliance
+        /// </summary>
+        TFOCompliance,
+
+        /// <summary>
+        /// Send Sales Rate file service
+        /// </summary>
+        SendSalesRateFile,
 
     }
 }

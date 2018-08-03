@@ -51,6 +51,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<IsoLocalizedName> localizedNames { get; set; }
 
+        /// <summary>
+        /// Whether or not this country requires a region in postal addresses.
+        /// </summary>
+        public Boolean? addressesRequireRegion { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

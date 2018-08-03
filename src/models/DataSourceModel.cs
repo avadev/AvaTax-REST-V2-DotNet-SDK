@@ -18,54 +18,74 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a verification request using Skyscraper for a company
+    /// Data source object
     /// </summary>
-    public class LoginVerificationInputModel
+    public class DataSourceModel
     {
         /// <summary>
-        /// CompanyId that we are verifying the login information for
+        /// ToDo
+        /// </summary>
+        public Int32? id { get; set; }
+
+        /// <summary>
+        /// ToDo
         /// </summary>
         public Int32 companyId { get; set; }
 
         /// <summary>
-        /// AccountId of the login verification
+        /// ToDo
         /// </summary>
-        public Int32 accountId { get; set; }
+        public String connectorId { get; set; }
 
         /// <summary>
-        /// Region of the verification request
+        /// ToDo
         /// </summary>
-        public String region { get; set; }
+        public String connectionId { get; set; }
 
         /// <summary>
-        /// TaxFormCode for the verification request
+        /// ToDo
         /// </summary>
-        public String taxFormCode { get; set; }
+        public Boolean? isEnabled { get; set; }
 
         /// <summary>
-        /// Username that we are using for verification
+        /// ToDo
         /// </summary>
-        public String username { get; set; }
+        public Boolean? isSynced { get; set; }
 
         /// <summary>
-        /// Password we are using for verification
+        /// ToDo
         /// </summary>
-        public String password { get; set; }
+        public Boolean? isAuthorized { get; set; }
 
         /// <summary>
-        /// Additional options of the verification
+        /// ToDo
         /// </summary>
-        public String additionalOptions { get; set; }
+        public DateTime? lastSyncedDate { get; set; }
 
         /// <summary>
-        /// Bulk Request Id of the verification
+        /// ToDo
         /// </summary>
-        public Int32? bulkRequestId { get; set; }
+        public Int32? createdUserId { get; set; }
 
         /// <summary>
-        /// Priority of the verification request
+        /// ToDo
         /// </summary>
-        public Int32? priority { get; set; }
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public DateTime? deletedDate { get; set; }
 
 
         /// <summary>

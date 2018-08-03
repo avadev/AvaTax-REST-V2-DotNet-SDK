@@ -208,6 +208,11 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? nonTaxableAccrualAmount { get; set; }
 
         /// <summary>
+        /// The total amount of taxable sales accrued in the current active period
+        /// </summary>
+        public Decimal? taxableAccrualAmount { get; set; }
+
+        /// <summary>
         /// The total amount of sales tax accrued in the current active period
         /// </summary>
         public Decimal? salesTaxAccrualAmount { get; set; }

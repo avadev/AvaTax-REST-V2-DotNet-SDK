@@ -64,6 +64,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String website { get; set; }
 
+        /// <summary>
+        /// Read Avalara's terms and conditions is necessary for a free trial account
+        /// </summary>
+        public Boolean haveReadAvalaraTermsAndConditions { get; set; }
+
+        /// <summary>
+        /// Accept Avalara's terms and conditions is necessary for a free trial
+        /// </summary>
+        public Boolean acceptAvalaraTermsAndConditions { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

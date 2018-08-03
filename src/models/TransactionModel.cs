@@ -43,7 +43,7 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? date { get; set; }
 
         /// <summary>
-        /// The date when payment was made on this transaction. By default, this should be the same as the date of the transaction.
+        /// DEPRECATED - The date when payment was made on this transaction. By default, this should be the same as the date of the transaction.
         /// </summary>
         public DateTime? paymentDate { get; set; }
 
@@ -104,7 +104,10 @@ namespace Avalara.AvaTax.RestClient
         public String customerCode { get; set; }
 
         /// <summary>
-        /// If this transaction was exempt, this field will contain the word "Exempt".
+        /// The customer Tax Id Number (tax_number) associated with a certificate - Sales tax calculation requests first determine if there is an applicable 
+        /// ECMS entry available, and will utilize it for exemption processing. If no applicable ECMS entry is available, the AvaTax service 
+        /// will determine if an Exemption Number field is populated or an Entity/Use Code is included in the sales tax calculation request, 
+        /// and will perform exemption processing using either of those two options.
         /// </summary>
         public String exemptNo { get; set; }
 
@@ -179,7 +182,15 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? totalDiscount { get; set; }
 
         /// <summary>
-        /// The total tax calculated for all lines in this transaction.
+        /// The total tax for all lines in this transaction.
+        /// 
+        /// If you used a `taxOverride` of type `taxAmount` for any lines in this transaction, this value 
+        /// may be different than the amount of tax calculated by AvaTax. The amount of tax calculated by
+        /// AvaTax will be stored in the `totalTaxCalculated` field, whereas this field will contain the
+        /// total tax that was charged on the transaction.
+        /// 
+        /// You can compare the `totalTax` and `totalTaxCalculated` fields to check for any discrepancies
+        /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
         public Decimal? totalTax { get; set; }
 
@@ -189,7 +200,14 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? totalTaxable { get; set; }
 
         /// <summary>
-        /// If a tax override was applied to this transaction, indicates the amount of tax Avalara calculated for the transaction.
+        /// The amount of tax that AvaTax calculated for the transaction.
+        /// 
+        /// If you used a `taxOverride` of type `taxAmount` for any lines in this transaction, this value 
+        /// will still represent the amount that AvaTax calculated for this transaction, although the field
+        /// `totalTax` will be the total amount of tax after all overrides are applied.
+        /// 
+        /// You can compare the `totalTax` and `totalTaxCalculated` fields to check for any discrepancies
+        /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
         public Decimal? totalTaxCalculated { get; set; }
 
@@ -326,6 +344,11 @@ namespace Avalara.AvaTax.RestClient
         /// List of informational and warning messages regarding this API call. These messages are only relevant to the current API call.
         /// </summary>
         public List<AvaTaxMessage> messages { get; set; }
+
+        /// <summary>
+        /// Invoice messages associated with this document. Currently, this stores legally-required VAT messages.
+        /// </summary>
+        public List<InvoiceMessageModel> invoiceMessages { get; set; }
 
 
         /// <summary>

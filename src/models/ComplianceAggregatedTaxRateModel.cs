@@ -18,49 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a list of statuses of returns available in skyscraper
+    /// A model for aggregated rates.
     /// </summary>
-    public class SkyscraperStatusModel
+    public class ComplianceAggregatedTaxRateModel
     {
         /// <summary>
-        /// The specific name of the returns available in skyscraper
+        /// The compontent rate.
         /// </summary>
-        public String name { get; set; }
+        public Decimal? rate { get; set; }
 
         /// <summary>
-        /// The tax form codes available to file through skyscrper
+        /// The stack rate based on the aggregation method.
         /// </summary>
-        public List<String> taxFormCodes { get; set; }
+        public Decimal? stackRate { get; set; }
 
         /// <summary>
-        /// The country of the returns
+        /// The date this rate is starts to take effect.
         /// </summary>
-        public String country { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// The Scraper type
+        /// The date this rate is no longer active.
         /// </summary>
-        public ScraperType? scraperType { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// Indicates if the return is currently available
+        /// The tax type of the rate.
         /// </summary>
-        public Boolean? isAvailable { get; set; }
+        public String taxTypeId { get; set; }
 
         /// <summary>
-        /// The expected response time of the call
+        /// The rate type of the rate.
         /// </summary>
-        public String expectedResponseTime { get; set; }
-
-        /// <summary>
-        /// Message on the returns
-        /// </summary>
-        public String message { get; set; }
-
-        /// <summary>
-        /// A list of required fields to file
-        /// </summary>
-        public List<requiredFilingCalendarDataFieldModel> requiredFilingCalendarDataFields { get; set; }
+        public String rateTypeId { get; set; }
 
 
         /// <summary>

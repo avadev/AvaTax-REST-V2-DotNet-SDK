@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this tax type group.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
         /// The unique human readable Id of this tax type group.
@@ -36,6 +36,31 @@ namespace Avalara.AvaTax.RestClient
         /// The description of this tax type group.
         /// </summary>
         public String description { get; set; }
+
+        /// <summary>
+        /// If this tax type group requires a subscription, this contains the ID number of the subscription type required to use it.
+        /// </summary>
+        public Int32? subscriptionTypeId { get; set; }
+
+        /// <summary>
+        /// If this tax type group requires a subscription, this contains the friendly name of the subscription type required to use it.
+        /// </summary>
+        public String subscriptionDescription { get; set; }
+
+        /// <summary>
+        /// The name of the tab in the AvaTax website corresponding to this tax type group.
+        /// </summary>
+        public String tabName { get; set; }
+
+        /// <summary>
+        /// True if this tax type group is displayed in the user interface of the AvaTax website.
+        /// </summary>
+        public Boolean? showColumn { get; set; }
+
+        /// <summary>
+        /// The order this record is being returned in the response
+        /// </summary>
+        public Int32? displaySequence { get; set; }
 
 
         /// <summary>

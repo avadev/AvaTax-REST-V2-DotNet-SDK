@@ -68,7 +68,7 @@ namespace Avalara.AvaTax.RestClient
         public FormTypeId? formTypeId { get; set; }
 
         /// <summary>
-        /// 
+        /// The type of Filing option
         /// </summary>
         public FilingOptionTypeId? filingOptionTypeId { get; set; }
 
@@ -83,7 +83,7 @@ namespace Avalara.AvaTax.RestClient
         public Byte? dueDay { get; set; }
 
         /// <summary>
-        /// 
+        /// The type of E-file due date.
         /// </summary>
         public DueDateTypeId? efileDueDateTypeId { get; set; }
 

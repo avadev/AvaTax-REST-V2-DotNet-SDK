@@ -138,11 +138,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        CannotChangeCompanyCode,
-
-        /// <summary>
-        /// 
-        /// </summary>
         DateFormatError,
 
         /// <summary>
@@ -283,7 +278,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidAdjustmentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
         DeleteInformation,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OutOfRange,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnspecifiedTimeZone,
 
         /// <summary>
         /// 
@@ -623,6 +633,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        RequestTooLarge,
+
+        /// <summary>
+        /// 
+        /// </summary>
         EcmsDisabled,
 
         /// <summary>
@@ -674,6 +689,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         TransactionAlreadyCancelled,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        QueryParameterOutOfRange,
 
         /// <summary>
         /// Batch errors
@@ -778,7 +798,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AddressIncomplete,
+        InvalidAddress,
 
         /// <summary>
         /// 
@@ -818,12 +838,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        InvalidAddress,
+        InvalidPostalCode,
+
+        /// <summary>
+        /// Subscription error codes
+        /// </summary>
+        InvalidSubscriptionDescription,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidPostalCode,
+        InvalidSubscriptionTypeId,
 
         /// <summary>
         /// Represents a malformed document fetch command
@@ -931,6 +956,11 @@ namespace Avalara.AvaTax.RestClient
         MustUseCreateTransaction,
 
         /// <summary>
+        /// 
+        /// </summary>
+        MustAcceptTermsAndConditions,
+
+        /// <summary>
         /// Filing Calendar Error Codes
         /// </summary>
         FilingCalendarCannotBeDeleted,
@@ -949,16 +979,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         OverlappingFilingCalendar,
-
-        /// <summary>
-        /// Location error codes
-        /// </summary>
-        QuestionNotNeededForThisAddress,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        QuestionNotValidForThisAddress,
 
         /// <summary>
         /// Create or update transaction error codes
@@ -1066,6 +1086,36 @@ namespace Avalara.AvaTax.RestClient
         AccountNotProvisioned,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidRequestContentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExemptionPaginationLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExemptionSortLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CustomerCantBeBothShipToAndBillTo,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BillToCustomerExpected,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShipToCustomerExpected,
+
+        /// <summary>
         /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
@@ -1136,16 +1186,6 @@ namespace Avalara.AvaTax.RestClient
         CommsConfigClientIdBadValue,
 
         /// <summary>
-        /// BizTech API error codes
-        /// </summary>
-        BizTechCustomerAccountFailure,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        BizTechOpportunityCreationFailure,
-
-        /// <summary>
         /// Account Activate error codes
         /// </summary>
         AccountInNewStatusException,
@@ -1189,6 +1229,61 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         NexusChildDateMismatch,
+
+        /// <summary>
+        /// Advanced rule errors
+        /// </summary>
+        AdvancedRuleBadScript,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleBadCsvTable,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleRequestRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleResponseRuleError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRuleNotApproved,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentStatusToAddOrDeleteLines,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxRuleRequiresNexus,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UPCCodeNotUnique,
+
+        /// <summary>
+        /// SendSales API errors
+        /// </summary>
+        UnsupportedFileFormat,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnsupportedOutputFileType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ConcurrentApiCallIsNotAllowed,
 
     }
 }
