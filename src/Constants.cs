@@ -15,6 +15,11 @@ namespace Avalara.AvaTax.RestClient
         public static readonly string AVALARA_CLIENT_HEADER = "X-Avalara-Client";
 
         /// <summary>
+        /// Header used when creating a transaction with the connectionId of the extractor.
+        /// </summary>
+        public static readonly string AVALARA_EXTRACTOR_HEADER = "X-Avalara-Extractor";
+
+        /// <summary>
         /// Mime type for JSON
         /// </summary>
         public static readonly string JSON_MIME_TYPE = "application/json";
