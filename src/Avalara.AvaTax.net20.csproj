@@ -94,6 +94,7 @@
     <Compile Include="enums\NexusTypeId.cs" />
     <Compile Include="enums\NoticeCustomerType.cs" />
     <Compile Include="enums\NoticePriorityId.cs" />
+    <Compile Include="enums\NotificationSeverityLevel.cs" />
     <Compile Include="enums\OutletTypeId.cs" />
     <Compile Include="enums\ParameterBagDataType.cs" />
     <Compile Include="enums\PasswordStatusId.cs" />
@@ -145,6 +146,8 @@
     <Compile Include="models\AdvancedRuleScriptModel.cs" />
     <Compile Include="models\AdvancedRuleTableModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
+    <Compile Include="models\AuditEvent.cs" />
+    <Compile Include="models\AuditModel.cs" />
     <Compile Include="models\AuditMultiDocumentModel.cs" />
     <Compile Include="models\AuditTransactionModel.cs" />
     <Compile Include="models\AvaFileFormModel.cs" />
@@ -169,6 +172,10 @@
     <Compile Include="models\CompanyInitializationModel.cs" />
     <Compile Include="models\CompanyModel.cs" />
     <Compile Include="models\CompanyReturnSettingModel.cs" />
+    <Compile Include="models\ComplianceAggregatedTaxRateModel.cs" />
+    <Compile Include="models\ComplianceJurisdictionModel.cs" />
+    <Compile Include="models\ComplianceJurisdictionRateModel.cs" />
+    <Compile Include="models\ComplianceTaxRateModel.cs" />
     <Compile Include="models\ContactModel.cs" />
     <Compile Include="models\CoordinateInfo.cs" />
     <Compile Include="models\CoverLetterModel.cs" />
@@ -184,6 +191,7 @@
     <Compile Include="models\CycleEditOptionModel.cs" />
     <Compile Include="models\CycleExpireModel.cs" />
     <Compile Include="models\CycleExpireOptionModel.cs" />
+    <Compile Include="models\DataSourceModel.cs" />
     <Compile Include="models\DeclareNexusByAddressModel.cs" />
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
@@ -261,6 +269,8 @@
     <Compile Include="models\NoticeRootCauseModel.cs" />
     <Compile Include="models\NoticeStatusModel.cs" />
     <Compile Include="models\NoticeTypeModel.cs" />
+    <Compile Include="models\NotificationModel.cs" />
+    <Compile Include="models\OfferModel.cs" />
     <Compile Include="models\OriginalApiRequestResponseModel.cs" />
     <Compile Include="models\ParameterModel.cs" />
     <Compile Include="models\PasswordChangeModel.cs" />
@@ -298,6 +308,8 @@
     <Compile Include="models\TaxCodeTypesModel.cs" />
     <Compile Include="models\TaxOverrideModel.cs" />
     <Compile Include="models\TaxRateModel.cs" />
+    <Compile Include="models\TaxRegionJurisdictionModel.cs" />
+    <Compile Include="models\TaxRegionModel.cs" />
     <Compile Include="models\TaxRuleModel.cs" />
     <Compile Include="models\TaxSubTypeModel.cs" />
     <Compile Include="models\TaxTypeGroupModel.cs" />

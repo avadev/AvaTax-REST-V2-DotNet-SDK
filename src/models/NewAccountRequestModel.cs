@@ -33,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         public String offer { get; set; }
 
         /// <summary>
+        /// The id associated with the connector
+        /// </summary>
+        public String connectorId { get; set; }
+
+        /// <summary>
         /// If your Avalara business development representative requests, please provide the campaign ID associated with your
         /// signup process. This campaign identifier helps Avalara match users to the context in which they learned about the product
         /// to help improve the accuracy of our messaging.

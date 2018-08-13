@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.5.1-208
+ * @version    18.7.2-226
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.5.1-208"; } }
+        public static string API_VERSION { get { return "18.7.2-226"; } }
 
 #region Methods
 
@@ -88,6 +88,39 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve audit history for an account.
+        /// </summary>
+        /// <remarks>
+        /// Retrieve audit history for an account.
+        /// 
+        /// Audit history provides you with the data necessary to report and investigate calls made from your account.
+        /// 
+        /// When specifying a start and end datetime, please include a valid timezone indicator, such as the "Z" present in the examples for the start and end query parameters.
+        /// You can learn more about valid time zone designators at https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators.
+        /// 
+        /// For performance reasons, there are are limits to the request size. Currently, the per-call limits are a one hour duration, 50 MB of data, and 30 records at a time. 
+        /// 
+        /// Due to the volume of traffic from the system, audit history is not guaranteed to be immediately available. In some cases, this could even take an hour or more.
+        /// If you receive no results where results are expected, this is likely an indication that the data is not yet available.
+        /// </remarks>
+        /// <param name="id">The ID of the account you wish to audit.</param>
+        /// <param name="start">The start datetime of audit history you with to retrieve, e.g. "2018-06-08T17:00:00Z". Defaults to the past 15 minutes.</param>
+        /// <param name="end">The end datetime of audit history you with to retrieve, e.g. "2018-06-08T17:15:00Z. Defaults to the current time. Maximum of an hour after the start time.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        public FetchResult<AuditModel> AuditAccount(Int32 id, DateTime? start, DateTime? end, Int32? top, Int32? skip)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/audit");
+            path.ApplyField("id", id);
+            path.AddQuery("start", start);
+            path.AddQuery("end", end);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            return RestCall<FetchResult<AuditModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve a single account
         /// </summary>
         /// <remarks>
@@ -131,6 +164,40 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
             return RestCall<List<AccountConfigurationModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all accounts
+        /// </summary>
+        /// <remarks>
+        /// List all account objects that can be seen by the current user.
+        /// 
+        /// This API lists all accounts you are allowed to see. In general, most users will only be able to see their own account.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Subscriptions
+        /// * Users
+        ///  
+        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
+        /// </remarks>
+        /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<AccountModel> QueryAccounts(String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts");
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<AccountModel>>("GET", path, null);
         }
 
 
@@ -1040,7 +1107,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve the list of attributes that are linked to this certificate.
         /// 
         /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
-        /// certificate at any time. The full list of defined attributes may be found using `/api/v2/definitions/certificateattributes`.
+        /// certificate at any time. The full list of defined attributes may be found using [ListCertificateAttributes](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListCertificateAttributes/) API.
         /// 
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
@@ -1556,7 +1623,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple company objects.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        /// 
+        /// A `company` represents a single corporation or individual that is registered to handle transactional taxes.
+        /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
@@ -1889,6 +1958,24 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             return RestCall<FetchResult<CertificateModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="code"></param>
+        /// <param name="model"></param>
+        public CustomerModel LinkShipToCustomersToBillCustomer(Int32 companyId, String code, LinkCustomersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/billto/{code}/shipto/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("code", code);
+            return RestCall<CustomerModel>("POST", path, model);
         }
 
 
@@ -3694,7 +3781,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
         /// <param name="id">The unique ID of the filing calendar object</param>
-        public CycleExpireModel CycleSafeExpiration(Int32 companyId, Int32 id)
+        public CycleExpireModel CycleSafeExpiration(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
             path.ApplyField("companyId", companyId);
@@ -5810,28 +5897,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Delete a single notice.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this notice.</param>
-        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
-        /// <param name="commentDetailsId">The ID of the comment you wish to delete.</param>
-        public List<ErrorDetail> CommentDetailsDelete(Int32 companyId, Int32 id, Int32 commentDetailsId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/commentdetails/{commentdetailsid}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.ApplyField("commentDetailsId", commentDetailsId);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
         /// Create a new notice comment.
         /// </summary>
         /// <remarks>
@@ -5940,6 +6005,51 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
+        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
+        /// <param name="commentDetailsId">The ID of the comment you wish to delete.</param>
+        public List<ErrorDetail> DeleteCommentDetails(Int32 companyId, Int32 id, Int32 commentDetailsId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/commentdetails/{commentdetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.ApplyField("commentDetailsId", commentDetailsId);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single notice.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
+        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
+        /// <param name="financeDetailsId">The ID of the finance detail you wish to delete.</param>
+        public List<ErrorDetail> DeleteFinanceDetails(Int32 companyId, Int32 id, Int32 financeDetailsId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails/{financedetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.ApplyField("financeDetailsId", financeDetailsId);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single notice.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
         /// Mark the existing notice object at this URL as deleted.
         /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
         /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
@@ -6014,29 +6124,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCallFile("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Delete a single notice.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
-        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this notice.</param>
-        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
-        /// <param name="financeDetailsId">The ID of the finance detail you wish to delete.</param>
-        public List<ErrorDetail> financedetailsdelete(Int32 companyId, Int32 id, Int32 financeDetailsId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails/{financedetailsid}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.ApplyField("financeDetailsId", financeDetailsId);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -6202,6 +6289,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update a single notice finance detail.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that this notice finance detail belongs to.</param>
+        /// <param name="noticeid">The ID of the notice finance detail you wish to update.</param>
+        /// <param name="financeDetailsId">The ID of the finance detail you wish to delete.</param>
+        /// <param name="model">The notice finance detail object you wish to update.</param>
+        public NoticeFinanceModel UpdateFinanceDetails(Int32 companyId, Int32 noticeid, Int32 financeDetailsId, NoticeFinanceModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeid}/financedetails/{financedetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeid", noticeid);
+            path.ApplyField("financeDetailsId", financeDetailsId);
+            return RestCall<NoticeFinanceModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Update a single notice.
         /// </summary>
         /// <remarks>
@@ -6225,6 +6334,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update a single notice comment.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that this notice comment belongs to.</param>
+        /// <param name="noticeid">The ID of the notice you wish to update.</param>
+        /// <param name="commentDetailsId">The ID of the comment you wish to update.</param>
+        /// <param name="model">The notice comment object you wish to update.</param>
+        public NoticeCommentModel UpdateNoticeComments(Int32 companyId, Int32 noticeid, Int32 commentDetailsId, NoticeCommentModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeid}/commentdetails/{commentdetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeid", noticeid);
+            path.ApplyField("commentDetailsId", commentDetailsId);
+            return RestCall<NoticeCommentModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve a single attachment
         /// </summary>
         /// <remarks>
@@ -6238,6 +6369,85 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
             path.ApplyField("companyId", companyId);
             return RestCallFile("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Mark a single notification as dismissed.
+        /// </summary>
+        /// <remarks>
+        /// Marks the notification identified by this URL as dismissed.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// 
+        /// When you dismiss a notification, the notification will track the user and time when it was
+        /// dismissed. You can then later review which employees of your company dismissed notifications to
+        /// determine if they were resolved appropriately.
+        /// </remarks>
+        /// <param name="id">The id of the notification you wish to mark as dismissed.</param>
+        public NotificationModel DismissNotification(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}/dismiss");
+            path.ApplyField("id", id);
+            return RestCall<NotificationModel>("PUT", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single notification.
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single notification by its unique ID number.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// </remarks>
+        /// <param name="id">The id of the notification to retrieve.</param>
+        public NotificationModel GetNotification(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}");
+            path.ApplyField("id", id);
+            return RestCall<NotificationModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all notifications.
+        /// </summary>
+        /// <remarks>
+        /// List all notifications.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// 
+        /// You may search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NotificationModel> ListNotifications(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<NotificationModel>>("GET", path, null);
         }
 
 
@@ -6265,6 +6475,24 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
             return RestCall<NewAccountModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Request a new entitilement to an existing customer
+        /// </summary>
+        /// <remarks>
+        /// This API is for use by partner onboarding services customers only. This will allow the partners to allow
+        /// the add new entitlement to an existing customer
+        /// </remarks>
+        /// <param name="id">The avatax account id of the customer</param>
+        /// <param name="offer">The offer to be added to an already existing customer</param>
+        public OfferModel RequestNewEntitlement(Int32 id, String offer)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/entitlements/{offer}");
+            path.ApplyField("id", id);
+            path.ApplyField("offer", offer);
+            return RestCall<OfferModel>("POST", path, null);
         }
 
 
@@ -6306,6 +6534,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create new notifications.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Create a single notification.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// </remarks>
+        /// <param name="model">The notifications you wish to create.</param>
+        public List<NotificationModel> CreateNotifications(List<NotificationModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications");
+            return RestCall<List<NotificationModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new subscription
         /// </summary>
         /// <remarks>
@@ -6340,6 +6591,30 @@ namespace Avalara.AvaTax.RestClient
         public List<ErrorDetail> DeleteAccount(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single notification.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Delete the existing notification identified by this URL.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// </remarks>
+        /// <param name="id">The id of the notification you wish to delete.</param>
+        public List<ErrorDetail> DeleteNotification(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
@@ -6386,40 +6661,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve all accounts
-        /// </summary>
-        /// <remarks>
-        /// # For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// 
-        /// Get multiple account objects.
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
-        ///  
-        /// * Subscriptions
-        /// * Users
-        ///  
-        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
-        /// </remarks>
-        /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<AccountModel> QueryAccounts(String include, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts");
-            path.AddQuery("$include", include);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<AccountModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
         /// Reset a user's password programmatically
         /// </summary>
         /// <remarks>
@@ -6456,6 +6697,31 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             return RestCall<AccountModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update a single notification.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Replaces the notification identified by this URL with a new notification.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// </remarks>
+        /// <param name="id">The id of the notification you wish to update.</param>
+        /// <param name="model">The notification object you wish to update.</param>
+        public NotificationModel UpdateNotification(Int64 id, NotificationModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}");
+            path.ApplyField("id", id);
+            return RestCall<NotificationModel>("PUT", path, model);
         }
 
 
@@ -7012,8 +7278,12 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
         /// 
-        /// This file contains tax rates and rules for items and locations that can be used
-        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
+        /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
+        /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
+        /// then use `CreateItems()` to create an item that uses the custom tax code.
         /// 
         /// This data file can be customized for specific partner devices and usage conditions.
         /// 
@@ -7038,8 +7308,12 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
         /// 
-        /// This file contains tax rates and rules for all items for a single location. Data from this API
-        /// can be used to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
+        /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
+        /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
+        /// then use `CreateItems()` to create an item that uses the custom tax code.
         /// 
         /// This data file can be customized for specific partner devices and usage conditions.
         /// 
@@ -7113,7 +7387,7 @@ namespace Avalara.AvaTax.RestClient
         public FileResult DownloadTaxRatesByZipCode(DateTime date, String region)
         {
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
-            path.ApplyField("date", date);
+            path.ApplyField("date", date.ToString("o"));
             path.AddQuery("region", region);
             return RestCallFile("GET", path, null);
         }
@@ -8337,6 +8611,39 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve audit history for an account.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve audit history for an account.
+        /// 
+        /// Audit history provides you with the data necessary to report and investigate calls made from your account.
+        /// 
+        /// When specifying a start and end datetime, please include a valid timezone indicator, such as the "Z" present in the examples for the start and end query parameters.
+        /// You can learn more about valid time zone designators at https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators.
+        /// 
+        /// For performance reasons, there are are limits to the request size. Currently, the per-call limits are a one hour duration, 50 MB of data, and 30 records at a time. 
+        /// 
+        /// Due to the volume of traffic from the system, audit history is not guaranteed to be immediately available. In some cases, this could even take an hour or more.
+        /// If you receive no results where results are expected, this is likely an indication that the data is not yet available.;
+        /// </remarks>
+        /// <param name="id">The ID of the account you wish to audit.</param>
+        /// <param name="start">The start datetime of audit history you with to retrieve, e.g. "2018-06-08T17:00:00Z". Defaults to the past 15 minutes.</param>
+        /// <param name="end">The end datetime of audit history you with to retrieve, e.g. "2018-06-08T17:15:00Z. Defaults to the current time. Maximum of an hour after the start time.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        public async Task<FetchResult<AuditModel>> AuditAccountAsync(Int32 id, DateTime? start, DateTime? end, Int32? top, Int32? skip)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/audit");
+            path.ApplyField("id", id);
+            path.AddQuery("start", start);
+            path.AddQuery("end", end);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            return await RestCallAsync<FetchResult<AuditModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve a single account;
         /// </summary>
         /// <remarks>
@@ -8380,6 +8687,40 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
             return await RestCallAsync<List<AccountConfigurationModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all accounts;
+        /// </summary>
+        /// <remarks>
+        /// List all account objects that can be seen by the current user.
+        /// 
+        /// This API lists all accounts you are allowed to see. In general, most users will only be able to see their own account.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Subscriptions
+        /// * Users
+        ///  
+        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .;
+        /// </remarks>
+        /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<AccountModel>> QueryAccountsAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts");
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<AccountModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9289,7 +9630,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve the list of attributes that are linked to this certificate.
         /// 
         /// A certificate may have multiple attributes that control its behavior. You may link or unlink attributes to a
-        /// certificate at any time. The full list of defined attributes may be found using `/api/v2/definitions/certificateattributes`.
+        /// certificate at any time. The full list of defined attributes may be found using [ListCertificateAttributes](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListCertificateAttributes/) API.
         /// 
         /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
         /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
@@ -9805,7 +10146,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple company objects.
-        /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
+        /// 
+        /// A `company` represents a single corporation or individual that is registered to handle transactional taxes.
+        /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
@@ -10138,6 +10481,24 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// ToDo;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="code"></param>
+        /// <param name="model"></param>
+        public async Task<CustomerModel> LinkShipToCustomersToBillCustomerAsync(Int32 companyId, String code, LinkCustomersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/billto/{code}/shipto/link");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("code", code);
+            return await RestCallAsync<CustomerModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -11943,7 +12304,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
         /// <param name="id">The unique ID of the filing calendar object</param>
-        public async Task<CycleExpireModel> CycleSafeExpirationAsync(Int32 companyId, Int32 id)
+        public async Task<CycleExpireModel> CycleSafeExpirationAsync(Int32 companyId, Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
             path.ApplyField("companyId", companyId);
@@ -14059,28 +14420,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Delete a single notice.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this notice.</param>
-        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
-        /// <param name="commentDetailsId">The ID of the comment you wish to delete.</param>
-        public async Task<List<ErrorDetail>> CommentDetailsDeleteAsync(Int32 companyId, Int32 id, Int32 commentDetailsId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/commentdetails/{commentdetailsid}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.ApplyField("commentDetailsId", commentDetailsId);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
         /// Create a new notice comment.;
         /// </summary>
         /// <remarks>
@@ -14189,6 +14528,51 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is available by invitation only.
+        /// 'Notice comments' are updates by the notice team on the work to be done and that has been done so far on a notice.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
+        /// <param name="commentDetailsId">The ID of the comment you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteCommentDetailsAsync(Int32 companyId, Int32 id, Int32 commentDetailsId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/commentdetails/{commentdetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.ApplyField("commentDetailsId", commentDetailsId);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single notice.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
+        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
+        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
+        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this notice.</param>
+        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
+        /// <param name="financeDetailsId">The ID of the finance detail you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteFinanceDetailsAsync(Int32 companyId, Int32 id, Int32 financeDetailsId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails/{financedetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            path.ApplyField("financeDetailsId", financeDetailsId);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single notice.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
         /// Mark the existing notice object at this URL as deleted.
         /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
         /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
@@ -14263,29 +14647,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete a single notice.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 'Notice finance details' is the categorical breakdown of the total charge levied by the tax authority on our customer,
-        /// as broken down in our "notice log" found in Workflow. Main examples of the categories are 'Tax Due', 'Interest', 'Penalty', 'Total Abated'.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this notice.</param>
-        /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
-        /// <param name="financeDetailsId">The ID of the finance detail you wish to delete.</param>
-        public async Task<List<ErrorDetail>> financedetailsdeleteAsync(Int32 companyId, Int32 id, Int32 financeDetailsId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{id}/financedetails/{financedetailsid}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.ApplyField("financeDetailsId", financeDetailsId);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -14451,6 +14812,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update a single notice finance detail.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that this notice finance detail belongs to.</param>
+        /// <param name="noticeid">The ID of the notice finance detail you wish to update.</param>
+        /// <param name="financeDetailsId">The ID of the finance detail you wish to delete.</param>
+        /// <param name="model">The notice finance detail object you wish to update.</param>
+        public async Task<NoticeFinanceModel> UpdateFinanceDetailsAsync(Int32 companyId, Int32 noticeid, Int32 financeDetailsId, NoticeFinanceModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeid}/financedetails/{financedetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeid", noticeid);
+            path.ApplyField("financeDetailsId", financeDetailsId);
+            return await RestCallAsync<NoticeFinanceModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Update a single notice.;
         /// </summary>
         /// <remarks>
@@ -14474,6 +14857,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update a single notice comment.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that this notice comment belongs to.</param>
+        /// <param name="noticeid">The ID of the notice you wish to update.</param>
+        /// <param name="commentDetailsId">The ID of the comment you wish to update.</param>
+        /// <param name="model">The notice comment object you wish to update.</param>
+        public async Task<NoticeCommentModel> UpdateNoticeCommentsAsync(Int32 companyId, Int32 noticeid, Int32 commentDetailsId, NoticeCommentModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/{noticeid}/commentdetails/{commentdetailsid}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("noticeid", noticeid);
+            path.ApplyField("commentDetailsId", commentDetailsId);
+            return await RestCallAsync<NoticeCommentModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve a single attachment;
         /// </summary>
         /// <remarks>
@@ -14487,6 +14892,85 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/notices/files/attachment");
             path.ApplyField("companyId", companyId);
             return await RestCallAsync<FileResult>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Mark a single notification as dismissed.;
+        /// </summary>
+        /// <remarks>
+        /// Marks the notification identified by this URL as dismissed.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// 
+        /// When you dismiss a notification, the notification will track the user and time when it was
+        /// dismissed. You can then later review which employees of your company dismissed notifications to
+        /// determine if they were resolved appropriately.;
+        /// </remarks>
+        /// <param name="id">The id of the notification you wish to mark as dismissed.</param>
+        public async Task<NotificationModel> DismissNotificationAsync(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}/dismiss");
+            path.ApplyField("id", id);
+            return await RestCallAsync<NotificationModel>("PUT", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single notification.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single notification by its unique ID number.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.;
+        /// </remarks>
+        /// <param name="id">The id of the notification to retrieve.</param>
+        public async Task<NotificationModel> GetNotificationAsync(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<NotificationModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all notifications.;
+        /// </summary>
+        /// <remarks>
+        /// List all notifications.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.
+        /// 
+        /// You may search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NotificationModel>> ListNotificationsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<NotificationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -14514,6 +14998,24 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
             return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Request a new entitilement to an existing customer;
+        /// </summary>
+        /// <remarks>
+        /// This API is for use by partner onboarding services customers only. This will allow the partners to allow
+        /// the add new entitlement to an existing customer;
+        /// </remarks>
+        /// <param name="id">The avatax account id of the customer</param>
+        /// <param name="offer">The offer to be added to an already existing customer</param>
+        public async Task<OfferModel> RequestNewEntitlementAsync(Int32 id, String offer)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/entitlements/{offer}");
+            path.ApplyField("id", id);
+            path.ApplyField("offer", offer);
+            return await RestCallAsync<OfferModel>("POST", path, null).ConfigureAwait(false);
         }
 
 
@@ -14555,6 +15057,29 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create new notifications.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Create a single notification.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.;
+        /// </remarks>
+        /// <param name="model">The notifications you wish to create.</param>
+        public async Task<List<NotificationModel>> CreateNotificationsAsync(List<NotificationModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications");
+            return await RestCallAsync<List<NotificationModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Create a new subscription;
         /// </summary>
         /// <remarks>
@@ -14589,6 +15114,30 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<ErrorDetail>> DeleteAccountAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single notification.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Delete the existing notification identified by this URL.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.;
+        /// </remarks>
+        /// <param name="id">The id of the notification you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteNotificationAsync(Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
@@ -14635,40 +15184,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieve all accounts;
-        /// </summary>
-        /// <remarks>
-        /// # For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        /// 
-        /// Get multiple account objects.
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
-        ///  
-        /// * Subscriptions
-        /// * Users
-        ///  
-        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .;
-        /// </remarks>
-        /// <param name="include">A comma separated list of objects to fetch underneath this account. Any object with a URL path underneath this account can be fetched by specifying its name.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with $skip to provide pagination for large datasets.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with $top to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<AccountModel>> QueryAccountsAsync(String include, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts");
-            path.AddQuery("$include", include);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<AccountModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
         /// Reset a user's password programmatically;
         /// </summary>
         /// <remarks>
@@ -14705,6 +15220,31 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             return await RestCallAsync<AccountModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a single notification.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// Replaces the notification identified by this URL with a new notification.
+        /// 
+        /// A notification is a message from Avalara that may have relevance to your business. You may want
+        /// to regularly review notifications and then dismiss them when you are certain that you have addressed
+        /// any relevant concerns raised by this notification.
+        /// 
+        /// An example of a notification would be a message about new software, or a change to AvaTax that may
+        /// affect you, or a potential issue with your company's tax profile.;
+        /// </remarks>
+        /// <param name="id">The id of the notification you wish to update.</param>
+        /// <param name="model">The notification object you wish to update.</param>
+        public async Task<NotificationModel> UpdateNotificationAsync(Int64 id, NotificationModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/notifications/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<NotificationModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -15261,8 +15801,12 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
         /// 
-        /// This file contains tax rates and rules for items and locations that can be used
-        /// to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
+        /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
+        /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
+        /// then use `CreateItems()` to create an item that uses the custom tax code.
         /// 
         /// This data file can be customized for specific partner devices and usage conditions.
         /// 
@@ -15287,8 +15831,12 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
         /// 
-        /// This file contains tax rates and rules for all items for a single location. Data from this API
-        /// can be used to correctly calculate tax in the event a point-of-sale device is not able to reach AvaTax.
+        /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
+        /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
+        /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
+        /// then use `CreateItems()` to create an item that uses the custom tax code.
         /// 
         /// This data file can be customized for specific partner devices and usage conditions.
         /// 

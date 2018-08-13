@@ -85,6 +85,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isSingleCertificate { get; set; }
 
         /// <summary>
+        /// The exemption reason that CertCapture audit/internal logic identifies for created certificate.
+        /// </summary>
+        public ExemptionReasonModel validatedExemptionReason { get; set; }
+
+        /// <summary>
         /// The exemption reason associated with this certificate. For example, the reason code for exemption
         /// for purposes of resale is `RESALE`.
         ///  

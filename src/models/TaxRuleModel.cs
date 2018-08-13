@@ -35,12 +35,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the tax code for this rule.
         /// When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
+        /// 
+        /// If both `taxCodeId` and `taxCode` are null, this tax rule will apply to all tax codes.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
         /// The code string of the tax code for this rule.
         /// When creating or updating a tax rule, you may specify either the taxCodeId value or the taxCode value.
+        /// 
+        /// If both `taxCodeId` and `taxCode` are null, this tax rule will apply to all tax codes.
         /// </summary>
         public String taxCode { get; set; }
 
@@ -72,12 +76,14 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// DEPRECATED - The type of customer usage to which this rule applies.
-        /// Please use entityUseCode instead.
+        /// Please use `entityUseCode` instead.
         /// </summary>
         public String customerUsageType { get; set; }
 
         /// <summary>
         /// The type of customer usage to which this rule applies.
+        /// 
+        /// For a full list of entity use codes, see the `ListEntityUseCodes` API.
         /// </summary>
         public String entityUseCode { get; set; }
 
@@ -92,7 +98,7 @@ namespace Avalara.AvaTax.RestClient
         public RateType? rateTypeId { get; set; }
 
         /// <summary>
-        /// Indicates the code of the rate type that applies to this rule. Use `/api/v2/definitions/ratetypes` for a full list of rate type codes.
+        /// Indicates the code of the rate type that applies to this rule. Use [ListRateTypesByCountry](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListRateTypesByCountry/) API for a full list of rate type codes.
         /// </summary>
         public String rateTypeCode { get; set; }
 
