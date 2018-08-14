@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     {
         private string _credentials;
         private string _clientHeader;
-        private string _extractorHeader;
+        private string _dataSourceHeader;
         private Uri _envUri;
 #if PORTABLE
         private static HttpClient _client = new HttpClient();
@@ -147,15 +147,15 @@ namespace Avalara.AvaTax.RestClient
         }
         #endregion
 
-        #region Extractor header
+        #region Datasource header
         /// <summary>
-        /// Configure extractor header
+        /// Configure datasource header
         /// </summary>
-        /// <param name="connectionId">If transactions are being logged by an extractor, please provide the connectionId of the extractor in this field when creating the transaction.</param>
+        /// <param name="dataSourceId">If transactions are being logged by an datasource, please provide the datasourceId of the datasource in this field when creating the transaction.</param>
         /// <returns></returns>
-        public AvaTaxClient WithExtractorHeader(string connectionId)
+        public AvaTaxClient WithDataSourceHeader(string dataSourceId)
         {
-            _extractorHeader = connectionId;
+            _dataSourceHeader = dataSourceId;
             return this;
         }
         #endregion
@@ -325,9 +325,9 @@ namespace Avalara.AvaTax.RestClient
                 if (_clientHeader != null) {
                     request.Headers.Add("X-Avalara-Client", _clientHeader);
                 }
-                if (_extractorHeader != null)
+                if (_dataSourceHeader != null)
                 {
-                    request.Headers.Add("X-Avalara-Extractor", _extractorHeader);
+                    request.Headers.Add("X-Avalara-DataSource", _dataSourceHeader);
                 }
 
                 // Add payload
@@ -463,8 +463,8 @@ namespace Avalara.AvaTax.RestClient
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
             }
-            if (!String.IsNullOrEmpty(_extractorHeader)) {
-                wr.Headers[Constants.AVALARA_EXTRACTOR_HEADER] = _extractorHeader;
+            if (!String.IsNullOrEmpty(_dataSourceHeader)) {
+                wr.Headers[Constants.AVALARA_DATASOURCE_HEADER] = _dataSourceHeader;
             }
 
             // Convert the name-value pairs into a byte array
@@ -575,8 +575,8 @@ namespace Avalara.AvaTax.RestClient
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
             }
-            if (!String.IsNullOrEmpty(_extractorHeader)) {
-                wr.Headers[Constants.AVALARA_EXTRACTOR_HEADER] = _extractorHeader;
+            if (!String.IsNullOrEmpty(_dataSourceHeader)) {
+                wr.Headers[Constants.AVALARA_DATASOURCE_HEADER] = _dataSourceHeader;
             }
 
             // Convert the name-value pairs into a byte array
