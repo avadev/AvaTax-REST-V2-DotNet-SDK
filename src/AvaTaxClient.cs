@@ -88,8 +88,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="headerString"></param>
         public AvaTaxClient WithSecurity(string headerString)
         {
-            _clientHeaders.Add("Authorization", headerString);
-            return this;
+            return WithCustomHeader("Authorization", headerString);
         }
 
         /// <summary>
