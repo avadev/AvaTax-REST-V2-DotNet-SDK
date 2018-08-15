@@ -23,7 +23,6 @@ namespace Avalara.AvaTax.RestClient
     {
         private string _credentials;
         private string _clientHeader;
-        private string _dataSourceHeader;
         private Uri _envUri;
 #if PORTABLE
         private static HttpClient _client = new HttpClient();
@@ -145,22 +144,9 @@ namespace Avalara.AvaTax.RestClient
             _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
             return this;
         }
-        #endregion
+#endregion
 
-        #region Datasource header
-        /// <summary>
-        /// Configure datasource header
-        /// </summary>
-        /// <param name="dataSourceId">If transactions are being logged by an datasource, please provide the datasourceId of the datasource in this field when creating the transaction.</param>
-        /// <returns></returns>
-        public AvaTaxClient WithDataSourceHeader(string dataSourceId)
-        {
-            _dataSourceHeader = dataSourceId;
-            return this;
-        }
-        #endregion
-
-        #region REST Call Interface
+#region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -212,22 +198,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
         {
-            try
-            {
-                return RestCallFileAsync(verb, relativePath, payload).Result;
-
-                // Unroll single-exception aggregates for ease of use
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count == 1)
-                {
-                    throw ex.InnerException;
-                }
-                throw ex;
-            }
-
-            
+            return RestCallFileAsync(verb, relativePath, payload).Result;
         }
 #endif
 #endregion
@@ -325,10 +296,6 @@ namespace Avalara.AvaTax.RestClient
                 if (_clientHeader != null) {
                     request.Headers.Add("X-Avalara-Client", _clientHeader);
                 }
-                if (_dataSourceHeader != null)
-                {
-                    request.Headers.Add("X-Avalara-DataSource", _dataSourceHeader);
-                }
 
                 // Add payload
                 if (jsonPayload != null) {
@@ -410,20 +377,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
         {
-            try
-            {
-                return RestCallStringAsync(verb, relativePath, content).Result;
-
-                // Unroll single-exception aggregates for ease of use
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count == 1)
-                {
-                    throw ex.InnerException;
-                }
-                throw ex;
-            }
+            return RestCallStringAsync(verb, relativePath, content).Result;
         }
 #else
         /// <summary>
@@ -462,9 +416,6 @@ namespace Avalara.AvaTax.RestClient
             }
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
-            }
-            if (!String.IsNullOrEmpty(_dataSourceHeader)) {
-                wr.Headers[Constants.AVALARA_DATASOURCE_HEADER] = _dataSourceHeader;
             }
 
             // Convert the name-value pairs into a byte array
@@ -574,9 +525,6 @@ namespace Avalara.AvaTax.RestClient
             }
             if (!String.IsNullOrEmpty(_clientHeader)) {
                 wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
-            }
-            if (!String.IsNullOrEmpty(_dataSourceHeader)) {
-                wr.Headers[Constants.AVALARA_DATASOURCE_HEADER] = _dataSourceHeader;
             }
 
             // Convert the name-value pairs into a byte array
