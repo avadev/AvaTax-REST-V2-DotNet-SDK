@@ -18,49 +18,64 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a tax type group
+    /// The tax rate model.
     /// </summary>
-    public class TaxTypeGroupModel
+    public class ComplianceTaxRateModel
     {
         /// <summary>
-        /// The unique ID number of this tax type group.
+        /// The unique id of the rate.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The unique human readable Id of this tax type group.
+        /// The tax rate.
         /// </summary>
-        public String taxTypeGroup { get; set; }
+        public Decimal? rate { get; set; }
 
         /// <summary>
-        /// The description of this tax type group.
+        /// The id of the jurisdiction.
         /// </summary>
-        public String description { get; set; }
+        public Int32? jurisdictionId { get; set; }
 
         /// <summary>
-        /// If this tax type group requires a subscription, this contains the ID number of the subscription type required to use it.
+        /// The id of the tax region.
         /// </summary>
-        public Int32? subscriptionTypeId { get; set; }
+        public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// If this tax type group requires a subscription, this contains the friendly name of the subscription type required to use it.
+        /// The date this rate is starts to take effect.
         /// </summary>
-        public String subscriptionDescription { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// The name of the tab in the AvaTax website corresponding to this tax type group.
+        /// The date this rate is no longer active.
         /// </summary>
-        public String tabName { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// True if this tax type group is displayed in the user interface of the AvaTax website.
+        /// The rate type.
         /// </summary>
-        public Boolean? showColumn { get; set; }
+        public String rateTypeId { get; set; }
 
         /// <summary>
-        /// The order this record is being returned in the response
+        /// The tax type.
         /// </summary>
-        public Int32? displaySequence { get; set; }
+        public String taxTypeId { get; set; }
+
+        /// <summary>
+        /// The name of the tax.
+        /// </summary>
+        public String taxName { get; set; }
+
+        /// <summary>
+        /// The unit of basis.
+        /// </summary>
+        public Int64? unitOfBasisId { get; set; }
+
+        /// <summary>
+        /// The rate type tax type mapping id.
+        /// </summary>
+        public Int32? rateTypeTaxTypeMappingId { get; set; }
 
 
         /// <summary>

@@ -78,7 +78,7 @@ namespace Avalara.AvaTax.RestClient
         public RateType? rateType { get; set; }
 
         /// <summary>
-        /// Indicates the code of the rate type. Use `/api/v2/definitions/ratetypes` for a full list of rate type codes.
+        /// Indicates the code of the rate type. Use [ListRateTypesByCountry](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListRateTypesByCountry/) API for a full list of rate type codes.
         /// </summary>
         public String rateTypeCode { get; set; }
 

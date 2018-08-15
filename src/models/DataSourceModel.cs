@@ -18,49 +18,74 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a tax type group
+    /// Data source object
     /// </summary>
-    public class TaxTypeGroupModel
+    public class DataSourceModel
     {
         /// <summary>
-        /// The unique ID number of this tax type group.
+        /// ToDo
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The unique human readable Id of this tax type group.
+        /// ToDo
         /// </summary>
-        public String taxTypeGroup { get; set; }
+        public Int32 companyId { get; set; }
 
         /// <summary>
-        /// The description of this tax type group.
+        /// ToDo
         /// </summary>
-        public String description { get; set; }
+        public String connectorId { get; set; }
 
         /// <summary>
-        /// If this tax type group requires a subscription, this contains the ID number of the subscription type required to use it.
+        /// ToDo
         /// </summary>
-        public Int32? subscriptionTypeId { get; set; }
+        public String connectionId { get; set; }
 
         /// <summary>
-        /// If this tax type group requires a subscription, this contains the friendly name of the subscription type required to use it.
+        /// ToDo
         /// </summary>
-        public String subscriptionDescription { get; set; }
+        public Boolean? isEnabled { get; set; }
 
         /// <summary>
-        /// The name of the tab in the AvaTax website corresponding to this tax type group.
+        /// ToDo
         /// </summary>
-        public String tabName { get; set; }
+        public Boolean? isSynced { get; set; }
 
         /// <summary>
-        /// True if this tax type group is displayed in the user interface of the AvaTax website.
+        /// ToDo
         /// </summary>
-        public Boolean? showColumn { get; set; }
+        public Boolean? isAuthorized { get; set; }
 
         /// <summary>
-        /// The order this record is being returned in the response
+        /// ToDo
         /// </summary>
-        public Int32? displaySequence { get; set; }
+        public DateTime? lastSyncedDate { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public Int32? createdUserId { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public DateTime? deletedDate { get; set; }
 
 
         /// <summary>

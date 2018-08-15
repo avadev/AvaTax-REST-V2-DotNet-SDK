@@ -168,6 +168,24 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CustomFieldModel> customFields { get; set; }
 
+        /// <summary>
+        /// A list of exposure zones where you do business with this customer. 
+        /// 
+        /// To keep track of certificates that are needed for each customer, set this value to a list of all exposure zones where you
+        /// sell products to this customer. You can find a list of exposure zones by calling `ListExposureZones`.
+        /// 
+        /// This field is often called "Ship-To States" or "Ship-To Zones", since it generally refers to locations where you ship products
+        /// when this customer makes a purchase.
+        /// 
+        /// This field is useful for audit purposes since it helps you ensure you have the necessary certificates for each customer.
+        /// </summary>
+        public List<ExposureZoneModel> exposureZones { get; set; }
+
+        /// <summary>
+        /// ToDo
+        /// </summary>
+        public List<CustomerModel> shipTos { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

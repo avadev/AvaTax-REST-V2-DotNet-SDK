@@ -23,77 +23,77 @@ namespace Avalara.AvaTax.RestClient
     public class NoticeFinanceModel
     {
         /// <summary>
-        /// 
+        /// The Unique Id of the Finance Model
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// 
+        /// The unique ID of the the tax notice associated with the the finance detail
         /// </summary>
         public Int32? noticeId { get; set; }
 
         /// <summary>
-        /// 
+        /// The date of the notice
         /// </summary>
         public DateTime? noticeDate { get; set; }
 
         /// <summary>
-        /// 
+        /// The due date of the notice
         /// </summary>
         public DateTime? dueDate { get; set; }
 
         /// <summary>
-        /// 
+        /// The sequential number of the notice
         /// </summary>
         public String noticeNumber { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of tax due on the notice
         /// </summary>
         public Decimal? taxDue { get; set; }
 
         /// <summary>
-        /// 
+        /// The amound of penalty listed on the notice
         /// </summary>
         public Decimal? penalty { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of interest listed on the notice
         /// </summary>
         public Decimal? interest { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of credits listed on the notice
         /// </summary>
         public Decimal? credits { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of tax abated on the notice
         /// </summary>
         public Decimal? taxAbated { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of customer penalty on the notice
         /// </summary>
         public Decimal? customerPenalty { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of customer interest on the notice
         /// </summary>
         public Decimal? customerInterest { get; set; }
 
         /// <summary>
-        /// 
+        /// The amount of CSP Fee Refund on the notice
         /// </summary>
         public Decimal? cspFeeRefund { get; set; }
 
         /// <summary>
-        /// resourceFileId
+        /// The name of the file attached to the finance detail
         /// </summary>
         public String fileName { get; set; }
 
         /// <summary>
-        /// resourceFileId
+        /// The ResourceFileId of the finance detail attachment
         /// </summary>
         public Int64? resourceFileId { get; set; }
 

@@ -278,7 +278,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidAdjustmentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
         DeleteInformation,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OutOfRange,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnspecifiedTimeZone,
 
         /// <summary>
         /// 
@@ -618,6 +633,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        RequestTooLarge,
+
+        /// <summary>
+        /// 
+        /// </summary>
         EcmsDisabled,
 
         /// <summary>
@@ -819,6 +839,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidPostalCode,
+
+        /// <summary>
+        /// Subscription error codes
+        /// </summary>
+        InvalidSubscriptionDescription,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidSubscriptionTypeId,
 
         /// <summary>
         /// Represents a malformed document fetch command
@@ -1061,6 +1091,31 @@ namespace Avalara.AvaTax.RestClient
         InvalidRequestContentType,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ExemptionPaginationLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExemptionSortLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CustomerCantBeBothShipToAndBillTo,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BillToCustomerExpected,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShipToCustomerExpected,
+
+        /// <summary>
         /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
@@ -1129,16 +1184,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CommsConfigClientIdBadValue,
-
-        /// <summary>
-        /// BizTech API error codes
-        /// </summary>
-        BizTechCustomerAccountFailure,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        BizTechOpportunityCreationFailure,
 
         /// <summary>
         /// Account Activate error codes
@@ -1216,9 +1261,29 @@ namespace Avalara.AvaTax.RestClient
         InvalidDocumentStatusToAddOrDeleteLines,
 
         /// <summary>
+        /// 
+        /// </summary>
+        TaxRuleRequiresNexus,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UPCCodeNotUnique,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnsupportedOutputFileType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ConcurrentApiCallIsNotAllowed,
 
     }
 }

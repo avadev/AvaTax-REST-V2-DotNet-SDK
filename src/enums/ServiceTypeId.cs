@@ -111,6 +111,36 @@ namespace Avalara.AvaTax.RestClient
         AvaBottle,
 
         /// <summary>
+        /// AvaComms
+        /// </summary>
+        AvaComms,
+
+        /// <summary>
+        /// AvaEWaste
+        /// </summary>
+        AvaEWaste,
+
+        /// <summary>
+        /// AvaExemptTier1
+        /// </summary>
+        AvaExemptTier1,
+
+        /// <summary>
+        /// AvaExemptTier2
+        /// </summary>
+        AvaExemptTier2,
+
+        /// <summary>
+        /// AvaExemptTier3
+        /// </summary>
+        AvaExemptTier3,
+
+        /// <summary>
+        /// AvaExemptTier4
+        /// </summary>
+        AvaExemptTier4,
+
+        /// <summary>
         /// MRSComplianceManager
         /// </summary>
         MRSComplianceManager,
