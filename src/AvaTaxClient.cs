@@ -139,7 +139,14 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public AvaTaxClient WithCustomHeader(string name, string value)
         {
-            _clientHeaders.Add(name, value);
+            if (_clientHeaders.ContainsKey(name))
+            {
+                _clientHeaders[name] = value;
+            }
+            else
+            {
+                _clientHeaders.Add(name, value);
+            }
             return this;
         }
         #endregion
