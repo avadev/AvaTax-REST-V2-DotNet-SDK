@@ -217,7 +217,20 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public FileResult RestCallFile(string verb, AvaTaxPath relativePath, object payload = null)
         {
-            return RestCallFileAsync(verb, relativePath, payload).Result;
+            try
+            {
+                return RestCallFileAsync(verb, relativePath, payload).Result;
+
+                // Unroll single-exception aggregates for ease of use
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count == 1)
+                {
+                    throw ex.InnerException;
+                }
+                throw ex;
+            }
         }
 #endif
 #endregion
@@ -394,7 +407,19 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private string RestCallString(string verb, AvaTaxPath relativePath, object content = null)
         {
-            return RestCallStringAsync(verb, relativePath, content).Result;
+            try
+            {
+                return RestCallStringAsync(verb, relativePath, content).Result;
+                // Unroll single-exception aggregates for ease of use
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count == 1)
+                {
+                    throw ex.InnerException;
+                }
+                throw ex;
+            }
         }
 #else
         /// <summary>
