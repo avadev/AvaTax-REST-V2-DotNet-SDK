@@ -21,8 +21,7 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
-        private string _credentials;
-        private string _clientHeader;
+        private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
 #if PORTABLE
         private static HttpClient _client = new HttpClient();
@@ -89,7 +88,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="headerString"></param>
         public AvaTaxClient WithSecurity(string headerString)
         {
-            _credentials = headerString;
+            _clientHeaders.Add("Authorization", headerString);
             return this;
         }
 
@@ -129,9 +128,23 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-#endregion
+        #endregion
 
-#region Client Identification
+        #region Custom headers
+        /// <summary>
+        /// Add custom header to this client.
+        /// </summary>
+        /// <param name="name">Name of header.</param>
+        /// <param name="value">Value of header.</param>
+        /// <returns></returns>
+        public AvaTaxClient WithCustomHeader(string name, string value)
+        {
+            _clientHeaders.Add(name, value);
+            return this;
+        }
+        #endregion
+
+        #region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -141,7 +154,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
         {
-            _clientHeader = String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName);
+            _clientHeaders.Add(Constants.AVALARA_CLIENT_HEADER, String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName));
             return this;
         }
 #endregion
@@ -289,12 +302,10 @@ namespace Avalara.AvaTax.RestClient
                 request.Method = new HttpMethod(verb);
                 request.RequestUri = new Uri(_envUri, relativePath.ToString());
 
-                // Add credentials and client header
-                if (_credentials != null) {
-                    request.Headers.Add("Authorization", _credentials);
-                }
-                if (_clientHeader != null) {
-                    request.Headers.Add("X-Avalara-Client", _clientHeader);
+                // Add headers
+                foreach (var key in _clientHeaders.Keys)
+                {
+                    request.Headers.Add(key, _clientHeaders[key]);
                 }
 
                 // Add payload
@@ -410,12 +421,10 @@ namespace Avalara.AvaTax.RestClient
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
 
-            // Construct the basic auth, if required
-            if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
-            }
-            if (!String.IsNullOrEmpty(_clientHeader)) {
-                wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
+            // Add headers
+            foreach (var key in _clientHeaders.Keys)
+            {
+                wr.Headers.Add(key, _clientHeaders[key]);
             }
 
             // Convert the name-value pairs into a byte array
@@ -519,12 +528,10 @@ namespace Avalara.AvaTax.RestClient
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
 
-            // Construct the basic auth, if required
-            if (!String.IsNullOrEmpty(_credentials)) {
-                wr.Headers[HttpRequestHeader.Authorization] = _credentials;
-            }
-            if (!String.IsNullOrEmpty(_clientHeader)) {
-                wr.Headers[Constants.AVALARA_CLIENT_HEADER] = _clientHeader;
+            // Add headers
+            foreach (var key in _clientHeaders.Keys)
+            {
+                wr.Headers.Add(key, _clientHeaders[key]);
             }
 
             // Convert the name-value pairs into a byte array
