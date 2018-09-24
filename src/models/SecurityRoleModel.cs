@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this security role.
         /// </summary>
-        public Byte? id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
         /// A description of this security role

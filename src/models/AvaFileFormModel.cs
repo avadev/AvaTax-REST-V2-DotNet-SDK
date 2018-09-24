@@ -80,7 +80,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Due date
         /// </summary>
-        public Byte? dueDay { get; set; }
+        public Int32? dueDay { get; set; }
 
         /// <summary>
         /// The type of E-file due date.
@@ -90,7 +90,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The date by when the E-filing should be submitted
         /// </summary>
-        public Byte? efileDueDay { get; set; }
+        public Int32? efileDueDay { get; set; }
 
         /// <summary>
         /// The time of day by when the E-filing should be submitted

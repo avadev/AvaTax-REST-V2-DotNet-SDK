@@ -22,24 +22,24 @@ namespace Avalara.AvaTax.RestClient
     public enum ReportDateFilter
     {
         /// <summary>
-        /// The date when the transaction is posted
-        /// </summary>
-        DocumentDate,
-
-        /// <summary>
-        /// The date when the transaction is paid for
-        /// </summary>
-        PaymentDate,
-
-        /// <summary>
         /// The date when the transaction is added to report
         /// </summary>
         ReportingDate,
 
         /// <summary>
+        /// The date when the transaction is posted
+        /// </summary>
+        DocumentDate,
+
+        /// <summary>
         /// The date when the transaction is being taxed
         /// </summary>
         TaxDate,
+
+        /// <summary>
+        /// The date when the transaction is paid for
+        /// </summary>
+        PaymentDate,
 
     }
 }

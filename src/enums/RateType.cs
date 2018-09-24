@@ -23,16 +23,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        ReducedA,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ReducedB,
-
-        /// <summary>
-        /// 
-        /// </summary>
         Food,
 
         /// <summary>
@@ -63,7 +53,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        SuperReduced,
+        ReducedA,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ReducedB,
 
         /// <summary>
         /// 
@@ -78,7 +73,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        SuperReduced,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Zero,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Services,
 
     }
 }

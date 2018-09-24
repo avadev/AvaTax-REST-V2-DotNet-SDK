@@ -21,6 +21,51 @@ namespace Avalara.AvaTax.RestClient
     public enum TaxType
     {
         /// <summary>
+        /// Sales tax
+        /// </summary>
+        Sales,
+
+        /// <summary>
+        /// Use tax
+        /// </summary>
+        Use,
+
+        /// <summary>
+        /// Consumer Use Tax
+        /// </summary>
+        ConsumerUse,
+
+        /// <summary>
+        /// VAT/GST Output tax
+        /// </summary>
+        Output,
+
+        /// <summary>
+        /// VAT/GST Input tax
+        /// </summary>
+        Input,
+
+        /// <summary>
+        /// VAT/GST Nonrecoverable Input tax
+        /// </summary>
+        Nonrecoverable,
+
+        /// <summary>
+        /// Fee - PIFs (Public Improvement Fees) and RSFs (Retail Sales Fees)
+        /// </summary>
+        Fee,
+
+        /// <summary>
+        /// Rental Tax
+        /// </summary>
+        Rental,
+
+        /// <summary>
+        /// Medical Excise Tax
+        /// </summary>
+        Excise,
+
+        /// <summary>
         /// Match Lodging tax type
         /// </summary>
         Lodging,
@@ -39,51 +84,6 @@ namespace Avalara.AvaTax.RestClient
         /// LandedCost tax type
         /// </summary>
         LandedCost,
-
-        /// <summary>
-        /// Consumer Use Tax
-        /// </summary>
-        ConsumerUse,
-
-        /// <summary>
-        /// Medical Excise Tax
-        /// </summary>
-        Excise,
-
-        /// <summary>
-        /// Fee - PIFs (Public Improvement Fees) and RSFs (Retail Sales Fees)
-        /// </summary>
-        Fee,
-
-        /// <summary>
-        /// VAT/GST Input tax
-        /// </summary>
-        Input,
-
-        /// <summary>
-        /// VAT/GST Nonrecoverable Input tax
-        /// </summary>
-        Nonrecoverable,
-
-        /// <summary>
-        /// VAT/GST Output tax
-        /// </summary>
-        Output,
-
-        /// <summary>
-        /// Rental Tax
-        /// </summary>
-        Rental,
-
-        /// <summary>
-        /// Sales tax
-        /// </summary>
-        Sales,
-
-        /// <summary>
-        /// Use tax
-        /// </summary>
-        Use,
 
     }
 }

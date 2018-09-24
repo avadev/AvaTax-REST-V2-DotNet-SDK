@@ -18,24 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ISO 4217 currency code used for designating the currency of a transaction.
+    /// Nexus tax type groupe with count
     /// </summary>
-    public class CurrencyModel
+    public class NexusTaxTypeGroupCountModel
     {
         /// <summary>
-        /// The ISO 4217 currency code for this currency.
+        /// Which nexus tax type group
         /// </summary>
-        public String code { get; set; }
+        public String nexusTaxTypeGroup { get; set; }
 
         /// <summary>
-        /// A friendly human-readable name representing this currency.
+        /// How many nexus in the group
         /// </summary>
-        public String description { get; set; }
-
-        /// <summary>
-        /// The number of decimal digits to use when formatting a currency value for display.
-        /// </summary>
-        public Int32? decimalDigits { get; set; }
+        public Int32? count { get; set; }
 
 
         /// <summary>

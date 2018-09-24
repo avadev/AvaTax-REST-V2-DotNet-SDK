@@ -18,54 +18,64 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a verification request using Skyscraper for a company
+    /// The tax rate model.
     /// </summary>
-    public class LoginVerificationInputModel
+    public class ComplianceTaxRateModel
     {
         /// <summary>
-        /// CompanyId that we are verifying the login information for
+        /// The unique id of the rate.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// AccountId of the login verification
+        /// The tax rate.
         /// </summary>
-        public Int32 accountId { get; set; }
+        public Decimal? rate { get; set; }
 
         /// <summary>
-        /// Region of the verification request
+        /// The id of the jurisdiction.
         /// </summary>
-        public String region { get; set; }
+        public Int32? jurisdictionId { get; set; }
 
         /// <summary>
-        /// TaxFormCode for the verification request
+        /// The id of the tax region.
         /// </summary>
-        public String taxFormCode { get; set; }
+        public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// Username that we are using for verification
+        /// The date this rate is starts to take effect.
         /// </summary>
-        public String username { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// Password we are using for verification
+        /// The date this rate is no longer active.
         /// </summary>
-        public String password { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// Additional options of the verification
+        /// The rate type.
         /// </summary>
-        public Dictionary<string, string> additionalOptions { get; set; }
+        public String rateTypeId { get; set; }
 
         /// <summary>
-        /// Bulk Request Id of the verification
+        /// The tax type.
         /// </summary>
-        public Int32? bulkRequestId { get; set; }
+        public String taxTypeId { get; set; }
 
         /// <summary>
-        /// Priority of the verification request
+        /// The name of the tax.
         /// </summary>
-        public Int32? priority { get; set; }
+        public String taxName { get; set; }
+
+        /// <summary>
+        /// The unit of basis.
+        /// </summary>
+        public Int64? unitOfBasisId { get; set; }
+
+        /// <summary>
+        /// The rate type tax type mapping id.
+        /// </summary>
+        public Int32? rateTypeTaxTypeMappingId { get; set; }
 
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of the adjustment.
         /// </summary>
-        public AdjustmentTypeId type { get; set; }
+        public String type { get; set; }
 
         /// <summary>
         /// Whether or not the adjustment has been calculated.

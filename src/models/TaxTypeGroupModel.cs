@@ -57,6 +57,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? showColumn { get; set; }
 
+        /// <summary>
+        /// The order this record is being returned in the response
+        /// </summary>
+        public Int32? displaySequence { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

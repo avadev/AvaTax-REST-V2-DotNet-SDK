@@ -18,24 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ISO 4217 currency code used for designating the currency of a transaction.
+    /// A model for aggregated rates.
     /// </summary>
-    public class CurrencyModel
+    public class ComplianceAggregatedTaxRateModel
     {
         /// <summary>
-        /// The ISO 4217 currency code for this currency.
+        /// The compontent rate.
         /// </summary>
-        public String code { get; set; }
+        public Decimal? rate { get; set; }
 
         /// <summary>
-        /// A friendly human-readable name representing this currency.
+        /// The stack rate based on the aggregation method.
         /// </summary>
-        public String description { get; set; }
+        public Decimal? stackRate { get; set; }
 
         /// <summary>
-        /// The number of decimal digits to use when formatting a currency value for display.
+        /// The date this rate is starts to take effect.
         /// </summary>
-        public Int32? decimalDigits { get; set; }
+        public DateTime? effectiveDate { get; set; }
+
+        /// <summary>
+        /// The date this rate is no longer active.
+        /// </summary>
+        public DateTime? endDate { get; set; }
+
+        /// <summary>
+        /// The tax type of the rate.
+        /// </summary>
+        public String taxTypeId { get; set; }
+
+        /// <summary>
+        /// The rate type of the rate.
+        /// </summary>
+        public String rateTypeId { get; set; }
 
 
         /// <summary>

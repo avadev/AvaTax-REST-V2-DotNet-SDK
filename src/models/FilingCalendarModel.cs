@@ -246,7 +246,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you are required to prepay a percentage of taxes for future periods, please specify the percentage in whole numbers; 
         /// for example, the value 90 would indicate 90%.
         /// </summary>
-        public Byte? prepayPercentage { get; set; }
+        public Int32? prepayPercentage { get; set; }
 
         /// <summary>
         /// If your company is required to make a prepayment that is designated by a fixed amount each period, please specify the amount here.

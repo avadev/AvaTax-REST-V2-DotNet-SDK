@@ -16,24 +16,29 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Sourcing
+    /// Severity level of a notification.
     /// </summary>
-    public enum Sourcing
+    public enum NotificationSeverityLevel
     {
         /// <summary>
-        /// Origin
+        /// A completed notification
         /// </summary>
-        Origin,
+        Complete,
 
         /// <summary>
-        /// Destination
+        /// Low priority notification, Default.
         /// </summary>
-        Destination,
+        Neutral,
 
         /// <summary>
-        /// Mixed sourcing, for states that do both origin and destination calculation
+        /// Medium priority notification.
         /// </summary>
-        Mixed,
+        Advisory,
+
+        /// <summary>
+        /// High priority notification.
+        /// </summary>
+        Blocking,
 
     }
 }

@@ -18,24 +18,27 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ISO 4217 currency code used for designating the currency of a transaction.
+    /// 
     /// </summary>
-    public class CurrencyModel
+    public class TransactionReferenceFieldModel
     {
         /// <summary>
-        /// The ISO 4217 currency code for this currency.
+        /// The id of the transaction
         /// </summary>
-        public String code { get; set; }
+        public Int64 documentId { get; set; }
 
         /// <summary>
-        /// A friendly human-readable name representing this currency.
+        /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority.
+        /// 
+        /// This value is used by Avalara Managed Returns to group documents together by reporting locations
+        /// for tax authorities that require location-based reporting.
         /// </summary>
-        public String description { get; set; }
+        public String reportingLocationCode { get; set; }
 
         /// <summary>
-        /// The number of decimal digits to use when formatting a currency value for display.
+        /// Reference field of the line details
         /// </summary>
-        public Int32? decimalDigits { get; set; }
+        public List<LineDetailSERCodeModel> lineDetailSerCodes { get; set; }
 
 
         /// <summary>

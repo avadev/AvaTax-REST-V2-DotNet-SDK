@@ -41,9 +41,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net20\Newtonsoft.Json.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
@@ -99,6 +96,7 @@
     <Compile Include="enums\NexusTypeId.cs" />
     <Compile Include="enums\NoticeCustomerType.cs" />
     <Compile Include="enums\NoticePriorityId.cs" />
+    <Compile Include="enums\NotificationSeverityLevel.cs" />
     <Compile Include="enums\OutletTypeId.cs" />
     <Compile Include="enums\ParameterBagDataType.cs" />
     <Compile Include="enums\PasswordStatusId.cs" />
@@ -150,6 +148,8 @@
     <Compile Include="models\AdvancedRuleScriptModel.cs" />
     <Compile Include="models\AdvancedRuleTableModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
+    <Compile Include="models\AuditEvent.cs" />
+    <Compile Include="models\AuditModel.cs" />
     <Compile Include="models\AuditMultiDocumentModel.cs" />
     <Compile Include="models\AuditTransactionModel.cs" />
     <Compile Include="models\AvaFileFormModel.cs" />
@@ -174,6 +174,10 @@
     <Compile Include="models\CompanyInitializationModel.cs" />
     <Compile Include="models\CompanyModel.cs" />
     <Compile Include="models\CompanyReturnSettingModel.cs" />
+    <Compile Include="models\ComplianceAggregatedTaxRateModel.cs" />
+    <Compile Include="models\ComplianceJurisdictionModel.cs" />
+    <Compile Include="models\ComplianceJurisdictionRateModel.cs" />
+    <Compile Include="models\ComplianceTaxRateModel.cs" />
     <Compile Include="models\ContactModel.cs" />
     <Compile Include="models\CoordinateInfo.cs" />
     <Compile Include="models\CoverLetterModel.cs" />
@@ -189,6 +193,7 @@
     <Compile Include="models\CycleEditOptionModel.cs" />
     <Compile Include="models\CycleExpireModel.cs" />
     <Compile Include="models\CycleExpireOptionModel.cs" />
+    <Compile Include="models\DataSourceModel.cs" />
     <Compile Include="models\DeclareNexusByAddressModel.cs" />
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
@@ -211,6 +216,7 @@
     <Compile Include="models\FilingRegionModel.cs" />
     <Compile Include="models\FilingRequestDataModel.cs" />
     <Compile Include="models\FilingRequestModel.cs" />
+    <Compile Include="models\FilingReturnCreditModel.cs" />
     <Compile Include="models\FilingReturnModel.cs" />
     <Compile Include="models\FilingReturnModelBasic.cs" />
     <Compile Include="models\FilingsCheckupAuthorityModel.cs" />
@@ -232,6 +238,7 @@
     <Compile Include="models\JurisdictionModel.cs" />
     <Compile Include="models\JurisdictionOverrideModel.cs" />
     <Compile Include="models\LicenseKeyModel.cs" />
+    <Compile Include="models\LineDetailSERCodeModel.cs" />
     <Compile Include="models\LineItemModel.cs" />
     <Compile Include="models\LinkCertificatesModel.cs" />
     <Compile Include="models\LinkCustomersModel.cs" />
@@ -242,6 +249,7 @@
     <Compile Include="models\LockTransactionModel.cs" />
     <Compile Include="models\LoginVerificationInputModel.cs" />
     <Compile Include="models\LoginVerificationOutputModel.cs" />
+    <Compile Include="models\Message.cs" />
     <Compile Include="models\MrsCompanyModel.cs" />
     <Compile Include="models\MultiCompanyLineItemModel.cs" />
     <Compile Include="models\MultiDocumentLineItemModel.cs" />
@@ -251,6 +259,8 @@
     <Compile Include="models\NexusByAddressModel.cs" />
     <Compile Include="models\NexusByTaxFormModel.cs" />
     <Compile Include="models\NexusModel.cs" />
+    <Compile Include="models\NexusSummaryModel.cs" />
+    <Compile Include="models\NexusTaxTypeGroupCountModel.cs" />
     <Compile Include="models\NexusTaxTypeGroupModel.cs" />
     <Compile Include="models\NoticeCommentModel.cs" />
     <Compile Include="models\NoticeCustomerFundingOptionModel.cs" />
@@ -266,6 +276,8 @@
     <Compile Include="models\NoticeRootCauseModel.cs" />
     <Compile Include="models\NoticeStatusModel.cs" />
     <Compile Include="models\NoticeTypeModel.cs" />
+    <Compile Include="models\NotificationModel.cs" />
+    <Compile Include="models\OfferModel.cs" />
     <Compile Include="models\OriginalApiRequestResponseModel.cs" />
     <Compile Include="models\ParameterModel.cs" />
     <Compile Include="models\PasswordChangeModel.cs" />
@@ -303,6 +315,8 @@
     <Compile Include="models\TaxCodeTypesModel.cs" />
     <Compile Include="models\TaxOverrideModel.cs" />
     <Compile Include="models\TaxRateModel.cs" />
+    <Compile Include="models\TaxRegionJurisdictionModel.cs" />
+    <Compile Include="models\TaxRegionModel.cs" />
     <Compile Include="models\TaxRuleModel.cs" />
     <Compile Include="models\TaxSubTypeModel.cs" />
     <Compile Include="models\TaxTypeGroupModel.cs" />
@@ -312,6 +326,7 @@
     <Compile Include="models\TransactionLineModel.cs" />
     <Compile Include="models\TransactionLocationTypeModel.cs" />
     <Compile Include="models\TransactionModel.cs" />
+    <Compile Include="models\TransactionReferenceFieldModel.cs" />
     <Compile Include="models\TransactionSummary.cs" />
     <Compile Include="models\UomModel.cs" />
     <Compile Include="models\UPCModel.cs" />
@@ -322,6 +337,8 @@
     <Compile Include="models\VerifyMultiDocumentModel.cs" />
     <Compile Include="models\VerifyTransactionModel.cs" />
     <Compile Include="models\VoidTransactionModel.cs" />
+    <Compile Include="models\WorksheetDocument.cs" />
+    <Compile Include="models\WorksheetDocumentLine.cs" />
     <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
   </ItemGroup>
