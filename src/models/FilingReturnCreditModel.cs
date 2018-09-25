@@ -18,24 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ISO 4217 currency code used for designating the currency of a transaction.
+    /// An attachment associated with a filing return
     /// </summary>
-    public class CurrencyModel
+    public class FilingReturnCreditModel
     {
         /// <summary>
-        /// The ISO 4217 currency code for this currency.
+        /// The resourceFileId used to retrieve the attachment
         /// </summary>
-        public String code { get; set; }
+        public Decimal? totalSales { get; set; }
 
         /// <summary>
-        /// A friendly human-readable name representing this currency.
+        /// The resourceFileId used to retrieve the attachment
         /// </summary>
-        public String description { get; set; }
+        public Decimal? totalExempt { get; set; }
 
         /// <summary>
-        /// The number of decimal digits to use when formatting a currency value for display.
+        /// The resourceFileId used to retrieve the attachment
         /// </summary>
-        public Int32? decimalDigits { get; set; }
+        public Decimal? totalTaxable { get; set; }
+
+        /// <summary>
+        /// The resourceFileId used to retrieve the attachment
+        /// </summary>
+        public Decimal? totalTax { get; set; }
+
+        /// <summary>
+        /// The excluded carry over credit documents
+        /// </summary>
+        public List<WorksheetDocument> transactionDetails { get; set; }
 
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     public class EcmsModel
     {
         /// <summary>
-        /// Exempt certificate ID
+        /// The calc_id associated with a certificate in CertCapture.
         /// </summary>
         public Int32 exemptCertId { get; set; }
 
@@ -93,19 +93,19 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
-        /// Exempt cert type
+        /// The type of exemption certificate. Permitted values are: Blanket and Single.
         /// </summary>
         public ExemptCertTypeId exemptCertTypeId { get; set; }
 
         /// <summary>
-        /// Document Reference Number
+        /// Document Reference Number, in the case of single-use exemption certificates, the DocumentCode or PurchaseOrderNo to which the certificate should apply.
         /// </summary>
         public String documentRefNo { get; set; }
 
         /// <summary>
-        /// Business type
+        /// Business type the customer belongs to.
         /// </summary>
-        public Byte businessTypeId { get; set; }
+        public Int32 businessTypeId { get; set; }
 
         /// <summary>
         /// Other description for this business type
@@ -113,12 +113,13 @@ namespace Avalara.AvaTax.RestClient
         public String businessTypeOtherDescription { get; set; }
 
         /// <summary>
-        /// Exempt reason ID
+        /// Exempt reason associated with the certificate, coded by CustomerUsageType.
+        /// Example: A - Federal Government.
         /// </summary>
         public String exemptReasonId { get; set; }
 
         /// <summary>
-        /// Other description for exempt reason
+        /// Other description for exempt reason i.e. Populated on if exemptReasonId is 'L' - Other.
         /// </summary>
         public String exemptReasonOtherDescription { get; set; }
 
@@ -183,7 +184,8 @@ namespace Avalara.AvaTax.RestClient
         public String countryIssued { get; set; }
 
         /// <summary>
-        /// Certificate ID for AvaTax?
+        /// If the certificate record was synced from an AvaTax Certs account(as opposed to being entered in ECMS directly), 
+        /// the unique AvaTax Certs identifier for the certificate record. Usually same as the Id of a Certificate.
         /// </summary>
         public String avaCertId { get; set; }
 

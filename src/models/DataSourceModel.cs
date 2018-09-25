@@ -18,44 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A company and account
+    /// Data source object
     /// </summary>
-    public class MrsCompanyModel
+    public class DataSourceModel
     {
         /// <summary>
-        /// The unique ID number of this company.
+        /// The id of the datasource.
         /// </summary>
-        public Int32? companyId { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The name of this company, as shown to customers.
+        /// The id of the company to which the datasource belongs to.
         /// </summary>
-        public String companyName { get; set; }
+        public Int32 companyId { get; set; }
 
         /// <summary>
-        /// The unique ID number of the account this company belongs to.
+        /// The extractor/connector id.
         /// </summary>
-        public Int32? accountId { get; set; }
+        public String source { get; set; }
 
         /// <summary>
-        /// The name of this account, as shown to customers.
+        /// The unique ID number of this connection.
         /// </summary>
-        public String accountName { get; set; }
+        public String instance { get; set; }
 
         /// <summary>
-        /// The taxpayer identification number for the company
+        /// The connection using the connection_id is enabled. The customer is responsible to enable or disable.
         /// </summary>
-        public String tin { get; set; }
+        public Boolean? isEnabled { get; set; }
 
         /// <summary>
-        /// The company code for the company
+        /// If all the information has been transferred from the extractor to the database.
         /// </summary>
-        public String companyCode { get; set; }
+        public Boolean? isSynced { get; set; }
 
         /// <summary>
-        /// The date when this record was created.
+        /// True if this data source is authorized.
         /// </summary>
-        public DateTime? createdDate { get; set; }
+        public Boolean? isAuthorized { get; set; }
+
+        /// <summary>
+        /// The date when the information was last synched.
+        /// </summary>
+        public DateTime? lastSyncedDate { get; set; }
 
         /// <summary>
         /// The User ID of the user who created this record.
@@ -63,14 +68,24 @@ namespace Avalara.AvaTax.RestClient
         public Int32? createdUserId { get; set; }
 
         /// <summary>
-        /// The date/time when this record was last modified.
+        /// The date when this record was created.
         /// </summary>
-        public DateTime? modifiedDate { get; set; }
+        public DateTime? createdDate { get; set; }
 
         /// <summary>
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// The date/time when this record was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// The daye when this record was deleted.
+        /// </summary>
+        public DateTime? deletedDate { get; set; }
 
 
         /// <summary>

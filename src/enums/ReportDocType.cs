@@ -21,14 +21,14 @@ namespace Avalara.AvaTax.RestClient
     public enum ReportDocType
     {
         /// <summary>
-        /// Output all ConsumerUse tax transactions in the report
-        /// </summary>
-        ConsumerUse,
-
-        /// <summary>
         /// Output all Sales tax transactions in the report
         /// </summary>
         Sales,
+
+        /// <summary>
+        /// Output all ConsumerUse tax transactions in the report
+        /// </summary>
+        ConsumerUse,
 
     }
 }

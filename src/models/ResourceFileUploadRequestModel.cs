@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// This stream contains the bytes of the file being uploaded.
         /// </summary>
-        public Byte[] content { get; set; }
+        public Byte content { get; set; }
 
         /// <summary>
         /// The username adding the file

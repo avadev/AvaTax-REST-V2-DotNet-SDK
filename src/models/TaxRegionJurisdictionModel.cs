@@ -18,54 +18,59 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a verification request using Skyscraper for a company
+    /// The tax region jurisdiction model.
     /// </summary>
-    public class LoginVerificationInputModel
+    public class TaxRegionJurisdictionModel
     {
         /// <summary>
-        /// CompanyId that we are verifying the login information for
+        /// The id of the jurisdiction.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? jurisdictionId { get; set; }
 
         /// <summary>
-        /// AccountId of the login verification
+        /// The id of the tax region.
         /// </summary>
-        public Int32 accountId { get; set; }
+        public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// Region of the verification request
+        /// The id of the jurisdiction level.
         /// </summary>
-        public String region { get; set; }
+        public Int32? jurisdictionLevelId { get; set; }
 
         /// <summary>
-        /// TaxFormCode for the verification request
+        /// The rock name.
         /// </summary>
-        public String taxFormCode { get; set; }
+        public String rockName { get; set; }
 
         /// <summary>
-        /// Username that we are using for verification
+        /// The report level.
         /// </summary>
-        public String username { get; set; }
+        public Int32? reportLevel { get; set; }
 
         /// <summary>
-        /// Password we are using for verification
+        /// The state assigned code.
         /// </summary>
-        public String password { get; set; }
+        public String stateAssignedCode { get; set; }
 
         /// <summary>
-        /// Additional options of the verification
+        /// The id of the tax authority.
         /// </summary>
-        public Dictionary<string, string> additionalOptions { get; set; }
+        public Int32? taxAuthorityId { get; set; }
 
         /// <summary>
-        /// Bulk Request Id of the verification
+        /// The signature code.
         /// </summary>
-        public Int32? bulkRequestId { get; set; }
+        public String signatureCode { get; set; }
 
         /// <summary>
-        /// Priority of the verification request
+        /// The date in which this tax region jurisdiction starts to take effect.
         /// </summary>
-        public Int32? priority { get; set; }
+        public DateTime? effectiveDate { get; set; }
+
+        /// <summary>
+        /// The date in which this tax region jurisdiction stops to take effect.
+        /// </summary>
+        public DateTime? endDate { get; set; }
 
 
         /// <summary>

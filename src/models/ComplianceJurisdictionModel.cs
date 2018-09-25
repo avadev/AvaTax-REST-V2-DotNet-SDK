@@ -18,24 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an ECMS record, used internally by AvaTax to track information about exemptions.
+    /// Model for distinct jurisdictions.
     /// </summary>
-    public class EcmsDetailModel
+    public class ComplianceJurisdictionModel
     {
         /// <summary>
-        /// Unique, system-assigned identifier of a ExemptCertDetail record.
+        /// The id of the tax region.
         /// </summary>
-        public Int32 exemptCertDetailId { get; set; }
+        public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// The calc_id associated with a certificate in CertCapture.
+        /// The state assigned code for the jurisdiction.
         /// </summary>
-        public Int32 exemptCertId { get; set; }
+        public String stateAssignedCode { get; set; }
 
         /// <summary>
-        /// State FIPS
+        /// The type of the jurisdiction, indicating whether it is a country, state/region, city, for example.
         /// </summary>
-        public String stateFips { get; set; }
+        public String jurisdictionTypeId { get; set; }
+
+        /// <summary>
+        /// The name of the jurisdiction.
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// The name of the county.
+        /// </summary>
+        public String county { get; set; }
+
+        /// <summary>
+        /// The name of the city.
+        /// </summary>
+        public String city { get; set; }
 
         /// <summary>
         /// Name or ISO 3166 code identifying the region within the country.
@@ -50,12 +65,7 @@ namespace Avalara.AvaTax.RestClient
         public String region { get; set; }
 
         /// <summary>
-        /// The customer Tax Id Number (tax_number) associated with a certificate. This is same as exemptionNo in Transactions.
-        /// </summary>
-        public String idNo { get; set; }
-
-        /// <summary>
-        /// Name or ISO 3166 code identifying the country.
+        /// Name or ISO 3166 code identifying the country of this jurisdiction.
         /// 
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
@@ -68,25 +78,19 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
-        /// End date of this exempt certificate
+        /// The name of the tax region.
         /// </summary>
-        public DateTime? endDate { get; set; }
+        public String taxRegionName { get; set; }
 
         /// <summary>
-        /// The type of idNo (tax_number) associated with a certificate.
-        /// Example: Driver's Licence Number, Permit Number.
+        /// The id of the tax authority.
         /// </summary>
-        public String idType { get; set; }
+        public Int32? taxAuthorityId { get; set; }
 
         /// <summary>
-        /// Is the tax code list an exculsion list?
+        /// Optional: A list of rates for this jurisdiction. To fetch this list, add the query string `?$include=TaxRates` to your URL.
         /// </summary>
-        public Int32? isTaxCodeListExclusionList { get; set; }
-
-        /// <summary>
-        /// optional: list of tax code associated with this exempt certificate detail
-        /// </summary>
-        public List<EcmsDetailTaxCodeModel> taxCodes { get; set; }
+        public List<ComplianceAggregatedTaxRateModel> rates { get; set; }
 
 
         /// <summary>

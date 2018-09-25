@@ -23,21 +23,6 @@ namespace Avalara.AvaTax.RestClient
     public enum MatchingTaxType
     {
         /// <summary>
-        /// Match medical excise type
-        /// </summary>
-        Excise,
-
-        /// <summary>
-        /// Match Lodging tax type
-        /// </summary>
-        Lodging,
-
-        /// <summary>
-        /// Match bottle tax type
-        /// </summary>
-        Bottle,
-
-        /// <summary>
         /// Match all tax types
         /// </summary>
         All,
@@ -53,19 +38,19 @@ namespace Avalara.AvaTax.RestClient
         ConsumerUseTax,
 
         /// <summary>
-        /// Match both Consumer Use and Seller's Use Tax types
+        /// Match Sales Tax only
         /// </summary>
-        ConsumersUseAndSellersUseTax,
+        SalesTax,
 
         /// <summary>
-        /// Match both Consumer Use and Sales Tax types
+        /// Match Seller's Use Tax only
         /// </summary>
-        ConsumerUseAndSalesTax,
+        UseTax,
 
         /// <summary>
-        /// Match Fee tax types only
+        /// Match VAT Output Tax only
         /// </summary>
-        Fee,
+        VATOutputTax,
 
         /// <summary>
         /// Match VAT Input Tax only
@@ -78,9 +63,9 @@ namespace Avalara.AvaTax.RestClient
         VATNonrecoverableInputTax,
 
         /// <summary>
-        /// Match VAT Output Tax only
+        /// Match Fee tax types only
         /// </summary>
-        VATOutputTax,
+        Fee,
 
         /// <summary>
         /// Match Rental tax types only
@@ -88,14 +73,29 @@ namespace Avalara.AvaTax.RestClient
         Rental,
 
         /// <summary>
-        /// Match Sales Tax only
+        /// Match both Consumer Use and Sales Tax types
         /// </summary>
-        SalesTax,
+        ConsumerUseAndSalesTax,
 
         /// <summary>
-        /// Match Seller's Use Tax only
+        /// Match both Consumer Use and Seller's Use Tax types
         /// </summary>
-        UseTax,
+        ConsumersUseAndSellersUseTax,
+
+        /// <summary>
+        /// Match medical excise type
+        /// </summary>
+        Excise,
+
+        /// <summary>
+        /// Match Lodging tax type
+        /// </summary>
+        Lodging,
+
+        /// <summary>
+        /// Match bottle tax type
+        /// </summary>
+        Bottle,
 
     }
 }

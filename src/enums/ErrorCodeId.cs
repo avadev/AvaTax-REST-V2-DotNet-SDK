@@ -278,7 +278,37 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        RuleMustHaveTaxCode,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RuleTypeRestricted,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AllJurisRuleLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidAdjustmentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
         DeleteInformation,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OutOfRange,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnspecifiedTimeZone,
 
         /// <summary>
         /// 
@@ -473,11 +503,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        TechSupportAuditRequired,
-
-        /// <summary>
-        /// 
-        /// </summary>
         NexusParentDateMismatch,
 
         /// <summary>
@@ -583,11 +608,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        FailedToUploadReport,
-
-        /// <summary>
-        /// 
-        /// </summary>
         FailedToDownloadReport,
 
         /// <summary>
@@ -614,6 +634,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidFileContentType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RequestTooLarge,
 
         /// <summary>
         /// 
@@ -731,11 +756,6 @@ namespace Avalara.AvaTax.RestClient
         InvalidInputDate,
 
         /// <summary>
-        /// 
-        /// </summary>
-        RequestedFileNotExist,
-
-        /// <summary>
         /// Errors in Soap V1 Passthrough / GetTax calls
         /// </summary>
         GetTaxError,
@@ -758,17 +778,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        InvalidParameter,
-
-        /// <summary>
-        /// 
-        /// </summary>
         InvalidParameterValue,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        CompanyCodeConflict,
 
         /// <summary>
         /// 
@@ -821,12 +831,17 @@ namespace Avalara.AvaTax.RestClient
         InvalidPostalCode,
 
         /// <summary>
-        /// Represents a malformed document fetch command
+        /// Subscription error codes
         /// </summary>
-        BadDocumentFetch,
+        InvalidSubscriptionDescription,
 
         /// <summary>
         /// 
+        /// </summary>
+        InvalidSubscriptionTypeId,
+
+        /// <summary>
+        /// Represents a malformed document fetch command
         /// </summary>
         CannotChangeFilingStatus,
 
@@ -971,6 +986,16 @@ namespace Avalara.AvaTax.RestClient
         LinesNotSpecified,
 
         /// <summary>
+        /// 
+        /// </summary>
+        LineDetailsDoesNotExist,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotCreateTransactionWithDeletedDataSource,
+
+        /// <summary>
         /// Exempt cert error codes
         /// </summary>
         InvalidBusinessType,
@@ -979,11 +1004,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CannotModifyExemptCert,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        CertificatesFieldInvalid,
 
         /// <summary>
         /// 
@@ -1061,6 +1081,31 @@ namespace Avalara.AvaTax.RestClient
         InvalidRequestContentType,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ExemptionPaginationLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ExemptionSortLimits,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CustomerCantBeBothShipToAndBillTo,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BillToCustomerExpected,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShipToCustomerExpected,
+
+        /// <summary>
         /// Multi document error codes
         /// </summary>
         TransactionNotCancelled,
@@ -1131,16 +1176,6 @@ namespace Avalara.AvaTax.RestClient
         CommsConfigClientIdBadValue,
 
         /// <summary>
-        /// BizTech API error codes
-        /// </summary>
-        BizTechCustomerAccountFailure,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        BizTechOpportunityCreationFailure,
-
-        /// <summary>
         /// Account Activate error codes
         /// </summary>
         AccountInNewStatusException,
@@ -1186,6 +1221,11 @@ namespace Avalara.AvaTax.RestClient
         NexusChildDateMismatch,
 
         /// <summary>
+        /// Remote validation Error
+        /// </summary>
+        RemoteValidationError,
+
+        /// <summary>
         /// Advanced rule errors
         /// </summary>
         AdvancedRuleBadScript,
@@ -1211,14 +1251,54 @@ namespace Avalara.AvaTax.RestClient
         AdvancedRuleNotApproved,
 
         /// <summary>
-        /// 
+        /// Miscellaneous
         /// </summary>
         InvalidDocumentStatusToAddOrDeleteLines,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxRuleRequiresNexus,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UPCCodeNotUnique,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotUpdateSourceOrInstance,
 
         /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnsupportedOutputFileType,
+
+        /// <summary>
+        /// TaxProfile API errors
+        /// </summary>
+        TaxProfileNotProvided,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxProfile,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CompanyTaxProfileEntryRequired,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ErrorReadingTaxProfileEntry,
 
     }
 }

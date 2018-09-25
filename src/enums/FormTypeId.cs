@@ -65,5 +65,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Prepayment,
 
+        /// <summary>
+        /// Denotes the form type is Prepayment Allowance
+        /// </summary>
+        PrepaymentAllowed,
+
     }
 }
