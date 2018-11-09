@@ -270,6 +270,29 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
+        /// Add an address to this line using an existing company location code.
+        /// 
+        /// AvaTax will search for a company location whose code matches the `locationCode` parameter and use the address
+        /// of that location.
+        /// </summary>
+        /// <param name="type">Address Type. Can be ShipFrom, ShipTo, PointOfOrderAcceptance, PointOfOrderOrigin, SingleLocation.</param>
+        /// <param name="locationCode">The location code of the location to use as this address.</param>
+        /// <returns></returns>
+        public TransactionBuilder WithLineAddress(TransactionAddressType type, string locationCode)
+        {
+            var line = GetMostRecentLine("WithLineAddress");
+            if (line.addresses == null) line.addresses = new AddressesModel();
+            var ai = new AddressLocationInfo
+            {
+                locationCode = locationCode
+            };
+            SetAddress(line.addresses, type, ai);
+            return this;
+        }
+
+        
+
+        /// <summary>
         /// Add a document-level Tax Override to the transaction.
         ///  - A TaxDate override requires a valid DateTime object to be passed.
         /// TODO: Verify Tax Override constraints and add exceptions.
