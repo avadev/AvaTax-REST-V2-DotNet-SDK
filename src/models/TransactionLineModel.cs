@@ -212,7 +212,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If a tax override was specified, this indicates the type of tax override.
         /// </summary>
-        public TaxOverrideTypeId? taxOverrideType { get; set; }
+        public TaxOverrideType? taxOverrideType { get; set; }
 
         /// <summary>
         /// VAT business identification number used for this transaction.

@@ -154,7 +154,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If a tax override was applied to this transaction, indicates what type of tax override was applied.
         /// </summary>
-        public TaxOverrideTypeId? taxOverrideType { get; set; }
+        public TaxOverrideType? taxOverrideType { get; set; }
 
         /// <summary>
         /// If a tax override was applied to this transaction, indicates the amount of tax that was requested by the customer.
@@ -336,6 +336,11 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionSummary> summary { get; set; }
 
         /// <summary>
+        /// Constains the tax details per tax type
+        /// </summary>
+        public List<TaxDetailsByTaxType> taxDetailsByTaxType { get; set; }
+
+        /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
         public Dictionary<string, string> parameters { get; set; }
@@ -349,11 +354,6 @@ namespace Avalara.AvaTax.RestClient
         /// Invoice messages associated with this document. Currently, this stores legally-required VAT messages.
         /// </summary>
         public List<InvoiceMessageModel> invoiceMessages { get; set; }
-
-        /// <summary>
-        /// The DataSource info that has recorded this transaction.
-        /// </summary>
-        public DataSourceModel dataSource { get; set; }
 
 
         /// <summary>

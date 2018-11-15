@@ -18,27 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a fixup change
+    /// Tax Details by Tax Type
     /// </summary>
-    public class TransactionReferenceFieldModel
+    public class TaxDetailsByTaxType
     {
         /// <summary>
-        /// The id of the transaction
+        /// Tax Type
         /// </summary>
-        public Int64 documentId { get; set; }
+        public String taxType { get; set; }
 
         /// <summary>
-        /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority.
-        /// 
-        /// This value is used by Avalara Managed Returns to group documents together by reporting locations
-        /// for tax authorities that require location-based reporting.
+        /// Total taxable amount by tax type
         /// </summary>
-        public String reportingLocationCode { get; set; }
+        public Decimal? totalTaxable { get; set; }
 
         /// <summary>
-        /// Reference field of the line details
+        /// Total exempt by tax type
         /// </summary>
-        public List<LineDetailSERCodeModel> lineDetailSerCodes { get; set; }
+        public Decimal? totalExempt { get; set; }
+
+        /// <summary>
+        /// Total non taxable by tax type
+        /// </summary>
+        public Decimal? totalNonTaxable { get; set; }
+
+        /// <summary>
+        /// Total tax by tax type
+        /// </summary>
+        public Decimal? totalTax { get; set; }
 
 
         /// <summary>
