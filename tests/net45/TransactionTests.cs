@@ -202,7 +202,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(overrideLine.lineAmount, line.lineAmount);
             Assert.AreEqual(1, overrideLine.tax);
             Assert.True(overrideLine.tax < line.tax);
-            Assert.AreEqual(TaxOverrideTypeId.TaxAmount, overrideLine.taxOverrideType);
+            Assert.AreEqual(TaxOverrideType.TaxAmount, overrideLine.taxOverrideType);
         }
 
 
