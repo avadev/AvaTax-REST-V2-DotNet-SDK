@@ -8076,6 +8076,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
+
             return RestCall<TransactionModel>("GET", path, null);
         }
 

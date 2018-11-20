@@ -196,7 +196,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(overrideLine.lineAmount, line.lineAmount);
             Assert.AreEqual(1, overrideLine.tax);
             Assert.True(overrideLine.tax < line.tax);
-            Assert.AreEqual(TaxOverrideTypeId.TaxAmount, overrideLine.taxOverrideType);
+            Assert.AreEqual(TaxOverrideType.TaxAmount, overrideLine.taxOverrideType);
         }
 
 
@@ -220,12 +220,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
 
             // Ensure this transaction was created
             Assert.NotNull(transaction, "Transaction should have been created");
-            Assert.AreEqual(aComplexTransactionCode, transaction.code);
+            Assert.AreNotEqual(aComplexTransactionCode, transaction.code);
+            Assert.That(transaction.code.Length, Is.EqualTo(36));
 
             // Fetch the transaction back
-            var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null, null);
+            var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null, "Lines");
             Assert.NotNull(fetchBack);
-            Assert.AreEqual(aComplexTransactionCode, fetchBack.code);
+            Assert.AreNotEqual(aComplexTransactionCode, fetchBack.code);
+            Assert.That(fetchBack.code.Length, Is.EqualTo(36));
         }
     }
 }
