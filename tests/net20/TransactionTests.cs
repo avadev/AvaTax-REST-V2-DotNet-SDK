@@ -226,7 +226,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
 
             // Ensure this transaction was created
             Assert.NotNull(transaction, "Transaction should have been created");
-            Assert.AreEqual(aComplexTransactionCode, transaction.code);
+            Assert.AreNotEqual(aComplexTransactionCode, transaction.code);
+            Assert.That(transaction.code.Length, Is.EqualTo(36));
 
             // Fetch the transaction back
             var fetchBack = Client.GetTransactionByCode(TestCompany.companyCode, aComplexTransactionCode, null, null);
