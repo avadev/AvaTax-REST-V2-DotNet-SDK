@@ -94,17 +94,22 @@ namespace Avalara.AvaTax.RestClient
         Adjusted,
 
         /// <summary>
-        /// DEPRECATED - A document which is in Queue status and processed later.
+        /// DEPRECATED - A document which is queued for later processing.
         /// </summary>
         Queued,
 
         /// <summary>
-        /// DEPRECATED - A document which is Pending for Approval.
+        /// Indicates that this document requires approval from a governmental agency before it can be finalized.
+        ///  
+        ///  Some governments require active verification of transactions before they can be finalized. When AvaTax
+        ///  detects that a transaction must be verified with a governmental agency, this transaction will be flagged
+        ///  as `PendingApproval` until the government has certified the transaction.
         /// </summary>
         PendingApproval,
 
         /// <summary>
-        /// DEPRECATED - Represents "a document in any status" when searching.
+        /// DEPRECATED - Represents "a document in any status" when searching. Please search using the 
+        ///  [Filtering in REST](/avatax/filtering-in-rest/) documentation.
         /// </summary>
         Any,
 

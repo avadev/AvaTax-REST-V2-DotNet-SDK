@@ -7,6 +7,7 @@ dotnet restore Avalara.AvaTax.net45.sln
 dotnet restore Avalara.AvaTax.netstandard11.sln
 
 ECHO ********** Build projects in release mode
+cd "C:\git\develop\AvaTax-REST-V2-DotNet-SDK1"
 "C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" Avalara.AvaTax.Net20.sln /t:Build /p:Configuration="Release"
 "C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" Avalara.AvaTax.net45.sln /t:Build /p:Configuration="Release"
 dotnet build Avalara.AvaTax.netstandard11.sln -c Release

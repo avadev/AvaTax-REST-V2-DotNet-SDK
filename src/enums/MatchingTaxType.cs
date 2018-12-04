@@ -97,5 +97,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Bottle,
 
+        /// <summary>
+        /// Match RentToOwn tax type
+        /// </summary>
+        RentToOwn,
+
     }
 }

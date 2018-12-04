@@ -18,7 +18,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// SER code fixup
     /// </summary>
     public class LineDetailSERCodeModel
     {
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         public Int64? transactionLineDetailId { get; set; }
 
         /// <summary>
-        /// SER Code of the transaction line detail. Only an SST Admin can modify this field.
+        /// Updated SER code
         /// </summary>
         public String serCode { get; set; }
 
