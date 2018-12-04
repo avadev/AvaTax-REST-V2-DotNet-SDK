@@ -313,6 +313,7 @@
     <Compile Include="models\TaxAuthorityTypeModel.cs" />
     <Compile Include="models\TaxCodeModel.cs" />
     <Compile Include="models\TaxCodeTypesModel.cs" />
+    <Compile Include="models\TaxDetailsByTaxType.cs" />
     <Compile Include="models\TaxOverrideModel.cs" />
     <Compile Include="models\TaxRateModel.cs" />
     <Compile Include="models\TaxRegionJurisdictionModel.cs" />

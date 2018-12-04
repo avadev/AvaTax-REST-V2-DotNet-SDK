@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.9.0-234
+ * @version    18.10.5-260
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.9.0-234"; } }
+        public static string API_VERSION { get { return "18.10.5-260"; } }
 
 #region Methods
 
@@ -91,17 +91,20 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve audit history for an account.
         /// </summary>
         /// <remarks>
-        /// Retrieve audit history for an account.
+        /// Retrieve audit trace history for an account.
         /// 
-        /// Audit history provides you with the data necessary to report and investigate calls made from your account.
+        /// Your audit trace history contains a record of all API calls made against the AvaTax REST API. You can use this API to investigate
+        /// problems and see exactly what information was sent back and forth between your code and AvaTax.
         /// 
         /// When specifying a start and end datetime, please include a valid timezone indicator, such as the "Z" present in the examples for the start and end query parameters.
         /// You can learn more about valid time zone designators at https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators.
         /// 
-        /// For performance reasons, there are are limits to the request size. Currently, the per-call limits are a one hour duration, 50 MB of data, and 30 records at a time. 
+        /// This API enforces limits to the amount of data retrieved. These limits are subject to change.
         /// 
-        /// Due to the volume of traffic from the system, audit history is not guaranteed to be immediately available. In some cases, this could even take an hour or more.
-        /// If you receive no results where results are expected, this is likely an indication that the data is not yet available.
+        /// * You may request data from a maximum of a one-hour time period.
+        /// * The amount of data and number of API calls returned by this API are limited and may be adjusted at any time.
+        /// * Old records may be migrated out of immediately available storage. To request older data, please contact your account manager.
+        /// * New records must migrate to available storage before they can be retrieved. You may need to wait a period of time before newly created records can be fetched.
         /// </remarks>
         /// <param name="id">The ID of the account you wish to audit.</param>
         /// <param name="start">The start datetime of audit history you with to retrieve, e.g. "2018-06-08T17:00:00Z". Defaults to the past 15 minutes.</param>
@@ -247,9 +250,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="postalCode">Postal Code / Zip Code</param>
         /// <param name="country">Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)</param>
         /// <param name="textCase">selectable text case for address validation</param>
-        /// <param name="latitude">Geospatial latitude measurement</param>
-        /// <param name="longitude">Geospatial longitude measurement</param>
-        public AddressResolutionModel ResolveAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase, Decimal? latitude, Decimal? longitude)
+        public AddressResolutionModel ResolveAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             path.AddQuery("line1", line1);
@@ -260,8 +261,6 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
             path.AddQuery("textCase", textCase);
-            path.AddQuery("latitude", latitude);
-            path.AddQuery("longitude", longitude);
             return RestCall<AddressResolutionModel>("GET", path, null);
         }
 
@@ -2163,6 +2162,121 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             return RestCall<CustomerModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Create and store new datasources for the respective companies.
+        /// </summary>
+        /// <remarks>
+        /// Create one or more datasource objects.
+        /// </remarks>
+        /// <param name="companyId">The id of the company you which to create the datasources</param>
+        /// <param name="model"></param>
+        public List<DataSourceModel> CreateDataSources(Int32 companyId, List<DataSourceModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
+            path.ApplyField("companyId", companyId);
+            return RestCall<List<DataSourceModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a datasource by datasource id for a company.
+        /// </summary>
+        /// <remarks>
+        /// Marks the existing datasource for a company as deleted.
+        /// </remarks>
+        /// <param name="companyId">The id of the company the datasource belongs to.</param>
+        /// <param name="id">The id of the datasource you wish to delete.</param>
+        public List<ErrorDetail> DeleteDataSource(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Get data source by data source id
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the data source by its unique ID number.
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="id">data source id</param>
+        public DataSourceModel GetDataSourceById(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<DataSourceModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all datasources for this company
+        /// </summary>
+        /// <remarks>
+        /// Gets multiple datasource objects for a given company.
+        /// </remarks>
+        /// <param name="companyId">The id of the company you wish to retrieve the datasources.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<DataSourceModel> ListDataSources(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<DataSourceModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all datasources
+        /// </summary>
+        /// <remarks>
+        /// Get multiple datasource objects across all companies.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<DataSourceModel> QueryDataSources(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/datasources");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<DataSourceModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a datasource identified by id for a company
+        /// </summary>
+        /// <remarks>
+        /// Updates a datasource for a company.
+        /// </remarks>
+        /// <param name="companyId">The id of the company the datasource belongs to.</param>
+        /// <param name="id">The id of the datasource you wish to delete.</param>
+        /// <param name="model"></param>
+        public DataSourceModel UpdateDataSource(Int32 companyId, Int32 id, DataSourceModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<DataSourceModel>("PUT", path, model);
         }
 
 
@@ -7882,7 +7996,8 @@ namespace Avalara.AvaTax.RestClient
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
         /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
-        ///  
+        /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
+        /// 
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
@@ -7961,6 +8076,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
+
             return RestCall<TransactionModel>("GET", path, null);
         }
 
@@ -8717,17 +8833,20 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve audit history for an account.;
         /// </summary>
         /// <remarks>
-        /// Retrieve audit history for an account.
+        /// Retrieve audit trace history for an account.
         /// 
-        /// Audit history provides you with the data necessary to report and investigate calls made from your account.
+        /// Your audit trace history contains a record of all API calls made against the AvaTax REST API. You can use this API to investigate
+        /// problems and see exactly what information was sent back and forth between your code and AvaTax.
         /// 
         /// When specifying a start and end datetime, please include a valid timezone indicator, such as the "Z" present in the examples for the start and end query parameters.
         /// You can learn more about valid time zone designators at https://en.wikipedia.org/wiki/ISO_8601#Time_zone_designators.
         /// 
-        /// For performance reasons, there are are limits to the request size. Currently, the per-call limits are a one hour duration, 50 MB of data, and 30 records at a time. 
+        /// This API enforces limits to the amount of data retrieved. These limits are subject to change.
         /// 
-        /// Due to the volume of traffic from the system, audit history is not guaranteed to be immediately available. In some cases, this could even take an hour or more.
-        /// If you receive no results where results are expected, this is likely an indication that the data is not yet available.;
+        /// * You may request data from a maximum of a one-hour time period.
+        /// * The amount of data and number of API calls returned by this API are limited and may be adjusted at any time.
+        /// * Old records may be migrated out of immediately available storage. To request older data, please contact your account manager.
+        /// * New records must migrate to available storage before they can be retrieved. You may need to wait a period of time before newly created records can be fetched.;
         /// </remarks>
         /// <param name="id">The ID of the account you wish to audit.</param>
         /// <param name="start">The start datetime of audit history you with to retrieve, e.g. "2018-06-08T17:00:00Z". Defaults to the past 15 minutes.</param>
@@ -8873,9 +8992,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="postalCode">Postal Code / Zip Code</param>
         /// <param name="country">Two character ISO 3166 Country Code (see /api/v2/definitions/countries for a full list)</param>
         /// <param name="textCase">selectable text case for address validation</param>
-        /// <param name="latitude">Geospatial latitude measurement</param>
-        /// <param name="longitude">Geospatial longitude measurement</param>
-        public async Task<AddressResolutionModel> ResolveAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase, Decimal? latitude, Decimal? longitude)
+        public async Task<AddressResolutionModel> ResolveAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             path.AddQuery("line1", line1);
@@ -8886,8 +9003,6 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
             path.AddQuery("textCase", textCase);
-            path.AddQuery("latitude", latitude);
-            path.AddQuery("longitude", longitude);
             return await RestCallAsync<AddressResolutionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -10789,6 +10904,121 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             return await RestCallAsync<CustomerModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create and store new datasources for the respective companies.;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more datasource objects.;
+        /// </remarks>
+        /// <param name="companyId">The id of the company you which to create the datasources</param>
+        /// <param name="model"></param>
+        public async Task<List<DataSourceModel>> CreateDataSourcesAsync(Int32 companyId, List<DataSourceModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<List<DataSourceModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a datasource by datasource id for a company.;
+        /// </summary>
+        /// <remarks>
+        /// Marks the existing datasource for a company as deleted.;
+        /// </remarks>
+        /// <param name="companyId">The id of the company the datasource belongs to.</param>
+        /// <param name="id">The id of the datasource you wish to delete.</param>
+        public async Task<List<ErrorDetail>> DeleteDataSourceAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Get data source by data source id;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the data source by its unique ID number.;
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="id">data source id</param>
+        public async Task<DataSourceModel> GetDataSourceByIdAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<DataSourceModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all datasources for this company;
+        /// </summary>
+        /// <remarks>
+        /// Gets multiple datasource objects for a given company.;
+        /// </remarks>
+        /// <param name="companyId">The id of the company you wish to retrieve the datasources.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<DataSourceModel>> ListDataSourcesAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<DataSourceModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all datasources;
+        /// </summary>
+        /// <remarks>
+        /// Get multiple datasource objects across all companies.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<DataSourceModel>> QueryDataSourcesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/datasources");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<DataSourceModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a datasource identified by id for a company;
+        /// </summary>
+        /// <remarks>
+        /// Updates a datasource for a company.;
+        /// </remarks>
+        /// <param name="companyId">The id of the company the datasource belongs to.</param>
+        /// <param name="id">The id of the datasource you wish to delete.</param>
+        /// <param name="model"></param>
+        public async Task<DataSourceModel> UpdateDataSourceAsync(Int32 companyId, Int32 id, DataSourceModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<DataSourceModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -16508,7 +16738,8 @@ namespace Avalara.AvaTax.RestClient
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
         /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
-        ///  
+        /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
+        /// 
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.;
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>

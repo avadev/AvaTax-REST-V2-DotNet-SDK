@@ -166,6 +166,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? haveReadAvalaraTermsAndConditions { get; set; }
 
+        /// <summary>
+        /// A dynamic key-value pair for the marketing context information
+        /// </summary>
+        public Dictionary<string, string> marketingContext { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

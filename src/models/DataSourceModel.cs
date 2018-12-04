@@ -83,9 +83,14 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? modifiedDate { get; set; }
 
         /// <summary>
-        /// The daye when this record was deleted.
+        /// The date when this record was deleted.
         /// </summary>
         public DateTime? deletedDate { get; set; }
+
+        /// <summary>
+        /// Specifies whether transactions created by this data source needs to re-calculate tax or not
+        /// </summary>
+        public Boolean? recalculate { get; set; }
 
 
         /// <summary>

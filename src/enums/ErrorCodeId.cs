@@ -293,6 +293,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidCompanyLocationSetting,
+
+        /// <summary>
+        /// 
+        /// </summary>
         InvalidAdjustmentType,
 
         /// <summary>
@@ -813,11 +818,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        MultiDocumentTypesError,
-
-        /// <summary>
-        /// 
-        /// </summary>
         InvalidDocumentTypesToFetch,
 
         /// <summary>
@@ -884,6 +884,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidIPAddress,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OfferCodeAlreadyApplied,
 
         /// <summary>
         /// Refund API error codes
@@ -1299,6 +1304,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         ErrorReadingTaxProfileEntry,
+
+        /// <summary>
+        /// AuditAccount API errors
+        /// </summary>
+        TraceDataNotAvailable,
 
     }
 }
