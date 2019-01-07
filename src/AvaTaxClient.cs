@@ -567,6 +567,7 @@ namespace Avalara.AvaTax.RestClient
 
             // Convert the name-value pairs into a byte array
             wr.Method = verb;
+            wr.ContentLength = 0;
             if (content != null) {
                 wr.ContentType = Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
