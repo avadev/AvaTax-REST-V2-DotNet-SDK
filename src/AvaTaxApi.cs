@@ -18,7 +18,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2018 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.10.5-260
+ * @version    18.12.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.10.5-260"; } }
+        public static string API_VERSION { get { return "18.12.0"; } }
 
 #region Methods
 
@@ -76,13 +76,11 @@ namespace Avalara.AvaTax.RestClient
         /// unchanged account model.
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
-        /// <param name="include">Elements to include when fetching the account</param>
         /// <param name="model">The activation request</param>
-        public AccountModel ActivateAccount(Int32 id, String include, ActivateAccountModel model)
+        public AccountModel ActivateAccount(Int32 id, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
-            path.AddQuery("$include", include);
             return RestCall<AccountModel>("POST", path, model);
         }
 
@@ -532,7 +530,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get the AvaFileForm object identified by this URL.
         /// </remarks>
         /// <param name="id">The primary key of this AvaFileForm</param>
-        public AvaFileFormModel GetAvaFileForm(String id)
+        public AvaFileFormModel GetAvaFileForm(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
@@ -904,11 +902,13 @@ namespace Avalara.AvaTax.RestClient
         /// storage for this company, call `RequestCertificateSetup`.
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
+        /// <param name="preValidatedExemptionReason">If set to true, the certificate will bypass the human verification process.</param>
         /// <param name="model">Certificates to be created</param>
-        public List<CertificateModel> CreateCertificates(Int32 companyId, List<CertificateModel> model)
+        public List<CertificateModel> CreateCertificates(Int32 companyId, Boolean? preValidatedExemptionReason, List<CertificateModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
+            path.AddQuery("$preValidatedExemptionReason", preValidatedExemptionReason);
             return RestCall<List<CertificateModel>>("POST", path, model);
         }
 
@@ -1538,15 +1538,15 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a list of all configuration settings tied to this company.
         /// 
         /// Configuration settings provide you with the ability to control features of your account and of your
-        /// tax software. The category names `AvaCertServiceConfig` is reserved for
-        /// Avalara internal software configuration values; to store your own account-level settings, please
+        /// tax software. The category name `AvaCertServiceConfig` is reserved for
+        /// Avalara internal software configuration values; to store your own company-level settings, please
         /// create a new category name that begins with `X-`, for example, `X-MyCustomCategory`.
         /// 
         /// Company settings are permanent settings that cannot be deleted. You can set the value of a
-        /// company setting to null if desired.
+        /// company setting to null if desired and if the particular setting supports it.
         /// 
-        /// Avalara-based account settings for `AvaCertServiceConfig` affect your account's exemption certificate
-        /// processing, and should only be changed with care.
+        /// Avalara-based company settings for `AvaCertServiceConfig` affect your company's exemption certificate
+        /// processing, and should be changed with care.
         /// </remarks>
         /// <param name="id"></param>
         public List<CompanyConfigurationModel> GetCompanyConfiguration(Int32 id)
@@ -1656,21 +1656,21 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Change configuration settings for this account
+        /// Change configuration settings for this company
         /// </summary>
         /// <remarks>
-        /// Update configuration settings tied to this account.
+        /// Update configuration settings tied to this company.
         /// 
         /// Configuration settings provide you with the ability to control features of your account and of your
         /// tax software. The category names `AvaCertServiceConfig` is reserved for
-        /// Avalara internal software configuration values; to store your own account-level settings, please
+        /// Avalara internal software configuration values; to store your own company-level settings, please
         /// create a new category name that begins with `X-`, for example, `X-MyCustomCategory`.
         /// 
         /// Company settings are permanent settings that cannot be deleted. You can set the value of a
-        /// company setting to null if desired.
+        /// company setting to null if desired and if the particular setting supports it.
         /// 
-        /// Avalara-based account settings for `AvaCertServiceConfig` affect your account's exemption certificate
-        /// processing, and should only be changed with care.
+        /// Avalara-based company settings for `AvaCertServiceConfig` affect your company's exemption certificate
+        /// processing, and should be changed with care.
         /// </remarks>
         /// <param name="id"></param>
         /// <param name="model"></param>
@@ -2311,9 +2311,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is intended to be useful to identify whether the user should be allowed
-        /// to automatically verify their login and password.
+        /// to automatically verify their login and password. This API will provide a result only if the form supports automatic online login verification.
         /// </remarks>
-        /// <param name="form">The name of the form you would like to verify. This can be the tax form code or the legacy return name</param>
+        /// <param name="form">The name of the form you would like to verify. This is the tax form code</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -3206,6 +3206,31 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the parameters by companyCode and itemCode.
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of parameters based on the company country and state jurisdiction and the item code.
+        /// </remarks>
+        /// <param name="companyCode">Company code.</param>
+        /// <param name="itemCode">Item code.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ParameterModel> ListParametersByItem(String companyCode, String itemCode, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/parameters/byitem/{companyCode}/{itemCode}");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("itemCode", itemCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ParameterModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported permissions
         /// </summary>
         /// <remarks>
@@ -3270,6 +3295,56 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<PreferredProgramModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all available product classification systems.
+        /// </summary>
+        /// <remarks>
+        /// List all available product classification systems.
+        /// 
+        /// Tax authorities use product classification systems as a way to identify products and associate them with a tax rate.
+        /// More than one tax authority might use the same product classification system, but they might charge different tax rates for products.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ProductClassificationSystemModel> ListProductClassificationSystems(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all product classification systems available to a company based on its nexus.
+        /// </summary>
+        /// <remarks>
+        /// Lists all product classification systems available to a company based on its nexus.
+        /// 
+        /// Tax authorities use product classification systems as a way to identify products and associate them with a tax rate.
+        /// More than one tax authority might use the same product classification system, but they might charge different tax rates for products.
+        /// </remarks>
+        /// <param name="companyCode">The company code.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ProductClassificationSystemModel> ListProductClassificationSystemsByCompany(String companyCode, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems/bycompany/{companyCode}");
+            path.ApplyField("companyCode", companyCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
 
@@ -4516,13 +4591,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="id">The id of the filing return your retrieving</param>
         /// <param name="details">Indicates if you would like the credit details returned</param>
-        public FetchResult<FilingReturnModel> GetFilingReturn(Int32 companyId, Int32 id, Boolean? details)
+        public FilingReturnModel GetFilingReturn(Int32 companyId, Int32 id, Boolean? details)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("details", details);
-            return RestCall<FetchResult<FilingReturnModel>>("GET", path, null);
+            return RestCall<FilingReturnModel>("GET", path, null);
         }
 
 
@@ -4992,6 +5067,58 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add classifications to an item.
+        /// </summary>
+        /// <remarks>
+        /// Add classifications to an item.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// 
+        /// An item may only have one classification per tax system.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="model">The item classifications you wish to create.</param>
+        public List<ItemClassificationOutputModel> CreateItemClassifications(Int32 companyId, Int64 itemId, List<ItemClassificationInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            return RestCall<List<ItemClassificationOutputModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Add parameters to an item.
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to an item.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// 
+        /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Product`
+        /// 
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this item parameter.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="model">The item parameters you wish to create.</param>
+        public List<ItemParameterModel> CreateItemParameters(Int32 companyId, Int64 itemId, List<ItemParameterModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            return RestCall<List<ItemParameterModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new item
         /// </summary>
         /// <remarks>
@@ -5002,6 +5129,8 @@ namespace Avalara.AvaTax.RestClient
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        ///  
+        /// The tax code takes precedence over the tax code id if both are provided.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
@@ -5017,13 +5146,15 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single item
         /// </summary>
         /// <remarks>
-        /// Marks the item object at this URL as deleted.
+        /// Deletes the item object at this URL.
         /// 
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        /// 
+        /// Deleting an item will also delete the parameters and classifications associated with that item.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
@@ -5031,6 +5162,54 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single item classification.
+        /// </summary>
+        /// <remarks>
+        /// Delete a single item classification.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="id">The item classification id.</param>
+        public List<ErrorDetail> DeleteItemClassification(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single item parameter
+        /// </summary>
+        /// <remarks>
+        /// Delete a single item parameter.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The parameter id</param>
+        public List<ErrorDetail> DeleteItemParameter(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
@@ -5050,12 +5229,128 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
-        public ItemModel GetItem(Int32 companyId, Int64 id)
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        public ItemModel GetItem(Int32 companyId, Int64 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return RestCall<ItemModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single item classification.
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single item classification.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="id">The item classification id.</param>
+        public ItemClassificationOutputModel GetItemClassification(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return RestCall<ItemClassificationOutputModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single item parameter
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single item parameter.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The parameter id</param>
+        public ItemParameterModel GetItemParameter(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return RestCall<ItemParameterModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve classifications for an item.
+        /// </summary>
+        /// <remarks>
+        /// List classifications for an item.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` classification; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` classifications.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ItemClassificationOutputModel> ListItemClassifications(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ItemClassificationOutputModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for an item
+        /// </summary>
+        /// <remarks>
+        /// List parameters for an item.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ItemParameterModel> ListItemParameters(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ItemParameterModel>>("GET", path, null);
         }
 
 
@@ -5077,7 +5372,8 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
-        /// * Attributes
+        /// * Parameters
+        /// * Classifications
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -5113,10 +5409,6 @@ namespace Avalara.AvaTax.RestClient
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// 
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
-        ///  
-        /// * Attributes
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
@@ -5149,6 +5441,8 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// All data from the existing object will be replaced with data in the object you PUT. To set a field's value to null, 
         /// you may either set its value to null or omit that field from the object you post.
+        ///  
+        /// The tax code takes precedence over the tax code id if both are provided.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
@@ -5159,6 +5453,58 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<ItemModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update an item classification.
+        /// </summary>
+        /// <remarks>
+        /// Update an item classification.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// 
+        /// An item may only have one classification per tax system.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="id">The item classification id.</param>
+        /// <param name="model">The item object you wish to update.</param>
+        public ItemClassificationOutputModel UpdateItemClassification(Int32 companyId, Int64 itemId, Int64 id, ItemClassificationInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return RestCall<ItemClassificationOutputModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update an item parameter
+        /// </summary>
+        /// <remarks>
+        /// Update an item parameter.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The item parameter id</param>
+        /// <param name="model">The item object you wish to update.</param>
+        public ItemParameterModel UpdateItemParameter(Int32 companyId, Int64 itemId, Int64 id, ItemParameterModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return RestCall<ItemParameterModel>("PUT", path, model);
         }
 
 
@@ -6776,11 +7122,13 @@ namespace Avalara.AvaTax.RestClient
         /// user based on internal Avalara business processes.
         /// </remarks>
         /// <param name="userId">The unique ID of the user whose password will be changed</param>
+        /// <param name="unmigrateFromAi">If user's password was migrated to AI, undo this.</param>
         /// <param name="model">The new password for this user</param>
-        public String ResetPassword(Int32 userId, SetPasswordModel model)
+        public String ResetPassword(Int32 userId, Boolean? unmigrateFromAi, SetPasswordModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
+            path.AddQuery("unmigrateFromAi", unmigrateFromAi);
             return RestCallString("POST", path, model);
         }
 
@@ -8076,7 +8424,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-
             return RestCall<TransactionModel>("GET", path, null);
         }
 
@@ -8122,6 +8469,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
@@ -8359,7 +8707,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
         /// <param name="documentType">(Optional): The document type of the transaction to void. If not provided, the default is SalesInvoice.</param>
-        /// <param name="model">The void request you wish to execute</param>
+        /// <param name="model">The void request you wish to execute. To void a transaction the code must be set to 'DocVoided'</param>
         public TransactionModel VoidTransaction(String companyCode, String transactionCode, DocumentType? documentType, VoidTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");
@@ -8818,13 +9166,11 @@ namespace Avalara.AvaTax.RestClient
         /// unchanged account model.;
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
-        /// <param name="include">Elements to include when fetching the account</param>
         /// <param name="model">The activation request</param>
-        public async Task<AccountModel> ActivateAccountAsync(Int32 id, String include, ActivateAccountModel model)
+        public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
-            path.AddQuery("$include", include);
             return await RestCallAsync<AccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -9274,7 +9620,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get the AvaFileForm object identified by this URL.;
         /// </remarks>
         /// <param name="id">The primary key of this AvaFileForm</param>
-        public async Task<AvaFileFormModel> GetAvaFileFormAsync(String id)
+        public async Task<AvaFileFormModel> GetAvaFileFormAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
@@ -9646,11 +9992,13 @@ namespace Avalara.AvaTax.RestClient
         /// storage for this company, call `RequestCertificateSetup`.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company recording this certificate</param>
+        /// <param name="preValidatedExemptionReason">If set to true, the certificate will bypass the human verification process.</param>
         /// <param name="model">Certificates to be created</param>
-        public async Task<List<CertificateModel>> CreateCertificatesAsync(Int32 companyId, List<CertificateModel> model)
+        public async Task<List<CertificateModel>> CreateCertificatesAsync(Int32 companyId, Boolean? preValidatedExemptionReason, List<CertificateModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
+            path.AddQuery("$preValidatedExemptionReason", preValidatedExemptionReason);
             return await RestCallAsync<List<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -10280,15 +10628,15 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a list of all configuration settings tied to this company.
         /// 
         /// Configuration settings provide you with the ability to control features of your account and of your
-        /// tax software. The category names `AvaCertServiceConfig` is reserved for
-        /// Avalara internal software configuration values; to store your own account-level settings, please
+        /// tax software. The category name `AvaCertServiceConfig` is reserved for
+        /// Avalara internal software configuration values; to store your own company-level settings, please
         /// create a new category name that begins with `X-`, for example, `X-MyCustomCategory`.
         /// 
         /// Company settings are permanent settings that cannot be deleted. You can set the value of a
-        /// company setting to null if desired.
+        /// company setting to null if desired and if the particular setting supports it.
         /// 
-        /// Avalara-based account settings for `AvaCertServiceConfig` affect your account's exemption certificate
-        /// processing, and should only be changed with care.;
+        /// Avalara-based company settings for `AvaCertServiceConfig` affect your company's exemption certificate
+        /// processing, and should be changed with care.;
         /// </remarks>
         /// <param name="id"></param>
         public async Task<List<CompanyConfigurationModel>> GetCompanyConfigurationAsync(Int32 id)
@@ -10398,21 +10746,21 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Change configuration settings for this account;
+        /// Change configuration settings for this company;
         /// </summary>
         /// <remarks>
-        /// Update configuration settings tied to this account.
+        /// Update configuration settings tied to this company.
         /// 
         /// Configuration settings provide you with the ability to control features of your account and of your
         /// tax software. The category names `AvaCertServiceConfig` is reserved for
-        /// Avalara internal software configuration values; to store your own account-level settings, please
+        /// Avalara internal software configuration values; to store your own company-level settings, please
         /// create a new category name that begins with `X-`, for example, `X-MyCustomCategory`.
         /// 
         /// Company settings are permanent settings that cannot be deleted. You can set the value of a
-        /// company setting to null if desired.
+        /// company setting to null if desired and if the particular setting supports it.
         /// 
-        /// Avalara-based account settings for `AvaCertServiceConfig` affect your account's exemption certificate
-        /// processing, and should only be changed with care.;
+        /// Avalara-based company settings for `AvaCertServiceConfig` affect your company's exemption certificate
+        /// processing, and should be changed with care.;
         /// </remarks>
         /// <param name="id"></param>
         /// <param name="model"></param>
@@ -11053,9 +11401,9 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is intended to be useful to identify whether the user should be allowed
-        /// to automatically verify their login and password.;
+        /// to automatically verify their login and password. This API will provide a result only if the form supports automatic online login verification.;
         /// </remarks>
-        /// <param name="form">The name of the form you would like to verify. This can be the tax form code or the legacy return name</param>
+        /// <param name="form">The name of the form you would like to verify. This is the tax form code</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -11948,6 +12296,31 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve the parameters by companyCode and itemCode.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of parameters based on the company country and state jurisdiction and the item code.;
+        /// </remarks>
+        /// <param name="companyCode">Company code.</param>
+        /// <param name="itemCode">Item code.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ParameterModel>> ListParametersByItemAsync(String companyCode, String itemCode, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/parameters/byitem/{companyCode}/{itemCode}");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("itemCode", itemCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of Avalara-supported permissions;
         /// </summary>
         /// <remarks>
@@ -12012,6 +12385,56 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<PreferredProgramModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all available product classification systems.;
+        /// </summary>
+        /// <remarks>
+        /// List all available product classification systems.
+        /// 
+        /// Tax authorities use product classification systems as a way to identify products and associate them with a tax rate.
+        /// More than one tax authority might use the same product classification system, but they might charge different tax rates for products.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ProductClassificationSystemModel>> ListProductClassificationSystemsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// List all product classification systems available to a company based on its nexus.;
+        /// </summary>
+        /// <remarks>
+        /// Lists all product classification systems available to a company based on its nexus.
+        /// 
+        /// Tax authorities use product classification systems as a way to identify products and associate them with a tax rate.
+        /// More than one tax authority might use the same product classification system, but they might charge different tax rates for products.;
+        /// </remarks>
+        /// <param name="companyCode">The company code.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ProductClassificationSystemModel>> ListProductClassificationSystemsByCompanyAsync(String companyCode, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems/bycompany/{companyCode}");
+            path.ApplyField("companyCode", companyCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13258,13 +13681,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="id">The id of the filing return your retrieving</param>
         /// <param name="details">Indicates if you would like the credit details returned</param>
-        public async Task<FetchResult<FilingReturnModel>> GetFilingReturnAsync(Int32 companyId, Int32 id, Boolean? details)
+        public async Task<FilingReturnModel> GetFilingReturnAsync(Int32 companyId, Int32 id, Boolean? details)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("details", details);
-            return await RestCallAsync<FetchResult<FilingReturnModel>>("GET", path, null).ConfigureAwait(false);
+            return await RestCallAsync<FilingReturnModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13734,6 +14157,58 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add classifications to an item.;
+        /// </summary>
+        /// <remarks>
+        /// Add classifications to an item.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// 
+        /// An item may only have one classification per tax system.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="model">The item classifications you wish to create.</param>
+        public async Task<List<ItemClassificationOutputModel>> CreateItemClassificationsAsync(Int32 companyId, Int64 itemId, List<ItemClassificationInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            return await RestCallAsync<List<ItemClassificationOutputModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Add parameters to an item.;
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to an item.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// 
+        /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Product`
+        /// 
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this item parameter.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="model">The item parameters you wish to create.</param>
+        public async Task<List<ItemParameterModel>> CreateItemParametersAsync(Int32 companyId, Int64 itemId, List<ItemParameterModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            return await RestCallAsync<List<ItemParameterModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Create a new item;
         /// </summary>
         /// <remarks>
@@ -13743,7 +14218,9 @@ namespace Avalara.AvaTax.RestClient
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
-        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.;
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        ///  
+        /// The tax code takes precedence over the tax code id if both are provided.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The item you wish to create.</param>
@@ -13759,13 +14236,15 @@ namespace Avalara.AvaTax.RestClient
         /// Delete a single item;
         /// </summary>
         /// <remarks>
-        /// Marks the item object at this URL as deleted.
+        /// Deletes the item object at this URL.
         /// 
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
-        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.;
+        /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        /// 
+        /// Deleting an item will also delete the parameters and classifications associated with that item.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
@@ -13773,6 +14252,54 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single item classification.;
+        /// </summary>
+        /// <remarks>
+        /// Delete a single item classification.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="id">The item classification id.</param>
+        public async Task<List<ErrorDetail>> DeleteItemClassificationAsync(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single item parameter;
+        /// </summary>
+        /// <remarks>
+        /// Delete a single item parameter.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<List<ErrorDetail>> DeleteItemParameterAsync(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
@@ -13792,12 +14319,128 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this item object</param>
         /// <param name="id">The primary key of this item</param>
-        public async Task<ItemModel> GetItemAsync(Int32 companyId, Int64 id)
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        public async Task<ItemModel> GetItemAsync(Int32 companyId, Int64 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return await RestCallAsync<ItemModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single item classification.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single item classification.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="id">The item classification id.</param>
+        public async Task<ItemClassificationOutputModel> GetItemClassificationAsync(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<ItemClassificationOutputModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single item parameter;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single item parameter.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<ItemParameterModel> GetItemParameterAsync(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<ItemParameterModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve classifications for an item.;
+        /// </summary>
+        /// <remarks>
+        /// List classifications for an item.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` classification; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` classifications.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ItemClassificationOutputModel>> ListItemClassificationsAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ItemClassificationOutputModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for an item;
+        /// </summary>
+        /// <remarks>
+        /// List parameters for an item.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// 
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ItemParameterModel>> ListItemParametersAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ItemParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13819,7 +14462,8 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
-        /// * Attributes;
+        /// * Parameters
+        /// * Classifications;
         /// </remarks>
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
@@ -13854,11 +14498,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// 
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
-        ///  
-        /// * Attributes;
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
@@ -13890,7 +14530,9 @@ namespace Avalara.AvaTax.RestClient
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         /// 
         /// All data from the existing object will be replaced with data in the object you PUT. To set a field's value to null, 
-        /// you may either set its value to null or omit that field from the object you post.;
+        /// you may either set its value to null or omit that field from the object you post.
+        ///  
+        /// The tax code takes precedence over the tax code id if both are provided.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
@@ -13901,6 +14543,58 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<ItemModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update an item classification.;
+        /// </summary>
+        /// <remarks>
+        /// Update an item classification.
+        /// 
+        /// A classification is the code for a product in a particular tax system. Classifications enable an item to be used in multiple tax systems which may have different tax rates for a product.
+        /// 
+        /// When an item is used in a transaction, the applicable classification will be used to determine the appropriate tax rate.
+        /// 
+        /// An item may only have one classification per tax system.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="id">The item classification id.</param>
+        /// <param name="model">The item object you wish to update.</param>
+        public async Task<ItemClassificationOutputModel> UpdateItemClassificationAsync(Int32 companyId, Int64 itemId, Int64 id, ItemClassificationInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<ItemClassificationOutputModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update an item parameter;
+        /// </summary>
+        /// <remarks>
+        /// Update an item parameter.
+        /// 
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        /// 
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        /// 
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The item parameter id</param>
+        /// <param name="model">The item object you wish to update.</param>
+        public async Task<ItemParameterModel> UpdateItemParameterAsync(Int32 companyId, Int64 itemId, Int64 id, ItemParameterModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<ItemParameterModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -15518,11 +16212,13 @@ namespace Avalara.AvaTax.RestClient
         /// user based on internal Avalara business processes.;
         /// </remarks>
         /// <param name="userId">The unique ID of the user whose password will be changed</param>
+        /// <param name="unmigrateFromAi">If user's password was migrated to AI, undo this.</param>
         /// <param name="model">The new password for this user</param>
-        public async Task<String> ResetPasswordAsync(Int32 userId, SetPasswordModel model)
+        public async Task<String> ResetPasswordAsync(Int32 userId, Boolean? unmigrateFromAi, SetPasswordModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
+            path.AddQuery("unmigrateFromAi", unmigrateFromAi);
             return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
@@ -16862,7 +17558,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
-        /// * LinesOnly (omit details - reduces API response size);
+        /// * LinesOnly (omit details - reduces API response size)
+        /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.;
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
@@ -17100,7 +17797,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
         /// <param name="documentType">(Optional): The document type of the transaction to void. If not provided, the default is SalesInvoice.</param>
-        /// <param name="model">The void request you wish to execute</param>
+        /// <param name="model">The void request you wish to execute. To void a transaction the code must be set to 'DocVoided'</param>
         public async Task<TransactionModel> VoidTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, VoidTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/void");

@@ -18,16 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction
+    /// Represents a product classification system.
     /// </summary>
-    public class VoidTransactionModel
+    public class ProductClassificationSystemModel
     {
         /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
+        /// Its Integer SystemId value for System
         /// </summary>
-        public VoidReasonCode code { get; set; }
+        public Int32? systemId { get; set; }
+
+        /// <summary>
+        /// The System code for this System.
+        /// </summary>
+        public String systemCode { get; set; }
+
+        /// <summary>
+        /// A friendly human-readable name representing this System.
+        /// </summary>
+        public String description { get; set; }
+
+        /// <summary>
+        /// custom value set for the system
+        /// </summary>
+        public String customsValue { get; set; }
+
+        /// <summary>
+        /// List of all countries that belong to the system including
+        /// </summary>
+        public List<ProductSystemCountryModel> countries { get; set; }
 
 
         /// <summary>

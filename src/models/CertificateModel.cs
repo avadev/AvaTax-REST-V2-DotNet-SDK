@@ -98,6 +98,11 @@ namespace Avalara.AvaTax.RestClient
         public ExemptionReasonModel exemptionReason { get; set; }
 
         /// <summary>
+        /// The status of the certificate
+        /// </summary>
+        public String status { get; set; }
+
+        /// <summary>
         /// The date/time when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
