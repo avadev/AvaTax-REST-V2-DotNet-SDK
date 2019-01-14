@@ -38,12 +38,14 @@ namespace Avalara.AvaTax.RestClient
         public String itemCode { get; set; }
 
         /// <summary>
+        /// DEPRECATED - For identifying an `Item` with `Avalara TaxCode`, please call the [CreateItemClassification API] with your ItemCode and the Avalara TaxCode.
         /// The unique ID number of the tax code that is applied when selling this item.
         /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
+        /// DEPRECATED - For identifying an `Item` with `Avalara TaxCode`, please call the [CreateItemClassification API] with your ItemCode and the Avalara TaxCode.
         /// The unique code string of the Tax Code that is applied when selling this item.
         /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
         /// </summary>
@@ -53,6 +55,11 @@ namespace Avalara.AvaTax.RestClient
         /// A friendly description of this item in your product catalog.
         /// </summary>
         public String description { get; set; }
+
+        /// <summary>
+        /// A way to group similar items.
+        /// </summary>
+        public String itemGroup { get; set; }
 
         /// <summary>
         /// The date when this record was created.
@@ -73,6 +80,17 @@ namespace Avalara.AvaTax.RestClient
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// List of classifications that belong to this item.
+        /// A single classification consits of a productCode and a systemCode for a particular item.
+        /// </summary>
+        public List<ClassificationModel> classifications { get; set; }
+
+        /// <summary>
+        /// List of item parameters.
+        /// </summary>
+        public List<ItemParameterModel> parameters { get; set; }
 
 
         /// <summary>

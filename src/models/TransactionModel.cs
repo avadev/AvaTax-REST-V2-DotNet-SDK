@@ -203,8 +203,8 @@ namespace Avalara.AvaTax.RestClient
         /// The amount of tax that AvaTax calculated for the transaction.
         /// 
         /// If you used a `taxOverride` of type `taxAmount` for any lines in this transaction, this value 
-        /// will still represent the amount that AvaTax calculated for this transaction, although the field
-        /// `totalTax` will be the total amount of tax after all overrides are applied.
+        /// will represent the amount that AvaTax calculated for this transaction without applying the override.
+        /// The field `totalTax` will be the total amount of tax after all overrides are applied.
         /// 
         /// You can compare the `totalTax` and `totalTaxCalculated` fields to check for any discrepancies
         /// between an external tax calculation provider and the calculation performed by AvaTax.

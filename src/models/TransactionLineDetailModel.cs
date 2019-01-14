@@ -194,9 +194,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? taxRegionId { get; set; }
 
         /// <summary>
-        /// The amount of tax that was calculated. This amount may be different if a tax override was used.
-        /// If the customer specified a tax override, this calculated tax value represents the amount of tax that would
-        /// have been charged if Avalara had calculated the tax for the rule.
+        /// The amount of tax that AvaTax calculated.
+        /// If an override for tax amount is used, there may be a difference between the tax
+        /// field which applies your override, and the this amount that is calculated without override.
         /// </summary>
         public Decimal? taxCalculated { get; set; }
 

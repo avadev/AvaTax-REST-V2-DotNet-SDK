@@ -62,5 +62,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         MarketplaceRemitsTax,
 
+        /// <summary>
+        /// Address refers to the mailing address of your company which is not a physical location.
+        /// </summary>
+        NonPhysical,
+
     }
 }

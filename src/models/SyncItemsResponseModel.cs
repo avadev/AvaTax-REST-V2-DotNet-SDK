@@ -18,16 +18,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction
+    /// The response returned after an item sync was requested.
     /// </summary>
-    public class VoidTransactionModel
+    public class SyncItemsResponseModel
     {
         /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
+        /// The status of the request
         /// </summary>
-        public VoidReasonCode code { get; set; }
+        public String status { get; set; }
 
 
         /// <summary>
