@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,22 +22,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Operation succeeded
         /// </summary>
-        Success,
+        Success = 0,
 
         /// <summary>
         /// Warnings occured, operation succeeded
         /// </summary>
-        Warning,
+        Warning = 1,
 
         /// <summary>
         /// Errors occured, operation failed
         /// </summary>
-        Error,
+        Error = 2,
 
         /// <summary>
         /// Unexpected exceptions occurred, operation failed
         /// </summary>
-        Exception,
+        Exception = 3,
 
     }
 }

@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,67 +22,67 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        Food,
+        ReducedA = 65,
 
         /// <summary>
         /// 
         /// </summary>
-        General,
+        ReducedB = 66,
 
         /// <summary>
         /// 
         /// </summary>
-        IncreasedStandard,
+        Food = 70,
 
         /// <summary>
         /// 
         /// </summary>
-        LinenRental,
+        General = 71,
 
         /// <summary>
         /// 
         /// </summary>
-        Medical,
+        IncreasedStandard = 73,
 
         /// <summary>
         /// 
         /// </summary>
-        Parking,
+        LinenRental = 76,
 
         /// <summary>
         /// 
         /// </summary>
-        ReducedA,
+        Medical = 77,
 
         /// <summary>
         /// 
         /// </summary>
-        ReducedB,
+        Parking = 80,
 
         /// <summary>
         /// 
         /// </summary>
-        ReducedR,
+        SuperReduced = 81,
 
         /// <summary>
         /// 
         /// </summary>
-        Standard,
+        ReducedR = 82,
 
         /// <summary>
         /// 
         /// </summary>
-        SuperReduced,
+        Standard = 83,
 
         /// <summary>
         /// 
         /// </summary>
-        Zero,
+        Services = 88,
 
         /// <summary>
         /// 
         /// </summary>
-        Services,
+        Zero = 90,
 
     }
 }

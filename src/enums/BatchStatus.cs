@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,47 +22,47 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Batch file has been received and is in the queue to be processed.
         /// </summary>
-        Waiting,
+        Waiting = 0,
 
         /// <summary>
         /// Batch file experienced system errors and cannot be processed.
         /// </summary>
-        SystemErrors,
+        SystemErrors = 1,
 
         /// <summary>
         /// Batch file is cancelled
         /// </summary>
-        Cancelled,
+        Cancelled = 2,
 
         /// <summary>
         /// Batch file has been completely processed.
         /// </summary>
-        Completed,
+        Completed = 3,
 
         /// <summary>
         /// Batch file is currently being created.
         /// </summary>
-        Creating,
+        Creating = 4,
 
         /// <summary>
         /// Batch file has been deleted.
         /// </summary>
-        Deleted,
+        Deleted = 5,
 
         /// <summary>
         /// Batch file was processed with some errors.
         /// </summary>
-        Errors,
+        Errors = 6,
 
         /// <summary>
         /// Batch processing was paused.
         /// </summary>
-        Paused,
+        Paused = 7,
 
         /// <summary>
         /// Batch is currently being processed.
         /// </summary>
-        Processing,
+        Processing = 8,
 
     }
 }
