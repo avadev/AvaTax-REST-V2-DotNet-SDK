@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Runtime.ExceptionServices;
 #endif
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Converters;
+
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -201,10 +203,11 @@ namespace Avalara.AvaTax.RestClient
 
             // Unroll single-exception aggregates for ease of use
             } catch (AggregateException ex) {
-                if (ex.InnerExceptions.Count == 1) {
-                    throw ex.InnerException;
+                if (ex.InnerExceptions.Count == 1)
+                {
+                    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
-                throw ex;
+                throw;
             }
         }
 
@@ -227,9 +230,9 @@ namespace Avalara.AvaTax.RestClient
             {
                 if (ex.InnerExceptions.Count == 1)
                 {
-                    throw ex.InnerException;
+                    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
-                throw ex;
+                throw;
             }
         }
 #endif
@@ -416,9 +419,9 @@ namespace Avalara.AvaTax.RestClient
             {
                 if (ex.InnerExceptions.Count == 1)
                 {
-                    throw ex.InnerException;
+                    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
-                throw ex;
+                throw;
             }
         }
 #else
