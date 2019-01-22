@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Threading;
 #endif
 using System.Net;
 using System.Text;
@@ -21,6 +22,7 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public partial class AvaTaxClient
     {
+        private AvaTaxClientOptions _options = new AvaTaxClientOptions();
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
 #if PORTABLE
@@ -79,9 +81,9 @@ namespace Avalara.AvaTax.RestClient
             WithClientIdentifier(appName, appVersion, machineName);
             _envUri = customEnvironment;
         }
-#endregion
+        #endregion
 
-#region Security
+        #region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -163,9 +165,20 @@ namespace Avalara.AvaTax.RestClient
             _clientHeaders.Add(Constants.AVALARA_CLIENT_HEADER, String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName));
             return this;
         }
-#endregion
+        #endregion
 
-#region REST Call Interface
+        /// <summary>
+        /// Sets options for the AvaTaxClient and how it behaves.
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public AvaTaxClient WithOptions(AvaTaxClientOptions options)
+        {
+            _options = options ?? new AvaTaxClientOptions();
+            return this;
+        }
+
+        #region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -233,9 +246,9 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 #endif
-#endregion
+        #endregion
 
-#region Implementation
+        #region Implementation
         private JsonSerializerSettings _serializer_settings = null;
         private JsonSerializerSettings SerializerSettings
         {
@@ -320,7 +333,7 @@ namespace Avalara.AvaTax.RestClient
             using (var request = new HttpRequestMessage()) {
                 request.Method = new HttpMethod(verb);
                 request.RequestUri = new Uri(_envUri, relativePath.ToString());
-
+                
                 // Add headers
                 foreach (var key in _clientHeaders.Keys)
                 {
@@ -334,7 +347,28 @@ namespace Avalara.AvaTax.RestClient
 
                 // Send
                 cd.FinishSetup();
-                return await _client.SendAsync(request).ConfigureAwait(false);
+
+                CancellationTokenSource timeoutTokenSource = null;
+
+                try
+                {
+                    CancellationToken token = default(CancellationToken);
+                    if (_options != null && _options.Timeout.HasValue)
+                    {
+                        timeoutTokenSource = new CancellationTokenSource(_options.Timeout.Value);
+                        token = timeoutTokenSource.Token;
+                    } 
+
+                    return await _client.SendAsync(request, token).ConfigureAwait(false);
+                }
+                finally
+                {
+                    if (timeoutTokenSource != null)
+                    {
+                        timeoutTokenSource.Dispose();
+                        timeoutTokenSource = null;
+                    }
+                }                
             }
         }
 
@@ -452,6 +486,11 @@ namespace Avalara.AvaTax.RestClient
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
 
+            if (_options != null && _options.Timeout.HasValue)
+            {
+                wr.Timeout = Convert.ToInt32(Math.Floor(_options.Timeout.Value.TotalMilliseconds));
+            }
+
             // Add headers
             foreach (var key in _clientHeaders.Keys)
             {
@@ -483,7 +522,7 @@ namespace Avalara.AvaTax.RestClient
                     using (var inStream = response.GetResponseStream()) {
                         const int BUFFER_SIZE = 1024;
                         var chunks = new List<byte>();
-                        var totalBytes = 0; 
+                        var totalBytes = 0;
                         var bytesRead = 0;
 
                         do
@@ -499,7 +538,7 @@ namespace Avalara.AvaTax.RestClient
                             }
                             totalBytes += bytesRead;
                         } while (bytesRead > 0);
-        
+
                         if(totalBytes <= 0) {
                             throw new IOException("Response contained no data");
                         }
@@ -559,6 +598,11 @@ namespace Avalara.AvaTax.RestClient
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
 
+            if (_options != null && _options.Timeout.HasValue)
+            {
+                wr.Timeout = Convert.ToInt32(Math.Floor(_options.Timeout.Value.TotalMilliseconds));
+            }
+
             // Add headers
             foreach (var key in _clientHeaders.Keys)
             {
@@ -601,7 +645,7 @@ namespace Avalara.AvaTax.RestClient
                     }
                 }
 
-            // Catch a web exception
+                // Catch a web exception
             } catch (WebException webex) {
                 HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
                 if (httpWebResponse != null) {

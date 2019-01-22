@@ -44,6 +44,7 @@
     <Compile Include="AvaTaxApi.cs" />
     <Compile Include="AvaTaxCallEventArgs.cs" />
     <Compile Include="AvaTaxClient.cs" />
+    <Compile Include="AvaTaxClientOptions.cs" />
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
     <Compile Include="AvaTaxPath.cs" />
