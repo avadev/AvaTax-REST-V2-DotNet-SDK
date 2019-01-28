@@ -12,16 +12,17 @@ namespace Avalara.AvaTax.RestClient
     /// </remarks>
     public class AvaTaxPath
     {
-        StringBuilder _path = new StringBuilder();
-        Dictionary<string, string> _query = new Dictionary<string, string>();
-
+        private string _uri;
+        private Dictionary<string, string> _fields = new Dictionary<string, string>();
+        private Dictionary<string, string> _query = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        
         /// <summary>
         /// Construct a base path
         /// </summary>
         /// <param name="uri"></param>
         public AvaTaxPath(string uri)
         {
-            _path.Append(uri);
+            _uri = uri;
         }
 
         /// <summary>
@@ -31,7 +32,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="value"></param>
         public void ApplyField(string name, object value)
         {
-            _path.Replace("{" + name + "}", System.Uri.EscapeDataString(value.ToString()));
+            if (value != null) {
+                _fields[name] = System.Uri.EscapeDataString(value.ToString());
+            }
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace Avalara.AvaTax.RestClient
         public void AddQuery(string name, object value)
         {
             if (value != null) {
-                _query[name] = value.ToString();
+                _query[System.Uri.EscapeDataString(name)] = System.Uri.EscapeDataString(value.ToString());
             }
         }
 
@@ -52,18 +55,19 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public override string ToString()
         {
-            if (_query.Count > 0) {
-                _path.Append("?");
-                foreach (var kvp in _query) {
-#if PORTABLE
-                    _path.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
-#else
-                    _path.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
-#endif
-                }
-                _path.Length -= 1;
+            StringBuilder path = new StringBuilder();
+            path.Append(_uri);
+            foreach (var kvp in _fields) {
+                path.Replace("{" + kvp.Key + "}", kvp.Value);
             }
-            return _path.ToString();
+            if (_query.Count > 0) {
+                path.Append("?");
+                foreach (var kvp in _query) {
+                    path.AppendFormat("{0}={1}&", kvp.Key, kvp.Value);
+                }
+                path.Length -= 1;
+            }
+            return path.ToString();
         }
     }
 }
