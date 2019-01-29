@@ -43,6 +43,11 @@ namespace Avalara.AvaTax.RestClient
         public List<String> taxCodes { get; set; }
 
         /// <summary>
+        /// A list of item codes to include in this point-of-sale file. If no item codes are specified, responese will include all distinct item codes associated with the Items within your company.
+        /// </summary>
+        public List<String> itemCodes { get; set; }
+
+        /// <summary>
         /// A list of location codes to include in this point-of-sale file. If no location codes are specified, response will include all locations within your company.
         /// </summary>
         public List<String> locationCodes { get; set; }

@@ -160,6 +160,7 @@
     <Compile Include="models\CertificateModel.cs" />
     <Compile Include="models\CertificateTaxCodeModel.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
+    <Compile Include="models\ClassificationModel.cs" />
     <Compile Include="models\CommitMultiDocumentModel.cs" />
     <Compile Include="models\CommitTransactionModel.cs" />
     <Compile Include="models\CommunicationsTransactionTypeModel.cs" />
@@ -230,7 +231,10 @@
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoLocalizedName.cs" />
     <Compile Include="models\IsoRegionModel.cs" />
+    <Compile Include="models\ItemClassificationInputModel.cs" />
+    <Compile Include="models\ItemClassificationOutputModel.cs" />
     <Compile Include="models\ItemModel.cs" />
+    <Compile Include="models\ItemParameterModel.cs" />
     <Compile Include="models\JurisdictionModel.cs" />
     <Compile Include="models\JurisdictionOverrideModel.cs" />
     <Compile Include="models\LicenseKeyModel.cs" />
@@ -282,6 +286,8 @@
     <Compile Include="models\PoNumberModel.cs" />
     <Compile Include="models\PostalCodeModel.cs" />
     <Compile Include="models\PreferredProgramModel.cs" />
+    <Compile Include="models\ProductClassificationSystemModel.cs" />
+    <Compile Include="models\ProductSystemCountryModel.cs" />
     <Compile Include="models\ProvisionStatusModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RateTypeModel.cs" />

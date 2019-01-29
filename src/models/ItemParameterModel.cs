@@ -18,16 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction
+    /// Represents a parameter associated with an item.
     /// </summary>
-    public class VoidTransactionModel
+    public class ItemParameterModel
     {
         /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
+        /// The id of the parameter.
         /// </summary>
-        public VoidReasonCode code { get; set; }
+        public Int64? id { get; set; }
+
+        /// <summary>
+        /// The parameter's name.
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// The value for the parameter.
+        /// </summary>
+        public String value { get; set; }
+
+        /// <summary>
+        /// The unit of measurement code for the parameter.
+        /// </summary>
+        public String unit { get; set; }
+
+        /// <summary>
+        /// The item id
+        /// </summary>
+        public Int64? itemId { get; set; }
 
 
         /// <summary>

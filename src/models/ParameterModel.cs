@@ -70,6 +70,31 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String regularExpression { get; set; }
 
+        /// <summary>
+        /// Label that helps the user to identify a parameter
+        /// </summary>
+        public String label { get; set; }
+
+        /// <summary>
+        /// A help url that provides more information about the parameter
+        /// </summary>
+        public String helpUrl { get; set; }
+
+        /// <summary>
+        /// The type of parameter as determined by its application, e.g. Product, Transaction, Calculated
+        /// </summary>
+        public String attributeType { get; set; }
+
+        /// <summary>
+        /// If the parameter is of enumeration data type, then this list will be populated with all of the possible enumeration values.
+        /// </summary>
+        public List<String> values { get; set; }
+
+        /// <summary>
+        /// The unit of measurement type of the parameter
+        /// </summary>
+        public String measurementType { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -18,16 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction
+    /// Information about the error that occurred
     /// </summary>
-    public class VoidTransactionModel
+    public class ErrorInfo
     {
         /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
+        /// Type of error that occurred
         /// </summary>
-        public VoidReasonCode code { get; set; }
+        public ErrorCodeId? code { get; set; }
+
+        /// <summary>
+        /// Short one-line message to summaryize what went wrong
+        /// </summary>
+        public String message { get; set; }
+
+        /// <summary>
+        /// What object or service caused the error?
+        /// </summary>
+        public ErrorTargetCode? target { get; set; }
+
+        /// <summary>
+        /// Array of detailed error messages
+        /// </summary>
+        public List<ErrorDetail> details { get; set; }
 
 
         /// <summary>

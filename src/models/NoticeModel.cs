@@ -215,6 +215,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? complianceContactId { get; set; }
 
         /// <summary>
+        /// The tax form code of the notice
+        /// </summary>
+        public String taxFormCode { get; set; }
+
+        /// <summary>
         /// The document reference of the notice
         /// </summary>
         public String documentReference { get; set; }

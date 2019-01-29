@@ -68,6 +68,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        EntityLimitExceeded,
+
+        /// <summary>
+        /// 
+        /// </summary>
         CommonPassword,
 
         /// <summary>
@@ -234,6 +239,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         JsonFormatError,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDecimalValue,
 
         /// <summary>
         /// 
@@ -1276,6 +1286,16 @@ namespace Avalara.AvaTax.RestClient
         CannotUpdateSourceOrInstance,
 
         /// <summary>
+        /// 
+        /// </summary>
+        TaxCodeAssociatedWithItemCodeNotFound,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DuplicateSystemForItem,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat,
@@ -1309,6 +1329,31 @@ namespace Avalara.AvaTax.RestClient
         /// AuditAccount API errors
         /// </summary>
         TraceDataNotAvailable,
+
+        /// <summary>
+        /// Item parameter errors
+        /// </summary>
+        InvalidParameterUnitMeasurementType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ParameterUnitRequired,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidParameterValueDataType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidParameterAttributeType,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SubscriptionRequiredForParameter,
 
     }
 }

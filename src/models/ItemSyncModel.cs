@@ -18,16 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction
+    /// An abridged item model used for syncing product catalogs with AvaTax.
     /// </summary>
-    public class VoidTransactionModel
+    public class ItemSyncModel
     {
         /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
+        /// A unique code representing this item.
         /// </summary>
-        public VoidReasonCode code { get; set; }
+        public String itemCode { get; set; }
+
+        /// <summary>
+        /// A friendly description of the item. If your company has enrolled in Streamlined Sales Tax, this description must be auditable.
+        /// </summary>
+        public String description { get; set; }
+
+        /// <summary>
+        /// A group to which the item belongs.
+        /// </summary>
+        public String itemGroup { get; set; }
+
+        /// <summary>
+        /// The tax code of the item (optional)
+        /// </summary>
+        public String taxCode { get; set; }
 
 
         /// <summary>

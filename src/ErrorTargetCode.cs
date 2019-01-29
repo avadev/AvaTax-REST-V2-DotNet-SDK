@@ -14,7 +14,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// 
-        /// </summary>
+        /// </summary>F
         HttpRequest,
 
         /// <summary>
