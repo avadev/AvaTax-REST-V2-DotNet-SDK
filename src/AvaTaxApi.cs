@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 /*
  * AvaTax Software Development Kit for C#
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author     Ted Spence <ted.spence@avalara.com>
- * @author     Zhenya Frolov <zhenya.frolov@avalara.com>
+ * @author     Genevieve Conty <genevieve.conty@avalara.com>
  * @author     Greg Hester <greg.hester@avalara.com>
- * @copyright  2004-2018 Avalara, Inc.
+ * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    18.12.0
+ * @version    19.1.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -29,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "18.12.0"; } }
+        public static string API_VERSION { get { return "19.1.1"; } }
 
 #region Methods
 
@@ -4724,6 +4723,33 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("filingCalendarId", filingCalendarId);
             return RestCall<FetchResult<FilingReturnModelBasic>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        /// based on filing frequency of filing.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="year">The year of the filing period.</param>
+        /// <param name="month">The two digit month of the filing period.</param>
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="formCode">The unique code of the form.</param>
+        public FetchResult<MultiTaxFilingModel> GetTaxFilings(Int32 companyId, Int32? year, Int32? month, String country, String region, String formCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("year", year);
+            path.AddQuery("month", month);
+            path.AddQuery("country", country);
+            path.AddQuery("region", region);
+            path.AddQuery("formCode", formCode);
+            return RestCall<FetchResult<MultiTaxFilingModel>>("GET", path, null);
         }
 
 
@@ -13814,6 +13840,33 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("filingCalendarId", filingCalendarId);
             return await RestCallAsync<FetchResult<FilingReturnModelBasic>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing, 
+        /// based on filing frequency of filing.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns the filings.</param>
+        /// <param name="year">The year of the filing period.</param>
+        /// <param name="month">The two digit month of the filing period.</param>
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="formCode">The unique code of the form.</param>
+        public async Task<FetchResult<MultiTaxFilingModel>> GetTaxFilingsAsync(Int32 companyId, Int32? year, Int32? month, String country, String region, String formCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("year", year);
+            path.AddQuery("month", month);
+            path.AddQuery("country", country);
+            path.AddQuery("region", region);
+            path.AddQuery("formCode", formCode);
+            return await RestCallAsync<FetchResult<MultiTaxFilingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 

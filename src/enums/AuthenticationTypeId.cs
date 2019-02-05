@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,22 +22,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// This API call was not authenticated.
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         /// This API call was authenticated by your username/password.
         /// </summary>
-        UsernamePassword,
+        UsernamePassword = 1,
 
         /// <summary>
         /// This API call was authenticated by your Avalara Account ID and private license key.
         /// </summary>
-        AccountIdLicenseKey,
+        AccountIdLicenseKey = 2,
 
         /// <summary>
         /// This API call was authenticated by OpenID Bearer Token.
         /// </summary>
-        OpenIdBearerToken,
+        OpenIdBearerToken = 3,
 
     }
 }
