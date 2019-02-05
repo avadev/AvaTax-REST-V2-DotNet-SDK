@@ -27,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// Returns the version number of the API used to generate this class
-        /// </summary>
+        /// </summary> 
         public static string API_VERSION { get { return "19.1.1"; } }
 
 #region Methods
