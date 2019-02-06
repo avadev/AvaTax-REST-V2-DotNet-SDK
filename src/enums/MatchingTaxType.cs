@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,84 +22,84 @@ namespace Avalara.AvaTax.RestClient
     public enum MatchingTaxType
     {
         /// <summary>
-        /// Match all tax types
-        /// </summary>
-        All,
-
-        /// <summary>
-        /// Match both Sales and Use Tax only
-        /// </summary>
-        BothSalesAndUseTax,
-
-        /// <summary>
-        /// Match Consumer Use Tax only
-        /// </summary>
-        ConsumerUseTax,
-
-        /// <summary>
-        /// Match Sales Tax only
-        /// </summary>
-        SalesTax,
-
-        /// <summary>
-        /// Match Seller's Use Tax only
-        /// </summary>
-        UseTax,
-
-        /// <summary>
-        /// Match VAT Output Tax only
-        /// </summary>
-        VATOutputTax,
-
-        /// <summary>
-        /// Match VAT Input Tax only
-        /// </summary>
-        VATInputTax,
-
-        /// <summary>
-        /// Match VAT Nonrecoverable Input Tax only
-        /// </summary>
-        VATNonrecoverableInputTax,
-
-        /// <summary>
-        /// Match Fee tax types only
-        /// </summary>
-        Fee,
-
-        /// <summary>
-        /// Match Rental tax types only
-        /// </summary>
-        Rental,
-
-        /// <summary>
-        /// Match both Consumer Use and Sales Tax types
-        /// </summary>
-        ConsumerUseAndSalesTax,
-
-        /// <summary>
-        /// Match both Consumer Use and Seller's Use Tax types
-        /// </summary>
-        ConsumersUseAndSellersUseTax,
-
-        /// <summary>
         /// Match medical excise type
         /// </summary>
-        Excise,
+        Excise = 5,
 
         /// <summary>
         /// Match Lodging tax type
         /// </summary>
-        Lodging,
+        Lodging = 6,
 
         /// <summary>
         /// Match bottle tax type
         /// </summary>
-        Bottle,
+        Bottle = 7,
 
         /// <summary>
         /// Match RentToOwn tax type
         /// </summary>
-        RentToOwn,
+        RentToOwn = 8,
+
+        /// <summary>
+        /// Match all tax types
+        /// </summary>
+        All = 65,
+
+        /// <summary>
+        /// Match both Sales and Use Tax only
+        /// </summary>
+        BothSalesAndUseTax = 66,
+
+        /// <summary>
+        /// Match Consumer Use Tax only
+        /// </summary>
+        ConsumerUseTax = 67,
+
+        /// <summary>
+        /// Match both Consumer Use and Seller's Use Tax types
+        /// </summary>
+        ConsumersUseAndSellersUseTax = 68,
+
+        /// <summary>
+        /// Match both Consumer Use and Sales Tax types
+        /// </summary>
+        ConsumerUseAndSalesTax = 69,
+
+        /// <summary>
+        /// Match Fee tax types only
+        /// </summary>
+        Fee = 70,
+
+        /// <summary>
+        /// Match VAT Input Tax only
+        /// </summary>
+        VATInputTax = 73,
+
+        /// <summary>
+        /// Match VAT Nonrecoverable Input Tax only
+        /// </summary>
+        VATNonrecoverableInputTax = 78,
+
+        /// <summary>
+        /// Match VAT Output Tax only
+        /// </summary>
+        VATOutputTax = 79,
+
+        /// <summary>
+        /// Match Rental tax types only
+        /// </summary>
+        Rental = 82,
+
+        /// <summary>
+        /// Match Sales Tax only
+        /// </summary>
+        SalesTax = 83,
+
+        /// <summary>
+        /// Match Seller's Use Tax only
+        /// </summary>
+        UseTax = 85,
 
     }
 }

@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,17 +22,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If the original api call is availabe on S3
         /// </summary>
-        OriginalApiCallAvailable,
+        OriginalApiCallAvailable = 0,
 
         /// <summary>
         /// if the original api call is not available, reconstructed api call should always be available
         /// </summary>
-        ReconstructedApiCallAvailable,
+        ReconstructedApiCallAvailable = 1,
 
         /// <summary>
         /// Any other api call status
         /// </summary>
-        Any,
+        Any = -1,
 
     }
 }

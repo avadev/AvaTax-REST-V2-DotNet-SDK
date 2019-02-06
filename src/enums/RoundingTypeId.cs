@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,22 +22,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// There is no rounding on the return
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         /// Round to the nearest whole number
         /// </summary>
-        Nearest,
+        Nearest = 1,
 
         /// <summary>
         /// Always round up
         /// </summary>
-        Up,
+        Up = 2,
 
         /// <summary>
         /// Always round down
         /// </summary>
-        Down,
+        Down = 3,
 
     }
 }

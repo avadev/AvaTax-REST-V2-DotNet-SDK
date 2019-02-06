@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,37 +22,37 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Error target is unknown
         /// </summary>
-        Unknown,
+        Unknown = 0,
 
         /// <summary>
         /// There was an error in the request URL, querystring, or body
         /// </summary>
-        HttpRequest,
+        HttpRequest = 1,
 
         /// <summary>
         /// There was an error in the HTTP Request headers
         /// </summary>
-        HttpRequestHeaders,
+        HttpRequestHeaders = 2,
 
         /// <summary>
         /// Some data provided by the user was incorrect
         /// </summary>
-        IncorrectData,
+        IncorrectData = 3,
 
         /// <summary>
         /// There was an error in the AvaTax API Server
         /// </summary>
-        AvaTaxApiServer,
+        AvaTaxApiServer = 10,
 
         /// <summary>
         /// There was an error in the Avalara Identity Server
         /// </summary>
-        AvalaraIdentityServer,
+        AvalaraIdentityServer = 11,
 
         /// <summary>
         /// The customer's account setup does not permit certain actions
         /// </summary>
-        CustomerAccountSetup,
+        CustomerAccountSetup = 12,
 
     }
 }

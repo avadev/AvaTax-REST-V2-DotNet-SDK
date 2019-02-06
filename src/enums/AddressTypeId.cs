@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,12 +22,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A business location, for example a store, warehouse, or office.
         /// </summary>
-        Location,
+        Location = 1,
 
         /// <summary>
         /// A person's address who performs sales tasks for the company remotely from an office.
         /// </summary>
-        Salesperson,
+        Salesperson = 2,
 
         /// <summary>
         /// This location is a marketplace vendor that handles transactions on behalf of the company.
@@ -36,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         ///  `SellerRemitsTax` or `MarketplaceRemitsTax` to indicate which business entity is responsible
         ///  for collecting and remitting tax for this location.
         /// </summary>
-        Marketplace,
+        Marketplace = 3,
 
     }
 }
