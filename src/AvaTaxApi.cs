@@ -118,10 +118,10 @@ namespace Avalara.AvaTax.RestClient
 		  startDate = string.Format("{0}{1}", start.Value.ToString("s"), "Z");
 	    } 
 
-		if (end != null)
-		{
-			endDate = string.Format("{0}{1}", end.Value.ToString("s"), "Z");
-		} 
+	    if (end != null)
+	    {
+		    endDate = string.Format("{0}{1}", end.Value.ToString("s"), "Z");
+	    } 
 
             var path = new AvaTaxPath("/api/v2/accounts/{id}/audit");
             path.ApplyField("id", id);
