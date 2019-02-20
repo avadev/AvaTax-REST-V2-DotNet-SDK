@@ -110,13 +110,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param> 
         public FetchResult<AuditModel> AuditAccount(Int32 id, DateTime? start, DateTime? end, Int32? top, Int32? skip)
         {
-		string startDate = null;
-		string endDate = null; 
+	  string startDate = null;
+	  string endDate = null; 
 
-		if (start != null)
-		{
-			startDate = string.Format("{0}{1}", start.Value.ToString("s"), "Z");
-		} 
+	  if (start != null)
+	  {
+		startDate = string.Format("{0}{1}", start.Value.ToString("s"), "Z");
+	  } 
 
 		if (end != null)
 		{
