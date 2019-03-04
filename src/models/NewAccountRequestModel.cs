@@ -132,7 +132,7 @@ namespace Avalara.AvaTax.RestClient
         /// * `Suppressed` - No email will be sent.
         /// * `Custom` - If your Avalara business development representative provides you with a customized welcome email for your customers, please select this option.
         /// </summary>
-        public WelcomeEmail? welcomeEmail { get; set; }
+        public String welcomeEmail { get; set; }
 
         /// <summary>
         /// Address information of the account being created.

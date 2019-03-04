@@ -54,5 +54,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         InverseQuarterly = 7,
 
+        /// <summary>
+        /// File every week
+        /// </summary>
+        Weekly = 8,
+
     }
 }
