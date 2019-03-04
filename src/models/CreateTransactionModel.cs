@@ -89,7 +89,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Purchase Order Number for this document.
         /// 
-        /// This is required for single use exemption certificates to match the order and invoice with the certificate.< HEAD
+        /// This is required for single use exemption certificates to match the order and invoice with the certificate.
         /// </summary>
         public String purchaseOrderNo { get; set; }
 

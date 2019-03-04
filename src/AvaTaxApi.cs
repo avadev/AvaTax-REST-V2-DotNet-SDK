@@ -28,7 +28,8 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "19.1.1"; } }
+        public static string API_VERSION { get { return "19.2.0"; } }
+
 #region Methods
 
         /// <summary>
@@ -106,26 +107,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="start">The start datetime of audit history you with to retrieve, e.g. "2018-06-08T17:00:00Z". Defaults to the past 15 minutes.</param>
         /// <param name="end">The end datetime of audit history you with to retrieve, e.g. "2018-06-08T17:15:00Z. Defaults to the current time. Maximum of an hour after the start time.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param> 
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         public FetchResult<AuditModel> AuditAccount(Int32 id, DateTime? start, DateTime? end, Int32? top, Int32? skip)
         {
-	    string startDate = null;
-	    string endDate = null; 
-
-	    if (start != null)
-	    {
-		  startDate = string.Format("{0}{1}", start.Value.ToString("s"), "Z");
-	    } 
-
-	    if (end != null)
-	    {
-		  endDate = string.Format("{0}{1}", end.Value.ToString("s"), "Z");
-	    } 
-
             var path = new AvaTaxPath("/api/v2/accounts/{id}/audit");
             path.ApplyField("id", id);
-            path.AddQuery("start", startDate);
-            path.AddQuery("end", endDate);
+            path.AddQuery("start", start);
+            path.AddQuery("end", end);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             return RestCall<FetchResult<AuditModel>>("GET", path, null);
