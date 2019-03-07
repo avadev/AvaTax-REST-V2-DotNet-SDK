@@ -102,27 +102,27 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        ParserFieldNameError = 17,
+        InvalidQueryField = 17,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserFieldValueError = 18,
+        InvalidQueryValue = 18,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserSyntaxError = 19,
+        SyntaxError = 19,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserTooManyParametersError = 20,
+        TooManyParametersError = 20,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserUnterminatedValueError = 21,
+        UnterminatedValueError = 21,
 
         /// <summary>
         /// 
@@ -248,6 +248,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         UnhandledException = 50,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InactiveAccount = 51,
 
         /// <summary>
         /// 
@@ -1222,7 +1227,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        ParserFieldNotQueryableError = 1408,
+        FieldNotQueryableError = 1408,
 
         /// <summary>
         /// 
@@ -1233,6 +1238,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidAuditMessage = 1410,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FieldNotOrderableError = 1411,
 
         /// <summary>
         /// Nexus validation error codes

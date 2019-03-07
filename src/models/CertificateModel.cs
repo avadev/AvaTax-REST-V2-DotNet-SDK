@@ -127,7 +127,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// If this certificate is applicable for all purchase order numbers, this field will be empty.
         /// 
-        /// You can fetch this data by specifying `$include=ponumbers` when calling a certificate fetch API.
+        /// You can fetch this data by specifying `$include=po_numbers` when calling a certificate fetch API.
         /// </summary>
         public List<PoNumberModel> poNumbers { get; set; }
 

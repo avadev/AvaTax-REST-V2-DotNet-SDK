@@ -39,25 +39,25 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the country that issued the tax form for this filing calendar.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
         /// </summary>
         public String formCountry { get; set; }
 
         /// <summary>
         /// Name or ISO 3166 code identifying the region that issued the tax form for this filing calendar.
-        /// 
+        ///  
         /// This field supports many different region identifiers:
         ///  * Two and three character ISO 3166 region codes
         ///  * Fully spelled out names of the region in ISO supported languages
         ///  * Common alternative spellings for many regions
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String formRegion { get; set; }
@@ -117,35 +117,35 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// DEPRECATED - The second line of the mailing address that will be used when filling out this tax return.
         /// Please note that some tax forms do not support multiple address lines.
-        /// 
+        ///  
         /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String line2 { get; set; }
 
         /// <summary>
         /// DEPRECATED - The city name of the mailing address that will be used when filling out this tax return.
-        /// 
+        ///  
         /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String city { get; set; }
 
         /// <summary>
         /// DEPRECATED - The state, region, or province of the mailing address that will be used when filling out this tax return.
-        /// 
+        ///  
         /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
         /// DEPRECATED - The postal code or zip code of the mailing address that will be used when filling out this tax return.
-        /// 
+        ///  
         /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String postalCode { get; set; }
 
         /// <summary>
         /// DEPRECATED - The two character ISO-3166 country code of the mailing address that will be used when filling out this tax return.
-        /// 
+        ///  
         /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String country { get; set; }
@@ -168,12 +168,12 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the region of the mailing address that will be used when filling out this tax return.
-        /// 
+        ///  
         /// This field supports many different region identifiers:
         ///  * Two and three character ISO 3166 region codes
         ///  * Fully spelled out names of the region in ISO supported languages
         ///  * Common alternative spellings for many regions
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String mailingAddressRegion { get; set; }
@@ -185,13 +185,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the country of the mailing address that will be used when filling out this tax return.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
         /// </summary>
         public String mailingAddressCountry { get; set; }
@@ -242,7 +242,7 @@ namespace Avalara.AvaTax.RestClient
         public String eFilePassword { get; set; }
 
         /// <summary>
-        /// If you are required to prepay a percentage of taxes for future periods, please specify the percentage in whole numbers; 
+        /// If you are required to prepay a percentage of taxes for future periods, please specify the percentage in whole numbers;
         /// for example, the value 90 would indicate 90%.
         /// </summary>
         public Int32? prepayPercentage { get; set; }

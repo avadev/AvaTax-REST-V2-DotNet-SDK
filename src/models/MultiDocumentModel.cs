@@ -18,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// A MultiDocument transaction represents a sale or purchase that occurred between more than two companies.
-    /// 
+    ///  
     /// A traditional transaction requires exactly two parties: a seller and a buyer. MultiDocument transactions can
     /// involve a marketplace of vendors, each of which contributes some portion of the final transaction. Within
     /// a MultiDocument transaction, each individual buyer and seller pair are matched up and converted to a separate
@@ -38,17 +38,17 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The transaction code of the MultiDocument transaction.
-        /// 
+        ///  
         /// All individual transactions within this MultiDocument object will have this code as a prefix.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
         /// Indicates the type of MultiDocument transaction. Common values are:
-        /// 
+        ///  
         /// * SalesOrder - An estimate that is not permanently recorded
         /// * SalesInvoice - An invoice that can be reported on a tax return
-        /// 
+        ///  
         /// For more information about document types, see [DocumentType](https://developer.avalara.com/api-reference/avatax/rest/v2/models/enums/DocumentType/)
         /// </summary>
         public DocumentType? type { get; set; }
