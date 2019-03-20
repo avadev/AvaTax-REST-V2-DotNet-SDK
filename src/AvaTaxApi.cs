@@ -17002,7 +17002,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FileResult> DownloadTaxRatesByZipCodeAsync(DateTime date, String region)
         {
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
-            path.ApplyField("date", date.ToString("yyyy-MM-dd"));
+            path.ApplyField("date", date);
             path.AddQuery("region", region);
             return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
         }
