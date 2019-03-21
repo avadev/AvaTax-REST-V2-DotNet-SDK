@@ -15,44 +15,29 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Filing Frequency types
+    /// Account Linkage status
     /// </summary>
-    public enum NoticeCustomerType
+    public enum FirmClientLinkageStatus
     {
         /// <summary>
-        /// AvaTax Returns
+        /// Requested
         /// </summary>
-        AvaTaxReturns = 1,
+        Requested = 1,
 
         /// <summary>
-        /// Stand Alone
+        /// Approved
         /// </summary>
-        StandAlone = 2,
+        Approved = 2,
 
         /// <summary>
-        /// Strategic
+        /// Rejected
         /// </summary>
-        Strategic = 3,
+        Rejected = 3,
 
         /// <summary>
-        /// SST
+        /// Revoked
         /// </summary>
-        SST = 4,
-
-        /// <summary>
-        /// TrustFile
-        /// </summary>
-        TrustFile = 5,
-
-        /// <summary>
-        /// PWC
-        /// </summary>
-        PWC = 6,
-
-        /// <summary>
-        /// Hudson Group
-        /// </summary>
-        HudsonGroup = 7,
+        Revoked = 4,
 
     }
 }
