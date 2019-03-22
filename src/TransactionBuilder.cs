@@ -347,18 +347,21 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
-        /// <summary>
-        /// Add a line to this transaction
-        /// </summary>
-        /// <param name="amount">Value of the item.</param>
-        /// <param name="quantity">Quantity of the item.</param>
-        /// <param name="taxCode">Tax Code of the item. If left blank, the default item (P0000000) is assumed.  Use ListTaxCodes() for a list of values.</param>
-        /// <param name="customerUsageType">The intended usage type for this line.  Use ListEntityUseCodes() for a list of values.</param>
-        /// <param name="description">A friendly description of this line item.</param>
-        /// <param name="itemCode">The item code of this item in your product item definitions.</param>
-        /// <returns></returns>
-        public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null)
+		/// <summary>
+		/// Add a line to this transaction
+		/// </summary>
+		/// <param name="amount">Value of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="taxCode">Tax Code of the item. If left blank, the default item (P0000000) is assumed.  Use ListTaxCodes() for a list of values.</param>
+		/// <param name="customerUsageType">The intended usage type for this line.  Use ListEntityUseCodes() for a list of values.</param>
+		/// <param name="description">A friendly description of this line item.</param>
+		/// <param name="itemCode">The item code of this item in your product item definitions.</param>
+		/// <param name="lineNumber">the number of the line.</param>
+		/// <returns></returns>
+		public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null, int? lineNumber = null)
         {
+			_line_number = lineNumber ?? _line_number;
+	
             var l = new LineItemModel
             {
                 number = _line_number.ToString(),
