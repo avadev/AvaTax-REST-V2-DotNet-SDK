@@ -50,6 +50,7 @@
     <Compile Include="CallDuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="enums\AccountStatusId.cs" />
+    <Compile Include="enums\AccountTypeId.cs" />
     <Compile Include="enums\AccrualType.cs" />
     <Compile Include="enums\AddressCategoryId.cs" />
     <Compile Include="enums\AddressTypeId.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="models\ProductClassificationSystemModel.cs" />
     <Compile Include="models\ProductSystemCountryModel.cs" />
     <Compile Include="models\ProvisionStatusModel.cs" />
+    <Compile Include="models\QueryRequestModel.cs" />
     <Compile Include="models\RateModel.cs" />
     <Compile Include="models\RateTypeModel.cs" />
     <Compile Include="models\RebuildFilingsModel.cs" />
@@ -310,6 +312,7 @@
     <Compile Include="models\ResetLicenseKeyModel.cs" />
     <Compile Include="models\ResourceFileTypeModel.cs" />
     <Compile Include="models\ResourceFileUploadRequestModel.cs" />
+    <Compile Include="models\ResourceFileUploadResultModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />
     <Compile Include="models\SetPasswordModel.cs" />
     <Compile Include="models\SettingModel.cs" />

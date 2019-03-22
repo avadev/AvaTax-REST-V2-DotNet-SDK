@@ -152,6 +152,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        AccountTypeNotSupported = 28,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidFirmClientOffer = 29,
+
+        /// <summary>
+        /// 
+        /// </summary>
         AuthenticationException = 30,
 
         /// <summary>
@@ -247,12 +257,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        LinkageStatusUpdateNotSupported = 49,
+
+        /// <summary>
+        /// 
+        /// </summary>
         UnhandledException = 50,
 
         /// <summary>
         /// 
         /// </summary>
         InactiveAccount = 51,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LinkageNotAllowed = 52,
 
         /// <summary>
         /// 
@@ -905,6 +925,11 @@ namespace Avalara.AvaTax.RestClient
         OfferCodeAlreadyApplied = 610,
 
         /// <summary>
+        /// 
+        /// </summary>
+        AccountAlreadyExists = 611,
+
+        /// <summary>
         /// Refund API error codes
         /// </summary>
         InvalidDocumentStatusForRefund = 700,
@@ -1262,16 +1287,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Advanced rule errors
         /// </summary>
-        AdvancedRuleBadScript = 1600,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        AdvancedRuleBadCsvTable = 1601,
-
-        /// <summary>
-        /// 
-        /// </summary>
         AdvancedRuleRequestRuleError = 1602,
 
         /// <summary>
@@ -1282,7 +1297,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AdvancedRuleNotApproved = 1604,
+        AdvancedRuleError = 1605,
 
         /// <summary>
         /// Miscellaneous

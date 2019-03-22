@@ -134,5 +134,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         SSTAdmin = 22,
 
+        /// <summary>
+        /// FirmUser
+        /// </summary>
+        FirmUser = 23,
+
+        /// <summary>
+        /// FirmAdmin
+        /// </summary>
+        FirmAdmin = 24,
+
     }
 }

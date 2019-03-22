@@ -52,6 +52,11 @@ namespace Avalara.AvaTax.RestClient
         public AccountStatusId? accountStatusId { get; set; }
 
         /// <summary>
+        /// The type of this account.
+        /// </summary>
+        public AccountTypeId? accountTypeId { get; set; }
+
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }

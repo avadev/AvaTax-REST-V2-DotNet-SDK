@@ -164,5 +164,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         SendSalesRateFile = 28,
 
+        /// <summary>
+        /// AvaMeals
+        /// </summary>
+        AvaMeals = 29,
+
+        /// <summary>
+        /// AvaAlcohol
+        /// </summary>
+        AvaAlcohol = 30,
+
+        /// <summary>
+        /// Accounting Firm ARA Service Type
+        /// </summary>
+        ARA = 31,
+
+        /// <summary>
+        /// Accounting Firm ManagedARA Service Type
+        /// </summary>
+        ManagedARA = 32,
+
     }
 }

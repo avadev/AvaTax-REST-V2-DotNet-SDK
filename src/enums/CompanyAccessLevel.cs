@@ -39,5 +39,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         AllCompanies = 3,
 
+        /// <summary>
+        /// Permission to access all companies in all accounts managed by a firm account.
+        /// </summary>
+        FirmManagedAccounts = 4,
+
     }
 }
