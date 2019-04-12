@@ -163,6 +163,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
 
                 //Test download of image attachment.
                 var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);
+
+                Assert.NotNull(certAttachment);
             }
         }
     }
