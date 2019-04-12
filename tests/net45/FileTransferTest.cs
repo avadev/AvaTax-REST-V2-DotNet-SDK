@@ -161,20 +161,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 //Response should be "OK"
                 Assert.True(string.Equals(certuploadResult, "\"OK\""));
             }
-                
-           
-           
-
-            //Upload Cert Image Test
-            //FileResult fr = new FileResult()
-            //{
-            //    ContentType = "multipart/form-data",
-            //    Filename = new FileInfo("2019HolidayCalendar.pdf").Name,
-            //    Data = File.ReadAllBytes("https://developer.avalara.com/public/images/blog/12000-juris.jpg")
-            //};
-
-            
-
         }
     }
 }
