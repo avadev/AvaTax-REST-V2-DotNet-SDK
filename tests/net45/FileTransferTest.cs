@@ -160,6 +160,9 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
 
                 //Response should be "OK"
                 Assert.True(string.Equals(certuploadResult, "\"OK\""));
+
+                //Test download of image attachment.
+                var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);
             }
         }
     }
