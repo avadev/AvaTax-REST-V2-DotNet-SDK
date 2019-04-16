@@ -593,7 +593,7 @@ namespace Avalara.AvaTax.RestClient
             // Convert the name-value pairs into a byte array
             wr.Method = verb;
 
-
+            //Upload file.
             if (content != null && content is FileResult) {
                 wr.KeepAlive = true;
                 var fr = (FileResult)content;
