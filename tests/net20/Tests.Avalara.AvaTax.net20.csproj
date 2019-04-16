@@ -65,6 +65,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="BatchTests.cs" />
+    <Compile Include="CertificateTests.cs" />
     <Compile Include="FreeTaxRatesTest.cs" />
     <Compile Include="NexusTests.cs" />
     <Compile Include="TransactionTests.cs" />

@@ -578,6 +578,7 @@ namespace Avalara.AvaTax.RestClient
         {
             string path = CombinePath(_envUri.ToString(), relativePath.ToString());
             string jsonPayload = null;
+            string mimeType = null;
 
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
@@ -591,11 +592,31 @@ namespace Avalara.AvaTax.RestClient
 
             // Convert the name-value pairs into a byte array
             wr.Method = verb;
-            if (content != null) {
-                wr.ContentType = Constants.JSON_MIME_TYPE;
+
+
+            if (content != null && content is FileResult) {
+                wr.KeepAlive = true;
+                var fr = (FileResult)content;
+                mimeType = fr.ContentType;
+                content = fr.Data;
+                string dataBoundary = "----dataBoundary";
+                wr.ContentType = "multipart/form-data; boundary=" + dataBoundary;
+                byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "\r\n");                
+                Stream rs = wr.GetRequestStream();
+                rs.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
+                string header = string.Format(headerTemplate, fr.Filename, fr.Filename, fr.ContentType);
+                byte[] headerBytes = Encoding.UTF8.GetBytes(header);
+                rs.Write(headerBytes, 0, headerBytes.Length);
+                rs.Write(fr.Data, 0, fr.Data.Length);
+                byte[] trailer = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "--\r\n");
+                rs.Write(trailer, 0, trailer.Length);
+                rs.Close();
+            } else if (content != null) {
+                wr.ContentType = mimeType ?? Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
 
-                // Encode the payload
+                // Encode the payload               
                 jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(jsonPayload);
