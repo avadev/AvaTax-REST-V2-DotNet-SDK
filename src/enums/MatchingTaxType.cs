@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Match medical excise type
         /// </summary>
-        Excise = 5,
+        E = 5,
 
         /// <summary>
         /// Match Lodging tax type

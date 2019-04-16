@@ -142,6 +142,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        ReadOnly = 25,
+
+        /// <summary>
+        /// 
+        /// </summary>
         DateFormatError = 26,
 
         /// <summary>
@@ -257,7 +262,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        LinkageStatusUpdateNotSupported = 49,
+        PermissionRequired = 49,
 
         /// <summary>
         /// 
@@ -273,6 +278,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         LinkageNotAllowed = 52,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LinkageStatusUpdateNotSupported = 53,
 
         /// <summary>
         /// 
@@ -293,6 +303,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         MustAssignUserToCompany = 63,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxTypeMapping = 64,
 
         /// <summary>
         /// 
@@ -1077,11 +1092,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        MissingExposureZone = 1207,
-
-        /// <summary>
-        /// 
-        /// </summary>
         ConflictingExposureZone = 1208,
 
         /// <summary>
@@ -1333,6 +1343,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CannotDismissGlobalNotification = 1706,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        GenericTaxCodeForItem = 1707,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotCertifyCompany = 1708,
 
         /// <summary>
         /// SendSales API errors

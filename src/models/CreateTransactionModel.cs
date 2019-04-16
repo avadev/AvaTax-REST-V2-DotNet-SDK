@@ -68,8 +68,8 @@ namespace Avalara.AvaTax.RestClient
         public String customerCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Customer Usage Type - The client application customer or usage type.
-        /// Please use entityUseCode instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
+        /// Customer Usage Type - The client application customer or usage type.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -117,7 +117,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// To get a full list of available parameters, please use the [ListParameters](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListParameters/) endpoint.
         /// </summary>
-        public Dictionary<string, string> parameters { get; set; }
+        public List<TransactionParameterModel> parameters { get; set; }
 
         /// <summary>
         /// Customer-provided Reference Code with information about this transaction.

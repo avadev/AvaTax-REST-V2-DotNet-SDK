@@ -102,8 +102,8 @@ namespace Avalara.AvaTax.RestClient
         public String stateAssignedNo { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) The type of the jurisdiction to which this tax detail applies.
-        /// NOTE: Use jurisdictionTypeId instead.
+        /// DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Use jurisdictionTypeId instead.
+        /// The type of the jurisdiction to which this tax detail applies.
         /// </summary>
         public JurisTypeId? jurisType { get; set; }
 
@@ -205,7 +205,8 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? taxOverride { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) The rate type for this tax detail. Please use rateTypeCode instead.
+        /// DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Please use rateTypeCode instead.
+        /// The rate type for this tax detail.
         /// </summary>
         public RateType? rateType { get; set; }
 

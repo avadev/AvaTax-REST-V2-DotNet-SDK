@@ -72,7 +72,8 @@ namespace Avalara.AvaTax.RestClient
         public String taxGroup { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) Indicates the tax rate type. Please use rateTypeCode instead.
+        /// DEPRECATED - Date: 3/1/2018, Version: 18.3, Message: Please use rateTypeCode instead.
+        /// Indicates the tax rate type.
         /// </summary>
         public RateType? rateType { get; set; }
 

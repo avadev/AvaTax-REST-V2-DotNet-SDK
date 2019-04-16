@@ -24,12 +24,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// API request
         /// </summary>
-        public String request { get; set; }
+        public CreateTransactionModel request { get; set; }
 
         /// <summary>
         /// API response
         /// </summary>
-        public String response { get; set; }
+        public TransactionModel response { get; set; }
 
 
         /// <summary>
