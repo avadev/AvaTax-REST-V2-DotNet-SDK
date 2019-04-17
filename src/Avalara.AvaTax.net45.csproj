@@ -345,8 +345,10 @@
     <Compile Include="models\TransactionLineDetailModel.cs" />
     <Compile Include="models\TransactionLineLocationTypeModel.cs" />
     <Compile Include="models\TransactionLineModel.cs" />
+    <Compile Include="models\TransactionLineParameterModel.cs" />
     <Compile Include="models\TransactionLocationTypeModel.cs" />
     <Compile Include="models\TransactionModel.cs" />
+    <Compile Include="models\TransactionParameterModel.cs" />
     <Compile Include="models\TransactionReferenceFieldModel.cs" />
     <Compile Include="models\TransactionSummary.cs" />
     <Compile Include="models\UomModel.cs" />

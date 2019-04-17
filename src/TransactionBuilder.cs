@@ -121,11 +121,17 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="name">The parameter name.  For a list of valid parameter names, call AvaTaxClient.ListParameters()</param>
         /// <param name="value">The value for this parameter</param>
+        /// <param name="unit">The unit of measure of the parameter value</param>
         /// <returns>The TransactionBuilder object</returns>
-        public TransactionBuilder WithParameter(string name, string value)
+        public TransactionBuilder WithParameter(string name, string value, string unit = null)
         {
-            if (_model.parameters == null) _model.parameters = new Dictionary<string, string>();
-            _model.parameters[name] = value;
+            if (_model.parameters == null) {
+                _model.parameters = new List<TransactionParameterModel>();
+            }
+
+            var param = new TransactionParameterModel(){ name = name, value = value, unit = unit };
+            _model.parameters.Add(param);
+
             return this;
         }
 
@@ -134,12 +140,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="name">The parameter name.  For a list of valid parameter names, call AvaTaxClient.ListParameters()</param>
         /// <param name="value">The value for this parameter</param>
+        /// <param name="unit">The unit of measure of the parameter value</param>
         /// <returns></returns>
-        public TransactionBuilder WithLineParameter(string name, string value)
+        public TransactionBuilder WithLineParameter(string name, string value, string unit = null)
         {
             var l = GetMostRecentLine("WithLineParameter");
-            if (l.parameters == null) l.parameters = new Dictionary<string, string>();
-            l.parameters.Add(name, value);
+            if (l.parameters == null) {
+                l.parameters = new List<TransactionLineParameterModel>();
+            }
+
+            var lParam = new TransactionLineParameterModel() { name = name, value = value, unit = unit };
+            l.parameters.Add(lParam);
+
             return this;
         }
 
