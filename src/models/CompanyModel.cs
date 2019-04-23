@@ -220,7 +220,12 @@ namespace Avalara.AvaTax.RestClient
         public List<UPCModel> upcs { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Please use the `ListCertificates` API.
+        /// Optional: A list of non reporting child companies associated with this company. To fetch this list, add the query string `?$include=NonReportingChildren` to your URL.
+        /// </summary>
+        public List<CompanyModel> nonReportingChildCompanies { get; set; }
+
+        /// <summary>
+        /// DEPRECATED - Date: 9/15/2017, Version: 17.10, Message: Please use the `ListCertificates` API.
         /// </summary>
         public List<EcmsModel> exemptCerts { get; set; }
 

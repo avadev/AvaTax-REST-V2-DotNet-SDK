@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The tax type associated with the summary
         /// </summary>
-        public TaxType? taxType { get; set; }
+        public String taxType { get; set; }
 
         /// <summary>
         /// The total sales amount

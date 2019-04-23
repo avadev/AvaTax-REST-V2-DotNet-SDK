@@ -42,7 +42,8 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? date { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The date when payment was made on this transaction. By default, this should be the same as the date of the transaction.
+        /// DEPRECATED - Date: 07/25/2018, Version: 18.7, Message: This field is deprecated and will return null till its removed.
+        /// The date when payment was made on this transaction. By default, this should be the same as the date of the transaction.
         /// </summary>
         public DateTime? paymentDate { get; set; }
 
@@ -76,8 +77,8 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The customer usage type for this transaction. Customer usage types often affect exemption or taxability rules.
-        /// Please use entityUseCode instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
+        /// The customer usage type for this transaction. Customer usage types often affect exemption or taxability rules.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -87,8 +88,7 @@ namespace Avalara.AvaTax.RestClient
         public String entityUseCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Please use `customerCode`.
-        ///  
+        /// DEPRECATED - Date: 3/1/2018, Version: 18.3, Message: Please use `customerCode`
         /// This field has been renamed to `customerCode` to match documentation for other APIs related to exemption customers.
         /// </summary>
         public String customerVendorCode { get; set; }
@@ -116,8 +116,8 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? reconciled { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) This field has been replaced by the reportingLocationCode field
-        /// In order to ensure consistency of field names, Please use reportingLocationCode instead.
+        /// DEPRECATED - Date: 3/1/2018, Version: 18.3, Message: In order to ensure consistency of field names, Please use reportingLocationCode instead.
+        /// This field has been replaced by the reportingLocationCode field
         /// </summary>
         public String locationCode { get; set; }
 
@@ -342,7 +342,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
-        public Dictionary<string, string> parameters { get; set; }
+        public List<TransactionParameterModel> parameters { get; set; }
 
         /// <summary>
         /// List of informational and warning messages regarding this API call. These messages are only relevant to the current API call.

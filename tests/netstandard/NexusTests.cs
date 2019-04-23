@@ -145,7 +145,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Get State nexus
             NexusModel getALNexus = null;
             try {
-                getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id);
+                getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id.Value);
             } catch (Exception) { }
             Assert.NotNull(getALNexus);
 
@@ -154,14 +154,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Get City Nexus
             NexusModel getCityNexus = null;
             try {
-                getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id);
+                getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id.Value);
             } catch (Exception) { }
             Assert.NotNull(getALNexus);
 
             fetchedUSNexus.Add(getCityNexus);
 
             // Delete Nexus
-            var errorResult = Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id);
+            var errorResult = Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id.Value);
             Assert.NotNull(errorResult);
         }
     }

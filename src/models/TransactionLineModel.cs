@@ -42,8 +42,8 @@ namespace Avalara.AvaTax.RestClient
         public Int32? boundaryOverrideId { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The customer usage type for this line item. Usage type often affects taxability rules.
-        /// Please use entityUseCode instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
+        /// The customer usage type for this line item. Usage type often affects taxability rules.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -263,7 +263,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
-        public Dictionary<string, string> parameters { get; set; }
+        public List<TransactionLineParameterModel> parameters { get; set; }
 
         /// <summary>
         /// The cross-border harmonized system code (HSCode) used to calculate tariffs and duties for this line item. 
