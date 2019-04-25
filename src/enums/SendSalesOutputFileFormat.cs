@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    ///	File format for sales output
     /// </summary>
     public enum SendSalesOutputFileFormat
     {
         /// <summary>
-        /// 
+        /// Standard CSV file
         /// </summary>
         STANDARD = 1,
 
         /// <summary>
-        /// 
+        /// DMA file
         /// </summary>
         DMA = 2,
 

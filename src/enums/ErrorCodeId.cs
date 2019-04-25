@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         AccountInvalidException = 2,
 
         /// <summary>
-        /// 
+        /// User doesn't have rights to this company
         /// </summary>
         CompanyInvalidException = 3,
 
