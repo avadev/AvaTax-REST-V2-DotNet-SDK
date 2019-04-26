@@ -1076,342 +1076,342 @@ namespace Avalara.AvaTax.RestClient
         CertificatesError = 1203,
 
         /// <summary>
-        /// 
+        /// A certificate must have either a filename, a PDF file attachment, or one JPG image for each page in the certificate.
         /// </summary>
         MissingRequiredFields = 1204,
 
         /// <summary>
-        /// 
+        /// The company has not been configured with this certificate.
         /// </summary>
         CertificatesNotSetup = 1205,
 
         /// <summary>
-        /// 
+        /// The certificate system could not link the two objects as requested.
         /// </summary>
         AddRelationshipsError = 1206,
 
         /// <summary>
-        /// 
+        /// Exposure zones must have unique names.
         /// </summary>
         ConflictingExposureZone = 1208,
 
         /// <summary>
-        /// 
+        /// Avalara's Certificates service requires extra information to create an exposure zone.
         /// </summary>
         MissingFieldToCreateExposureZone = 1209,
 
         /// <summary>
-        /// 
+        /// A certificate must have an exemption reason.
         /// </summary>
         MissingExemptReason = 1210,
 
         /// <summary>
-        /// 
+        /// The exemption reason you specified cannot be found.
         /// </summary>
         InvalidExemptReason = 1211,
 
         /// <summary>
-        /// 
+        /// Filtering operation is not supported
         /// </summary>
         InvalidExemptionOperation = 1212,
 
         /// <summary>
-        /// 
+        /// A certificate must have be stored in only one format: filename, PDF, or images.
         /// </summary>
         ConflictingFields = 1213,
 
         /// <summary>
-        /// 
+        /// You provided a value in the PDF or image file fields, but the value was empty.
         /// </summary>
         InvalidPdfOrImageFile = 1214,
 
         /// <summary>
-        /// 
+        /// The cover letter you specified for this CertExpress invitation was not found.
         /// </summary>
         InvalidCoverLetterTitle = 1215,
 
         /// <summary>
-        /// 
+        /// The automatic provisioning process for exemption certificates failed.
         /// </summary>
         AccountNotProvisioned = 1216,
 
         /// <summary>
-        /// 
+        /// Invalid request content type in the request.
         /// </summary>
         InvalidRequestContentType = 1217,
 
         /// <summary>
-        /// 
+        /// AvaTax exemption data does not support this type of pagination.
         /// </summary>
         ExemptionPaginationLimits = 1218,
 
         /// <summary>
-        /// 
+        /// AvaTax exemption data does not support sorting by more than one field.
         /// </summary>
         ExemptionSortLimits = 1219,
 
         /// <summary>
-        /// 
+        /// An AvaTax customer record can be either a BillTo customer address or a ShipTo customer address, but not both.
         /// </summary>
         CustomerCantBeBothShipToAndBillTo = 1220,
 
         /// <summary>
-        /// 
+        /// The API call you made requires a BillTo customer as a parameter, but you used a ShipTo customer.
         /// </summary>
         BillToCustomerExpected = 1221,
 
         /// <summary>
-        /// 
+        /// The API call you made expects a ShipTo customer record, but you supplied a BillTo customer instead.
         /// </summary>
         ShipToCustomerExpected = 1222,
 
         /// <summary>
-        /// 
+        /// The `EcmsSstCertsRequired` field should be set to true.
         /// </summary>
         EcmsSstCertsRequired = 1223,
 
         /// <summary>
-        /// Multi document error codes
+        /// A multi-company transaction was partially created.
         /// </summary>
         TransactionNotCancelled = 1300,
 
         /// <summary>
-        /// 
+        /// The MultiDocument transaction you attempted to create is too complex.
         /// </summary>
         TooManyTransactions = 1301,
 
         /// <summary>
-        /// 
+        /// Multi-company transactions may only override tax dates.
         /// </summary>
         OnlyTaxDateOverrideIsAllowed = 1302,
 
         /// <summary>
-        /// 
+        /// This transaction already exists and cannot be overwritten.
         /// </summary>
         TransactionAlreadyExists = 1303,
 
         /// <summary>
-        /// 
+        /// The values in your verify call did not match the transaction.
         /// </summary>
         DateMismatch = 1305,
 
         /// <summary>
-        /// 
+        /// Documents can only be verified from the `Saved` or `Posted` statuses.
         /// </summary>
         InvalidDocumentStatusForVerify = 1306,
 
         /// <summary>
-        /// 
+        /// The values in your verify call did not match the transaction.
         /// </summary>
         TotalAmountMismatch = 1307,
 
         /// <summary>
-        /// 
+        /// The values in your verify call did not match the transaction.
         /// </summary>
         TotalTaxMismatch = 1308,
 
         /// <summary>
-        /// 
+        /// Documents can only be committed from the `Saved` or `Posted` statuses.
         /// </summary>
         InvalidDocumentStatusForCommit = 1309,
 
         /// <summary>
-        /// 
+        /// A document could not be found with the specified type.
         /// </summary>
         InvalidDocumentType = 1310,
 
         /// <summary>
-        /// 
+        /// A MultiDocument was partially locked for reporting.
         /// </summary>
         MultiDocumentPartiallyLocked = 1312,
 
         /// <summary>
-        /// 
+        /// This API can only modify transactions that are not yet committed.
         /// </summary>
         TransactionIsCommitted = 1313,
 
         /// <summary>
-        /// Communications Tax error codes
+        /// You attempted to call a Communications tax API, but your client ID value is missing.
         /// </summary>
         CommsConfigClientIdMissing = 1400,
 
         /// <summary>
-        /// 
+        /// The Avalara Communications Client ID value associated with your account is invalid.
         /// </summary>
         CommsConfigClientIdBadValue = 1401,
 
         /// <summary>
-        /// Account Activate error codes
+        /// You may not obtain a license key until you have accepted Avalara's terms and conditions.
         /// </summary>
         AccountInNewStatusException = 1404,
 
         /// <summary>
-        /// Worksheet Exception
+        ///An error occurred in the Liability Worksheet calculation service
         /// </summary>
         WorksheetException = 1405,
 
         /// <summary>
-        /// 
+        /// Invalid AccountOverride format.
         /// </summary>
         InvalidAccountOverride = 1406,
 
         /// <summary>
-        /// 
+        /// The current role you are in does not permit account override function
         /// </summary>
         AccountOverrideNotAuthorized = 1407,
 
         /// <summary>
-        /// 
+        /// A field in the query is not a queryable.
         /// </summary>
         FieldNotQueryableError = 1408,
 
         /// <summary>
-        /// 
+        /// A username is required
         /// </summary>
         UsernameRequired = 1409,
 
         /// <summary>
-        /// 
+        /// Please review your audit message and ensure no special characters are used.
         /// </summary>
         InvalidAuditMessage = 1410,
 
         /// <summary>
-        /// 
+        /// The field you have tried to sort cannot be organized in the desired manner.
         /// </summary>
         FieldNotOrderableError = 1411,
 
         /// <summary>
-        /// Nexus validation error codes
+        /// The nexus cannot be deleted due to child nexus tied to it.
         /// </summary>
         CannotDeleteParentBeforeChildNexus = 1500,
 
         /// <summary>
-        /// 
+        /// Nexus out of date range with its children
         /// </summary>
         NexusChildDateMismatch = 1501,
 
         /// <summary>
-        /// Remote validation Error
+        /// The AvaTax API encountered an internal error and could not continue.
         /// </summary>
         RemoteValidationError = 1502,
 
         /// <summary>
-        /// Advanced rule errors
+        /// Advanced rule failed to execute.
         /// </summary>
         AdvancedRuleRequestRuleError = 1602,
 
         /// <summary>
-        /// 
+        /// Failed to execute the advanced rule script.
         /// </summary>
         AdvancedRuleResponseRuleError = 1603,
 
         /// <summary>
-        /// 
+        /// The advanced rule script has not been approved.
         /// </summary>
         AdvancedRuleError = 1605,
 
         /// <summary>
-        /// Miscellaneous
+        /// This document is voided, cannot add or delete lines.
         /// </summary>
         InvalidDocumentStatusToAddOrDeleteLines = 1700,
 
         /// <summary>
-        /// 
+        /// Nexus is not declared in this region, therefore no tax rule can be created.
         /// </summary>
         TaxRuleRequiresNexus = 1701,
 
         /// <summary>
-        /// 
+        /// A single UPC code can be defined only once for each company.
         /// </summary>
         UPCCodeNotUnique = 1702,
 
         /// <summary>
-        /// 
+        /// The DataSource Source and Instance fields cannot be modified.
         /// </summary>
         CannotUpdateSourceOrInstance = 1703,
 
         /// <summary>
-        /// 
+        /// The tax code in the request could not be found.
         /// </summary>
         TaxCodeAssociatedWithItemCodeNotFound = 1704,
 
         /// <summary>
-        /// 
+        /// An item in this request has multiple entries for a given system code.
         /// </summary>
         DuplicateSystemForItem = 1705,
 
         /// <summary>
-        /// 
+        /// This notification cannot be dismissed because it is a global notification.
         /// </summary>
         CannotDismissGlobalNotification = 1706,
 
         /// <summary>
-        /// 
+        /// TBD
         /// </summary>
         GenericTaxCodeForItem = 1707,
 
         /// <summary>
-        /// 
+        /// TBD
         /// </summary>
         CannotCertifyCompany = 1708,
 
         /// <summary>
-        /// SendSales API errors
+        /// The requested output file format is invalid.
         /// </summary>
         UnsupportedFileFormat = 1800,
 
         /// <summary>
-        /// 
+        /// You must specify either CSV or JSON file formats.
         /// </summary>
         UnsupportedOutputFileType = 1801,
 
         /// <summary>
-        /// TaxProfile API errors
+        /// A tax profile was not included in your request.
         /// </summary>
         TaxProfileNotProvided = 1900,
 
         /// <summary>
-        /// 
+        /// The tax profile must be a valid ZIP file.
         /// </summary>
         InvalidTaxProfile = 1901,
 
         /// <summary>
-        /// 
+        /// The import tax profile request is missing a company model and company tax profile.
         /// </summary>
         CompanyTaxProfileEntryRequired = 1902,
 
         /// <summary>
-        /// 
+        /// AvaTax was unable to parse your tax profile entry.
         /// </summary>
         ErrorReadingTaxProfileEntry = 1903,
 
         /// <summary>
-        /// AuditAccount API errors
+        /// The trace data is not available for the date and time selected.
         /// </summary>
         TraceDataNotAvailable = 2000,
 
         /// <summary>
-        /// Item parameter errors
+        /// A paremeter in the request has an unexpected unit of measurement type.
         /// </summary>
         InvalidParameterUnitMeasurementType = 2100,
 
         /// <summary>
-        /// 
+        /// A parameter in the request doesn't have a unit of measure.
         /// </summary>
         ParameterUnitRequired = 2101,
 
         /// <summary>
-        /// 
+        /// A parameter value in the request has an invalid data type.
         /// </summary>
         InvalidParameterValueDataType = 2102,
 
         /// <summary>
-        /// 
+        /// A parameter in the request doesn't match the expected attribute type.
         /// </summary>
         InvalidParameterAttributeType = 2103,
 
         /// <summary>
-        /// 
+        /// The account's subscription level doesn't include use of the parameter in your request.
         /// </summary>
         SubscriptionRequiredForParameter = 2104,
 
