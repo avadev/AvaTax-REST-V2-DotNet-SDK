@@ -51,6 +51,7 @@
     <Compile Include="AvaTaxClient.cs" />
     <Compile Include="AvaTaxEnvironment.cs" />
     <Compile Include="AvaTaxError.cs" />
+    <Compile Include="AvaTaxOfflineHelper.cs" />
     <Compile Include="AvaTaxPath.cs" />
     <Compile Include="CallDuration.cs" />
     <Compile Include="Constants.cs" />
@@ -367,6 +368,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="taxContent\README.txt" />
+    <Content Include="taxRatesByZip\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
