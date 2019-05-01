@@ -14,30 +14,34 @@ namespace Avalara.AvaTax.RestClient.net45
     public class AvaTaxOfflineHelper
     {
         /// <summary>Caches the content.</summary>
-        public static void CacheRateContent(AvaTaxClient client, string region, string zip)
+        /// <param name="client"></param>
+        /// <param name="region"></param>
+        /// <param name="zip"></param>
+        /// <param name="path">The fully qualified path where the file will be stored.</param>
+        public static void CacheRateContent(AvaTaxClient client, string region, string zip, string path)
         {
             //Call rate by ZIP endpoint.
             var rateFile = client.TaxRatesByPostalCode(region, zip);
 
             //Save the rate by ZIP file in the local ZIP folder.
-            WriteZipRateFile(rateFile, zip);
+            WriteZipRateFile(rateFile, zip, path);
         }
 
         /// <summary>Verifies the local zip rate available.</summary>
         /// <param name="zip">The ZIP code rate file to verify is available locally.</param>
         /// <returns>bool indicating whether the ZIP rate file is present.</returns>
-        public static bool VerifyLocalZipRateAvailable(string zip)
+        public static bool VerifyLocalZipRateAvailable(string zip, string path)
         {
-            return File.Exists(string.Format(@"C:\git\develop\AvaTax-REST-V2-DotNet-SDK\src\taxRatesByZip\{0}.json", zip));
+            return File.Exists(string.Format("{0}{1}.json", path, zip));
         }
 
-        private static void WriteZipRateFile(TaxRateModel zipRate, string zip)
+        private static void WriteZipRateFile(TaxRateModel zipRate, string zip, string path)
         {
             TextWriter writer = null;
 
             try {
                 var content = JsonConvert.SerializeObject(zipRate);
-                writer = new StreamWriter(string.Format(@"C:\git\develop\AvaTax-REST-V2-DotNet-SDK\src\taxRatesByZip\{0}", string.Format("{0}.json", zip)));
+                writer = new StreamWriter(string.Format("{0}{1}.json", path, zip));
                 writer.Write(content);
             }
             finally {
@@ -48,12 +52,12 @@ namespace Avalara.AvaTax.RestClient.net45
             }
         }
 
-        private static TaxRateModel ReadZipRateFile(string zip)
+        private static TaxRateModel ReadZipRateFile(string zip, string path)
         {
             TextReader reader = null;
 
             try {
-                reader = new StreamReader(string.Format(@"C:\git\develop\AvaTax-REST-V2-DotNet-SDK\src\taxRatesByZip\{0}.json", zip));
+                reader = new StreamReader(string.Format("{0}{1}.json", path, zip));
                 var contents = reader.ReadToEnd();
                 return JsonConvert.DeserializeObject<TaxRateModel>(contents);
             }
