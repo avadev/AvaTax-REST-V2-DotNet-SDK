@@ -1,17 +1,13 @@
 ﻿using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Tests.Avalara.AvaTax.RestClient.net20
 {
     [TestFixture]
-    public class FileTransferTest
+    class CertificateTests
     {
         public AvaTaxClient Client { get; set; }
         public string DefaultCompanyCode { get; set; }
@@ -25,8 +21,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [SetUp]
         public void Setup()
         {
-            try
-            {
+            try {
                 // Create a client and set up authentication
                 Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
                     typeof(TransactionTests).Assembly.GetName().Version.ToString(),
@@ -75,9 +70,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.True(TestCompany.locations.Count > 0, "Test company should have locations");
 
                 // Shouldn't fail
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Assert.Fail("Exception in SetUp: " + ex);
             }
         }
@@ -89,8 +82,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [TearDown]
         public void TearDown()
         {
-            try
-            {
+            try {
 
                 // Re-fetch the company
                 var company = Client.GetCompany(TestCompany.id, null);
@@ -104,36 +96,15 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.False(disableResult.isActive, "Company should have been deactivated");
 
                 // Shouldn't fail
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Assert.Fail("Exception in TearDown: " + ex);
             }
         }
         #endregion
 
         /// <summary>
-        /// To debug this application, call app must be called with args[0] as username and args[1] as password
+        /// Tests the upload certificate image endpoint.
         /// </summary>
-        [Test]
-        public async Task TestInitiateExportDocumentLineReport()
-        {
-            var exportDocumentLine = new ExportDocumentLineModel()
-            {
-                country = "US",
-                culture = "en-US",
-                currencyCode = "USD",
-                docType = ReportDocType.Sales,
-                startDate = new DateTime(2012, 1, 1),
-                endDate = DateTime.Today,
-                format = ReportFormat.CSV,
-            };
-            var company = Client.QueryCompanies(null, null, null, null, null);
-            
-            var report = await Client.InitiateExportDocumentLineReportAsync(company.value[0].id, exportDocumentLine);
-            Assert.NotNull(report);
-        }
-
         [Test]
         public void TestUploadCertificateImage()
         {
@@ -141,25 +112,31 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             //be provisioned, already have a certificate created, and the
             //certificate needs to be valid.
             var certs = Client.QueryCertificates(DefaultCompanyId, string.Empty, "valid EQ true", null, null, string.Empty).value;
+            var certId = certs.FirstOrDefault().id.Value;
 
-            var certId = certs.FirstOrDefault().id.Value;            
+            //Use TLS 1.2 with .NET 2.0.
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            const System.Security.Authentication.SslProtocols _tls12 = (System.Security.Authentication.SslProtocols)0x00000C00;
+            const SecurityProtocolType tls12 = (SecurityProtocolType)_tls12;
+            ServicePointManager.SecurityProtocol = tls12;
 
             //Get an image.
             using (WebClient webClient = new WebClient()) {
-                byte[] jpgByteArr = webClient.DownloadData("https://developer.avalara.com/public/images/blog/12000-juris.jpg");
+                
+                byte[] jpegByteArr = webClient.DownloadData("https://developer.avalara.com/public/images/blog/12000-juris.jpg");
 
                 FileResult fileResult = new FileResult()
                 {
                     ContentType = "multipart/form-data",
                     Filename = "test_cert_image.jpg",
-                    Data = jpgByteArr
+                    Data = jpegByteArr
                 };
 
                 //Send request.
-                var certuploadResult = Client.UploadCertificateImage(DefaultCompanyId, certId, fileResult);
+                var certUploadResult = Client.UploadCertificateImage(DefaultCompanyId, certId, fileResult);
 
                 //Response should be "OK"
-                Assert.True(string.Equals(certuploadResult, "\"OK\""));
+                Assert.True(string.Equals(certUploadResult, "\"OK\""));
 
                 //Test download of image attachment.
                 var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);

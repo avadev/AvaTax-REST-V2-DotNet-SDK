@@ -52,18 +52,20 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public override string ToString()
         {
+            StringBuilder output = new StringBuilder(_path.ToString());
+
             if (_query.Count > 0) {
-                _path.Append("?");
+                output.Append("?");
                 foreach (var kvp in _query) {
 #if PORTABLE
-                    _path.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
+                    output.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
 #else
-                    _path.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
+                    output.AppendFormat("{0}={1}&", System.Uri.EscapeDataString(kvp.Key), System.Uri.EscapeDataString(kvp.Value));
 #endif
                 }
-                _path.Length -= 1;
+                output.Length -= 1;
             }
-            return _path.ToString();
+            return output.ToString();
         }
     }
 }
