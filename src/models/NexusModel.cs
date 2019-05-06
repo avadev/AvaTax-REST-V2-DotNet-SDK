@@ -37,7 +37,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This field is defined automatically when you declare nexus. You do not need to provide a value for this field.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the company that declared nexus.
@@ -61,8 +61,8 @@ namespace Avalara.AvaTax.RestClient
         public String region { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) The jurisdiction type of the jurisdiction in which this company declared nexus.
-        /// NOTE: Use jurisdictionTypeId instead.
+        /// DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Please use jurisdictionTypeId instead.
+        /// The jurisdiction type of the jurisdiction in which this company declared nexus.
         /// </summary>
         public JurisTypeId? jurisTypeId { get; set; }
 
@@ -178,12 +178,22 @@ namespace Avalara.AvaTax.RestClient
         public String taxId { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 4/29/2017, Version: 19.4, Message: Please use isSSTActive instead.
         /// For the United States, this flag indicates whether this particular nexus falls within a U.S. State that participates
         /// in the Streamlined Sales Tax program. For countries other than the US, this flag is null.
         ///  
         /// This field is defined by Avalara. All Avalara-defined fields must match an Avalara-defined nexus object found by calling `ListNexus`.
         /// </summary>
         public Boolean? streamlinedSalesTax { get; set; }
+
+        /// <summary>
+        /// For the United States, this flag indicates whether this particular nexus falls within a U.S. State that participates
+        /// in the Streamlined Sales Tax program and if the account associated with the Nexus has an active AvaTaxCsp subscription.
+        /// For countries other than the US, this flag is null.
+        ///  
+        /// This field is defined by Avalara. All Avalara-defined fields must match an Avalara-defined nexus object found by calling `ListNexus`.
+        /// </summary>
+        public Boolean? isSSTActive { get; set; }
 
         /// <summary>
         /// The date when this record was created.

@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// The account type of the adjustment.
     /// </summary>
     public enum PaymentAccountTypeId
     {
         /// <summary>
-        /// 
+        /// no account type
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// 
+        ///  Accounts receivable and accounts payable account type
         /// </summary>
         AccountsReceivableAccountsPayable = 1,
 
         /// <summary>
-        /// 
+        /// Accounts receivable account type 
         /// </summary>
         AccountsReceivable = 2,
 
         /// <summary>
-        /// 
+        /// Accounts payable account type
         /// </summary>
         AccountsPayable = 3,
 

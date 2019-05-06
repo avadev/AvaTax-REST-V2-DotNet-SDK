@@ -22,15 +22,15 @@ namespace Avalara.AvaTax.RestClient
     public class MultiDocumentLineItemModel
     {
         /// <summary>
-        /// Specify the code of the company for this line of transaction. 
-        /// 
+        /// Specify the code of the company for this line of transaction.
+        ///  
         /// If you leave this value null, the `companyCode` at the root level will be used instead.
         /// </summary>
         public String companyCode { get; set; }
 
         /// <summary>
-        /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority. 
-        /// 
+        /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority.
+        ///  
         /// If you leave this value `null`, the `reportingLocationCode` at the root level will be used instead.
         /// </summary>
         public String reportingLocationCode { get; set; }
@@ -74,7 +74,7 @@ namespace Avalara.AvaTax.RestClient
         public String taxCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Please use `entityUseCode` instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use `entityUseCode` instead.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -164,7 +164,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// To get a full list of available parameters, please use the `ListParameters` API.
         /// </summary>
-        public Dictionary<string, string> parameters { get; set; }
+        public List<TransactionLineParameterModel> parameters { get; set; }
 
         /// <summary>
         /// The Item code for Custom Duty / Global Import tax determination

@@ -17,34 +17,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a listing of all tax calculation data for filings and for accruing to future filings.
+    /// Represents a transaction parameter.
     /// </summary>
-    public class FilingsTaxDetailsModel
+    public class TransactionLineParameterModel
     {
         /// <summary>
-        /// The tax type associated with the summary
+        /// The name of the parameter.
         /// </summary>
-        public String taxType { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The total sales amount
+        /// The value of the parameter.
         /// </summary>
-        public Decimal? salesAmount { get; set; }
+        public String value { get; set; }
 
         /// <summary>
-        /// The nontaxable amount
+        /// The unit of measure of the parameter value.
         /// </summary>
-        public Decimal? nonTaxableAmount { get; set; }
-
-        /// <summary>
-        /// The tax amount
-        /// </summary>
-        public Decimal? taxAmount { get; set; }
-
-        /// <summary>
-        /// The number of nights
-        /// </summary>
-        public Int64? numberOfNights { get; set; }
+        public String unit { get; set; }
 
 
         /// <summary>

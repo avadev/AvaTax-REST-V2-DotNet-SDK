@@ -103,7 +103,7 @@ namespace Avalara.AvaTax.RestClient
         public String jurisCode { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) Please use `jurisdictionTypeId` instead.
+        /// DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Please use `jurisdictionTypeId` instead.
         /// </summary>
         public JurisTypeId? jurisTypeId { get; set; }
 
@@ -123,7 +123,7 @@ namespace Avalara.AvaTax.RestClient
         public JurisdictionType? jurisdictionTypeId { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Please use `entityUseCode` instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use `entityUseCode` instead.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -147,7 +147,7 @@ namespace Avalara.AvaTax.RestClient
         public MatchingTaxType? taxTypeId { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) Please use `rateTypeCode`, `taxTypeGroup` and `subTaxType` instead.
+        /// DEPRECATED - Date: 8/27/2018, Version: 18.9, Message: Please use `rateTypeCode`, `taxTypeGroup` and `subTaxType` instead.
         /// </summary>
         public RateType? rateTypeId { get; set; }
 
@@ -236,7 +236,7 @@ namespace Avalara.AvaTax.RestClient
         public String countyFIPS { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) This field is no longer required.
+        /// DEPRECATED - Date: 8/27/2018, Version: 18.9, Message: This field is no longer required.
         /// </summary>
         public Boolean? isSTPro { get; set; }
 

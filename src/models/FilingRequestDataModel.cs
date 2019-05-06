@@ -28,7 +28,8 @@ namespace Avalara.AvaTax.RestClient
         public Int64? companyReturnId { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The legacy return name of the requested calendar.
+        /// DEPRECATED - Date: 9/13/2018, Version: 18.10, Message: Please use `taxFormCode` instead.
+        /// The legacy return name of the requested calendar.
         /// </summary>
         public String returnName { get; set; }
 

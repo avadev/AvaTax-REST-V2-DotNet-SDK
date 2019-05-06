@@ -33,7 +33,8 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The legacy return name of the tax form to file. Please use `taxFormCode` instead.
+        /// DEPRECATED - Date: 9/13/2018, Version: 18.10, Message: Please use `taxFormCode` instead.
+        /// The legacy return name of the tax form to file.
         /// </summary>
         public String returnName { get; set; }
 
@@ -109,44 +110,39 @@ namespace Avalara.AvaTax.RestClient
         public String employerIdentificationNumber { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The first line of the mailing address that will be used when filling out this tax return.
-        /// Field will be no longer be available after the 17.9 release.
+        /// DEPRECATED - Date: 9/1/2017, Version: 17.9, Message: Field will be no longer be available after the 17.9 release.
+        /// The first line of the mailing address that will be used when filling out this tax return.
         /// </summary>
         public String line1 { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The second line of the mailing address that will be used when filling out this tax return.
+        /// DEPRECATED - Date: 9/1/2017, Version: 17.9, Message: Field will be no longer be available after the 17.9 release.
+        /// The second line of the mailing address that will be used when filling out this tax return.
         /// Please note that some tax forms do not support multiple address lines.
-        ///  
-        /// Field will be no longer be available after the 17.9 release.
         /// </summary>
         public String line2 { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The city name of the mailing address that will be used when filling out this tax return.
-        ///  
-        /// Field will be no longer be available after the 17.9 release.
+        /// DEPRECATED - Date: 9/1/2017, Version: 17.9, Message: Field will be no longer be available after the 17.9 release.
+        /// The city name of the mailing address that will be used when filling out this tax return.
         /// </summary>
         public String city { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The state, region, or province of the mailing address that will be used when filling out this tax return.
-        ///  
-        /// Field will be no longer be available after the 17.9 release.
+        /// DEPRECATED - Date: 9/1/2017, Version: 17.9, Message: Field will be no longer be available after the 17.9 release.
+        /// The state, region, or province of the mailing address that will be used when filling out this tax return.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The postal code or zip code of the mailing address that will be used when filling out this tax return.
-        ///  
-        /// Field will be no longer be available after the 17.9 release.
+        /// DEPRECATED - Date: 9/1/2017, Version: 17.9, Message: Field will be no longer be available after the 17.9 release.
+        /// The postal code or zip code of the mailing address that will be used when filling out this tax return.
         /// </summary>
         public String postalCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The two character ISO-3166 country code of the mailing address that will be used when filling out this tax return.
-        ///  
-        /// Field will be no longer be available after the 17.9 release.
+        /// DEPRECATED - Date: 9/1/2017, Version: 17.9, Message: Field will be no longer be available after the 17.9 release.
+        /// The two character ISO-3166 country code of the mailing address that will be used when filling out this tax return.
         /// </summary>
         public String country { get; set; }
 

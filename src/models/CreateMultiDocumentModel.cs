@@ -18,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// A MultiDocument transaction represents a sale or purchase that occurred between more than two companies.
-    /// 
+    ///  
     /// A traditional transaction requires exactly two parties: a seller and a buyer. MultiDocument transactions can
     /// involve a marketplace of vendors, each of which contributes some portion of the final transaction. Within
     /// a MultiDocument transaction, each individual buyer and seller pair are matched up and converted to a separate
@@ -28,16 +28,16 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The transaction code of the MultiDocument transaction.
-        /// 
+        ///  
         /// All individual transactions within this MultiDocument object will have this code as a prefix.
-        /// 
+        ///  
         /// If you leave the `code` field blank, a GUID will be assigned.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
         /// Lines that will appear on the invoice.
-        /// 
+        ///  
         /// For a MultiDocument transaction, each line may represent a different company or reporting location code. AvaTax
         /// will separate this MultiDocument transaction object into many different transactions, one for each pair of legal
         /// entities, so that each legal entity can file their transactional taxes correctly.
@@ -46,7 +46,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Set this value to true to allow this API call to adjust the MultiDocument model if one already exists.
-        /// 
+        ///  
         /// If you omit this field, or if the value is `null`, you will receive an error if you try to create two MultiDocument
         /// objects with the same `code`.
         /// </summary>
@@ -88,8 +88,8 @@ namespace Avalara.AvaTax.RestClient
         public String customerCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Customer Usage Type - The client application customer or usage type.
-        /// Please use entityUseCode instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
+        /// Customer Usage Type - The client application customer or usage type.
         /// </summary>
         public String customerUsageType { get; set; }
 
@@ -137,7 +137,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// To get a full list of available parameters, please use the [ListParameters](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListParameters/) endpoint.
         /// </summary>
-        public Dictionary<string, string> parameters { get; set; }
+        public List<TransactionParameterModel> parameters { get; set; }
 
         /// <summary>
         /// Customer-provided Reference Code with information about this transaction.
