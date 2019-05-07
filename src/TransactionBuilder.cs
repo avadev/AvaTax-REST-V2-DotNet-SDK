@@ -370,13 +370,17 @@ namespace Avalara.AvaTax.RestClient
 		/// <param name="itemCode">The item code of this item in your product item definitions.</param>
 		/// <param name="lineNumber">the number of the line.</param>
 		/// <returns></returns>
-		public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null, int? lineNumber = null)
+		public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null, string lineNumber = null)
         {
-			_line_number = lineNumber ?? _line_number;
+			string lineNumStr = lineNumber;
+			if(string.IsNullOrEmpty(lineNumStr))
+			{
+				lineNumStr = _line_number.ToString();
+			}
 	
             var l = new LineItemModel
             {
-                number = _line_number.ToString(),
+                number = lineNumStr,
                 quantity = quantity,
                 amount = amount,
                 taxCode = taxCode,
