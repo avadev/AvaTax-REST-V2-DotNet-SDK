@@ -10512,9 +10512,9 @@ namespace Avalara.AvaTax.RestClient
             return RestCall<PingResultModel>("GET", path, null);
         }
 
-#endregion
+		#endregion
 
-#region Asynchronous
+		#region Asynchronous
 #if PORTABLE
 
         /// <summary>
@@ -10569,7 +10569,8 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
         /// <param name="model">The activation request</param>
-        public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
+        
+		public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
@@ -12116,6 +12117,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         public async Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync()
         {
+			var path = new AvaTaxPath("/api/v2/companies/mrs");
             return await RestCallAsync<FetchResult<MrsCompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20997,6 +20999,6 @@ namespace Avalara.AvaTax.RestClient
         }
 
 #endif
-#endregion
-    }
+		#endregion
+	}
 }
