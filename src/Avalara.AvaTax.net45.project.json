@@ -1,8 +1,8 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "Newtonsoft.Json": "12.0.1",
-    "NUnit3TestAdapter": "3.11.0"
+    "Newtonsoft.Json": "12.0.2",
+    "NUnit3TestAdapter": "3.13.0"
   },
   "frameworks": {
     "net45": {}
