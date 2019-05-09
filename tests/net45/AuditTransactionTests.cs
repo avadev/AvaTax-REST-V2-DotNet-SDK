@@ -137,7 +137,9 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
 
 			// Audit Transaction
 			var response = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
-
+			Assert.NotNull(response, "response returns properly");
+			Assert.NotNull(response.original.request);
+			Assert.NotNull(response.original.response);
 		}
 
 		private AvaTaxCallEventArgs lastEvent = null;
