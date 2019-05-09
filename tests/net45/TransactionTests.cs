@@ -194,7 +194,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(overrideTransaction.totalTaxCalculated, transaction.totalTaxCalculated, "Total Tax Calculated should be the same.");
             Assert.True(overrideTransaction.totalTax < transaction.totalTax, "Total Tax should not be the same. Overridden transaction should be smaller.");
 
-            // Compare the transaction lines.
+            // Compare the transaction lines
             var overrideLine = overrideTransaction.lines[1];
             var line = transaction.lines[1];
             Assert.AreEqual(overrideLine.isItemTaxable, line.isItemTaxable);
