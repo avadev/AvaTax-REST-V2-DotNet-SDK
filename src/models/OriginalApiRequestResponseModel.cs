@@ -23,13 +23,15 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// API request
+		/// CAUTION: the type of this will change in 19.5 update
         /// </summary>
         public object request { get; set; }
 
-        /// <summary>
-        /// API response
-        /// </summary>
-        public object response { get; set; }
+		/// <summary>
+		/// API response
+		/// CAUTION: the type of this will change in 19.5 update
+		/// </summary>
+		public object response { get; set; }
 
 
         /// <summary>
