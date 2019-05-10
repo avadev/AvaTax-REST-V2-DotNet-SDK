@@ -168,7 +168,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         [Test]
-        public void TaxOverrideExample()
+		[Ignore("Ignore TransactionWorkflow")]
+		public void TaxOverrideExample()
         {
             // Create base transaction.
             var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
