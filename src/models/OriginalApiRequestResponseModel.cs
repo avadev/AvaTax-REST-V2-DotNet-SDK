@@ -23,13 +23,15 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// API request
+		/// CAUTION: the type of this will change in 19.5 update
         /// </summary>
-        public CreateTransactionModel request { get; set; }
+        public object request { get; set; }
 
-        /// <summary>
-        /// API response
-        /// </summary>
-        public TransactionModel response { get; set; }
+		/// <summary>
+		/// API response
+		/// CAUTION: the type of this will change in 19.5 update
+		/// </summary>
+		public object response { get; set; }
 
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace Avalara.AvaTax.RestClient
         /// <returns>A JSON string of this object</returns>
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, new JsonSerializerSettings() { Formatting = Formatting.Indented });
+			return JsonConvert.SerializeObject(this, new JsonSerializerSettings() { Formatting = Formatting.Indented });
         }
     }
 }

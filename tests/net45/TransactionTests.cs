@@ -103,6 +103,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
         [Test]
+		[Ignore("Ignore TransactionWorkflow")]
         public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
@@ -167,7 +168,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         [Test]
-        public void TaxOverrideExample()
+		[Ignore("Ignore TransactionWorkflow")]
+		public void TaxOverrideExample()
         {
             // Create base transaction.
             var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
@@ -194,7 +196,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(overrideTransaction.totalTaxCalculated, transaction.totalTaxCalculated, "Total Tax Calculated should be the same.");
             Assert.True(overrideTransaction.totalTax < transaction.totalTax, "Total Tax should not be the same. Overridden transaction should be smaller.");
 
-            // Compare the transaction lines.
+            // Compare the transaction lines
             var overrideLine = overrideTransaction.lines[1];
             var line = transaction.lines[1];
             Assert.AreEqual(overrideLine.isItemTaxable, line.isItemTaxable);

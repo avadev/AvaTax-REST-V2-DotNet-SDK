@@ -1,3 +1,7 @@
+> NOTICE for 19.4.1:  This is a patch fixing serialization issues with version 19.4.0's AuditTransaction method. If you are having issues utilizing this method, please update your AvaTax package to 19.4.1. 
+>
+>At this time, we do not recommend implementing code which utilizes the contents of the AuditTransaction response, because the type of this response will be updated in 19.5.0. 
+
 # AvaTax-REST-V2-DotNet-SDK
 
 This GitHub repository is the DotNet (or C#) SDK for Avalara's world-class tax service, AvaTax.  It uses the AvaTax REST v2 API, which is a fully REST implementation and provides a single client for all AvaTax functionality.  For more information about AvaTax REST v2, please visit [Avalara's Developer Network](http://developer.avalara.com/) or view the [online Swagger documentation](https://sandbox-rest.avatax.com/swagger/ui/index.html).
