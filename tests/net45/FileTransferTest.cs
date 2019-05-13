@@ -135,7 +135,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         [Test]
-        [Ignore("Ignore TransactionWorkflow")]
+        [Ignore("Ignore TestUploadCertificateImage")]
         public void TestUploadCertificateImage()
         {
             //Get the cert number. The account needs to have CertCapture 
