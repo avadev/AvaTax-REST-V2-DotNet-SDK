@@ -1791,12 +1791,9 @@ namespace Avalara.AvaTax.RestClient
         /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
         /// a tax collecting and filing entity.
         /// 
-        /// ### Security Policies
-        /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this contact</param>
-        /// <param name="id">The primary key of this contact</param>
         public ContactModel GetContact(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
@@ -10515,9 +10512,9 @@ namespace Avalara.AvaTax.RestClient
             return RestCall<PingResultModel>("GET", path, null);
         }
 
-#endregion
+		#endregion
 
-#region Asynchronous
+		#region Asynchronous
 #if PORTABLE
 
         /// <summary>
@@ -10572,7 +10569,8 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
         /// <param name="model">The activation request</param>
-        public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
+        
+		public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
@@ -12115,14 +12113,11 @@ namespace Avalara.AvaTax.RestClient
         /// This API is available by invitation only.
         ///  
         /// Get a list of companies with an active MRS service.
-        /// 
-        /// ### Security Policies
-        /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         public async Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync()
         {
-            var path = new AvaTaxPath("/api/v2/companies/mrs");
+			var path = new AvaTaxPath("/api/v2/companies/mrs");
             return await RestCallAsync<FetchResult<MrsCompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21004,6 +20999,6 @@ namespace Avalara.AvaTax.RestClient
         }
 
 #endif
-#endregion
-    }
+		#endregion
+	}
 }

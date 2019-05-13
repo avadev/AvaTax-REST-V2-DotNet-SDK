@@ -1,20 +1,18 @@
 ﻿using Avalara.AvaTax.RestClient;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
     [TestFixture]
-    public class FileTransferTest
+    public class CertificateTests
     {
         public AvaTaxClient Client { get; set; }
-        public string DefaultCompanyCode { get; set; }
+        public string CompanyCode { get; set; }
         public int DefaultCompanyId { get; set; }
         public CompanyModel TestCompany { get; set; }
 
@@ -25,11 +23,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [SetUp]
         public void Setup()
         {
-            try
-            {
+            try {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
-                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
+                Client = new AvaTaxClient(typeof(CertificateTests).Name,
+                    typeof(CertificateTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -42,7 +39,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.True(pingResult.authenticated, "Environment variables should provide correct authentication");
 
                 //Get the default company.
-                var defaultCompanyModel = Client.QueryCompanies(string.Empty, "isDefault EQ true", null, null, string.Empty).value.FirstOrDefault();
+                var defaultCompanyModel = Client.QueryCompanies(string.Empty, "isDefault EQ true", null, null, string.Empty).value[0];
 
                 DefaultCompanyId = defaultCompanyModel.id;
 
@@ -66,7 +63,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     title = "Owner/CEO"
                 });
 
-                // Add a delay after creating company
+                // Add a delay
                 System.Threading.Thread.Sleep(6 * 1000);
 
                 // Assert that company setup succeeded
@@ -75,9 +72,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.True(TestCompany.locations.Count > 0, "Test company should have locations");
 
                 // Shouldn't fail
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Assert.Fail("Exception in SetUp: " + ex);
             }
         }
@@ -89,8 +84,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [TearDown]
         public void TearDown()
         {
-            try
-            {
+            try {
 
                 // Re-fetch the company
                 var company = Client.GetCompany(TestCompany.id, null);
@@ -104,70 +98,47 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.False(disableResult.isActive, "Company should have been deactivated");
 
                 // Shouldn't fail
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 Assert.Fail("Exception in TearDown: " + ex);
             }
         }
         #endregion
 
         /// <summary>
-        /// To debug this application, call app must be called with args[0] as username and args[1] as password
+        /// Tests the upload certificate image endpoint.
         /// </summary>
         [Test]
-        public async Task TestInitiateExportDocumentLineReport()
-        {
-            var exportDocumentLine = new ExportDocumentLineModel()
-            {
-                country = "US",
-                culture = "en-US",
-                currencyCode = "USD",
-                docType = ReportDocType.Sales,
-                startDate = new DateTime(2012, 1, 1),
-                endDate = DateTime.Today,
-                format = ReportFormat.CSV,
-            };
-            var company = Client.QueryCompanies(null, null, null, null, null);
-            
-            var report = await Client.InitiateExportDocumentLineReportAsync(company.value[0].id, exportDocumentLine);
-            Assert.NotNull(report);
-        }
-
-        [Test]
-        [Ignore("Ignore TestUploadCertificateImage")]
-        public void TestUploadCertificateImage()
+        [Ignore("Ignore CertificateImageUploadTest")]
+        public void CertificateImageUploadTest()
         {
             //Get the cert number. The account needs to have CertCapture 
             //be provisioned, already have a certificate created, and the
             //certificate needs to be valid.
             var certs = Client.QueryCertificates(DefaultCompanyId, string.Empty, "valid EQ true", null, null, string.Empty).value;
-
-            var certId = certs.FirstOrDefault().id.Value;            
+            var certId = certs[0].id.Value;
 
             //Get an image.
-            using (WebClient webClient = new WebClient()) {
-                byte[] jpgByteArr = webClient.DownloadData("https://developer.avalara.com/public/images/blog/12000-juris.jpg");
+            byte[] jpegByteArr = File.ReadAllBytes(Environment.GetEnvironmentVariable("TEST_IMAGE_PATH"));
 
-                FileResult fileResult = new FileResult()
-                {
-                    ContentType = "multipart/form-data",
-                    Filename = "test_cert_image.jpg",
-                    Data = jpgByteArr
-                };
+            FileResult fileResult = new FileResult()
+            {
+                ContentType = "multipart/form-data",
+                Filename = "test_cert_image.jpg",
+                Data = jpegByteArr
+            };
 
-                //Send request.
-                var certuploadResult = Client.UploadCertificateImage(DefaultCompanyId, certId, fileResult);
+            //Send request.
+            var certUploadResult = Client.UploadCertificateImage(DefaultCompanyId, certId, fileResult);
 
-                //Response should be "OK"
-                Assert.True(string.Equals(certuploadResult, "\"OK\""));
+            //Response should be "OK"
+            Assert.True(string.Equals(certUploadResult, "\"OK\""));
 
-                //Test download of image attachment.
-                var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);
-                Assert.NotNull(certAttachment);
-                Assert.True(string.Equals(certAttachment.ContentType, "application/pdf"));
-                Assert.True(certAttachment.Data.Length > 1000);
-            }
+            //Test download of image attachment.
+            var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);
+            Assert.NotNull(certAttachment);
+            Assert.True(string.Equals(certAttachment.ContentType, "application/pdf"));
+            Assert.True(certAttachment.Data.Length > 1000);
+            
         }
     }
 }
