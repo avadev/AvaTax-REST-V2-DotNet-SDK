@@ -108,6 +108,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// Tests the upload certificate image endpoint.
         /// </summary>
         [Test]
+        [Ignore("Ignore CertificateImageUploadTest")]
         public void CertificateImageUploadTest()
         {
             //Get the cert number. The account needs to have CertCapture 
