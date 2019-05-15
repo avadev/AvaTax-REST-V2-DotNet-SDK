@@ -56,13 +56,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// Test the local rate by ZIP caching.
         /// </summary>        
         [Test]
-        public async Task CacheRatesByZipTest()
+        //[Ignore("This test will fail in Travis")]
+        public void CacheRatesByZipTest()
         {
             string zip = "12590";
             string path = @"C:\git\develop\AvaTax-REST-V2-DotNet-SDK\src\taxRatesByZip\";
 
             //Call the content caching helper.
-            AvaTaxOfflineHelper.CacheRateContent(Client, "US", "12590", path);
+            AvaTaxOfflineHelper.StoreZipRateContent(Client, "US", "12590", path);
 
             //Verify that the file was stored locally. 
             bool zipRateExists = AvaTaxOfflineHelper.VerifyLocalZipRateAvailable(zip, path);
@@ -74,6 +75,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.False(zipRateExists);
 
             //Verify that the local file can be used for rate calculation.
+            var zipTaxRate = AvaTaxOfflineHelper.GetTaxRateByZip(zip, path);
+            Assert.NotNull(zipTaxRate);
+            decimal result = 9.99m * zipTaxRate.totalRate.Value;
+            Assert.NotZero(result);
         }
     }
 }

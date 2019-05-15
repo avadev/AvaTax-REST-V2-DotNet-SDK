@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -203,6 +204,22 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(1, overrideLine.tax);
             Assert.True(overrideLine.tax < line.tax);
             Assert.AreEqual(TaxOverrideType.TaxAmount, overrideLine.taxOverrideType);
+        }
+
+        [Test]
+        public void AuditTransactionTest()
+        {
+            // Execute a transaction
+            var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
+                .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!")
+                .Create();
+
+            var auditResponse = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
         }
     }
 }
