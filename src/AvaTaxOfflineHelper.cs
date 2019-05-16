@@ -10,10 +10,13 @@ namespace Avalara.AvaTax.RestClient.net45
 {
     /// <summary>
     /// This class contains methods to assist with content for offline calculations. 
+    /// 
+    /// Store the ZIP rates locally for those jurisidictions in which you have nexus. 
     /// </summary>
-    public class AvaTaxOfflineHelper
+    public static class AvaTaxOfflineHelper
     {
         public static Dictionary<string, TaxRateModel> RatesByZip;
+
 
         /// <summary>Caches the content.</summary>
         /// <param name="client"></param>
@@ -29,17 +32,25 @@ namespace Avalara.AvaTax.RestClient.net45
             WriteZipRateFile(rateFile, zip, path);
         }
 
-        /// <summary>Verifies the local zip rate available.</summary>
-        /// <param name="zip">The ZIP code rate file to verify is available locally.</param>
+        /// <summary>Verifies that the local ZIP-only rate file available.</summary>
+        /// <param name="zip">The ZIP code for which you want to verify is available locally.</param>
+        /// <param name="path">The path where you stored ZIP-only files.</param>
         /// <returns>bool indicating whether the ZIP rate file is present.</returns>
         public static bool VerifyLocalZipRateAvailable(string zip, string path)
         {
             return File.Exists(string.Format("{0}{1}.json", path, zip));
         }
 
+        /// <summary>Gets the tax rate by zip.</summary>
+        /// <param name="zip">The ZIP code for which you want a ZIP-only tax rate.</param>
+        /// <param name="path">The path where you stored ZIP-only files.</param>
+        /// <returns>The tax rate model object for the requested ZIP, if available</returns>
         public static TaxRateModel GetTaxRateByZip(string zip, string path)
         {
-            TaxRateModel zipRate = null;
+            TaxRateModel zipRate = null;            
+            if (RatesByZip == null) {
+                RatesByZip = new Dictionary<string, TaxRateModel>();
+            }
 
             //First see if the ZIP rate file is available in the dictionary.
             if (RatesByZip.ContainsKey(zip)) {

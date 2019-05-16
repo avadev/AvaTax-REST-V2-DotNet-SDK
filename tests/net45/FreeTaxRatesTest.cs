@@ -30,9 +30,15 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             } catch (Exception ex) {
                 Assert.Fail("Exception in SetUp: " + ex);
             }
-        }        
+        }
         #endregion
 
+        /// <summary>
+        ///   <para>
+        ///  Test that the SDK can pull tax rate objects.
+        /// </para>
+        /// </summary>
+        /// <returns></returns>
         [Test]
         public async Task FreeTaxRates()
         {
@@ -53,11 +59,11 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         /// <summary>
-        /// Test the local rate by ZIP caching.
+        /// Test the local rate by ZIP storage.
         /// </summary>        
         [Test]
         //[Ignore("This test will fail in Travis")]
-        public void CacheRatesByZipTest()
+        public void StoreRatesByZipTest()
         {
             string zip = "12590";
             string path = @"C:\git\develop\AvaTax-REST-V2-DotNet-SDK\src\taxRatesByZip\";
