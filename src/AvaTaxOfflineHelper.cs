@@ -15,21 +15,30 @@ namespace Avalara.AvaTax.RestClient.net45
     /// </summary>
     public static class AvaTaxOfflineHelper
     {
+        /// <summary>
+        /// A Dictionary of AvaTax tax rate model objects. The dictionary key 
+        /// is the ZIP code for which you wish to retrieve a TaxRateModel, if
+        /// it has been downloaded.
+        /// </summary>
         public static Dictionary<string, TaxRateModel> RatesByZip;
 
-
-        /// <summary>Caches the content.</summary>
+        /// <summary>
+        /// Downloads and stores a ZIP code TaxRateModel object and stores it in the location
+        /// designated. Call this method with the Z
+        /// </summary>
         /// <param name="client"></param>
         /// <param name="region"></param>
         /// <param name="zip"></param>
         /// <param name="path">The fully qualified path where the file will be stored.</param>
-        public static void StoreZipRateContent(AvaTaxClient client, string region, string zip, string path)
+        public static void StoreZipRateContent(AvaTaxClient client, string region, List<string> zips, string path)
         {
-            //Call rate by ZIP endpoint.
-            var rateFile = client.TaxRatesByPostalCode(region, zip);
+            foreach (string zip in zips) {
+                //Call rate by ZIP endpoint.
+                var rateFile = client.TaxRatesByPostalCode(region, zip);
 
-            //Save the rate by ZIP file in the local ZIP folder.
-            WriteZipRateFile(rateFile, zip, path);
+                //Save the rate by ZIP file in the local ZIP folder.
+                WriteZipRateFile(rateFile, zip, path);
+            }
         }
 
         /// <summary>Verifies that the local ZIP-only rate file available.</summary>
@@ -41,7 +50,9 @@ namespace Avalara.AvaTax.RestClient.net45
             return File.Exists(string.Format("{0}{1}.json", path, zip));
         }
 
-        /// <summary>Gets the tax rate by zip.</summary>
+        /// <summary>
+        /// Gets the tax rate by zip.
+        /// </summary>
         /// <param name="zip">The ZIP code for which you want a ZIP-only tax rate.</param>
         /// <param name="path">The path where you stored ZIP-only files.</param>
         /// <returns>The tax rate model object for the requested ZIP, if available</returns>
@@ -63,10 +74,10 @@ namespace Avalara.AvaTax.RestClient.net45
             return zipRate;         
         }
 
-        /// <summary>Writes the zip rate file.</summary>
-        /// <param name="zipRate">The zip rate.</param>
-        /// <param name="zip">The zip.</param>
-        /// <param name="path">The path.</param>
+        /// <summary>Writes the ZIP rate file to the designated location.</summary>
+        /// <param name="zipRate">The ZIP rate object to store locally.</param>
+        /// <param name="zip">The ZIP code of the rate object.</param>
+        /// <param name="path">The path in which to store the file.</param>
         private static void WriteZipRateFile(TaxRateModel zipRate, string zip, string path)
         {
             TextWriter writer = null;
