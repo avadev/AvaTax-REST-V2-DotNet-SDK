@@ -62,10 +62,10 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// Test the local rate by ZIP storage.
         /// </summary>        
         [Test]
-        //[Ignore("This test will fail in Travis")]
+        [Ignore("This test will fail in Travis")]
         public void StoreRatesByZipTest()
         {
-            string path = @"C:\git\develop\AvaTax-REST-V2-DotNet-SDK\src\taxRatesByZip\";
+            string path = Environment.GetEnvironmentVariable("ZIP_RATE_FILE_STORAGE_PATH");
             List<string> zips = new List<string>() { "12590", "98104" };
 
             //Call the content caching helper.
