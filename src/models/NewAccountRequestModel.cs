@@ -173,12 +173,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Type of the account to be created. Regular, Firm or FirmClient
         /// </summary>
-        public String accountType { get; set; }
+        public AccountTypeId? accountType { get; set; }
 
         /// <summary>
-        /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your 
+        /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your
         /// Social Security Number if you are an individual.
-        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services, 
+        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services,
         /// but it is optional if you do not subscribe to either of those services.
         /// </summary>
         public String taxPayerIdNumber { get; set; }

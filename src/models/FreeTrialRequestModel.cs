@@ -38,7 +38,7 @@ namespace Avalara.AvaTax.RestClient
         public String email { get; set; }
 
         /// <summary>
-        /// The company or organizational name for this free trial. If this account is for personal use, it is acceptable 
+        /// The company or organizational name for this free trial. If this account is for personal use, it is acceptable
         /// to use your full name here.
         /// </summary>
         public String company { get; set; }

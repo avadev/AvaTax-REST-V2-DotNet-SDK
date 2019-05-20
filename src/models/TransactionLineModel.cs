@@ -98,9 +98,9 @@ namespace Avalara.AvaTax.RestClient
         public String certificateId { get; set; }
 
         /// <summary>
-        /// The customer Tax Id Number (tax_number) associated with a certificate - Sales tax calculation requests first determine if there is an applicable 
-        /// ECMS entry available, and will utilize it for exemption processing. If no applicable ECMS entry is available, the AvaTax service 
-        /// will determine if an Exemption Number field is populated or an Entity/Use Code is included in the sales tax calculation request, 
+        /// The customer Tax Id Number (tax_number) associated with a certificate - Sales tax calculation requests first determine if there is an applicable
+        /// ECMS entry available, and will utilize it for exemption processing. If no applicable ECMS entry is available, the AvaTax service
+        /// will determine if an Exemption Number field is populated or an Entity/Use Code is included in the sales tax calculation request,
         /// and will perform exemption processing using either of those two options.
         /// </summary>
         public String exemptNo { get; set; }
@@ -159,11 +159,11 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The tax for this line in this transaction.
-        /// 
-        /// If you used a `taxOverride` of type `taxAmount` for this line, this value 
+        ///  
+        /// If you used a `taxOverride` of type `taxAmount` for this line, this value
         /// will represent the amount of your override. AvaTax will still attempt to calculate the correct tax
         /// for this line and will store that calculated value in the `taxCalculated` field.
-        /// 
+        ///  
         /// You can compare the `tax` and `taxCalculated` fields to check for any discrepancies
         /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
@@ -176,11 +176,11 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The amount of tax that AvaTax calculated for the transaction.
-        /// 
+        ///  
         /// If you used a `taxOverride` of type `taxAmount`, there may be a difference between
         /// the `tax` field which applies your override, and the `taxCalculated` field which
         /// represents the amount of tax that AvaTax calculated without the override.
-        /// 
+        ///  
         /// You can compare the `tax` and `taxCalculated` fields to check for any discrepancies
         /// between an external tax calculation provider and the calculation performed by AvaTax.
         /// </summary>
@@ -230,27 +230,27 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Indicates whether the `amount` for this line already includes tax.
-        /// 
-        /// If this value is `true`, the final price of this line including tax will equal the value in `amount`. 
-        /// 
+        ///  
+        /// If this value is `true`, the final price of this line including tax will equal the value in `amount`.
+        ///  
         /// If this value is `null` or `false`, the final price will equal `amount` plus whatever taxes apply to this line.
         /// </summary>
         public Boolean? taxIncluded { get; set; }
 
         /// <summary>
-        /// Optional: A list of tax details for this line item. 
-        /// 
-        /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `details` collection are intended to be 
+        /// Optional: A list of tax details for this line item.
+        ///  
+        /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `details` collection are intended to be
         /// displayed to the customer and charged as a 'tax' on the invoice.
-        /// 
+        ///  
         /// To fetch this list, add the query string `?$include=Details` to your URL.
         /// </summary>
         public List<TransactionLineDetailModel> details { get; set; }
 
         /// <summary>
         /// Optional: A list of non-passthrough tax details for this line item.
-        /// 
-        /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `nonPassthroughDetails` collection are 
+        ///  
+        /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `nonPassthroughDetails` collection are
         /// taxes that must be paid directly by the company and not shown to the customer.
         /// </summary>
         public List<TransactionLineDetailModel> nonPassthroughDetails { get; set; }
@@ -266,7 +266,7 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionLineParameterModel> parameters { get; set; }
 
         /// <summary>
-        /// The cross-border harmonized system code (HSCode) used to calculate tariffs and duties for this line item. 
+        /// The cross-border harmonized system code (HSCode) used to calculate tariffs and duties for this line item.
         /// For a full list of HS codes, see `ListCrossBorderCodes()`.
         /// </summary>
         public String hsCode { get; set; }

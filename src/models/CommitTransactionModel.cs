@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// Set this value to be `true` to commit this transaction.
-        /// 
+        ///  
         /// Committing a transaction allows it to be reported on a tax filing. Uncommitted transactions will not be reported.
         /// </summary>
         public Boolean commit { get; set; }

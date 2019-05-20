@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// A preferred program is a customs and/or duty program that can be used to handle cross-border transactions.
     /// Customers who sign up for a preferred program may obtain better terms for their customs and duty payments.
-    /// 
+    ///  
     /// To indicate that your company has signed up for a preferred program, specify the `code` value from this
     /// object as the value for the `AvaTax.LC.PreferredProgram` parameter in your transaction.
     /// </summary>

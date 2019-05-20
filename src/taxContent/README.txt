@@ -1,0 +1,1 @@
+This folder is for storing offline tax content. The Avalara AvaTax C# SDK includes methods to enable offline, ZIP-only calculations for cases when your integration fails to receive a tax calculation response in the time you allotted. 

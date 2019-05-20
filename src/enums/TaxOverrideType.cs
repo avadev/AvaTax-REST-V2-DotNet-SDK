@@ -47,7 +47,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// AvaTax was instructed to calculate this transaction using the tax rules that were in effect
-        ///  on a different day than the transaction occurred. 
+        ///  on a different day than the transaction occurred.
         ///  
         ///  This behavior typically occurs during refunds. If the customer attempts to return a product
         ///  without a receipt that shows the exact tax amount paid, AvaTax can calculate tax on the date

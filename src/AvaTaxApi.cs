@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    19.4.1
+ * @version    19.5.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "19.4.1"; } }
+        public static string API_VERSION { get { return "19.5.0"; } }
 
 #region Methods
 
@@ -320,138 +320,22 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create a new AvaFileForm
-        /// </summary>
-        /// <remarks>
-        /// Create one or more AvaFileForms
-        /// A 'AvaFileForm' represents a form supported by our returns team
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires the user role Compliance Root User.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="model">The AvaFileForm you wish to create.</param>
-        public List<AvaFileFormModel> CreateAvaFileForms(List<AvaFileFormModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms");
-            return RestCall<List<AvaFileFormModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Delete a single AvaFileForm
-        /// </summary>
-        /// <remarks>
-        /// Marks the existing AvaFileForm object at this URL as deleted.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: Compliance Root User, ComplianceUser, FirmAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="id">The ID of the AvaFileForm you wish to delete.</param>
-        public List<ErrorDetail> DeleteAvaFileForm(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single AvaFileForm
-        /// </summary>
-        /// <remarks>
-        /// Get the AvaFileForm object identified by this URL.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="id">The primary key of this AvaFileForm</param>
-        public AvaFileFormModel GetAvaFileForm(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return RestCall<AvaFileFormModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all AvaFileForms
-        /// </summary>
-        /// <remarks>
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* outletTypeId</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<AvaFileFormModel> QueryAvaFileForms(String filter, String include, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms");
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<AvaFileFormModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Update a AvaFileForm
-        /// </summary>
-        /// <remarks>
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires the user role Compliance Root User.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="id">The ID of the AvaFileForm you wish to update</param>
-        /// <param name="model">The AvaFileForm model you wish to update.</param>
-        public AvaFileFormModel UpdateAvaFileForm(Int32 id, AvaFileFormModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return RestCall<AvaFileFormModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
         /// Create a new batch
         /// </summary>
         /// <remarks>
         /// Create one or more new batch objects attached to this company.
-        /// 
+        ///  
         /// Each batch object may have one or more file objects (currently only one file is supported).
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
-        /// required, please use the 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
+        /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
         /// ### Security Policies
@@ -473,14 +357,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks the batch identified by this URL as deleted.
-        /// 
+        ///  
         /// If you attempt to delete a batch that is being processed, you will receive an error message.
         /// Deleting a batch does not delete any transactions that were created by importing the batch.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
-        /// required, please use the 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
+        /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
         /// ### Security Policies
@@ -525,20 +409,20 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single batch
         /// </summary>
         /// <remarks>
-        /// Get the batch object identified by this URL. A batch object is a large 
+        /// Get the batch object identified by this URL. A batch object is a large
         /// collection of API calls stored in a compact file.
-        /// 
+        ///  
         /// Use this endpoint to retrieve the results or check the status of a batch.
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
-        /// required, please use the 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
+        /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
         /// ### Security Policies
@@ -561,24 +445,24 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all batch objects attached to the specified company.
-        /// 
+        ///  
         /// A batch object is a large collection of API calls stored in a compact file.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter;
         /// full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// Use [GetBatch](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Batches/GetBatch/) 
+        ///  
+        /// Use [GetBatch](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Batches/GetBatch/)
         /// to retrieve the results, or check the status, of an individual batch.
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
@@ -610,21 +494,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple batch objects across all companies.
-        /// 
+        ///  
         /// A batch object is a large collection of API calls stored in a compact file.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter;
         /// full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
@@ -654,19 +538,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates an invitation for a customer to self-report certificates using the CertExpress website.
-        /// 
+        ///  
         /// This invitation is delivered by your choice of method, or you can present a hyperlink to the user
         /// directly in your connector. Your customer will be redirected to https://app.certexpress.com/ where
         /// they can follow a step-by-step guide to enter information about their exemption certificates. The
         /// certificates entered will be recorded and automatically linked to their customer record.
-        /// 
+        ///  
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
-        /// 
+        ///  
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
-        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document
         /// storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -691,19 +575,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieve an existing CertExpress invitation sent to a customer.
-        /// 
+        ///  
         /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
-        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full
         /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
         /// they will automatically be recorded to your company and linked to the customer record.
-        /// 
+        ///  
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
-        /// 
+        ///  
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
-        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document
         /// storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -731,19 +615,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieve CertExpress invitations sent by this company.
-        /// 
+        ///  
         /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
-        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full
         /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
         /// they will automatically be recorded to your company and linked to the customer record.
-        /// 
+        ///  
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
-        /// 
+        ///  
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
-        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document
         /// storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -752,7 +636,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
-        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options.
         ///  
         ///  No options are defined at this time.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, customer, coverLetter, exposureZones, exemptReasons, requestLink</param>
@@ -1343,7 +1227,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="id"></param>
         /// <param name="model"></param>
@@ -1421,7 +1305,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="id">The unique identifier of the company</param>
         /// <param name="model">The funding initialization request</param>
@@ -1465,7 +1349,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The unique identifier of the company</param>
         public FundingConfigurationModel FundingConfigurationByCompany(Int32 companyId)
@@ -1489,7 +1373,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The unique identifier of the company</param>
         /// <param name="currency">The currency of the funding. USD and CAD are the only valid currencies</param>
@@ -1791,9 +1675,12 @@ namespace Avalara.AvaTax.RestClient
         /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
         /// a tax collecting and filing entity.
         /// 
+        /// ### Security Policies
+        /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this contact</param>
+        /// <param name="id">The primary key of this contact</param>
         public ContactModel GetContact(Int32 companyId, Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
@@ -1808,7 +1695,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all contact objects assigned to this company.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -1818,16 +1705,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these contacts</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<ContactModel> ListContactsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ContactModel> ListContactsByCompany(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
             path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
@@ -1842,7 +1727,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get multiple contact objects across all companies.
         /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
         /// a tax collecting and filing entity.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -1851,15 +1736,13 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<ContactModel> QueryContacts(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ContactModel> QueryContacts(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/contacts");
             path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
@@ -1874,7 +1757,7 @@ namespace Avalara.AvaTax.RestClient
         /// Replace the existing contact object at this URL with an updated object.
         /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
         /// a tax collecting and filing entity.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -3854,7 +3737,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more DistanceThreshold objects for this company.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -3878,7 +3761,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks the DistanceThreshold object identified by this URL as deleted.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -3903,7 +3786,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieves a single DistanceThreshold object defined by this URL.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -3928,7 +3811,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Lists all DistanceThreshold objects that belong to this company.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -3961,11 +3844,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Lists all DistanceThreshold objects that belong to this account.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -3995,12 +3878,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing DistanceThreshold object at this URL with an updated object.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
         ///  
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -4020,976 +3903,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Approve existing Filing Request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// The filing request must be in the "ChangeRequest" status to be approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public FilingRequestModel ApproveFilingRequest(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("POST", path, null);
-        }
-
-
-        /// <summary>
-        /// Cancel existing Filing Request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public FilingRequestModel CancelFilingRequest(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("POST", path, null);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to cancel a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to cancel</param>
-        /// <param name="model">The cancellation request for this filing calendar</param>
-        public FilingRequestModel CancelFilingRequests(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Create a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only and only available for users with Compliance access
-        /// A "filing request" represents information that compliance uses to file a return
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
-        /// <param name="model">Filing calendars that will be added</param>
-        public FilingCalendarModel CreateFilingCalendars(Int32 companyId, List<FilingCalendarModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
-            path.ApplyField("companyId", companyId);
-            return RestCall<FilingCalendarModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to create a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
-        /// <param name="model">Information about the proposed new filing calendar</param>
-        public FilingRequestModel CreateFilingRequests(Int32 companyId, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
-            path.ApplyField("companyId", companyId);
-            return RestCall<FilingRequestModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Returns a list of options for adding the specified form.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="formCode">The unique code of the form</param>
-        public List<CycleAddOptionModel> CycleSafeAdd(Int32 companyId, String formCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/options");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("formCode", formCode);
-            return RestCall<List<CycleAddOptionModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Indicates when changes are allowed to be made to a filing calendar.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public CycleEditOptionModel CycleSafeEdit(Int32 companyId, Int32 id, List<FilingCalendarEditModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/options");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<CycleEditOptionModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Returns a list of options for expiring a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        public CycleExpireModel CycleSafeExpiration(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<CycleExpireModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Delete a single filing calendar.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Mark the existing notice object at this URL as deleted.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar.</param>
-        /// <param name="id">The ID of the filing calendar you wish to delete.</param>
-        public List<ErrorDetail> DeleteFilingCalendar(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
-        /// <param name="id">The primary key of this filing calendar</param>
-        public FilingCalendarModel GetFilingCalendar(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingCalendarModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single filing request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
-        /// <param name="id">The primary key of this filing calendar</param>
-        public FilingRequestModel GetFilingRequest(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing calendars for this company
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* formCountry, formRegion, taxFormCode, taxAuthorityId, taxAuthorityName, taxAuthorityType, settings</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry">A comma separated list of countries</param>
-        /// <param name="returnRegion">A comma separated list of regions</param>
-        public FetchResult<FilingCalendarModel> ListFilingCalendars(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            return RestCall<FetchResult<FilingCalendarModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests for this company
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filingCalendarId">Specific filing calendar id for the request</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<FilingRequestModel> ListFilingRequests(Int32 companyId, Int32? filingCalendarId, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingRequestModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// New request for getting for validating customer's login credentials
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API verifies that a customer has submitted correct login credentials for a tax authority's online filing system.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="model">The model of the login information we are verifying</param>
-        public LoginVerificationOutputModel LoginVerificationRequest(LoginVerificationInputModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
-            return RestCall<LoginVerificationOutputModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Gets the request status and Login Result
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API checks the status of a login verification request. It may only be called by authorized users from the account
-        /// that initially requested the login verification.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="jobId">The unique ID number of this login request</param>
-        public LoginVerificationOutputModel LoginVerificationStatus(Int32 jobId)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
-            path.ApplyField("jobId", jobId);
-            return RestCall<LoginVerificationOutputModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing calendars
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is deprecated - please use POST `/api/v2/filingrequests/query` API.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* formCountry, formRegion, taxFormCode, taxAuthorityId, taxAuthorityName, taxAuthorityType, settings</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry">If specified, fetches only filing calendars that apply to tax filings in this specific country. Uses ISO 3166 country codes.</param>
-        /// <param name="returnRegion">If specified, fetches only filing calendars that apply to tax filings in this specific region. Uses ISO 3166 region codes.</param>
-        public FetchResult<FilingCalendarModel> QueryFilingCalendars(String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars");
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            return RestCall<FetchResult<FilingCalendarModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing calendars
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is intended to replace the GET `/api/v2/filingcalendars` API. The fetch request object is posted on the body of the request instead of the URI, so it's not limited by a set number of characters.
-        /// The documentation of the GET API shows how filtering, sorting and pagination works.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="returnCountry">If specified, fetches only filing calendars that apply to tax filings in this specific country. Uses ISO 3166 country codes.</param>
-        /// <param name="returnRegion">If specified, fetches only filing calendars that apply to tax filings in this specific region. Uses ISO 3166 region codes.</param>
-        /// <param name="model">Query object to filter, sort and paginate the filing calendars.</param>
-        public FetchResult<FilingCalendarModel> QueryFilingCalendarsPost(String returnCountry, String returnRegion, QueryRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/query");
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            return RestCall<FetchResult<FilingCalendarModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is deprecated - please use POST `/api/v2/filingrequests/query` API.
-        ///  
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        ///  
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="filingCalendarId">Specific filing calendar id for the request</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<FilingRequestModel> QueryFilingRequests(Int32? filingCalendarId, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/filingrequests");
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<FilingRequestModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is intended to replace the GET `/api/v2/filingrequests` API. The fetch request object is posted on the body of the request instead of the URI, so it's not limited by a set number of characters.
-        /// The documentation of the GET API shows how filtering, sorting and pagination works.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="filingCalendarId">Specific filing calendar id for the request</param>
-        /// <param name="model">Query object to filter, sort and paginate the filing calendars.</param>
-        public FetchResult<FilingRequestModel> QueryFilingRequestsPost(Int32? filingCalendarId, QueryRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/filingrequests/query");
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            return RestCall<FetchResult<FilingRequestModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to edit a filing calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        ///  
-        /// Certain users may not update filing calendars directly. Instead, they may submit an edit request
-        /// to modify the value of a filing calendar using this API.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to edit</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public FilingRequestModel RequestFilingCalendarUpdate(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Edit existing Filing Calendar
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        /// <param name="model">The filing calendar model you are wishing to update with.</param>
-        public FilingCalendarModel UpdateFilingCalendar(Int32 companyId, Int64 id, FilingCalendarModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingCalendarModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Edit existing Filing Request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public FilingRequestModel UpdateFilingRequest(Int32 companyId, Int32 id, FilingRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingRequestModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Approve all filings for the specified company in the given filing period.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console,
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to approve.</param>
-        /// <param name="month">The month of the filing period to approve.</param>
-        /// <param name="model">The approve request you wish to execute.</param>
-        public List<FilingModel> ApproveFilings(Int32 companyId, Int16 year, Byte month, ApproveFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return RestCall<List<FilingModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Approve all filings for the specified company in the given filing period and country.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console,
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to approve.</param>
-        /// <param name="month">The month of the filing period to approve.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="model">The approve request you wish to execute.</param>
-        public List<FilingModel> ApproveFilingsCountry(Int32 companyId, Int16 year, Byte month, String country, ApproveFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            return RestCall<List<FilingModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Approve all filings for the specified company in the given filing period, country and region.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console,
-        /// else system auto-approves the night before the filing cycle
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to approve.</param>
-        /// <param name="month">The month of the filing period to approve.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="model">The approve request you wish to execute.</param>
-        public List<FilingModel> ApproveFilingsCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region, ApproveFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return RestCall<List<FilingModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Add an adjustment to a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API creates a new adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="year">The year of the filing's filing period being adjusted.</param>
-        /// <param name="month">The month of the filing's filing period being adjusted.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country of the filing being adjusted.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form being adjusted.</param>
-        /// <param name="model">A list of Adjustments to be created for the specified filing.</param>
-        public List<FilingAdjustmentModel> CreateReturnAdjustment(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingAdjustmentModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/adjust");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingAdjustmentModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Add an augmentation for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API creates a new augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
-        /// <param name="year">The month of the filing's filing period being changed.</param>
-        /// <param name="month">The month of the filing's filing period being changed.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country of the filing being changed.</param>
-        /// <param name="region">The two or three character region code for the region of the filing being changed.</param>
-        /// <param name="formCode">The unique code of the form being changed.</param>
-        /// <param name="model">A list of augmentations to be created for the specified filing.</param>
-        public List<FilingAugmentationModel> CreateReturnAugmentation(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingAugmentationModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/augment");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingAugmentationModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Add an payment to a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API creates a new payment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="year">The year of the filing's filing period being adjusted.</param>
-        /// <param name="month">The month of the filing's filing period being adjusted.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country of the filing being adjusted.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form being adjusted.</param>
-        /// <param name="model">A list of Payments to be created for the specified filing.</param>
-        public List<FilingPaymentModel> CreateReturnPayment(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingPaymentModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/payment");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return RestCall<List<FilingPaymentModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Delete an adjustment for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API deletes an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the adjustment being deleted.</param>
-        public List<ErrorDetail> DeleteReturnAdjustment(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Delete an augmentation for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API deletes an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
-        /// <param name="id">The ID of the augmentation being added.</param>
-        public List<ErrorDetail> DeleteReturnAugmentation(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Delete an payment for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API deletes an payment for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the payment being deleted.</param>
-        public List<ErrorDetail> DeleteReturnPayment(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve worksheet checkup report for company and filing period.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="filingsId">The unique id of the worksheet.</param>
-        /// <param name="companyId">The unique ID of the company that owns the worksheet.</param>
-        public FilingsCheckupModel FilingsCheckupReport(Int32 filingsId, Int32 companyId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
-            path.ApplyField("filingsId", filingsId);
-            path.ApplyField("companyId", companyId);
-            return RestCall<FilingsCheckupModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve worksheet checkup report for company and filing period.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the worksheets object.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The month of the filing period.</param>
-        public FilingsCheckupModel FilingsCheckupReports(Int32 companyId, Int16 year, Byte month)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/checkup");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return RestCall<FilingsCheckupModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified accrual return.
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filingReturnId">The ID of the accrual return</param>
-        public FetchResult<FilingReturnModel> GetAccrualFillings(Int32 companyId, Int64 filingReturnId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/accrual/{filingReturnId}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingReturnId", filingReturnId);
-            return RestCall<FetchResult<FilingReturnModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single attachment for a filing
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="filingReturnId">The unique id of the worksheet return.</param>
-        /// <param name="fileId">The unique id of the document you are downloading</param>
-        public FileResult GetFilingAttachment(Int32 companyId, Int64 filingReturnId, Int64? fileId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingReturnId}/attachment");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingReturnId", filingReturnId);
-            path.AddQuery("fileId", fileId);
-            return RestCallFile("GET", path, null);
-        }
-
-
-        /// <summary>
         /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
         /// </summary>
         /// <remarks>
@@ -5001,7 +3914,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -5028,7 +3941,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -5040,405 +3953,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             return RestCallFile("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a filing for the specified company and id.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="id">The id of the filing return your retrieving</param>
-        /// <param name="details">Indicates if you would like the credit details returned</param>
-        public FilingReturnModel GetFilingReturn(Int32 companyId, Int32 id, Boolean? details)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.AddQuery("details", details);
-            return RestCall<FilingReturnModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        public FetchResult<FilingModel> GetFilings(Int32 companyId, Int16 year, Byte month)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return RestCall<FetchResult<FilingModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the given filing period and country.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        public FetchResult<FilingModel> GetFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            return RestCall<FetchResult<FilingModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the filing period, country and region.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        public FetchResult<FilingModel> GetFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return RestCall<FetchResult<FilingModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the given filing period, country, region and form.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form.</param>
-        public FetchResult<FilingModel> GetFilingsByReturnName(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return RestCall<FetchResult<FilingModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
-        /// This gets the basic information from the filings and doesn't include anything extra.
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="endPeriodMonth">The month of the period you are trying to retrieve</param>
-        /// <param name="endPeriodYear">The year of the period you are trying to retrieve</param>
-        /// <param name="frequency">The frequency of the return you are trying to retrieve</param>
-        /// <param name="status">The status of the return(s) you are trying to retrieve</param>
-        /// <param name="country">The country of the return(s) you are trying to retrieve</param>
-        /// <param name="region">The region of the return(s) you are trying to retrieve</param>
-        /// <param name="filingCalendarId">The filing calendar id of the return you are trying to retrieve</param>
-        public FetchResult<FilingReturnModelBasic> GetFilingsReturns(Int32 companyId, Int32? endPeriodMonth, Int32? endPeriodYear, FilingFrequencyId? frequency, FilingStatusId? status, String country, String region, Int64? filingCalendarId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("endPeriodMonth", endPeriodMonth);
-            path.AddQuery("endPeriodYear", endPeriodYear);
-            path.AddQuery("frequency", frequency);
-            path.AddQuery("status", status);
-            path.AddQuery("country", country);
-            path.AddQuery("region", region);
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            return RestCall<FetchResult<FilingReturnModelBasic>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form.</param>
-        public FetchResult<MultiTaxFilingModel> GetTaxFilings(Int32 companyId, Int32? year, Int32? month, String country, String region, String formCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("year", year);
-            path.AddQuery("month", month);
-            path.AddQuery("country", country);
-            path.AddQuery("region", region);
-            path.AddQuery("formCode", formCode);
-            return RestCall<FetchResult<MultiTaxFilingModel>>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Rebuild a set of filings for the specified company in the given filing period.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to be rebuilt.</param>
-        /// <param name="month">The month of the filing period to be rebuilt.</param>
-        /// <param name="model">The rebuild request you wish to execute.</param>
-        public FetchResult<FilingModel> RebuildFilings(Int32 companyId, Int16 year, Byte month, RebuildFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/rebuild");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return RestCall<FetchResult<FilingModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Rebuild a set of filings for the specified company in the given filing period and country.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to be rebuilt.</param>
-        /// <param name="month">The month of the filing period to be rebuilt.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="model">The rebuild request you wish to execute.</param>
-        public FetchResult<FilingModel> RebuildFilingsByCountry(Int32 companyId, Int16 year, Byte month, String country, RebuildFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/rebuild");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            return RestCall<FetchResult<FilingModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Rebuild a set of filings for the specified company in the given filing period, country and region.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.audit.CheckAuthorizationReturns(null, companyId);
-        /// Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to be rebuilt.</param>
-        /// <param name="month">The month of the filing period to be rebuilt.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="model">The rebuild request you wish to execute.</param>
-        public FetchResult<FilingModel> RebuildFilingsByCountryRegion(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/rebuild");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return RestCall<FetchResult<FilingModel>>("POST", path, model);
-        }
-
-
-        /// <summary>
-        /// Edit an adjustment for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API modifies an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the adjustment being edited.</param>
-        /// <param name="model">The updated Adjustment.</param>
-        public FilingAdjustmentModel UpdateReturnAdjustment(Int32 companyId, Int64 id, FilingAdjustmentModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingAdjustmentModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Edit an augmentation for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API modifies an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
-        /// <param name="id">The ID of the augmentation being edited.</param>
-        /// <param name="model">The updated Augmentation.</param>
-        public FilingModel UpdateReturnAugmentation(Int32 companyId, Int64 id, FilingAugmentationModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Edit an payment for a given filing.
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API modifies an payment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the payment being edited.</param>
-        /// <param name="model">The updated Payment.</param>
-        public FilingPaymentModel UpdateReturnPayment(Int32 companyId, Int64 id, FilingPaymentModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return RestCall<FilingPaymentModel>("PUT", path, model);
         }
 
 
@@ -5474,19 +3988,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// # Free-To-Use
-        /// 
+        ///  
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// 
+        ///  
         /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
         /// response code 429 - `Too Many Requests`.
-        /// 
+        ///  
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
-        /// location in the United States only. 
-        /// 
+        /// location in the United States only.
+        ///  
         /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
         /// which supports features including, but not limited to:
-        /// 
+        ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
         /// * Sourcing rules affecting origin/destination states
@@ -5495,7 +4009,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Refunds for products purchased on a different date
         /// * Detailed jurisdiction names and state assigned codes
         /// * And more!
-        /// 
+        ///  
         /// Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
         /// for information on how to upgrade to the full AvaTax CreateTransaction API.
         /// </remarks>
@@ -5504,22 +4018,22 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="line3">The street address of the location.</param>
         /// <param name="city">The city name of the location.</param>
         /// <param name="region">Name or ISO 3166 code identifying the region within the country.
-        /// 
+        ///  
         /// This field supports many different region identifiers:
         ///  * Two and three character ISO 3166 region codes
         ///  * Fully spelled out names of the region in ISO supported languages
         ///  * Common alternative spellings for many regions
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.</param>
         /// <param name="postalCode">The postal code of the location.</param>
         /// <param name="country">Name or ISO 3166 code identifying the country.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.</param>
         public TaxRateModel TaxRatesByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country)
         {
@@ -5540,21 +4054,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// # Free-To-Use
-        /// 
+        ///  
         /// This API is only available for a US postal codes.
-        /// 
+        ///  
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// 
+        ///  
         /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
         /// response code 429 - `Too Many Requests`.
-        /// 
+        ///  
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
-        /// location in the United States only. 
-        /// 
+        /// location in the United States only.
+        ///  
         /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
         /// which supports features including, but not limited to:
-        /// 
+        ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
         /// * Sourcing rules affecting origin/destination states
@@ -5563,18 +4077,18 @@ namespace Avalara.AvaTax.RestClient
         /// * Refunds for products purchased on a different date
         /// * Detailed jurisdiction names and state assigned codes
         /// * And more!
-        /// 
+        ///  
         /// Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
         /// for information on how to upgrade to the full AvaTax CreateTransaction API.
         /// </remarks>
         /// <param name="country">Name or ISO 3166 code identifying the country.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.</param>
         /// <param name="postalCode">The postal code of the location.</param>
         public TaxRateModel TaxRatesByPostalCode(String country, String postalCode)
@@ -5583,68 +4097,6 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
             return RestCall<TaxRateModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Request the javascript for a funding setup widget
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API returns back the actual javascript code to insert into your application to render the
-        /// JavaScript funding setup widget inline.
-        /// Use the 'methodReturn.javaScript' return value to insert this widget into your HTML page.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="id">The unique ID number of this funding request</param>
-        public FundingStatusModel ActivateFundingRequest(Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
-            path.ApplyField("id", id);
-            return RestCall<FundingStatusModel>("GET", path, null);
-        }
-
-
-        /// <summary>
-        /// Retrieve status about a funding setup request
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API checks the status on an existing funding request.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// </remarks>
-        /// <param name="id">The unique ID number of this funding request</param>
-        public FundingStatusModel FundingRequestStatus(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
-            path.ApplyField("id", id);
-            return RestCall<FundingStatusModel>("GET", path, null);
         }
 
 
@@ -6370,7 +4822,7 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
@@ -6401,7 +4853,7 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
@@ -6440,10 +4892,10 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
@@ -6474,7 +4926,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing location object at this URL with an updated object.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -7178,7 +5630,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the comment for.</param>
@@ -7206,7 +5658,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice added to the finance details.</param>
@@ -7233,7 +5685,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
@@ -7260,7 +5712,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
@@ -7287,7 +5739,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="model">The notice object you wish to create.</param>
@@ -7312,7 +5764,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
@@ -7341,7 +5793,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
@@ -7369,7 +5821,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete.</param>
@@ -7395,7 +5847,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="noticeId">The ID of the notice you wish to delete.</param>
@@ -7423,7 +5875,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="noticeId">The ID of the notice you wish to delete.</param>
@@ -7449,7 +5901,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this attachment.</param>
         /// <param name="id">The ResourceFileId of the attachment to download.</param>
@@ -7475,7 +5927,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this notice.</param>
         /// <param name="id">The ID of this notice.</param>
@@ -7501,7 +5953,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -7528,7 +5980,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="id">The ID of the company that owns these notices.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -7554,7 +6006,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -7580,7 +6032,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -7609,7 +6061,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* status, totalRemit, ticketReferenceNo, ticketReferenceUrl, reason, type, createdByUserName, documentReference, jurisdictionName, jurisdictionType, comments, finances, responsibility, rootCause</param>
@@ -7649,7 +6101,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* status, totalRemit, ticketReferenceNo, ticketReferenceUrl, reason, type, createdByUserName, documentReference, jurisdictionName, jurisdictionType, comments, finances, responsibility, rootCause</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
@@ -7681,7 +6133,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="model">Query object to filter, sort and paginate the filing calendars.</param>
         public FetchResult<NoticeModel> QueryNoticesPost(QueryRequestModel model)
@@ -7703,7 +6155,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice finance detail belongs to.</param>
         /// <param name="noticeid">The ID of the notice finance detail you wish to update.</param>
@@ -7734,7 +6186,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice belongs to.</param>
         /// <param name="id">The ID of the notice you wish to update.</param>
@@ -7760,7 +6212,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice comment belongs to.</param>
         /// <param name="noticeid">The ID of the notice you wish to update.</param>
@@ -7788,7 +6240,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company for this attachment.</param>
         /// <param name="model">The upload request.</param>
@@ -7819,7 +6271,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="id">The id of the notification you wish to mark as dismissed.</param>
         public NotificationModel DismissNotification(Int64 id)
@@ -7913,7 +6365,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Onboarding] for your servers.
+        /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Onboarding:RequestNewAccount].
         /// </remarks>
         /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
@@ -7934,7 +6386,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Onboarding] for your servers.
+        /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Onboarding:RequestNewAccount].
         /// </remarks>
         /// <param name="id">The avatax account id of the customer</param>
@@ -8104,7 +6556,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// # For Registrar Use Only
         /// This API is for use by Avalara Registrar administrative users only.
-        /// 
+        ///  
         /// Allows a system admin to reset the password for a specific user via the API.
         /// This API is only available for Avalara Registrar Admins, and can be used to reset the password of any
         /// user based on internal Avalara business processes.
@@ -8342,9 +6794,17 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
-        public FetchResult<ReportModel> ListReports()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* reportType, parameters, createdUser, completedDate</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ReportModel> ListReports(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/reports");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<ReportModel>>("GET", path, null);
         }
 
@@ -8354,12 +6814,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new setting objects attached to this company.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
@@ -8383,12 +6843,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Mark the setting object at this URL as deleted.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
@@ -8413,12 +6873,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get a single setting object by its unique ID.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
@@ -8443,16 +6903,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all setting objects attached to this company.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -8484,16 +6944,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple setting objects across all companies.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -8523,18 +6983,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing setting object at this URL with an updated object.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
         ///  
-        /// All data from the existing object will be replaced with data in the object you `PUT`. 
-        /// 
+        /// All data from the existing object will be replaced with data in the object you `PUT`.
+        ///  
         /// To set a field's value to `null`, you may either set its value to `null` or omit that field from the object when calling update.
         /// 
         /// ### Security Policies
@@ -8717,7 +7177,7 @@ namespace Avalara.AvaTax.RestClient
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -8753,7 +7213,7 @@ namespace Avalara.AvaTax.RestClient
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -8787,7 +7247,7 @@ namespace Avalara.AvaTax.RestClient
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -8811,32 +7271,32 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
-        /// 
+        ///  
         /// Since tax rates may change based on decisions made by a variety of tax authorities, we recommend
         /// that users of this tax content API download new data every day. Many tax authorities may finalize
         /// decisions on tax changes at unexpected times and may make changes in response to legal issues or
         /// governmental priorities. Any tax content downloaded for future time periods is subject to change
         /// if tax rates or tax laws change.
-        /// 
+        ///  
         /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
         /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
-        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your
         /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
         /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
         /// then use `CreateItems()` to create an item that uses the custom tax code.
-        /// 
+        ///  
         /// This data file can be customized for specific partner devices and usage conditions.
-        /// 
+        ///  
         /// The result of this API is the file you requested in the format you requested using the `responseType` field.
-        /// 
+        ///  
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
-        /// 
+        ///  
         /// NOTE: This API does not work for Tennessee tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
@@ -8852,32 +7312,32 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
-        /// 
+        ///  
         /// Since tax rates may change based on decisions made by a variety of tax authorities, we recommend
         /// that users of this tax content API download new data every day. Many tax authorities may finalize
         /// decisions on tax changes at unexpected times and may make changes in response to legal issues or
         /// governmental priorities. Any tax content downloaded for future time periods is subject to change
         /// if tax rates or tax laws change.
-        /// 
+        ///  
         /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
         /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
-        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your
         /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
         /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
         /// then use `CreateItems()` to create an item that uses the custom tax code.
-        /// 
+        ///  
         /// This data file can be customized for specific partner devices and usage conditions.
-        /// 
+        ///  
         /// The result of this API is the file you requested in the format you requested using the `responseType` field.
-        /// 
+        ///  
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
-        /// 
+        ///  
         /// NOTE: This API does not work for Tennessee tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
         /// </remarks>
         /// <param name="companyId">The ID number of the company that owns this location.</param>
@@ -8905,28 +7365,28 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Download a CSV file containing all five digit postal codes in the United States and their sales
         /// and use tax rates for tangible personal property.
-        /// 
+        ///  
         /// Since tax rates may change based on decisions made by a variety of tax authorities, we recommend
         /// that users of this tax content API download new data every day. Many tax authorities may finalize
         /// decisions on tax changes at unexpected times and may make changes in response to legal issues or
         /// governmental priorities. Any tax content downloaded for future time periods is subject to change
         /// if tax rates or tax laws change.
-        /// 
+        ///  
         /// This rates file is intended to be used as a default for tax calculation when your software cannot
         /// call the `CreateTransaction` API call. When using this file, your software will be unable to
         /// handle complex tax rules such as:
-        /// 
+        ///  
         /// * Zip+4 - This tax file contains five digit zip codes only.
         /// * Different product types - This tax file contains tangible personal property tax rates only.
         /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
         /// * Threshold-based taxes - This tax file does not contain information about thresholds.
-        /// 
+        ///  
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
         /// rate and the final transaction tax.
-        /// 
+        ///  
         /// The file provided by this API is in CSV format with the following columns:
-        /// 
+        ///  
         /// * ZIP_CODE - The five digit zip code for this record.
         /// * STATE_ABBREV - A valid two character US state abbreviation for this record. Zip codes may span multiple states.
         /// * COUNTY_NAME - A valid county name for this record. Zip codes may span multiple counties.
@@ -8941,12 +7401,12 @@ namespace Avalara.AvaTax.RestClient
         /// * TOTAL_USE_TAX - The total tax rate for use tax for this postal code. This value may not equal the sum of the state/county/city due to special tax jurisdiction rules.
         /// * TAX_SHIPPING_ALONE - This column contains 'Y' if shipping is taxable.
         /// * TAX_SHIPPING_AND_HANDLING_TOGETHER - This column contains 'Y' if shipping and handling are taxable when sent together.
-        /// 
+        ///  
         /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
         /// <param name="region">If the region is provided, this API is going to generate the tax rate per zipcode for only the region specified.</param>
@@ -8964,16 +7424,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more custom tax rules attached to this company.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -8996,16 +7456,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Mark the custom tax rule identified by this URL as deleted.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -9029,16 +7489,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the taxrule object identified by this URL.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -9062,19 +7522,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all taxrule objects attached to this company.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -9106,19 +7566,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple taxrule objects across all companies.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -9148,16 +7608,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing custom tax rule object at this URL with an updated object.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -9232,7 +7692,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are considered `locked` and are
         /// no longer available for adjustments.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -9352,8 +7812,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
+        /// * This API requires the user role Compliance Root User.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="model">bulk lock request</param>
         public BulkLockTransactionResult BulkLockTransaction(BulkLockTransactionModel model)
@@ -9378,7 +7839,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -9424,7 +7885,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
         /// Any changes made to a committed transaction will generate a transaction history.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -9769,7 +8230,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -9874,7 +8335,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
         /// This API is available for users who want to execute more than one action at a time.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -9913,7 +8374,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are considered `locked` and are
         /// no longer available to be uncommitted.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -9945,6 +8406,42 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Unvoids a transaction
+        /// </summary>
+        /// <remarks>
+        /// Unvoids a voided transaction
+        ///  
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Lines
+        /// * Details (implies lines)
+        /// * Summary (implies details)
+        /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
+        /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// </remarks>
+        /// <param name="companyCode">The company code of the company that recorded this transaction</param>
+        /// <param name="transactionCode">The transaction code to commit</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to commit. If not provided, the default is SalesInvoice.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
+        public TransactionModel UnvoidTransaction(String companyCode, String transactionCode, DocumentType? documentType, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/unvoid");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
+            path.AddQuery("$include", include);
+            return RestCall<TransactionModel>("POST", path, null);
+        }
+
+
+        /// <summary>
         /// Verify a transaction
         /// </summary>
         /// <remarks>
@@ -9956,7 +8453,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -10002,7 +8499,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available to be voided.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -10198,10 +8695,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Allows a user to change their password via an API call.
-        /// 
+        ///  
         /// This API allows an authenticated user to change their password via an API call. This feature is only available
         /// for accounts that do not use SAML integrated password validation.
-        /// 
+        ///  
         /// This API only allows the currently authenticated user to change their password; it cannot be used to apply to a
         /// different user than the one authenticating the current API call.
         /// 
@@ -10277,7 +8774,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Get the user object identified by this URL.
         /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// 
+        ///  
         ///  You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * FetchDeleted
@@ -10346,7 +8843,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * FetchDeleted
@@ -10388,7 +8885,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * FetchDeleted
@@ -10512,9 +9009,9 @@ namespace Avalara.AvaTax.RestClient
             return RestCall<PingResultModel>("GET", path, null);
         }
 
-		#endregion
+#endregion
 
-		#region Asynchronous
+#region Asynchronous
 #if PORTABLE
 
         /// <summary>
@@ -10569,8 +9066,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="id">The ID of the account to activate</param>
         /// <param name="model">The activation request</param>
-        
-		public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
+        public async Task<AccountModel> ActivateAccountAsync(Int32 id, ActivateAccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
@@ -10806,138 +9302,22 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create a new AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// Create one or more AvaFileForms
-        /// A 'AvaFileForm' represents a form supported by our returns team
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires the user role Compliance Root User.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="model">The AvaFileForm you wish to create.</param>
-        public async Task<List<AvaFileFormModel>> CreateAvaFileFormsAsync(List<AvaFileFormModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms");
-            return await RestCallAsync<List<AvaFileFormModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete a single AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// Marks the existing AvaFileForm object at this URL as deleted.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: Compliance Root User, ComplianceUser, FirmAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="id">The ID of the AvaFileForm you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteAvaFileFormAsync(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// Get the AvaFileForm object identified by this URL.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="id">The primary key of this AvaFileForm</param>
-        public async Task<AvaFileFormModel> GetAvaFileFormAsync(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<AvaFileFormModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all AvaFileForms;
-        /// </summary>
-        /// <remarks>
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CompanyUser, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, FirmAdmin, FirmUser, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* outletTypeId</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<AvaFileFormModel>> QueryAvaFileFormsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms");
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Update a AvaFileForm;
-        /// </summary>
-        /// <remarks>
-        /// All data from the existing object will be replaced with data in the object you PUT. 
-        /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires the user role Compliance Root User.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="id">The ID of the AvaFileForm you wish to update</param>
-        /// <param name="model">The AvaFileForm model you wish to update.</param>
-        public async Task<AvaFileFormModel> UpdateAvaFileFormAsync(Int32 id, AvaFileFormModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<AvaFileFormModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
         /// Create a new batch;
         /// </summary>
         /// <remarks>
         /// Create one or more new batch objects attached to this company.
-        /// 
+        ///  
         /// Each batch object may have one or more file objects (currently only one file is supported).
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
-        /// required, please use the 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
+        /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
         /// ### Security Policies
@@ -10959,14 +9339,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks the batch identified by this URL as deleted.
-        /// 
+        ///  
         /// If you attempt to delete a batch that is being processed, you will receive an error message.
         /// Deleting a batch does not delete any transactions that were created by importing the batch.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
-        /// required, please use the 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
+        /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
         /// ### Security Policies
@@ -11011,20 +9391,20 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve a single batch;
         /// </summary>
         /// <remarks>
-        /// Get the batch object identified by this URL. A batch object is a large 
+        /// Get the batch object identified by this URL. A batch object is a large
         /// collection of API calls stored in a compact file.
-        /// 
+        ///  
         /// Use this endpoint to retrieve the results or check the status of a batch.
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
-        /// required, please use the 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
+        /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
         /// ### Security Policies
@@ -11047,24 +9427,24 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all batch objects attached to the specified company.
-        /// 
+        ///  
         /// A batch object is a large collection of API calls stored in a compact file.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter;
         /// full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// Use [GetBatch](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Batches/GetBatch/) 
+        ///  
+        /// Use [GetBatch](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Batches/GetBatch/)
         /// to retrieve the results, or check the status, of an individual batch.
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
@@ -11096,21 +9476,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple batch objects across all companies.
-        /// 
+        ///  
         /// A batch object is a large collection of API calls stored in a compact file.
-        /// 
-        /// Search for specific objects using the criteria in the `$filter` parameter; 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter;
         /// full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// When a batch is created, it is added to the AvaTax Batch Queue and will be 
-        /// processed as quickly as possible in the order it was received. To check the 
-        /// status of a batch, fetch the batch and retrieve the results of the batch 
+        ///  
+        /// When a batch is created, it is added to the AvaTax Batch Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
         /// operation.
-        /// 
+        ///  
         /// Because the batch system processes with a degree of concurrency, and
-        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately 
-        /// predict when a batch will complete. If high performance processing is 
+        /// because of batch sizes in the queue vary, AvaTax API is unable to accurately
+        /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         /// 
@@ -11140,19 +9520,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates an invitation for a customer to self-report certificates using the CertExpress website.
-        /// 
+        ///  
         /// This invitation is delivered by your choice of method, or you can present a hyperlink to the user
         /// directly in your connector. Your customer will be redirected to https://app.certexpress.com/ where
         /// they can follow a step-by-step guide to enter information about their exemption certificates. The
         /// certificates entered will be recorded and automatically linked to their customer record.
-        /// 
+        ///  
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
-        /// 
+        ///  
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
-        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document
         /// storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11177,19 +9557,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieve an existing CertExpress invitation sent to a customer.
-        /// 
+        ///  
         /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
-        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full
         /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
         /// they will automatically be recorded to your company and linked to the customer record.
-        /// 
+        ///  
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
-        /// 
+        ///  
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
-        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document
         /// storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11217,19 +9597,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieve CertExpress invitations sent by this company.
-        /// 
+        ///  
         /// A CertExpression invitation allows a customer to follow a helpful step-by-step guide to provide information
-        /// about their certificates. This step by step guide allows the customer to complete and upload the full 
+        /// about their certificates. This step by step guide allows the customer to complete and upload the full
         /// certificate in a convenient, friendly web browser experience. When the customer completes their certificates,
         /// they will automatically be recorded to your company and linked to the customer record.
-        /// 
+        ///  
         /// The [CertExpress website](https://app.certexpress.com/home) is available for customers to use at any time.
         /// Using CertExpress with this API will ensure that your certificates are automatically linked correctly into
         /// your company so that they can be used for tax exemptions.
-        /// 
+        ///  
         /// Using exemption certificates endpoints requires setup of an auditable document storage for each company that will use certificates.
         /// Companies that do not have this storage system set up will receive the error `CertCaptureNotConfiguredError` when they call exemption
-        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document 
+        /// certificate related APIs. To check if this company is set up, call `GetCertificateSetup`. To request setup of the auditable document
         /// storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11238,7 +9618,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
-        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. 
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options.
         ///  
         ///  No options are defined at this time.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, customer, coverLetter, exposureZones, exemptReasons, requestLink</param>
@@ -11829,7 +10209,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="id"></param>
         /// <param name="model"></param>
@@ -11907,7 +10287,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="id">The unique identifier of the company</param>
         /// <param name="model">The funding initialization request</param>
@@ -11951,7 +10331,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The unique identifier of the company</param>
         public async Task<FundingConfigurationModel> FundingConfigurationByCompanyAsync(Int32 companyId)
@@ -11975,7 +10355,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The unique identifier of the company</param>
         /// <param name="currency">The currency of the funding. USD and CAD are the only valid currencies</param>
@@ -12113,11 +10493,14 @@ namespace Avalara.AvaTax.RestClient
         /// This API is available by invitation only.
         ///  
         /// Get a list of companies with an active MRS service.
+        /// 
+        /// ### Security Policies
+        /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         public async Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync()
         {
-			var path = new AvaTaxPath("/api/v2/companies/mrs");
+            var path = new AvaTaxPath("/api/v2/companies/mrs");
             return await RestCallAsync<FetchResult<MrsCompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12294,7 +10677,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all contact objects assigned to this company.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -12304,16 +10687,14 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these contacts</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<ContactModel>> ListContactsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ContactModel>> ListContactsByCompanyAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
             path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
@@ -12328,7 +10709,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get multiple contact objects across all companies.
         /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
         /// a tax collecting and filing entity.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -12337,15 +10718,13 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<ContactModel>> QueryContactsAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ContactModel>> QueryContactsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/contacts");
             path.AddQuery("$filter", filter);
-            path.AddQuery("$include", include);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
@@ -12360,7 +10739,7 @@ namespace Avalara.AvaTax.RestClient
         /// Replace the existing contact object at this URL with an updated object.
         /// A 'contact' is a person associated with a company who is designated to handle certain responsibilities of
         /// a tax collecting and filing entity.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -14340,7 +12719,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more DistanceThreshold objects for this company.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -14364,7 +12743,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Marks the DistanceThreshold object identified by this URL as deleted.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -14389,7 +12768,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Retrieves a single DistanceThreshold object defined by this URL.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -14414,7 +12793,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Lists all DistanceThreshold objects that belong to this company.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
@@ -14447,11 +12826,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Lists all DistanceThreshold objects that belong to this account.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -14481,12 +12860,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing DistanceThreshold object at this URL with an updated object.
-        /// 
+        ///  
         /// A company-distance-threshold model indicates the distance between a company
         /// and the taxing borders of various countries. Distance thresholds are necessary
         /// to correctly calculate some value-added taxes.
         ///  
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -14506,976 +12885,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Approve existing Filing Request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// The filing request must be in the "ChangeRequest" status to be approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public async Task<FilingRequestModel> ApproveFilingRequestAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("POST", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Cancel existing Filing Request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        public async Task<FilingRequestModel> CancelFilingRequestAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}/cancel");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("POST", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to cancel a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to cancel</param>
-        /// <param name="model">The cancellation request for this filing calendar</param>
-        public async Task<FilingRequestModel> CancelFilingRequestsAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only and only available for users with Compliance access
-        /// A "filing request" represents information that compliance uses to file a return
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
-        /// <param name="model">Filing calendars that will be added</param>
-        public async Task<FilingCalendarModel> CreateFilingCalendarsAsync(Int32 companyId, List<FilingCalendarModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
-            path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingCalendarModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to create a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that will add the new filing calendar</param>
-        /// <param name="model">Information about the proposed new filing calendar</param>
-        public async Task<FilingRequestModel> CreateFilingRequestsAsync(Int32 companyId, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/request");
-            path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingRequestModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Returns a list of options for adding the specified form.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="formCode">The unique code of the form</param>
-        public async Task<List<CycleAddOptionModel>> CycleSafeAddAsync(Int32 companyId, String formCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/add/options");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("formCode", formCode);
-            return await RestCallAsync<List<CycleAddOptionModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Indicates when changes are allowed to be made to a filing calendar.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public async Task<CycleEditOptionModel> CycleSafeEditAsync(Int32 companyId, Int32 id, List<FilingCalendarEditModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/options");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<CycleEditOptionModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Returns a list of options for expiring a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        public async Task<CycleExpireModel> CycleSafeExpirationAsync(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/cancel/options");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<CycleExpireModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete a single filing calendar.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Mark the existing notice object at this URL as deleted.
-        /// A 'notice' represents a letter sent to a business by a tax authority regarding tax filing issues. Avalara
-        /// Returns customers often receive support and assistance from the Compliance Notices team in handling notices received by taxing authorities.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar.</param>
-        /// <param name="id">The ID of the filing calendar you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteFilingCalendarAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
-        /// <param name="id">The primary key of this filing calendar</param>
-        public async Task<FilingCalendarModel> GetFilingCalendarAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingCalendarModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single filing request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns this filing calendar</param>
-        /// <param name="id">The primary key of this filing calendar</param>
-        public async Task<FilingRequestModel> GetFilingRequestAsync(Int32 companyId, Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing calendars for this company;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* formCountry, formRegion, taxFormCode, taxAuthorityId, taxAuthorityName, taxAuthorityType, settings</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry">A comma separated list of countries</param>
-        /// <param name="returnRegion">A comma separated list of regions</param>
-        public async Task<FetchResult<FilingCalendarModel>> ListFilingCalendarsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests for this company;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filingCalendarId">Specific filing calendar id for the request</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<FilingRequestModel>> ListFilingRequestsAsync(Int32 companyId, Int32? filingCalendarId, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingRequestModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// New request for getting for validating customer's login credentials;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API verifies that a customer has submitted correct login credentials for a tax authority's online filing system.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="model">The model of the login information we are verifying</param>
-        public async Task<LoginVerificationOutputModel> LoginVerificationRequestAsync(LoginVerificationInputModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/verify");
-            return await RestCallAsync<LoginVerificationOutputModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Gets the request status and Login Result;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API checks the status of a login verification request. It may only be called by authorized users from the account
-        /// that initially requested the login verification.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="jobId">The unique ID number of this login request</param>
-        public async Task<LoginVerificationOutputModel> LoginVerificationStatusAsync(Int32 jobId)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/credentials/{jobId}");
-            path.ApplyField("jobId", jobId);
-            return await RestCallAsync<LoginVerificationOutputModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing calendars;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is deprecated - please use POST `/api/v2/filingrequests/query` API.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* formCountry, formRegion, taxFormCode, taxAuthorityId, taxAuthorityName, taxAuthorityType, settings</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        /// <param name="returnCountry">If specified, fetches only filing calendars that apply to tax filings in this specific country. Uses ISO 3166 country codes.</param>
-        /// <param name="returnRegion">If specified, fetches only filing calendars that apply to tax filings in this specific region. Uses ISO 3166 region codes.</param>
-        public async Task<FetchResult<FilingCalendarModel>> QueryFilingCalendarsAsync(String filter, Int32? top, Int32? skip, String orderBy, String returnCountry, String returnRegion)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars");
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing calendars;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is intended to replace the GET `/api/v2/filingcalendars` API. The fetch request object is posted on the body of the request instead of the URI, so it's not limited by a set number of characters.
-        /// The documentation of the GET API shows how filtering, sorting and pagination works.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="returnCountry">If specified, fetches only filing calendars that apply to tax filings in this specific country. Uses ISO 3166 country codes.</param>
-        /// <param name="returnRegion">If specified, fetches only filing calendars that apply to tax filings in this specific region. Uses ISO 3166 region codes.</param>
-        /// <param name="model">Query object to filter, sort and paginate the filing calendars.</param>
-        public async Task<FetchResult<FilingCalendarModel>> QueryFilingCalendarsPostAsync(String returnCountry, String returnRegion, QueryRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/filingcalendars/query");
-            path.AddQuery("returnCountry", returnCountry);
-            path.AddQuery("returnRegion", returnRegion);
-            return await RestCallAsync<FetchResult<FilingCalendarModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is deprecated - please use POST `/api/v2/filingrequests/query` API.
-        ///  
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        ///  
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="filingCalendarId">Specific filing calendar id for the request</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<FilingRequestModel>> QueryFilingRequestsAsync(Int32? filingCalendarId, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/filingrequests");
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<FilingRequestModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve all filing requests;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// This API is intended to replace the GET `/api/v2/filingrequests` API. The fetch request object is posted on the body of the request instead of the URI, so it's not limited by a set number of characters.
-        /// The documentation of the GET API shows how filtering, sorting and pagination works.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="filingCalendarId">Specific filing calendar id for the request</param>
-        /// <param name="model">Query object to filter, sort and paginate the filing calendars.</param>
-        public async Task<FetchResult<FilingRequestModel>> QueryFilingRequestsPostAsync(Int32? filingCalendarId, QueryRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/filingrequests/query");
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            return await RestCallAsync<FetchResult<FilingRequestModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Create a new filing request to edit a filing calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        ///  
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        ///  
-        /// Certain users may not update filing calendars directly. Instead, they may submit an edit request
-        /// to modify the value of a filing calendar using this API.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID number of the filing calendar to edit</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public async Task<FilingRequestModel> RequestFilingCalendarUpdateAsync(Int32 companyId, Int32 id, List<FilingRequestModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}/edit/request");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Edit existing Filing Calendar;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing calendar object</param>
-        /// <param name="id">The unique ID of the filing calendar object</param>
-        /// <param name="model">The filing calendar model you are wishing to update with.</param>
-        public async Task<FilingCalendarModel> UpdateFilingCalendarAsync(Int32 companyId, Int64 id, FilingCalendarModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingCalendarModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Edit existing Filing Request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing request" represents a request to change an existing filing calendar. Filing requests
-        /// are reviewed and validated by Avalara Compliance before being implemented.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the filing request object</param>
-        /// <param name="id">The unique ID of the filing request object</param>
-        /// <param name="model">A list of filing calendar edits to be made</param>
-        public async Task<FilingRequestModel> UpdateFilingRequestAsync(Int32 companyId, Int32 id, FilingRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingrequests/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingRequestModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Approve all filings for the specified company in the given filing period.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console,
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to approve.</param>
-        /// <param name="month">The month of the filing period to approve.</param>
-        /// <param name="model">The approve request you wish to execute.</param>
-        public async Task<List<FilingModel>> ApproveFilingsAsync(Int32 companyId, Int16 year, Byte month, ApproveFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return await RestCallAsync<List<FilingModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Approve all filings for the specified company in the given filing period and country.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console,
-        /// else system auto-approves the night before the filing cycle.
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to approve.</param>
-        /// <param name="month">The month of the filing period to approve.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="model">The approve request you wish to execute.</param>
-        public async Task<List<FilingModel>> ApproveFilingsCountryAsync(Int32 companyId, Int16 year, Byte month, String country, ApproveFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            return await RestCallAsync<List<FilingModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Approve all filings for the specified company in the given filing period, country and region.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Approving a return means the customer is ready to let Avalara file that return.
-        /// Customer either approves themselves from admin console,
-        /// else system auto-approves the night before the filing cycle
-        /// Sometimes Compliance has to manually unapprove and reapprove to modify liability or filing for the customer.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to approve.</param>
-        /// <param name="month">The month of the filing period to approve.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="model">The approve request you wish to execute.</param>
-        public async Task<List<FilingModel>> ApproveFilingsCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region, ApproveFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/approve");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return await RestCallAsync<List<FilingModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Add an adjustment to a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API creates a new adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="year">The year of the filing's filing period being adjusted.</param>
-        /// <param name="month">The month of the filing's filing period being adjusted.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country of the filing being adjusted.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form being adjusted.</param>
-        /// <param name="model">A list of Adjustments to be created for the specified filing.</param>
-        public async Task<List<FilingAdjustmentModel>> CreateReturnAdjustmentAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingAdjustmentModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/adjust");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingAdjustmentModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Add an augmentation for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API creates a new augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
-        /// <param name="year">The month of the filing's filing period being changed.</param>
-        /// <param name="month">The month of the filing's filing period being changed.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country of the filing being changed.</param>
-        /// <param name="region">The two or three character region code for the region of the filing being changed.</param>
-        /// <param name="formCode">The unique code of the form being changed.</param>
-        /// <param name="model">A list of augmentations to be created for the specified filing.</param>
-        public async Task<List<FilingAugmentationModel>> CreateReturnAugmentationAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingAugmentationModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/augment");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingAugmentationModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Add an payment to a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API creates a new payment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="year">The year of the filing's filing period being adjusted.</param>
-        /// <param name="month">The month of the filing's filing period being adjusted.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country of the filing being adjusted.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form being adjusted.</param>
-        /// <param name="model">A list of Payments to be created for the specified filing.</param>
-        public async Task<List<FilingPaymentModel>> CreateReturnPaymentAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode, List<FilingPaymentModel> model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}/payment");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return await RestCallAsync<List<FilingPaymentModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete an adjustment for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API deletes an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the adjustment being deleted.</param>
-        public async Task<List<ErrorDetail>> DeleteReturnAdjustmentAsync(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete an augmentation for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API deletes an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
-        /// <param name="id">The ID of the augmentation being added.</param>
-        public async Task<List<ErrorDetail>> DeleteReturnAugmentationAsync(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete an payment for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API deletes an payment for an existing tax filing.
-        /// This API can only be used when the filing has been unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the payment being deleted.</param>
-        public async Task<List<ErrorDetail>> DeleteReturnPaymentAsync(Int32 companyId, Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve worksheet checkup report for company and filing period.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="filingsId">The unique id of the worksheet.</param>
-        /// <param name="companyId">The unique ID of the company that owns the worksheet.</param>
-        public async Task<FilingsCheckupModel> FilingsCheckupReportAsync(Int32 filingsId, Int32 companyId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingsId}/checkup");
-            path.ApplyField("filingsId", filingsId);
-            path.ApplyField("companyId", companyId);
-            return await RestCallAsync<FilingsCheckupModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve worksheet checkup report for company and filing period.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The unique ID of the company that owns the worksheets object.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The month of the filing period.</param>
-        public async Task<FilingsCheckupModel> FilingsCheckupReportsAsync(Int32 companyId, Int16 year, Byte month)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/checkup");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return await RestCallAsync<FilingsCheckupModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified accrual return.;
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="filingReturnId">The ID of the accrual return</param>
-        public async Task<FetchResult<FilingReturnModel>> GetAccrualFillingsAsync(Int32 companyId, Int64 filingReturnId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/accrual/{filingReturnId}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingReturnId", filingReturnId);
-            return await RestCallAsync<FetchResult<FilingReturnModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a single attachment for a filing;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="filingReturnId">The unique id of the worksheet return.</param>
-        /// <param name="fileId">The unique id of the document you are downloading</param>
-        public async Task<FileResult> GetFilingAttachmentAsync(Int32 companyId, Int64 filingReturnId, Int64? fileId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{filingReturnId}/attachment");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("filingReturnId", filingReturnId);
-            path.AddQuery("fileId", fileId);
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
         /// Retrieve a list of filings for the specified company in the year and month of a given filing period.;
         /// </summary>
         /// <remarks>
@@ -15487,7 +12896,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -15514,7 +12923,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns the filings.</param>
         /// <param name="year">The year of the filing period.</param>
@@ -15526,405 +12935,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("year", year);
             path.ApplyField("month", month);
             return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a filing for the specified company and id.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="id">The id of the filing return your retrieving</param>
-        /// <param name="details">Indicates if you would like the credit details returned</param>
-        public async Task<FilingReturnModel> GetFilingReturnAsync(Int32 companyId, Int32 id, Boolean? details)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            path.AddQuery("details", details);
-            return await RestCallAsync<FilingReturnModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        public async Task<FetchResult<FilingModel>> GetFilingsAsync(Int32 companyId, Int16 year, Byte month)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the given filing period and country.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        public async Task<FetchResult<FilingModel>> GetFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the filing period, country and region.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        public async Task<FetchResult<FilingModel>> GetFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the given filing period, country, region and form.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form.</param>
-        public async Task<FetchResult<FilingModel>> GetFilingsByReturnNameAsync(Int32 companyId, Int16 year, Byte month, String country, String region, String formCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/{formCode}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            path.ApplyField("formCode", formCode);
-            return await RestCallAsync<FetchResult<FilingModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.
-        /// This gets the basic information from the filings and doesn't include anything extra.;
-        /// </summary>
-        /// <remarks>
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns these batches</param>
-        /// <param name="endPeriodMonth">The month of the period you are trying to retrieve</param>
-        /// <param name="endPeriodYear">The year of the period you are trying to retrieve</param>
-        /// <param name="frequency">The frequency of the return you are trying to retrieve</param>
-        /// <param name="status">The status of the return(s) you are trying to retrieve</param>
-        /// <param name="country">The country of the return(s) you are trying to retrieve</param>
-        /// <param name="region">The region of the return(s) you are trying to retrieve</param>
-        /// <param name="filingCalendarId">The filing calendar id of the return you are trying to retrieve</param>
-        public async Task<FetchResult<FilingReturnModelBasic>> GetFilingsReturnsAsync(Int32 companyId, Int32? endPeriodMonth, Int32? endPeriodYear, FilingFrequencyId? frequency, FilingStatusId? status, String country, String region, Int64? filingCalendarId)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/returns");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("endPeriodMonth", endPeriodMonth);
-            path.AddQuery("endPeriodYear", endPeriodYear);
-            path.AddQuery("frequency", frequency);
-            path.AddQuery("status", status);
-            path.AddQuery("country", country);
-            path.AddQuery("region", region);
-            path.AddQuery("filingCalendarId", filingCalendarId);
-            return await RestCallAsync<FetchResult<FilingReturnModelBasic>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve a list of filings for the specified company in the year and month of a given filing period.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period.</param>
-        /// <param name="month">The two digit month of the filing period.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="formCode">The unique code of the form.</param>
-        public async Task<FetchResult<MultiTaxFilingModel>> GetTaxFilingsAsync(Int32 companyId, Int32? year, Int32? month, String country, String region, String formCode)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings");
-            path.ApplyField("companyId", companyId);
-            path.AddQuery("year", year);
-            path.AddQuery("month", month);
-            path.AddQuery("country", country);
-            path.AddQuery("region", region);
-            path.AddQuery("formCode", formCode);
-            return await RestCallAsync<FetchResult<MultiTaxFilingModel>>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Rebuild a set of filings for the specified company in the given filing period.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to be rebuilt.</param>
-        /// <param name="month">The month of the filing period to be rebuilt.</param>
-        /// <param name="model">The rebuild request you wish to execute.</param>
-        public async Task<FetchResult<FilingModel>> RebuildFilingsAsync(Int32 companyId, Int16 year, Byte month, RebuildFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/rebuild");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            return await RestCallAsync<FetchResult<FilingModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Rebuild a set of filings for the specified company in the given filing period and country.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Rebuilding a return means re-creating or updating the amounts to be filed (worksheet) for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to be rebuilt.</param>
-        /// <param name="month">The month of the filing period to be rebuilt.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="model">The rebuild request you wish to execute.</param>
-        public async Task<FetchResult<FilingModel>> RebuildFilingsByCountryAsync(Int32 companyId, Int16 year, Byte month, String country, RebuildFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/rebuild");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            return await RestCallAsync<FetchResult<FilingModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Rebuild a set of filings for the specified company in the given filing period, country and region.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.audit.CheckAuthorizationReturns(null, companyId);
-        /// Rebuilding a return means re-creating or updating the amounts to be filed for a filing.
-        /// Rebuilding has to be done whenever a customer adds transactions to a filing.
-        /// A "filing period" is the year and month of the date of the latest customer transaction allowed to be reported on a filing,
-        /// based on filing frequency of filing.
-        /// This API requires filing to be unapproved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filings.</param>
-        /// <param name="year">The year of the filing period to be rebuilt.</param>
-        /// <param name="month">The month of the filing period to be rebuilt.</param>
-        /// <param name="country">The two-character ISO-3166 code for the country.</param>
-        /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="model">The rebuild request you wish to execute.</param>
-        public async Task<FetchResult<FilingModel>> RebuildFilingsByCountryRegionAsync(Int32 companyId, Int16 year, Byte month, String country, String region, RebuildFilingsModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/{year}/{month}/{country}/{region}/rebuild");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("year", year);
-            path.ApplyField("month", month);
-            path.ApplyField("country", country);
-            path.ApplyField("region", region);
-            return await RestCallAsync<FetchResult<FilingModel>>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Edit an adjustment for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Adjustment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API modifies an adjustment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the adjustment being edited.</param>
-        /// <param name="model">The updated Adjustment.</param>
-        public async Task<FilingAdjustmentModel> UpdateReturnAdjustmentAsync(Int32 companyId, Int64 id, FilingAdjustmentModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/adjust/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingAdjustmentModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Edit an augmentation for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Augmentation" is a manually added increase or decrease in tax liability, by either customer or Avalara
-        /// usually due to customer wanting to report tax Avatax does not support, e.g. bad debts, rental tax.
-        /// This API modifies an augmentation for an existing tax filing.
-        /// This API can only be used when the filing has not been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being changed.</param>
-        /// <param name="id">The ID of the augmentation being edited.</param>
-        /// <param name="model">The updated Augmentation.</param>
-        public async Task<FilingModel> UpdateReturnAugmentationAsync(Int32 companyId, Int64 id, FilingAugmentationModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/augment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Edit an payment for a given filing.;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// An "Payment" is usually an increase or decrease to customer funding to Avalara,
-        /// such as early filer discount amounts that are refunded to the customer, or efile fees from websites.
-        /// Sometimes may be a manual change in tax liability similar to an augmentation.
-        /// This API modifies an payment for an existing tax filing.
-        /// This API can only be used when the filing has not yet been approved.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, CSPTester, FirmUser, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="companyId">The ID of the company that owns the filing being adjusted.</param>
-        /// <param name="id">The ID of the payment being edited.</param>
-        /// <param name="model">The updated Payment.</param>
-        public async Task<FilingPaymentModel> UpdateReturnPaymentAsync(Int32 companyId, Int64 id, FilingPaymentModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/payment/{id}");
-            path.ApplyField("companyId", companyId);
-            path.ApplyField("id", id);
-            return await RestCallAsync<FilingPaymentModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -15960,19 +12970,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// # Free-To-Use
-        /// 
+        ///  
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// 
+        ///  
         /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
         /// response code 429 - `Too Many Requests`.
-        /// 
+        ///  
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
-        /// location in the United States only. 
-        /// 
+        /// location in the United States only.
+        ///  
         /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
         /// which supports features including, but not limited to:
-        /// 
+        ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
         /// * Sourcing rules affecting origin/destination states
@@ -15981,7 +12991,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Refunds for products purchased on a different date
         /// * Detailed jurisdiction names and state assigned codes
         /// * And more!
-        /// 
+        ///  
         /// Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
         /// for information on how to upgrade to the full AvaTax CreateTransaction API.;
         /// </remarks>
@@ -15990,22 +13000,22 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="line3">The street address of the location.</param>
         /// <param name="city">The city name of the location.</param>
         /// <param name="region">Name or ISO 3166 code identifying the region within the country.
-        /// 
+        ///  
         /// This field supports many different region identifiers:
         ///  * Two and three character ISO 3166 region codes
         ///  * Fully spelled out names of the region in ISO supported languages
         ///  * Common alternative spellings for many regions
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.</param>
         /// <param name="postalCode">The postal code of the location.</param>
         /// <param name="country">Name or ISO 3166 code identifying the country.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.</param>
         public async Task<TaxRateModel> TaxRatesByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country)
         {
@@ -16026,21 +13036,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// # Free-To-Use
-        /// 
+        ///  
         /// This API is only available for a US postal codes.
-        /// 
+        ///  
         /// The TaxRates API is a free-to-use, no cost option for estimating sales tax rates.
         /// Any customer can request a free AvaTax account and make use of the TaxRates API.
-        /// 
+        ///  
         /// Usage of this API is subject to rate limits. Users who exceed the rate limit will receive HTTP
         /// response code 429 - `Too Many Requests`.
-        /// 
+        ///  
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
-        /// location in the United States only. 
-        /// 
+        /// location in the United States only.
+        ///  
         /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
         /// which supports features including, but not limited to:
-        /// 
+        ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
         /// * Sourcing rules affecting origin/destination states
@@ -16049,18 +13059,18 @@ namespace Avalara.AvaTax.RestClient
         /// * Refunds for products purchased on a different date
         /// * Detailed jurisdiction names and state assigned codes
         /// * And more!
-        /// 
+        ///  
         /// Please see [Estimating Tax with REST v2](http://developer.avalara.com/blog/2016/11/04/estimating-tax-with-rest-v2/)
         /// for information on how to upgrade to the full AvaTax CreateTransaction API.;
         /// </remarks>
         /// <param name="country">Name or ISO 3166 code identifying the country.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.</param>
         /// <param name="postalCode">The postal code of the location.</param>
         public async Task<TaxRateModel> TaxRatesByPostalCodeAsync(String country, String postalCode)
@@ -16069,68 +13079,6 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
             return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Request the javascript for a funding setup widget;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API returns back the actual javascript code to insert into your application to render the
-        /// JavaScript funding setup widget inline.
-        /// Use the 'methodReturn.javaScript' return value to insert this widget into your HTML page.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="id">The unique ID number of this funding request</param>
-        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int64 id)
-        {
-            var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
-            path.ApplyField("id", id);
-            return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve status about a funding setup request;
-        /// </summary>
-        /// <remarks>
-        /// This API is available by invitation only.
-        /// Companies that use the Avalara Managed Returns or the SST Certified Service Provider services are
-        /// required to setup their funding configuration before Avalara can begin filing tax returns on their
-        /// behalf.
-        /// Funding configuration for each company is set up by submitting a funding setup request, which can
-        /// be sent either via email or via an embedded HTML widget.
-        /// When the funding configuration is submitted to Avalara, it will be reviewed by treasury team members
-        /// before approval.
-        /// This API checks the status on an existing funding request.
-        /// This API requires a subscription to Avalara Managed Returns or SST Certified Service Provider.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
-        /// </remarks>
-        /// <param name="id">The unique ID number of this funding request</param>
-        public async Task<FundingStatusModel> FundingRequestStatusAsync(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/fundingrequests/{id}");
-            path.ApplyField("id", id);
-            return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -16856,7 +13804,7 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
@@ -16887,7 +13835,7 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
@@ -16926,10 +13874,10 @@ namespace Avalara.AvaTax.RestClient
         /// Many taxing authorities require that you define a list of all locations where your company does business.
         /// These locations may require additional custom configuration or tax registration with these authorities.
         /// For more information on metadata requirements, see the '/api/v2/definitions/locationquestions' API.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
@@ -16960,7 +13908,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing location object at this URL with an updated object.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -17664,7 +14612,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the comment for.</param>
@@ -17692,7 +14640,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice added to the finance details.</param>
@@ -17719,7 +14667,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
@@ -17746,7 +14694,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the tax notice we are adding the responsibility for.</param>
@@ -17773,7 +14721,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="model">The notice object you wish to create.</param>
@@ -17798,7 +14746,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
@@ -17827,7 +14775,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete the finance detail from.</param>
@@ -17855,7 +14803,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="id">The ID of the notice you wish to delete.</param>
@@ -17881,7 +14829,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="noticeId">The ID of the notice you wish to delete.</param>
@@ -17909,7 +14857,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this notice.</param>
         /// <param name="noticeId">The ID of the notice you wish to delete.</param>
@@ -17935,7 +14883,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company for this attachment.</param>
         /// <param name="id">The ResourceFileId of the attachment to download.</param>
@@ -17961,7 +14909,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company for this notice.</param>
         /// <param name="id">The ID of this notice.</param>
@@ -17987,7 +14935,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -18014,7 +14962,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="id">The ID of the company that owns these notices.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -18040,7 +14988,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -18066,7 +15014,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="id">The ID of the notice.</param>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
@@ -18095,7 +15043,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these notices.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* status, totalRemit, ticketReferenceNo, ticketReferenceUrl, reason, type, createdByUserName, documentReference, jurisdictionName, jurisdictionType, comments, finances, responsibility, rootCause</param>
@@ -18135,7 +15083,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* status, totalRemit, ticketReferenceNo, ticketReferenceUrl, reason, type, createdByUserName, documentReference, jurisdictionName, jurisdictionType, comments, finances, responsibility, rootCause</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
@@ -18167,7 +15115,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="model">Query object to filter, sort and paginate the filing calendars.</param>
         public async Task<FetchResult<NoticeModel>> QueryNoticesPostAsync(QueryRequestModel model)
@@ -18189,7 +15137,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice finance detail belongs to.</param>
         /// <param name="noticeid">The ID of the notice finance detail you wish to update.</param>
@@ -18220,7 +15168,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice belongs to.</param>
         /// <param name="id">The ID of the notice you wish to update.</param>
@@ -18246,7 +15194,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that this notice comment belongs to.</param>
         /// <param name="noticeid">The ID of the notice you wish to update.</param>
@@ -18274,7 +15222,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company for this attachment.</param>
         /// <param name="model">The upload request.</param>
@@ -18305,7 +15253,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="id">The id of the notification you wish to mark as dismissed.</param>
         public async Task<NotificationModel> DismissNotificationAsync(Int64 id)
@@ -18399,7 +15347,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Onboarding] for your servers.
+        /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Onboarding:RequestNewAccount].;
         /// </remarks>
         /// <param name="model">Information about the account you wish to create and the selected product offerings.</param>
@@ -18420,7 +15368,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Onboarding] for your servers.
+        /// * This API is available by invitation only.
         /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request access to [Onboarding:RequestNewAccount].;
         /// </remarks>
         /// <param name="id">The avatax account id of the customer</param>
@@ -18590,7 +15538,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// # For Registrar Use Only
         /// This API is for use by Avalara Registrar administrative users only.
-        /// 
+        ///  
         /// Allows a system admin to reset the password for a specific user via the API.
         /// This API is only available for Avalara Registrar Admins, and can be used to reset the password of any
         /// user based on internal Avalara business processes.
@@ -18828,9 +15776,17 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
-        public async Task<FetchResult<ReportModel>> ListReportsAsync()
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* reportType, parameters, createdUser, completedDate</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ReportModel>> ListReportsAsync(String filter, Int32? top, Int32? skip, String orderBy)
         {
             var path = new AvaTaxPath("/api/v2/reports");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<ReportModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18840,12 +15796,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more new setting objects attached to this company.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
@@ -18869,12 +15825,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Mark the setting object at this URL as deleted.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
@@ -18899,12 +15855,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get a single setting object by its unique ID.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
@@ -18929,16 +15885,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all setting objects attached to this company.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -18970,16 +15926,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple setting objects across all companies.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -19009,18 +15965,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing setting object at this URL with an updated object.
-        /// 
+        ///  
         /// The company settings system is a metadata system that you can use to store extra information
         /// about a company. Your integration or connector could use this data storage to keep track of
         /// preference information, reminders, or any other storage that would need to persist even if
         /// the customer uninstalls your application.
-        /// 
+        ///  
         /// A setting can refer to any type of data you need to remember about this company object.
         /// When creating this object, you may define your own `set`, `name`, and `value` parameters.
         /// To define your own values, please choose a `set` name that begins with `X-` to indicate an extension.
         ///  
-        /// All data from the existing object will be replaced with data in the object you `PUT`. 
-        /// 
+        /// All data from the existing object will be replaced with data in the object you `PUT`.
+        ///  
         /// To set a field's value to `null`, you may either set its value to `null` or omit that field from the object when calling update.
         /// 
         /// ### Security Policies
@@ -19203,7 +16159,7 @@ namespace Avalara.AvaTax.RestClient
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -19239,7 +16195,7 @@ namespace Avalara.AvaTax.RestClient
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -19273,7 +16229,7 @@ namespace Avalara.AvaTax.RestClient
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
         /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
-        /// All data from the existing object will be replaced with data in the object you PUT. 
+        /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
         /// 
         /// ### Security Policies
@@ -19297,32 +16253,32 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
-        /// 
+        ///  
         /// Since tax rates may change based on decisions made by a variety of tax authorities, we recommend
         /// that users of this tax content API download new data every day. Many tax authorities may finalize
         /// decisions on tax changes at unexpected times and may make changes in response to legal issues or
         /// governmental priorities. Any tax content downloaded for future time periods is subject to change
         /// if tax rates or tax laws change.
-        /// 
+        ///  
         /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
         /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
-        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your
         /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
         /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
         /// then use `CreateItems()` to create an item that uses the custom tax code.
-        /// 
+        ///  
         /// This data file can be customized for specific partner devices and usage conditions.
-        /// 
+        ///  
         /// The result of this API is the file you requested in the format you requested using the `responseType` field.
-        /// 
+        ///  
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
-        /// 
+        ///  
         /// NOTE: This API does not work for Tennessee tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
         /// </remarks>
         /// <param name="model">Parameters about the desired file format and report format, specifying which company, locations and TaxCodes to include.</param>
@@ -19338,32 +16294,32 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Builds a tax content file containing information useful for a retail point-of-sale solution.
-        /// 
+        ///  
         /// Since tax rates may change based on decisions made by a variety of tax authorities, we recommend
         /// that users of this tax content API download new data every day. Many tax authorities may finalize
         /// decisions on tax changes at unexpected times and may make changes in response to legal issues or
         /// governmental priorities. Any tax content downloaded for future time periods is subject to change
         /// if tax rates or tax laws change.
-        /// 
+        ///  
         /// A TaxContent file contains a matrix of the taxes that would be charged when you sell any of your
         /// Items at any of your Locations. To create items, use `CreateItems()`. To create locations, use
-        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your 
+        /// `CreateLocations()`. The file is built by looking up the tax profile for your location and your
         /// item and calculating taxes for each in turn. To include a custom `TaxCode` in this tax content
         /// file, first create the custom tax code using `CreateTaxCodes()` to create the custom tax code,
         /// then use `CreateItems()` to create an item that uses the custom tax code.
-        /// 
+        ///  
         /// This data file can be customized for specific partner devices and usage conditions.
-        /// 
+        ///  
         /// The result of this API is the file you requested in the format you requested using the `responseType` field.
-        /// 
+        ///  
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
-        /// 
+        ///  
         /// NOTE: This API does not work for Tennessee tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
         /// </remarks>
         /// <param name="companyId">The ID number of the company that owns this location.</param>
@@ -19391,28 +16347,28 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Download a CSV file containing all five digit postal codes in the United States and their sales
         /// and use tax rates for tangible personal property.
-        /// 
+        ///  
         /// Since tax rates may change based on decisions made by a variety of tax authorities, we recommend
         /// that users of this tax content API download new data every day. Many tax authorities may finalize
         /// decisions on tax changes at unexpected times and may make changes in response to legal issues or
         /// governmental priorities. Any tax content downloaded for future time periods is subject to change
         /// if tax rates or tax laws change.
-        /// 
+        ///  
         /// This rates file is intended to be used as a default for tax calculation when your software cannot
         /// call the `CreateTransaction` API call. When using this file, your software will be unable to
         /// handle complex tax rules such as:
-        /// 
+        ///  
         /// * Zip+4 - This tax file contains five digit zip codes only.
         /// * Different product types - This tax file contains tangible personal property tax rates only.
         /// * Mixed sourcing - This tax file cannot be used to resolve origin-based taxes.
         /// * Threshold-based taxes - This tax file does not contain information about thresholds.
-        /// 
+        ///  
         /// If you use this file to provide default tax rates, please ensure that your software calls `CreateTransaction`
         /// to reconcile the actual transaction and determine the difference between the estimated general tax
         /// rate and the final transaction tax.
-        /// 
+        ///  
         /// The file provided by this API is in CSV format with the following columns:
-        /// 
+        ///  
         /// * ZIP_CODE - The five digit zip code for this record.
         /// * STATE_ABBREV - A valid two character US state abbreviation for this record. Zip codes may span multiple states.
         /// * COUNTY_NAME - A valid county name for this record. Zip codes may span multiple counties.
@@ -19427,12 +16383,12 @@ namespace Avalara.AvaTax.RestClient
         /// * TOTAL_USE_TAX - The total tax rate for use tax for this postal code. This value may not equal the sum of the state/county/city due to special tax jurisdiction rules.
         /// * TAX_SHIPPING_ALONE - This column contains 'Y' if shipping is taxable.
         /// * TAX_SHIPPING_AND_HANDLING_TOGETHER - This column contains 'Y' if shipping and handling are taxable when sent together.
-        /// 
+        ///  
         /// For more detailed tax content, please use the `BuildTaxContentFile` API which allows usage of exact items and exact locations.
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default). Example input: 2016-12-31</param>
         /// <param name="region">If the region is provided, this API is going to generate the tax rate per zipcode for only the region specified.</param>
@@ -19450,16 +16406,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Create one or more custom tax rules attached to this company.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -19482,16 +16438,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Mark the custom tax rule identified by this URL as deleted.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -19515,16 +16471,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get the taxrule object identified by this URL.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -19548,19 +16504,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// List all taxrule objects attached to this company.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -19592,19 +16548,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Get multiple taxrule objects across all companies.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
-        /// 
+        ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// 
@@ -19634,16 +16590,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Replace the existing custom tax rule object at this URL with an updated object.
-        /// 
+        ///  
         /// A tax rule represents a rule that changes the default AvaTax behavior for a product or jurisdiction. Custom tax rules
-        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate 
+        /// can be used to change the taxability of an item, to change the tax base of an item, or to change the tax rate
         /// charged when selling an item. Tax rules can also change tax behavior depending on the `entityUseCode` value submitted
         /// with the transaction.
-        /// 
+        ///  
         /// You can create custom tax rules to customize the behavior of AvaTax to match specific rules that are custom to your
         /// business. If you have obtained a ruling from a tax auditor that requires custom tax calculations, you can use
         /// custom tax rules to redefine the behavior for your company or item.
-        /// 
+        ///  
         /// Please use custom tax rules carefully and ensure that these tax rules match the behavior agreed upon with your
         /// auditor, legal representative, and accounting team.
         /// 
@@ -19718,7 +16674,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are considered `locked` and are
         /// no longer available for adjustments.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -19838,8 +16794,9 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
+        /// * This API requires the user role Compliance Root User.
         /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
-        /// * This API is available by invitation only. To request access to this feature, please speak to a business development manager and request host address whitelisting for [Returns] for your servers.;
+        /// * This API is available by invitation only.<br />*Exempt security roles*: ComplianceRootUser, ComplianceAdmin, ComplianceUser, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="model">bulk lock request</param>
         public async Task<BulkLockTransactionResult> BulkLockTransactionAsync(BulkLockTransactionModel model)
@@ -19864,7 +16821,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -19910,7 +16867,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
         /// Any changes made to a committed transaction will generate a transaction history.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -20255,7 +17212,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -20360,7 +17317,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
         /// This API is available for users who want to execute more than one action at a time.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -20399,7 +17356,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are considered `locked` and are
         /// no longer available to be uncommitted.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -20431,6 +17388,42 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Unvoids a transaction;
+        /// </summary>
+        /// <remarks>
+        /// Unvoids a voided transaction
+        ///  
+        /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        /// * Lines
+        /// * Details (implies lines)
+        /// * Summary (implies details)
+        /// * Addresses
+        /// * SummaryOnly (omit lines and details - reduces API response size)
+        /// * LinesOnly (omit details - reduces API response size)
+        /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// </remarks>
+        /// <param name="companyCode">The company code of the company that recorded this transaction</param>
+        /// <param name="transactionCode">The transaction code to commit</param>
+        /// <param name="documentType">(Optional): The document type of the transaction to commit. If not provided, the default is SalesInvoice.</param>
+        /// <param name="include">Specifies objects to include in this fetch call</param>
+        public async Task<TransactionModel> UnvoidTransactionAsync(String companyCode, String transactionCode, DocumentType? documentType, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/unvoid");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionCode", transactionCode);
+            path.AddQuery("documentType", documentType);
+            path.AddQuery("$include", include);
+            return await RestCallAsync<TransactionModel>("POST", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Verify a transaction;
         /// </summary>
         /// <remarks>
@@ -20442,7 +17435,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -20488,7 +17481,7 @@ namespace Avalara.AvaTax.RestClient
         /// If you have more than one document with the same `code`, specify the `documentType` parameter to choose between them.
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are no longer available to be voided.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Lines
@@ -20684,10 +17677,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Allows a user to change their password via an API call.
-        /// 
+        ///  
         /// This API allows an authenticated user to change their password via an API call. This feature is only available
         /// for accounts that do not use SAML integrated password validation.
-        /// 
+        ///  
         /// This API only allows the currently authenticated user to change their password; it cannot be used to apply to a
         /// different user than the one authenticating the current API call.
         /// 
@@ -20763,7 +17756,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Get the user object identified by this URL.
         /// A user represents one person with access privileges to make API calls and work with a specific account.
-        /// 
+        ///  
         ///  You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * FetchDeleted
@@ -20832,7 +17825,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * FetchDeleted
@@ -20874,7 +17867,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * FetchDeleted
@@ -20999,6 +17992,6 @@ namespace Avalara.AvaTax.RestClient
         }
 
 #endif
-		#endregion
-	}
+#endregion
+    }
 }

@@ -18,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Provides detailed information about an API call.
-    /// 
+    ///  
     /// The information on this record was captured by AvaTax when your API call was made. If you are unsure why you
     /// received an error, you can fetch these audit objects and examine the `RequestUrl`, `RequestBody`, and `ErrorMessage`
     /// fields to determine root cause for the error.
@@ -158,14 +158,14 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// If this API call included requests made to any of the AvaTax data layers, this contains the number of requests that were traced.
-        /// 
+        ///  
         /// Please note that not all data layers support this measurement.
         /// </summary>
         public Int32? databaseCallCount { get; set; }
 
         /// <summary>
         /// If this API call included requests made to any of the AvaTax data layers, this contains the total duration time measured for all the requests.
-        /// 
+        ///  
         /// Please note that not all data layers support this measurement.
         /// </summary>
         public String databaseCallDuration { get; set; }
@@ -187,7 +187,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// If this request was an HTTP request that included a body such as a POST or a PUT, this will contain the request body sent by the client.
-        /// 
+        ///  
         /// This request body is represented as a string, exactly as it was received from the client. Regardless of whether the request was JSON,
         /// Base64 encoded bytes, or a CSV file, this contains the exact contents of the request body.
         /// </summary>

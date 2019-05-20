@@ -24,14 +24,14 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The two-character alphanumeric code identifying the language in which this name is used.
-        /// 
+        ///  
         /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
         /// </summary>
         public String languageAlpha2Code { get; set; }
 
         /// <summary>
         /// The three-character alphanumeric code identifying the language in which this name is used.
-        /// 
+        ///  
         /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
         /// </summary>
         public String languageAlpha3Code { get; set; }
