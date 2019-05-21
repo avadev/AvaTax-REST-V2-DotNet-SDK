@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// DEPRECATED - Please use rateTypeCode, taxTypeGroup and subTaxType instead.
+    /// 
     /// </summary>
     public enum RateType
     {

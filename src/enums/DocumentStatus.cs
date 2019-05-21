@@ -32,7 +32,7 @@ namespace Avalara.AvaTax.RestClient
         /// Saved document (SalesInvoice or PurchaseInvoice) ready to be posted.
         ///  
         ///  This status indicates that the transaction has been saved to AvaTax, but is not available
-        ///  to be reported on a tax filing, and has not yet been verified by a business process that 
+        ///  to be reported on a tax filing, and has not yet been verified by a business process that
         ///  posts transactions.
         ///  
         ///  To mark this transaction as `Posted`, please call `VerifyTransaction` or `SettleTransaction`.
@@ -67,7 +67,7 @@ namespace Avalara.AvaTax.RestClient
         ///  on a tax return. When this occurs, the transaction's `locked` flag will be set to true. Once
         ///  the transaction is locked, no further changes may occur.
         ///  
-        ///  As long as the transaction has not been locked, you may adjust or void this transaction using 
+        ///  As long as the transaction has not been locked, you may adjust or void this transaction using
         ///  `AdjustTransaction`, `CreateOrAdjustTransaction`, or `VoidTransaction`.
         /// </summary>
         Committed = 3,
@@ -78,7 +78,7 @@ namespace Avalara.AvaTax.RestClient
         ///  This status indicates that the transaction has been cancelled or voided. Cancelled and Voided
         ///  are synonyms.
         ///  
-        ///  When a transaction has been cancelled, it is considered to no longer exist. You are free to create 
+        ///  When a transaction has been cancelled, it is considered to no longer exist. You are free to create
         ///  a new transaction with the same code.
         /// </summary>
         Cancelled = 4,
@@ -107,7 +107,7 @@ namespace Avalara.AvaTax.RestClient
         PendingApproval = 7,
 
         /// <summary>
-        /// DEPRECATED - Represents "a document in any status" when searching. Please search using the 
+        /// DEPRECATED - Represents "a document in any status" when searching. Please search using the
         ///  [Filtering in REST](/avatax/filtering-in-rest/) documentation.
         /// </summary>
         Any = -1,

@@ -38,7 +38,7 @@ namespace Avalara.AvaTax.RestClient
         FilingRequested = 2,
 
         /// <summary>
-        /// Avalara has begun filing tax returns for this company. Normally, this status will change to `Active` after 
+        /// Avalara has begun filing tax returns for this company. Normally, this status will change to `Active` after
         ///  one month of successful filing of tax returns.
         /// </summary>
         FirstFiling = 3,

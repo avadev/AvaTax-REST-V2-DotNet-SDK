@@ -32,9 +32,19 @@ namespace Avalara.AvaTax.RestClient
         public Int32? firmAccountId { get; set; }
 
         /// <summary>
+        /// FIrm Account name
+        /// </summary>
+        public String firmAccountName { get; set; }
+
+        /// <summary>
         /// Client Account to be linked with the firm
         /// </summary>
         public Int32? clientAccountId { get; set; }
+
+        /// <summary>
+        /// Client Account name
+        /// </summary>
+        public String clientAccountName { get; set; }
 
         /// <summary>
         /// Offer requested

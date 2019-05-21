@@ -17,7 +17,7 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The "Unit of Measurement" model captures information about a type of measurement. Types of measurement refer to 
+    /// The "Unit of Measurement" model captures information about a type of measurement. Types of measurement refer to
     /// different scales for the same dimension. For example, measurements of type "Distance" may include units of measurement
     /// such as meters, feet, inches, and miles.
     /// </summary>
@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         public String measurementTypeCode { get; set; }
 
         /// <summary>
-        /// For a particular measurement type, this is the ID number of the unit of measurement object corresponding to the 
+        /// For a particular measurement type, this is the ID number of the unit of measurement object corresponding to the
         /// International System of Units (abbreviated SI) unit of measurement standard. This pointer allows you to select
         /// the SI unit of measurement for a particular measurement type.
         /// </summary>

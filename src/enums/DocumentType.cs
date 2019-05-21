@@ -20,7 +20,7 @@ namespace Avalara.AvaTax.RestClient
     public enum DocumentType
     {
         /// <summary>
-        /// Represents an estimate, or a sales order, or a quote. 
+        /// Represents an estimate, or a sales order, or a quote.
         ///  
         ///  This document type is used before a sale has occurred to estimate the final amount of tax to be paid when the
         ///  sale is completed.
@@ -71,7 +71,7 @@ namespace Avalara.AvaTax.RestClient
         ///  This document type is used before a customer chooses to request a refund for a previous sale, and it
         ///  estimates the final amount of tax to be refunded when the refund is completed.
         ///  
-        ///  For a return order, the `companyCode` of the transaction refers to the seller who is giving the refund 
+        ///  For a return order, the `companyCode` of the transaction refers to the seller who is giving the refund
         ///  and the `customerVendorCode` refers to the buyer who is requesting the refund.
         ///  
         ///  This is a temporary document type and is not saved in tax history.
@@ -84,7 +84,7 @@ namespace Avalara.AvaTax.RestClient
         ///  This document type is used when a customer chooses to request a refund for a previous sale, and it
         ///  records the final amount of tax that has been refunded when the refund is completed.
         ///  
-        ///  For a return invoice, the `companyCode` of the transaction refers to the seller who is giving the refund 
+        ///  For a return invoice, the `companyCode` of the transaction refers to the seller who is giving the refund
         ///  and the `customerVendorCode` refers to the buyer who is requesting the refund.
         ///  
         ///  This is a permanent document and is recorded in AvaTax.

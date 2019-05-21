@@ -34,7 +34,7 @@ namespace Avalara.AvaTax.RestClient
         public String privateLicenseKey { get; set; }
 
         /// <summary>
-        /// If your software allows you to specify the HTTP Authorization header directly, this is the header string you 
+        /// If your software allows you to specify the HTTP Authorization header directly, this is the header string you
         /// should use when contacting Avalara to make API calls with this license key.
         /// </summary>
         public String httpRequestHeader { get; set; }

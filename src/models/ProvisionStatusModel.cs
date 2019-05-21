@@ -18,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Contains information about a company's exemption certificate status.
-    /// 
+    ///  
     /// This model can be used to determine if your company is able to use the Customers, Certificates, and
     /// CertExpressInvites APIs within AvaTax.
     /// </summary>
@@ -26,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The status of exemption certificate setup for this company.
-        /// 
+        ///  
         /// If this value is `Finished`, this company will then be able to use the Customers, Certificates, and
         /// CertExpressInvites APIs within AvaTax.
         /// </summary>

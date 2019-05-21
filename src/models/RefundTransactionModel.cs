@@ -33,21 +33,21 @@ namespace Avalara.AvaTax.RestClient
         public DateTime refundDate { get; set; }
 
         /// <summary>
-        /// Type of this refund. 
-        /// 
-        /// To submit a full refund, specify `Full`. 
-        /// 
+        /// Type of this refund.
+        ///  
+        /// To submit a full refund, specify `Full`.
+        ///  
         /// To refund only specific lines from the transaction, specify `Partial` and indicate the lines you wish to apply in the `refundLines` field.
-        /// 
+        ///  
         /// To refund the tax that was paid in the previous transaction, specify `TaxOnly`.
-        /// 
+        ///  
         /// To issue a percentage-based discount, specify `Percentage`.
         /// </summary>
         public RefundType? refundType { get; set; }
 
         /// <summary>
         /// The percentage for refund.
-        /// 
+        ///  
         /// This value only applies if you choose `refundType = Percentage` or `refundType = Partial`.
         /// </summary>
         public Decimal? refundPercentage { get; set; }

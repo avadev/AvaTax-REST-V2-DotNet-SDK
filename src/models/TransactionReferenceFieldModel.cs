@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority.
-        /// 
+        ///  
         /// This value is used by Avalara Managed Returns to group documents together by reporting locations
         /// for tax authorities that require location-based reporting.
         /// </summary>
