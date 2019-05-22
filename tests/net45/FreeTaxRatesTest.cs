@@ -1,12 +1,10 @@
 ﻿using Avalara.AvaTax.RestClient;
-using Avalara.AvaTax.RestClient.net45;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Tests.Avalara.AvaTax.RestClient.net45
 {
     [TestFixture]
     public class FreeTaxRatesTest
@@ -22,8 +20,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         {
             try {
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
-                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
+                Client = new AvaTaxClient(typeof(FreeTaxRatesTest).Assembly.FullName,
+                    typeof(FreeTaxRatesTest).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -59,13 +57,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         /// <summary>
-        /// Test the local rate by ZIP storage.
+        /// Test the local rate by ZIP storage and retrieval.
         /// </summary>        
         [Test]
-        [Ignore("This test will fail in Travis")]
+        //[Ignore("This test will fail in Travis")]
         public void StoreRatesByZipTest()
         {
-            string path = Environment.GetEnvironmentVariable("ZIP_RATE_FILE_STORAGE_PATH");
+            //string path = Environment.GetEnvironmentVariable("ZIP_RATE_FILE_STORAGE_PATH");
+            string path = @"c:\git\";
             List<string> zips = new List<string>() { "12590", "98104" };
 
             //Call the content caching helper.

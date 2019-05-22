@@ -1,17 +1,13 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Avalara.AvaTax.RestClient.net45
+namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// This class contains methods to assist with content for offline calculations. 
     /// 
-    /// Store the ZIP rates locally for those jurisidictions in which you have nexus. 
+    /// Store the rate or content files locally for those jurisidictions in which you have nexus. 
     /// </summary>
     public static class AvaTaxOfflineHelper
     {
@@ -51,7 +47,7 @@ namespace Avalara.AvaTax.RestClient.net45
         }
 
         /// <summary>
-        /// Gets the tax rate by zip.
+        /// Gets the tax rate information for ZIP centroid and stores it locally.
         /// </summary>
         /// <param name="zip">The ZIP code for which you want a ZIP-only tax rate.</param>
         /// <param name="path">The path where you stored ZIP-only files.</param>
@@ -73,6 +69,8 @@ namespace Avalara.AvaTax.RestClient.net45
 
             return zipRate;         
         }
+
+
 
         /// <summary>Writes the ZIP rate file to the designated location.</summary>
         /// <param name="zipRate">The ZIP rate object to store locally.</param>
