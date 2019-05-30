@@ -74,10 +74,23 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.False(zipRateExists);
 
             //Verify that the local file can be used for rate calculation.
-            var zipTaxRate = AvaTaxOfflineHelper.GetTaxRateByZip(zips[1], path);
+            var zipTaxRate = AvaTaxOfflineHelper.GetLocalTaxRateByZip(zips[1], path);
             Assert.NotNull(zipTaxRate);
             decimal result = 9.99m * zipTaxRate.totalRate.Value;
             Assert.NotZero(result);
+
+            //Test AvaTaxOfflineHelper Exception handling.
+            path = @"n:\someBadPath";
+            try {
+                AvaTaxOfflineHelper.StoreZipRateContent(_client, "US", zips, path);
+            }
+            catch (AvaTaxOfflineHelperException exc) {
+#if PORTABLE
+                Assert.True(string.Equals(exc.InnerException.Message, "Could not find a part of the path 'n:\\someBadPath\\12590.json'."));
+#else
+                Assert.True(string.Equals(exc.Message, "An error occurred retrieving or storing the rate content. Please see inner exception for details."));
+#endif
+            }
         }
     }
 }
