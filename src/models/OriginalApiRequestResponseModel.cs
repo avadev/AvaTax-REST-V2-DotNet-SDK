@@ -21,15 +21,18 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class OriginalApiRequestResponseModel
     {
+       
+
         /// <summary>
         /// API request
         /// </summary>
-        public CreateTransactionModel request { get; set; }
+        public object request { get; set; }
+       
 
         /// <summary>
         /// API response
         /// </summary>
-        public TransactionModel response { get; set; }
+        public object response { get; set; }
 
 
         /// <summary>
