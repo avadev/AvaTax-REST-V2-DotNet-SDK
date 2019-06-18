@@ -17,14 +17,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Tax Details by Tax Type
+    /// Tax Details by Tax subtype
     /// </summary>
-    public class TaxDetailsByTaxType
+    public class TaxDetailsByTaxSubType
     {
         /// <summary>
-        /// Tax Type
+        /// Tax subtype
         /// </summary>
-        public String taxType { get; set; }
+        public String taxSubType { get; set; }
 
         /// <summary>
         /// Total taxable amount by tax type
@@ -45,11 +45,6 @@ namespace Avalara.AvaTax.RestClient
         /// Total tax by tax type
         /// </summary>
         public Decimal? totalTax { get; set; }
-
-        /// <summary>
-        /// Tax subtype details
-        /// </summary>
-        public List<TaxDetailsByTaxSubType> taxSubTypeDetails { get; set; }
 
 
         /// <summary>

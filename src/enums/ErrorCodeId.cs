@@ -607,11 +607,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        LocalNexusConflict = 170,
-
-        /// <summary>
-        /// 
-        /// </summary>
         InvalidEcmsOverrideCode = 171,
 
         /// <summary>
@@ -1285,6 +1280,11 @@ namespace Avalara.AvaTax.RestClient
         RemoteValidationError = 1502,
 
         /// <summary>
+        /// 
+        /// </summary>
+        CannotModifySstNexus = 1503,
+
+        /// <summary>
         /// Advanced rule errors
         /// </summary>
         AdvancedRuleRequestRuleError = 1602,
@@ -1327,42 +1327,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        GenericTaxCodeForItem = 1707,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        CannotCertifyCompany = 1708,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        NoVoidedDocuments = 1709,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        InadequateCommittedDocuments = 1710,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        DocumentCodeIsGuid = 1711,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        CustomerVendorCodeIsGuid = 1712,
-
-        /// <summary>
-        /// 
-        /// </summary>
         CannotUpdateAccountTypeId = 1713,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        InadequateDocumentLineCount = 1714,
 
         /// <summary>
         /// SendSales API errors
@@ -1430,9 +1395,84 @@ namespace Avalara.AvaTax.RestClient
         InvalidAccountType = 2105,
 
         /// <summary>
+        /// Certify Company Errors
+        /// </summary>
+        GenericTaxCodeForItem = 2200,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotCertifyCompany = 2201,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoVoidedDocuments = 2202,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InadequateCommittedDocuments = 2203,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DocumentCodeIsGuid = 2204,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CustomerVendorCodeIsGuid = 2205,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InadequateDocumentLineCount = 2206,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SameDocumentDescription = 2207,
+
+        /// <summary>
         /// 
         /// </summary>
         NoExemptionNoOrCustomerUsageType = 2208,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InadequateUniqueAddresses = 2209,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ItemCodesAreAllSame = 2210,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxCodesAreAllSame = 2211,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RepeatedLinesInDocument = 2213,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxDateOverrideAndNegativeLineAmount = 2214,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AllUSDCurrencyCodes = 2215,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoDocumentsToTest = 2218,
 
     }
 }

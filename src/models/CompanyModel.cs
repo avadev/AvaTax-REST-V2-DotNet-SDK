@@ -70,8 +70,7 @@ namespace Avalara.AvaTax.RestClient
         /// For United States companies, this field contains your Taxpayer Identification Number.
         /// This is a nine digit number that is usually called an EIN for an Employer Identification Number if this company is a corporation,
         /// or SSN for a Social Security Number if this company is a person.
-        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services,
-        /// but it is optional if you do not subscribe to either of those services.
+        /// This value is required if the address provided is inside the US and if you subscribed to the Avalara Managed Returns or SST Certified Service Provider service. Otherwise it is optional.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
 

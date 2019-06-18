@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    19.5.0
+ * @version    19.6.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "19.5.0"; } }
+        public static string API_VERSION { get { return "19.6.0"; } }
 
 #region Methods
 
@@ -3899,6 +3899,35 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<CompanyDistanceThresholdModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Checks to see if the company has a valid POA for a tax form code
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///  
+        /// This API fetches valid POA's for a company by TaxFormCode or by country/region
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
+        /// * This API is available by invitation only.
+        /// </remarks>
+        /// <param name="companyId">The company id that we are checking about</param>
+        /// <param name="taxFormCode">The tax form code that we are checking</param>
+        /// <param name="country">The country we are fetching POAs for</param>
+        /// <param name="region">The region we are fetching POAs for</param>
+        public List<PowerOfAttorneyCheckModel> ActivePowerOfAttorney(Int32 companyId, String taxFormCode, String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/powerofattorney");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("taxFormCode", taxFormCode);
+            path.AddQuery("country", country);
+            path.AddQuery("region", region);
+            return RestCall<List<PowerOfAttorneyCheckModel>>("GET", path, null);
         }
 
 
@@ -12881,6 +12910,35 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<CompanyDistanceThresholdModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Checks to see if the company has a valid POA for a tax form code;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///  
+        /// This API fetches valid POA's for a company by TaxFormCode or by country/region
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Operator, Compliance Root User, Compliance Temp User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API depends on the following active services<br />*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.
+        /// * This API is available by invitation only.;
+        /// </remarks>
+        /// <param name="companyId">The company id that we are checking about</param>
+        /// <param name="taxFormCode">The tax form code that we are checking</param>
+        /// <param name="country">The country we are fetching POAs for</param>
+        /// <param name="region">The region we are fetching POAs for</param>
+        public async Task<List<PowerOfAttorneyCheckModel>> ActivePowerOfAttorneyAsync(Int32 companyId, String taxFormCode, String country, String region)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/powerofattorney");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("taxFormCode", taxFormCode);
+            path.AddQuery("country", country);
+            path.AddQuery("region", region);
+            return await RestCallAsync<List<PowerOfAttorneyCheckModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 

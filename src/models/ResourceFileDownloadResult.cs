@@ -17,39 +17,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Tax Details by Tax Type
+    /// Represents everything downloaded from resource files
     /// </summary>
-    public class TaxDetailsByTaxType
+    public class ResourceFileDownloadResult
     {
         /// <summary>
-        /// Tax Type
+        /// True if this download succeeded
         /// </summary>
-        public String taxType { get; set; }
+        public Boolean? success { get; set; }
 
         /// <summary>
-        /// Total taxable amount by tax type
+        /// Bytes of the file
         /// </summary>
-        public Decimal? totalTaxable { get; set; }
+        public Byte bytes { get; set; }
 
         /// <summary>
-        /// Total exempt by tax type
+        /// Original filename
         /// </summary>
-        public Decimal? totalExempt { get; set; }
+        public String filename { get; set; }
 
         /// <summary>
-        /// Total non taxable by tax type
+        /// Mime content type
         /// </summary>
-        public Decimal? totalNonTaxable { get; set; }
-
-        /// <summary>
-        /// Total tax by tax type
-        /// </summary>
-        public Decimal? totalTax { get; set; }
-
-        /// <summary>
-        /// Tax subtype details
-        /// </summary>
-        public List<TaxDetailsByTaxSubType> taxSubTypeDetails { get; set; }
+        public String contentType { get; set; }
 
 
         /// <summary>
