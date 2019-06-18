@@ -300,6 +300,7 @@
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
     <Compile Include="models\PoNumberModel.cs" />
     <Compile Include="models\PostalCodeModel.cs" />
+    <Compile Include="models\PowerOfAttorneyCheckModel.cs" />
     <Compile Include="models\PreferredProgramModel.cs" />
     <Compile Include="models\ProductClassificationSystemModel.cs" />
     <Compile Include="models\ProductSystemCountryModel.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="models\ReportParametersModel.cs" />
     <Compile Include="models\requiredFilingCalendarDataFieldModel.cs" />
     <Compile Include="models\ResetLicenseKeyModel.cs" />
+    <Compile Include="models\ResourceFileDownloadResult.cs" />
     <Compile Include="models\ResourceFileTypeModel.cs" />
     <Compile Include="models\ResourceFileUploadRequestModel.cs" />
     <Compile Include="models\ResourceFileUploadResultModel.cs" />
@@ -334,6 +336,7 @@
     <Compile Include="models\TaxAuthorityTypeModel.cs" />
     <Compile Include="models\TaxCodeModel.cs" />
     <Compile Include="models\TaxCodeTypesModel.cs" />
+    <Compile Include="models\TaxDetailsByTaxSubType.cs" />
     <Compile Include="models\TaxDetailsByTaxType.cs" />
     <Compile Include="models\TaxOverrideModel.cs" />
     <Compile Include="models\TaxRateModel.cs" />

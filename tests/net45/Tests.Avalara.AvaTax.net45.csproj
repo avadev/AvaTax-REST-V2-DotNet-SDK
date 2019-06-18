@@ -61,6 +61,7 @@
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AuditTransactionTests.cs" />
+    <Compile Include="AvaTaxOfflineHelper.cs" />
     <Compile Include="BatchTests.cs" />
     <Compile Include="FileTransferTest.cs" />
     <Compile Include="FreeTaxRatesTest.cs" />
