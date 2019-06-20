@@ -178,8 +178,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your
         /// Social Security Number if you are an individual.
-        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services,
-        /// but it is optional if you do not subscribe to either of those services.
+        /// This value is required if the address provided is inside the US and if you subscribed to the Avalara Managed Returns or SST Certified Service Provider service. Otherwise it is optional.
         /// </summary>
         public String taxPayerIdNumber { get; set; }
 

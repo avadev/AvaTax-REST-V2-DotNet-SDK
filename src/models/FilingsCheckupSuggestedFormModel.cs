@@ -37,14 +37,14 @@ namespace Avalara.AvaTax.RestClient
         public String region { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public String returnName { get; set; }
-
-        /// <summary>
         /// Name of the suggested form returned
         /// </summary>
         public String taxFormCode { get; set; }
+
+        /// <summary>
+        /// Legacy Name of the suggested form returned
+        /// </summary>
+        public String returnName { get; set; }
 
 
         /// <summary>

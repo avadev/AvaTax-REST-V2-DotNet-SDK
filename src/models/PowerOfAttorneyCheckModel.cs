@@ -17,39 +17,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Tax Details by Tax Type
+    /// Response when checking if a company has a POA on file with Avalara
     /// </summary>
-    public class TaxDetailsByTaxType
+    public class PowerOfAttorneyCheckModel
     {
         /// <summary>
-        /// Tax Type
+        /// companyId of the request
         /// </summary>
-        public String taxType { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
-        /// Total taxable amount by tax type
+        /// Country POA is for
         /// </summary>
-        public Decimal? totalTaxable { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// Total exempt by tax type
+        /// Region POA is for
         /// </summary>
-        public Decimal? totalExempt { get; set; }
+        public String region { get; set; }
 
         /// <summary>
-        /// Total non taxable by tax type
+        /// Notes if there is an actice POA
         /// </summary>
-        public Decimal? totalNonTaxable { get; set; }
+        public Boolean? activePoa { get; set; }
 
         /// <summary>
-        /// Total tax by tax type
+        /// Effective Date of the POA
         /// </summary>
-        public Decimal? totalTax { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// Tax subtype details
+        /// End Date of POA
         /// </summary>
-        public List<TaxDetailsByTaxSubType> taxSubTypeDetails { get; set; }
+        public DateTime? expirationDate { get; set; }
+
+        /// <summary>
+        /// POA download
+        /// </summary>
+        public ResourceFileDownloadResult availablePoa { get; set; }
 
 
         /// <summary>

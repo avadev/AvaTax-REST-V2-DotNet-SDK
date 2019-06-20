@@ -180,9 +180,9 @@ namespace Avalara.AvaTax.RestClient
         ARA = 31,
 
         /// <summary>
-        /// Accounting Firm ManagedARA Service Type
+        /// Accounting Firm ARAManaged Service Type
         /// </summary>
-        ManagedARA = 32,
+        ARAManaged = 32,
 
     }
 }
