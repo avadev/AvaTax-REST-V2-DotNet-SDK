@@ -31,11 +31,6 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String clientAccountName { get; set; }
 
-        /// <summary>
-        /// Offer to be associated
-        /// </summary>
-        public String offer { get; set; }
-
 
         /// <summary>
         /// Convert this object to a JSON string of itself

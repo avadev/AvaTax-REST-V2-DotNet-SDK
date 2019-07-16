@@ -24,10 +24,5 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         CSV = 0,
 
-        /// <summary>
-        /// The Extensible Markup Language file format
-        /// </summary>
-        XML = 1,
-
     }
 }

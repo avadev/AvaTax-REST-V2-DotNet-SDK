@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of this filing calendar.
         /// </summary>
-        public Int64 id { get; set; }
+        public Int64? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the company to which this filing calendar belongs.
@@ -68,6 +68,11 @@ namespace Avalara.AvaTax.RestClient
         /// are the ISO 3166 country code of the country that issued this form.
         /// </summary>
         public String taxFormCode { get; set; }
+
+        /// <summary>
+        /// The start period of a fiscal year for this form/company
+        /// </summary>
+        public Int32? fiscalYearStartMonth { get; set; }
 
         /// <summary>
         /// If this calendar is for a location-specific tax return, specify the location code here. To file for all locations, leave this value NULL.
@@ -242,6 +247,11 @@ namespace Avalara.AvaTax.RestClient
         /// for example, the value 90 would indicate 90%.
         /// </summary>
         public Int32? prepayPercentage { get; set; }
+
+        /// <summary>
+        /// Determines if a prepayment is required for this filing calendar
+        /// </summary>
+        public Boolean? prePaymentRequired { get; set; }
 
         /// <summary>
         /// If your company is required to make a prepayment that is designated by a fixed amount each period, please specify the amount here.

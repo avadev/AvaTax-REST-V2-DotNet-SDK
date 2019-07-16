@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The size of the report file, if available
         /// </summary>
-        public Int32? size { get; set; }
+        public Int64? size { get; set; }
 
         /// <summary>
         /// The format of the report file

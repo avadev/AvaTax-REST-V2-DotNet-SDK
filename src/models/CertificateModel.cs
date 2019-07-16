@@ -84,6 +84,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isSingleCertificate { get; set; }
 
         /// <summary>
+        /// Indicates the tax number passed in for the certificate.
+        /// </summary>
+        public String exemptionNumber { get; set; }
+
+        /// <summary>
         /// The exemption reason that CertCapture audit/internal logic identifies for created certificate.
         /// </summary>
         public ExemptionReasonModel validatedExemptionReason { get; set; }

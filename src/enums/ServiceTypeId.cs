@@ -184,5 +184,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         ARAManaged = 32,
 
+        /// <summary>
+        /// Premium Returns Service Type
+        /// </summary>
+        MRSPremium = 33,
+
     }
 }

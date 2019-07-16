@@ -84,5 +84,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Use = 85,
 
+        /// <summary>
+        /// Alcohol tax type
+        /// </summary>
+        Alcohol = 1014,
+
+        /// <summary>
+        /// Batteries tax type
+        /// </summary>
+        Batteries = 1015,
+
     }
 }
