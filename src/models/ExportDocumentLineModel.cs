@@ -22,7 +22,7 @@ namespace Avalara.AvaTax.RestClient
     public class ExportDocumentLineModel
     {
         /// <summary>
-        /// The output format: CSV, XML, etc. If no preference, report will be in CSV format.
+        /// The file format.
         /// </summary>
         public ReportFormat? format { get; set; }
 

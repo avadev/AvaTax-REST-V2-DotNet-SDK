@@ -47,11 +47,6 @@ namespace Avalara.AvaTax.RestClient
         public String clientAccountName { get; set; }
 
         /// <summary>
-        /// Offer requested
-        /// </summary>
-        public String offer { get; set; }
-
-        /// <summary>
         /// Created date of the linkage
         /// </summary>
         public DateTime? createdDate { get; set; }

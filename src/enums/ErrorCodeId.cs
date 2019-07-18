@@ -162,11 +162,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        InvalidFirmClientOffer = 29,
-
-        /// <summary>
-        /// 
-        /// </summary>
         AuthenticationException = 30,
 
         /// <summary>
@@ -607,6 +602,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidPageKey = 170,
+
+        /// <summary>
+        /// 
+        /// </summary>
         InvalidEcmsOverrideCode = 171,
 
         /// <summary>
@@ -827,7 +827,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        DocumentFetchLimit = 308,
+        FetchLimit = 308,
 
         /// <summary>
         /// 
@@ -1330,6 +1330,11 @@ namespace Avalara.AvaTax.RestClient
         CannotUpdateAccountTypeId = 1713,
 
         /// <summary>
+        /// 
+        /// </summary>
+        TaxpayerNumberIsRequired = 1714,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1395,6 +1400,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidAccountType = 2105,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidFirmSubscriptions = 2106,
+
+        /// <summary>
         /// Certify Company Errors
         /// </summary>
         GenericTaxCodeForItem = 2200,
@@ -1457,6 +1467,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        LocationCodeNotUsed = 2212,
+
+        /// <summary>
+        /// 
+        /// </summary>
         RepeatedLinesInDocument = 2213,
 
         /// <summary>
@@ -1472,7 +1487,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        NoVATBuyerId = 2216,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AllUSCountryCodes = 2217,
+
+        /// <summary>
+        /// 
+        /// </summary>
         NoDocumentsToTest = 2218,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoShippingCharge = 2219,
 
     }
 }

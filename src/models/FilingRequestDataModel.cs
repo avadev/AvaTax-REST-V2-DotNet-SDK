@@ -55,6 +55,11 @@ namespace Avalara.AvaTax.RestClient
         public Int16 months { get; set; }
 
         /// <summary>
+        /// The start period of a fiscal year for this form/company
+        /// </summary>
+        public Int32? fiscalYearStartMonth { get; set; }
+
+        /// <summary>
         /// The type of tax to report on this return.
         /// </summary>
         public MatchingTaxType? taxTypeId { get; set; }
