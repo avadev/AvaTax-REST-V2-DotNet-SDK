@@ -15905,7 +15905,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
