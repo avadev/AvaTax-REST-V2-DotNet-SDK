@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    19.7.0
+ * @version    19.7.0.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "19.7.0"; } }
+        public static string API_VERSION { get { return "19.7.0.1"; } }
 
 #region Methods
 
@@ -15905,7 +15905,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
