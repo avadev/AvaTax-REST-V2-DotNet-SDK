@@ -30,5 +30,10 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 
+<<<<<<< HEAD
 [assembly: AssemblyVersion("19.8.0")]
 [assembly: AssemblyFileVersion("19.8.0")]
+=======
+[assembly: AssemblyVersion("19.7.0.1")]
+[assembly: AssemblyFileVersion("19.7.0.1")]
+>>>>>>> 4cf2caec90bec9e6da2206c5168b3fdb57506a5d
