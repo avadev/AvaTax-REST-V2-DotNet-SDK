@@ -11119,10 +11119,23 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         public async Task<FetchResult<AuditModel>> AuditAccountAsync(Int32 id, DateTime? start, DateTime? end, Int32? top, Int32? skip)
         {
+            string startDate = null;
+            string endDate = null; 
+            
+            if (start != null)
+            {
+                startDate = string.Format("{0}{1}", start.Value.ToString("s"), "Z");
+            }
+
+            if (end != null)
+            {
+                endDate = string.Format("{0}{1}", end.Value.ToString("s"), "Z");
+            }
+        
             var path = new AvaTaxPath("/api/v2/accounts/{id}/audit");
             path.ApplyField("id", id);
-            path.AddQuery("start", start);
-            path.AddQuery("end", end);
+            path.AddQuery("start", startDate);
+            path.AddQuery("end", endDate);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             return await RestCallAsync<FetchResult<AuditModel>>("GET", path, null).ConfigureAwait(false);
