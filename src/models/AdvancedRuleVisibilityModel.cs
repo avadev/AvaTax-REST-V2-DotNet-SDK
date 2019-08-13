@@ -17,29 +17,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An edit to be made on a filing calendar.
+    /// Model for toggling visibility of an advanced rule for an account
     /// </summary>
-    public class FilingCalendarEditModel
+    public class AdvancedRuleVisibilityModel
     {
         /// <summary>
-        /// The name of the field to be modified.
+        /// Should the rule be visible or not visible
         /// </summary>
-        public String fieldName { get; set; }
+        public Boolean? isVisible { get; set; }
 
         /// <summary>
-        /// The unique ID of the filing calendar question. "Filing calendar question" is the wording displayed to users for a given field.
+        /// The account Id for which the rule is to be visible/not visible
         /// </summary>
-        public Int32 questionId { get; set; }
-
-        /// <summary>
-        /// The current value of the field.
-        /// </summary>
-        public object oldValue { get; set; }
-
-        /// <summary>
-        /// The new/proposed value of the field.
-        /// </summary>
-        public object newValue { get; set; }
+        public Int32? accountId { get; set; }
 
 
         /// <summary>

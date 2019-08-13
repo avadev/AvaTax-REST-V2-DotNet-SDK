@@ -17,29 +17,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An edit to be made on a filing calendar.
+    /// Response model used as output for InspectLine API.
     /// </summary>
-    public class FilingCalendarEditModel
+    public class InspectLineResponseModel
     {
         /// <summary>
-        /// The name of the field to be modified.
+        /// A list of determination factors for a line that is being inspected through the InspectLine API.
         /// </summary>
-        public String fieldName { get; set; }
-
-        /// <summary>
-        /// The unique ID of the filing calendar question. "Filing calendar question" is the wording displayed to users for a given field.
-        /// </summary>
-        public Int32 questionId { get; set; }
-
-        /// <summary>
-        /// The current value of the field.
-        /// </summary>
-        public object oldValue { get; set; }
-
-        /// <summary>
-        /// The new/proposed value of the field.
-        /// </summary>
-        public object newValue { get; set; }
+        public List<DeterminationFactorModel> determinationFactors { get; set; }
 
 
         /// <summary>

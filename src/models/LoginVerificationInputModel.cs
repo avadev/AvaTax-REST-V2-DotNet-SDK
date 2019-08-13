@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Additional options of the verification
         /// </summary>
-        public Dictionary<string, string> additionalOptions { get; set; }
+        public object additionalOptions { get; set; }
 
         /// <summary>
         /// Bulk Request Id of the verification

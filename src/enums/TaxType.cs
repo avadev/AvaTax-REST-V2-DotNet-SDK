@@ -94,5 +94,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Batteries = 1015,
 
+        /// <summary>
+        /// LightBulbs
+        /// </summary>
+        LightBulbs = 1016,
+
     }
 }

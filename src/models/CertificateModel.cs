@@ -57,6 +57,11 @@ namespace Avalara.AvaTax.RestClient
         public String filename { get; set; }
 
         /// <summary>
+        /// This value is true if there exists scanned PDF copy of this certificate or the PDF version of the form that the customer filled via the CertCapture wizard on S3 bucket.
+        /// </summary>
+        public Boolean? documentExists { get; set; }
+
+        /// <summary>
         /// True if this certificate is marked as valid. A valid certificate can be considered for exemption purposes.
         /// When a certificate is marked invalid, it will no longer be considered when calculating exemption for
         /// a customer.
@@ -147,6 +152,16 @@ namespace Avalara.AvaTax.RestClient
         /// You can fetch this data by specifying `$include=attributes` when calling a certificate fetch API.
         /// </summary>
         public List<CertificateAttributeModel> attributes { get; set; }
+
+        /// <summary>
+        /// The unique ID number of current AvaTax Exemption Certificate that refers this certificate.
+        /// </summary>
+        public Int32? ecmsId { get; set; }
+
+        /// <summary>
+        /// The status of current AvaTax Exemption Certificate that refers to this certificate.
+        /// </summary>
+        public String ecmsStatus { get; set; }
 
         /// <summary>
         /// This field is available for input only. To retrieve the image after creation, use the

@@ -77,6 +77,11 @@ namespace Avalara.AvaTax.RestClient
         VATInputTax = 73,
 
         /// <summary>
+        /// LightBulbs tax type
+        /// </summary>
+        LightBulbs = 76,
+
+        /// <summary>
         /// Match VAT Nonrecoverable Input Tax only
         /// </summary>
         VATNonrecoverableInputTax = 78,
@@ -100,6 +105,16 @@ namespace Avalara.AvaTax.RestClient
         /// Match Seller's Use Tax only
         /// </summary>
         UseTax = 85,
+
+        /// <summary>
+        /// EWaste tax type
+        /// </summary>
+        EWaste = 87,
+
+        /// <summary>
+        /// Batteries tax type
+        /// </summary>
+        Batteries = 90,
 
     }
 }

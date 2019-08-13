@@ -80,6 +80,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isDeleted { get; set; }
 
+        /// <summary>
+        /// Name of the firm's point of contact person for the client
+        /// </summary>
+        public String firmContactName { get; set; }
+
+        /// <summary>
+        /// Email of the firm's point of contact person for the client
+        /// </summary>
+        public String firmContactEmail { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

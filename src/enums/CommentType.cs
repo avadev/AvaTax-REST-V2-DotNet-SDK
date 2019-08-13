@@ -29,5 +29,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Customer = 2,
 
+        /// <summary>
+        /// A comment that has a POA Attachment on it
+        /// </summary>
+        POAAttachment = 3,
+
     }
 }

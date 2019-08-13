@@ -87,6 +87,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? version { get; set; }
 
         /// <summary>
+        /// Account Ids the rule is visible for in CUP, when IsVisibleInCUP = false
+        /// </summary>
+        public List<Int32> accountsVisibleFor { get; set; }
+
+        /// <summary>
         /// Unique identifier for a rule
         /// </summary>
         public String ruleId { get; set; }

@@ -186,6 +186,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CustomerModel> shipTos { get; set; }
 
+        /// <summary>
+        /// A list of attributes that apply to this customer.
+        ///  
+        /// You can fetch this data by specifying `$include=attributes` when calling a customer fetch API.
+        /// </summary>
+        public List<CustomerAttributeModel> attributes { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

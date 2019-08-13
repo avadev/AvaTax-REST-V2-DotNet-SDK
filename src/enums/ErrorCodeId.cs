@@ -785,6 +785,11 @@ namespace Avalara.AvaTax.RestClient
         MissingBatchFileContent = 207,
 
         /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotBeDeletedWhileProcessing = 208,
+
+        /// <summary>
         /// Point Of Sale API exceptions
         /// </summary>
         PointOfSaleFileSize = 250,
@@ -1072,11 +1077,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AddRelationshipsError = 1206,
-
-        /// <summary>
-        /// 
-        /// </summary>
         ConflictingExposureZone = 1208,
 
         /// <summary>
@@ -1335,6 +1335,16 @@ namespace Avalara.AvaTax.RestClient
         TaxpayerNumberIsRequired = 1714,
 
         /// <summary>
+        /// 
+        /// </summary>
+        RequestLimitExceeded = 1715,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ConcurrentRequestLimitExceeded = 1716,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1503,6 +1513,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         NoShippingCharge = 2219,
+
+        /// <summary>
+        /// Company Controller Related Errors
+        /// </summary>
+        FailedToUpdateCompanyLocation = 2314,
 
     }
 }

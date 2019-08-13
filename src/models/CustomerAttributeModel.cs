@@ -17,44 +17,41 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to upload a file to Resource Files
+    /// A Customer's linked attribute denoting what features applied to the customer. A customer can
+    /// be linked to multiple customer attributes and vice versa.
     /// </summary>
-    public class ResourceFileUploadRequestModel
+    public class CustomerAttributeModel
     {
         /// <summary>
-        /// This stream contains the bytes of the file being uploaded.
+        /// A unique ID number representing this attribute.
         /// </summary>
-        public Byte[] content { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The username adding the file
-        /// </summary>
-        public String username { get; set; }
-
-        /// <summary>
-        /// The account ID to which this file will be attached.
-        /// </summary>
-        public Int32? accountId { get; set; }
-
-        /// <summary>
-        /// The company ID to which this file will be attached.
-        /// </summary>
-        public Int32? companyId { get; set; }
-
-        /// <summary>
-        /// The original name of this file.
+        /// A friendly readable name for this attribute.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// The resource type ID of this file.
+        /// A full help text description of the attribute.
         /// </summary>
-        public Int32? resourceFileTypeId { get; set; }
+        public String description { get; set; }
 
         /// <summary>
-        /// Length of the file in bytes.
+        /// This value is true if this is a system-defined attribute. System-defined attributes
+        /// cannot be modified or deleted on the CertCapture website.
         /// </summary>
-        public Int64? length { get; set; }
+        public Boolean? isSystemCode { get; set; }
+
+        /// <summary>
+        /// A flag denotes that future exemption certificate request won't be mailed to the customer
+        /// </summary>
+        public Boolean? isNonDeliver { get; set; }
+
+        /// <summary>
+        /// A flag denotes that this attribute can't be removed/added to a customer record
+        /// </summary>
+        public Boolean? isChangeable { get; set; }
 
 
         /// <summary>
