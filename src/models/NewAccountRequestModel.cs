@@ -168,7 +168,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A dynamic key-value pair for the marketing context information
         /// </summary>
-        public Dictionary<string, string> marketingContext { get; set; }
+        public object marketingContext { get; set; }
 
         /// <summary>
         /// Type of the account to be created. Regular, Firm or FirmClient

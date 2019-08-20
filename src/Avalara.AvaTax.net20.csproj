@@ -91,6 +91,7 @@
     <Compile Include="enums\FilingRequestStatus.cs" />
     <Compile Include="enums\FilingStatusId.cs" />
     <Compile Include="enums\FilingTypeId.cs" />
+    <Compile Include="enums\FirmClientLinkageStatus.cs" />
     <Compile Include="enums\FormTypeId.cs" />
     <Compile Include="enums\FundingOption.cs" />
     <Compile Include="enums\JurisdictionType.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
     <Compile Include="models\CurrencyModel.cs" />
+    <Compile Include="models\CustomerAttributeModel.cs" />
     <Compile Include="models\CustomerModel.cs" />
     <Compile Include="models\CustomFieldModel.cs" />
     <Compile Include="models\CycleAddOptionModel.cs" />
@@ -232,6 +234,8 @@
     <Compile Include="models\FilingStatusChangeModel.cs" />
     <Compile Include="models\FilingsTaxDetailsModel.cs" />
     <Compile Include="models\FilingsTaxSummaryModel.cs" />
+    <Compile Include="models\FirmClientLinkageInputModel.cs" />
+    <Compile Include="models\FirmClientLinkageOutputModel.cs" />
     <Compile Include="models\FormMasterModel.cs" />
     <Compile Include="models\FreeTrialRequestModel.cs" />
     <Compile Include="models\FundingConfigurationModel.cs" />
@@ -272,6 +276,7 @@
     <Compile Include="models\MultiTaxFilingReturnModel.cs" />
     <Compile Include="models\NewAccountModel.cs" />
     <Compile Include="models\NewAccountRequestModel.cs" />
+    <Compile Include="models\NewFirmClientAccountRequestModel.cs" />
     <Compile Include="models\NexusByAddressModel.cs" />
     <Compile Include="models\NexusByTaxFormModel.cs" />
     <Compile Include="models\NexusModel.cs" />

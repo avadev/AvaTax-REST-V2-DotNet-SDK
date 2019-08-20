@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The value of the answer for the filing question identified by filingQuestionId
         /// </summary>
-        public Dictionary<string, string> answer { get; set; }
+        public object answer { get; set; }
 
 
         /// <summary>
