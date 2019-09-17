@@ -284,10 +284,17 @@ namespace Avalara.AvaTax.RestClient
 
                 // Read the result
                 if (result.IsSuccessStatusCode) {
+                    string contentType = null;
+                    string filename = null;
+                    if (result.Content.Headers.ContentLength > 0)
+                    {
+                        contentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                        filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
+                    }
                     var fr = new FileResult()
                     {
-                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
+                        ContentType = contentType,
+                        Filename = filename,
                         Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
                     };
 
