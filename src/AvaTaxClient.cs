@@ -289,7 +289,7 @@ namespace Avalara.AvaTax.RestClient
                     if (result.Content.Headers.ContentLength > 0)
                     {
                         contentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
-                        GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
+                        filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
                     }
                     var fr = new FileResult()
                     {
