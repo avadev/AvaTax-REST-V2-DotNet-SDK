@@ -75,6 +75,11 @@ namespace Avalara.AvaTax.RestClient
         public String taxpayerIdNumber { get; set; }
 
         /// <summary>
+        /// Set this field to true if the taxPayerIdNumber is a FEIN.
+        /// </summary>
+        public Boolean? isFein { get; set; }
+
+        /// <summary>
         /// Set this flag to true to give this company its own unique tax profile.
         /// If this flag is true, this company will have its own Nexus, TaxRule, TaxCode, and Item definitions.
         /// If this flag is false, this company will inherit all profile values from its parent.

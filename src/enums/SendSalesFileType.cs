@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// File type for request
+    /// 
     /// </summary>
     public enum SendSalesFileType
     {

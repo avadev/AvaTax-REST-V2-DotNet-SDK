@@ -51,7 +51,7 @@ namespace Avalara.AvaTax.RestClient
         public WorksheetTypeId? type { get; set; }
 
         /// <summary>
-        /// A summary of all taxes compbined for this period
+        /// A summary of all taxes combined for this period
         /// </summary>
         public FilingsTaxSummaryModel taxSummary { get; set; }
 
