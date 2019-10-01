@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number of the company to which this filing calendar belongs.
         /// </summary>
-        public Int32? companyId { get; set; }
+        public Int32 companyId { get; set; }
 
         /// <summary>
         /// DEPRECATED - Date: 9/13/2018, Version: 18.10, Message: Please use `taxFormCode` instead.
@@ -92,7 +92,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The frequency on which this tax form is filed.
         /// </summary>
-        public FilingFrequencyId? filingFrequencyId { get; set; }
+        public FilingFrequencyId filingFrequencyId { get; set; }
 
         /// <summary>
         /// A 16-bit bitmap containing a 1 for each month when the return should be filed.
@@ -218,7 +218,7 @@ namespace Avalara.AvaTax.RestClient
         /// This date specifies the earliest date for tax transactions that should be reported on this filing calendar.
         /// Please note that tax is usually filed one month in arrears: for example, tax for January transactions is typically filed during the month of February.
         /// </summary>
-        public DateTime? effectiveDate { get; set; }
+        public DateTime effectiveDate { get; set; }
 
         /// <summary>
         /// The last date for the tax period when this return should be filed.

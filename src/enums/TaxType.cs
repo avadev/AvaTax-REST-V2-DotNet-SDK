@@ -40,6 +40,11 @@ namespace Avalara.AvaTax.RestClient
         LandedCost = 12,
 
         /// <summary>
+        /// Meals tax type
+        /// </summary>
+        Meals = 15,
+
+        /// <summary>
         /// Consumer Use Tax
         /// </summary>
         ConsumerUse = 67,

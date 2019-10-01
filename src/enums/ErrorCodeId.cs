@@ -790,6 +790,11 @@ namespace Avalara.AvaTax.RestClient
         BatchCannotBeDeletedWhileProcessing = 208,
 
         /// <summary>
+        /// BizTech error
+        /// </summary>
+        InternalServerError = 209,
+
+        /// <summary>
         /// Point Of Sale API exceptions
         /// </summary>
         PointOfSaleFileSize = 250,
@@ -888,6 +893,11 @@ namespace Avalara.AvaTax.RestClient
         /// Represents a malformed document fetch command
         /// </summary>
         CannotChangeFilingStatus = 401,
+
+        /// <summary>
+        /// Represents a FEIN in incorrect format.
+        /// </summary>
+        FEINFormatError = 402,
 
         /// <summary>
         /// Represents a SQL server timeout error / deadlock error
@@ -1518,6 +1528,31 @@ namespace Avalara.AvaTax.RestClient
         /// Company Controller Related Errors
         /// </summary>
         FailedToUpdateCompanyLocation = 2314,
+
+        /// <summary>
+        /// Error Transaction Related Errors
+        /// </summary>
+        FailedToCreateErrorTransaction = 2400,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FailedToDeleteErrorTransactions = 2401,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FailedToListErrorTransactions = 2402,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ErrorTransactionsServiceException = 2403,
+
+        /// <summary>
+        /// Generic validation errors
+        /// </summary>
+        FieldLengthError = 2500,
 
     }
 }

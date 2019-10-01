@@ -44,6 +44,11 @@ namespace Avalara.AvaTax.RestClient
         public String taxpayerIdNumber { get; set; }
 
         /// <summary>
+        /// Set this field to true if the taxPayerIdNumber is a FEIN.
+        /// </summary>
+        public Boolean? isFein { get; set; }
+
+        /// <summary>
         /// Address Line1
         /// </summary>
         public String line1 { get; set; }

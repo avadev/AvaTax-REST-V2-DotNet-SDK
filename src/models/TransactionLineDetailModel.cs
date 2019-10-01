@@ -242,6 +242,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isNonPassThru { get; set; }
 
+        /// <summary>
+        /// The Taxes/Fee component. True if the fee is applied.
+        /// </summary>
+        public Boolean? isFee { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
