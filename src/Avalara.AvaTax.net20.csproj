@@ -68,6 +68,7 @@
     <Compile Include="enums\AdvancedRuleScriptType.cs" />
     <Compile Include="enums\ApiCallStatus.cs" />
     <Compile Include="enums\AuthenticationTypeId.cs" />
+    <Compile Include="enums\AvataxDeleteErrorTransactionStatus.cs" />
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
@@ -202,6 +203,9 @@
     <Compile Include="models\CycleExpireOptionModel.cs" />
     <Compile Include="models\DataSourceModel.cs" />
     <Compile Include="models\DeclareNexusByAddressModel.cs" />
+    <Compile Include="models\DeleteErrorTransactionResponseModel.cs" />
+    <Compile Include="models\DeleteErrorTransactionsRequestModel.cs" />
+    <Compile Include="models\DeleteErrorTransactionsResponseModel.cs" />
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
     <Compile Include="models\EcmsModel.cs" />
@@ -209,6 +213,8 @@
     <Compile Include="models\ErrorDetail.cs" />
     <Compile Include="models\ErrorInfo.cs" />
     <Compile Include="models\ErrorResult.cs" />
+    <Compile Include="models\ErrorTransactionModelBase.cs" />
+    <Compile Include="models\ErrorTransactionOutputModel.cs" />
     <Compile Include="models\ExemptionReasonModel.cs" />
     <Compile Include="models\ExemptionStatusModel.cs" />
     <Compile Include="models\ExportDocumentLineModel.cs" />
