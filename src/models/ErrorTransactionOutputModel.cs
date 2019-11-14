@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Error code of the error result from transaction creation
         /// </summary>
-        public ErrorCodeId? errorCode { get; set; }
+        public String errorCode { get; set; }
 
         /// <summary>
         /// Error message of the error result from transaction creation
@@ -50,6 +50,11 @@ namespace Avalara.AvaTax.RestClient
         /// The date of the document
         /// </summary>
         public DateTime? documentDate { get; set; }
+
+        /// <summary>
+        /// The date that this ErrorTransaction will be automatically purged from the detabase.
+        /// </summary>
+        public DateTime? expiresAt { get; set; }
 
         /// <summary>
         /// Type of transaction of the error transaction

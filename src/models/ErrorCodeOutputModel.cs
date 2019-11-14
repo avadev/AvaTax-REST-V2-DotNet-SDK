@@ -17,16 +17,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Commit this transaction as permanent so that it can be reported on a tax filing.
+    /// Model that has the matching count for an errorcode
     /// </summary>
-    public class CommitTransactionModel
+    public class ErrorCodeOutputModel
     {
         /// <summary>
-        /// Set this value to be `true` to commit this transaction.
-        ///  
-        /// Committing a transaction allows it to be reported on a tax filing. Uncommitted transactions will not be reported.
+        /// Name of the error code
         /// </summary>
-        public Boolean commit { get; set; }
+        public String errorCode { get; set; }
+
+        /// <summary>
+        /// Number of error code recorded
+        /// </summary>
+        public Int32? count { get; set; }
 
 
         /// <summary>

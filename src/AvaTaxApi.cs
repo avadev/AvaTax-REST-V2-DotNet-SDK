@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    19.9.0
+ * @version    19.10.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "19.9.0"; } }
+        public static string API_VERSION { get { return "19.10.0"; } }
 
 #region Methods
 
@@ -466,6 +466,11 @@ namespace Avalara.AvaTax.RestClient
         /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
+        ///  
+        /// The maximum content length of the request body is limited to 28.6 MB. If this limit
+        /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
+        /// the API is called from a browser). In this situation, please split the request into
+        /// smaller batches.
         /// 
         /// ### Security Policies
         /// 
@@ -1447,6 +1452,8 @@ namespace Avalara.AvaTax.RestClient
         /// Create one or more new company objects.
         /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
         /// You may attach nested data objects such as contacts, locations, and nexus with this CREATE call, and those objects will be created with the company.
+        ///  
+        /// NOTE: Please do not use these blacklisted characters in company name and code: ';', '\', '|'.
         /// 
         /// ### Security Policies
         /// 
@@ -1783,6 +1790,8 @@ namespace Avalara.AvaTax.RestClient
         /// such as contacts, locations, or settings are not permitted. To update the nested objects
         ///  
         /// To set a field's value to `null`, you may either set its value to `null` or omit that field from the object you PUT.
+        ///  
+        /// NOTE: Please do not use these blacklisted characters in company name and code: ';', '\', '|'.
         /// 
         /// ### Security Policies
         /// 
@@ -2025,12 +2034,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
-        public CustomerModel DeleteCustomer(Int32 companyId, String customerCode)
+        public List<ErrorDetail> DeleteCustomer(Int32 companyId, String customerCode)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return RestCall<CustomerModel>("DELETE", path, null);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -3016,6 +3025,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
         /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01'
+        ///  
+        /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
@@ -4201,60 +4212,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<CompanyDistanceThresholdModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Delete a batch of error transactions
-        /// </summary>
-        /// <remarks>
-        /// Delete a batch of error transactions attached to a company.
-        ///  
-        /// If any of the provided error transaction isn't found then it'll be treated as a success.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
-        /// </remarks>
-        /// <param name="model">The request that contains error transactions to be deleted</param>
-        public DeleteErrorTransactionsResponseModel DeleteErrorTransactions(DeleteErrorTransactionsRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/errortransactions");
-            return RestCall<DeleteErrorTransactionsResponseModel>("DELETE", path, model);
-        }
-
-
-        /// <summary>
-        /// Retrieve list of error transactions
-        /// </summary>
-        /// <remarks>
-        /// List error transactions attached to this company. Results are dependent on `$filter` if provided.
-        ///  
-        /// This endpoint is limited to returning 250 error transactions at a time maximum.
-        ///  
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
-        /// </remarks>
-        /// <param name="companyCode">The company code to filter on. This query parameter is required.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, avataxErrorJson, avataxCreateTransactionJson</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<ErrorTransactionOutputModel> ListErrorTransactions(String companyCode, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/errortransactions");
-            path.AddQuery("companyCode", companyCode);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return RestCall<FetchResult<ErrorTransactionOutputModel>>("GET", path, null);
         }
 
 
@@ -9491,6 +9448,11 @@ namespace Avalara.AvaTax.RestClient
         /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
+        ///  
+        /// The maximum content length of the request body is limited to 28.6 MB. If this limit
+        /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
+        /// the API is called from a browser). In this situation, please split the request into
+        /// smaller batches.
         /// 
         /// ### Security Policies
         /// 
@@ -10472,6 +10434,8 @@ namespace Avalara.AvaTax.RestClient
         /// Create one or more new company objects.
         /// A 'company' represents a single corporation or individual that is registered to handle transactional taxes.
         /// You may attach nested data objects such as contacts, locations, and nexus with this CREATE call, and those objects will be created with the company.
+        ///  
+        /// NOTE: Please do not use these blacklisted characters in company name and code: ';', '\', '|'.
         /// 
         /// ### Security Policies
         /// 
@@ -10808,6 +10772,8 @@ namespace Avalara.AvaTax.RestClient
         /// such as contacts, locations, or settings are not permitted. To update the nested objects
         ///  
         /// To set a field's value to `null`, you may either set its value to `null` or omit that field from the object you PUT.
+        ///  
+        /// NOTE: Please do not use these blacklisted characters in company name and code: ';', '\', '|'.
         /// 
         /// ### Security Policies
         /// 
@@ -11050,12 +11016,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
-        public async Task<CustomerModel> DeleteCustomerAsync(Int32 companyId, String customerCode)
+        public async Task<List<ErrorDetail>> DeleteCustomerAsync(Int32 companyId, String customerCode)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            return await RestCallAsync<CustomerModel>("DELETE", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -12040,7 +12006,9 @@ namespace Avalara.AvaTax.RestClient
         /// Returns a list of all Avalara-supported taxing jurisdictions.
         ///  
         /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
-        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01';
+        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01'
+        ///  
+        /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
@@ -13226,60 +13194,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<CompanyDistanceThresholdModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Delete a batch of error transactions;
-        /// </summary>
-        /// <remarks>
-        /// Delete a batch of error transactions attached to a company.
-        ///  
-        /// If any of the provided error transaction isn't found then it'll be treated as a success.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
-        /// </remarks>
-        /// <param name="model">The request that contains error transactions to be deleted</param>
-        public async Task<DeleteErrorTransactionsResponseModel> DeleteErrorTransactionsAsync(DeleteErrorTransactionsRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/errortransactions");
-            return await RestCallAsync<DeleteErrorTransactionsResponseModel>("DELETE", path, model).ConfigureAwait(false);
-        }
-
-
-        /// <summary>
-        /// Retrieve list of error transactions;
-        /// </summary>
-        /// <remarks>
-        /// List error transactions attached to this company. Results are dependent on `$filter` if provided.
-        ///  
-        /// This endpoint is limited to returning 250 error transactions at a time maximum.
-        ///  
-        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
-        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
-        /// </remarks>
-        /// <param name="companyCode">The company code to filter on. This query parameter is required.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, avataxErrorJson, avataxCreateTransactionJson</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<ErrorTransactionOutputModel>> ListErrorTransactionsAsync(String companyCode, String filter, Int32? top, Int32? skip, String orderBy)
-        {
-            var path = new AvaTaxPath("/api/v2/errortransactions");
-            path.AddQuery("companyCode", companyCode);
-            path.AddQuery("$filter", filter);
-            path.AddQuery("$top", top);
-            path.AddQuery("$skip", skip);
-            path.AddQuery("$orderBy", orderBy);
-            return await RestCallAsync<FetchResult<ErrorTransactionOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
