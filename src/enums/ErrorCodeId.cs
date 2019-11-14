@@ -422,11 +422,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        RateDependsEuropeError = 133,
-
-        /// <summary>
-        /// 
-        /// </summary>
         InvalidRateTypeCode = 134,
 
         /// <summary>
@@ -1060,6 +1055,11 @@ namespace Avalara.AvaTax.RestClient
         CannotCreateTransactionWithDeletedDataSource = 1105,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ShipToRegionRequiredWithDataSource = 1106,
+
+        /// <summary>
         /// Exempt cert error codes
         /// </summary>
         InvalidBusinessType = 1200,
@@ -1355,6 +1355,11 @@ namespace Avalara.AvaTax.RestClient
         ConcurrentRequestLimitExceeded = 1716,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentTypeForInspect = 1717,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1530,29 +1535,14 @@ namespace Avalara.AvaTax.RestClient
         FailedToUpdateCompanyLocation = 2314,
 
         /// <summary>
-        /// Error Transaction Related Errors
-        /// </summary>
-        FailedToCreateErrorTransaction = 2400,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        FailedToDeleteErrorTransactions = 2401,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        FailedToListErrorTransactions = 2402,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ErrorTransactionsServiceException = 2403,
-
-        /// <summary>
         /// Generic validation errors
         /// </summary>
-        FieldLengthError = 2500,
+        FieldLengthError = 2400,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InputContainsBlacklistedCharacters = 2401,
 
     }
 }

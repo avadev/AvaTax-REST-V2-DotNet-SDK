@@ -29,5 +29,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         DMA = 2,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        DMA_NEW = 3,
+
     }
 }
