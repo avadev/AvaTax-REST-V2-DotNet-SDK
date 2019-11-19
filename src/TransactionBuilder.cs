@@ -61,13 +61,24 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Specify a specific usage type for the entire transaction
+        /// Specify a specific usage type for the entire  transaction
         /// </summary>
         /// <param name="usageType"></param>
         /// <returns></returns>
         public TransactionBuilder WithUsageType(string usageType)
         {
             _model.customerUsageType = usageType;
+            return this;
+        }
+
+        /// <summary>
+        /// Specify a specific entity use code for the entire transaction
+        /// </summary>
+        /// <param name="useCode"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithEntityUseCode(string useCode)
+        {
+            _model.entityUseCode = useCode;
             return this;
         }
 
@@ -134,7 +145,7 @@ namespace Avalara.AvaTax.RestClient
 
             return this;
         }
-
+        
         /// <summary>
         /// Add a parameter to the current line
         /// </summary>
