@@ -61,7 +61,7 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Specify a specific usage type for the entire transaction
+        /// Specify a specific usage type for the entire  transaction
         /// </summary>
         /// <param name="usageType"></param>
         /// <returns></returns>
