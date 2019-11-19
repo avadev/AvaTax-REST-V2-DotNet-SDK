@@ -72,6 +72,17 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
+        /// Specify a specific entity use code for the entire transaction
+        /// </summary>
+        /// <param name="useCode"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithEntityUseCode(string useCode)
+        {
+            _model.entityUseCode = useCode;
+            return this;
+        }
+
+        /// <summary>
         /// Set a specific discount amount
         /// </summary>
         /// <param name="discount">The amount of the discount to grant</param>
@@ -134,7 +145,7 @@ namespace Avalara.AvaTax.RestClient
 
             return this;
         }
-
+        
         /// <summary>
         /// Add a parameter to the current line
         /// </summary>
