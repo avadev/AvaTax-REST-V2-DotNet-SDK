@@ -22,18 +22,6 @@ namespace Avalara.AvaTax.RestClient
     public class CreateOrAdjustTransactionModel
     {
         /// <summary>
-        /// A reason code indicating why this adjustment was made
-        /// </summary>
-        public AdjustmentReason? adjustmentReason { get; set; }
-
-        /// <summary>
-        /// If the AdjustmentReason is "Other", specify the reason here.
-        ///  
-        /// This is required when the AdjustmentReason is 8 (Other).
-        /// </summary>
-        public String adjustmentDescription { get; set; }
-
-        /// <summary>
         /// The create transaction model to be created or updated.
         ///  
         /// If the transaction does not exist, create transaction.
