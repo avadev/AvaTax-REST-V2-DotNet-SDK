@@ -165,7 +165,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of tax that was calculated. Depends on the company's nexus settings as well as the jurisdiction's tax laws.
         /// </summary>
-        public TaxType? taxType { get; set; }
+        public String taxType { get; set; }
 
         /// <summary>
         /// The id of the tax subtype.
