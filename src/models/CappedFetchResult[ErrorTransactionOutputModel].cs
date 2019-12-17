@@ -17,14 +17,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Request model for when a user is deleting multiple error transaction
+    /// 
     /// </summary>
-    public class DeleteErrorTransactionsRequestModel
+    public class CappedFetchResult[ErrorTransactionOutputModel]
     {
         /// <summary>
-        /// List of error transactions to be deleted
+        /// 
         /// </summary>
-        public List<ErrorTransactionModelBase> models { get; set; }
+        public Boolean? @isRecordsetCountCapped { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? @recordsetCount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<ErrorTransactionOutputModel> value { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String @nextLink { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String pageKey { get; set; }
 
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The filing return id that this applies too
         /// </summary>
-        public Int64? filingId { get; set; }
+        public Int64 filingId { get; set; }
 
         /// <summary>
         /// The payment amount.
