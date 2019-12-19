@@ -22,11 +22,6 @@ namespace Avalara.AvaTax.RestClient
     public class DeleteErrorTransactionsRequestModel
     {
         /// <summary>
-        /// The company code of the error transactions
-        /// </summary>
-        public String companyCode { get; set; }
-
-        /// <summary>
         /// List of error transactions to be deleted
         /// </summary>
         public List<ErrorTransactionModelBase> models { get; set; }

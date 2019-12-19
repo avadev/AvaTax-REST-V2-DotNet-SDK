@@ -224,6 +224,7 @@
     <Compile Include="models\ExemptionStatusModel.cs" />
     <Compile Include="models\ExportDocumentLineModel.cs" />
     <Compile Include="models\ExposureZoneModel.cs" />
+    <Compile Include="models\FiledReturnModel.cs" />
     <Compile Include="models\FilingAdjustmentModel.cs" />
     <Compile Include="models\FilingAnswerModel.cs" />
     <Compile Include="models\FilingAttachmentModel.cs" />
