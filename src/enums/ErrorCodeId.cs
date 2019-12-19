@@ -1360,6 +1360,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidDocumentTypeForInspect = 1717,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ServiceNotReady = 1718,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
