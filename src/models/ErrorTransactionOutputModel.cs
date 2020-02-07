@@ -57,6 +57,26 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? expiresAt { get; set; }
 
         /// <summary>
+        /// The amount of the transaction.
+        /// </summary>
+        public Decimal? amount { get; set; }
+
+        /// <summary>
+        /// The Datasource source of the transaction creation call.
+        /// </summary>
+        public String datasourceSource { get; set; }
+
+        /// <summary>
+        /// The country of the ship to address for the transaction creation call.
+        /// </summary>
+        public String shipToCountry { get; set; }
+
+        /// <summary>
+        /// The region of the ship to address for the transaction creation call.
+        /// </summary>
+        public String shipToRegion { get; set; }
+
+        /// <summary>
         /// Type of transaction of the error transaction
         /// </summary>
         public DocumentType documentType { get; set; }

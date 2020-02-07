@@ -65,5 +65,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         DeriveTaxable = 5,
 
+        /// <summary>
+        /// This is for the documents that are calculated outside of AvaTax and passed in to AvaTax
+        ///  specifically for reporting/Returns purposes
+        /// </summary>
+        OutOfHarbor = 6,
+
     }
 }

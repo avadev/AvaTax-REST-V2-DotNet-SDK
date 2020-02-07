@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    19.12.0
+ * @version    20.1.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "19.12.0"; } }
+        public static string API_VERSION { get { return "20.1.0"; } }
 
 #region Methods
 
@@ -800,7 +800,7 @@ namespace Avalara.AvaTax.RestClient
         /// calculating tax exemptions when processing is complete. For a certificate to be used in calculating exemptions,
         /// it must have the following:
         ///  
-        /// * A list of exposure zones indicating where the certificate is valid
+        /// * An exposure zone indicating where the certificate is valid
         /// * A link to the customer that is allowed to use this certificate
         /// * Your tax transaction must contain the correct customer code
         ///  
@@ -3143,6 +3143,27 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the list of locations for a marketplace.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the list of suggested locations for a marketplace.
+        /// </remarks>
+        /// <param name="marketplaceId">MarketplaceId of a marketplace</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<MarketplaceLocationModel> ListMarketplaceLocations(String marketplaceId, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/marketplacelocations");
+            path.AddQuery("marketplaceId", marketplaceId);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<MarketplaceLocationModel>>("GET", path, null);
         }
 
 
@@ -7825,7 +7846,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, AvaTaxST.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
@@ -7934,7 +7955,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create or adjust</param>
@@ -7994,7 +8015,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create</param>
@@ -8074,7 +8095,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
@@ -8105,7 +8126,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
@@ -8147,7 +8168,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
@@ -8194,7 +8215,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="dataSourceId">Optionally filter transactions to those from a specific data source.</param>
@@ -9809,7 +9830,7 @@ namespace Avalara.AvaTax.RestClient
         /// calculating tax exemptions when processing is complete. For a certificate to be used in calculating exemptions,
         /// it must have the following:
         ///  
-        /// * A list of exposure zones indicating where the certificate is valid
+        /// * An exposure zone indicating where the certificate is valid
         /// * A link to the customer that is allowed to use this certificate
         /// * Your tax transaction must contain the correct customer code
         ///  
@@ -12152,6 +12173,27 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the list of locations for a marketplace.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the list of suggested locations for a marketplace.;
+        /// </remarks>
+        /// <param name="marketplaceId">MarketplaceId of a marketplace</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<MarketplaceLocationModel>> ListMarketplaceLocationsAsync(String marketplaceId, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/marketplacelocations");
+            path.AddQuery("marketplaceId", marketplaceId);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<MarketplaceLocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -16834,7 +16876,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, AvaTaxST.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
@@ -16943,7 +16985,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create or adjust</param>
@@ -17003,7 +17045,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">The transaction you wish to create</param>
@@ -17083,7 +17125,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
@@ -17114,7 +17156,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to retrieve</param>
@@ -17156,7 +17198,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="id">The unique ID number of the transaction to retrieve</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
@@ -17203,7 +17245,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="dataSourceId">Optionally filter transactions to those from a specific data source.</param>

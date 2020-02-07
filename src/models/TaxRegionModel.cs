@@ -101,6 +101,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isSst { get; set; }
 
+        /// <summary>
+        /// List of jurisdictions associated with this tax region.
+        /// </summary>
+        public List<DenormalizedJurisModel> jurisdictions { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
