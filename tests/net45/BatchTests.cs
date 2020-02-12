@@ -28,6 +28,9 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+                Console.WriteLine(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"));
+                Console.WriteLine(Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+
 
                 // Verify that we can ping successfully
                 var pingResult = Client.Ping();
@@ -175,7 +178,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 Assert.NotNull(fileResult);
 
                 // Compare what we got back with what we sent.
-                Assert.AreEqual(batchFetchResult.name + ".Input.CSV", fileResult.Filename);
+                Assert.AreEqual(batchFetchResult.name + ".Input.CSV; filename*=UTF-8''" + batchFetchResult.name + ".Input.CSV", fileResult.Filename);
                 Assert.AreEqual(batchFileModel.content, fileResult.Data);
                 Assert.AreEqual(batchFileModel.contentType, fileResult.ContentType);
             } catch (AvaTaxError e)
