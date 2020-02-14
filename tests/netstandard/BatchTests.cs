@@ -184,9 +184,9 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 // Alright. Time to download the sent batch file.
                 var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
                 Assert.NotNull(fileResult);
-                
+
                 // Compare what we got back with what we sent.
-                Assert.AreEqual(batchFetchResult.name + ".Input.CSV", fileResult.Filename);
+                Assert.AreEqual(batchFetchResult.name + ".Input.CSV; filename*=UTF-8''" + batchFetchResult.name + ".Input.CSV", fileResult.Filename);
                 Assert.AreEqual(batchFileModel.content, fileResult.Data);
                 Assert.AreEqual(batchFileModel.contentType, fileResult.ContentType);
             } catch (AvaTaxError e)
