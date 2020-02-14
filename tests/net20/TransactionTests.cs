@@ -178,6 +178,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 .WithLine(100.0m, 1, "P0000000")
                 .WithLine(200m);
 
+
             var transaction = builder.Create();
 
             // Ensure this transaction was created.
