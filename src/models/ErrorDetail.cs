@@ -47,6 +47,11 @@ namespace Avalara.AvaTax.RestClient
         public String faultCode { get; set; }
 
         /// <summary>
+        /// If this is an error from a downstream system (such as Calc) faultSubCode can be used to represent the fault code from that system.
+        /// </summary>
+        public String faultSubCode { get; set; }
+
+        /// <summary>
         /// URL to help for this message
         /// </summary>
         public String helpLink { get; set; }

@@ -1365,6 +1365,21 @@ namespace Avalara.AvaTax.RestClient
         ServiceNotReady = 1718,
 
         /// <summary>
+        /// 
+        /// </summary>
+        UpdateLocationRemittanceMismatchTypeAndCategory = 1719,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UpdateLocationRemittanceCheckExistingEffectiveDateError = 1720,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UpdateLocationRemittanceCheckExistingEndDateError = 1721,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1538,6 +1553,11 @@ namespace Avalara.AvaTax.RestClient
         /// Company Controller Related Errors
         /// </summary>
         FailedToUpdateCompanyLocation = 2314,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CompanyLocationDateRangeOverlap = 2315,
 
         /// <summary>
         /// Generic validation errors

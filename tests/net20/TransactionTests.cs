@@ -168,6 +168,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         }
 
         [Test]
+        [Ignore("Ignore TransactionWorkflow")]
+
         public void TaxOverrideExample()
         {
             // Create base transaction.
@@ -177,6 +179,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                     "98104", "US")
                 .WithLine(100.0m, 1, "P0000000")
                 .WithLine(200m);
+
 
             var transaction = builder.Create();
 

@@ -39,6 +39,10 @@
     <AssemblyOriginatorKeyFile>keyfile45.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -211,6 +215,7 @@
     <Compile Include="models\DeleteErrorTransactionResponseModel.cs" />
     <Compile Include="models\DeleteErrorTransactionsRequestModel.cs" />
     <Compile Include="models\DeleteErrorTransactionsResponseModel.cs" />
+    <Compile Include="models\DenormalizedJurisModel.cs" />
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
     <Compile Include="models\EcmsModel.cs" />
@@ -278,6 +283,7 @@
     <Compile Include="models\LockTransactionModel.cs" />
     <Compile Include="models\LoginVerificationInputModel.cs" />
     <Compile Include="models\LoginVerificationOutputModel.cs" />
+    <Compile Include="models\MarketplaceLocationModel.cs" />
     <Compile Include="models\Message.cs" />
     <Compile Include="models\MrsCompanyModel.cs" />
     <Compile Include="models\MultiCompanyLineItemModel.cs" />

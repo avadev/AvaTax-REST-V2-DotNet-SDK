@@ -175,7 +175,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 Assert.NotNull(fileResult);
 
                 // Compare what we got back with what we sent.
-                Assert.AreEqual(batchFetchResult.name + ".Input.CSV", fileResult.Filename);
+                Assert.AreEqual(batchFetchResult.name + ".Input.CSV; filename*=UTF-8''" + batchFetchResult.name + ".Input.CSV", fileResult.Filename);
                 Assert.AreEqual(batchFileModel.content, fileResult.Data);
                 Assert.AreEqual(batchFileModel.contentType, fileResult.ContentType);
 
