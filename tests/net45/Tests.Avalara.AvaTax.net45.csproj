@@ -38,9 +38,6 @@
     <DocumentationFile>bin\Release\Tests.Avalara.AvaTax.net45.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Avalara.AvaTax.RestClient.net45">
-      <HintPath>..\..\src\bin\Debug\net45\Avalara.AvaTax.RestClient.net45.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -77,6 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Avalara.AvaTax.net45.csproj">
+      <Project>{66ced0ca-099d-4db6-8dac-5c84d575a4c3}</Project>
+      <Name>Avalara.AvaTax.net45</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
