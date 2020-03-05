@@ -26,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
 #if PORTABLE
-        private static HttpClient _client = new HttpClient();
+        private static HttpClient _client = new HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
 #endif
 
         /// <summary>
@@ -482,6 +482,7 @@ namespace Avalara.AvaTax.RestClient
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
+            wr.Timeout = 1200000;
 
             // Add headers
             foreach (var key in _clientHeaders.Keys)
@@ -590,6 +591,7 @@ namespace Avalara.AvaTax.RestClient
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
+            wr.Timeout = 1200000;
 
             // Add headers
             foreach (var key in _clientHeaders.Keys)
