@@ -12,6 +12,7 @@
         <projectUrl>https://developer.avalara.com</projectUrl>
         <iconUrl>https://developer.avalara.com/public/images/favicon/A-Check-RGB.png</iconUrl>
         <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+        <repository type="git" url="https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK.git" />
 		<copyright>(C) 2004-2019, Avalara, Inc.</copyright>
         <tags>tax Avalara AvaTax sales taxes ecommerce</tags>
         <dependencies>
