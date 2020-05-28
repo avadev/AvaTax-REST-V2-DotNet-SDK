@@ -22,6 +22,21 @@ namespace Avalara.AvaTax.RestClient
     public class BatchModel
     {
         /// <summary>
+        /// The type of this batch.
+        /// </summary>
+        public BatchType type { get; set; }
+
+        /// <summary>
+        /// The agent used to create this batch
+        /// </summary>
+        public String batchAgent { get; set; }
+
+        /// <summary>
+        /// Any optional flags provided for this batch
+        /// </summary>
+        public String options { get; set; }
+
+        /// <summary>
         /// The unique ID number of this batch.
         /// </summary>
         public Int32? id { get; set; }
@@ -42,24 +57,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The type of this batch.
-        /// </summary>
-        public BatchType type { get; set; }
-
-        /// <summary>
         /// This batch's current processing status
         /// </summary>
         public BatchStatus? status { get; set; }
-
-        /// <summary>
-        /// Any optional flags provided for this batch
-        /// </summary>
-        public String options { get; set; }
-
-        /// <summary>
-        /// The agent used to create this batch
-        /// </summary>
-        public String batchAgent { get; set; }
 
         /// <summary>
         /// The date/time when this batch started processing

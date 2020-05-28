@@ -359,6 +359,21 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
+        /// User name of bulk account.
+        /// </summary>
+        public String bulkAccountId { get; set; }
+
+        /// <summary>
+        /// The bulk account site code.
+        /// </summary>
+        public String siteCode { get; set; }
+
+        /// <summary>
+        /// The status of the bulk account's validation.
+        /// </summary>
+        public BulkAccountValidationStatus? bulkAccountValidationStatus { get; set; }
+
+        /// <summary>
         /// CompanyReturn settings for complext filing calendar
         /// </summary>
         public List<CompanyReturnSettingModel> settings { get; set; }

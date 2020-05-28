@@ -254,6 +254,22 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isSellerImporterOfRecord { get; set; }
 
+        /// <summary>
+        /// A description of corresponding tax type applied to the nexus.
+        ///  
+        /// When a custom nexus is created, it'll have to be matched to a system nexus to be validated successfully. The matched system nexus has a
+        /// field to describe the tax type applied to it, that field will be copied over to the nexus that is being created.
+        ///  
+        /// This field is defined by Avalara. Its main purpose is to give a simple description of the tax type associated with the nexus so
+        /// users have a better understanding of the nexus when it is displayed.
+        /// </summary>
+        public String taxName { get; set; }
+
+        /// <summary>
+        /// List of nexus parameters.
+        /// </summary>
+        public List<NexusParameterDetailModel> parameters { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

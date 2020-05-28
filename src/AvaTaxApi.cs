@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    20.1.0
+ * @version    20.5.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "20.1.0"; } }
+        public static string API_VERSION { get { return "20.5.0"; } }
 
 #region Methods
 
@@ -44,10 +44,12 @@ namespace Avalara.AvaTax.RestClient
         /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
         /// please log onto the AvaTax website or call the `ActivateAccount` API.
         ///  
+        /// You can only reset license with 'Default' license key name. 
         /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
         ///  
         /// When you call this API, all account administrators for this account will receive an email with the newly updated license key.
         /// The email will specify which user reset the license key and it will contain the new key to use to update your connectors.
+        /// Note: The reset license key functionality will only be available for existing active license key i.e. when you reset license key for the account, the Default license key will be reset.The reset license key functionality is not available for newly created license keys i.e. license keys other than Default
         /// 
         /// ### Security Policies
         /// 
@@ -98,7 +100,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Retrieve audit trace history for an account.
         ///  
-        /// Your audit trace history contains a record of all API calls made against the AvaTax REST API. You can use this API to investigate
+        /// Your audit trace history contains a record of all API calls made against the AvaTax REST API that returned an error. You can use this API to investigate
         /// problems and see exactly what information was sent back and forth between your code and AvaTax.
         ///  
         /// When specifying a start and end datetime, please include a valid timezone indicator, such as the "Z" present in the examples for the start and end query parameters.
@@ -139,6 +141,60 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             return RestCall<FetchResult<AuditModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Create license key for this account
+        /// </summary>
+        /// <remarks>
+        /// Creates a new license key for this account.
+        ///  
+        /// To create a license key for your account, you must specify the ID of the account and license key name.
+        ///  
+        /// This API is only available to account administrators for the account in question, and may only be called after
+        /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
+        /// please log onto the AvaTax website or call the `ActivateAccount` API.
+        ///  
+        /// You will reference this key using license key name. The existing license key will be using 'Default' as license key name.
+        /// Hence make sure that the license key name is unique per account considering the existing license key name 'Default'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="id">The ID of the account you wish to update.</param>
+        /// <param name="model"></param>
+        public LicenseKeyModel CreateLicenseKey(Int32 id, AccountLicenseKeyModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey");
+            path.ApplyField("id", id);
+            return RestCall<LicenseKeyModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete license key for this account by license key name
+        /// </summary>
+        /// <remarks>
+        /// Deletes the license key for this account using license key name.
+        ///  
+        /// To delete a license key for your account, you must specify the accountID of the account and license key name.
+        ///  
+        /// This API is only available to account administrators for the account in question.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="id">The ID of the account you wish to update.</param>
+        /// <param name="licensekeyname">The license key name you wish to update.</param>
+        public List<ErrorDetail> DeleteLicenseKey(Int32 id, String licensekeyname)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
+            path.ApplyField("id", id);
+            path.ApplyField("licensekeyname", licensekeyname);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
 
@@ -194,6 +250,44 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
             return RestCall<List<AccountConfigurationModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve license key by license key name
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="id">The ID of the account to retrieve</param>
+        /// <param name="licensekeyname">The ID of the account to retrieve</param>
+        public AccountLicenseKeyModel GetLicenseKey(Int32 id, String licensekeyname)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
+            path.ApplyField("id", id);
+            path.ApplyField("licensekeyname", licensekeyname);
+            return RestCall<AccountLicenseKeyModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all license keys for this account
+        /// </summary>
+        /// <remarks>
+        /// Gets list of all the license keys used by the account.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="id">The ID of the account to retrieve</param>
+        public List<AccountLicenseKeyModel> GetLicenseKeys(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekeys");
+            path.ApplyField("id", id);
+            return RestCall<List<AccountLicenseKeyModel>>("GET", path, null);
         }
 
 
@@ -331,6 +425,93 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return RestCall<AddressResolutionModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Create a lookup file for a company
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the company</param>
+        /// <param name="companyId">The ID of the company for which the lookup file is to be created</param>
+        /// <param name="model">The lookup file you wish to create</param>
+        public AdvancedRuleLookupFileModel CreateCompanyLookupFile(Int32 accountId, Int32 companyId, AdvancedRuleLookupFileModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("companyId", companyId);
+            return RestCall<AdvancedRuleLookupFileModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a lookup file
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the company the lookup file is for</param>
+        /// <param name="id">The unique ID/GUID for the company lookup file to be deleted</param>
+        public List<ErrorDetail> DeleteLookupFile(Int32 accountId, String id)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Get the lookup files for a company
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId">The account ID for the company</param>
+        /// <param name="companyId">The ID of the company for which to retrieve lookup files</param>
+        public FetchResult<AdvancedRuleLookupFileModel> GetCompanyLookupFiles(Int32 accountId, Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("companyId", companyId);
+            return RestCall<FetchResult<AdvancedRuleLookupFileModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Get a lookup file for an accountId and companyLookupFileId
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the lookup file</param>
+        /// <param name="id">The unique ID/GUID of the company lookup file to return</param>
+        public AdvancedRuleLookupFileModel GetLookupFile(Int32 accountId, String id)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return RestCall<AdvancedRuleLookupFileModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a lookup file
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the company the lookup file is for</param>
+        /// <param name="id">The unique ID/GUID of the company lookup file to be updated</param>
+        /// <param name="model">The new values to update the lookup file</param>
+        public AdvancedRuleLookupFileModel UpdateLookupFile(Int32 accountId, String id, AdvancedRuleLookupFileModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return RestCall<AdvancedRuleLookupFileModel>("PUT", path, model);
         }
 
 
@@ -1575,6 +1756,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * TaxCodes
         ///  * TaxRules
         ///  * UPC
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
@@ -1717,13 +1899,14 @@ namespace Avalara.AvaTax.RestClient
         /// * TaxCodes
         /// * TaxRules
         /// * UPC
+        /// * Parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2534,7 +2717,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
         /// </remarks>
         /// <param name="companyId">The id of the company you wish to retrieve the datasources.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2564,7 +2747,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3175,7 +3358,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3222,7 +3405,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * Common alternative spellings for many countries
         ///  
         ///  For a full list of all supported codes and names, please see the Definitions API `ListCountries`.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3253,7 +3436,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
         /// </remarks>
         /// <param name="country">The country in which you want to fetch the system nexus</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3279,7 +3462,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3594,6 +3777,29 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<ParameterModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported usage of extra parameters for creating transactions.
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported usage of extra parameters for the 'Create Transaction' API call.
+        /// This list of parameters is available for use when configuring your transaction.
+        /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ParameterUsageModel> ListParametersUsage(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/parametersusage");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<ParameterUsageModel>>("GET", path, null);
         }
 
 
@@ -4228,6 +4434,29 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<CompanyDistanceThresholdModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a company return setting
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only and only available for users with Compliance access
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company</param>
+        /// <param name="filingCalendarId">The unique ID of the filing calendar that will remove setting</param>
+        /// <param name="companyReturnSettingId">The unique ID of the company return setting that will be deleted from the filing calendar</param>
+        public List<CompanyReturnSettingModel> DeleteCompanyReturnSettings(Int32 companyId, Int32 filingCalendarId, Int64 companyReturnSettingId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{filingCalendarId}/setting/{companyReturnSettingId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("filingCalendarId", filingCalendarId);
+            path.ApplyField("companyReturnSettingId", companyReturnSettingId);
+            return RestCall<List<CompanyReturnSettingModel>>("DELETE", path, null);
         }
 
 
@@ -5457,6 +5686,7 @@ namespace Avalara.AvaTax.RestClient
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
+        /// * parameters
         /// 
         /// ### Security Policies
         /// 
@@ -5464,7 +5694,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
-        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         public LocationModel GetLocation(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
@@ -5490,14 +5720,15 @@ namespace Avalara.AvaTax.RestClient
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
+        /// * parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings</param>
-        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5530,12 +5761,13 @@ namespace Avalara.AvaTax.RestClient
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
+        /// * parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -5613,6 +5845,12 @@ namespace Avalara.AvaTax.RestClient
         /// Both the revisions will be available for retrieval based on their code and ID numbers. Only transactions in Committed status can be reported on a tax filing by Avalara's Managed Returns Service.
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are considered locked and are no longer available for adjustments.
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5651,6 +5889,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5680,6 +5924,12 @@ namespace Avalara.AvaTax.RestClient
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         ///  
         /// Any changes made to a committed transaction will generate a transaction history.
+        /// 
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5730,6 +5980,12 @@ namespace Avalara.AvaTax.RestClient
         /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5762,6 +6018,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5806,6 +6068,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5846,6 +6114,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5910,6 +6184,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// 
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
+        /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
@@ -5939,6 +6219,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -5966,6 +6252,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns Service are considered `locked`,
         /// and they are no longer available to be voided.
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -6023,6 +6315,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a nexus.
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to the nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Nexus`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus parameter.</param>
+        /// <param name="nexusId">The nexus id.</param>
+        /// <param name="model">The nexus parameters you wish to create.</param>
+        public List<NexusParameterDetailModel> CreateNexusParameters(Int32 companyId, Int32 nexusId, List<NexusParameterDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            return RestCall<List<NexusParameterDetailModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Creates nexus for a list of addresses.
         /// </summary>
         /// <remarks>
@@ -6075,11 +6398,67 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="id">The ID of the nexus you wish to delete.</param>
-        public List<ErrorDetail> DeleteNexus(Int32 companyId, Int32 id)
+        /// <param name="cascadeDelete">If true, deletes all the child nexus if they exist along with parent nexus</param>
+        public List<ErrorDetail> DeleteNexus(Int32 companyId, Int32 id, Boolean? cascadeDelete)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("cascadeDelete", cascadeDelete);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single nexus parameter
+        /// </summary>
+        /// <remarks>
+        /// Delete a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public List<ErrorDetail> DeleteNexusParameter(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete all parameters for an nexus
+        /// </summary>
+        /// <remarks>
+        /// Delete all the parameters for a given nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus.</param>
+        /// <param name="nexusId">The ID of the nexus you wish to delete the parameters.</param>
+        public List<ErrorDetail> DeleteNexusParameters(Int32 companyId, Int32 nexusId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6093,6 +6472,9 @@ namespace Avalara.AvaTax.RestClient
         /// The concept of Nexus indicates a place where your company is legally obligated to collect and remit transactional
         /// taxes. The legal requirements for nexus may vary per country and per jurisdiction; please seek advice from your
         /// accountant or lawyer prior to declaring nexus.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
@@ -6100,11 +6482,13 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
         /// <param name="id">The primary key of this nexus</param>
-        public NexusModel GetNexus(Int32 companyId, Int32 id)
+        /// <param name="include"></param>
+        public NexusModel GetNexus(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return RestCall<NexusModel>("GET", path, null);
         }
 
@@ -6122,6 +6506,9 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to provide useful information when examining a tax form. If you are about to begin filing
         /// a tax form, you may want to know whether you have declared nexus in all the jurisdictions related to that tax
         /// form in order to better understand how the form will be filled out.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
@@ -6129,12 +6516,42 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
         /// <param name="formCode">The form code that we are looking up the nexus for</param>
-        public NexusByTaxFormModel GetNexusByFormCode(Int32 companyId, String formCode)
+        /// <param name="include"></param>
+        public NexusByTaxFormModel GetNexusByFormCode(Int32 companyId, String formCode, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
+            path.AddQuery("$include", include);
             return RestCall<NexusByTaxFormModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single nexus parameter
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller.In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public NexusParameterDetailModel GetNexusParameter(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return RestCall<NexusParameterDetailModel>("GET", path, null);
         }
 
 
@@ -6150,13 +6567,16 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6175,6 +6595,43 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve parameters for a nexus
+        /// </summary>
+        /// <remarks>
+        /// List parameters for a nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name. 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusParameterDetailModel> ListNexusParameters(Int32 companyId, Int32 nexusId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<NexusParameterDetailModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve all nexus
         /// </summary>
         /// <remarks>
@@ -6186,12 +6643,15 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6245,6 +6705,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<NexusModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update an nexus parameter
+        /// </summary>
+        /// <remarks>
+        /// Update an nexus parameter.
+        ///  
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a nexus will be used in tax calculation based on the locationcode and parameter value the transaction state line might have lines added.
+        ///  
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.????? I dont know about this?
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The nexus parameter id</param>
+        /// <param name="model">The nexus object you wish to update.</param>
+        public NexusParameterDetailModel UpdateNexusParameter(Int32 companyId, Int32 nexusId, Int64 id, NexusParameterDetailModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return RestCall<NexusParameterDetailModel>("PUT", path, model);
         }
 
 
@@ -6483,7 +6973,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is for use by Avalara Registrar administrative users only.
         ///  
         /// Delete an account.
-        /// Deleting an account will delete all companies and all account level users attached to this account.
+        /// Deleting an account will delete all companies, all account level users and license keys attached to this account.
         /// 
         /// ### Security Policies
         /// 
@@ -7677,10 +8167,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -7723,10 +8214,11 @@ namespace Avalara.AvaTax.RestClient
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -7764,10 +8256,11 @@ namespace Avalara.AvaTax.RestClient
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -7838,10 +8331,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -7889,10 +8383,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8087,10 +8582,11 @@ namespace Avalara.AvaTax.RestClient
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8118,10 +8614,11 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// DEPRECATED: Please use the `GetTransactionByCode` API instead.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8207,10 +8704,11 @@ namespace Avalara.AvaTax.RestClient
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8264,10 +8762,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8326,10 +8825,11 @@ namespace Avalara.AvaTax.RestClient
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8379,10 +8879,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8423,10 +8924,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8464,10 +8966,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8512,10 +9015,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -8563,15 +9067,16 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>
@@ -9084,10 +9589,12 @@ namespace Avalara.AvaTax.RestClient
         /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
         /// please log onto the AvaTax website or call the `ActivateAccount` API.
         ///  
+        /// You can only reset license with 'Default' license key name. 
         /// Resetting a license key cannot be undone. Any previous license keys will immediately cease to work when a new key is created.
         ///  
         /// When you call this API, all account administrators for this account will receive an email with the newly updated license key.
         /// The email will specify which user reset the license key and it will contain the new key to use to update your connectors.
+        /// Note: The reset license key functionality will only be available for existing active license key i.e. when you reset license key for the account, the Default license key will be reset.The reset license key functionality is not available for newly created license keys i.e. license keys other than Default
         /// 
         /// ### Security Policies
         /// 
@@ -9138,7 +9645,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Retrieve audit trace history for an account.
         ///  
-        /// Your audit trace history contains a record of all API calls made against the AvaTax REST API. You can use this API to investigate
+        /// Your audit trace history contains a record of all API calls made against the AvaTax REST API that returned an error. You can use this API to investigate
         /// problems and see exactly what information was sent back and forth between your code and AvaTax.
         ///  
         /// When specifying a start and end datetime, please include a valid timezone indicator, such as the "Z" present in the examples for the start and end query parameters.
@@ -9169,6 +9676,60 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             return await RestCallAsync<FetchResult<AuditModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create license key for this account;
+        /// </summary>
+        /// <remarks>
+        /// Creates a new license key for this account.
+        ///  
+        /// To create a license key for your account, you must specify the ID of the account and license key name.
+        ///  
+        /// This API is only available to account administrators for the account in question, and may only be called after
+        /// an account has been activated by reading and accepting Avalara's terms and conditions. To activate your account
+        /// please log onto the AvaTax website or call the `ActivateAccount` API.
+        ///  
+        /// You will reference this key using license key name. The existing license key will be using 'Default' as license key name.
+        /// Hence make sure that the license key name is unique per account considering the existing license key name 'Default'
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="id">The ID of the account you wish to update.</param>
+        /// <param name="model"></param>
+        public async Task<LicenseKeyModel> CreateLicenseKeyAsync(Int32 id, AccountLicenseKeyModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey");
+            path.ApplyField("id", id);
+            return await RestCallAsync<LicenseKeyModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete license key for this account by license key name;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the license key for this account using license key name.
+        ///  
+        /// To delete a license key for your account, you must specify the accountID of the account and license key name.
+        ///  
+        /// This API is only available to account administrators for the account in question.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="id">The ID of the account you wish to update.</param>
+        /// <param name="licensekeyname">The license key name you wish to update.</param>
+        public async Task<List<ErrorDetail>> DeleteLicenseKeyAsync(Int32 id, String licensekeyname)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
+            path.ApplyField("id", id);
+            path.ApplyField("licensekeyname", licensekeyname);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -9224,6 +9785,44 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
             return await RestCallAsync<List<AccountConfigurationModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve license key by license key name;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="id">The ID of the account to retrieve</param>
+        /// <param name="licensekeyname">The ID of the account to retrieve</param>
+        public async Task<AccountLicenseKeyModel> GetLicenseKeyAsync(Int32 id, String licensekeyname)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
+            path.ApplyField("id", id);
+            path.ApplyField("licensekeyname", licensekeyname);
+            return await RestCallAsync<AccountLicenseKeyModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve all license keys for this account;
+        /// </summary>
+        /// <remarks>
+        /// Gets list of all the license keys used by the account.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="id">The ID of the account to retrieve</param>
+        public async Task<List<AccountLicenseKeyModel>> GetLicenseKeysAsync(Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekeys");
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<AccountLicenseKeyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -9361,6 +9960,93 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
             return await RestCallAsync<AddressResolutionModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Create a lookup file for a company;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the company</param>
+        /// <param name="companyId">The ID of the company for which the lookup file is to be created</param>
+        /// <param name="model">The lookup file you wish to create</param>
+        public async Task<AdvancedRuleLookupFileModel> CreateCompanyLookupFileAsync(Int32 accountId, Int32 companyId, AdvancedRuleLookupFileModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<AdvancedRuleLookupFileModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a lookup file;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the company the lookup file is for</param>
+        /// <param name="id">The unique ID/GUID for the company lookup file to be deleted</param>
+        public async Task<List<ErrorDetail>> DeleteLookupFileAsync(Int32 accountId, String id)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Get the lookup files for a company;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId">The account ID for the company</param>
+        /// <param name="companyId">The ID of the company for which to retrieve lookup files</param>
+        public async Task<FetchResult<AdvancedRuleLookupFileModel>> GetCompanyLookupFilesAsync(Int32 accountId, Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FetchResult<AdvancedRuleLookupFileModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Get a lookup file for an accountId and companyLookupFileId;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the lookup file</param>
+        /// <param name="id">The unique ID/GUID of the company lookup file to return</param>
+        public async Task<AdvancedRuleLookupFileModel> GetLookupFileAsync(Int32 accountId, String id)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<AdvancedRuleLookupFileModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a lookup file;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account for the company the lookup file is for</param>
+        /// <param name="id">The unique ID/GUID of the company lookup file to be updated</param>
+        /// <param name="model">The new values to update the lookup file</param>
+        public async Task<AdvancedRuleLookupFileModel> UpdateLookupFileAsync(Int32 accountId, String id, AdvancedRuleLookupFileModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<AdvancedRuleLookupFileModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -10605,6 +11291,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * TaxCodes
         ///  * TaxRules
         ///  * UPC
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
@@ -10747,13 +11434,14 @@ namespace Avalara.AvaTax.RestClient
         /// * TaxCodes
         /// * TaxRules
         /// * UPC
+        /// * Parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11564,7 +12252,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
         /// </remarks>
         /// <param name="companyId">The id of the company you wish to retrieve the datasources.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11594,7 +12282,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12205,7 +12893,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12252,7 +12940,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * Common alternative spellings for many countries
         ///  
         ///  For a full list of all supported codes and names, please see the Definitions API `ListCountries`.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12283,7 +12971,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
         /// </remarks>
         /// <param name="country">The country in which you want to fetch the system nexus</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12309,7 +12997,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
         /// <param name="region">The two or three character region code for the region.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12624,6 +13312,29 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve the full list of Avalara-supported usage of extra parameters for creating transactions.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the full list of Avalara-supported usage of extra parameters for the 'Create Transaction' API call.
+        /// This list of parameters is available for use when configuring your transaction.
+        /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ParameterUsageModel>> ListParametersUsageAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/parametersusage");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<ParameterUsageModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -13258,6 +13969,29 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<CompanyDistanceThresholdModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a company return setting;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only and only available for users with Compliance access
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The unique ID of the company</param>
+        /// <param name="filingCalendarId">The unique ID of the filing calendar that will remove setting</param>
+        /// <param name="companyReturnSettingId">The unique ID of the company return setting that will be deleted from the filing calendar</param>
+        public async Task<List<CompanyReturnSettingModel>> DeleteCompanyReturnSettingsAsync(Int32 companyId, Int32 filingCalendarId, Int64 companyReturnSettingId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filingcalendars/{filingCalendarId}/setting/{companyReturnSettingId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("filingCalendarId", filingCalendarId);
+            path.ApplyField("companyReturnSettingId", companyReturnSettingId);
+            return await RestCallAsync<List<CompanyReturnSettingModel>>("DELETE", path, null).ConfigureAwait(false);
         }
 
 
@@ -14487,6 +15221,7 @@ namespace Avalara.AvaTax.RestClient
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
+        /// * parameters
         /// 
         /// ### Security Policies
         /// 
@@ -14494,7 +15229,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
-        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         public async Task<LocationModel> GetLocationAsync(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
@@ -14520,14 +15255,15 @@ namespace Avalara.AvaTax.RestClient
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
+        /// * parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings</param>
-        /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -14560,12 +15296,13 @@ namespace Avalara.AvaTax.RestClient
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * LocationSettings
+        /// * parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -14643,6 +15380,12 @@ namespace Avalara.AvaTax.RestClient
         /// Both the revisions will be available for retrieval based on their code and ID numbers. Only transactions in Committed status can be reported on a tax filing by Avalara's Managed Returns Service.
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns are considered locked and are no longer available for adjustments.
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14681,6 +15424,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14710,6 +15459,12 @@ namespace Avalara.AvaTax.RestClient
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         ///  
         /// Any changes made to a committed transaction will generate a transaction history.
+        /// 
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14760,6 +15515,12 @@ namespace Avalara.AvaTax.RestClient
         /// * ForceTimeout - Simulates a timeout. This adds a 30 second delay and error to your API call. This can be used to test your code to ensure it can respond correctly in the case of a dropped connection.
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14792,6 +15553,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14836,6 +15603,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14876,6 +15649,12 @@ namespace Avalara.AvaTax.RestClient
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14940,6 +15719,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         /// 
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
+        /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
@@ -14969,6 +15754,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -14996,6 +15787,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Transactions that have been previously reported to a tax authority by Avalara Managed Returns Service are considered `locked`,
         /// and they are no longer available to be voided.
+        ///  
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
+        /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
+        /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
+        /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -15053,6 +15850,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a nexus.;
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to the nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Nexus`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus parameter.</param>
+        /// <param name="nexusId">The nexus id.</param>
+        /// <param name="model">The nexus parameters you wish to create.</param>
+        public async Task<List<NexusParameterDetailModel>> CreateNexusParametersAsync(Int32 companyId, Int32 nexusId, List<NexusParameterDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            return await RestCallAsync<List<NexusParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Creates nexus for a list of addresses.;
         /// </summary>
         /// <remarks>
@@ -15105,11 +15933,67 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus.</param>
         /// <param name="id">The ID of the nexus you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteNexusAsync(Int32 companyId, Int32 id)
+        /// <param name="cascadeDelete">If true, deletes all the child nexus if they exist along with parent nexus</param>
+        public async Task<List<ErrorDetail>> DeleteNexusAsync(Int32 companyId, Int32 id, Boolean? cascadeDelete)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("cascadeDelete", cascadeDelete);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single nexus parameter;
+        /// </summary>
+        /// <remarks>
+        /// Delete a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<List<ErrorDetail>> DeleteNexusParameterAsync(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete all parameters for an nexus;
+        /// </summary>
+        /// <remarks>
+        /// Delete all the parameters for a given nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus.</param>
+        /// <param name="nexusId">The ID of the nexus you wish to delete the parameters.</param>
+        public async Task<List<ErrorDetail>> DeleteNexusParametersAsync(Int32 companyId, Int32 nexusId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -15123,6 +16007,9 @@ namespace Avalara.AvaTax.RestClient
         /// The concept of Nexus indicates a place where your company is legally obligated to collect and remit transactional
         /// taxes. The legal requirements for nexus may vary per country and per jurisdiction; please seek advice from your
         /// accountant or lawyer prior to declaring nexus.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
@@ -15130,11 +16017,13 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
         /// <param name="id">The primary key of this nexus</param>
-        public async Task<NexusModel> GetNexusAsync(Int32 companyId, Int32 id)
+        /// <param name="include"></param>
+        public async Task<NexusModel> GetNexusAsync(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
+            path.AddQuery("$include", include);
             return await RestCallAsync<NexusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15152,6 +16041,9 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to provide useful information when examining a tax form. If you are about to begin filing
         /// a tax form, you may want to know whether you have declared nexus in all the jurisdictions related to that tax
         /// form in order to better understand how the form will be filled out.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
@@ -15159,12 +16051,42 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this nexus object</param>
         /// <param name="formCode">The form code that we are looking up the nexus for</param>
-        public async Task<NexusByTaxFormModel> GetNexusByFormCodeAsync(Int32 companyId, String formCode)
+        /// <param name="include"></param>
+        public async Task<NexusByTaxFormModel> GetNexusByFormCodeAsync(Int32 companyId, String formCode, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byform/{formCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
+            path.AddQuery("$include", include);
             return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single nexus parameter;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller.In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<NexusParameterDetailModel> GetNexusParameterAsync(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<NexusParameterDetailModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15180,13 +16102,16 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these nexus objects</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -15205,6 +16130,43 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve parameters for a nexus;
+        /// </summary>
+        /// <remarks>
+        /// List parameters for a nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name. 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusParameterDetailModel>> ListNexusParametersAsync(Int32 companyId, Int32 nexusId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<NexusParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve all nexus;
         /// </summary>
         /// <remarks>
@@ -15216,12 +16178,15 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
+        ///  
+        ///  * Parameters
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxAuthorityId, taxName, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -15275,6 +16240,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<NexusModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update an nexus parameter;
+        /// </summary>
+        /// <remarks>
+        /// Update an nexus parameter.
+        ///  
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a nexus will be used in tax calculation based on the locationcode and parameter value the transaction state line might have lines added.
+        ///  
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.????? I dont know about this?
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The nexus parameter id</param>
+        /// <param name="model">The nexus object you wish to update.</param>
+        public async Task<NexusParameterDetailModel> UpdateNexusParameterAsync(Int32 companyId, Int32 nexusId, Int64 id, NexusParameterDetailModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<NexusParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -15513,7 +16508,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is for use by Avalara Registrar administrative users only.
         ///  
         /// Delete an account.
-        /// Deleting an account will delete all companies and all account level users attached to this account.
+        /// Deleting an account will delete all companies, all account level users and license keys attached to this account.
         /// 
         /// ### Security Policies
         /// 
@@ -16707,10 +17702,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -16753,10 +17749,11 @@ namespace Avalara.AvaTax.RestClient
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -16794,10 +17791,11 @@ namespace Avalara.AvaTax.RestClient
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
         /// sales, purchases, inventory transfer, and returns (also called refunds).
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -16868,10 +17866,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -16919,10 +17918,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17117,10 +18117,11 @@ namespace Avalara.AvaTax.RestClient
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17148,10 +18149,11 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// DEPRECATED: Please use the `GetTransactionByCode` API instead.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17237,10 +18239,11 @@ namespace Avalara.AvaTax.RestClient
         /// * SummaryOnly (omit lines and details - reduces API response size)
         /// * LinesOnly (omit details - reduces API response size)
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17294,10 +18297,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17356,10 +18360,11 @@ namespace Avalara.AvaTax.RestClient
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         /// If you omit the `$include` parameter, the API will assume you want `Summary,Addresses`.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17409,10 +18414,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17453,10 +18459,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17494,10 +18501,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17542,10 +18550,11 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
@@ -17593,15 +18602,16 @@ namespace Avalara.AvaTax.RestClient
         /// * LinesOnly (omit details - reduces API response size)
         /// * TaxDetailsByTaxType - Includes the aggregated tax, exempt tax, taxable and non-taxable for each tax type returned in the transaction summary.
         ///  
-        /// NOTE: If your companyCode or transactionCode contains any of these characters /, + or ? please use the following encoding before making a request:
+        /// NOTE: If your companyCode or transactionCode contains any of these characters /, +, ? or a space please use the following encoding before making a request:
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to void</param>

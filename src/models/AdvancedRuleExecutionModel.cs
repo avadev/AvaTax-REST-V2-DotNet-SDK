@@ -47,6 +47,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? enabled { get; set; }
 
         /// <summary>
+        /// Should we keep running if we hit an exception
+        /// </summary>
+        public Boolean? continueOnError { get; set; }
+
+        /// <summary>
         /// Unique identifier of rule to execute
         /// </summary>
         public String ruleId { get; set; }

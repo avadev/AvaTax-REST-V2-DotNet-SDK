@@ -106,6 +106,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String description { get; set; }
 
+        /// <summary>
+        /// Advance Rules limited availability
+        /// </summary>
+        public Boolean? arEntitlementRequired { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
