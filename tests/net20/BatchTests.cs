@@ -166,9 +166,14 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 }
                 Assert.True(processing == false, $"Batch processing too long. Check BatchId: {batchResult[0].id}");
 
-                // This batch is done processing. 
-                Assert.True((batchFetchResult.status.Value == BatchStatus.Errors || batchFetchResult.status.Value == BatchStatus.Completed),
-                    $"BatchId: {batchResult[0].id} should either complete or error out.");
+                // This batch is done processing. Let's make sure it has completed successfully.
+                Assert.True(batchFetchResult.status.Value != BatchStatus.Errors,
+                    $"BatchId: {batchResult[0].id} completed with errors.");
+                Assert.True(batchFetchResult.status.Value == BatchStatus.Completed,
+                    $"BatchId: {batchResult[0].id} is in a strange state. Status: {batchFetchResult.status}");
+
+                // Ensure that the number of records matches what we sent in.
+                Assert.AreEqual(9, batchFetchResult.currentRecord.Value);
 
                 // We should be able to get back the batch file we sent
                 var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
