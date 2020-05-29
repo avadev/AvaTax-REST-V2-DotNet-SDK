@@ -76,6 +76,7 @@
     <Compile Include="enums\BatchStatus.cs" />
     <Compile Include="enums\BatchType.cs" />
     <Compile Include="enums\BoundaryLevel.cs" />
+    <Compile Include="enums\BulkAccountValidationStatus.cs" />
     <Compile Include="enums\CertCaptureProvisionStatus.cs" />
     <Compile Include="enums\CertExpressInvitationStatus.cs" />
     <Compile Include="enums\CertificatePreviewType.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
+    <Compile Include="models\AccountLicenseKeyModel.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\ActivateAccountModel.cs" />
     <Compile Include="models\AddressesModel.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="models\AddTransactionLineModel.cs" />
     <Compile Include="models\AdjustMultiDocumentModel.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
+    <Compile Include="models\AdvancedRuleLookupFileModel.cs" />
     <Compile Include="models\AdvancedRuleScriptModel.cs" />
     <Compile Include="models\AdvancedRuleTableModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="models\CompanyDistanceThresholdModel.cs" />
     <Compile Include="models\CompanyInitializationModel.cs" />
     <Compile Include="models\CompanyModel.cs" />
+    <Compile Include="models\CompanyParameterDetailModel.cs" />
     <Compile Include="models\CompanyReturnSettingModel.cs" />
     <Compile Include="models\ComplianceAggregatedTaxRateModel.cs" />
     <Compile Include="models\ComplianceJurisdictionModel.cs" />
@@ -272,6 +276,7 @@
     <Compile Include="models\LinkCertificatesModel.cs" />
     <Compile Include="models\LinkCustomersModel.cs" />
     <Compile Include="models\LocationModel.cs" />
+    <Compile Include="models\LocationParameterModel.cs" />
     <Compile Include="models\LocationQuestionModel.cs" />
     <Compile Include="models\LocationSettingModel.cs" />
     <Compile Include="models\LocationValidationModel.cs" />
@@ -293,6 +298,7 @@
     <Compile Include="models\NexusByAddressModel.cs" />
     <Compile Include="models\NexusByTaxFormModel.cs" />
     <Compile Include="models\NexusModel.cs" />
+    <Compile Include="models\NexusParameterDetailModel.cs" />
     <Compile Include="models\NexusSummaryModel.cs" />
     <Compile Include="models\NexusTaxTypeGroupCountModel.cs" />
     <Compile Include="models\NexusTaxTypeGroupModel.cs" />
@@ -314,6 +320,7 @@
     <Compile Include="models\OfferModel.cs" />
     <Compile Include="models\OriginalApiRequestResponseModel.cs" />
     <Compile Include="models\ParameterModel.cs" />
+    <Compile Include="models\ParameterUsageModel.cs" />
     <Compile Include="models\PasswordChangeModel.cs" />
     <Compile Include="models\PingResultModel.cs" />
     <Compile Include="models\PointOfSaleDataRequestModel.cs" />
@@ -387,6 +394,7 @@
     <Compile Include="models\WorksheetDocumentLine.cs" />
     <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
+    <Compile Include="models\CompanyParameterDetailModel %28copy%29.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
