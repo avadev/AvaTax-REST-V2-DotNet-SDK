@@ -91,6 +91,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? recalculate { get; set; }
 
+        /// <summary>
+        /// Specifies the name of the extractor
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// Specifies any implementation-specific information along with the DataSource.This field has no internal meaning in AvaTax and is purely for the convenience of the DataSource API user
+        /// </summary>
+        public String externalState { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

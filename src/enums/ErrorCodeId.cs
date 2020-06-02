@@ -327,11 +327,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AllJurisRuleLimits = 84,
-
-        /// <summary>
-        /// 
-        /// </summary>
         InvalidCompanyLocationSetting = 85,
 
         /// <summary>
@@ -528,11 +523,6 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         DuplicateSystemTaxCode = 155,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        SSTOverridesNotAvailable = 156,
 
         /// <summary>
         /// 
@@ -741,6 +731,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Batch errors
+        ///  New batch error codes continue at 2501
         /// </summary>
         BatchSalesAuditMustBeZippedError = 200,
 
@@ -943,6 +934,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         AccountAlreadyExists = 611,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LicenseKeyNameAlreadyExistsForAccount = 612,
 
         /// <summary>
         /// Refund API error codes
@@ -1380,6 +1376,16 @@ namespace Avalara.AvaTax.RestClient
         UpdateLocationRemittanceCheckExistingEndDateError = 1721,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ErrorCountLimitExceededError = 1722,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RateLimitExceededError = 1723,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1415,7 +1421,7 @@ namespace Avalara.AvaTax.RestClient
         TraceDataNotAvailable = 2000,
 
         /// <summary>
-        /// Item parameter errors
+        /// Item and Nexus parameter errors
         /// </summary>
         InvalidParameterUnitMeasurementType = 2100,
 
@@ -1568,6 +1574,42 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InputContainsBlacklistedCharacters = 2401,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotCreateNestedObjects = 2402,
+
+        /// <summary>
+        /// Batch errors
+        ///  For other batch errors, see: 200 - 208 above
+        /// </summary>
+        BatchTransactionTypeError = 2501,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchTransactionLineLimitExceeded = 2502,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCompanyIdAndCompanyCodeMismatch = 2503,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotBeCancelledStatusError = 2504,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotBeCancelledFormatError = 2505,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidParameterDataType = 2600,
 
     }
 }

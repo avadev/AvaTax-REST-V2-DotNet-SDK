@@ -174,6 +174,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<LocationSettingModel> settings { get; set; }
 
+        /// <summary>
+        /// List of location parameters.
+        /// </summary>
+        public List<LocationParameterModel> parameters { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

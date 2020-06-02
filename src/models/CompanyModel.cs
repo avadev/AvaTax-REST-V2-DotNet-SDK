@@ -243,6 +243,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String mossCountry { get; set; }
 
+        /// <summary>
+        /// The parameters of a company
+        /// </summary>
+        public List<CompanyParameterDetailModel> parameters { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -34,5 +34,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         POAAttachment = 3,
 
+        /// <summary>
+        /// Used when creating Notice Comments in Returns Console
+        /// </summary>
+        NoticeVoucher = 4,
+
     }
 }

@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID number for this UPC.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
         /// The unique ID number of the company to which this UPC belongs.
