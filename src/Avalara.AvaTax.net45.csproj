@@ -172,8 +172,10 @@
     <Compile Include="models\AuditTransactionModel.cs" />
     <Compile Include="models\AvaFileFormModel.cs" />
     <Compile Include="models\AvaTaxMessage.cs" />
+    <Compile Include="models\BatchAdjustTransactionModel.cs" />
     <Compile Include="models\BatchFileModel.cs" />
     <Compile Include="models\BatchModel.cs" />
+    <Compile Include="models\BatchVoidTransactionModel.cs" />
     <Compile Include="models\BulkLockTransactionModel.cs" />
     <Compile Include="models\BulkLockTransactionResult.cs" />
     <Compile Include="models\CertExpressInvitationModel.cs" />
@@ -205,6 +207,8 @@
     <Compile Include="models\CreateMultiCompanyTransactionModel.cs" />
     <Compile Include="models\CreateMultiDocumentModel.cs" />
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
+    <Compile Include="models\CreateTransactionBatchRequestModel.cs" />
+    <Compile Include="models\CreateTransactionBatchResponseModel.cs" />
     <Compile Include="models\CreateTransactionModel.cs" />
     <Compile Include="models\CurrencyModel.cs" />
     <Compile Include="models\CustomerAttributeModel.cs" />
@@ -377,6 +381,7 @@
     <Compile Include="models\TaxSubTypeModel.cs" />
     <Compile Include="models\TaxTypeGroupModel.cs" />
     <Compile Include="models\TransactionAddressModel.cs" />
+    <Compile Include="models\TransactionBatchItemModel.cs" />
     <Compile Include="models\TransactionLineDetailModel.cs" />
     <Compile Include="models\TransactionLineLocationTypeModel.cs" />
     <Compile Include="models\TransactionLineModel.cs" />

@@ -1291,6 +1291,11 @@ namespace Avalara.AvaTax.RestClient
         CannotModifySstNexus = 1503,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidLocalNexusTypeId = 1504,
+
+        /// <summary>
         /// Advanced rule errors
         /// </summary>
         AdvancedRuleRequestRuleError = 1602,
