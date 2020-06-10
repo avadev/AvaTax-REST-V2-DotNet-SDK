@@ -41,6 +41,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? arEntitlementRequired { get; set; }
 
+        /// <summary>
+        /// Execution position. Both, Before or After
+        /// </summary>
+        public String executionPosition { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
