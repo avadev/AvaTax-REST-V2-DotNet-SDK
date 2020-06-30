@@ -28,7 +28,11 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
 #if PORTABLE
-        private static HttpClient _client = new HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
+        private static HttpClient _client = new HttpClient() 
+        {
+            // This timeout will be the default timeout used for all requests if if a timeout is not provided with the AvaTaxClientOptions
+            Timeout = TimeSpan.FromMinutes(20) 
+        };
 #endif
 
         /// <summary>
@@ -515,8 +519,9 @@ namespace Avalara.AvaTax.RestClient
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
-            wr.Timeout = 1200000;
 
+            // Default to 20 minutes if a timeout has not been provided in the AvaTaxClientOptions. 
+            wr.Timeout = 1200000;
             if (_options != null && _options.Timeout.HasValue)
             {
                 wr.Timeout = Convert.ToInt32(Math.Floor(_options.Timeout.Value.TotalMilliseconds));
