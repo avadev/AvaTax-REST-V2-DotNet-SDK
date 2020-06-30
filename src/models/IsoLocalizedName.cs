@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -25,14 +24,14 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The two-character alphanumeric code identifying the language in which this name is used.
-        /// 
+        ///  
         /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
         /// </summary>
         public String languageAlpha2Code { get; set; }
 
         /// <summary>
         /// The three-character alphanumeric code identifying the language in which this name is used.
-        /// 
+        ///  
         /// Note that languageAlpha2Code and language3AlphaCode refer to the same language.
         /// </summary>
         public String languageAlpha3Code { get; set; }

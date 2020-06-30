@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,117 +22,127 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// NoAccess
         /// </summary>
-        NoAccess,
+        NoAccess = 0,
 
         /// <summary>
         /// SiteAdmin
         /// </summary>
-        SiteAdmin,
+        SiteAdmin = 1,
 
         /// <summary>
         /// AccountOperator
         /// </summary>
-        AccountOperator,
+        AccountOperator = 2,
 
         /// <summary>
         /// AccountAdmin
         /// </summary>
-        AccountAdmin,
+        AccountAdmin = 3,
 
         /// <summary>
         /// AccountUser
         /// </summary>
-        AccountUser,
+        AccountUser = 4,
 
         /// <summary>
         /// SystemAdmin
         /// </summary>
-        SystemAdmin,
+        SystemAdmin = 5,
 
         /// <summary>
         /// Registrar
         /// </summary>
-        Registrar,
+        Registrar = 6,
 
         /// <summary>
         /// CSPTester
         /// </summary>
-        CSPTester,
+        CSPTester = 7,
 
         /// <summary>
         /// CSPAdmin
         /// </summary>
-        CSPAdmin,
+        CSPAdmin = 8,
 
         /// <summary>
         /// SystemOperator
         /// </summary>
-        SystemOperator,
+        SystemOperator = 9,
 
         /// <summary>
         /// TechnicalSupportUser
         /// </summary>
-        TechnicalSupportUser,
+        TechnicalSupportUser = 10,
 
         /// <summary>
         /// TechnicalSupportAdmin
         /// </summary>
-        TechnicalSupportAdmin,
+        TechnicalSupportAdmin = 11,
 
         /// <summary>
         /// TreasuryUser
         /// </summary>
-        TreasuryUser,
+        TreasuryUser = 12,
 
         /// <summary>
         /// TreasuryAdmin
         /// </summary>
-        TreasuryAdmin,
+        TreasuryAdmin = 13,
 
         /// <summary>
         /// ComplianceUser
         /// </summary>
-        ComplianceUser,
+        ComplianceUser = 14,
 
         /// <summary>
         /// ComplianceAdmin
         /// </summary>
-        ComplianceAdmin,
+        ComplianceAdmin = 15,
 
         /// <summary>
         /// ProStoresOperator
         /// </summary>
-        ProStoresOperator,
+        ProStoresOperator = 16,
 
         /// <summary>
         /// CompanyUser
         /// </summary>
-        CompanyUser,
+        CompanyUser = 17,
 
         /// <summary>
         /// CompanyAdmin
         /// </summary>
-        CompanyAdmin,
+        CompanyAdmin = 18,
 
         /// <summary>
         /// ComplianceTempUser
         /// </summary>
-        ComplianceTempUser,
+        ComplianceTempUser = 19,
 
         /// <summary>
         /// ComplianceRootUser
         /// </summary>
-        ComplianceRootUser,
+        ComplianceRootUser = 20,
 
         /// <summary>
         /// ComplianceOperator
         /// </summary>
-        ComplianceOperator,
+        ComplianceOperator = 21,
 
         /// <summary>
         /// SSTAdmin
         /// </summary>
-        SSTAdmin,
+        SSTAdmin = 22,
+
+        /// <summary>
+        /// FirmUser
+        /// </summary>
+        FirmUser = 23,
+
+        /// <summary>
+        /// FirmAdmin
+        /// </summary>
+        FirmAdmin = 24,
 
     }
 }

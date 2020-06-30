@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -38,12 +37,16 @@ namespace Avalara.AvaTax.RestClient
         public String vatRegistrationId { get; set; }
 
         /// <summary>
-        /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your 
+        /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your
         /// Social Security Number if you are an individual.
-        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services, 
-        /// but it is optional if you do not subscribe to either of those services.
+        /// This value is required if the address provided is inside the US and if you subscribed to the Avalara Managed Returns or SST Certified Service Provider service. Otherwise it is optional.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
+
+        /// <summary>
+        /// Set this field to true if the taxPayerIdNumber is a FEIN.
+        /// </summary>
+        public Boolean? isFein { get; set; }
 
         /// <summary>
         /// Address Line1
@@ -67,12 +70,12 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the region within the country.
-        /// 
+        ///  
         /// This field supports many different region identifiers:
         ///  * Two and three character ISO 3166 region codes
         ///  * Fully spelled out names of the region in ISO supported languages
         ///  * Common alternative spellings for many regions
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
@@ -84,13 +87,13 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the country.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
         /// </summary>
         public String country { get; set; }

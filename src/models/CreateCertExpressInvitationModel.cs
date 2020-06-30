@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -27,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
     public class CreateCertExpressInvitationModel
     {
         /// <summary>
-        /// If the value of `deliveryMethod` is set to `Email`, please specify the email address of the recipient 
+        /// If the value of `deliveryMethod` is set to `Email`, please specify the email address of the recipient
         /// for the request.
         /// </summary>
         public String recipient { get; set; }
@@ -39,10 +38,10 @@ namespace Avalara.AvaTax.RestClient
         public String coverLetterTitle { get; set; }
 
         /// <summary>
-        /// You may optionally specify a list of exposure zones to request in this CertExpress invitation. If you list 
-        /// more than one exposure zone, the customer will be prompted to provide an exemption certificate for each one. 
+        /// You may optionally specify a list of exposure zones to request in this CertExpress invitation. If you list
+        /// more than one exposure zone, the customer will be prompted to provide an exemption certificate for each one.
         /// If you do not provide a list of exposure zones, the customer will be prompted to select an exposure zone.
-        /// 
+        ///  
         /// For a list of available exposure zones, please call `ListCertificateExposureZones`.
         /// </summary>
         public List<Int32> exposureZones { get; set; }
@@ -50,17 +49,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// You may optionally specify a list of exemption reasons to pre-populate in this CertExpress invitation.
         /// If you list exemption reasons, the customer will have part of their form already filled in when they visit
-        /// the CertExpress website. 
-        /// 
+        /// the CertExpress website.
+        ///  
         /// For a list of available exemption reasons, please call `ListCertificateExemptReasons`.
         /// </summary>
         public List<Int32> exemptReasons { get; set; }
 
         /// <summary>
         /// Specify the type of invitation. CertExpress invitations can be delivered via email, web link, or
-        /// facsimile. 
-        /// 
-        /// * If you specify `Email`, the invitation will be delivered via email. Please ask the customer to ensure that 
+        /// facsimile.
+        ///  
+        /// * If you specify `Email`, the invitation will be delivered via email. Please ask the customer to ensure that
         /// * If you specify `Fax`, the invitation will be sent via fax to the customer's fax number on file.
         /// * If you specify `Download`, the invitation will be prepared as a web link that you can display to the customer.
         /// </summary>

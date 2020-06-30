@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -60,7 +59,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The tax type of this tax.
         /// </summary>
-        public TaxType? taxType { get; set; }
+        public String taxType { get; set; }
+
+        /// <summary>
+        /// The tax subtype of this tax.
+        /// </summary>
+        public String taxSubType { get; set; }
 
         /// <summary>
         /// The name of the tax.
@@ -73,7 +77,8 @@ namespace Avalara.AvaTax.RestClient
         public String taxGroup { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) Indicates the tax rate type. Please use rateTypeCode instead.
+        /// DEPRECATED - Date: 3/1/2018, Version: 18.3, Message: Please use rateTypeCode instead.
+        /// Indicates the tax rate type.
         /// </summary>
         public RateType? rateType { get; set; }
 

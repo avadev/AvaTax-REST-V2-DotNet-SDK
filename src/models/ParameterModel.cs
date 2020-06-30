@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -28,7 +27,7 @@ namespace Avalara.AvaTax.RestClient
         public Int64? id { get; set; }
 
         /// <summary>
-        /// DEPRECATED
+        /// DEPRECATED - Date: 07/25/2018, Version: 18.7, Message: This field is deprecated and will return null.
         /// The category grouping of this parameter. When your user interface displays a large number of parameters, they should
         /// be grouped by their category value.
         /// </summary>
@@ -56,15 +55,14 @@ namespace Avalara.AvaTax.RestClient
         public List<String> serviceTypes { get; set; }
 
         /// <summary>
-        /// DEPRECATED
+        /// DEPRECATED - Date: 07/25/2018, Version: 18.7, Message: This field is deprecated and will return null.
         /// The prompt you should use when displaying this parameter to a user. For example, if your user interface displays a
         /// parameter in a text box, this is the label you should use to identify that text box.
         /// </summary>
         public String prompt { get; set; }
 
         /// <summary>
-        /// DEPRECATED 
-        /// 
+        /// DEPRECATED - Date: 07/25/2018, Version: 18.7, Message: This field is deprecated and will return null.
         /// If your user interface permits client-side validation of parameters, this string is a regular expression you can use
         /// to validate the user's data entry prior to submitting a tax request.
         /// </summary>

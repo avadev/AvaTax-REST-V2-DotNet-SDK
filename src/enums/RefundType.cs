@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,22 +22,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Refund the whole transaction.
         /// </summary>
-        Full,
+        Full = 0,
 
         /// <summary>
         /// Refund only specific lines from the original a transaction.
         /// </summary>
-        Partial,
+        Partial = 1,
 
         /// <summary>
         /// Only refund the tax part of the transaction.
         /// </summary>
-        TaxOnly,
+        TaxOnly = 2,
 
         /// <summary>
         /// Refund a percentage of the value of this transaction.
         /// </summary>
-        Percentage,
+        Percentage = 3,
 
     }
 }

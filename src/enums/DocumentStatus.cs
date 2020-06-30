@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -27,13 +26,13 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This document has not been recorded to AvaTax
         /// </summary>
-        Temporary,
+        Temporary = 0,
 
         /// <summary>
         /// Saved document (SalesInvoice or PurchaseInvoice) ready to be posted.
         ///  
         ///  This status indicates that the transaction has been saved to AvaTax, but is not available
-        ///  to be reported on a tax filing, and has not yet been verified by a business process that 
+        ///  to be reported on a tax filing, and has not yet been verified by a business process that
         ///  posts transactions.
         ///  
         ///  To mark this transaction as `Posted`, please call `VerifyTransaction` or `SettleTransaction`.
@@ -43,7 +42,7 @@ namespace Avalara.AvaTax.RestClient
         ///  To adjust or void this transaction, call `AdjustTransaction`, `CreateOrAdjustTransaction`, or
         ///  `VoidTransaction`.
         /// </summary>
-        Saved,
+        Saved = 1,
 
         /// <summary>
         /// A posted document (not committed).
@@ -56,7 +55,7 @@ namespace Avalara.AvaTax.RestClient
         ///  To adjust or void this transaction, call `AdjustTransaction`, `CreateOrAdjustTransaction`, or
         ///  `VoidTransaction`.
         /// </summary>
-        Posted,
+        Posted = 2,
 
         /// <summary>
         /// A posted document that has been committed.
@@ -68,10 +67,10 @@ namespace Avalara.AvaTax.RestClient
         ///  on a tax return. When this occurs, the transaction's `locked` flag will be set to true. Once
         ///  the transaction is locked, no further changes may occur.
         ///  
-        ///  As long as the transaction has not been locked, you may adjust or void this transaction using 
+        ///  As long as the transaction has not been locked, you may adjust or void this transaction using
         ///  `AdjustTransaction`, `CreateOrAdjustTransaction`, or `VoidTransaction`.
         /// </summary>
-        Committed,
+        Committed = 3,
 
         /// <summary>
         /// A document that has been cancelled.
@@ -79,10 +78,10 @@ namespace Avalara.AvaTax.RestClient
         ///  This status indicates that the transaction has been cancelled or voided. Cancelled and Voided
         ///  are synonyms.
         ///  
-        ///  When a transaction has been cancelled, it is considered to no longer exist. You are free to create 
+        ///  When a transaction has been cancelled, it is considered to no longer exist. You are free to create
         ///  a new transaction with the same code.
         /// </summary>
-        Cancelled,
+        Cancelled = 4,
 
         /// <summary>
         /// An older version of a document that has been adjusted.
@@ -91,12 +90,12 @@ namespace Avalara.AvaTax.RestClient
         ///  of the new document. The old document is changed to the status `Adjusted`, and the new document
         ///  is created in the status you requested.
         /// </summary>
-        Adjusted,
+        Adjusted = 5,
 
         /// <summary>
         /// DEPRECATED - A document which is queued for later processing.
         /// </summary>
-        Queued,
+        Queued = 6,
 
         /// <summary>
         /// Indicates that this document requires approval from a governmental agency before it can be finalized.
@@ -105,13 +104,13 @@ namespace Avalara.AvaTax.RestClient
         ///  detects that a transaction must be verified with a governmental agency, this transaction will be flagged
         ///  as `PendingApproval` until the government has certified the transaction.
         /// </summary>
-        PendingApproval,
+        PendingApproval = 7,
 
         /// <summary>
-        /// DEPRECATED - Represents "a document in any status" when searching. Please search using the 
+        /// DEPRECATED - Represents "a document in any status" when searching. Please search using the
         ///  [Filtering in REST](/avatax/filtering-in-rest/) documentation.
         /// </summary>
-        Any,
+        Any = -1,
 
     }
 }

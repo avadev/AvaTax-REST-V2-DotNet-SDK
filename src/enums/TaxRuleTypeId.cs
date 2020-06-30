@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,28 +22,28 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Reserved for Avalara internal usage.
         /// </summary>
-        RateRule,
+        RateRule = 0,
 
         /// <summary>
         /// Specifies a rule that changes the rate of tax for a specified set of criteria.
         ///  
         ///  This rule can apply to one specific type of product (identified by `TaxCode`) or all products (identified by a null `TaxCode`).
         /// </summary>
-        RateOverrideRule,
+        RateOverrideRule = 1,
 
         /// <summary>
         /// Specifies a rule that changes the tax base of a specific product.
         ///  
         ///  This rule can apply to one specific type of product (identified by `TaxCode`) or all products (identified by a null `TaxCode`).
         /// </summary>
-        BaseRule,
+        BaseRule = 2,
 
         /// <summary>
         /// Indicates that a particular product is exempt from tax due to an exempt usage reason.
         ///  
         ///  Amounts exempted by this rule are stored in the `exemptAmount` field on the transaction.
         /// </summary>
-        ExemptEntityRule,
+        ExemptEntityRule = 3,
 
         /// <summary>
         /// Specifies a rule that changes whether a product is taxable or not.
@@ -59,12 +58,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This type of rule can also determine the rate type for a product or to apply a cap or threshold.
         /// </summary>
-        ProductTaxabilityRule,
+        ProductTaxabilityRule = 4,
 
         /// <summary>
         /// Reserved for Avalara internal usage.
         /// </summary>
-        NexusRule,
+        NexusRule = 5,
 
     }
 }

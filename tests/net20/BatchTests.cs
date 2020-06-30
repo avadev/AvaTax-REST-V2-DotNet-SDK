@@ -170,12 +170,15 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 Assert.True((batchFetchResult.status.Value == BatchStatus.Errors || batchFetchResult.status.Value == BatchStatus.Completed),
                     $"BatchId: {batchResult[0].id} should either complete or error out.");
 
+                // Ensure that the number of records matches what we sent in.
+                Assert.AreEqual(9, batchFetchResult.currentRecord.Value);
+
                 // We should be able to get back the batch file we sent
                 var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
                 Assert.NotNull(fileResult);
 
                 // Compare what we got back with what we sent.
-                Assert.AreEqual(batchFetchResult.name + ".Input.CSV", fileResult.Filename);
+                Assert.AreEqual(batchFetchResult.name + ".Input.CSV; filename*=UTF-8''" + batchFetchResult.name + ".Input.CSV", fileResult.Filename);
                 Assert.AreEqual(batchFileModel.content, fileResult.Data);
                 Assert.AreEqual(batchFileModel.contentType, fileResult.ContentType);
 

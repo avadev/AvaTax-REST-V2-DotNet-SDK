@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -91,6 +90,16 @@ namespace Avalara.AvaTax.RestClient
         /// Specifies whether transactions created by this data source needs to re-calculate tax or not
         /// </summary>
         public Boolean? recalculate { get; set; }
+
+        /// <summary>
+        /// Specifies the name of the extractor
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// Specifies any implementation-specific information along with the DataSource.This field has no internal meaning in AvaTax and is purely for the convenience of the DataSource API user
+        /// </summary>
+        public String externalState { get; set; }
 
 
         /// <summary>

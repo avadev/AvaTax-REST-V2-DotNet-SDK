@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -24,17 +23,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Street address precision
         /// </summary>
-        Address,
+        Address = 0,
 
         /// <summary>
         /// 9-digit zip precision
         /// </summary>
-        Zip9,
+        Zip9 = 1,
 
         /// <summary>
         /// 5-digit zip precision
         /// </summary>
-        Zip5,
+        Zip5 = 2,
 
     }
 }

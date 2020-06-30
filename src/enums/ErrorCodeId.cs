@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,1337 +22,1599 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Server has a configuration or setup problem
         /// </summary>
-        ServerConfiguration,
+        ServerConfiguration = 1,
 
         /// <summary>
         /// User doesn't have rights to this account or company
         /// </summary>
-        AccountInvalidException,
+        AccountInvalidException = 2,
 
         /// <summary>
         /// 
         /// </summary>
-        CompanyInvalidException,
+        CompanyInvalidException = 3,
 
         /// <summary>
         /// Use this error message when the user is trying to fetch a single object and the object either does not exist or cannot be seen by the current user.
         /// </summary>
-        EntityNotFoundError,
+        EntityNotFoundError = 4,
 
         /// <summary>
         /// 
         /// </summary>
-        ValueRequiredError,
+        ValueRequiredError = 5,
 
         /// <summary>
         /// 
         /// </summary>
-        RangeError,
+        RangeError = 6,
 
         /// <summary>
         /// 
         /// </summary>
-        RangeCompareError,
+        RangeCompareError = 7,
 
         /// <summary>
         /// 
         /// </summary>
-        RangeSetError,
+        RangeSetError = 8,
 
         /// <summary>
         /// 
         /// </summary>
-        TaxpayerNumberRequired,
+        TaxpayerNumberRequired = 9,
 
         /// <summary>
         /// 
         /// </summary>
-        EntityLimitExceeded,
+        EntityLimitExceeded = 10,
 
         /// <summary>
         /// 
         /// </summary>
-        CommonPassword,
+        CommonPassword = 11,
 
         /// <summary>
         /// 
         /// </summary>
-        WeakPassword,
+        WeakPassword = 12,
 
         /// <summary>
         /// 
         /// </summary>
-        StringLengthError,
+        StringLengthError = 13,
 
         /// <summary>
         /// 
         /// </summary>
-        MaxStringLengthError,
+        MaxStringLengthError = 14,
 
         /// <summary>
         /// 
         /// </summary>
-        EmailValidationError,
+        EmailValidationError = 15,
 
         /// <summary>
         /// 
         /// </summary>
-        EmailMissingError,
+        EmailMissingError = 16,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserFieldNameError,
+        InvalidQueryField = 17,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserFieldValueError,
+        InvalidQueryValue = 18,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserSyntaxError,
+        SyntaxError = 19,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserTooManyParametersError,
+        TooManyParametersError = 20,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserUnterminatedValueError,
+        UnterminatedValueError = 21,
 
         /// <summary>
         /// 
         /// </summary>
-        DeleteUserSelfError,
+        DeleteUserSelfError = 22,
 
         /// <summary>
         /// 
         /// </summary>
-        OldPasswordInvalid,
+        OldPasswordInvalid = 23,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotChangePassword,
+        CannotChangePassword = 24,
 
         /// <summary>
         /// 
         /// </summary>
-        DateFormatError,
+        ReadOnly = 25,
 
         /// <summary>
         /// 
         /// </summary>
-        NoDefaultCompany,
+        DateFormatError = 26,
 
         /// <summary>
         /// 
         /// </summary>
-        AuthenticationException,
+        NoDefaultCompany = 27,
 
         /// <summary>
         /// 
         /// </summary>
-        AuthorizationException,
+        AccountTypeNotSupported = 28,
 
         /// <summary>
         /// 
         /// </summary>
-        ValidationException,
+        AuthenticationException = 30,
 
         /// <summary>
         /// 
         /// </summary>
-        InactiveUserError,
+        AuthorizationException = 31,
 
         /// <summary>
         /// 
         /// </summary>
-        AuthenticationIncomplete,
+        ValidationException = 32,
 
         /// <summary>
         /// 
         /// </summary>
-        BasicAuthIncorrect,
+        InactiveUserError = 33,
 
         /// <summary>
         /// 
         /// </summary>
-        IdentityServerError,
+        AuthenticationIncomplete = 34,
 
         /// <summary>
         /// 
         /// </summary>
-        BearerTokenInvalid,
+        BasicAuthIncorrect = 35,
 
         /// <summary>
         /// 
         /// </summary>
-        ModelRequiredException,
+        IdentityServerError = 36,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountExpiredException,
+        BearerTokenInvalid = 37,
 
         /// <summary>
         /// 
         /// </summary>
-        VisibilityError,
+        ModelRequiredException = 38,
 
         /// <summary>
         /// 
         /// </summary>
-        BearerTokenNotSupported,
+        AccountExpiredException = 39,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidSecurityRole,
+        BearerTokenNotSupported = 41,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidRegistrarAction,
+        InvalidSecurityRole = 42,
 
         /// <summary>
         /// 
         /// </summary>
-        RemoteServerError,
+        InvalidRegistrarAction = 43,
 
         /// <summary>
         /// 
         /// </summary>
-        NoFilterCriteriaException,
+        RemoteServerError = 44,
 
         /// <summary>
         /// 
         /// </summary>
-        OpenClauseException,
+        NoFilterCriteriaException = 45,
 
         /// <summary>
         /// 
         /// </summary>
-        JsonFormatError,
+        OpenClauseException = 46,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDecimalValue,
+        JsonFormatError = 47,
 
         /// <summary>
         /// 
         /// </summary>
-        UnhandledException,
+        InvalidDecimalValue = 48,
 
         /// <summary>
         /// 
         /// </summary>
-        ReportingCompanyMustHaveContactsError,
+        PermissionRequired = 49,
 
         /// <summary>
         /// 
         /// </summary>
-        CompanyProfileNotSet,
+        UnhandledException = 50,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotAssignUserToCompany,
+        InactiveAccount = 51,
 
         /// <summary>
         /// 
         /// </summary>
-        MustAssignUserToCompany,
+        LinkageNotAllowed = 52,
 
         /// <summary>
         /// 
         /// </summary>
-        ModelStateInvalid,
+        LinkageStatusUpdateNotSupported = 53,
 
         /// <summary>
         /// 
         /// </summary>
-        DateRangeError,
+        ReportingCompanyMustHaveContactsError = 60,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDateRangeError,
+        CompanyProfileNotSet = 61,
 
         /// <summary>
         /// 
         /// </summary>
-        RuleMustHaveTaxCode,
+        CannotAssignUserToCompany = 62,
 
         /// <summary>
         /// 
         /// </summary>
-        RuleTypeRestricted,
+        MustAssignUserToCompany = 63,
 
         /// <summary>
         /// 
         /// </summary>
-        AllJurisRuleLimits,
+        InvalidTaxTypeMapping = 64,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidCompanyLocationSetting,
+        ModelStateInvalid = 70,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidAdjustmentType,
+        DateRangeError = 80,
 
         /// <summary>
         /// 
         /// </summary>
-        DeleteInformation,
+        InvalidDateRangeError = 81,
 
         /// <summary>
         /// 
         /// </summary>
-        OutOfRange,
+        RuleMustHaveTaxCode = 82,
 
         /// <summary>
         /// 
         /// </summary>
-        UnspecifiedTimeZone,
+        RuleTypeRestricted = 83,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotCreateDeletedObjects,
+        InvalidCompanyLocationSetting = 85,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotModifyDeletedObjects,
+        InvalidAdjustmentType = 99,
 
         /// <summary>
         /// 
         /// </summary>
-        ReturnNameNotFound,
+        DeleteInformation = 100,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidAddressTypeAndCategory,
+        OutOfRange = 118,
 
         /// <summary>
         /// 
         /// </summary>
-        DefaultCompanyLocation,
+        UnspecifiedTimeZone = 119,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidCountry,
+        CannotCreateDeletedObjects = 120,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidCountryRegion,
+        CannotModifyDeletedObjects = 121,
 
         /// <summary>
         /// 
         /// </summary>
-        BrazilValidationError,
+        ReturnNameNotFound = 122,
 
         /// <summary>
         /// 
         /// </summary>
-        BrazilExemptValidationError,
+        InvalidAddressTypeAndCategory = 123,
 
         /// <summary>
         /// 
         /// </summary>
-        BrazilPisCofinsError,
+        DefaultCompanyLocation = 124,
 
         /// <summary>
         /// 
         /// </summary>
-        JurisdictionNotFoundError,
+        InvalidCountry = 125,
 
         /// <summary>
         /// 
         /// </summary>
-        MedicalExciseError,
+        InvalidCountryRegion = 126,
 
         /// <summary>
         /// 
         /// </summary>
-        RateDependsTaxabilityError,
+        BrazilValidationError = 127,
 
         /// <summary>
         /// 
         /// </summary>
-        RateDependsEuropeError,
+        BrazilExemptValidationError = 128,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidRateTypeCode,
+        BrazilPisCofinsError = 129,
 
         /// <summary>
         /// 
         /// </summary>
-        RateTypeNotSupported,
+        JurisdictionNotFoundError = 130,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotUpdateNestedObjects,
+        MedicalExciseError = 131,
 
         /// <summary>
         /// 
         /// </summary>
-        UPCCodeInvalidChars,
+        RateDependsTaxabilityError = 132,
 
         /// <summary>
         /// 
         /// </summary>
-        UPCCodeInvalidLength,
+        InvalidRateTypeCode = 134,
 
         /// <summary>
         /// 
         /// </summary>
-        IncorrectPathError,
+        RateTypeNotSupported = 135,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidJurisdictionType,
+        CannotUpdateNestedObjects = 136,
 
         /// <summary>
         /// 
         /// </summary>
-        MustConfirmResetLicenseKey,
+        UPCCodeInvalidChars = 137,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateCompanyCode,
+        UPCCodeInvalidLength = 138,
 
         /// <summary>
         /// 
         /// </summary>
-        TINFormatError,
+        IncorrectPathError = 139,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateNexusError,
+        InvalidJurisdictionType = 140,
 
         /// <summary>
         /// 
         /// </summary>
-        UnknownNexusError,
+        MustConfirmResetLicenseKey = 141,
 
         /// <summary>
         /// 
         /// </summary>
-        ParentNexusNotFound,
+        DuplicateCompanyCode = 142,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidTaxCodeType,
+        TINFormatError = 143,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotActivateCompany,
+        DuplicateNexusError = 144,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateEntityProperty,
+        UnknownNexusError = 145,
 
         /// <summary>
         /// 
         /// </summary>
-        ReportingEntityError,
+        ParentNexusNotFound = 146,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidReturnOperationError,
+        InvalidTaxCodeType = 147,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotDeleteCompany,
+        CannotActivateCompany = 148,
 
         /// <summary>
         /// 
         /// </summary>
-        CountryOverridesNotAvailable,
+        DuplicateEntityProperty = 149,
 
         /// <summary>
         /// 
         /// </summary>
-        JurisdictionOverrideMismatch,
+        ReportingEntityError = 150,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateSystemTaxCode,
+        InvalidReturnOperationError = 151,
 
         /// <summary>
         /// 
         /// </summary>
-        SSTOverridesNotAvailable,
+        CannotDeleteCompany = 152,
 
         /// <summary>
         /// 
         /// </summary>
-        NexusDateMismatch,
+        CountryOverridesNotAvailable = 153,
 
         /// <summary>
         /// 
         /// </summary>
-        NexusParentDateMismatch,
+        JurisdictionOverrideMismatch = 154,
 
         /// <summary>
         /// 
         /// </summary>
-        BearerTokenParseUserIdError,
+        DuplicateSystemTaxCode = 155,
 
         /// <summary>
         /// 
         /// </summary>
-        RetrieveUserError,
+        NexusDateMismatch = 157,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidConfigurationSetting,
+        NexusParentDateMismatch = 159,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidConfigurationValue,
+        BearerTokenParseUserIdError = 160,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidEnumValue,
+        RetrieveUserError = 161,
 
         /// <summary>
         /// 
         /// </summary>
-        TaxCodeAssociatedTaxRule,
+        InvalidConfigurationSetting = 162,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotSwitchAccountId,
+        InvalidConfigurationValue = 163,
 
         /// <summary>
         /// 
         /// </summary>
-        RequestIncomplete,
+        InvalidEnumValue = 164,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountNotNew,
+        TaxCodeAssociatedTaxRule = 165,
 
         /// <summary>
         /// 
         /// </summary>
-        PasswordLengthInvalid,
+        CannotSwitchAccountId = 166,
 
         /// <summary>
         /// 
         /// </summary>
-        LocalNexusConflict,
+        RequestIncomplete = 167,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidEcmsOverrideCode,
+        AccountNotNew = 168,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountDoesNotExist,
+        PasswordLengthInvalid = 169,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidTaxType,
+        InvalidPageKey = 170,
 
         /// <summary>
         /// 
         /// </summary>
-        IncorrectFieldValue,
+        InvalidEcmsOverrideCode = 171,
 
         /// <summary>
         /// 
         /// </summary>
-        LeadingOrTrailingException,
+        AccountDoesNotExist = 172,
 
         /// <summary>
         /// 
         /// </summary>
-        NotEnoughAddressesInfo,
+        InvalidTaxType = 173,
 
         /// <summary>
         /// 
         /// </summary>
-        ReportNotInitiated,
+        IncorrectFieldValue = 174,
 
         /// <summary>
         /// 
         /// </summary>
-        FailedToBuildReport,
+        LeadingOrTrailingException = 175,
 
         /// <summary>
         /// 
         /// </summary>
-        ReportNotFinished,
+        NotEnoughAddressesInfo = 176,
 
         /// <summary>
         /// 
         /// </summary>
-        FailedToDownloadReport,
+        ReportNotInitiated = 177,
 
         /// <summary>
         /// 
         /// </summary>
-        MalformedFilterException,
+        FailedToBuildReport = 178,
 
         /// <summary>
         /// 
         /// </summary>
-        ExpectedConjunctionError,
+        ReportNotFinished = 179,
 
         /// <summary>
         /// 
         /// </summary>
-        CriteriaNotSupportedError,
+        FailedToDownloadReport = 181,
 
         /// <summary>
         /// 
         /// </summary>
-        CompanyAccountAndParentAccountMismatch,
+        MalformedFilterException = 182,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidFileContentType,
+        ExpectedConjunctionError = 183,
 
         /// <summary>
         /// 
         /// </summary>
-        RequestTooLarge,
+        CriteriaNotSupportedError = 184,
 
         /// <summary>
         /// 
         /// </summary>
-        EcmsDisabled,
+        CompanyAccountAndParentAccountMismatch = 185,
 
         /// <summary>
         /// 
         /// </summary>
-        UnknownConjunctionError,
+        InvalidFileContentType = 186,
 
         /// <summary>
         /// 
         /// </summary>
-        NoLinesDiscounted,
+        RequestTooLarge = 187,
 
         /// <summary>
         /// 
         /// </summary>
-        FailedToDelete,
+        EcmsDisabled = 188,
 
         /// <summary>
         /// 
         /// </summary>
-        CircularCompanyHierarchies,
+        UnknownConjunctionError = 189,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateEntry,
+        NoLinesDiscounted = 190,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateFieldNameInOrderBy,
+        FailedToDelete = 191,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotAdjustDocumentType,
+        CircularCompanyHierarchies = 192,
 
         /// <summary>
         /// 
         /// </summary>
-        UserNoAccess,
+        DuplicateEntry = 193,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidEntry,
+        DuplicateFieldNameInOrderBy = 194,
 
         /// <summary>
         /// 
         /// </summary>
-        TransactionAlreadyCancelled,
+        CannotAdjustDocumentType = 195,
 
         /// <summary>
         /// 
         /// </summary>
-        QueryParameterOutOfRange,
+        UserNoAccess = 196,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidEntry = 197,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TransactionAlreadyCancelled = 198,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        QueryParameterOutOfRange = 199,
 
         /// <summary>
         /// Batch errors
+        ///  New batch error codes continue at 2501
         /// </summary>
-        BatchSalesAuditMustBeZippedError,
+        BatchSalesAuditMustBeZippedError = 200,
 
         /// <summary>
         /// 
         /// </summary>
-        BatchZipMustContainOneFileError,
+        BatchZipMustContainOneFileError = 201,
 
         /// <summary>
         /// 
         /// </summary>
-        BatchInvalidFileTypeError,
+        BatchInvalidFileTypeError = 202,
 
         /// <summary>
         /// 
         /// </summary>
-        BatchCannotSaveBatchFile,
+        BatchCannotSaveBatchFile = 203,
 
         /// <summary>
         /// 
         /// </summary>
-        BatchCannotGetBatchFile,
+        BatchCannotGetBatchFile = 204,
 
         /// <summary>
         /// 
         /// </summary>
-        BatchCannotDeleteBatchFile,
+        BatchCannotDeleteBatchFile = 205,
 
         /// <summary>
         /// 
         /// </summary>
-        BatchMustContainOneFile,
+        BatchMustContainOneFile = 206,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingBatchFileContent,
+        MissingBatchFileContent = 207,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotBeDeletedWhileProcessing = 208,
+
+        /// <summary>
+        /// BizTech error
+        /// </summary>
+        InternalServerError = 209,
 
         /// <summary>
         /// Point Of Sale API exceptions
         /// </summary>
-        PointOfSaleFileSize,
+        PointOfSaleFileSize = 250,
 
         /// <summary>
         /// 
         /// </summary>
-        PointOfSaleSetup,
+        PointOfSaleSetup = 251,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidInputDate,
+        InvalidInputDate = 252,
 
         /// <summary>
         /// Errors in Soap V1 Passthrough / GetTax calls
         /// </summary>
-        GetTaxError,
+        GetTaxError = 300,
 
         /// <summary>
         /// 
         /// </summary>
-        AddressConflictException,
+        AddressConflictException = 301,
 
         /// <summary>
         /// 
         /// </summary>
-        DocumentCodeConflict,
+        DocumentCodeConflict = 303,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingAddress,
+        MissingAddress = 304,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidParameterValue,
+        InvalidParameterValue = 306,
 
         /// <summary>
         /// 
         /// </summary>
-        DocumentFetchLimit,
+        FetchLimit = 308,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidAddress,
+        InvalidAddress = 309,
 
         /// <summary>
         /// 
         /// </summary>
-        AddressLocationNotFound,
+        AddressLocationNotFound = 310,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingLine,
+        MissingLine = 311,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidAddressTextCase,
+        InvalidAddressTextCase = 312,
 
         /// <summary>
         /// 
         /// </summary>
-        DocumentNotCommitted,
+        DocumentNotCommitted = 313,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDocumentTypesToFetch,
+        InvalidDocumentTypesToFetch = 315,
 
         /// <summary>
         /// 
         /// </summary>
-        TimeoutRequested,
+        TimeoutRequested = 316,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidPostalCode,
+        InvalidPostalCode = 317,
 
         /// <summary>
         /// Subscription error codes
         /// </summary>
-        InvalidSubscriptionDescription,
+        InvalidSubscriptionDescription = 318,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidSubscriptionTypeId,
+        InvalidSubscriptionTypeId = 319,
 
         /// <summary>
         /// Represents a malformed document fetch command
         /// </summary>
-        CannotChangeFilingStatus,
+        CannotChangeFilingStatus = 401,
+
+        /// <summary>
+        /// Represents a FEIN in incorrect format.
+        /// </summary>
+        FEINFormatError = 402,
 
         /// <summary>
         /// Represents a SQL server timeout error / deadlock error
         /// </summary>
-        ServerUnreachable,
+        ServerUnreachable = 500,
 
         /// <summary>
         /// Partner API error codes
         /// </summary>
-        SubscriptionRequired,
+        SubscriptionRequired = 600,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountExists,
+        AccountExists = 601,
 
         /// <summary>
         /// 
         /// </summary>
-        InvitationOnly,
+        InvitationOnly = 602,
 
         /// <summary>
         /// 
         /// </summary>
-        FreeTrialNotAvailable,
+        FreeTrialNotAvailable = 606,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountExistsDifferentEmail,
+        AccountExistsDifferentEmail = 607,
 
         /// <summary>
         /// 
         /// </summary>
-        AvalaraIdentityApiError,
+        AvalaraIdentityApiError = 608,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidIPAddress,
+        InvalidIPAddress = 609,
 
         /// <summary>
         /// 
         /// </summary>
-        OfferCodeAlreadyApplied,
+        OfferCodeAlreadyApplied = 610,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccountAlreadyExists = 611,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LicenseKeyNameAlreadyExistsForAccount = 612,
 
         /// <summary>
         /// Refund API error codes
         /// </summary>
-        InvalidDocumentStatusForRefund,
+        RefundTypeAndPercentageMismatch = 701,
 
         /// <summary>
         /// 
         /// </summary>
-        RefundTypeAndPercentageMismatch,
+        InvalidDocumentTypeForRefund = 702,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDocumentTypeForRefund,
+        RefundTypeAndLineMismatch = 703,
 
         /// <summary>
         /// 
         /// </summary>
-        RefundTypeAndLineMismatch,
+        RefundLinesRequired = 704,
 
         /// <summary>
         /// 
         /// </summary>
-        RefundLinesRequired,
+        InvalidRefundType = 705,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidRefundType,
+        RefundPercentageForTaxOnly = 706,
 
         /// <summary>
         /// 
         /// </summary>
-        RefundPercentageForTaxOnly,
+        LineNoOutOfRange = 707,
 
         /// <summary>
         /// 
         /// </summary>
-        LineNoOutOfRange,
+        RefundPercentageOutOfRange = 708,
 
         /// <summary>
         /// 
         /// </summary>
-        RefundPercentageOutOfRange,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        RefundPercentageMissing,
+        RefundPercentageMissing = 709,
 
         /// <summary>
         /// Free API error codes
         /// </summary>
-        MustUseCreateTransaction,
+        MustUseCreateTransaction = 800,
 
         /// <summary>
         /// 
         /// </summary>
-        MustAcceptTermsAndConditions,
+        MustAcceptTermsAndConditions = 801,
 
         /// <summary>
         /// Filing Calendar Error Codes
         /// </summary>
-        FilingCalendarCannotBeDeleted,
+        FilingCalendarCannotBeDeleted = 900,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidEffectiveDate,
+        InvalidEffectiveDate = 901,
 
         /// <summary>
         /// 
         /// </summary>
-        NonOutletForm,
+        NonOutletForm = 902,
 
         /// <summary>
         /// 
         /// </summary>
-        OverlappingFilingCalendar,
+        OverlappingFilingCalendar = 903,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FilingCalendarCannotBeEdited = 904,
 
         /// <summary>
         /// Create or update transaction error codes
         /// </summary>
-        CannotModifyLockedTransaction,
+        CannotModifyLockedTransaction = 1100,
 
         /// <summary>
         /// 
         /// </summary>
-        LineAlreadyExists,
+        LineAlreadyExists = 1101,
 
         /// <summary>
         /// 
         /// </summary>
-        LineDoesNotExist,
+        LineDoesNotExist = 1102,
 
         /// <summary>
         /// 
         /// </summary>
-        LinesNotSpecified,
+        LinesNotSpecified = 1103,
 
         /// <summary>
         /// 
         /// </summary>
-        LineDetailsDoesNotExist,
+        LineDetailsDoesNotExist = 1104,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotCreateTransactionWithDeletedDataSource,
+        CannotCreateTransactionWithDeletedDataSource = 1105,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShipToRegionRequiredWithDataSource = 1106,
 
         /// <summary>
         /// Exempt cert error codes
         /// </summary>
-        InvalidBusinessType,
+        InvalidBusinessType = 1200,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotModifyExemptCert,
+        CannotModifyExemptCert = 1201,
 
         /// <summary>
         /// 
         /// </summary>
-        CertificatesError,
+        CertificatesError = 1203,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingRequiredFields,
+        MissingRequiredFields = 1204,
 
         /// <summary>
         /// 
         /// </summary>
-        CertificatesNotSetup,
+        CertificatesNotSetup = 1205,
 
         /// <summary>
         /// 
         /// </summary>
-        AddRelationshipsError,
+        ConflictingExposureZone = 1208,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingExposureZone,
+        MissingFieldToCreateExposureZone = 1209,
 
         /// <summary>
         /// 
         /// </summary>
-        ConflictingExposureZone,
+        MissingExemptReason = 1210,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingFieldToCreateExposureZone,
+        InvalidExemptReason = 1211,
 
         /// <summary>
         /// 
         /// </summary>
-        MissingExemptReason,
+        InvalidExemptionOperation = 1212,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidExemptReason,
+        ConflictingFields = 1213,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidExemptionOperation,
+        InvalidPdfOrImageFile = 1214,
 
         /// <summary>
         /// 
         /// </summary>
-        ConflictingFields,
+        InvalidCoverLetterTitle = 1215,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidPdfOrImageFile,
+        AccountNotProvisioned = 1216,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidCoverLetterTitle,
+        InvalidRequestContentType = 1217,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountNotProvisioned,
+        ExemptionPaginationLimits = 1218,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidRequestContentType,
+        ExemptionSortLimits = 1219,
 
         /// <summary>
         /// 
         /// </summary>
-        ExemptionPaginationLimits,
+        CustomerCantBeBothShipToAndBillTo = 1220,
 
         /// <summary>
         /// 
         /// </summary>
-        ExemptionSortLimits,
+        BillToCustomerExpected = 1221,
 
         /// <summary>
         /// 
         /// </summary>
-        CustomerCantBeBothShipToAndBillTo,
+        ShipToCustomerExpected = 1222,
 
         /// <summary>
         /// 
         /// </summary>
-        BillToCustomerExpected,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ShipToCustomerExpected,
+        EcmsSstCertsRequired = 1223,
 
         /// <summary>
         /// Multi document error codes
         /// </summary>
-        TransactionNotCancelled,
+        TransactionNotCancelled = 1300,
 
         /// <summary>
         /// 
         /// </summary>
-        TooManyTransactions,
+        TooManyTransactions = 1301,
 
         /// <summary>
         /// 
         /// </summary>
-        OnlyTaxDateOverrideIsAllowed,
+        OnlyTaxDateOverrideIsAllowed = 1302,
 
         /// <summary>
         /// 
         /// </summary>
-        TransactionAlreadyExists,
+        TransactionAlreadyExists = 1303,
 
         /// <summary>
         /// 
         /// </summary>
-        DateMismatch,
+        DateMismatch = 1305,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDocumentStatusForVerify,
+        InvalidDocumentStatusForVerify = 1306,
 
         /// <summary>
         /// 
         /// </summary>
-        TotalAmountMismatch,
+        TotalAmountMismatch = 1307,
 
         /// <summary>
         /// 
         /// </summary>
-        TotalTaxMismatch,
+        TotalTaxMismatch = 1308,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDocumentStatusForCommit,
+        InvalidDocumentType = 1310,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidDocumentType,
+        MultiDocumentPartiallyLocked = 1312,
 
         /// <summary>
         /// 
         /// </summary>
-        MultiDocumentPartiallyLocked,
+        TransactionIsCommitted = 1313,
 
         /// <summary>
         /// 
         /// </summary>
-        TransactionIsCommitted,
+        InvalidDocumentStatus = 1314,
 
         /// <summary>
         /// Communications Tax error codes
         /// </summary>
-        CommsConfigClientIdMissing,
+        CommsConfigClientIdMissing = 1400,
 
         /// <summary>
         /// 
         /// </summary>
-        CommsConfigClientIdBadValue,
+        CommsConfigClientIdBadValue = 1401,
 
         /// <summary>
         /// Account Activate error codes
         /// </summary>
-        AccountInNewStatusException,
+        AccountInNewStatusException = 1404,
 
         /// <summary>
         /// Worksheet Exception
         /// </summary>
-        WorksheetException,
+        WorksheetException = 1405,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidAccountOverride,
+        InvalidAccountOverride = 1406,
 
         /// <summary>
         /// 
         /// </summary>
-        AccountOverrideNotAuthorized,
+        AccountOverrideNotAuthorized = 1407,
 
         /// <summary>
         /// 
         /// </summary>
-        ParserFieldNotQueryableError,
+        FieldNotQueryableError = 1408,
 
         /// <summary>
         /// 
         /// </summary>
-        UsernameRequired,
+        UsernameRequired = 1409,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidAuditMessage,
+        InvalidAuditMessage = 1410,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FieldNotOrderableError = 1411,
 
         /// <summary>
         /// Nexus validation error codes
         /// </summary>
-        CannotDeleteParentBeforeChildNexus,
+        CannotDeleteParentBeforeChildNexus = 1500,
 
         /// <summary>
         /// 
         /// </summary>
-        NexusChildDateMismatch,
+        NexusChildDateMismatch = 1501,
 
         /// <summary>
         /// Remote validation Error
         /// </summary>
-        RemoteValidationError,
+        RemoteValidationError = 1502,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotModifySstNexus = 1503,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidLocalNexusTypeId = 1504,
 
         /// <summary>
         /// Advanced rule errors
         /// </summary>
-        AdvancedRuleBadScript,
+        AdvancedRuleRequestRuleError = 1602,
 
         /// <summary>
         /// 
         /// </summary>
-        AdvancedRuleBadCsvTable,
+        AdvancedRuleResponseRuleError = 1603,
 
         /// <summary>
         /// 
         /// </summary>
-        AdvancedRuleRequestRuleError,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        AdvancedRuleResponseRuleError,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        AdvancedRuleNotApproved,
+        AdvancedRuleError = 1605,
 
         /// <summary>
         /// Miscellaneous
         /// </summary>
-        InvalidDocumentStatusToAddOrDeleteLines,
+        TaxRuleRequiresNexus = 1701,
 
         /// <summary>
         /// 
         /// </summary>
-        TaxRuleRequiresNexus,
+        UPCCodeNotUnique = 1702,
 
         /// <summary>
         /// 
         /// </summary>
-        UPCCodeNotUnique,
+        TaxCodeAssociatedWithItemCodeNotFound = 1704,
 
         /// <summary>
         /// 
         /// </summary>
-        CannotUpdateSourceOrInstance,
+        DuplicateSystemForItem = 1705,
 
         /// <summary>
         /// 
         /// </summary>
-        TaxCodeAssociatedWithItemCodeNotFound,
+        CannotDismissGlobalNotification = 1706,
 
         /// <summary>
         /// 
         /// </summary>
-        DuplicateSystemForItem,
+        CannotUpdateAccountTypeId = 1713,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxpayerNumberIsRequired = 1714,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RequestLimitExceeded = 1715,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ConcurrentRequestLimitExceeded = 1716,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidDocumentTypeForInspect = 1717,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ServiceNotReady = 1718,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UpdateLocationRemittanceMismatchTypeAndCategory = 1719,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UpdateLocationRemittanceCheckExistingEffectiveDateError = 1720,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UpdateLocationRemittanceCheckExistingEndDateError = 1721,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ErrorCountLimitExceededError = 1722,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RateLimitExceededError = 1723,
 
         /// <summary>
         /// SendSales API errors
         /// </summary>
-        UnsupportedFileFormat,
+        UnsupportedFileFormat = 1800,
 
         /// <summary>
         /// 
         /// </summary>
-        UnsupportedOutputFileType,
+        UnsupportedOutputFileType = 1801,
 
         /// <summary>
         /// TaxProfile API errors
         /// </summary>
-        TaxProfileNotProvided,
+        TaxProfileNotProvided = 1900,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidTaxProfile,
+        InvalidTaxProfile = 1901,
 
         /// <summary>
         /// 
         /// </summary>
-        CompanyTaxProfileEntryRequired,
+        CompanyTaxProfileEntryRequired = 1902,
 
         /// <summary>
         /// 
         /// </summary>
-        ErrorReadingTaxProfileEntry,
+        ErrorReadingTaxProfileEntry = 1903,
 
         /// <summary>
         /// AuditAccount API errors
         /// </summary>
-        TraceDataNotAvailable,
+        TraceDataNotAvailable = 2000,
 
         /// <summary>
-        /// Item parameter errors
+        /// Item and Nexus parameter errors
         /// </summary>
-        InvalidParameterUnitMeasurementType,
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ParameterUnitRequired,
+        InvalidParameterUnitMeasurementType = 2100,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidParameterValueDataType,
+        ParameterUnitRequired = 2101,
 
         /// <summary>
         /// 
         /// </summary>
-        InvalidParameterAttributeType,
+        InvalidParameterValueDataType = 2102,
 
         /// <summary>
         /// 
         /// </summary>
-        SubscriptionRequiredForParameter,
+        InvalidParameterAttributeType = 2103,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SubscriptionRequiredForParameter = 2104,
+
+        /// <summary>
+        /// Accounting Firm errors
+        /// </summary>
+        InvalidAccountType = 2105,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidFirmSubscriptions = 2106,
+
+        /// <summary>
+        /// Certify Company Errors
+        /// </summary>
+        GenericTaxCodeForItem = 2200,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotCertifyCompany = 2201,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoVoidedDocuments = 2202,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InadequateCommittedDocuments = 2203,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DocumentCodeIsGuid = 2204,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CustomerVendorCodeIsGuid = 2205,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InadequateDocumentLineCount = 2206,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SameDocumentDescription = 2207,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoExemptionNoOrCustomerUsageType = 2208,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InadequateUniqueAddresses = 2209,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ItemCodesAreAllSame = 2210,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxCodesAreAllSame = 2211,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LocationCodeNotUsed = 2212,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RepeatedLinesInDocument = 2213,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxDateOverrideAndNegativeLineAmount = 2214,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AllUSDCurrencyCodes = 2215,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoVATBuyerId = 2216,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AllUSCountryCodes = 2217,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoDocumentsToTest = 2218,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoShippingCharge = 2219,
+
+        /// <summary>
+        /// Company Controller Related Errors
+        /// </summary>
+        FailedToUpdateCompanyLocation = 2314,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CompanyLocationDateRangeOverlap = 2315,
+
+        /// <summary>
+        /// Generic validation errors
+        /// </summary>
+        FieldLengthError = 2400,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InputContainsBlacklistedCharacters = 2401,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotCreateNestedObjects = 2402,
+
+        /// <summary>
+        /// Batch errors
+        ///  For other batch errors, see: 200 - 208 above
+        /// </summary>
+        BatchTransactionTypeError = 2501,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchTransactionLineLimitExceeded = 2502,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCompanyIdAndCompanyCodeMismatch = 2503,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotBeCancelledStatusError = 2504,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchCannotBeCancelledFormatError = 2505,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidParameterDataType = 2600,
 
     }
 }

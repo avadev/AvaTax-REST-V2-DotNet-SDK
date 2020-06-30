@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -35,12 +34,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The current value of the field.
         /// </summary>
-        public Dictionary<string, string> oldValue { get; set; }
+        public object oldValue { get; set; }
 
         /// <summary>
         /// The new/proposed value of the field.
         /// </summary>
-        public Dictionary<string, string> newValue { get; set; }
+        public object newValue { get; set; }
 
 
         /// <summary>

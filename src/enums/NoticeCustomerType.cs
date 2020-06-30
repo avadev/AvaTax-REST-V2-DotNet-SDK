@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,27 +22,37 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// AvaTax Returns
         /// </summary>
-        AvaTaxReturns,
+        AvaTaxReturns = 1,
 
         /// <summary>
         /// Stand Alone
         /// </summary>
-        StandAlone,
+        StandAlone = 2,
 
         /// <summary>
         /// Strategic
         /// </summary>
-        Strategic,
+        Strategic = 3,
 
         /// <summary>
         /// SST
         /// </summary>
-        SST,
+        SST = 4,
 
         /// <summary>
         /// TrustFile
         /// </summary>
-        TrustFile,
+        TrustFile = 5,
+
+        /// <summary>
+        /// PWC
+        /// </summary>
+        PWC = 6,
+
+        /// <summary>
+        /// Hudson Group
+        /// </summary>
+        HudsonGroup = 7,
 
     }
 }

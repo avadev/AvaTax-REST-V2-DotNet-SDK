@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -22,24 +21,24 @@ namespace Avalara.AvaTax.RestClient
     public enum ReportDateFilter
     {
         /// <summary>
-        /// The date when the transaction is added to report
-        /// </summary>
-        ReportingDate,
-
-        /// <summary>
         /// The date when the transaction is posted
         /// </summary>
-        DocumentDate,
-
-        /// <summary>
-        /// The date when the transaction is being taxed
-        /// </summary>
-        TaxDate,
+        DocumentDate = 68,
 
         /// <summary>
         /// The date when the transaction is paid for
         /// </summary>
-        PaymentDate,
+        PaymentDate = 80,
+
+        /// <summary>
+        /// The date when the transaction is added to report
+        /// </summary>
+        ReportingDate = 82,
+
+        /// <summary>
+        /// The date when the transaction is being taxed
+        /// </summary>
+        TaxDate = 84,
 
     }
 }

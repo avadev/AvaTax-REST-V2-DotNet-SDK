@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -38,7 +37,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? subscriptionTypeId { get; set; }
 
         /// <summary>
-        /// A friendly description of the service that the account is subscribed to. You can either provide the subscription type Id or this but not both. If 
+        /// A friendly description of the service that the account is subscribed to. You can either provide the subscription type Id or this but not both. If
         /// subscription type Id is provided, then this information is ignored and this field will be updated with the information from subscription type id.
         /// </summary>
         public String subscriptionDescription { get; set; }

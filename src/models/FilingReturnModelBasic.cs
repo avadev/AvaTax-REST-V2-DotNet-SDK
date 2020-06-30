@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -63,15 +62,15 @@ namespace Avalara.AvaTax.RestClient
         public String region { get; set; }
 
         /// <summary>
-        /// The month of the filing period for this tax filing. 
-        /// The filing period represents the year and month of the last day of taxes being reported on this filing. 
+        /// The month of the filing period for this tax filing.
+        /// The filing period represents the year and month of the last day of taxes being reported on this filing.
         /// For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
         /// </summary>
         public Int32? endPeriodMonth { get; set; }
 
         /// <summary>
         /// The year of the filing period for this tax filing.
-        /// The filing period represents the year and month of the last day of taxes being reported on this filing. 
+        /// The filing period represents the year and month of the last day of taxes being reported on this filing.
         /// For example, an annual tax filing for Jan-Dec 2015 would have a filing period of Dec 2015.
         /// </summary>
         public Int16? endPeriodYear { get; set; }

@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -22,6 +21,21 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class BatchModel
     {
+        /// <summary>
+        /// The type of this batch.
+        /// </summary>
+        public BatchType type { get; set; }
+
+        /// <summary>
+        /// The agent used to create this batch
+        /// </summary>
+        public String batchAgent { get; set; }
+
+        /// <summary>
+        /// Any optional flags provided for this batch
+        /// </summary>
+        public String options { get; set; }
+
         /// <summary>
         /// The unique ID number of this batch.
         /// </summary>
@@ -43,24 +57,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The type of this batch.
-        /// </summary>
-        public BatchType type { get; set; }
-
-        /// <summary>
         /// This batch's current processing status
         /// </summary>
         public BatchStatus? status { get; set; }
-
-        /// <summary>
-        /// Any optional flags provided for this batch
-        /// </summary>
-        public String options { get; set; }
-
-        /// <summary>
-        /// The agent used to create this batch
-        /// </summary>
-        public String batchAgent { get; set; }
 
         /// <summary>
         /// The date/time when this batch started processing

@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -21,7 +20,7 @@ namespace Avalara.AvaTax.RestClient
     public enum DocumentType
     {
         /// <summary>
-        /// Represents an estimate, or a sales order, or a quote. 
+        /// Represents an estimate, or a sales order, or a quote.
         ///  
         ///  This document type is used before a sale has occurred to estimate the final amount of tax to be paid when the
         ///  sale is completed.
@@ -30,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a temporary document type and is not saved in tax history.
         /// </summary>
-        SalesOrder,
+        SalesOrder = 0,
 
         /// <summary>
         /// Represents a sale that has been finalized.
@@ -41,7 +40,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a permanent document and is recorded in AvaTax.
         /// </summary>
-        SalesInvoice,
+        SalesInvoice = 1,
 
         /// <summary>
         /// Represents an estimate, or a purchase order, or a quote.
@@ -53,7 +52,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a temporary document type and is not saved in tax history.
         /// </summary>
-        PurchaseOrder,
+        PurchaseOrder = 2,
 
         /// <summary>
         /// Represents a sale that has been finalized.
@@ -64,7 +63,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a permanent document and is recorded in AvaTax.
         /// </summary>
-        PurchaseInvoice,
+        PurchaseInvoice = 3,
 
         /// <summary>
         /// Represents an estimate of tax to be refunded if a refund or return is processed.
@@ -72,12 +71,12 @@ namespace Avalara.AvaTax.RestClient
         ///  This document type is used before a customer chooses to request a refund for a previous sale, and it
         ///  estimates the final amount of tax to be refunded when the refund is completed.
         ///  
-        ///  For a return order, the `companyCode` of the transaction refers to the seller who is giving the refund 
+        ///  For a return order, the `companyCode` of the transaction refers to the seller who is giving the refund
         ///  and the `customerVendorCode` refers to the buyer who is requesting the refund.
         ///  
         ///  This is a temporary document type and is not saved in tax history.
         /// </summary>
-        ReturnOrder,
+        ReturnOrder = 4,
 
         /// <summary>
         /// Represents an refund that has been finalized.
@@ -85,7 +84,7 @@ namespace Avalara.AvaTax.RestClient
         ///  This document type is used when a customer chooses to request a refund for a previous sale, and it
         ///  records the final amount of tax that has been refunded when the refund is completed.
         ///  
-        ///  For a return invoice, the `companyCode` of the transaction refers to the seller who is giving the refund 
+        ///  For a return invoice, the `companyCode` of the transaction refers to the seller who is giving the refund
         ///  and the `customerVendorCode` refers to the buyer who is requesting the refund.
         ///  
         ///  This is a permanent document and is recorded in AvaTax.
@@ -94,7 +93,7 @@ namespace Avalara.AvaTax.RestClient
         ///  on a sales tax filing, and some refund transactions may be unable to file immediately due to credit netting
         ///  rules.
         /// </summary>
-        ReturnInvoice,
+        ReturnInvoice = 5,
 
         /// <summary>
         /// Represents a proposed movement of inventory from one jurisdiction to another.
@@ -107,7 +106,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a temporary document type and is not saved in tax history.
         /// </summary>
-        InventoryTransferOrder,
+        InventoryTransferOrder = 6,
 
         /// <summary>
         /// Represents a movement of inventory from one jurisdiction to another that has been finalized.
@@ -120,7 +119,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a permanent document and is recorded in AvaTax.
         /// </summary>
-        InventoryTransferInvoice,
+        InventoryTransferInvoice = 7,
 
         /// <summary>
         /// Represents a VAT "Reverse Charge" mechanism transaction as defined in the European Union.
@@ -131,7 +130,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a temporary document type and is not saved in tax history.
         /// </summary>
-        ReverseChargeOrder,
+        ReverseChargeOrder = 8,
 
         /// <summary>
         /// Represents a VAT "Reverse Charge" mechanism transaction as defined in the European Union.
@@ -142,7 +141,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  This is a permanent document and is recorded in AvaTax.
         /// </summary>
-        ReverseChargeInvoice,
+        ReverseChargeInvoice = 9,
 
         /// <summary>
         /// Not a real document type.
@@ -150,7 +149,7 @@ namespace Avalara.AvaTax.RestClient
         ///  This value is used when querying for documents. You can specify the type `Any` in some cases to permit the
         ///  system to find any document matching other criteria.
         /// </summary>
-        Any,
+        Any = -1,
 
     }
 }

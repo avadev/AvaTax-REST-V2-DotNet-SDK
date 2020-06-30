@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -19,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Contains information about a company's exemption certificate status.
-    /// 
+    ///  
     /// This model can be used to determine if your company is able to use the Customers, Certificates, and
     /// CertExpressInvites APIs within AvaTax.
     /// </summary>
@@ -27,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The status of exemption certificate setup for this company.
-        /// 
+        ///  
         /// If this value is `Finished`, this company will then be able to use the Customers, Certificates, and
         /// CertExpressInvites APIs within AvaTax.
         /// </summary>

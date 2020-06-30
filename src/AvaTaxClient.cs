@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
 #if PORTABLE
-        private static HttpClient _client = new HttpClient();
+        private static HttpClient _client = new HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
 #endif
 
         /// <summary>
@@ -282,19 +282,32 @@ namespace Avalara.AvaTax.RestClient
 
             // Convert the JSON payload, if any
             string jsonPayload = null;
-            if (content != null) {
+            string mimeType = null;
+
+            if (content != null && content is FileResult) {
+                content = ((FileResult)content).Data;
+                mimeType = ((FileResult)content).ContentType;
+            } else if (content != null) {
                 jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
+                mimeType = "application/json";
             }
 
             // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)) {
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
 
                 // Read the result
                 if (result.IsSuccessStatusCode) {
+                    string contentType = null;
+                    string filename = null;
+                    if (result.Content.Headers.ContentLength > 0)
+                    {
+                        contentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                        filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
+                    }
                     var fr = new FileResult()
                     {
-                        ContentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
-                        Filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault()),
+                        ContentType = contentType,
+                        Filename = filename,
                         Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
                     };
 
@@ -329,25 +342,28 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="verb"></param>
         /// <param name="relativePath"></param>
         /// <param name="jsonPayload"></param>
+        /// <param name="mimeType"></param>
         /// <returns></returns>
-        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb, AvaTaxPath relativePath, string jsonPayload)
+        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb, AvaTaxPath relativePath, object jsonPayload, string mimeType = null)
         {
             // Setup the request
             using (var request = new HttpRequestMessage()) {
                 request.Method = new HttpMethod(verb);
                 request.RequestUri = new Uri(_envUri, relativePath.ToString());
-                
+
                 // Add headers
                 foreach (var key in _clientHeaders.Keys)
                 {
                     request.Headers.Add(key, _clientHeaders[key]);
                 }
 
-                // Add payload
-                if (jsonPayload != null) {
-                    request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                //Add payload if present.
+                if (mimeType == "multipart/form-data") {
+                    request.Content = jsonPayload as MultipartFormDataContent;
+                } else if (jsonPayload != null) {
+                    request.Content = new StringContent(jsonPayload as string, Encoding.UTF8, mimeType);
                 }
-
+                
                 // Send
                 cd.FinishSetup();
 
@@ -373,7 +389,7 @@ namespace Avalara.AvaTax.RestClient
                     }
                 }                
             }
-        }
+        }        
 
         /// <summary>
         /// Implementation of raw string-returning async API 
@@ -388,13 +404,24 @@ namespace Avalara.AvaTax.RestClient
             if (cd == null) cd = new CallDuration();
 
             // Convert the JSON payload, if any
-            string jsonPayload = null;
-            if (content != null) {
+            object jsonPayload = null;
+            string mimeType = null;
+
+            if(content != null && content is FileResult) {
+                var fr = (FileResult)content;
+                mimeType = fr.ContentType;                
+                MultipartFormDataContent mpfdc = new MultipartFormDataContent("----dataBoundary");
+                ByteArrayContent byteArrayContent = new ByteArrayContent(fr.Data);
+                byteArrayContent.Headers.Add("Content-Type", "application/octet-stream");
+                mpfdc.Add(byteArrayContent, fr.Filename, fr.Filename);
+                jsonPayload = mpfdc;
+            } else if (content != null) {
                 jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
+                mimeType = "application/json";
             }
 
             // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload).ConfigureAwait(false)) {
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
 
                 // Read the result
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -406,7 +433,7 @@ namespace Avalara.AvaTax.RestClient
                 cd.FinishReceive(sd, dd, td);
 
                 // Capture information about this API call and make it available for logging
-                var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = responseString, Duration = cd };
+                var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload as string, ResponseString = responseString, Duration = cd };
                 OnCallCompleted(eventargs);
 
                 // Deserialize the result
@@ -488,6 +515,7 @@ namespace Avalara.AvaTax.RestClient
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
+            wr.Timeout = 1200000;
 
             if (_options != null && _options.Timeout.HasValue)
             {
@@ -596,10 +624,12 @@ namespace Avalara.AvaTax.RestClient
         {
             string path = CombinePath(_envUri.ToString(), relativePath.ToString());
             string jsonPayload = null;
+            string mimeType = null;
 
             // Use HttpWebRequest so we can get a decent response
             var wr = (HttpWebRequest)WebRequest.Create(path);
             wr.Proxy = null;
+            wr.Timeout = 1200000;
 
             if (_options != null && _options.Timeout.HasValue)
             {
@@ -614,11 +644,31 @@ namespace Avalara.AvaTax.RestClient
 
             // Convert the name-value pairs into a byte array
             wr.Method = verb;
-            if (content != null) {
-                wr.ContentType = Constants.JSON_MIME_TYPE;
+
+            //Upload file.
+            if (content != null && content is FileResult) {
+                wr.KeepAlive = true;
+                var fr = (FileResult)content;
+                mimeType = fr.ContentType;
+                content = fr.Data;
+                string dataBoundary = "----dataBoundary";
+                wr.ContentType = "multipart/form-data; boundary=" + dataBoundary;
+                byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "\r\n");                
+                Stream rs = wr.GetRequestStream();
+                rs.Write(boundaryBytes, 0, boundaryBytes.Length);
+                string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
+                string header = string.Format(headerTemplate, fr.Filename, fr.Filename, fr.ContentType);
+                byte[] headerBytes = Encoding.UTF8.GetBytes(header);
+                rs.Write(headerBytes, 0, headerBytes.Length);
+                rs.Write(fr.Data, 0, fr.Data.Length);
+                byte[] trailer = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "--\r\n");
+                rs.Write(trailer, 0, trailer.Length);
+                rs.Close();
+            } else if (content != null) {
+                wr.ContentType = mimeType ?? Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
 
-                // Encode the payload
+                // Encode the payload               
                 jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
                 var encoding = new UTF8Encoding();
                 byte[] data = encoding.GetBytes(jsonPayload);

@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -19,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// A MultiDocument transaction represents a sale or purchase that occurred between more than two companies.
-    /// 
+    ///  
     /// A traditional transaction requires exactly two parties: a seller and a buyer. MultiDocument transactions can
     /// involve a marketplace of vendors, each of which contributes some portion of the final transaction. Within
     /// a MultiDocument transaction, each individual buyer and seller pair are matched up and converted to a separate
@@ -29,16 +28,16 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The transaction code of the MultiDocument transaction.
-        /// 
+        ///  
         /// All individual transactions within this MultiDocument object will have this code as a prefix.
-        /// 
+        ///  
         /// If you leave the `code` field blank, a GUID will be assigned.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
         /// Lines that will appear on the invoice.
-        /// 
+        ///  
         /// For a MultiDocument transaction, each line may represent a different company or reporting location code. AvaTax
         /// will separate this MultiDocument transaction object into many different transactions, one for each pair of legal
         /// entities, so that each legal entity can file their transactional taxes correctly.
@@ -47,7 +46,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Set this value to true to allow this API call to adjust the MultiDocument model if one already exists.
-        /// 
+        ///  
         /// If you omit this field, or if the value is `null`, you will receive an error if you try to create two MultiDocument
         /// objects with the same `code`.
         /// </summary>
@@ -57,7 +56,7 @@ namespace Avalara.AvaTax.RestClient
         /// Specifies the type of document to create. A document type ending with `Invoice` is a permanent transaction
         /// that will be recorded in AvaTax. A document type ending with `Order` is a temporary estimate that will not
         /// be preserved.
-        /// 
+        ///  
         /// If you omit this value, the API will assume you want to create a `SalesOrder`.
         /// </summary>
         public DocumentType? type { get; set; }
@@ -70,7 +69,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Transaction Date - The date on the invoice, purchase order, etc.
-        /// 
+        ///  
         /// By default, this date will be used to calculate the tax rates for the transaction. If you wish to use a
         /// different date to calculate tax rates, please specify a `taxOverride` of type `taxDate`.
         /// </summary>
@@ -89,13 +88,13 @@ namespace Avalara.AvaTax.RestClient
         public String customerCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Customer Usage Type - The client application customer or usage type.
-        /// Please use entityUseCode instead.
+        /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
+        /// Customer Usage Type - The client application customer or usage type.
         /// </summary>
         public String customerUsageType { get; set; }
 
         /// <summary>
-        /// Entity Use Code - The client application customer or usage type. For a list of 
+        /// Entity Use Code - The client application customer or usage type. For a list of
         /// available usage types, use [ListEntityUseCodes](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListEntityUseCodes/) API.
         /// </summary>
         public String entityUseCode { get; set; }
@@ -109,14 +108,14 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Purchase Order Number for this document.
-        /// 
+        ///  
         /// This is required for single use exemption certificates to match the order and invoice with the certificate.
         /// </summary>
         public String purchaseOrderNo { get; set; }
 
         /// <summary>
         /// Exemption Number for this document.
-        /// 
+        ///  
         /// If you specify an exemption number for this document, this document will be considered exempt, and you
         /// may be asked to provide proof of this exemption certificate in the event that you are asked by an auditor
         /// to verify your exemptions.
@@ -125,8 +124,8 @@ namespace Avalara.AvaTax.RestClient
         public String exemptionNo { get; set; }
 
         /// <summary>
-        /// Default addresses for all lines in this document. 
-        /// 
+        /// Default addresses for all lines in this document.
+        ///  
         /// These addresses are the default values that will be used for any lines that do not have their own
         /// address information. If you specify addresses for a line, then no default addresses will be loaded
         /// for that line.
@@ -135,14 +134,14 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Special parameters for this transaction.
-        /// 
+        ///  
         /// To get a full list of available parameters, please use the [ListParameters](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListParameters/) endpoint.
         /// </summary>
-        public Dictionary<string, string> parameters { get; set; }
+        public List<TransactionParameterModel> parameters { get; set; }
 
         /// <summary>
         /// Customer-provided Reference Code with information about this transaction.
-        /// 
+        ///  
         /// This field could be used to reference the original document for a return invoice, or for any other
         /// reference purpose.
         /// </summary>
@@ -150,14 +149,14 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Sets the sale location code (Outlet ID) for reporting this document to the tax authority.
-        /// 
+        ///  
         /// This value is used by Avalara Managed Returns to group documents together by reporting locations
         /// for tax authorities that require location-based reporting.
         /// </summary>
         public String reportingLocationCode { get; set; }
 
         /// <summary>
-        /// Causes the document to be committed if true. This option is only applicable for invoice document 
+        /// Causes the document to be committed if true. This option is only applicable for invoice document
         /// types, not orders.
         /// </summary>
         public Boolean? commit { get; set; }
@@ -178,7 +177,7 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
-        /// Specifies whether the tax calculation is handled Local, Remote, or Automatic (default). This only 
+        /// Specifies whether the tax calculation is handled Local, Remote, or Automatic (default). This only
         /// applies when using an AvaLocal server.
         /// </summary>
         public ServiceMode? serviceMode { get; set; }
@@ -202,24 +201,24 @@ namespace Avalara.AvaTax.RestClient
         public String posLaneCode { get; set; }
 
         /// <summary>
-        /// VAT business identification number for the customer for this transaction. This number will be used for all lines 
+        /// VAT business identification number for the customer for this transaction. This number will be used for all lines
         /// in the transaction, except for those lines where you have defined a different business identification number.
-        /// 
+        ///  
         /// If you specify a VAT business identification number for the customer in this transaction and you have also set up
-        /// a business identification number for your company during company setup, this transaction will be treated as a 
+        /// a business identification number for your company during company setup, this transaction will be treated as a
         /// business-to-business transaction for VAT purposes and it will be calculated according to VAT tax rules.
         /// </summary>
         public String businessIdentificationNo { get; set; }
 
         /// <summary>
         /// Specifies if the transaction should have value-added and cross-border taxes calculated with the seller as the importer of record.
-        /// 
+        ///  
         /// Some taxes only apply if the seller is the importer of record for a product. In cases where companies are working together to
         /// ship products, there may be mutual agreement as to which company is the entity designated as importer of record. The importer
         /// of record will then be the company designated to pay taxes marked as being obligated to the importer of record.
-        /// 
+        ///  
         /// Set this value to `true` to consider your company as the importer of record and collect these taxes.
-        /// 
+        ///  
         /// This value may also be set at the Nexus level. See `NexusModel` for more information.
         /// </summary>
         public Boolean? isSellerImporterOfRecord { get; set; }

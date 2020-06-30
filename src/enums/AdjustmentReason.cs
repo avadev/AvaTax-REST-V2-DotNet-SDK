@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,52 +22,52 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The transaction has not been adjusted
         /// </summary>
-        NotAdjusted,
+        NotAdjusted = 0,
 
         /// <summary>
         /// A sourcing issue existed which caused the transaction to be adjusted
         /// </summary>
-        SourcingIssue,
+        SourcingIssue = 1,
 
         /// <summary>
         /// Transaction was adjusted to reconcile it with a general ledger
         /// </summary>
-        ReconciledWithGeneralLedger,
+        ReconciledWithGeneralLedger = 2,
 
         /// <summary>
         /// Transaction was adjusted after an exemption certificate was applied
         /// </summary>
-        ExemptCertApplied,
+        ExemptCertApplied = 3,
 
         /// <summary>
         /// Transaction was adjusted when the price of an item changed
         /// </summary>
-        PriceAdjusted,
+        PriceAdjusted = 4,
 
         /// <summary>
         /// Transaction was adjusted due to a product return
         /// </summary>
-        ProductReturned,
+        ProductReturned = 5,
 
         /// <summary>
         /// Transaction was adjusted due to a product exchange
         /// </summary>
-        ProductExchanged,
+        ProductExchanged = 6,
 
         /// <summary>
         /// Transaction was adjusted due to bad or uncollectable debt
         /// </summary>
-        BadDebt,
+        BadDebt = 7,
 
         /// <summary>
         /// Transaction was adjusted for another reason not specified
         /// </summary>
-        Other,
+        Other = 8,
 
         /// <summary>
         /// Offline
         /// </summary>
-        Offline,
+        Offline = 9,
 
     }
 }

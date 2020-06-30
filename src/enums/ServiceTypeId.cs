@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,147 +22,172 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// None
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         /// AvaTaxST
         /// </summary>
-        AvaTaxST,
+        AvaTaxST = 1,
 
         /// <summary>
         /// AvaTaxPro
         /// </summary>
-        AvaTaxPro,
+        AvaTaxPro = 2,
 
         /// <summary>
         /// AvaTaxGlobal
         /// </summary>
-        AvaTaxGlobal,
+        AvaTaxGlobal = 3,
 
         /// <summary>
         /// AutoAddress
         /// </summary>
-        AutoAddress,
+        AutoAddress = 4,
 
         /// <summary>
         /// AutoReturns
         /// </summary>
-        AutoReturns,
+        AutoReturns = 5,
 
         /// <summary>
         /// TaxSolver
         /// </summary>
-        TaxSolver,
+        TaxSolver = 6,
 
         /// <summary>
         /// AvaTaxCsp
         /// </summary>
-        AvaTaxCsp,
+        AvaTaxCsp = 7,
 
         /// <summary>
         /// Twe
         /// </summary>
-        Twe,
+        Twe = 8,
 
         /// <summary>
         /// Mrs
         /// </summary>
-        Mrs,
+        Mrs = 9,
 
         /// <summary>
         /// AvaCert
         /// </summary>
-        AvaCert,
+        AvaCert = 10,
 
         /// <summary>
         /// AuthorizationPartner
         /// </summary>
-        AuthorizationPartner,
+        AuthorizationPartner = 11,
 
         /// <summary>
         /// CertCapture
         /// </summary>
-        CertCapture,
+        CertCapture = 12,
 
         /// <summary>
         /// AvaUpc
         /// </summary>
-        AvaUpc,
+        AvaUpc = 13,
 
         /// <summary>
         /// AvaCUT
         /// </summary>
-        AvaCUT,
+        AvaCUT = 14,
 
         /// <summary>
         /// AvaLandedCost
         /// </summary>
-        AvaLandedCost,
+        AvaLandedCost = 15,
 
         /// <summary>
         /// AvaLodging
         /// </summary>
-        AvaLodging,
+        AvaLodging = 16,
 
         /// <summary>
         /// AvaBottle
         /// </summary>
-        AvaBottle,
+        AvaBottle = 17,
 
         /// <summary>
         /// AvaComms
         /// </summary>
-        AvaComms,
+        AvaComms = 18,
 
         /// <summary>
         /// AvaEWaste
         /// </summary>
-        AvaEWaste,
+        AvaEWaste = 19,
 
         /// <summary>
         /// AvaExemptTier1
         /// </summary>
-        AvaExemptTier1,
+        AvaExemptTier1 = 20,
 
         /// <summary>
         /// AvaExemptTier2
         /// </summary>
-        AvaExemptTier2,
+        AvaExemptTier2 = 21,
 
         /// <summary>
         /// AvaExemptTier3
         /// </summary>
-        AvaExemptTier3,
+        AvaExemptTier3 = 22,
 
         /// <summary>
         /// AvaExemptTier4
         /// </summary>
-        AvaExemptTier4,
+        AvaExemptTier4 = 23,
 
         /// <summary>
         /// MRSComplianceManager
         /// </summary>
-        MRSComplianceManager,
+        MRSComplianceManager = 24,
 
         /// <summary>
         /// AvaBikeTax
         /// </summary>
-        AvaBikeTax,
+        AvaBikeTax = 25,
 
         /// <summary>
         /// AvaCheckoutBag
         /// </summary>
-        AvaCheckoutBag,
+        AvaCheckoutBag = 26,
 
         /// <summary>
         /// TFOCompliance
         /// </summary>
-        TFOCompliance,
+        TFOCompliance = 27,
 
         /// <summary>
         /// Send Sales Rate file service
         /// </summary>
-        SendSalesRateFile,
+        SendSalesRateFile = 28,
+
+        /// <summary>
+        /// AvaMeals
+        /// </summary>
+        AvaMeals = 29,
+
+        /// <summary>
+        /// AvaAlcohol
+        /// </summary>
+        AvaAlcohol = 30,
+
+        /// <summary>
+        /// Accounting Firm ARA Service Type
+        /// </summary>
+        ARA = 31,
+
+        /// <summary>
+        /// Accounting Firm ARAManaged Service Type
+        /// </summary>
+        ARAManaged = 32,
+
+        /// <summary>
+        /// Premium Returns Service Type
+        /// </summary>
+        MRSPremium = 33,
 
     }
 }

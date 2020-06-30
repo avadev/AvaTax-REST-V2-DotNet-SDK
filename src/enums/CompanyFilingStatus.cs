@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -24,35 +23,35 @@ namespace Avalara.AvaTax.RestClient
         /// This company is not a reporting entity and cannot file taxes. To change this behavior, you must mark
         ///  the company as a reporting entity.
         /// </summary>
-        NoReporting,
+        NoReporting = 0,
 
         /// <summary>
         /// This company is a reporting entity, but Avalara is not currently filing tax returns for this company.
         /// </summary>
-        NotYetFiling,
+        NotYetFiling = 1,
 
         /// <summary>
         /// The customer has requested that Avalara Managed Returns begin filing for this company, however filing has
         ///  not yet started. Avalara's compliance team is reviewing this request and will update the company to
         ///  first filing status when complete.
         /// </summary>
-        FilingRequested,
+        FilingRequested = 2,
 
         /// <summary>
-        /// Avalara has begun filing tax returns for this company. Normally, this status will change to `Active` after 
+        /// Avalara has begun filing tax returns for this company. Normally, this status will change to `Active` after
         ///  one month of successful filing of tax returns.
         /// </summary>
-        FirstFiling,
+        FirstFiling = 3,
 
         /// <summary>
         /// Avalara currently files tax returns for this company.
         /// </summary>
-        Active,
+        Active = 4,
 
         /// <summary>
         /// This company has not been configured for compliance
         /// </summary>
-        NotConfiguredForCompliance,
+        NotConfiguredForCompliance = 5,
 
     }
 }

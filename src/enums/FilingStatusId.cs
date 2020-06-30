@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,87 +22,87 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        PendingApproval,
+        PendingApproval = 0,
 
         /// <summary>
         /// 
         /// </summary>
-        Dirty,
+        Dirty = 1,
 
         /// <summary>
         /// 
         /// </summary>
-        ApprovedToFile,
+        ApprovedToFile = 2,
 
         /// <summary>
         /// 
         /// </summary>
-        PendingFiling,
+        PendingFiling = 3,
 
         /// <summary>
         /// 
         /// </summary>
-        PendingFilingOnBehalf,
+        PendingFilingOnBehalf = 4,
 
         /// <summary>
         /// 
         /// </summary>
-        Filed,
+        Filed = 5,
 
         /// <summary>
         /// 
         /// </summary>
-        FiledOnBehalf,
+        FiledOnBehalf = 6,
 
         /// <summary>
         /// 
         /// </summary>
-        ReturnAccepted,
+        ReturnAccepted = 7,
 
         /// <summary>
         /// 
         /// </summary>
-        ReturnAcceptedOnBehalf,
+        ReturnAcceptedOnBehalf = 8,
 
         /// <summary>
         /// 
         /// </summary>
-        PaymentRemitted,
+        PaymentRemitted = 9,
 
         /// <summary>
         /// 
         /// </summary>
-        Voided,
+        Voided = 10,
 
         /// <summary>
         /// 
         /// </summary>
-        PendingReturn,
+        PendingReturn = 11,
 
         /// <summary>
         /// 
         /// </summary>
-        PendingReturnOnBehalf,
+        PendingReturnOnBehalf = 12,
 
         /// <summary>
         /// 
         /// </summary>
-        DoNotFile,
+        DoNotFile = 13,
 
         /// <summary>
         /// 
         /// </summary>
-        ReturnRejected,
+        ReturnRejected = 14,
 
         /// <summary>
         /// 
         /// </summary>
-        ReturnRejectedOnBehalf,
+        ReturnRejectedOnBehalf = 15,
 
         /// <summary>
         /// 
         /// </summary>
-        ApprovedToFileOnBehalf,
+        ApprovedToFileOnBehalf = 16,
 
     }
 }

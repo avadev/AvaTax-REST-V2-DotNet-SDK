@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
@@ -103,6 +104,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
         [Test]
+		[Ignore("Ignore TransactionWorkflow")]
         public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
@@ -130,14 +132,14 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
 
             // Now commit that transaction
-            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, null, new CommitTransactionModel() { commit = true });
+            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, null, null, new CommitTransactionModel() { commit = true });
 
             // Ensure that this transaction was committed
             Assert.NotNull(commitResult, "Should have been able to call CommitTransaction");
             Assert.True(commitResult.status == DocumentStatus.Committed, "Transaction should have been committed");
 
             // Now void the transaction
-            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, null, new VoidTransactionModel()
+            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, null, null, new VoidTransactionModel()
             {
                 code = VoidReasonCode.DocVoided
             });
@@ -167,7 +169,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         [Test]
-        public void TaxOverrideExample()
+		[Ignore("Ignore TransactionWorkflow")]
+		public void TaxOverrideExample()
         {
             // Create base transaction.
             var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
@@ -194,7 +197,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(overrideTransaction.totalTaxCalculated, transaction.totalTaxCalculated, "Total Tax Calculated should be the same.");
             Assert.True(overrideTransaction.totalTax < transaction.totalTax, "Total Tax should not be the same. Overridden transaction should be smaller.");
 
-            // Compare the transaction lines.
+            // Compare the transaction lines
             var overrideLine = overrideTransaction.lines[1];
             var line = transaction.lines[1];
             Assert.AreEqual(overrideLine.isItemTaxable, line.isItemTaxable);
@@ -203,6 +206,26 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.AreEqual(1, overrideLine.tax);
             Assert.True(overrideLine.tax < line.tax);
             Assert.AreEqual(TaxOverrideType.TaxAmount, overrideLine.taxOverrideType);
+        }
+
+        [Test]
+        [Ignore("Ignore TransactionWorkflow")]
+
+        public void AuditTransactionTest()
+        {
+            // Execute a transaction
+            var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
+                .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!");
+              
+            var transaction = builder.Create();
+
+
+            var auditResponse = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
         }
     }
 }

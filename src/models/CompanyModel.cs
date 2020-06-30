@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -68,13 +67,17 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isActive { get; set; }
 
         /// <summary>
-        /// For United States companies, this field contains your Taxpayer Identification Number. 
-        /// This is a nine digit number that is usually called an EIN for an Employer Identification Number if this company is a corporation, 
+        /// For United States companies, this field contains your Taxpayer Identification Number.
+        /// This is a nine digit number that is usually called an EIN for an Employer Identification Number if this company is a corporation,
         /// or SSN for a Social Security Number if this company is a person.
-        /// This value is required if you subscribe to Avalara Managed Returns or the SST Certified Service Provider services, 
-        /// but it is optional if you do not subscribe to either of those services.
+        /// This value is required if the address provided is inside the US and if you subscribed to the Avalara Managed Returns or SST Certified Service Provider service. Otherwise it is optional.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
+
+        /// <summary>
+        /// Set this field to true if the taxPayerIdNumber is a FEIN.
+        /// </summary>
+        public Boolean? isFein { get; set; }
 
         /// <summary>
         /// Set this flag to true to give this company its own unique tax profile.
@@ -158,7 +161,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of contacts defined for this company. To fetch this list, add the query string `?$include=Contacts` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -166,7 +169,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of items defined for this company. To fetch this list, add the query string `?$include=Items` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -174,7 +177,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of locations defined for this company. To fetch this list, add the query string `?$include=Locations` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -182,7 +185,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of nexus defined for this company. To fetch this list, add the query string `?$include=Nexus` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -190,7 +193,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of settings defined for this company. To fetch this list, add the query string `?$include=Settings` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -198,7 +201,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of tax codes defined for this company. To fetch this list, add the query string `?$include=TaxCodes` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -206,7 +209,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of tax rules defined for this company. To fetch this list, add the query string `?$include=TaxRules` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
@@ -214,14 +217,19 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Optional: A list of UPCs defined for this company. To fetch this list, add the query string `?$include=UPCs` to your URL.
-        /// 
+        ///  
         /// When calling `CreateCompany`, you may provide a list of objects in this element and they will be created alongside the company.
         /// The `UpdateCompany` API does not permit updating nested objects.
         /// </summary>
         public List<UPCModel> upcs { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Please use the `ListCertificates` API.
+        /// Optional: A list of non reporting child companies associated with this company. To fetch this list, add the query string `?$include=NonReportingChildren` to your URL.
+        /// </summary>
+        public List<CompanyModel> nonReportingChildCompanies { get; set; }
+
+        /// <summary>
+        /// DEPRECATED - Date: 9/15/2017, Version: 17.10, Message: Please use the `ListCertificates` API.
         /// </summary>
         public List<EcmsModel> exemptCerts { get; set; }
 
@@ -234,6 +242,11 @@ namespace Avalara.AvaTax.RestClient
         /// The country code of the mini-one-stop-shop used for Value Added Tax (VAT) processing.
         /// </summary>
         public String mossCountry { get; set; }
+
+        /// <summary>
+        /// The parameters of a company
+        /// </summary>
+        public List<CompanyParameterDetailModel> parameters { get; set; }
 
 
         /// <summary>

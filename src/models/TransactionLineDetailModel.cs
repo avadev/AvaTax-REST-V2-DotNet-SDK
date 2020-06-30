@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -103,8 +102,8 @@ namespace Avalara.AvaTax.RestClient
         public String stateAssignedNo { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) The type of the jurisdiction to which this tax detail applies.
-        /// NOTE: Use jurisdictionTypeId instead.
+        /// DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Use jurisdictionTypeId instead.
+        /// The type of the jurisdiction to which this tax detail applies.
         /// </summary>
         public JurisTypeId? jurisType { get; set; }
 
@@ -166,7 +165,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The type of tax that was calculated. Depends on the company's nexus settings as well as the jurisdiction's tax laws.
         /// </summary>
-        public TaxType? taxType { get; set; }
+        public String taxType { get; set; }
 
         /// <summary>
         /// The id of the tax subtype.
@@ -206,7 +205,8 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? taxOverride { get; set; }
 
         /// <summary>
-        /// (DEPRECATED) The rate type for this tax detail. Please use rateTypeCode instead.
+        /// DEPRECATED - Date: 12/20/2017, Version: 18.1, Message: Please use rateTypeCode instead.
+        /// The rate type for this tax detail.
         /// </summary>
         public RateType? rateType { get; set; }
 
@@ -237,10 +237,15 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// True if this value is a non-passthrough tax.
-        /// 
+        ///  
         /// A non-passthrough tax is a tax that may not be charged to a customer; it must be paid directly by the company.
         /// </summary>
         public Boolean? isNonPassThru { get; set; }
+
+        /// <summary>
+        /// The Taxes/Fee component. True if the fee is applied.
+        /// </summary>
+        public Boolean? isFee { get; set; }
 
 
         /// <summary>

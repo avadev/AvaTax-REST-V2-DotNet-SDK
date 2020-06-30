@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -20,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// This model contains a reconstructed CreateTransaction request object that could potentially be used
     /// to recreate this transaction.
-    /// 
+    ///  
     /// Note that the API changes over time, and this reconstructed model is likely different from the exact request
     /// that was originally used to create this transaction.
     /// </summary>

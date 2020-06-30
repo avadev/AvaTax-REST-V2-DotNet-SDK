@@ -61,13 +61,24 @@ namespace Avalara.AvaTax.RestClient
         }
 
         /// <summary>
-        /// Specify a specific usage type for the entire transaction
+        /// Specify a specific usage type for the entire  transaction
         /// </summary>
         /// <param name="usageType"></param>
         /// <returns></returns>
         public TransactionBuilder WithUsageType(string usageType)
         {
             _model.customerUsageType = usageType;
+            return this;
+        }
+
+        /// <summary>
+        /// Specify a specific entity use code for the entire transaction
+        /// </summary>
+        /// <param name="useCode"></param>
+        /// <returns></returns>
+        public TransactionBuilder WithEntityUseCode(string useCode)
+        {
+            _model.entityUseCode = useCode;
             return this;
         }
 
@@ -121,25 +132,37 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <param name="name">The parameter name.  For a list of valid parameter names, call AvaTaxClient.ListParameters()</param>
         /// <param name="value">The value for this parameter</param>
+        /// <param name="unit">The unit of measure of the parameter value</param>
         /// <returns>The TransactionBuilder object</returns>
-        public TransactionBuilder WithParameter(string name, string value)
+        public TransactionBuilder WithParameter(string name, string value, string unit = null)
         {
-            if (_model.parameters == null) _model.parameters = new Dictionary<string, string>();
-            _model.parameters[name] = value;
+            if (_model.parameters == null) {
+                _model.parameters = new List<TransactionParameterModel>();
+            }
+
+            var param = new TransactionParameterModel(){ name = name, value = value, unit = unit };
+            _model.parameters.Add(param);
+
             return this;
         }
-
+        
         /// <summary>
         /// Add a parameter to the current line
         /// </summary>
         /// <param name="name">The parameter name.  For a list of valid parameter names, call AvaTaxClient.ListParameters()</param>
         /// <param name="value">The value for this parameter</param>
+        /// <param name="unit">The unit of measure of the parameter value</param>
         /// <returns></returns>
-        public TransactionBuilder WithLineParameter(string name, string value)
+        public TransactionBuilder WithLineParameter(string name, string value, string unit = null)
         {
             var l = GetMostRecentLine("WithLineParameter");
-            if (l.parameters == null) l.parameters = new Dictionary<string, string>();
-            l.parameters.Add(name, value);
+            if (l.parameters == null) {
+                l.parameters = new List<TransactionLineParameterModel>();
+            }
+
+            var lParam = new TransactionLineParameterModel() { name = name, value = value, unit = unit };
+            l.parameters.Add(lParam);
+
             return this;
         }
 
@@ -347,21 +370,28 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
-        /// <summary>
-        /// Add a line to this transaction
-        /// </summary>
-        /// <param name="amount">Value of the item.</param>
-        /// <param name="quantity">Quantity of the item.</param>
-        /// <param name="taxCode">Tax Code of the item. If left blank, the default item (P0000000) is assumed.  Use ListTaxCodes() for a list of values.</param>
-        /// <param name="customerUsageType">The intended usage type for this line.  Use ListEntityUseCodes() for a list of values.</param>
-        /// <param name="description">A friendly description of this line item.</param>
-        /// <param name="itemCode">The item code of this item in your product item definitions.</param>
-        /// <returns></returns>
-        public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null)
+		/// <summary>
+		/// Add a line to this transaction
+		/// </summary>
+		/// <param name="amount">Value of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="taxCode">Tax Code of the item. If left blank, the default item (P0000000) is assumed.  Use ListTaxCodes() for a list of values.</param>
+		/// <param name="customerUsageType">The intended usage type for this line.  Use ListEntityUseCodes() for a list of values.</param>
+		/// <param name="description">A friendly description of this line item.</param>
+		/// <param name="itemCode">The item code of this item in your product item definitions.</param>
+		/// <param name="lineNumber">the number of the line.</param>
+		/// <returns></returns>
+		public TransactionBuilder WithLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null, string lineNumber = null)
         {
+			string lineNumStr = lineNumber;
+			if(string.IsNullOrEmpty(lineNumStr))
+			{
+				lineNumStr = _line_number.ToString();
+			}
+	
             var l = new LineItemModel
             {
-                number = _line_number.ToString(),
+                number = lineNumStr,
                 quantity = quantity,
                 amount = amount,
                 taxCode = taxCode,

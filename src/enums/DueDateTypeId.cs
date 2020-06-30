@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,17 +22,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Denotes form is due on the due day
         /// </summary>
-        ByDay,
+        ByDay = 0,
 
         /// <summary>
         /// Denotes form is due by last day of the month
         /// </summary>
-        ByLastDay,
+        ByLastDay = 1,
 
         /// <summary>
         /// Denotes form is due by second to last day of the month
         /// </summary>
-        BySecondLastDay,
+        BySecondLastDay = 2,
 
     }
 }

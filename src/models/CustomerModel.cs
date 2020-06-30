@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -34,10 +33,10 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The unique code identifying this customer. Must be unique within your company.
-        /// 
+        ///  
         /// This code should be used in the `customerCode` field of any call that creates or adjusts a transaction
         /// in order to ensure that all exemptions that apply to this customer are correctly considered.
-        /// 
+        ///  
         /// Note: This field is case sensitive.
         /// </summary>
         public String customerCode { get; set; }
@@ -54,7 +53,7 @@ namespace Avalara.AvaTax.RestClient
         public String name { get; set; }
 
         /// <summary>
-        /// Indicates the "Attn:" component of the address for this customer, if this customer requires mailings to be shipped 
+        /// Indicates the "Attn:" component of the address for this customer, if this customer requires mailings to be shipped
         /// to the attention of a specific person or department name.
         /// </summary>
         public String attnName { get; set; }
@@ -116,26 +115,22 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the country.
-        /// 
+        ///  
         /// This field supports many different country identifiers:
         ///  * Two character ISO 3166 codes
         ///  * Three character ISO 3166 codes
         ///  * Fully spelled out names of the country in ISO supported languages
         ///  * Common alternative spellings for many countries
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// Name or ISO 3166 code identifying the region within the country.
-        /// 
-        /// This field supports many different region identifiers:
-        ///  * Two and three character ISO 3166 region codes
-        ///  * Fully spelled out names of the region in ISO supported languages
-        ///  * Common alternative spellings for many regions
-        /// 
-        /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
+        /// ISO 3166 code identifying the region within the country.
+        /// Two and three character ISO 3166 region codes.
+        ///  
+        /// For a full list of all supported codes, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
 
@@ -150,46 +145,53 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isShip { get; set; }
 
         /// <summary>
-        /// For customers in the United States, this field is the federal taxpayer ID number. For businesses, this is 
+        /// For customers in the United States, this field is the federal taxpayer ID number. For businesses, this is
         /// a Federal Employer Identification Number. For individuals, this will be a Social Security Number.
         /// </summary>
         public String taxpayerIdNumber { get; set; }
 
         /// <summary>
-        /// A list of exemption certficates that apply to this customer. You can fetch this data by specifying 
+        /// A list of exemption certficates that apply to this customer. You can fetch this data by specifying
         /// `$include=certificates` when calling a customer fetch API.
         /// </summary>
         public List<CertificateModel> certificates { get; set; }
 
         /// <summary>
-        /// A list of custom fields defined on this customer. 
-        /// 
+        /// A list of custom fields defined on this customer.
+        ///  
         /// For more information about custom fields, see the [Avalara Help Center article about custom fields](https://help.avalara.com/0021_Avalara_CertCapture/All_About_CertCapture/Edit_or_Remove_Details_about_Customers).
         /// </summary>
         public List<CustomFieldModel> customFields { get; set; }
 
         /// <summary>
-        /// A list of exposure zones where you do business with this customer. 
-        /// 
+        /// A list of exposure zones where you do business with this customer.
+        ///  
         /// To keep track of certificates that are needed for each customer, set this value to a list of all exposure zones where you
         /// sell products to this customer. You can find a list of exposure zones by calling `ListExposureZones`.
-        /// 
+        ///  
         /// This field is often called "Ship-To States" or "Ship-To Zones", since it generally refers to locations where you ship products
         /// when this customer makes a purchase.
-        /// 
+        ///  
         /// This field is useful for audit purposes since it helps you ensure you have the necessary certificates for each customer.
         /// </summary>
         public List<ExposureZoneModel> exposureZones { get; set; }
 
         /// <summary>
         /// A list of ship-to customer records that are connected to this bill-to customer.
-        /// 
+        ///  
         /// Customer records represent businesses or individuals who can provide exemption certificates. Some customers
         /// may have certificates that are linked to their shipping address or their billing address. To group these
         /// customer records together, you may link multiple bill-to and ship-to addresses together to represent a single
         /// entity that has multiple different addresses of different kinds.
         /// </summary>
         public List<CustomerModel> shipTos { get; set; }
+
+        /// <summary>
+        /// A list of attributes that apply to this customer.
+        ///  
+        /// You can fetch this data by specifying `$include=attributes` when calling a customer fetch API.
+        /// </summary>
+        public List<CustomerAttributeModel> attributes { get; set; }
 
 
         /// <summary>

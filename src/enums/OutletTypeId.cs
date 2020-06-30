@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -25,22 +24,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// File a single return per cycle for your entire business.
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         /// You may file separate forms for each outlet; contact the tax authority for more details about location based reporting requirements.
         /// </summary>
-        Schedule,
+        Schedule = 1,
 
         /// <summary>
         /// You may file separate forms for each outlet; contact the tax authority for more details about location based reporting requirements.
         /// </summary>
-        Duplicate,
+        Duplicate = 2,
 
         /// <summary>
         /// File a single return, but you must have a line item for each place of business.
         /// </summary>
-        Consolidated,
+        Consolidated = 3,
 
     }
 }

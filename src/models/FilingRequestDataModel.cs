@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -29,7 +28,8 @@ namespace Avalara.AvaTax.RestClient
         public Int64? companyReturnId { get; set; }
 
         /// <summary>
-        /// DEPRECATED - The legacy return name of the requested calendar.
+        /// DEPRECATED - Date: 9/13/2018, Version: 18.10, Message: Please use `taxFormCode` instead.
+        /// The legacy return name of the requested calendar.
         /// </summary>
         public String returnName { get; set; }
 
@@ -53,6 +53,11 @@ namespace Avalara.AvaTax.RestClient
         /// The months of the request
         /// </summary>
         public Int16 months { get; set; }
+
+        /// <summary>
+        /// The start period of a fiscal year for this form/company
+        /// </summary>
+        public Int32? fiscalYearStartMonth { get; set; }
 
         /// <summary>
         /// The type of tax to report on this return.

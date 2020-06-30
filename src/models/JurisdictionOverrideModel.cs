@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -19,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents an override of tax jurisdictions for a specific address.
-    /// 
+    ///  
     /// During the time period represented by EffDate through EndDate, all tax decisions for addresses matching
     /// this override object will be assigned to the list of jurisdictions designated in this object.
     /// </summary>
@@ -52,21 +51,21 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Name or ISO 3166 code identifying the region within the country to be affected by this override.
-        /// 
+        ///  
         /// Note that only United States addresses are affected by the jurisdiction override system.
-        /// 
+        ///  
         /// This field supports many different region identifiers:
         ///  * Two and three character ISO 3166 region codes
         ///  * Fully spelled out names of the region in ISO supported languages
         ///  * Common alternative spellings for many regions
-        /// 
+        ///  
         /// For a full list of all supported codes and names, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
 
         /// <summary>
         /// The two character ISO-3166 country code of the country affected by this override.
-        /// 
+        ///  
         /// Note that only United States addresses are affected by the jurisdiction override system.
         /// </summary>
         public String country { get; set; }

@@ -17,7 +17,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Mime type for JSON
         /// </summary>
-        public static readonly string JSON_MIME_TYPE = "application/json";
+        public static readonly string JSON_MIME_TYPE = "application/json";        
 
         /// <summary>
         /// Official URL of AvaTax (Sandbox)

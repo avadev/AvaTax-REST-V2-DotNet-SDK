@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -34,7 +33,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The full name, using localized characters, for this region, in uppercase.
-        /// 
+        ///  
         /// For names in proper or formal case, or for names in other languages, please examine the `localizedNames` element for an appropriate name.
         /// </summary>
         public String name { get; set; }
@@ -52,7 +51,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// A list of localized names in a variety of languages.
-        /// 
+        ///  
         /// This list is maintained by the International Standards Organization.
         /// </summary>
         public List<IsoLocalizedName> localizedNames { get; set; }

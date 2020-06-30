@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -72,14 +71,14 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// When an invitation is sent, it contains a list of exposure zones for which the customer is invited to upload
         /// their exemption certificates. This list contains the ID numbers of the exposure zones identified.
-        /// 
+        ///  
         /// For a list of exposure zones, please call `ListCertificateExposureZones`.
         /// </summary>
         public List<Int32> exposureZones { get; set; }
 
         /// <summary>
         /// The list of exemption reasons identified by this CertExpress invitation.
-        /// 
+        ///  
         /// For a list of reason codes, please call `ListCertificateExemptReasons`.
         /// </summary>
         public List<Int32> exemptReasons { get; set; }
@@ -100,8 +99,8 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? date { get; set; }
 
         /// <summary>
-        /// The web link (URL) that a customer can click on or visit to begin using this CertExpress invitation. 
-        /// 
+        /// The web link (URL) that a customer can click on or visit to begin using this CertExpress invitation.
+        ///  
         /// This value is only usable if the status of this invitation is `Ready` and the request was created with type `Download`.
         /// NOTE: This link usually takes a few minutes to be available.
         /// </summary>

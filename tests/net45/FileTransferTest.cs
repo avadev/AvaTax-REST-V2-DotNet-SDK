@@ -2,6 +2,9 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +14,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
     public class FileTransferTest
     {
         public AvaTaxClient Client { get; set; }
-        public string CompanyCode { get; set; }
+        public string DefaultCompanyCode { get; set; }
+        public int DefaultCompanyId { get; set; }
         public CompanyModel TestCompany { get; set; }
 
         #region Setup / TearDown
@@ -36,6 +40,11 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 // Assert that ping succeeded
                 Assert.NotNull(pingResult, "Should be able to call Ping");
                 Assert.True(pingResult.authenticated, "Environment variables should provide correct authentication");
+
+                //Get the default company.
+                var defaultCompanyModel = Client.QueryCompanies(string.Empty, "isDefault EQ true", null, null, string.Empty).value.FirstOrDefault();
+
+                DefaultCompanyId = defaultCompanyModel.id;
 
                 // Create a basic company with nexus in the state of Washington
                 TestCompany = Client.CompanyInitialize(new CompanyInitializationModel()
@@ -123,6 +132,42 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             
             var report = await Client.InitiateExportDocumentLineReportAsync(company.value[0].id, exportDocumentLine);
             Assert.NotNull(report);
+        }
+
+        [Test]
+        [Ignore("Ignore TestUploadCertificateImage")]
+        public void TestUploadCertificateImage()
+        {
+            //Get the cert number. The account needs to have CertCapture 
+            //be provisioned, already have a certificate created, and the
+            //certificate needs to be valid.
+            var certs = Client.QueryCertificates(DefaultCompanyId, string.Empty, "valid EQ true", null, null, string.Empty).value;
+
+            var certId = certs.FirstOrDefault().id.Value;            
+
+            //Get an image.
+            using (WebClient webClient = new WebClient()) {
+                byte[] jpgByteArr = webClient.DownloadData("https://developer.avalara.com/public/images/blog/12000-juris.jpg");
+
+                FileResult fileResult = new FileResult()
+                {
+                    ContentType = "multipart/form-data",
+                    Filename = "test_cert_image.jpg",
+                    Data = jpgByteArr
+                };
+
+                //Send request.
+                var certuploadResult = Client.UploadCertificateImage(DefaultCompanyId, certId, fileResult);
+
+                //Response should be "OK"
+                Assert.True(string.Equals(certuploadResult, "\"OK\""));
+
+                //Test download of image attachment.
+                var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);
+                Assert.NotNull(certAttachment);
+                Assert.True(string.Equals(certAttachment.ContentType, "application/pdf"));
+                Assert.True(certAttachment.Data.Length > 1000);
+            }
         }
     }
 }

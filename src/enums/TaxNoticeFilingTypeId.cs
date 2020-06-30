@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,52 +22,52 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Denotes the tax return is being filed via electronic means; excludes SST electronic filing.
         /// </summary>
-        ElectronicReturn,
+        ElectronicReturn = 1,
 
         /// <summary>
         /// Denotes the tax return is being filed on paper.
         /// </summary>
-        PaperReturn,
+        PaperReturn = 2,
 
         /// <summary>
         /// Denotes the tax return that was not filed.
         /// </summary>
-        ReturnNotFiled,
+        ReturnNotFiled = 3,
 
         /// <summary>
         /// Denotes a return is paid via EFT and filed on paper without payment.
         /// </summary>
-        EFTPaper,
+        EFTPaper = 4,
 
         /// <summary>
         /// Denotes the tax return is an SST filing.
         /// </summary>
-        SER,
+        SER = 5,
 
         /// <summary>
         /// Denotes the tax return is a Trudsfile-EDI filing.
         /// </summary>
-        TrustfileEdi,
+        TrustfileEdi = 6,
 
         /// <summary>
         /// Denotes the tax return is an uploaded file.
         /// </summary>
-        UploadFile,
+        UploadFile = 7,
 
         /// <summary>
         /// Denotes the tax return was manually filed via paper
         /// </summary>
-        PaperManual,
+        PaperManual = 8,
 
         /// <summary>
         /// Denotes a cert capture return
         /// </summary>
-        CertCapture,
+        CertCapture = 9,
 
         /// <summary>
         /// Denotes a signature ready return
         /// </summary>
-        SignatureReady,
+        SignatureReady = 10,
 
     }
 }

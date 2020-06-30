@@ -3,13 +3,12 @@ using System;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -23,52 +22,52 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Denotes the form type is Sales and Use Tax
         /// </summary>
-        SalesAndUse,
+        SalesAndUse = 0,
 
         /// <summary>
         /// Denotes the form type is Sales Tax only
         /// </summary>
-        Sales,
+        Sales = 1,
 
         /// <summary>
         /// Denotes the form type is Sellers Use Tax only
         /// </summary>
-        SellersUse,
+        SellersUse = 2,
 
         /// <summary>
         /// Denotes the form type is Lodging Tax only
         /// </summary>
-        Lodging,
+        Lodging = 3,
 
         /// <summary>
         /// Denotes the form type is Sales and Lodging Tax
         /// </summary>
-        SalesAndLodging,
+        SalesAndLodging = 4,
 
         /// <summary>
         /// Denotes the form type is Consumer Use Tax only
         /// </summary>
-        ConsumerUse,
+        ConsumerUse = 5,
 
         /// <summary>
         /// Denotes the form type is Resort and Rental Tax
         /// </summary>
-        ResortAndRental,
+        ResortAndRental = 6,
 
         /// <summary>
         /// Denotes the form type is Tourist and Rental Tax
         /// </summary>
-        TouristAndRental,
+        TouristAndRental = 7,
 
         /// <summary>
         /// Denotes the form type is Prepayment
         /// </summary>
-        Prepayment,
+        Prepayment = 8,
 
         /// <summary>
         /// Denotes the form type is Prepayment Allowance
         /// </summary>
-        PrepaymentAllowed,
+        PrepaymentAllowed = 9,
 
     }
 }

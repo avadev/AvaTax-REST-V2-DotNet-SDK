@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -19,7 +18,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// The CoverLetter model represents a message sent along with an invitation to use CertExpress to
-    /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption 
+    /// upload certificates. An invitation allows customers to use CertExpress to upload their exemption
     /// certificates directly; this cover letter explains why the invitation was sent.
     /// </summary>
     public class CoverLetterModel

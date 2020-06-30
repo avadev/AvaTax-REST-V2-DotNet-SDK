@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -46,6 +45,11 @@ namespace Avalara.AvaTax.RestClient
         /// Total tax by tax type
         /// </summary>
         public Decimal? totalTax { get; set; }
+
+        /// <summary>
+        /// Tax subtype details
+        /// </summary>
+        public List<TaxDetailsByTaxSubType> taxSubTypeDetails { get; set; }
 
 
         /// <summary>

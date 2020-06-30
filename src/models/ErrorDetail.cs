@@ -5,13 +5,12 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2018 Avalara, Inc.
+ * (c) 2004-2019 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Ted Spence
- * @author Zhenya Frolov
+ * @author Genevieve Conty
  * @author Greg Hester
  */
 
@@ -46,6 +45,11 @@ namespace Avalara.AvaTax.RestClient
         /// Indicates the SOAP Fault code, if this was related to an error that corresponded to AvaTax SOAP v1 behavior.
         /// </summary>
         public String faultCode { get; set; }
+
+        /// <summary>
+        /// If this is an error from a downstream system (such as Calc) faultSubCode can be used to represent the fault code from that system.
+        /// </summary>
+        public String faultSubCode { get; set; }
 
         /// <summary>
         /// URL to help for this message
