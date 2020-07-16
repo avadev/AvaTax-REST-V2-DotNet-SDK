@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the type of authentication provided to the API call
+    /// 
     /// </summary>
     public enum AuthenticationTypeId
     {
         /// <summary>
-        /// This API call was not authenticated.
+        /// 
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// This API call was authenticated by your username/password.
+        /// 
         /// </summary>
         UsernamePassword = 1,
 
         /// <summary>
-        /// This API call was authenticated by your Avalara Account ID and private license key.
+        /// 
         /// </summary>
         AccountIdLicenseKey = 2,
 
         /// <summary>
-        /// This API call was authenticated by OpenID Bearer Token.
+        /// 
         /// </summary>
         OpenIdBearerToken = 3,
 

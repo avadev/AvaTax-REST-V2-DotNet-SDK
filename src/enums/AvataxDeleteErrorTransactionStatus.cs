@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Status when deleting an error transaction
+    /// 
     /// </summary>
     public enum AvataxDeleteErrorTransactionStatus
     {
         /// <summary>
-        /// Successful delete
+        /// 
         /// </summary>
         Success = 0,
 
         /// <summary>
-        /// Failed delete
+        /// 
         /// </summary>
         Failure = 1,
 

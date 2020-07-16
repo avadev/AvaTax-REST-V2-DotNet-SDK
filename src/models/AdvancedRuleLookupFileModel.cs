@@ -61,6 +61,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? version { get; set; }
 
+        /// <summary>
+        /// Lookup file CreatedOn
+        /// </summary>
+        public String createdDate { get; set; }
+
+        /// <summary>
+        /// Lookup file ModifiedOn
+        /// </summary>
+        public String modifiedDate { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

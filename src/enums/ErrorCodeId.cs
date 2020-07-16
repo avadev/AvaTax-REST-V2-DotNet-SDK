@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a error code message
+    /// 
     /// </summary>
     public enum ErrorCodeId
     {
         /// <summary>
-        /// Server has a configuration or setup problem
+        /// 
         /// </summary>
         ServerConfiguration = 1,
 
         /// <summary>
-        /// User doesn't have rights to this account or company
+        /// 
         /// </summary>
         AccountInvalidException = 2,
 
@@ -35,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         CompanyInvalidException = 3,
 
         /// <summary>
-        /// Use this error message when the user is trying to fetch a single object and the object either does not exist or cannot be seen by the current user.
+        /// 
         /// </summary>
         EntityNotFoundError = 4,
 
@@ -730,8 +730,7 @@ namespace Avalara.AvaTax.RestClient
         QueryParameterOutOfRange = 199,
 
         /// <summary>
-        /// Batch errors
-        ///  New batch error codes continue at 2501
+        /// 
         /// </summary>
         BatchSalesAuditMustBeZippedError = 200,
 
@@ -776,12 +775,12 @@ namespace Avalara.AvaTax.RestClient
         BatchCannotBeDeletedWhileProcessing = 208,
 
         /// <summary>
-        /// BizTech error
+        /// 
         /// </summary>
         InternalServerError = 209,
 
         /// <summary>
-        /// Point Of Sale API exceptions
+        /// 
         /// </summary>
         PointOfSaleFileSize = 250,
 
@@ -796,7 +795,7 @@ namespace Avalara.AvaTax.RestClient
         InvalidInputDate = 252,
 
         /// <summary>
-        /// Errors in Soap V1 Passthrough / GetTax calls
+        /// 
         /// </summary>
         GetTaxError = 300,
 
@@ -866,7 +865,7 @@ namespace Avalara.AvaTax.RestClient
         InvalidPostalCode = 317,
 
         /// <summary>
-        /// Subscription error codes
+        /// 
         /// </summary>
         InvalidSubscriptionDescription = 318,
 
@@ -876,22 +875,22 @@ namespace Avalara.AvaTax.RestClient
         InvalidSubscriptionTypeId = 319,
 
         /// <summary>
-        /// Represents a malformed document fetch command
+        /// 
         /// </summary>
         CannotChangeFilingStatus = 401,
 
         /// <summary>
-        /// Represents a FEIN in incorrect format.
+        /// 
         /// </summary>
         FEINFormatError = 402,
 
         /// <summary>
-        /// Represents a SQL server timeout error / deadlock error
+        /// 
         /// </summary>
         ServerUnreachable = 500,
 
         /// <summary>
-        /// Partner API error codes
+        /// 
         /// </summary>
         SubscriptionRequired = 600,
 
@@ -941,7 +940,7 @@ namespace Avalara.AvaTax.RestClient
         LicenseKeyNameAlreadyExistsForAccount = 612,
 
         /// <summary>
-        /// Refund API error codes
+        /// 
         /// </summary>
         RefundTypeAndPercentageMismatch = 701,
 
@@ -986,7 +985,7 @@ namespace Avalara.AvaTax.RestClient
         RefundPercentageMissing = 709,
 
         /// <summary>
-        /// Free API error codes
+        /// 
         /// </summary>
         MustUseCreateTransaction = 800,
 
@@ -996,7 +995,7 @@ namespace Avalara.AvaTax.RestClient
         MustAcceptTermsAndConditions = 801,
 
         /// <summary>
-        /// Filing Calendar Error Codes
+        /// 
         /// </summary>
         FilingCalendarCannotBeDeleted = 900,
 
@@ -1021,7 +1020,7 @@ namespace Avalara.AvaTax.RestClient
         FilingCalendarCannotBeEdited = 904,
 
         /// <summary>
-        /// Create or update transaction error codes
+        /// 
         /// </summary>
         CannotModifyLockedTransaction = 1100,
 
@@ -1056,7 +1055,7 @@ namespace Avalara.AvaTax.RestClient
         ShipToRegionRequiredWithDataSource = 1106,
 
         /// <summary>
-        /// Exempt cert error codes
+        /// 
         /// </summary>
         InvalidBusinessType = 1200,
 
@@ -1161,7 +1160,7 @@ namespace Avalara.AvaTax.RestClient
         EcmsSstCertsRequired = 1223,
 
         /// <summary>
-        /// Multi document error codes
+        /// 
         /// </summary>
         TransactionNotCancelled = 1300,
 
@@ -1221,7 +1220,7 @@ namespace Avalara.AvaTax.RestClient
         InvalidDocumentStatus = 1314,
 
         /// <summary>
-        /// Communications Tax error codes
+        /// 
         /// </summary>
         CommsConfigClientIdMissing = 1400,
 
@@ -1231,12 +1230,12 @@ namespace Avalara.AvaTax.RestClient
         CommsConfigClientIdBadValue = 1401,
 
         /// <summary>
-        /// Account Activate error codes
+        /// 
         /// </summary>
         AccountInNewStatusException = 1404,
 
         /// <summary>
-        /// Worksheet Exception
+        /// 
         /// </summary>
         WorksheetException = 1405,
 
@@ -1271,7 +1270,7 @@ namespace Avalara.AvaTax.RestClient
         FieldNotOrderableError = 1411,
 
         /// <summary>
-        /// Nexus validation error codes
+        /// 
         /// </summary>
         CannotDeleteParentBeforeChildNexus = 1500,
 
@@ -1281,7 +1280,7 @@ namespace Avalara.AvaTax.RestClient
         NexusChildDateMismatch = 1501,
 
         /// <summary>
-        /// Remote validation Error
+        /// 
         /// </summary>
         RemoteValidationError = 1502,
 
@@ -1296,7 +1295,7 @@ namespace Avalara.AvaTax.RestClient
         InvalidLocalNexusTypeId = 1504,
 
         /// <summary>
-        /// Advanced rule errors
+        /// 
         /// </summary>
         AdvancedRuleRequestRuleError = 1602,
 
@@ -1311,7 +1310,7 @@ namespace Avalara.AvaTax.RestClient
         AdvancedRuleError = 1605,
 
         /// <summary>
-        /// Miscellaneous
+        /// 
         /// </summary>
         TaxRuleRequiresNexus = 1701,
 
@@ -1391,7 +1390,7 @@ namespace Avalara.AvaTax.RestClient
         RateLimitExceededError = 1723,
 
         /// <summary>
-        /// SendSales API errors
+        /// 
         /// </summary>
         UnsupportedFileFormat = 1800,
 
@@ -1401,7 +1400,7 @@ namespace Avalara.AvaTax.RestClient
         UnsupportedOutputFileType = 1801,
 
         /// <summary>
-        /// TaxProfile API errors
+        /// 
         /// </summary>
         TaxProfileNotProvided = 1900,
 
@@ -1421,12 +1420,12 @@ namespace Avalara.AvaTax.RestClient
         ErrorReadingTaxProfileEntry = 1903,
 
         /// <summary>
-        /// AuditAccount API errors
+        /// 
         /// </summary>
         TraceDataNotAvailable = 2000,
 
         /// <summary>
-        /// Item and Nexus parameter errors
+        /// 
         /// </summary>
         InvalidParameterUnitMeasurementType = 2100,
 
@@ -1451,7 +1450,7 @@ namespace Avalara.AvaTax.RestClient
         SubscriptionRequiredForParameter = 2104,
 
         /// <summary>
-        /// Accounting Firm errors
+        /// 
         /// </summary>
         InvalidAccountType = 2105,
 
@@ -1461,7 +1460,7 @@ namespace Avalara.AvaTax.RestClient
         InvalidFirmSubscriptions = 2106,
 
         /// <summary>
-        /// Certify Company Errors
+        /// 
         /// </summary>
         GenericTaxCodeForItem = 2200,
 
@@ -1561,7 +1560,7 @@ namespace Avalara.AvaTax.RestClient
         NoShippingCharge = 2219,
 
         /// <summary>
-        /// Company Controller Related Errors
+        /// 
         /// </summary>
         FailedToUpdateCompanyLocation = 2314,
 
@@ -1571,7 +1570,7 @@ namespace Avalara.AvaTax.RestClient
         CompanyLocationDateRangeOverlap = 2315,
 
         /// <summary>
-        /// Generic validation errors
+        /// 
         /// </summary>
         FieldLengthError = 2400,
 
@@ -1586,8 +1585,7 @@ namespace Avalara.AvaTax.RestClient
         CannotCreateNestedObjects = 2402,
 
         /// <summary>
-        /// Batch errors
-        ///  For other batch errors, see: 200 - 208 above
+        /// 
         /// </summary>
         BatchTransactionTypeError = 2501,
 

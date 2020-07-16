@@ -71,6 +71,26 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Decimal? taxAccrualAmount { get; set; }
 
+        /// <summary>
+        /// reportableSalesAmount
+        /// </summary>
+        public Decimal? reportableSalesAmount { get; set; }
+
+        /// <summary>
+        /// reportableNonTaxableAmount
+        /// </summary>
+        public Decimal? reportableNonTaxableAmount { get; set; }
+
+        /// <summary>
+        /// reportableTaxableAmount
+        /// </summary>
+        public Decimal? reportableTaxableAmount { get; set; }
+
+        /// <summary>
+        /// reportableTaxAmount
+        /// </summary>
+        public Decimal? reportableTaxAmount { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

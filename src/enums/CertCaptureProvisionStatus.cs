@@ -20,14 +20,12 @@ namespace Avalara.AvaTax.RestClient
     public enum CertCaptureProvisionStatus
     {
         /// <summary>
-        /// Account and company are provisioned
+        /// 
         /// </summary>
         Provisioned = 0,
 
         /// <summary>
-        /// Provision job is being queued
-        ///  This could also be an indication that some companies under an account has been provisioned, while others
-        ///  under the same account has not.
+        /// 
         /// </summary>
         InProgress = 1,
 

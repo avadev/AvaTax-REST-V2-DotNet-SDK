@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Type of verification task
+    /// 
     /// </summary>
     public enum ScraperType
     {
         /// <summary>
-        /// Indicates that is is a login type
+        /// 
         /// </summary>
         Login = 1,
 
         /// <summary>
-        /// Indicates that it is a Customer DOR Data type
+        /// 
         /// </summary>
         CustomerDorData = 2,
 

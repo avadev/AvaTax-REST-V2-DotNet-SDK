@@ -15,42 +15,42 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Filing Frequency types
+    /// 
     /// </summary>
     public enum NoticeCustomerType
     {
         /// <summary>
-        /// AvaTax Returns
+        /// 
         /// </summary>
         AvaTaxReturns = 1,
 
         /// <summary>
-        /// Stand Alone
+        /// 
         /// </summary>
         StandAlone = 2,
 
         /// <summary>
-        /// Strategic
+        /// 
         /// </summary>
         Strategic = 3,
 
         /// <summary>
-        /// SST
+        /// 
         /// </summary>
         SST = 4,
 
         /// <summary>
-        /// TrustFile
+        /// 
         /// </summary>
         TrustFile = 5,
 
         /// <summary>
-        /// PWC
+        /// 
         /// </summary>
         PWC = 6,
 
         /// <summary>
-        /// Hudson Group
+        /// 
         /// </summary>
         HudsonGroup = 7,
 

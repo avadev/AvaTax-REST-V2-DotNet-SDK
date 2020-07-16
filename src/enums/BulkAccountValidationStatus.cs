@@ -15,7 +15,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A list of bulk account validation statuses for filing calendars.
+    /// 
     /// </summary>
     public enum BulkAccountValidationStatus
     {

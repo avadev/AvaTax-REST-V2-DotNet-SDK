@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Severity of message
+    /// 
     /// </summary>
     public enum SeverityLevel
     {
         /// <summary>
-        /// Operation succeeded
+        /// 
         /// </summary>
         Success = 0,
 
         /// <summary>
-        /// Warnings occured, operation succeeded
+        /// 
         /// </summary>
         Warning = 1,
 
         /// <summary>
-        /// Errors occured, operation failed
+        /// 
         /// </summary>
         Error = 2,
 
         /// <summary>
-        /// Unexpected exceptions occurred, operation failed
+        /// 
         /// </summary>
         Exception = 3,
 
