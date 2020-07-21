@@ -64,6 +64,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public AddressLocationInfo pointOfOrderAcceptance { get; set; }
 
+        /// <summary>
+        /// The address where the goods are located or where services are rendered.This address type is valid only for VAT transactions.
+        /// </summary>
+        public AddressLocationInfo goodsPlaceOrServiceRendered { get; set; }
+
+        /// <summary>
+        /// The address of the buyer importing a good from another country.This address type is valid only for VAT transactions.
+        /// </summary>
+        public AddressLocationInfo import { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

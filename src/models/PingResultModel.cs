@@ -52,6 +52,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? authenticatedAccountId { get; set; }
 
         /// <summary>
+        /// The ID number of the currently authenticated user's company, if any.
+        /// </summary>
+        public Int32? authenticatedCompanyId { get; set; }
+
+        /// <summary>
         /// The connected Salesforce account.
         /// </summary>
         public String crmid { get; set; }

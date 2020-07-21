@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    20.6.0
+ * @version    20.7.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "20.6.0"; } }
+        public static string API_VERSION { get { return "20.7.0"; } }
 
 #region Methods
 
@@ -460,6 +460,25 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Get audit records by account id and date range.
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <param name="accountId">The ID of the account</param>
+        /// <param name="fromDate">Date</param>
+        /// <param name="toDate">Date</param>
+        public AdvancedRuleLookupFileModel GetAuditRecords(Int32 accountId, String fromDate, String toDate)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/audits/accounts/{accountId}/from/{fromDate}/to/{toDate}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("fromDate", fromDate);
+            path.ApplyField("toDate", toDate);
+            return RestCall<AdvancedRuleLookupFileModel>("GET", path, null);
         }
 
 
@@ -2717,7 +2736,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyId">The id of the company you which to create the datasources</param>
         /// <param name="model"></param>
@@ -2738,7 +2757,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyId">The id of the company the datasource belongs to.</param>
         /// <param name="id">The id of the datasource you wish to delete.</param>
@@ -2760,7 +2779,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyId"></param>
         /// <param name="id">data source id</param>
@@ -2782,7 +2801,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyId">The id of the company you wish to retrieve the datasources.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
@@ -2813,7 +2832,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
@@ -2839,7 +2858,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyId">The id of the company the datasource belongs to.</param>
         /// <param name="id">The id of the datasource you wish to delete.</param>
@@ -3952,13 +3971,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<ProductClassificationSystemModel> ListProductClassificationSystems(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="countryCode">If not null, return all records with this code.</param>
+        public FetchResult<ProductClassificationSystemModel> ListProductClassificationSystems(String filter, Int32? top, Int32? skip, String orderBy, String countryCode)
         {
             var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$countryCode", countryCode);
             return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
@@ -3977,7 +3998,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<ProductClassificationSystemModel> ListProductClassificationSystemsByCompany(String companyCode, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="countryCode">If not null, return all records with this code.</param>
+        public FetchResult<ProductClassificationSystemModel> ListProductClassificationSystemsByCompany(String companyCode, String filter, Int32? top, Int32? skip, String orderBy, String countryCode)
         {
             var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems/bycompany/{companyCode}");
             path.ApplyField("companyCode", companyCode);
@@ -3985,6 +4007,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$countryCode", countryCode);
             return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
@@ -5918,6 +5941,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -5962,6 +5987,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -5997,6 +6024,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6053,6 +6082,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6091,6 +6122,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6141,6 +6174,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6187,6 +6222,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6256,6 +6293,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6292,6 +6331,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -6325,6 +6366,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8017,7 +8060,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be added</param>
@@ -8059,12 +8102,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
@@ -8106,12 +8151,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The code identifying the company that owns this transaction</param>
         /// <param name="transactionCode">The code identifying the transaction</param>
@@ -8148,12 +8195,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The code identifying the company that owns this transaction</param>
         /// <param name="transactionCode">The code identifying the transaction</param>
@@ -8223,12 +8272,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
@@ -8275,6 +8326,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8435,7 +8488,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be removed</param>
@@ -8474,6 +8527,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8506,6 +8561,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8596,6 +8653,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8654,6 +8713,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8717,12 +8778,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The code of the company that made the original sale</param>
         /// <param name="transactionCode">The transaction code of the original sale</param>
@@ -8771,6 +8834,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -8816,12 +8881,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to Uncommit</param>
@@ -8858,12 +8925,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
@@ -8907,12 +8976,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
@@ -8959,6 +9030,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -9883,6 +9956,25 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Get audit records by account id and date range.;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+        /// <param name="accountId">The ID of the account</param>
+        /// <param name="fromDate">Date</param>
+        /// <param name="toDate">Date</param>
+        public async Task<AdvancedRuleLookupFileModel> GetAuditRecordsAsync(Int32 accountId, String fromDate, String toDate)
+        {
+            var path = new AvaTaxPath("/api/v2/advancedrules/audits/accounts/{accountId}/from/{fromDate}/to/{toDate}");
+            path.ApplyField("accountId", accountId);
+            path.ApplyField("fromDate", fromDate);
+            path.ApplyField("toDate", toDate);
+            return await RestCallAsync<AdvancedRuleLookupFileModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -12140,7 +12232,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyId">The id of the company you which to create the datasources</param>
         /// <param name="model"></param>
@@ -12161,7 +12253,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyId">The id of the company the datasource belongs to.</param>
         /// <param name="id">The id of the datasource you wish to delete.</param>
@@ -12183,7 +12275,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyId"></param>
         /// <param name="id">data source id</param>
@@ -12205,7 +12297,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyId">The id of the company you wish to retrieve the datasources.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
@@ -12236,7 +12328,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isEnabled, isSynced, isAuthorized, name, externalState</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
@@ -12262,7 +12354,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyId">The id of the company the datasource belongs to.</param>
         /// <param name="id">The id of the datasource you wish to delete.</param>
@@ -13375,13 +13467,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<ProductClassificationSystemModel>> ListProductClassificationSystemsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="countryCode">If not null, return all records with this code.</param>
+        public async Task<FetchResult<ProductClassificationSystemModel>> ListProductClassificationSystemsAsync(String filter, Int32? top, Int32? skip, String orderBy, String countryCode)
         {
             var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$countryCode", countryCode);
             return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13400,7 +13494,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<ProductClassificationSystemModel>> ListProductClassificationSystemsByCompanyAsync(String companyCode, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="countryCode">If not null, return all records with this code.</param>
+        public async Task<FetchResult<ProductClassificationSystemModel>> ListProductClassificationSystemsByCompanyAsync(String companyCode, String filter, Int32? top, Int32? skip, String orderBy, String countryCode)
         {
             var path = new AvaTaxPath("/api/v2/definitions/productclassificationsystems/bycompany/{companyCode}");
             path.ApplyField("companyCode", companyCode);
@@ -13408,6 +13503,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$countryCode", countryCode);
             return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15341,6 +15437,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15385,6 +15483,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15420,6 +15520,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15476,6 +15578,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15514,6 +15618,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15564,6 +15670,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15610,6 +15718,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15679,6 +15789,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15715,6 +15827,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -15748,6 +15862,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -17440,7 +17556,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be added</param>
@@ -17482,12 +17598,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to adjust</param>
@@ -17529,12 +17647,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The code identifying the company that owns this transaction</param>
         /// <param name="transactionCode">The code identifying the transaction</param>
@@ -17571,12 +17691,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The code identifying the company that owns this transaction</param>
         /// <param name="transactionCode">The code identifying the transaction</param>
@@ -17646,12 +17768,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to change</param>
@@ -17698,6 +17822,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -17858,7 +17984,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="include">Specifies objects to include in the response after transaction is created</param>
         /// <param name="model">information about the transaction and lines to be removed</param>
@@ -17897,6 +18023,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -17929,6 +18057,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -18019,6 +18149,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -18077,6 +18209,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -18140,12 +18274,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The code of the company that made the original sale</param>
         /// <param name="transactionCode">The transaction code of the original sale</param>
@@ -18194,6 +18330,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
@@ -18239,12 +18377,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to Uncommit</param>
@@ -18281,12 +18421,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to commit</param>
@@ -18330,12 +18472,14 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, CSPTester, ProStoresOperator, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services<br />*Required* (all): AvaTaxPro, BasicReturns.;
         /// </remarks>
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="transactionCode">The transaction code to settle</param>
@@ -18382,6 +18526,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Replace '/' with '\_-ava2f-\_' For example: document/Code becomes document_-ava2f-_Code
         /// * Replace '+' with '\_-ava2b-\_' For example: document+Code becomes document_-ava2b-_Code
         /// * Replace '?' with '\_-ava3f-\_' For example: document?Code becomes document_-ava3f-_Code
+        /// * Replace '%' with '\_-ava25-\_' For example: document%Code becomes document_-ava25-_Code
+        /// * Replace '#' with '\_-ava23-\_' For example: document#Code becomes document_-ava23-_Code
         /// * Replace ' ' with '%20' For example: document Code becomes document%20Code
         /// 
         /// ### Security Policies

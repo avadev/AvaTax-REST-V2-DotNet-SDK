@@ -15,17 +15,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Casing to use for validation result
+    /// 
     /// </summary>
     public enum TextCase
     {
         /// <summary>
-        /// Upper case
+        /// 
         /// </summary>
         Upper = 0,
 
         /// <summary>
-        /// Mixed Case
+        /// 
         /// </summary>
         Mixed = 1,
 

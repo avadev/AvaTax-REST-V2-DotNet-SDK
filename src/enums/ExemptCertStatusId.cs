@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Status for this exempt certificate
+    /// 
     /// </summary>
     public enum ExemptCertStatusId
     {
         /// <summary>
-        /// Inactive certificate
+        /// 
         /// </summary>
         Inactive = 0,
 
         /// <summary>
-        /// Active certificate
+        /// 
         /// </summary>
         Active = 1,
 
         /// <summary>
-        /// Expired certificate
+        /// 
         /// </summary>
         Expired = 2,
 
         /// <summary>
-        /// Revoked certificate
+        /// 
         /// </summary>
         Revoked = 3,
 

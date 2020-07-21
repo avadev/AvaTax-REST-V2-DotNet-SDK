@@ -15,22 +15,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Exempt certificate review status
+    /// 
     /// </summary>
     public enum ExemptCertReviewStatusId
     {
         /// <summary>
-        /// Review pending
+        /// 
         /// </summary>
         Pending = 0,
 
         /// <summary>
-        /// Certificate was accepted
+        /// 
         /// </summary>
         Accepted = 1,
 
         /// <summary>
-        /// Certificate was rejected
+        /// 
         /// </summary>
         Rejected = 2,
 

@@ -15,27 +15,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Indicates the rounding behavior of a form
+    /// 
     /// </summary>
     public enum RoundingTypeId
     {
         /// <summary>
-        /// There is no rounding on the return
+        /// 
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Round to the nearest whole number
+        /// 
         /// </summary>
         Nearest = 1,
 
         /// <summary>
-        /// Always round up
+        /// 
         /// </summary>
         Up = 2,
 
         /// <summary>
-        /// Always round down
+        /// 
         /// </summary>
         Down = 3,
 

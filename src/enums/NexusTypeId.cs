@@ -15,34 +15,32 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Describes the different types of statuses which describe an entity (company).
+    /// 
     /// </summary>
     public enum NexusTypeId
     {
         /// <summary>
-        /// Indicates no nexus
+        /// 
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Indicates the entity is voluntarily collecting tax (default)
+        /// 
         /// </summary>
         SalesOrSellersUseTax = 1,
 
         /// <summary>
-        /// Indicates the entity is required to collect tax in the state
+        /// 
         /// </summary>
         SalesTax = 2,
 
         /// <summary>
-        /// Indicates the entity is registered as a Volunteer in an SST state.
-        ///  Only your SST administrator may set this option.
+        /// 
         /// </summary>
         SSTVolunteer = 3,
 
         /// <summary>
-        /// Indicates the entity is registered as a Non-Volunteer in an SST state.
-        ///  Only your SST administrator may set this option.
+        /// 
         /// </summary>
         SSTNonVolunteer = 4,
 

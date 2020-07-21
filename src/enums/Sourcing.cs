@@ -15,22 +15,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Sourcing
+    /// 
     /// </summary>
     public enum Sourcing
     {
         /// <summary>
-        /// Mixed sourcing, for states that do both origin and destination calculation
+        /// 
         /// </summary>
         Mixed = 42,
 
         /// <summary>
-        /// Destination
+        /// 
         /// </summary>
         Destination = 68,
 
         /// <summary>
-        /// Origin
+        /// 
         /// </summary>
         Origin = 79,
 
