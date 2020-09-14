@@ -62,12 +62,12 @@ namespace Avalara.AvaTax.RestClient
         public Int32? version { get; set; }
 
         /// <summary>
-        /// Lookup file CreatedOn
+        /// Lookup file CreatedDate
         /// </summary>
         public String createdDate { get; set; }
 
         /// <summary>
-        /// Lookup file ModifiedOn
+        /// Lookup file ModifiedDate
         /// </summary>
         public String modifiedDate { get; set; }
 

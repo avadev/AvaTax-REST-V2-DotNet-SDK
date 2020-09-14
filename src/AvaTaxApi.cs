@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    20.7.0
+ * @version    20.9.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "20.7.0"; } }
+        public static string API_VERSION { get { return "20.9.0"; } }
 
 #region Methods
 
@@ -1731,6 +1731,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a company.
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this company, call `/api/v2/definitions/parameters?$filter=attributeType eq Company`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this company parameter.</param>
+        /// <param name="model">The company parameters you wish to create.</param>
+        public List<CompanyParameterDetailModel> CreateCompanyParameters(Int32 companyId, List<CompanyParameterDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
+            path.ApplyField("companyId", companyId);
+            return RestCall<List<CompanyParameterDetailModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Request managed returns funding setup for a company
         /// </summary>
         /// <remarks>
@@ -1774,6 +1804,32 @@ namespace Avalara.AvaTax.RestClient
         public List<ErrorDetail> DeleteCompany(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single company parameter
+        /// </summary>
+        /// <remarks>
+        /// Delete a parameter of a company.
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="id">The parameter id</param>
+        public List<ErrorDetail> DeleteCompanyParameter(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
@@ -1894,6 +1950,33 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a single company parameter
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single parameter of a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="id"></param>
+        public CompanyParameterDetailModel GetCompanyParameterDetail(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<CompanyParameterDetailModel>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Get this company's filing status
         /// </summary>
         /// <remarks>
@@ -1921,6 +2004,42 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
             return RestCallString("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for a company
+        /// </summary>
+        /// <remarks>
+        /// Retrieve all parameters of a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CompanyParameterDetailModel> ListCompanyParameterDetails(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<CompanyParameterDetailModel>>("GET", path, null);
         }
 
 
@@ -2067,6 +2186,34 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             return RestCall<CompanyModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update a company parameter
+        /// </summary>
+        /// <remarks>
+        /// Update a parameter of a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="id">The company parameter id</param>
+        /// <param name="model">The company parameter object you wish to update.</param>
+        public CompanyParameterDetailModel UpdateCompanyParameterDetail(Int32 companyId, Int64 id, CompanyParameterDetailModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return RestCall<CompanyParameterDetailModel>("PUT", path, model);
         }
 
 
@@ -3289,7 +3436,7 @@ namespace Avalara.AvaTax.RestClient
         /// Returns a list of all Avalara-supported taxing jurisdictions.
         ///  
         /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
-        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01'
+        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate > '2016-01-01'
         ///  
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.
         /// </remarks>
@@ -4529,6 +4676,50 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a new eCommerce token.
+        /// </summary>
+        /// <remarks>
+        /// Creates a new eCommerce token.
+        ///  
+        /// This API is used to create a new eCommerce token. An eCommerce token is required in order to launch the CertCapture eCommerce plugin. Create a token for each of your CertCapture customers.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The company ID that will be issued this certificate.</param>
+        /// <param name="model"></param>
+        public FetchResult<ECommerceTokenOutputModel> CreateECommerceToken(Int32 companyId, CreateECommerceTokenInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
+            path.ApplyField("companyId", companyId);
+            return RestCall<FetchResult<ECommerceTokenOutputModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Refresh an eCommerce token.
+        /// </summary>
+        /// <remarks>
+        /// Refresh an eCommerce token.
+        ///  
+        /// CertCapture eCommerce tokens expire after one hour. This API is used to refresh an eCommerce token that is about to expire. This API can only be used with active tokens. If your token has expired, you must generate a new one.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The company ID that the refreshed certificate belongs to.</param>
+        /// <param name="model"></param>
+        public FetchResult<ECommerceTokenOutputModel> RefreshECommerceToken(Int32 companyId, RefreshECommerceTokenInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
+            path.ApplyField("companyId", companyId);
+            return RestCall<FetchResult<ECommerceTokenOutputModel>>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Delete a company return setting
         /// </summary>
         /// <remarks>
@@ -4548,6 +4739,25 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("filingCalendarId", filingCalendarId);
             path.ApplyField("companyReturnSettingId", companyReturnSettingId);
             return RestCall<List<CompanyReturnSettingModel>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a filing containing the return and all its accrual returns.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns these returns</param>
+        /// <param name="filingReturnId">The ID of the filing return</param>
+        public FetchResult<MultiTaxFilingModel> GetAccrualFilings(Int32 companyId, Int64 filingReturnId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/accrual/{filingReturnId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("filingReturnId", filingReturnId);
+            return RestCall<FetchResult<MultiTaxFilingModel>>("GET", path, null);
         }
 
 
@@ -5724,6 +5934,38 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a location.
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to a location.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this location, call `/api/v2/definitions/parameters?$filter=attributeType eq Company`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this location parameter.</param>
+        /// <param name="locationId">The location id.</param>
+        /// <param name="model">The location parameters you wish to create.</param>
+        public List<LocationParameterModel> CreateLocationParameters(Int32 companyId, Int32 locationId, List<LocationParameterModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            return RestCall<List<LocationParameterModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new location
         /// </summary>
         /// <remarks>
@@ -5765,6 +6007,35 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete a single location parameter
+        /// </summary>
+        /// <remarks>
+        /// Delete a single location parameter.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="locationId">The location id</param>
+        /// <param name="id">The parameter id</param>
+        public List<ErrorDetail> DeleteLocationParameter(Int32 companyId, Int32 locationId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve a single location
         /// </summary>
         /// <remarks>
@@ -5781,7 +6052,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -5793,6 +6064,73 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return RestCall<LocationModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single company location parameter
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single location parameter.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="locationId">The location id</param>
+        /// <param name="id">The parameter id</param>
+        public LocationParameterModel GetLocationParameter(Int32 companyId, Int32 locationId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.ApplyField("id", id);
+            return RestCall<LocationParameterModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for a location
+        /// </summary>
+        /// <remarks>
+        /// List parameters for a location.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="locationId">The ID of the location</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<LocationParameterModel> ListLocationParameters(Int32 companyId, Int32 locationId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<LocationParameterModel>>("GET", path, null);
         }
 
 
@@ -5815,7 +6153,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
@@ -5856,7 +6194,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
@@ -5900,6 +6238,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update a location parameter
+        /// </summary>
+        /// <remarks>
+        /// Update a location parameter.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="locationId">The location id</param>
+        /// <param name="id">The location parameter id</param>
+        /// <param name="model">The location parameter object you wish to update.</param>
+        public LocationParameterModel UpdateLocationParameter(Int32 companyId, Int32 locationId, Int64 id, LocationParameterModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.ApplyField("id", id);
+            return RestCall<LocationParameterModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Validate the location against local requirements
         /// </summary>
         /// <remarks>
@@ -5909,7 +6277,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -6426,6 +6794,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a nexus.
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to the nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Nexus`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus parameter.</param>
+        /// <param name="nexusId">The nexus id.</param>
+        /// <param name="model">The nexus parameters you wish to create.</param>
+        public List<NexusParameterDetailModel> CreateNexusParameters(Int32 companyId, Int32 nexusId, List<NexusParameterDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            return RestCall<List<NexusParameterDetailModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Creates nexus for a list of addresses.
         /// </summary>
         /// <remarks>
@@ -6485,6 +6884,60 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("cascadeDelete", cascadeDelete);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete a single nexus parameter
+        /// </summary>
+        /// <remarks>
+        /// Delete a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public List<ErrorDetail> DeleteNexusParameter(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete all parameters for an nexus
+        /// </summary>
+        /// <remarks>
+        /// Delete all the parameters for a given nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus.</param>
+        /// <param name="nexusId">The ID of the nexus you wish to delete the parameters.</param>
+        public List<ErrorDetail> DeleteNexusParameters(Int32 companyId, Int32 nexusId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6554,6 +7007,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a single nexus parameter
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller.In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public NexusParameterDetailModel GetNexusParameter(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return RestCall<NexusParameterDetailModel>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve nexus for this company
         /// </summary>
         /// <remarks>
@@ -6589,6 +7070,43 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for a nexus
+        /// </summary>
+        /// <remarks>
+        /// List parameters for a nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name. 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<NexusParameterDetailModel> ListNexusParameters(Int32 companyId, Int32 nexusId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<NexusParameterDetailModel>>("GET", path, null);
         }
 
 
@@ -6666,6 +7184,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return RestCall<NexusModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update an nexus parameter
+        /// </summary>
+        /// <remarks>
+        /// Update an nexus parameter.
+        ///  
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a nexus will be used in tax calculation based on the locationcode and parameter value the transaction state line might have lines added.
+        ///  
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.????? I dont know about this?
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The nexus parameter id</param>
+        /// <param name="model">The nexus object you wish to update.</param>
+        public NexusParameterDetailModel UpdateNexusParameter(Int32 companyId, Int32 nexusId, Int64 id, NexusParameterDetailModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return RestCall<NexusParameterDetailModel>("PUT", path, model);
         }
 
 
@@ -11227,6 +11775,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a company.;
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this company, call `/api/v2/definitions/parameters?$filter=attributeType eq Company`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this company parameter.</param>
+        /// <param name="model">The company parameters you wish to create.</param>
+        public async Task<List<CompanyParameterDetailModel>> CreateCompanyParametersAsync(Int32 companyId, List<CompanyParameterDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<List<CompanyParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Request managed returns funding setup for a company;
         /// </summary>
         /// <remarks>
@@ -11270,6 +11848,32 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<ErrorDetail>> DeleteCompanyAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single company parameter;
+        /// </summary>
+        /// <remarks>
+        /// Delete a parameter of a company.
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<List<ErrorDetail>> DeleteCompanyParameterAsync(Int32 companyId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
@@ -11390,6 +11994,33 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a single company parameter;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single parameter of a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId"></param>
+        /// <param name="id"></param>
+        public async Task<CompanyParameterDetailModel> GetCompanyParameterDetailAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<CompanyParameterDetailModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Get this company's filing status;
         /// </summary>
         /// <remarks>
@@ -11417,6 +12048,42 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
             return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for a company;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve all parameters of a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CompanyParameterDetailModel>> ListCompanyParameterDetailsAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<CompanyParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -11563,6 +12230,34 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             return await RestCallAsync<CompanyModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update a company parameter;
+        /// </summary>
+        /// <remarks>
+        /// Update a parameter of a company.
+        ///  
+        /// Some companies can be taxed and reported differently depending on the properties of the company, such as IsPrimaryAddress. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a company will be used by default in tax calculation but will not show on the transaction line referencing the company.
+        ///  
+        /// A company location parameter specified on a transaction line will override a company parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="id">The company parameter id</param>
+        /// <param name="model">The company parameter object you wish to update.</param>
+        public async Task<CompanyParameterDetailModel> UpdateCompanyParameterDetailAsync(Int32 companyId, Int64 id, CompanyParameterDetailModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<CompanyParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -12785,7 +13480,7 @@ namespace Avalara.AvaTax.RestClient
         /// Returns a list of all Avalara-supported taxing jurisdictions.
         ///  
         /// This API allows you to examine all Avalara-supported jurisdictions. You can filter your search by supplying
-        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate &gt; '2016-01-01'
+        /// SQL-like query for fetching only the ones you concerned about. For example: effectiveDate > '2016-01-01'
         ///  
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.;
         /// </remarks>
@@ -14025,6 +14720,50 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a new eCommerce token.;
+        /// </summary>
+        /// <remarks>
+        /// Creates a new eCommerce token.
+        ///  
+        /// This API is used to create a new eCommerce token. An eCommerce token is required in order to launch the CertCapture eCommerce plugin. Create a token for each of your CertCapture customers.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The company ID that will be issued this certificate.</param>
+        /// <param name="model"></param>
+        public async Task<FetchResult<ECommerceTokenOutputModel>> CreateECommerceTokenAsync(Int32 companyId, CreateECommerceTokenInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FetchResult<ECommerceTokenOutputModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Refresh an eCommerce token.;
+        /// </summary>
+        /// <remarks>
+        /// Refresh an eCommerce token.
+        ///  
+        /// CertCapture eCommerce tokens expire after one hour. This API is used to refresh an eCommerce token that is about to expire. This API can only be used with active tokens. If your token has expired, you must generate a new one.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The company ID that the refreshed certificate belongs to.</param>
+        /// <param name="model"></param>
+        public async Task<FetchResult<ECommerceTokenOutputModel>> RefreshECommerceTokenAsync(Int32 companyId, RefreshECommerceTokenInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
+            path.ApplyField("companyId", companyId);
+            return await RestCallAsync<FetchResult<ECommerceTokenOutputModel>>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Delete a company return setting;
         /// </summary>
         /// <remarks>
@@ -14044,6 +14783,25 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("filingCalendarId", filingCalendarId);
             path.ApplyField("companyReturnSettingId", companyReturnSettingId);
             return await RestCallAsync<List<CompanyReturnSettingModel>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a filing containing the return and all its accrual returns.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns these returns</param>
+        /// <param name="filingReturnId">The ID of the filing return</param>
+        public async Task<FetchResult<MultiTaxFilingModel>> GetAccrualFilingsAsync(Int32 companyId, Int64 filingReturnId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/filings/accrual/{filingReturnId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("filingReturnId", filingReturnId);
+            return await RestCallAsync<FetchResult<MultiTaxFilingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15220,6 +15978,38 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a location.;
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to a location.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this location, call `/api/v2/definitions/parameters?$filter=attributeType eq Company`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this location parameter.</param>
+        /// <param name="locationId">The location id.</param>
+        /// <param name="model">The location parameters you wish to create.</param>
+        public async Task<List<LocationParameterModel>> CreateLocationParametersAsync(Int32 companyId, Int32 locationId, List<LocationParameterModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            return await RestCallAsync<List<LocationParameterModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Create a new location;
         /// </summary>
         /// <remarks>
@@ -15261,6 +16051,35 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete a single location parameter;
+        /// </summary>
+        /// <remarks>
+        /// Delete a single location parameter.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="locationId">The location id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<List<ErrorDetail>> DeleteLocationParameterAsync(Int32 companyId, Int32 locationId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve a single location;
         /// </summary>
         /// <remarks>
@@ -15277,7 +16096,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -15289,6 +16108,73 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
             return await RestCallAsync<LocationModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single company location parameter;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single location parameter.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="locationId">The location id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<LocationParameterModel> GetLocationParameterAsync(Int32 companyId, Int32 locationId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<LocationParameterModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for a location;
+        /// </summary>
+        /// <remarks>
+        /// List parameters for a location.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="locationId">The ID of the location</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<LocationParameterModel>> ListLocationParametersAsync(Int32 companyId, Int32 locationId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<LocationParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -15311,7 +16197,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns these locations</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
@@ -15352,7 +16238,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* settings, parameters</param>
         /// <param name="include">A comma separated list of additional data to retrieve. You may specify `LocationSettings` to retrieve location settings.</param>
@@ -15396,6 +16282,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update a location parameter;
+        /// </summary>
+        /// <remarks>
+        /// Update a location parameter.
+        ///  
+        /// Some locations can be taxed differently depending on the properties of that location. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a location will be used by default in tax calculation but will not show on the transaction line referencing the location.
+        ///  
+        /// A parameter specified on a transaction line will override a location parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="locationId">The location id</param>
+        /// <param name="id">The location parameter id</param>
+        /// <param name="model">The location parameter object you wish to update.</param>
+        public async Task<LocationParameterModel> UpdateLocationParameterAsync(Int32 companyId, Int32 locationId, Int64 id, LocationParameterModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("locationId", locationId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<LocationParameterModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Validate the location against local requirements;
         /// </summary>
         /// <remarks>
@@ -15405,7 +16321,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
         /// <param name="companyId">The ID of the company that owns this location</param>
         /// <param name="id">The primary key of this location</param>
@@ -15922,6 +16838,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add parameters to a nexus.;
+        /// </summary>
+        /// <remarks>
+        /// Add parameters to the nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        ///  
+        /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Nexus`
+        ///  
+        /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus parameter.</param>
+        /// <param name="nexusId">The nexus id.</param>
+        /// <param name="model">The nexus parameters you wish to create.</param>
+        public async Task<List<NexusParameterDetailModel>> CreateNexusParametersAsync(Int32 companyId, Int32 nexusId, List<NexusParameterDetailModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            return await RestCallAsync<List<NexusParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Creates nexus for a list of addresses.;
         /// </summary>
         /// <remarks>
@@ -15981,6 +16928,60 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("cascadeDelete", cascadeDelete);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete a single nexus parameter;
+        /// </summary>
+        /// <remarks>
+        /// Delete a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<List<ErrorDetail>> DeleteNexusParameterAsync(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Delete all parameters for an nexus;
+        /// </summary>
+        /// <remarks>
+        /// Delete all the parameters for a given nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The ID of the company that owns this nexus.</param>
+        /// <param name="nexusId">The ID of the nexus you wish to delete the parameters.</param>
+        public async Task<List<ErrorDetail>> DeleteNexusParametersAsync(Int32 companyId, Int32 nexusId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -16050,6 +17051,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve a single nexus parameter;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single nexus parameter.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller.In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The parameter id</param>
+        public async Task<NexusParameterDetailModel> GetNexusParameterAsync(Int32 companyId, Int32 nexusId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<NexusParameterDetailModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve nexus for this company;
         /// </summary>
         /// <remarks>
@@ -16085,6 +17114,43 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve parameters for a nexus;
+        /// </summary>
+        /// <remarks>
+        /// List parameters for a nexus.
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
+        ///  
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name. 
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+        /// <param name="companyId">The company id</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* name, unit</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<NexusParameterDetailModel>> ListNexusParametersAsync(Int32 companyId, Int32 nexusId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<NexusParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -16162,6 +17228,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             return await RestCallAsync<NexusModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Update an nexus parameter;
+        /// </summary>
+        /// <remarks>
+        /// Update an nexus parameter.
+        ///  
+        /// Some tax calculation and reporting are different depending on the properties of the nexus, such as isRemoteSeller. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to a nexus will be used in tax calculation based on the locationcode and parameter value the transaction state line might have lines added.
+        ///  
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.????? I dont know about this?
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="companyId">The company id.</param>
+        /// <param name="nexusId">The nexus id</param>
+        /// <param name="id">The nexus parameter id</param>
+        /// <param name="model">The nexus object you wish to update.</param>
+        public async Task<NexusParameterDetailModel> UpdateNexusParameterAsync(Int32 companyId, Int32 nexusId, Int64 id, NexusParameterDetailModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("nexusId", nexusId);
+            path.ApplyField("id", id);
+            return await RestCallAsync<NexusParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 

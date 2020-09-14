@@ -22,14 +22,14 @@ namespace Avalara.AvaTax.RestClient
     public class AddressValidationInfo
     {
         /// <summary>
-        /// Specify the text case for the validated address result. If not specified, will return uppercase.
-        /// </summary>
-        public TextCase? textCase { get; set; }
-
-        /// <summary>
         /// First line of the street address
         /// </summary>
         public String line1 { get; set; }
+
+        /// <summary>
+        /// Specify the text case for the validated address result. If not specified, will return uppercase.
+        /// </summary>
+        public TextCase? textCase { get; set; }
 
         /// <summary>
         /// Second line of the street address

@@ -72,6 +72,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        CustomsInvoice = 10,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CustomsOrder = 11,
+
+        /// <summary>
+        /// 
+        /// </summary>
         Any = -1,
 
     }
