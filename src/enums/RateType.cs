@@ -77,7 +77,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        Leasing = 85,
+        Leasing = 84,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LeasingLow = 85,
 
         /// <summary>
         /// 

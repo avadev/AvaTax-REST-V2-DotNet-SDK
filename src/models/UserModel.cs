@@ -86,6 +86,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public DateTime? modifiedDate { get; set; }
 
+        /// <summary>
+        /// Matches the subjectId of corresponding user record in AI.
+        /// </summary>
+        public String subjectId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

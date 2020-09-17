@@ -82,6 +82,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        Meals = 77,
+
+        /// <summary>
+        /// 
+        /// </summary>
         VATNonrecoverableInputTax = 78,
 
         /// <summary>

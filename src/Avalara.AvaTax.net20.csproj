@@ -199,6 +199,7 @@
     <Compile Include="models\CoordinateInfo.cs" />
     <Compile Include="models\CoverLetterModel.cs" />
     <Compile Include="models\CreateCertExpressInvitationModel.cs" />
+    <Compile Include="models\CreateECommerceTokenInputModel.cs" />
     <Compile Include="models\CreateMultiCompanyTransactionModel.cs" />
     <Compile Include="models\CreateMultiDocumentModel.cs" />
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
@@ -222,6 +223,7 @@
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
     <Compile Include="models\EcmsModel.cs" />
+    <Compile Include="models\ECommerceTokenOutputModel.cs" />
     <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
     <Compile Include="models\ErrorInfo.cs" />
@@ -341,6 +343,7 @@
     <Compile Include="models\RebuildFilingsModel.cs" />
     <Compile Include="models\ReconstructedApiRequestResponseModel.cs" />
     <Compile Include="models\ReconstructedMultiDocumentModel.cs" />
+    <Compile Include="models\RefreshECommerceTokenInputModel.cs" />
     <Compile Include="models\RefundTransactionModel.cs" />
     <Compile Include="models\RemoveTransactionLineModel.cs" />
     <Compile Include="models\ReportModel.cs" />
