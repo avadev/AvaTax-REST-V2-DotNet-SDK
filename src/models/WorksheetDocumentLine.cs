@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        public List<Message> messages { get; set; }
+        public List<> messages { get; set; }
 
         /// <summary>
         /// 

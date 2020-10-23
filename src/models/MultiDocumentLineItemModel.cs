@@ -64,7 +64,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// If you specify any other value besides `null`, only addresses specified for this line will be used for this line.
         /// </summary>
-        public AddressesModel addresses { get; set; }
+        public  addresses { get; set; }
 
         /// <summary>
         /// Tax Code - System or Custom Tax Code.
@@ -157,14 +157,14 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Specifies a tax override for this line.
         /// </summary>
-        public TaxOverrideModel taxOverride { get; set; }
+        public  taxOverride { get; set; }
 
         /// <summary>
         /// Special parameters that apply to this line within this transaction.
         ///  
         /// To get a full list of available parameters, please use the `ListParameters` API.
         /// </summary>
-        public List<TransactionLineParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
         /// <summary>
         /// The Item code for Custom Duty / Global Import tax determination

@@ -137,7 +137,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Address information of the account being created.
         /// </summary>
-        public CompanyAddress companyAddress { get; set; }
+        public  companyAddress { get; set; }
 
         /// <summary>
         /// Company code to be assigned to the company created for this account.

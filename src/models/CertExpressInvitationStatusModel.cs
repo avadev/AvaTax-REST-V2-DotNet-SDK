@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// request, this invitation will be sent via email. Otherwise, you are expected to direct the customer
         /// using a hyperlink directly in your application.
         /// </summary>
-        public CertExpressInvitationModel invitation { get; set; }
+        public  invitation { get; set; }
 
 
         /// <summary>

@@ -31,7 +31,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of settings that must be defined for this location
         /// </summary>
-        public List<LocationQuestionModel> requiredSettings { get; set; }
+        public List<> requiredSettings { get; set; }
 
 
         /// <summary>

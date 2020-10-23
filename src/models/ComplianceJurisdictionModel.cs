@@ -89,7 +89,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Optional: A list of rates for this jurisdiction. To fetch this list, add the query string `?$include=TaxRates` to your URL.
         /// </summary>
-        public List<ComplianceAggregatedTaxRateModel> rates { get; set; }
+        public List<> rates { get; set; }
 
 
         /// <summary>

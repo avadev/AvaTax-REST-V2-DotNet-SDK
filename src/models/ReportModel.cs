@@ -44,7 +44,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The parametes used to build the report
         /// </summary>
-        public ReportParametersModel parameters { get; set; }
+        public  parameters { get; set; }
 
         /// <summary>
         /// The current status of the report building task

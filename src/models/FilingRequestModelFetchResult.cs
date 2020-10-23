@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        public List<FilingRequestModel> value { get; set; }
+        public List<> value { get; set; }
 
         /// <summary>
         /// 

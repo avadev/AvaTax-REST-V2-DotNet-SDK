@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of line items that will appear on this transaction.
         /// </summary>
-        public List<LineItemModel> lines { get; set; }
+        public List<> lines { get; set; }
 
         /// <summary>
         /// Specifies the type of document to create. A document type ending with `Invoice` is a permanent transaction
@@ -110,14 +110,14 @@ namespace Avalara.AvaTax.RestClient
         /// address information. If you specify addresses for a line, then no default addresses will be loaded
         /// for that line.
         /// </summary>
-        public AddressesModel addresses { get; set; }
+        public  addresses { get; set; }
 
         /// <summary>
         /// Special parameters for this transaction.
         ///  
         /// To get a full list of available parameters, please use the [ListParameters](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListParameters/) endpoint.
         /// </summary>
-        public List<TransactionParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
         /// <summary>
         /// Customer-provided Reference Code with information about this transaction.
@@ -149,7 +149,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Specifies a tax override for the entire document
         /// </summary>
-        public TaxOverrideModel taxOverride { get; set; }
+        public  taxOverride { get; set; }
 
         /// <summary>
         /// The three-character ISO 4217 currency code for this transaction.

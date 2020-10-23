@@ -48,7 +48,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This list is maintained by the International Standards Organization.
         /// </summary>
-        public List<IsoLocalizedName> localizedNames { get; set; }
+        public List<> localizedNames { get; set; }
 
         /// <summary>
         /// Whether or not this country requires a region in postal addresses.

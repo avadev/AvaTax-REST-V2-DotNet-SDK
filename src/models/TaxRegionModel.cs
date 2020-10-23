@@ -104,7 +104,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of jurisdictions associated with this tax region.
         /// </summary>
-        public List<DenormalizedJurisModel> jurisdictions { get; set; }
+        public List<> jurisdictions { get; set; }
 
 
         /// <summary>

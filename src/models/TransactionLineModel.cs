@@ -245,7 +245,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To fetch this list, add the query string `?$include=Details` to your URL.
         /// </summary>
-        public List<TransactionLineDetailModel> details { get; set; }
+        public List<> details { get; set; }
 
         /// <summary>
         /// Optional: A list of non-passthrough tax details for this line item.
@@ -253,17 +253,17 @@ namespace Avalara.AvaTax.RestClient
         /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `nonPassthroughDetails` collection are
         /// taxes that must be paid directly by the company and not shown to the customer.
         /// </summary>
-        public List<TransactionLineDetailModel> nonPassthroughDetails { get; set; }
+        public List<> nonPassthroughDetails { get; set; }
 
         /// <summary>
         /// Optional: A list of location types for this line item. To fetch this list, add the query string "?$include=LineLocationTypes" to your URL.
         /// </summary>
-        public List<TransactionLineLocationTypeModel> lineLocationTypes { get; set; }
+        public List<> lineLocationTypes { get; set; }
 
         /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
-        public List<TransactionLineParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
         /// <summary>
         /// The cross-border harmonized system code (HSCode) used to calculate tariffs and duties for this line item.

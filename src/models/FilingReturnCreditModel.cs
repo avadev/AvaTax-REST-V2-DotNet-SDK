@@ -44,7 +44,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The excluded carry over credit documents
         /// </summary>
-        public List<WorksheetDocument> transactionDetails { get; set; }
+        public List<> transactionDetails { get; set; }
 
 
         /// <summary>

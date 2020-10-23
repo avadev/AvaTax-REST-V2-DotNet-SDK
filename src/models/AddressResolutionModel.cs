@@ -24,17 +24,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The original address
         /// </summary>
-        public AddressInfo address { get; set; }
+        public  address { get; set; }
 
         /// <summary>
         /// The validated address or addresses
         /// </summary>
-        public List<ValidatedAddressInfo> validatedAddresses { get; set; }
+        public List<> validatedAddresses { get; set; }
 
         /// <summary>
         /// The geospatial coordinates of this address
         /// </summary>
-        public CoordinateInfo coordinates { get; set; }
+        public  coordinates { get; set; }
 
         /// <summary>
         /// The resolution quality of the geospatial coordinates
@@ -44,12 +44,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
-        public List<TaxAuthorityInfo> taxAuthorities { get; set; }
+        public List<> taxAuthorities { get; set; }
 
         /// <summary>
         /// List of informational and warning messages regarding this address
         /// </summary>
-        public List<AvaTaxMessage> messages { get; set; }
+        public List<> messages { get; set; }
 
 
         /// <summary>

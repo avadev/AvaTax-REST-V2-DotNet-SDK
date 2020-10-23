@@ -69,7 +69,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// MethodReturn
         /// </summary>
-        public FundingESignMethodReturn methodReturn { get; set; }
+        public  methodReturn { get; set; }
 
         /// <summary>
         /// Status

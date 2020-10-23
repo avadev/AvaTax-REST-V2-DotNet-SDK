@@ -44,22 +44,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A summary of all taxes compbined for this period
         /// </summary>
-        public FilingsTaxSummaryModel regionTaxSummary { get; set; }
+        public  regionTaxSummary { get; set; }
 
         /// <summary>
         /// A detailed breakdown of the taxes in this filing
         /// </summary>
-        public List<FilingsTaxDetailsModel> regionTaxDetails { get; set; }
+        public List<> regionTaxDetails { get; set; }
 
         /// <summary>
         /// A list of tax returns in this region.
         /// </summary>
-        public List<FilingsCheckupSuggestedFormModel> suggestReturns { get; set; }
+        public List<> suggestReturns { get; set; }
 
         /// <summary>
         /// A list of tax returns in this region.
         /// </summary>
-        public List<MultiTaxFilingReturnModel> returns { get; set; }
+        public List<> returns { get; set; }
 
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Reconstructed API request/response pair that can be used to adjust or re-create this MultiDocument transaction.
         /// </summary>
-        public ReconstructedMultiDocumentModel reconstructed { get; set; }
+        public  reconstructed { get; set; }
 
         /// <summary>
         /// Represents the unique code of this MultiDocument transaction.
@@ -59,7 +59,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Original API request/response
         /// </summary>
-        public OriginalApiRequestResponseModel original { get; set; }
+        public  original { get; set; }
 
 
         /// <summary>

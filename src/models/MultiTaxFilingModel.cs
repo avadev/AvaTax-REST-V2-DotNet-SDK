@@ -53,17 +53,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A summary of all taxes combined for this period
         /// </summary>
-        public FilingsTaxSummaryModel taxSummary { get; set; }
+        public  taxSummary { get; set; }
 
         /// <summary>
         /// A detailed breakdown of the taxes in this filing
         /// </summary>
-        public List<FilingsTaxDetailsModel> taxDetails { get; set; }
+        public List<> taxDetails { get; set; }
 
         /// <summary>
         /// A listing of regional tax filings within this time period.
         /// </summary>
-        public List<MultiTaxFilingRegionModel> filingRegions { get; set; }
+        public List<> filingRegions { get; set; }
 
 
         /// <summary>

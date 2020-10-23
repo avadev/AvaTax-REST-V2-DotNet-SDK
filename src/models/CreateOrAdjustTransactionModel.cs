@@ -39,7 +39,7 @@ namespace Avalara.AvaTax.RestClient
         /// If the transaction does not exist, create transaction.
         /// If the transaction exists, adjust the existing transaction.
         /// </summary>
-        public CreateTransactionModel createTransactionModel { get; set; }
+        public  createTransactionModel { get; set; }
 
 
         /// <summary>

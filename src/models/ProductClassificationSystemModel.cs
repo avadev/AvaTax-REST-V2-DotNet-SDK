@@ -44,7 +44,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of all countries that belong to the system including
         /// </summary>
-        public List<ProductSystemCountryModel> countries { get; set; }
+        public List<> countries { get; set; }
 
 
         /// <summary>

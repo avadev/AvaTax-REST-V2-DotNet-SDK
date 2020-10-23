@@ -76,7 +76,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A separate document will exist for each unique combination of buyer and seller in this MultiDocument transaction.
         /// </summary>
-        public List<TransactionModel> documents { get; set; }
+        public List<> documents { get; set; }
 
 
         /// <summary>

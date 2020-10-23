@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of items to sync with AvaTax.
         /// </summary>
-        public List<ItemSyncModel> items { get; set; }
+        public List<> items { get; set; }
 
 
         /// <summary>

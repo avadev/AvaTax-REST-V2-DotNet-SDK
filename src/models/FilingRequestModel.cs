@@ -40,7 +40,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The data model object of the request
         /// </summary>
-        public FilingRequestDataModel data { get; set; }
+        public  data { get; set; }
 
         /// <summary>
         /// The date when this record was created.

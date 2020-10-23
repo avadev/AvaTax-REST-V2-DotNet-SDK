@@ -104,7 +104,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The list of files contained in this batch.
         /// </summary>
-        public List<BatchFileModel> files { get; set; }
+        public List<> files { get; set; }
 
 
         /// <summary>

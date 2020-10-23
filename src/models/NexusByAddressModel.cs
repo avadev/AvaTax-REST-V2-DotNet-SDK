@@ -27,13 +27,13 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The address that was provided by the user in the call to `DeclareNexusByAddress`
         /// </summary>
-        public DeclareNexusByAddressModel address { get; set; }
+        public  address { get; set; }
 
         /// <summary>
         /// List of all nexus objects that were affected by declaring nexus at the address specified
         /// by `address`.
         /// </summary>
-        public List<NexusModel> declaredNexus { get; set; }
+        public List<> declaredNexus { get; set; }
 
 
         /// <summary>

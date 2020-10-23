@@ -89,22 +89,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A summary of all taxes compbined for this period
         /// </summary>
-        public FilingsTaxSummaryModel returnTaxSummary { get; set; }
+        public  returnTaxSummary { get; set; }
 
         /// <summary>
         /// A detailed breakdown of the taxes in this filing
         /// </summary>
-        public List<FilingsTaxDetailsModel> returnTaxDetails { get; set; }
+        public List<> returnTaxDetails { get; set; }
 
         /// <summary>
         /// The excluded carry over credit documents
         /// </summary>
-        public FilingReturnCreditModel excludedCarryOverCredits { get; set; }
+        public  excludedCarryOverCredits { get; set; }
 
         /// <summary>
         /// The applied carry over credit documents
         /// </summary>
-        public FilingReturnCreditModel appliedCarryOverCredits { get; set; }
+        public  appliedCarryOverCredits { get; set; }
 
         /// <summary>
         /// Total amount of adjustments on this return
@@ -114,7 +114,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Adjustments for this return.
         /// </summary>
-        public List<FilingAdjustmentModel> adjustments { get; set; }
+        public List<> adjustments { get; set; }
 
         /// <summary>
         /// Total amount of augmentations on this return
@@ -124,7 +124,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Augmentations for this return.
         /// </summary>
-        public List<FilingAugmentationModel> augmentations { get; set; }
+        public List<> augmentations { get; set; }
 
         /// <summary>
         /// Total amount of payments on this return
@@ -134,12 +134,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The payments for this return.
         /// </summary>
-        public List<FilingPaymentModel> payments { get; set; }
+        public List<> payments { get; set; }
 
         /// <summary>
         /// The attachments for this return.
         /// </summary>
-        public List<FilingAttachmentModel> attachments { get; set; }
+        public List<> attachments { get; set; }
 
 
         /// <summary>

@@ -239,7 +239,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Adjustments for this return.
         /// </summary>
-        public List<FilingAdjustmentModel> adjustments { get; set; }
+        public List<> adjustments { get; set; }
 
         /// <summary>
         /// Total amount of augmentations on this return
@@ -249,7 +249,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Augmentations for this return.
         /// </summary>
-        public List<FilingAugmentationModel> augmentations { get; set; }
+        public List<> augmentations { get; set; }
 
         /// <summary>
         /// Total amount of payments on this return
@@ -259,7 +259,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The payments for this return.
         /// </summary>
-        public List<FilingPaymentModel> payments { get; set; }
+        public List<> payments { get; set; }
 
         /// <summary>
         /// Accrual type of the return
@@ -283,17 +283,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The attachments for this return.
         /// </summary>
-        public List<FilingAttachmentModel> attachments { get; set; }
+        public List<> attachments { get; set; }
 
         /// <summary>
         /// The excluded carry over credit documents
         /// </summary>
-        public FilingReturnCreditModel excludedCarryOverCredits { get; set; }
+        public  excludedCarryOverCredits { get; set; }
 
         /// <summary>
         /// The applied carry over credit documents
         /// </summary>
-        public FilingReturnCreditModel appliedCarryOverCredits { get; set; }
+        public  appliedCarryOverCredits { get; set; }
 
         /// <summary>
         /// The date when this record was created.

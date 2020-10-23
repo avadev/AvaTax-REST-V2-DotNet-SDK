@@ -119,7 +119,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// An attachment to the finance detail
         /// </summary>
-        public ResourceFileUploadRequestModel attachmentUploadRequest { get; set; }
+        public  attachmentUploadRequest { get; set; }
 
 
         /// <summary>

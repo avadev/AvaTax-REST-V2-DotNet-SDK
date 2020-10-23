@@ -36,7 +36,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Replace the current transaction with tax data calculated for this new transaction
         /// </summary>
-        public CreateTransactionModel newTransaction { get; set; }
+        public  newTransaction { get; set; }
 
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// API request
         /// </summary>
-        public CreateTransactionModel request { get; set; }
+        public  request { get; set; }
 
 
         /// <summary>

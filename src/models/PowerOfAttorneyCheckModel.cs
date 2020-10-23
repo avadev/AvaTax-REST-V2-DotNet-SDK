@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// POA download
         /// </summary>
-        public ResourceFileDownloadResult availablePoa { get; set; }
+        public  availablePoa { get; set; }
 
 
         /// <summary>

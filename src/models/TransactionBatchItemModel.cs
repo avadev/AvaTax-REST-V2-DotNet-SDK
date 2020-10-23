@@ -25,17 +25,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Represents a transaction to be created.
         /// </summary>
-        public CreateTransactionModel createTransactionModel { get; set; }
+        public  createTransactionModel { get; set; }
 
         /// <summary>
         /// Represents an existing transaction to be adjusted.
         /// </summary>
-        public BatchAdjustTransactionModel adjustTransactionModel { get; set; }
+        public  adjustTransactionModel { get; set; }
 
         /// <summary>
         /// Represents an existing transaction to be voided.
         /// </summary>
-        public BatchVoidTransactionModel voidTransactionModel { get; set; }
+        public  voidTransactionModel { get; set; }
 
 
         /// <summary>

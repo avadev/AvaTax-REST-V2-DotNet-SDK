@@ -35,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of options for expiring the filing calendar.
         /// </summary>
-        public List<CycleExpireOptionModel> cycleExpirationOptions { get; set; }
+        public List<> cycleExpirationOptions { get; set; }
 
 
         /// <summary>

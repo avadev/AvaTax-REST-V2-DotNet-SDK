@@ -49,7 +49,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Tax subtype details
         /// </summary>
-        public List<TaxDetailsByTaxSubType> taxSubTypeDetails { get; set; }
+        public List<> taxSubTypeDetails { get; set; }
 
 
         /// <summary>

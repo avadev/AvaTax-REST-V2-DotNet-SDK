@@ -39,7 +39,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of lines to be added
         /// </summary>
-        public List<LineItemModel> lines { get; set; }
+        public List<> lines { get; set; }
 
         /// <summary>
         /// Option to renumber lines after add. After renumber, the line number becomes: "1", "2", "3", ...

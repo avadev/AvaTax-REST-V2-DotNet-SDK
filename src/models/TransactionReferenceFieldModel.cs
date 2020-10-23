@@ -37,7 +37,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Reference field of the line details
         /// </summary>
-        public List<LineDetailSERCodeModel> lineDetailSerCodes { get; set; }
+        public List<> lineDetailSerCodes { get; set; }
 
 
         /// <summary>

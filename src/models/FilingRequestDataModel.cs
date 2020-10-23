@@ -107,7 +107,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Filing question answers
         /// </summary>
-        public List<FilingAnswerModel> answers { get; set; }
+        public List<> answers { get; set; }
 
 
         /// <summary>

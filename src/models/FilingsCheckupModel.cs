@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A collection of authorities in the report
         /// </summary>
-        public List<FilingsCheckupAuthorityModel> authorities { get; set; }
+        public List<> authorities { get; set; }
 
 
         /// <summary>

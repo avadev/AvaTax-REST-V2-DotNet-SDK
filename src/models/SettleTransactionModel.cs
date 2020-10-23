@@ -29,14 +29,14 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// If you leave this field null, the transaction will not be verified.
         /// </summary>
-        public VerifyTransactionModel verify { get; set; }
+        public  verify { get; set; }
 
         /// <summary>
         /// To change the code for this transaction, you may provide information in this field.
         ///  
         /// If you leave this field null, the transaction's code will not be changed.
         /// </summary>
-        public ChangeTransactionCodeModel changeCode { get; set; }
+        public  changeCode { get; set; }
 
         /// <summary>
         /// To commit this transaction so that it can be reported on a tax filing, you may provide information in this field.
@@ -45,7 +45,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// If you use Avalara's Managed Returns Service, committing a transaction will allow that transaction to be filed.
         /// </summary>
-        public CommitTransactionModel commit { get; set; }
+        public  commit { get; set; }
 
 
         /// <summary>

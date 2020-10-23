@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Nexus summary for this company
         /// </summary>
-        public List<NexusTaxTypeGroupCountModel> nexusSummary { get; set; }
+        public List<> nexusSummary { get; set; }
 
 
         /// <summary>

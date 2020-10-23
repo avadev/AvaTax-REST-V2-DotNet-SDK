@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The individual result of each error transaction in the request batch
         /// </summary>
-        public List<DeleteErrorTransactionResponseModel> results { get; set; }
+        public List<> results { get; set; }
 
 
         /// <summary>

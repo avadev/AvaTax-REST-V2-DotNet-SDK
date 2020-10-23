@@ -73,7 +73,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A listing of regional tax filings within this time period.
         /// </summary>
-        public List<FilingRegionModel> filingRegions { get; set; }
+        public List<> filingRegions { get; set; }
 
 
         /// <summary>

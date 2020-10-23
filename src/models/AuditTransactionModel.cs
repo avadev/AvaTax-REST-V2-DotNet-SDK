@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Reconstructed API request/response
         /// </summary>
-        public ReconstructedApiRequestResponseModel reconstructed { get; set; }
+        public  reconstructed { get; set; }
 
         /// <summary>
         /// Server timestamp, in UTC, of the date/time when the original transaction was created
@@ -49,7 +49,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Original API request/response
         /// </summary>
-        public OriginalApiRequestResponseModel original { get; set; }
+        public  original { get; set; }
 
 
         /// <summary>

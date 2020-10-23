@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of error transactions to be deleted
         /// </summary>
-        public List<ErrorTransactionModelBase> models { get; set; }
+        public List<> models { get; set; }
 
 
         /// <summary>

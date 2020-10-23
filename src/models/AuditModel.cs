@@ -178,7 +178,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Reserved for Avalara internal usage.
         /// </summary>
-        public List<AuditEvent> events { get; set; }
+        public List<> events { get; set; }
 
         /// <summary>
         /// The original request URL as provided by the client.
@@ -207,7 +207,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Reserved for Avalara internal usage.
         /// </summary>
-        public List<AuditModel> remoteCalls { get; set; }
+        public List<> remoteCalls { get; set; }
 
 
         /// <summary>

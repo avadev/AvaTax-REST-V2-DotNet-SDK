@@ -36,7 +36,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Replace the current MultiDocument transaction with tax data calculated for this new MultiDocument transaction
         /// </summary>
-        public CreateMultiDocumentModel newTransaction { get; set; }
+        public  newTransaction { get; set; }
 
 
         /// <summary>

@@ -50,12 +50,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The customer who received this invitation.
         /// </summary>
-        public CustomerModel customer { get; set; }
+        public  customer { get; set; }
 
         /// <summary>
         /// The attached cover letter object to this request.
         /// </summary>
-        public CoverLetterModel coverLetter { get; set; }
+        public  coverLetter { get; set; }
 
         /// <summary>
         /// The status of the emails associated with this invitation. If this invitation was sent via email,

@@ -172,12 +172,12 @@ namespace Avalara.AvaTax.RestClient
         /// For a list of settings recognized by Avalara, query the endpoint "/api/v2/definitions/locationquestions".
         /// To determine the list of settings required for this location, query the endpoint "/api/v2/companies/(id)/locations/(id)/validate".
         /// </summary>
-        public List<LocationSettingModel> settings { get; set; }
+        public List<> settings { get; set; }
 
         /// <summary>
         /// List of location parameters.
         /// </summary>
-        public List<LocationParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
 
         /// <summary>

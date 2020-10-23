@@ -61,7 +61,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Address information of the account being created.
         /// </summary>
-        public CompanyAddress companyAddress { get; set; }
+        public  companyAddress { get; set; }
 
         /// <summary>
         /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your

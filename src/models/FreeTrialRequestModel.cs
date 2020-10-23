@@ -56,7 +56,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Address information of the account
         /// </summary>
-        public CompanyAddress companyAddress { get; set; }
+        public  companyAddress { get; set; }
 
         /// <summary>
         /// Website of the company or user requesting a free trial

@@ -376,7 +376,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// CompanyReturn settings for complext filing calendar
         /// </summary>
-        public List<CompanyReturnSettingModel> settings { get; set; }
+        public List<> settings { get; set; }
 
 
         /// <summary>

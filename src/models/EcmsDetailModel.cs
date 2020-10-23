@@ -85,7 +85,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// optional: list of tax code associated with this exempt certificate detail
         /// </summary>
-        public List<EcmsDetailTaxCodeModel> taxCodes { get; set; }
+        public List<> taxCodes { get; set; }
 
 
         /// <summary>

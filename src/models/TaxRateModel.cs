@@ -42,7 +42,7 @@ namespace Avalara.AvaTax.RestClient
         /// The list of individual rate elements for general tangible personal property sold at a retail
         /// point of presence in this jurisdiction on this date.
         /// </summary>
-        public List<RateModel> rates { get; set; }
+        public List<> rates { get; set; }
 
 
         /// <summary>

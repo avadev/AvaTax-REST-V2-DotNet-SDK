@@ -108,7 +108,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of the tax jurisdictions that will be assigned to this overridden address.
         /// </summary>
-        public List<JurisdictionModel> jurisdictions { get; set; }
+        public List<> jurisdictions { get; set; }
 
         /// <summary>
         /// The TaxRegionId of the new location affected by this jurisdiction override.

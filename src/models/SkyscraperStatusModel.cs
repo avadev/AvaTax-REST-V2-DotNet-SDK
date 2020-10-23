@@ -59,7 +59,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of required fields to file
         /// </summary>
-        public List<requiredFilingCalendarDataFieldModel> requiredFilingCalendarDataFields { get; set; }
+        public List<> requiredFilingCalendarDataFields { get; set; }
 
 
         /// <summary>

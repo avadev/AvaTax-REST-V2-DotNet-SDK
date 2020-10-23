@@ -34,12 +34,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of all Avalara-defined nexus that are relevant to this tax form
         /// </summary>
-        public List<NexusModel> nexusDefinitions { get; set; }
+        public List<> nexusDefinitions { get; set; }
 
         /// <summary>
         /// A list of all currently-defined company nexus that are related to this tax form
         /// </summary>
-        public List<NexusModel> companyNexus { get; set; }
+        public List<> companyNexus { get; set; }
 
 
         /// <summary>

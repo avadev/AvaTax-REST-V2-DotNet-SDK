@@ -34,7 +34,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        public List<ErrorCodeOutputModel> value { get; set; }
+        public List<> value { get; set; }
 
         /// <summary>
         /// 

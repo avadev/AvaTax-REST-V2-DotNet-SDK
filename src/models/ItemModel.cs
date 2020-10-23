@@ -84,12 +84,12 @@ namespace Avalara.AvaTax.RestClient
         /// List of classifications that belong to this item.
         /// A single classification consits of a productCode and a systemCode for a particular item.
         /// </summary>
-        public List<ClassificationModel> classifications { get; set; }
+        public List<> classifications { get; set; }
 
         /// <summary>
         /// List of item parameters.
         /// </summary>
-        public List<ItemParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
 
         /// <summary>

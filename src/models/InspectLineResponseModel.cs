@@ -24,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of determination factors for a line that is being inspected through the InspectLine API.
         /// </summary>
-        public List<DeterminationFactorModel> determinationFactors { get; set; }
+        public List<> determinationFactors { get; set; }
 
 
         /// <summary>

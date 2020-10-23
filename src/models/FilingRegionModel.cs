@@ -119,12 +119,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of tax returns in this region.
         /// </summary>
-        public List<FilingReturnModel> returns { get; set; }
+        public List<> returns { get; set; }
 
         /// <summary>
         /// A list of tax returns in this region.
         /// </summary>
-        public List<FilingsCheckupSuggestedFormModel> suggestReturns { get; set; }
+        public List<> suggestReturns { get; set; }
 
         /// <summary>
         /// The date when this record was created.

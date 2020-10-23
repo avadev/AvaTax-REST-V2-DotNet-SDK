@@ -188,7 +188,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The attachments for this return.
         /// </summary>
-        public List<FilingAttachmentModel> attachments { get; set; }
+        public List<> attachments { get; set; }
 
         /// <summary>
         /// The date when this record was created.

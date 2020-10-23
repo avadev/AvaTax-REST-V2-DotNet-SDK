@@ -196,7 +196,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Exempt Cert details
         /// </summary>
-        public List<EcmsDetailModel> details { get; set; }
+        public List<> details { get; set; }
 
 
         /// <summary>

@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The original request that was used to create a MultiDocument object.
         /// </summary>
-        public CreateMultiDocumentModel request { get; set; }
+        public  request { get; set; }
 
 
         /// <summary>

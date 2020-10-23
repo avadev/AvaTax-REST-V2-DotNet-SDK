@@ -236,22 +236,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Additional comments on the notice
         /// </summary>
-        public List<NoticeCommentModel> comments { get; set; }
+        public List<> comments { get; set; }
 
         /// <summary>
         /// Finance details of the notice
         /// </summary>
-        public List<NoticeFinanceModel> finances { get; set; }
+        public List<> finances { get; set; }
 
         /// <summary>
         /// Notice Responsibility Details
         /// </summary>
-        public List<NoticeResponsibilityDetailModel> responsibility { get; set; }
+        public List<> responsibility { get; set; }
 
         /// <summary>
         /// Notice Root Cause Details
         /// </summary>
-        public List<NoticeRootCauseDetailModel> rootCause { get; set; }
+        public List<> rootCause { get; set; }
 
         /// <summary>
         /// The date when this record was created.

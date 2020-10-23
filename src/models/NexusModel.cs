@@ -268,7 +268,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of nexus parameters.
         /// </summary>
-        public List<NexusParameterDetailModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
 
         /// <summary>

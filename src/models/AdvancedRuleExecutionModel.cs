@@ -59,7 +59,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Advanced rule to execute
         /// </summary>
-        public AdvancedRuleModel rule { get; set; }
+        public  rule { get; set; }
 
         /// <summary>
         /// Json data used for rule execution

@@ -42,7 +42,7 @@ namespace Avalara.AvaTax.RestClient
         /// will separate this MultiDocument transaction object into many different transactions, one for each pair of legal
         /// entities, so that each legal entity can file their transactional taxes correctly.
         /// </summary>
-        public List<MultiDocumentLineItemModel> lines { get; set; }
+        public List<> lines { get; set; }
 
         /// <summary>
         /// Set this value to true to allow this API call to adjust the MultiDocument model if one already exists.
@@ -130,14 +130,14 @@ namespace Avalara.AvaTax.RestClient
         /// address information. If you specify addresses for a line, then no default addresses will be loaded
         /// for that line.
         /// </summary>
-        public AddressesModel addresses { get; set; }
+        public  addresses { get; set; }
 
         /// <summary>
         /// Special parameters for this transaction.
         ///  
         /// To get a full list of available parameters, please use the [ListParameters](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListParameters/) endpoint.
         /// </summary>
-        public List<TransactionParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
         /// <summary>
         /// Customer-provided Reference Code with information about this transaction.
@@ -169,7 +169,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Specifies a tax override for the entire document
         /// </summary>
-        public TaxOverrideModel taxOverride { get; set; }
+        public  taxOverride { get; set; }
 
         /// <summary>
         /// The three-character ISO 4217 currency code for this transaction.

@@ -54,7 +54,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This list is maintained by the International Standards Organization.
         /// </summary>
-        public List<IsoLocalizedName> localizedNames { get; set; }
+        public List<> localizedNames { get; set; }
 
 
         /// <summary>

@@ -79,12 +79,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Optional: A list of subscriptions granted to this account. To fetch this list, add the query string "?$include=Subscriptions" to your URL.
         /// </summary>
-        public List<SubscriptionModel> subscriptions { get; set; }
+        public List<> subscriptions { get; set; }
 
         /// <summary>
         /// Optional: A list of all the users belonging to this account. To fetch this list, add the query string "?$include=Users" to your URL.
         /// </summary>
-        public List<UserModel> users { get; set; }
+        public List<> users { get; set; }
 
 
         /// <summary>

@@ -319,7 +319,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// A list of line items in this transaction. To fetch this list, add the query string `?$include=Lines` or `?$include=Details` to your URL.
         /// </summary>
-        public List<TransactionLineModel> lines { get; set; }
+        public List<> lines { get; set; }
 
         /// <summary>
         /// A list of line items in this transaction. To fetch this list, add the query string `?$include=Addresses` to your URL.
@@ -327,37 +327,37 @@ namespace Avalara.AvaTax.RestClient
         /// For more information about transaction addresses, please see [Using Address Types](https://developer.avalara.com/avatax/dev-guide/customizing-transaction/address-types/)
         /// in the AvaTax Developer Guide.
         /// </summary>
-        public List<TransactionAddressModel> addresses { get; set; }
+        public List<> addresses { get; set; }
 
         /// <summary>
         /// A list of location types in this transaction. To fetch this list, add the query string `?$include=Addresses` to your URL.
         /// </summary>
-        public List<TransactionLocationTypeModel> locationTypes { get; set; }
+        public List<> locationTypes { get; set; }
 
         /// <summary>
         /// Contains a summary of tax on this transaction.
         /// </summary>
-        public List<TransactionSummary> summary { get; set; }
+        public List<> summary { get; set; }
 
         /// <summary>
         /// Contains the tax details per tax type
         /// </summary>
-        public List<TaxDetailsByTaxType> taxDetailsByTaxType { get; set; }
+        public List<> taxDetailsByTaxType { get; set; }
 
         /// <summary>
         /// Contains a list of extra parameters that were set when the transaction was created.
         /// </summary>
-        public List<TransactionParameterModel> parameters { get; set; }
+        public List<> parameters { get; set; }
 
         /// <summary>
         /// List of informational and warning messages regarding this API call. These messages are only relevant to the current API call.
         /// </summary>
-        public List<AvaTaxMessage> messages { get; set; }
+        public List<> messages { get; set; }
 
         /// <summary>
         /// Invoice messages associated with this document. Currently, this stores legally-required VAT messages.
         /// </summary>
-        public List<InvoiceMessageModel> invoiceMessages { get; set; }
+        public List<> invoiceMessages { get; set; }
 
 
         /// <summary>

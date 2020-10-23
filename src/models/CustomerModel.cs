@@ -154,14 +154,14 @@ namespace Avalara.AvaTax.RestClient
         /// A list of exemption certficates that apply to this customer. You can fetch this data by specifying
         /// `$include=certificates` when calling a customer fetch API.
         /// </summary>
-        public List<CertificateModel> certificates { get; set; }
+        public List<> certificates { get; set; }
 
         /// <summary>
         /// A list of custom fields defined on this customer.
         ///  
         /// For more information about custom fields, see the [Avalara Help Center article about custom fields](https://help.avalara.com/0021_Avalara_CertCapture/All_About_CertCapture/Edit_or_Remove_Details_about_Customers).
         /// </summary>
-        public List<CustomFieldModel> customFields { get; set; }
+        public List<> customFields { get; set; }
 
         /// <summary>
         /// A list of exposure zones where you do business with this customer.
@@ -174,7 +174,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This field is useful for audit purposes since it helps you ensure you have the necessary certificates for each customer.
         /// </summary>
-        public List<ExposureZoneModel> exposureZones { get; set; }
+        public List<> exposureZones { get; set; }
 
         /// <summary>
         /// A list of ship-to customer records that are connected to this bill-to customer.
@@ -184,14 +184,14 @@ namespace Avalara.AvaTax.RestClient
         /// customer records together, you may link multiple bill-to and ship-to addresses together to represent a single
         /// entity that has multiple different addresses of different kinds.
         /// </summary>
-        public List<CustomerModel> shipTos { get; set; }
+        public List<> shipTos { get; set; }
 
         /// <summary>
         /// A list of attributes that apply to this customer.
         ///  
         /// You can fetch this data by specifying `$include=attributes` when calling a customer fetch API.
         /// </summary>
-        public List<CustomerAttributeModel> attributes { get; set; }
+        public List<> attributes { get; set; }
 
 
         /// <summary>

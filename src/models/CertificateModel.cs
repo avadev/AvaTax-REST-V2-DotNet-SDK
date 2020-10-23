@@ -96,7 +96,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The exemption reason that CertCapture audit/internal logic identifies for created certificate.
         /// </summary>
-        public ExemptionReasonModel validatedExemptionReason { get; set; }
+        public  validatedExemptionReason { get; set; }
 
         /// <summary>
         /// The exemption reason associated with this certificate. For example, the reason code for exemption
@@ -104,7 +104,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// For a list of exemption reasons, call `ListCertificateExemptReasons`.
         /// </summary>
-        public ExemptionReasonModel exemptionReason { get; set; }
+        public  exemptionReason { get; set; }
 
         /// <summary>
         /// The status of the certificate
@@ -140,7 +140,7 @@ namespace Avalara.AvaTax.RestClient
         /// A list of customers to which this certificate applies. You can fetch this data by specifying
         /// `$include=customers` when calling a certificate fetch API.
         /// </summary>
-        public List<CustomerModel> customers { get; set; }
+        public List<> customers { get; set; }
 
         /// <summary>
         /// A list of purchase order numbers that are valid for use with this certificate.
@@ -149,19 +149,19 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can fetch this data by specifying `$include=po_numbers` when calling a certificate fetch API.
         /// </summary>
-        public List<PoNumberModel> poNumbers { get; set; }
+        public List<> poNumbers { get; set; }
 
         /// <summary>
         /// The exposure zone where this certificate is valid.
         /// </summary>
-        public ExposureZoneModel exposureZone { get; set; }
+        public  exposureZone { get; set; }
 
         /// <summary>
         /// A list of certificate attributes that apply to this certificate.
         ///  
         /// You can fetch this data by specifying `$include=attributes` when calling a certificate fetch API.
         /// </summary>
-        public List<CertificateAttributeModel> attributes { get; set; }
+        public List<> attributes { get; set; }
 
         /// <summary>
         /// The unique ID number of current AvaTax Exemption Certificate that refers this certificate.

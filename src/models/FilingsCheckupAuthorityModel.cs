@@ -59,7 +59,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Suggested forms to file due to tax collected
         /// </summary>
-        public List<FilingsCheckupSuggestedFormModel> suggestedForms { get; set; }
+        public List<> suggestedForms { get; set; }
 
 
         /// <summary>

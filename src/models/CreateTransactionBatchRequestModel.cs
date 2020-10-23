@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The list of transactions contained in this batch.
         /// </summary>
-        public List<TransactionBatchItemModel> transactions { get; set; }
+        public List<> transactions { get; set; }
 
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Certificate if the customer is exempted
         /// </summary>
-        public CertificateModel certificate { get; set; }
+        public  certificate { get; set; }
 
 
         /// <summary>
