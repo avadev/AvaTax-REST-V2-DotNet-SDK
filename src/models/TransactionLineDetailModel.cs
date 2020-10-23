@@ -247,6 +247,38 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isFee { get; set; }
 
+        /// <summary>
+        /// Number of units in this line item that were calculated to be taxable according to this rate detail in the reporting currency.
+        /// </summary>
+        public Decimal? reportingTaxableUnits { get; set; }
+
+        /// <summary>
+        /// Number of units in this line item that were calculated to be nontaxable according to this rate detail in the reporting currency.
+        /// </summary>
+        public Decimal? reportingNonTaxableUnits { get; set; }
+
+        /// <summary>
+        /// Number of units in this line item that were calculated to be exempt according to this rate detail in the reporting currency.
+        /// </summary>
+        public Decimal? reportingExemptUnits { get; set; }
+
+        /// <summary>
+        /// The amount of tax for this tax detail in the reporting currency.
+        /// </summary>
+        public Decimal? reportingTax { get; set; }
+
+        /// <summary>
+        /// The amount of tax that AvaTax calculated in the reporting currency.
+        /// If an override for tax amount is used, there may be a difference between the tax
+        /// field which applies your override, and the this amount that is calculated without override.
+        /// </summary>
+        public Decimal? reportingTaxCalculated { get; set; }
+
+        /// <summary>
+        /// LiabilityType identifies the party liable to file the tax. This field is used to filter taxes from reports and tax filings as appropriate.
+        /// </summary>
+        public LiabilityType? liabilityType { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
