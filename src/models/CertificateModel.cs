@@ -122,16 +122,6 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? modifiedDate { get; set; }
 
         /// <summary>
-        /// The tax number type for the certificate. For example, `FEIN`, `Social Security Number`, or `Employer Identification Number`.
-        /// </summary>
-        public String taxNumberType { get; set; }
-
-        /// <summary>
-        /// Description of business for the certificate. For example, `Retail trade`, `Professional services`, or `Construction`.
-        /// </summary>
-        public String businessNumberType { get; set; }
-
-        /// <summary>
         /// Number of pages contained within this certificate.
         /// </summary>
         public Int32? pageCount { get; set; }
