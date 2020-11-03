@@ -67,36 +67,6 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String jurisdictionRegion { get; set; }
 
-        /// <summary>
-        /// Help and guidance for this specific question
-        /// </summary>
-        public String helpText { get; set; }
-
-        /// <summary>
-        /// Maximum length of the answer string
-        /// </summary>
-        public Int32? maxLength { get; set; }
-
-        /// <summary>
-        /// True if this question must be answered for this filing calendar
-        /// </summary>
-        public Boolean? required { get; set; }
-
-        /// <summary>
-        /// Data type of the answer
-        /// </summary>
-        public String dataType { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String staticOptions { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Boolean? unique { get; set; }
-
 
         /// <summary>
         /// Convert this object to a JSON string of itself

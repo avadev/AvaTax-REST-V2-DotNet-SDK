@@ -84,10 +84,5 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         UPCValidationImport = 12,
 
-        /// <summary>
-        /// 
-        /// </summary>
-        CustomerSupplierImport = 13,
-
     }
 }
