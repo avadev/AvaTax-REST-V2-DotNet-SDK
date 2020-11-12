@@ -165,7 +165,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     .Create();
             });
             Assert.NotNull(err);
-            Assert.AreEqual(err.statusCode, HttpStatusCode.NotFound);
+            Assert.AreEqual(HttpStatusCode.BadRequest, err.statusCode);
         }
 
         [Test]
