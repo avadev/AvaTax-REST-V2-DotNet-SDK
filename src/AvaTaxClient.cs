@@ -310,7 +310,7 @@ namespace Avalara.AvaTax.RestClient
                 // Handle exceptions and convert them to AvaTax results
                 } else {
                     var errorResponseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(errorResponseString);
+                    var err = DeserializeErrorResult(errorResponseString, result.StatusCode);
                     cd.FinishParse();
                     this.LastCallTime = cd;
 
@@ -407,7 +407,7 @@ namespace Avalara.AvaTax.RestClient
                 if (result.IsSuccessStatusCode) {
                     return responseString;
                 } else {
-                    var err = JsonConvert.DeserializeObject<ErrorResult>(responseString);
+                    var err = DeserializeErrorResult(responseString, result.StatusCode);
                     cd.FinishParse();
                     this.LastCallTime = cd;
                     throw new AvaTaxError(err, result.StatusCode);
@@ -560,11 +560,12 @@ namespace Avalara.AvaTax.RestClient
                             var errString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
+                            var statusCode = ((HttpWebResponse)httpWebResponse).StatusCode;
+                            var eventargs = new AvaTaxCallEventArgs() { Code = statusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
                             OnCallCompleted(eventargs);
 
                             // Pass on the error
-                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
+                            var err = DeserializeErrorResult(errString, statusCode);
                             throw new AvaTaxError(err, httpWebResponse.StatusCode);
                         }
                     }
@@ -664,11 +665,12 @@ namespace Avalara.AvaTax.RestClient
                             var errString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)httpWebResponse).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
+                            var statusCode = ((HttpWebResponse)httpWebResponse).StatusCode;
+                            var eventargs = new AvaTaxCallEventArgs() { Code = statusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
                             OnCallCompleted(eventargs);
 
                             // Here's the results
-                            var err = JsonConvert.DeserializeObject<ErrorResult>(errString);
+                            var err = DeserializeErrorResult(errString, statusCode);
                             throw new AvaTaxError(err, httpWebResponse.StatusCode);
                         }
                     }
@@ -706,6 +708,40 @@ namespace Avalara.AvaTax.RestClient
                 return contentDisposition.Substring(index + filename.Length);
             }
             return contentDisposition;
+        }
+
+        /// <summary>
+        /// Deserialize a JSON string as an ErrorResult.
+        /// Create an appropriate ErrorResult if the string isn't a valid JSON string.
+        /// </summary>
+        /// <param name="errorResultJson"></param>
+        /// <param name="statusCode"></param>
+        /// <returns></returns>
+        private static ErrorResult DeserializeErrorResult(string errorResultJson, HttpStatusCode statusCode)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<ErrorResult>(errorResultJson);
+            }
+            catch (JsonReaderException)
+            {
+                return new ErrorResult
+                {
+                    error = new ErrorInfo
+                    {
+                        message = $"The server returned {(int)statusCode} {statusCode} but the response is in an unexpected format."
+                            + "  See details for the complete response.",
+                        target = ErrorTargetCode.Unknown,
+                        details = new List<ErrorDetail>()
+                        {
+                            new ErrorDetail
+                            {
+                                description = errorResultJson
+                            }
+                        }
+                    }
+                };
+            }
         }
 
         #endregion
