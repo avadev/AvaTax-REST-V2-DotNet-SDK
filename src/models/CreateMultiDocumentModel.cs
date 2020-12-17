@@ -196,6 +196,11 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? exchangeRateEffectiveDate { get; set; }
 
         /// <summary>
+        /// Optional three-character ISO 4217 reporting exchange rate currency code for this transaction. The default value is USD.
+        /// </summary>
+        public String exchangeRateCurrencyCode { get; set; }
+
+        /// <summary>
         /// Sets the Point of Sale Lane Code sent by the User for this document.
         /// </summary>
         public String posLaneCode { get; set; }

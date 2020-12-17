@@ -77,6 +77,11 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
+        /// The three-character ISO 4217 exchange rate currency code that was used for payment for this transaction.
+        /// </summary>
+        public String exchangeRateCurrencyCode { get; set; }
+
+        /// <summary>
         /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
         /// The customer usage type for this transaction. Customer usage types often affect exemption or taxability rules.
         /// </summary>

@@ -1392,6 +1392,21 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        TaxCodeAndTaxCodeIdMissing = 1724,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NexusAlreadyExists = 1725,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidAddressTypeAndMarketPlaceOusideUsaFlag = 1726,
+
+        /// <summary>
+        /// 
+        /// </summary>
         UnsupportedFileFormat = 1800,
 
         /// <summary>
