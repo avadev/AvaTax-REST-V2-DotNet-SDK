@@ -102,6 +102,7 @@
     <Compile Include="enums\FundingOption.cs" />
     <Compile Include="enums\JurisdictionType.cs" />
     <Compile Include="enums\JurisTypeId.cs" />
+    <Compile Include="enums\LiabilityType.cs" />
     <Compile Include="enums\LocalNexusTypeId.cs" />
     <Compile Include="enums\MatchingTaxType.cs" />
     <Compile Include="enums\NexusTypeId.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="models\AuditMultiDocumentModel.cs" />
     <Compile Include="models\AuditTransactionModel.cs" />
     <Compile Include="models\AvaFileFormModel.cs" />
+    <Compile Include="models\AvailableCycleModel.cs" />
     <Compile Include="models\AvaTaxMessage.cs" />
     <Compile Include="models\BatchAdjustTransactionModel.cs" />
     <Compile Include="models\BatchFileModel.cs" />
@@ -209,11 +211,15 @@
     <Compile Include="models\CurrencyModel.cs" />
     <Compile Include="models\CustomerAttributeModel.cs" />
     <Compile Include="models\CustomerModel.cs" />
+    <Compile Include="models\CustomerSupplierModel.cs" />
     <Compile Include="models\CustomFieldModel.cs" />
     <Compile Include="models\CycleAddOptionModel.cs" />
     <Compile Include="models\CycleEditOptionModel.cs" />
     <Compile Include="models\CycleExpireModel.cs" />
     <Compile Include="models\CycleExpireOptionModel.cs" />
+    <Compile Include="models\CycleSafeEditRequestModel.cs" />
+    <Compile Include="models\CycleSafeFilingCalendarEditModel.cs" />
+    <Compile Include="models\CycleSafeOptionResultModel.cs" />
     <Compile Include="models\DataSourceModel.cs" />
     <Compile Include="models\DeclareNexusByAddressModel.cs" />
     <Compile Include="models\DeleteErrorTransactionResponseModel.cs" />
@@ -260,6 +266,7 @@
     <Compile Include="models\FirmClientLinkageOutputModel.cs" />
     <Compile Include="models\FormMasterModel.cs" />
     <Compile Include="models\FreeTrialRequestModel.cs" />
+    <Compile Include="models\FrequencyAvailableModel.cs" />
     <Compile Include="models\FundingConfigurationModel.cs" />
     <Compile Include="models\FundingESignMethodReturn.cs" />
     <Compile Include="models\FundingInitiateModel.cs" />
