@@ -39,7 +39,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Content of the lookup file.
         /// </summary>
-        public Byte content { get; set; }
+        public Byte[] content { get; set; }
 
         /// <summary>
         /// File extension (e.g. CSV).

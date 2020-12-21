@@ -29,7 +29,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Bytes of the file
         /// </summary>
-        public Byte bytes { get; set; }
+        public Byte[] bytes { get; set; }
 
         /// <summary>
         /// Original filename
