@@ -248,6 +248,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CompanyParameterDetailModel> parameters { get; set; }
 
+        /// <summary>
+        /// The customers and suppliers of a company
+        /// </summary>
+        public List<CustomerSupplierModel> supplierandcustomers { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

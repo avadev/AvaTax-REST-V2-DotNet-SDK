@@ -53,6 +53,11 @@ namespace Avalara.AvaTax.RestClient
         public AddressCategoryId addressCategoryId { get; set; }
 
         /// <summary>
+        /// Indicates whether the Marketplace is outside or in USA
+        /// </summary>
+        public Boolean? isMarketplaceOutsideUsa { get; set; }
+
+        /// <summary>
         /// The first line of the physical address of this location.
         /// </summary>
         public String line1 { get; set; }
