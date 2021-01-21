@@ -51,10 +51,12 @@ namespace Avalara.AvaTax.RestClient
 
         private AvaTaxClient()
         {
+#if PORTABLE
             if (_httpClientStatic == null)
             {
                 _httpClientStatic = new HttpClient() {Timeout = TimeSpan.FromMinutes(20)};
             }
+#endif
         }
 
         #region Constructor
