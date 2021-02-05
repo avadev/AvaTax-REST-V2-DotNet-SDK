@@ -160,26 +160,6 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String hsCode { get; set; }
 
-        /// <summary>
-        /// ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.
-        /// </summary>
-        public Int64? merchantSellerId { get; set; }
-
-        /// <summary>
-        /// This field will identify who is remitting Marketplace or Seller. This field must be populated by Marketplace.
-        /// </summary>
-        public MarketplaceLiabilityType? marketplaceLiabilityType { get; set; }
-
-        /// <summary>
-        /// The transaction's original ID in its origination system
-        /// </summary>
-        public String originationDocumentId { get; set; }
-
-        /// <summary>
-        /// Synonym of Marketplace Origination. Name of the Marketplace where the transaction originated from.
-        /// </summary>
-        public String originationSite { get; set; }
-
 
         /// <summary>
         /// Convert this object to a JSON string of itself

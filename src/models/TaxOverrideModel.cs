@@ -53,14 +53,6 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String reason { get; set; }
 
-        /// <summary>
-        /// Indicates a total override of the calculated tax on the line with TaxType.
-        /// AvaTax will distribute the override across all the line details for that TaxType.
-        ///  
-        /// TaxAmountByTaxType can be used only at the Line level.
-        /// </summary>
-        public List<TransactionLineTaxAmountByTaxTypeModel> taxAmountByTaxTypes { get; set; }
-
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -270,11 +270,6 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<NexusParameterDetailModel> parameters { get; set; }
 
-        /// <summary>
-        /// Shows if system nexus records are associated with tax collection
-        /// </summary>
-        public Boolean? taxableNexus { get; set; }
-
 
         /// <summary>
         /// Convert this object to a JSON string of itself

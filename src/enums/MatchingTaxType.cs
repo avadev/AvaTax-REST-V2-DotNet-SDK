@@ -97,11 +97,6 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        PIF = 80,
-
-        /// <summary>
-        /// 
-        /// </summary>
         Rental = 82,
 
         /// <summary>
