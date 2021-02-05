@@ -49,5 +49,25 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         NexusRule = 5,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        RateCapRule = 6,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxOverrideRule = 7,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FeeRule = 8,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        OtherRule = 100,
+
     }
 }

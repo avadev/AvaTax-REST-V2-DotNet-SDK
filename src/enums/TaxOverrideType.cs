@@ -54,5 +54,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         OutOfHarbor = 6,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        TaxAmountByTaxType = 7,
+
     }
 }

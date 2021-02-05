@@ -238,6 +238,26 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? taxIncluded { get; set; }
 
         /// <summary>
+        /// ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.
+        /// </summary>
+        public Int64? merchantSellerId { get; set; }
+
+        /// <summary>
+        /// This field will identify who is remitting Marketplace or Seller. This field must be populated by Marketplace.
+        /// </summary>
+        public MarketplaceLiabilityType? marketplaceLiabilityType { get; set; }
+
+        /// <summary>
+        /// The transaction's original ID in its origination system
+        /// </summary>
+        public String originationDocumentId { get; set; }
+
+        /// <summary>
+        /// Synonym of Marketplace Origination. Name of the Marketplace where the transaction originated from.
+        /// </summary>
+        public String originationSite { get; set; }
+
+        /// <summary>
         /// Optional: A list of tax details for this line item.
         ///  
         /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `details` collection are intended to be
@@ -285,6 +305,11 @@ namespace Avalara.AvaTax.RestClient
         /// Indicates the VAT number type for this line item.
         /// </summary>
         public Int32? vatNumberTypeId { get; set; }
+
+        /// <summary>
+        /// Contains a list of TaxType that are to be overridden with their respective TaxOverrideAmount.
+        /// </summary>
+        public List<TransactionLineTaxAmountByTaxTypeModel> taxAmountByTaxTypes { get; set; }
 
 
         /// <summary>
