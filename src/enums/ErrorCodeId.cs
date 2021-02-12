@@ -327,6 +327,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        AllJurisRuleLimits = 84,
+
+        /// <summary>
+        /// 
+        /// </summary>
         InvalidCompanyLocationSetting = 85,
 
         /// <summary>
@@ -523,6 +528,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         DuplicateSystemTaxCode = 155,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SSTOverridesNotAvailable = 156,
 
         /// <summary>
         /// 
@@ -1598,6 +1608,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CannotCreateNestedObjects = 2402,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UserSubjectIdNotUpdated = 2500,
 
         /// <summary>
         /// 

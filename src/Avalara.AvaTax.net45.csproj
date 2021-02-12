@@ -109,6 +109,7 @@
     <Compile Include="enums\JurisTypeId.cs" />
     <Compile Include="enums\LiabilityType.cs" />
     <Compile Include="enums\LocalNexusTypeId.cs" />
+    <Compile Include="enums\MarketplaceLiabilityType.cs" />
     <Compile Include="enums\MatchingTaxType.cs" />
     <Compile Include="enums\NexusTypeId.cs" />
     <Compile Include="enums\NoticeCustomerType.cs" />
@@ -396,6 +397,7 @@
     <Compile Include="models\TransactionLineLocationTypeModel.cs" />
     <Compile Include="models\TransactionLineModel.cs" />
     <Compile Include="models\TransactionLineParameterModel.cs" />
+    <Compile Include="models\TransactionLineTaxAmountByTaxTypeModel.cs" />
     <Compile Include="models\TransactionLocationTypeModel.cs" />
     <Compile Include="models\TransactionModel.cs" />
     <Compile Include="models\TransactionParameterModel.cs" />

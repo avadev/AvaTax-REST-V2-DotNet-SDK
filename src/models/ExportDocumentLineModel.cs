@@ -74,6 +74,30 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String currencyCode { get; set; }
 
+        /// <summary>
+        /// Number of partitions (2 - 250) to split the report into.
+        /// If a value is provided for this property, a value must also be provided for the partition property.
+        /// </summary>
+        public Int32? numberOfPartitions { get; set; }
+
+        /// <summary>
+        /// The zero-based partition number to retrieve in this export request.
+        /// If a value is provided for this property, a value must also be provided for the numberOfPartitions property.
+        /// </summary>
+        public Int32? partition { get; set; }
+
+        /// <summary>
+        /// If true, include only documents that are locked.
+        /// If false, include only documents that are not locked.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isLocked { get; set; }
+
+        /// <summary>
+        /// If set, include only documents associated with this merchantSellerId.
+        /// </summary>
+        public Int32? merchantSellerId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
