@@ -227,5 +227,17 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
 
             var auditResponse = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
         }
+
+        [Test]
+        public void AuditTransaction_With_TaxIncluded_Test()
+        {
+            // Execute a transaction
+            var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA", "98104", "US")
+                .WithLine(200m, taxIncluded: true)
+                .Create();
+
+            var auditResponse = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
+        }
     }
 }
