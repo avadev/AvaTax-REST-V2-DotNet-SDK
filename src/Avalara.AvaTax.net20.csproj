@@ -159,9 +159,16 @@
     <Compile Include="models\AddTransactionLineModel.cs" />
     <Compile Include="models\AdjustMultiDocumentModel.cs" />
     <Compile Include="models\AdjustTransactionModel.cs" />
+    <Compile Include="models\AdvancedRuleCustomerDataSchemaModel.cs" />
+    <Compile Include="models\AdvancedRuleExecutionModel.cs" />
+    <Compile Include="models\AdvancedRuleExecutionOrderModel.cs" />
+    <Compile Include="models\AdvancedRuleFullDetailsModel.cs" />
     <Compile Include="models\AdvancedRuleLookupFileModel.cs" />
+    <Compile Include="models\AdvancedRuleModel.cs" />
     <Compile Include="models\AdvancedRuleScriptModel.cs" />
     <Compile Include="models\AdvancedRuleTableModel.cs" />
+    <Compile Include="models\AdvancedRuleVisibilityModel.cs" />
+    <Compile Include="models\ApproveAdvancedRuleModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
     <Compile Include="models\AuditEvent.cs" />
     <Compile Include="models\AuditModel.cs" />
@@ -176,6 +183,7 @@
     <Compile Include="models\BatchVoidTransactionModel.cs" />
     <Compile Include="models\BulkLockTransactionModel.cs" />
     <Compile Include="models\BulkLockTransactionResult.cs" />
+    <Compile Include="models\CappedFetchResult.cs" />
     <Compile Include="models\CertExpressInvitationModel.cs" />
     <Compile Include="models\CertExpressInvitationStatusModel.cs" />
     <Compile Include="models\CertificateAttributeModel.cs" />
@@ -212,6 +220,7 @@
     <Compile Include="models\CurrencyModel.cs" />
     <Compile Include="models\CustomerAttributeModel.cs" />
     <Compile Include="models\CustomerModel.cs" />
+    <Compile Include="models\CustomerSupplierCountryParamModel.cs" />
     <Compile Include="models\CustomerSupplierModel.cs" />
     <Compile Include="models\CustomFieldModel.cs" />
     <Compile Include="models\CycleAddOptionModel.cs" />
@@ -223,15 +232,18 @@
     <Compile Include="models\CycleSafeOptionResultModel.cs" />
     <Compile Include="models\DataSourceModel.cs" />
     <Compile Include="models\DeclareNexusByAddressModel.cs" />
+    <Compile Include="models\DeleteErrorTransactionRequestModel.cs" />
     <Compile Include="models\DeleteErrorTransactionResponseModel.cs" />
     <Compile Include="models\DeleteErrorTransactionsRequestModel.cs" />
     <Compile Include="models\DeleteErrorTransactionsResponseModel.cs" />
     <Compile Include="models\DenormalizedJurisModel.cs" />
+    <Compile Include="models\DeterminationFactorModel.cs" />
     <Compile Include="models\EcmsDetailModel.cs" />
     <Compile Include="models\EcmsDetailTaxCodeModel.cs" />
     <Compile Include="models\EcmsModel.cs" />
     <Compile Include="models\ECommerceTokenOutputModel.cs" />
     <Compile Include="models\EntityUseCodeModel.cs" />
+    <Compile Include="models\ErrorCodeOutputModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
     <Compile Include="models\ErrorInfo.cs" />
     <Compile Include="models\ErrorResult.cs" />
@@ -273,6 +285,7 @@
     <Compile Include="models\FundingInitiateModel.cs" />
     <Compile Include="models\FundingStatusModel.cs" />
     <Compile Include="models\HsCodeModel.cs" />
+    <Compile Include="models\InspectLineResponseModel.cs" />
     <Compile Include="models\InvoiceMessageModel.cs" />
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoLocalizedName.cs" />
@@ -363,6 +376,7 @@
     <Compile Include="models\ResourceFileUploadRequestModel.cs" />
     <Compile Include="models\ResourceFileUploadResultModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />
+    <Compile Include="models\SendSalesRequestModel.cs" />
     <Compile Include="models\SetPasswordModel.cs" />
     <Compile Include="models\SettingModel.cs" />
     <Compile Include="models\SettleTransactionModel.cs" />
@@ -400,6 +414,7 @@
     <Compile Include="models\TransactionSummary.cs" />
     <Compile Include="models\UomModel.cs" />
     <Compile Include="models\UPCModel.cs" />
+    <Compile Include="models\UpdateCompanyLocationRemittanceModel.cs" />
     <Compile Include="models\UserEntitlementModel.cs" />
     <Compile Include="models\UserModel.cs" />
     <Compile Include="models\UsernameModel.cs" />
@@ -411,7 +426,6 @@
     <Compile Include="models\WorksheetDocumentLine.cs" />
     <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
-    <Compile Include="models\CompanyParameterDetailModel %28copy%29.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
