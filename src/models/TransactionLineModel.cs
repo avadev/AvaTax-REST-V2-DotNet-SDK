@@ -311,6 +311,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<TransactionLineTaxAmountByTaxTypeModel> taxAmountByTaxTypes { get; set; }
 
+        /// <summary>
+        /// Deemed Supplier field indicates which party on the marketplace transaction is liable for collecting and reporting the VAT. This is based on the 2021 E-commerce legislative reforms in EU and UK. This field will not be used until after July 1, 2021.
+        /// </summary>
+        public DeemedSellerType? deemedSupplier { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

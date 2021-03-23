@@ -359,6 +359,19 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<InvoiceMessageModel> invoiceMessages { get; set; }
 
+        /// <summary>
+        /// The name of the supplier / exporter / seller.
+        /// For sales doctype this will be the name of your own company for which you are reporting.
+        /// For purchases doctype this will be the name of the supplier you have purchased from.
+        /// </summary>
+        public String customerSupplierName { get; set; }
+
+        /// <summary>
+        /// The Id of the datasource from which this transaction originated.
+        /// This value will be overridden by the system to take the datasource Id from the call header.
+        /// </summary>
+        public Int32? dataSourceId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
