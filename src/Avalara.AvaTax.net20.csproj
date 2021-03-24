@@ -84,6 +84,7 @@
     <Compile Include="enums\CommentType.cs" />
     <Compile Include="enums\CompanyAccessLevel.cs" />
     <Compile Include="enums\CompanyFilingStatus.cs" />
+    <Compile Include="enums\DeemedSellerType.cs" />
     <Compile Include="enums\DocumentStatus.cs" />
     <Compile Include="enums\DocumentType.cs" />
     <Compile Include="enums\DueDateTypeId.cs" />
