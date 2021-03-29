@@ -1644,5 +1644,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         InvalidParameterDataType = 2600,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotDownloadReport = 2700,
+
     }
 }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    21.3.0
+ * @version    21.3.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "21.3.0"; } }
+        public static string API_VERSION { get { return "21.3.1"; } }
 
 #region Methods
 
@@ -1974,6 +1974,7 @@ namespace Avalara.AvaTax.RestClient
         /// * `FilingRequested` - The company has requested to begin filing tax returns, but Avalara's compliance team has not yet begun filing.
         /// * `FirstFiling` - The company has recently filing tax returns and is in a new status.
         /// * `Active` - The company is currently active and is filing tax returns via Avalara Managed Returns.
+        /// * `Inactive` - The company is currently inactive.
         /// 
         /// ### Security Policies
         /// 
@@ -12020,6 +12021,7 @@ namespace Avalara.AvaTax.RestClient
         /// * `FilingRequested` - The company has requested to begin filing tax returns, but Avalara's compliance team has not yet begun filing.
         /// * `FirstFiling` - The company has recently filing tax returns and is in a new status.
         /// * `Active` - The company is currently active and is filing tax returns via Avalara Managed Returns.
+        /// * `Inactive` - The company is currently inactive.
         /// 
         /// ### Security Policies
         /// 
