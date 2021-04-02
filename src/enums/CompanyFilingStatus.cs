@@ -22,7 +22,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        NoReporting = 0,
+        NotConfiguredForCompliance = 0,
 
         /// <summary>
         /// 
@@ -47,7 +47,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        NotConfiguredForCompliance = 5,
+        NoReporting = 5,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Inactive = 6,
 
     }
 }
