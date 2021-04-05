@@ -370,6 +370,44 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
+        /// <summary>
+		/// Add a line to this transaction with tax included
+		/// </summary>
+		/// <param name="amount">Value of the item.</param>
+		/// <param name="quantity">Quantity of the item.</param>
+		/// <param name="taxCode">Tax Code of the item. If left blank, the default item (P0000000) is assumed.  Use ListTaxCodes() for a list of values.</param>
+		/// <param name="customerUsageType">The intended usage type for this line.  Use ListEntityUseCodes() for a list of values.</param>
+		/// <param name="description">A friendly description of this line item.</param>
+		/// <param name="itemCode">The item code of this item in your product item definitions.</param>
+		/// <param name="lineNumber">the number of the line.</param>
+		/// <returns></returns>
+		public TransactionBuilder WithTaxIncludeLine(decimal amount, decimal quantity = 1, string taxCode = null, string description = null, string itemCode = null, string customerUsageType = null, string lineNumber = null)
+        {
+			string lineNumStr = lineNumber;
+			if(string.IsNullOrEmpty(lineNumStr))
+			{
+				lineNumStr = _line_number.ToString();
+			}
+	
+            var l = new LineItemModel
+            {
+                number = lineNumStr,
+                quantity = quantity,
+                amount = amount,
+                taxCode = taxCode,
+                description = description,
+                itemCode = itemCode,
+                customerUsageType = customerUsageType,
+                taxIncluded = true
+            };
+
+            _model.lines.Add(l);
+            _line_number++;
+
+            // Continue building
+            return this;
+        }
+
 		/// <summary>
 		/// Add a line to this transaction
 		/// </summary>
