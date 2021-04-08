@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Avalara.AvaTax.RestClient
 {
-    public partial class AvaTaxClient
+    public partial class AvaTaxClient : IAvaTaxClient
     {
         /// <summary>
         /// Returns the version number of the API used to generate this class

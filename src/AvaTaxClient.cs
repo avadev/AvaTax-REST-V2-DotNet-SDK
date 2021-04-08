@@ -21,7 +21,7 @@ namespace Avalara.AvaTax.RestClient
     /// <remarks>
     /// This file contains all the basic behavior.  Individual APIs are in the other partial class.
     /// </remarks>
-    public partial class AvaTaxClient
+    public partial class AvaTaxClient : IAvaTaxClient
     {
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
