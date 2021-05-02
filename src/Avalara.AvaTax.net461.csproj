@@ -312,6 +312,7 @@
     <Compile Include="models\LocationParameterModel.cs" />
     <Compile Include="models\LocationQuestionModel.cs" />
     <Compile Include="models\LocationSettingModel.cs" />
+    <Compile Include="models\LocationTaxContent.cs" />
     <Compile Include="models\LocationValidationModel.cs" />
     <Compile Include="models\LockTransactionModel.cs" />
     <Compile Include="models\LoginVerificationInputModel.cs" />
