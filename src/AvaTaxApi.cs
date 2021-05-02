@@ -18226,13 +18226,21 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
         /// </remarks>
+        /// 
+        /// <remarks>
+        /// Josh Waldrep - jwaldrepwork@gmail.com - 04/2021 
+        /// This method always fails. The route specified does not return a FileResult it returns a list of tax authorities and rates
+        /// I was unable to find a model that matched the response so one was added. If an existing model is more appropriate it 
+        /// probably should be used
+        /// </remarks>
+        /// 
         /// <param name="companyId">The ID number of the company that owns this location.</param>
         /// <param name="id">The ID number of the location to retrieve point-of-sale data.</param>
         /// <param name="date">The date for which point-of-sale data would be calculated (today by default)</param>
         /// <param name="format">The format of the file (JSON by default)</param>
         /// <param name="partnerId">If specified, requests a custom partner-formatted version of the file.</param>
         /// <param name="includeJurisCodes">When true, the file will include jurisdiction codes in the result.</param>
-        public async Task<FileResult> BuildTaxContentFileForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
+        public async Task<List<LocationTaxContent>> BuildTaxContentFileForLocationAsync(Int32 companyId, Int32 id, DateTime? date, PointOfSaleFileType? format, PointOfSalePartnerId? partnerId, Boolean? includeJurisCodes)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/pointofsaledata");
             path.ApplyField("companyId", companyId);
@@ -18241,7 +18249,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            return await RestCallAsync<List<LocationTaxContent>>("GET", path, null).ConfigureAwait(false);
         }
 
 
