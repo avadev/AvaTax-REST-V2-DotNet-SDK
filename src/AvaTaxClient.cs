@@ -11,7 +11,6 @@ using System.Text;
 using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Converters;
-using Avalara.AvaTax.netstandard11;
 
 namespace Avalara.AvaTax.RestClient
 {

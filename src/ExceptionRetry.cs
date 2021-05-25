@@ -4,7 +4,7 @@ using Polly;
 using Polly.Retry;
 
 
-namespace Avalara.AvaTax.netstandard11
+namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Class for Exception Retry Policy

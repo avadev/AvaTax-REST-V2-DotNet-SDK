@@ -1,4 +1,4 @@
-﻿using Avalara.AvaTax.netstandard11;
+﻿using Avalara.AvaTax.RestClient;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;

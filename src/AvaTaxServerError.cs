@@ -1,7 +1,6 @@
-﻿using Avalara.AvaTax.RestClient;
-using System.Net;
+﻿using System.Net;
 
-namespace Avalara.AvaTax.netstandard11
+namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Class for handling Avatax server errors - InternalServerError, RequestTimeout
