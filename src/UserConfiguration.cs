@@ -1,4 +1,4 @@
-﻿namespace Avalara.AvaTax.netstandard11
+﻿namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Class for User configuration
