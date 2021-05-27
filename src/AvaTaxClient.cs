@@ -250,10 +250,7 @@ namespace Avalara.AvaTax.RestClient
         {
             try
             {
-                return _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
-                {
-                    return await RestCallFileAsync(verb, relativePath, payload);
-                }).Result;
+                return RestCallFileAsync(verb, relativePath, payload).Result;
                 // Unroll single-exception aggregates for ease of use
             }
             catch (AggregateException ex)
@@ -295,61 +292,72 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         private async Task<FileResult> RestCallFileAsync(string verb, AvaTaxPath relativePath, object content = null)
         {
-            CallDuration cd = new CallDuration();
+            return _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
+            {
+                CallDuration cd = new CallDuration();
 
-            // Convert the JSON payload, if any
-            string jsonPayload = null;
-            string mimeType = null;
+                // Convert the JSON payload, if any
+                string jsonPayload = null;
+                string mimeType = null;
 
-            if (content != null && content is FileResult) {
-                content = ((FileResult)content).Data;
-                mimeType = ((FileResult)content).ContentType;
-            } else if (content != null) {
-                jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
-                mimeType = "application/json";
-            }
-
-            // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
-
-                // Read the result
-                if (result.IsSuccessStatusCode) {
-                    string contentType = null;
-                    string filename = null;
-                    if (result.Content.Headers.ContentLength > 0)
-                    {
-                        contentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
-                        filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
-                    }
-                    var fr = new FileResult()
-                    {
-                        ContentType = contentType,
-                        Filename = filename,
-                        Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
-                    };
-
-                    // Capture timings
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-
-                    // Capture information about this API call and make it available for logging
-                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseBody = fr.Data, Duration = cd };
-                    OnCallCompleted(eventargs);
-                    return fr;
-
-                    // Handle exceptions and convert them to AvaTax results
-                } else {
-                    var errorResponseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var err = DeserializeErrorResult(errorResponseString, result.StatusCode);
-                    cd.FinishParse();
-                    this.LastCallTime = cd;
-
-                    // Capture information about this API call error and make it available for logging
-                    var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = errorResponseString, Duration = cd };
-                    OnCallCompleted(eventargs);
-                    throw new AvaTaxError(err, result.StatusCode);
+                if (content != null && content is FileResult) {
+                    content = ((FileResult)content).Data;
+                    mimeType = ((FileResult)content).ContentType;
+                } else if (content != null) {
+                    jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
+                    mimeType = "application/json";
                 }
-            }
+
+                // Call REST
+                using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
+
+                    // Read the result
+                    if (result.IsSuccessStatusCode) {
+                        string contentType = null;
+                        string filename = null;
+                        if (result.Content.Headers.ContentLength > 0)
+                        {
+                            contentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
+                            filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
+                        }
+                        var fr = new FileResult()
+                        {
+                            ContentType = contentType,
+                            Filename = filename,
+                            Data = await result.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
+                        };
+
+                        // Capture timings
+                        cd.FinishParse();
+                        this.LastCallTime = cd;
+
+                        // Capture information about this API call and make it available for logging
+                        var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseBody = fr.Data, Duration = cd };
+                        OnCallCompleted(eventargs);
+                        return fr;
+
+                        // Handle exceptions and convert them to AvaTax results
+                    } else {
+                        var errorResponseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var err = DeserializeErrorResult(errorResponseString, result.StatusCode);
+                        cd.FinishParse();
+                        this.LastCallTime = cd;
+
+                        // Capture information about this API call error and make it available for logging
+                        var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = errorResponseString, Duration = cd };
+                        OnCallCompleted(eventargs);
+
+                        if (result.StatusCode == HttpStatusCode.InternalServerError || result.StatusCode == HttpStatusCode.RequestTimeout)
+                        {
+                            throw new AvaTaxServerError(err, result.StatusCode);
+                        }
+                        else
+                        {
+                            throw new AvaTaxError(err, result.StatusCode);
+                        }
+                    }
+                }
+            }).Result;
         }
 
         /// <summary>
@@ -419,7 +427,6 @@ namespace Avalara.AvaTax.RestClient
 
             // Call REST
             using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
-
                 // Read the result
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 

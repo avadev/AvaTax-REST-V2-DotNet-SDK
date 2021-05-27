@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
                            .Or<AvaTaxServerError>()
                            .WaitAndRetryAsync(maxRetryAttempt, retryAttempt =>
                            {
-                               return TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)); //ToDo: After how much time should we retry?
+                               return TimeSpan.FromSeconds(2 * retryAttempt); 
                            });
         }
     }
