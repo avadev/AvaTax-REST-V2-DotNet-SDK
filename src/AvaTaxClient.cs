@@ -73,9 +73,10 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 
+#if PORTABLE
             _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);
             _exceptionRetry = new ExceptionRetry(_userConfiguration.MaxRetryAttempts);
-
+#endif
             switch (environment)
             {
                 case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
@@ -100,15 +101,16 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 
+#if PORTABLE
             _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);
             _exceptionRetry = new ExceptionRetry(_userConfiguration.MaxRetryAttempts);
-
+#endif
             _envUri = customEnvironment;
         }
 
-        #endregion
+#endregion
 
-        #region Security
+#region Security
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -154,9 +156,9 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
-        #endregion
+#endregion
 
-        #region Custom headers
+#region Custom headers
         /// <summary>
         /// Add custom header to this client.
         /// </summary>
@@ -175,9 +177,9 @@ namespace Avalara.AvaTax.RestClient
             }
             return this;
         }
-        #endregion
+#endregion
 
-        #region Client Identification
+#region Client Identification
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -190,9 +192,9 @@ namespace Avalara.AvaTax.RestClient
             _clientHeaders.Add(Constants.AVALARA_CLIENT_HEADER, String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName));
             return this;
         }
-        #endregion
+#endregion
 
-        #region REST Call Interface
+#region REST Call Interface
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -263,9 +265,9 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 #endif
-        #endregion
+#endregion
 
-        #region Implementation
+#region Implementation
         private JsonSerializerSettings _serializer_settings = null;
         private JsonSerializerSettings SerializerSettings
         {
@@ -789,9 +791,9 @@ namespace Avalara.AvaTax.RestClient
             }
         }
 
-        #endregion
+#endregion
 
-        #region Logging
+#region Logging
         /// <summary>
         /// Hook this event to capture information about API calls
         /// </summary>
@@ -832,6 +834,6 @@ namespace Avalara.AvaTax.RestClient
             }
             File.AppendAllText(_logFileName, sb.ToString(), Encoding.UTF8);
         }
-        #endregion
+#endregion
     }
 }

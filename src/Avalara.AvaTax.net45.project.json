@@ -1,7 +1,8 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "NUnit3TestAdapter": "3.13.0"
+    "NUnit3TestAdapter": "3.13.0",
+    "Polly": "7.2.2"
   },
   "frameworks": {
     "net45": {}

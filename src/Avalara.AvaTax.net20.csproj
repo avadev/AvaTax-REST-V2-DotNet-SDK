@@ -58,6 +58,7 @@
     <Compile Include="AvaTaxError.cs" />
     <Compile Include="AvaTaxOfflineHelper.cs" />
     <Compile Include="AvaTaxPath.cs" />
+    <Compile Include="AvaTaxServerError.cs" />
     <Compile Include="CallDuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="enums\AccountStatusId.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="enums\VoidReasonCode.cs" />
     <Compile Include="enums\WelcomeEmail.cs" />
     <Compile Include="enums\WorksheetTypeId.cs" />
+    <Compile Include="ExceptionRetry.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
@@ -427,6 +429,7 @@
     <Compile Include="models\WorksheetDocumentLine.cs" />
     <Compile Include="TransactionAddressType.cs" />
     <Compile Include="TransactionBuilder.cs" />
+    <Compile Include="UserConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

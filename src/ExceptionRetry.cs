@@ -1,8 +1,9 @@
 ﻿using System;
+#if PORTABLE
 using System.Net.Http;
 using Polly;
 using Polly.Retry;
-
+#endif
 
 namespace Avalara.AvaTax.RestClient
 {
@@ -11,6 +12,7 @@ namespace Avalara.AvaTax.RestClient
     /// </summary>
     public class ExceptionRetry
     {
+#if PORTABLE
         /// <summary>
         /// Gets or sets Retry policy
         /// </summary>
@@ -30,6 +32,7 @@ namespace Avalara.AvaTax.RestClient
                            {
                                return TimeSpan.FromSeconds(2 * retryAttempt); 
                            });
-        }
+    }
+#endif
     }
 }

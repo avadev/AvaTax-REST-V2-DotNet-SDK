@@ -66,8 +66,10 @@
     </Compile>
     <Compile Include="BatchTests.cs" />
     <Compile Include="CertificateTests.cs" />
+    <Compile Include="ExceptionRetryTest.cs" />
     <Compile Include="FreeTaxRatesTest.cs" />
     <Compile Include="NexusTests.cs" />
+    <Compile Include="TestHelper.cs" />
     <Compile Include="TransactionTests.cs" />
   </ItemGroup>
   <ItemGroup>
