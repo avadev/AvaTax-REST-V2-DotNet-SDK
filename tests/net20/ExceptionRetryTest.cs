@@ -1,12 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Tests.Avalara.AvaTax.RestClient.net20
 {
     [TestFixture]
     public class ExceptionRetryTest
     {
-
+#if PORTABLE
         [Test]
         public void Exception_Retry_Zero_MaxAttempt()
         {
@@ -33,5 +33,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             Assert.Throws<AggregateException>(()=>testHelper.DivideIntegers(3, 0));
             Assert.AreEqual(1, testHelper.MethodCount);
         }
+#endif
     }
 }
