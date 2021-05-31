@@ -15,15 +15,21 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             maxRetryAttempts = _maxRetryAttempt;
             _exceptionRetry = new ExceptionRetry(maxRetryAttempts);
         }
+
+        public TestHelper(UserConfiguration userConfiguration)
+        {
+            _exceptionRetry = new ExceptionRetry(userConfiguration.MaxRetryAttempts);
+        }
+
         public int MethodCount { get; set; }
         
-        public int AddNonZeroIntegers(int a, int b)
+        public async Task AddNonZeroIntegers(int a, int b)
         { 
-            return _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
+            await _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
             {
                 await Task.Delay(1);
                 MethodCount++;
-                if (b == 0 && MethodCount <= maxRetryAttempts)
+                if (b == 0)
                 {
                     throw new HttpRequestException("0 is not allowed");
                 }
@@ -31,16 +37,16 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 {
                     return a + b;
                 }
-            }).Result;
+            });
         }
 
-        public int DivideIntegers(int a, int b)
+        public async Task DivideIntegers(int a, int b)
         {
-            return _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
+            await _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
             {
                 await Task.Delay(1);
                 MethodCount++;
-                if (b == 0 && MethodCount <= maxRetryAttempts)
+                if (b == 0)
                 {
                     throw new DivideByZeroException();
                 }
@@ -48,7 +54,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                 {
                     return a/b;
                 }
-            }).Result;
+            });
         }
     }
 }
