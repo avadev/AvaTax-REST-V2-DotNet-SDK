@@ -10,7 +10,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
     public class TestHelper
     {
 #if PORTABLE
-        private int maxRetryAttempts;
+       private int maxRetryAttempts;
         private ExceptionRetry _exceptionRetry; 
 
         public TestHelper(int _maxRetryAttempt)
@@ -18,15 +18,21 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             maxRetryAttempts = _maxRetryAttempt;
             _exceptionRetry = new ExceptionRetry(maxRetryAttempts);
         }
-        public int MethodCount { get; set; }
 
-        public int AddNonZeroIntegers(int a, int b)
+        public TestHelper(UserConfiguration userConfiguration)
         {
-            return _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
+            _exceptionRetry = new ExceptionRetry(userConfiguration.MaxRetryAttempts);
+        }
+
+        public int MethodCount { get; set; }
+        
+        public async Task AddNonZeroIntegers(int a, int b)
+        { 
+            await _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
             {
                 await Task.Delay(1);
                 MethodCount++;
-                if (b == 0 && MethodCount <= maxRetryAttempts)
+                if (b == 0)
                 {
                     throw new HttpRequestException("0 is not allowed");
                 }
@@ -34,16 +40,16 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 {
                     return a + b;
                 }
-            }).Result;
+            });
         }
 
-        public int DivideIntegers(int a, int b)
+        public async Task DivideIntegers(int a, int b)
         {
-            return _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
+            await _exceptionRetry.RetryPolicy.ExecuteAsync(async () =>
             {
                 await Task.Delay(1);
                 MethodCount++;
-                if (b == 0 && MethodCount <= maxRetryAttempts)
+                if (b == 0)
                 {
                     throw new DivideByZeroException();
                 }
@@ -51,7 +57,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                 {
                     return a/b;
                 }
-            }).Result;
+            });
         }
 #endif
     }
