@@ -120,6 +120,11 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionParameterModel> parameters { get; set; }
 
         /// <summary>
+        /// Custom user fields/flex fields for this transaction.
+        /// </summary>
+        public List<TransactionUserDefinedFieldModel> userDefinedFields { get; set; }
+
+        /// <summary>
         /// Customer-provided Reference Code with information about this transaction.
         ///  
         /// This field could be used to reference the original document for a return invoice, or for any other
@@ -235,6 +240,14 @@ namespace Avalara.AvaTax.RestClient
         /// This value will be overridden by the system to take the datasource Id from the call header.
         /// </summary>
         public Int32? dataSourceId { get; set; }
+
+        /// <summary>
+        /// The Delivery Terms is a field used in conjunction with Importer of Record to influence whether AvaTax includes Import Duty and Tax values in the transaction totals or not.
+        /// Delivered at Place (DAP) and Delivered Duty Paid (DDP) are two delivery terms that indicate that Import Duty and Tax should be included in the transaction total.
+        /// This field is also used for reports.
+        /// This field is used for future feature support. This field is not currently in use.
+        /// </summary>
+        public DeliveryTerms? deliveryTerms { get; set; }
 
 
         /// <summary>
