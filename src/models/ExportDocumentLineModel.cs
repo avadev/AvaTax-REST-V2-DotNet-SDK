@@ -60,16 +60,6 @@ namespace Avalara.AvaTax.RestClient
         public ReportDocType? docType { get; set; }
 
         /// <summary>
-        /// Format of dates in your rendered report. Example: "MM/dd/yyyy"
-        /// </summary>
-        public String dateFormat { get; set; }
-
-        /// <summary>
-        /// In which culture your report is produced with. Example: "en-US"
-        /// </summary>
-        public String culture { get; set; }
-
-        /// <summary>
         /// The currency your report is displayed in. Example: "USD"
         /// </summary>
         public String currencyCode { get; set; }
@@ -96,7 +86,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If set, include only documents associated with this merchantSellerId.
         /// </summary>
-        public Int32? merchantSellerId { get; set; }
+        public String merchantSellerIdentifier { get; set; }
 
 
         /// <summary>

@@ -61,6 +61,11 @@ namespace Avalara.AvaTax.RestClient
         public String itemGroup { get; set; }
 
         /// <summary>
+        /// A category of product
+        /// </summary>
+        public String category { get; set; }
+
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
@@ -90,6 +95,11 @@ namespace Avalara.AvaTax.RestClient
         /// List of item parameters.
         /// </summary>
         public List<ItemParameterModel> parameters { get; set; }
+
+        /// <summary>
+        /// List of item tags.
+        /// </summary>
+        public List<ItemTagDetailModel> tags { get; set; }
 
 
         /// <summary>

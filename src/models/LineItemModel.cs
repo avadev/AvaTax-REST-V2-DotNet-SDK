@@ -153,6 +153,11 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionLineParameterModel> parameters { get; set; }
 
         /// <summary>
+        /// Custom user fields/flex fields for this line.
+        /// </summary>
+        public List<TransactionLineUserDefinedFieldModel> userDefinedFields { get; set; }
+
+        /// <summary>
         /// The Item code for Custom Duty / Global Import tax determination
         /// Harmonized Tariff System code for this transaction.
         ///  
@@ -161,9 +166,15 @@ namespace Avalara.AvaTax.RestClient
         public String hsCode { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 04/15/2021, Version: 21.4, Message: Please use merchantSellerIdentifier instead.
         /// ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.
         /// </summary>
         public Int64? merchantSellerId { get; set; }
+
+        /// <summary>
+        /// ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.
+        /// </summary>
+        public String merchantSellerIdentifier { get; set; }
 
         /// <summary>
         /// This field will identify who is remitting Marketplace or Seller. This field must be populated by Marketplace.
@@ -179,6 +190,16 @@ namespace Avalara.AvaTax.RestClient
         /// Synonym of Marketplace Origination. Name of the Marketplace where the transaction originated from.
         /// </summary>
         public String originationSite { get; set; }
+
+        /// <summary>
+        /// Product category breadcrumbs. This is the full path to the category where item is included. Categories should be separated by “ > “. Multiple category paths per item are accepted. In this case, category paths should be separated by “;”.
+        /// </summary>
+        public String category { get; set; }
+
+        /// <summary>
+        /// A long description of the product.
+        /// </summary>
+        public String summary { get; set; }
 
 
         /// <summary>

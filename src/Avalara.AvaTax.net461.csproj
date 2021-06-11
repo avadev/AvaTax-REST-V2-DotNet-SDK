@@ -90,6 +90,7 @@
     <Compile Include="enums\CompanyAccessLevel.cs" />
     <Compile Include="enums\CompanyFilingStatus.cs" />
     <Compile Include="enums\DeemedSellerType.cs" />
+    <Compile Include="enums\DeliveryTerms.cs" />
     <Compile Include="enums\DocumentStatus.cs" />
     <Compile Include="enums\DocumentType.cs" />
     <Compile Include="enums\DueDateTypeId.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="enums\TaxRuleTypeId.cs" />
     <Compile Include="enums\TaxType.cs" />
     <Compile Include="enums\TextCase.cs" />
+    <Compile Include="enums\Visibility.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
     <Compile Include="enums\WelcomeEmail.cs" />
     <Compile Include="enums\WorksheetTypeId.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="models\CertificateTaxCodeModel.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
     <Compile Include="models\ClassificationModel.cs" />
+    <Compile Include="models\ClassificationParameterUsageMapModel.cs" />
     <Compile Include="models\CommitMultiDocumentModel.cs" />
     <Compile Include="models\CommitTransactionModel.cs" />
     <Compile Include="models\CommunicationsTransactionTypeModel.cs" />
@@ -219,6 +222,8 @@
     <Compile Include="models\CreateECommerceTokenInputModel.cs" />
     <Compile Include="models\CreateMultiCompanyTransactionModel.cs" />
     <Compile Include="models\CreateMultiDocumentModel.cs" />
+    <Compile Include="models\CreateNoticeResponsibilityTypeModel.cs" />
+    <Compile Include="models\CreateNoticeRootCauseTypeModel.cs" />
     <Compile Include="models\CreateOrAdjustTransactionModel.cs" />
     <Compile Include="models\CreateTransactionBatchRequestModel.cs" />
     <Compile Include="models\CreateTransactionBatchResponseModel.cs" />
@@ -296,11 +301,15 @@
     <Compile Include="models\IsoCountryModel.cs" />
     <Compile Include="models\IsoLocalizedName.cs" />
     <Compile Include="models\IsoRegionModel.cs" />
+    <Compile Include="models\ItemBulkUploadInputModel.cs" />
+    <Compile Include="models\ItemBulkUploadOutputModel.cs" />
     <Compile Include="models\ItemClassificationInputModel.cs" />
     <Compile Include="models\ItemClassificationOutputModel.cs" />
     <Compile Include="models\ItemModel.cs" />
     <Compile Include="models\ItemParameterModel.cs" />
     <Compile Include="models\ItemSyncModel.cs" />
+    <Compile Include="models\ItemTagDetailModel.cs" />
+    <Compile Include="models\ItemUploadErrorModel.cs" />
     <Compile Include="models\JurisdictionModel.cs" />
     <Compile Include="models\JurisdictionOverrideModel.cs" />
     <Compile Include="models\LicenseKeyModel.cs" />
@@ -381,6 +390,7 @@
     <Compile Include="models\ResourceFileTypeModel.cs" />
     <Compile Include="models\ResourceFileUploadRequestModel.cs" />
     <Compile Include="models\ResourceFileUploadResultModel.cs" />
+    <Compile Include="models\ReturnsParameterUsageModel.cs" />
     <Compile Include="models\SecurityRoleModel.cs" />
     <Compile Include="models\SendSalesRequestModel.cs" />
     <Compile Include="models\SetPasswordModel.cs" />
@@ -391,6 +401,7 @@
     <Compile Include="models\SubscriptionTypeModel.cs" />
     <Compile Include="models\SyncItemsRequestModel.cs" />
     <Compile Include="models\SyncItemsResponseModel.cs" />
+    <Compile Include="models\TagsModel.cs" />
     <Compile Include="models\TaxAuthorityFormModel.cs" />
     <Compile Include="models\TaxAuthorityInfo.cs" />
     <Compile Include="models\TaxAuthorityModel.cs" />
@@ -413,11 +424,13 @@
     <Compile Include="models\TransactionLineModel.cs" />
     <Compile Include="models\TransactionLineParameterModel.cs" />
     <Compile Include="models\TransactionLineTaxAmountByTaxTypeModel.cs" />
+    <Compile Include="models\TransactionLineUserDefinedFieldModel.cs" />
     <Compile Include="models\TransactionLocationTypeModel.cs" />
     <Compile Include="models\TransactionModel.cs" />
     <Compile Include="models\TransactionParameterModel.cs" />
     <Compile Include="models\TransactionReferenceFieldModel.cs" />
     <Compile Include="models\TransactionSummary.cs" />
+    <Compile Include="models\TransactionUserDefinedFieldModel.cs" />
     <Compile Include="models\UomModel.cs" />
     <Compile Include="models\UPCModel.cs" />
     <Compile Include="models\UpdateCompanyLocationRemittanceModel.cs" />

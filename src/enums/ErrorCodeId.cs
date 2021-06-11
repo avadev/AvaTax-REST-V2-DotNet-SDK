@@ -347,6 +347,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        DisableAuthenticationForSamlBasedAccounts = 101,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DisableResetPasswordForSamlBasedAccounts = 102,
+
+        /// <summary>
+        /// 
+        /// </summary>
         OutOfRange = 118,
 
         /// <summary>
@@ -1417,6 +1427,36 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidSettingSet = 1727,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidSettingName = 1728,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidSettingValue = 1729,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TooManyUserDefinedFields = 1730,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DuplicateUserDefinedFieldsFound = 1731,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidNameForUserDefinedField = 1732,
+
+        /// <summary>
+        /// 
+        /// </summary>
         UnsupportedFileFormat = 1800,
 
         /// <summary>
@@ -1643,6 +1683,21 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidParameterDataType = 2600,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TagDoesNotExist = 2620,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ObjectDeleted = 2660,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AssociatedObjectsDeleted = 2661,
 
         /// <summary>
         /// 

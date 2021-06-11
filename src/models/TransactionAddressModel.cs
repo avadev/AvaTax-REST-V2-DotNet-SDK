@@ -86,6 +86,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String longitude { get; set; }
 
+        /// <summary>
+        /// List of all the qualified jurisdictions for the TaxRegionId.
+        /// </summary>
+        public List<JurisdictionModel> jurisdictions { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

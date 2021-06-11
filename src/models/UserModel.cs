@@ -91,6 +91,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String subjectId { get; set; }
 
+        /// <summary>
+        /// Suppress new user email
+        /// </summary>
+        public Boolean? suppressNewUserEmail { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

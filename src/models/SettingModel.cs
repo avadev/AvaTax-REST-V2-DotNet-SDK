@@ -62,6 +62,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String value { get; set; }
 
+        /// <summary>
+        /// The value when the entry was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// The value identifying who last modified the entry.
+        /// </summary>
+        public Int32? modifiedUserId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

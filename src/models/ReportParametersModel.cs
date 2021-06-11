@@ -86,7 +86,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// If set, include only documents associated with this merchantSellerId.
         /// </summary>
-        public Int32? merchantSellerId { get; set; }
+        public String merchantSellerId { get; set; }
 
 
         /// <summary>
