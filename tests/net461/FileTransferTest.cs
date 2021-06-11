@@ -121,7 +121,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             var exportDocumentLine = new ExportDocumentLineModel()
             {
                 country = "US",
-                culture = "en-US",
+               // culture = "en-US",
                 currencyCode = "USD",
                 docType = ReportDocType.Sales,
                 startDate = new DateTime(2012, 1, 1),
