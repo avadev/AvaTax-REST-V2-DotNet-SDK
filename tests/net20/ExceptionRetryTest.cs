@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using Avalara.AvaTax.RestClient;
+#if PORTABLE
 using System.Net.Http;
-
+#endif
 namespace Tests.Avalara.AvaTax.RestClient.net20
 {
     [TestFixture]

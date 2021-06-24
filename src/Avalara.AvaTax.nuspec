@@ -23,6 +23,7 @@
             </group>
             <group targetFramework="net461">
               <dependency id="Newtonsoft.Json" version="12.0.1" />
+	      <dependency id="Polly" version="7.2.2" />
             </group>
             <group targetFramework=".NETStandard1.6">
                 <dependency id="NETStandard.Library" version="1.6.1" />
