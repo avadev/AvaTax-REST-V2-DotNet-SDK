@@ -222,6 +222,7 @@ namespace Avalara.AvaTax.RestClient
                             throw ex;
                         }
                         retryCount++;
+                        await Task.Delay(2 * 1000 * retryCount);
                     }
                     else {
                         throw ex;
@@ -386,6 +387,7 @@ namespace Avalara.AvaTax.RestClient
                             throw ex;
                         }
                         retryCount++;
+                        await Task.Delay(2 * 1000 * retryCount);
                     }
                     else {
                         throw ex;
