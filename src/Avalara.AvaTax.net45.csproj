@@ -152,7 +152,6 @@
     <Compile Include="enums\VoidReasonCode.cs" />
     <Compile Include="enums\WelcomeEmail.cs" />
     <Compile Include="enums\WorksheetTypeId.cs" />
-    <Compile Include="ExceptionRetry.cs" />
     <Compile Include="FetchResult.cs" />
     <Compile Include="FileResult.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />

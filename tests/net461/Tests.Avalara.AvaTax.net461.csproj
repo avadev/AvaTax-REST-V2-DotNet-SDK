@@ -44,9 +44,6 @@
     <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="Polly, Version=7.0.0.0, Culture=neutral, PublicKeyToken=c8a3ffc3f8f825cc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Polly.7.2.2\lib\net461\Polly.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -66,12 +63,10 @@
     <Compile Include="AuditTransactionTests.cs" />
     <Compile Include="AvaTaxOfflineHelper.cs" />
     <Compile Include="BatchTests.cs" />
-    <Compile Include="ExceptionRetryTest.cs" />
     <Compile Include="FileTransferTest.cs" />
     <Compile Include="FreeTaxRatesTest.cs" />
     <Compile Include="NexusTests.cs" />
     <Compile Include="TaxContentOfflineTest.cs" />
-    <Compile Include="TestHelper.cs" />
     <Compile Include="TransactionTests.cs" />
   </ItemGroup>
   <ItemGroup>
