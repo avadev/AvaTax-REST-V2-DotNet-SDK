@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
         private UserConfiguration _userConfiguration = new UserConfiguration();
-        private ExceptionRetry _exceptionRetry;
+        
 #if PORTABLE
         private HttpClient _client = new HttpClient();
 #endif
@@ -75,7 +75,7 @@ namespace Avalara.AvaTax.RestClient
 
 #if PORTABLE
             _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);
-            _exceptionRetry = new ExceptionRetry(_userConfiguration.MaxRetryAttempts);
+            
 #endif
             switch (environment)
             {
@@ -102,8 +102,7 @@ namespace Avalara.AvaTax.RestClient
             }
 
 #if PORTABLE
-            _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);
-            _exceptionRetry = new ExceptionRetry(_userConfiguration.MaxRetryAttempts);
+            _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);    
 #endif
             _envUri = customEnvironment;
         }
@@ -208,32 +207,27 @@ namespace Avalara.AvaTax.RestClient
         {
             int retryCount = 0;
             T result = default(T);
-            while (retryCount <= _userConfiguration.MaxRetryAttempts)
-            {
-                try
-                {
+            while (retryCount <= _userConfiguration.MaxRetryAttempts) {
+                try {
                     CallDuration cd = new CallDuration();
                     var s = await RestCallStringAsync(verb, relativePath, content, cd).ConfigureAwait(false);
                     var o = JsonConvert.DeserializeObject<T>(s);
                     cd.FinishParse();
                     this.LastCallTime = cd;
                     return o;
-                }
-                catch (AvaTaxServerError)
-                {
-                    if (retryCount == _userConfiguration.MaxRetryAttempts)
-                    {
-                        throw;
                     }
-
-                    retryCount++;
-                }
-                catch (Exception)
-                {
-                    throw;
+                catch (Exception ex) {
+                    if ((ex is AvaTaxServerError) || (ex is HttpRequestException)) {
+                        if (retryCount == _userConfiguration.MaxRetryAttempts) {
+                            throw ex;
+                        }
+                        retryCount++;
+                    }
+                    else {
+                        throw ex;
+                    }
                 }
             }
-
             return result;
         }
 
@@ -382,21 +376,20 @@ namespace Avalara.AvaTax.RestClient
                             {
                                 throw new AvaTaxError(err, result.StatusCode);
                             }
+                            
                         }
                     }
                 }
-                catch (AvaTaxServerError)
-                {
-                    if (retryCount == _userConfiguration.MaxRetryAttempts)
-                    {
-                        throw;
+                catch (Exception ex) {
+                    if ((ex is AvaTaxServerError) || (ex is HttpRequestException)) {
+                        if (retryCount == _userConfiguration.MaxRetryAttempts) {
+                            throw ex;
+                        }
+                        retryCount++;
                     }
-
-                    retryCount++;
-                }
-                catch (Exception)
-                {
-                    throw;
+                    else {
+                        throw ex;
+                    }
                 }
             }
 
