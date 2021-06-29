@@ -25,11 +25,6 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
         private UserConfiguration _userConfiguration = new UserConfiguration();
-        
-#if PORTABLE
-        private HttpClient _client = new HttpClient();
-#endif
-
         /// <summary>
         /// Tracks the amount of time spent on the most recent API call
         /// </summary>
@@ -72,11 +67,6 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
-
-#if PORTABLE
-            _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);
-            
-#endif
             switch (environment)
             {
                 case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
@@ -100,10 +90,6 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
-
-#if PORTABLE
-            _client.Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes);    
-#endif
             _envUri = customEnvironment;
         }
 
@@ -430,7 +416,13 @@ namespace Avalara.AvaTax.RestClient
                 // Send
                 cd.FinishSetup();
 
-                return await _client.SendAsync(request).ConfigureAwait(false);
+                HttpResponseMessage response;
+                using (var client = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes)})
+                {
+                    response = await client.SendAsync(request).ConfigureAwait(false);
+                }
+
+                return response;
             }
         }
 
