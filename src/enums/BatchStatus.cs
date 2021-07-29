@@ -64,5 +64,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Processing = 8,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        Cancelling = 9,
+
     }
 }

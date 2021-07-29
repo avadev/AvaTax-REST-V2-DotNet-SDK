@@ -350,6 +350,11 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionParameterModel> parameters { get; set; }
 
         /// <summary>
+        /// Custom user fields/flex fields for this transaction.
+        /// </summary>
+        public List<TransactionUserDefinedFieldModel> userDefinedFields { get; set; }
+
+        /// <summary>
         /// List of informational and warning messages regarding this API call. These messages are only relevant to the current API call.
         /// </summary>
         public List<AvaTaxMessage> messages { get; set; }
@@ -358,6 +363,27 @@ namespace Avalara.AvaTax.RestClient
         /// Invoice messages associated with this document. Currently, this stores legally-required VAT messages.
         /// </summary>
         public List<InvoiceMessageModel> invoiceMessages { get; set; }
+
+        /// <summary>
+        /// The name of the supplier / exporter / seller.
+        /// For sales doctype this will be the name of your own company for which you are reporting.
+        /// For purchases doctype this will be the name of the supplier you have purchased from.
+        /// </summary>
+        public String customerSupplierName { get; set; }
+
+        /// <summary>
+        /// The Id of the datasource from which this transaction originated.
+        /// This value will be overridden by the system to take the datasource Id from the call header.
+        /// </summary>
+        public Int32? dataSourceId { get; set; }
+
+        /// <summary>
+        /// The Delivery Terms is a field used in conjunction with Importer of Record to influence whether AvaTax includes Import Duty and Tax values in the transaction totals or not.
+        /// Delivered at Place (DAP) and Delivered Duty Paid (DDP) are two delivery terms that indicate that Import Duty and Tax should be included in the transaction total.
+        /// This field is also used for reports.
+        /// This field is used for future feature support. This field is not currently in use.
+        /// </summary>
+        public DeliveryTerms? deliveryTerms { get; set; }
 
 
         /// <summary>

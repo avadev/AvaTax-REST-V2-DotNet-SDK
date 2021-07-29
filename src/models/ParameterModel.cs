@@ -93,6 +93,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String measurementType { get; set; }
 
+        /// <summary>
+        /// This field identifies if parameter is needed for calculation
+        /// </summary>
+        public Boolean? isNeededForCalculation { get; set; }
+
+        /// <summary>
+        /// This field identifies if parameter is needed for returns
+        /// </summary>
+        public Boolean? isNeededForReturns { get; set; }
+
+        /// <summary>
+        /// This field identifies if parameter is needed for classification
+        /// </summary>
+        public Boolean? isNeededForClassification { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

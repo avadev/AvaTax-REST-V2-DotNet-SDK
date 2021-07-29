@@ -56,6 +56,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<IsoLocalizedName> localizedNames { get; set; }
 
+        /// <summary>
+        /// Whether the region collects tax or not. This field will be populated for US country only and will be null for all the other countries.
+        /// </summary>
+        public Boolean? isRegionTaxable { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

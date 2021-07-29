@@ -86,6 +86,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<UserModel> users { get; set; }
 
+        /// <summary>
+        /// Is Saml based authentication used by this account for user to login via AI.
+        /// </summary>
+        public Boolean? isSamlEnabled { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

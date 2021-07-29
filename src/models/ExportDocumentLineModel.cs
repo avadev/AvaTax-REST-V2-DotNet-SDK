@@ -60,19 +60,33 @@ namespace Avalara.AvaTax.RestClient
         public ReportDocType? docType { get; set; }
 
         /// <summary>
-        /// Format of dates in your rendered report. Example: "MM/dd/yyyy"
-        /// </summary>
-        public String dateFormat { get; set; }
-
-        /// <summary>
-        /// In which culture your report is produced with. Example: "en-US"
-        /// </summary>
-        public String culture { get; set; }
-
-        /// <summary>
         /// The currency your report is displayed in. Example: "USD"
         /// </summary>
         public String currencyCode { get; set; }
+
+        /// <summary>
+        /// Number of partitions (2 - 250) to split the report into.
+        /// If a value is provided for this property, a value must also be provided for the partition property.
+        /// </summary>
+        public Int32? numberOfPartitions { get; set; }
+
+        /// <summary>
+        /// The zero-based partition number to retrieve in this export request.
+        /// If a value is provided for this property, a value must also be provided for the numberOfPartitions property.
+        /// </summary>
+        public Int32? partition { get; set; }
+
+        /// <summary>
+        /// If true, include only documents that are locked.
+        /// If false, include only documents that are not locked.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isLocked { get; set; }
+
+        /// <summary>
+        /// If set, include only documents associated with this merchantSellerId.
+        /// </summary>
+        public String merchantSellerIdentifier { get; set; }
 
 
         /// <summary>

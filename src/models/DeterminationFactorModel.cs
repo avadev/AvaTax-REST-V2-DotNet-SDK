@@ -31,6 +31,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String description { get; set; }
 
+        /// <summary>
+        /// The ids of any applied determination factor.
+        /// </summary>
+        public List<String> ids { get; set; }
+
+        /// <summary>
+        /// The name of any applied determination factor.
+        /// </summary>
+        public List<String> names { get; set; }
+
+        /// <summary>
+        /// The name of the user who created the determination factor.
+        /// </summary>
+        public String createdBy { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

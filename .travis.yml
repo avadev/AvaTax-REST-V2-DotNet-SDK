@@ -8,24 +8,22 @@ install:
   - sudo apt-get install -y gtk-sharp2
   - nuget restore Avalara.AvaTax.Net20.sln
   - nuget restore Avalara.AvaTax.net45.sln
+  - nuget restore Avalara.AvaTax.net461.sln
   - dotnet restore Avalara.AvaTax.netstandard11.sln
+  - dotnet restore Avalara.AvaTax.netstandard20.sln
   - nuget install NUnit -Version 3.6.0 -OutputDirectory nunit
   - nuget install NUnit.Console -Version 3.6.0 -OutputDirectory testrunner
 script:
   - xbuild Avalara.AvaTax.Net20.sln
   - xbuild Avalara.AvaTax.net45.sln
+  - xbuild Avalara.AvaTax.net461.sln
   - dotnet build Avalara.AvaTax.netstandard11.sln
+  - dotnet build Avalara.AvaTax.netstandard20.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net20/bin/Debug/Tests.Avalara.AvaTax.RestClient.net20.dll
   - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net45/bin/Debug/Tests.Avalara.AvaTax.net45.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.6.0/tools/nunit3-console.exe ./tests/net461/bin/Debug/Tests.Avalara.AvaTax.net461.dll
   - dotnet test ./tests/netstandard/Tests.Avalara.AvaTax.netstandard11.csproj
-  - xbuild /p:Configuration=Release Avalara.AvaTax.Net20.sln
-  - xbuild /p:Configuration=Release Avalara.AvaTax.net45.sln
-  - dotnet build -c Release Avalara.AvaTax.netstandard11.sln
-  - nuget pack ./src/Avalara.AvaTax.nuspec -Verbosity detailed
-  - |
-    if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST_BRANCH" == "" ]; then 
-        nuget push /home/travis/build/avadev/AvaTax-REST-V2-DotNet-SDK/Avalara.AvaTax.*.nupkg -ApiKey $NUGET_API_KEY -Source https://api.nuget.org/v3/index.json
-    fi
+  - dotnet test ./tests/netstandard20/Tests.Avalara.AvaTax.netstandard20.csproj
 after_success:
   - echo "Branch is $TRAVIS_BRANCH"
   - echo "Pull Request is $TRAVIS_PULL_REQUEST_BRANCH"

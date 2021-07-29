@@ -238,6 +238,32 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? taxIncluded { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 04/15/2021, Version: 21.4, Message: Please use merchantSellerIdentifier instead.
+        /// ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.
+        /// </summary>
+        public Int64? merchantSellerId { get; set; }
+
+        /// <summary>
+        /// ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.
+        /// </summary>
+        public String merchantSellerIdentifier { get; set; }
+
+        /// <summary>
+        /// This field will identify who is remitting Marketplace or Seller. This field must be populated by Marketplace.
+        /// </summary>
+        public MarketplaceLiabilityType? marketplaceLiabilityType { get; set; }
+
+        /// <summary>
+        /// The transaction's original ID in its origination system
+        /// </summary>
+        public String originationDocumentId { get; set; }
+
+        /// <summary>
+        /// Synonym of Marketplace Origination. Name of the Marketplace where the transaction originated from.
+        /// </summary>
+        public String originationSite { get; set; }
+
+        /// <summary>
         /// Optional: A list of tax details for this line item.
         ///  
         /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `details` collection are intended to be
@@ -266,6 +292,11 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionLineParameterModel> parameters { get; set; }
 
         /// <summary>
+        /// Custom user fields/flex fields for this transaction.
+        /// </summary>
+        public List<TransactionLineUserDefinedFieldModel> userDefinedFields { get; set; }
+
+        /// <summary>
         /// The cross-border harmonized system code (HSCode) used to calculate tariffs and duties for this line item.
         /// For a full list of HS codes, see `ListCrossBorderCodes()`.
         /// </summary>
@@ -285,6 +316,26 @@ namespace Avalara.AvaTax.RestClient
         /// Indicates the VAT number type for this line item.
         /// </summary>
         public Int32? vatNumberTypeId { get; set; }
+
+        /// <summary>
+        /// Contains a list of TaxType that are to be overridden with their respective TaxOverrideAmount.
+        /// </summary>
+        public List<TransactionLineTaxAmountByTaxTypeModel> taxAmountByTaxTypes { get; set; }
+
+        /// <summary>
+        /// Deemed Supplier field indicates which party on the marketplace transaction is liable for collecting and reporting the VAT. This is based on the 2021 E-commerce legislative reforms in EU and UK. This field will not be used until after July 1, 2021.
+        /// </summary>
+        public DeemedSellerType? deemedSupplier { get; set; }
+
+        /// <summary>
+        /// Product category breadcrumbs. This is the full path to the category where item is included. Categories should be separated by “ > “. Multiple category paths per item are accepted. In this case, category paths should be separated by “;”.
+        /// </summary>
+        public String category { get; set; }
+
+        /// <summary>
+        /// A long description of the product.
+        /// </summary>
+        public String summary { get; set; }
 
 
         /// <summary>
