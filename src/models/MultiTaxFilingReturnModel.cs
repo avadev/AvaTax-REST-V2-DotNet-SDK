@@ -87,6 +87,11 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? endPeriod { get; set; }
 
         /// <summary>
+        /// The FilingTaskType for this return.
+        /// </summary>
+        public String type { get; set; }
+
+        /// <summary>
         /// A summary of all taxes compbined for this period
         /// </summary>
         public FilingsTaxSummaryModel returnTaxSummary { get; set; }

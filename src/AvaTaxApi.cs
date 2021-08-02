@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    21.6.0
+ * @version    21.7.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "21.6.0"; } }
+        public static string API_VERSION { get { return "21.7.1"; } }
 
 #region Methods
 
@@ -3040,6 +3040,27 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List all market place locations.
+        /// </summary>
+        /// <remarks>
+        /// List all market place locations.
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<MarketplaceModel> ListAllMarketplaceLocations(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/listallmarketplacelocations");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return RestCall<FetchResult<MarketplaceModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of the AvaFile Forms available
         /// </summary>
         /// <remarks>
@@ -5666,6 +5687,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Parameters
         /// * Classifications
+        /// * Tags
         /// 
         /// ### Security Policies
         /// 
@@ -7718,6 +7740,23 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve List of Accounts by Account Migration Status
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// <param name="writeMode"></param>
+        public AccountMigrationStatusModel ListAccountsByTssWriteMode(TssAccountMigrationId writeMode)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/ListAccountsByTssWriteMode/{writeMode}");
+            path.ApplyField("writeMode", writeMode);
+            return RestCall<AccountMigrationStatusModel>("GET", path, null);
         }
 
 
@@ -13406,6 +13445,27 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List all market place locations.;
+        /// </summary>
+        /// <remarks>
+        /// List all market place locations.;
+        /// </remarks>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<MarketplaceModel>> ListAllMarketplaceLocationsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/listallmarketplacelocations");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            return await RestCallAsync<FetchResult<MarketplaceModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
         /// Retrieve the full list of the AvaFile Forms available;
         /// </summary>
         /// <remarks>
@@ -16032,6 +16092,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Parameters
         /// * Classifications
+        /// * Tags
         /// 
         /// ### Security Policies
         /// 
@@ -18084,6 +18145,23 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// <summary>
+        /// Retrieve List of Accounts by Account Migration Status;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: FirmAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+        /// <param name="writeMode"></param>
+        public async Task<AccountMigrationStatusModel> ListAccountsByTssWriteModeAsync(TssAccountMigrationId writeMode)
+        {
+            var path = new AvaTaxPath("/api/v2/accounts/ListAccountsByTssWriteMode/{writeMode}");
+            path.ApplyField("writeMode", writeMode);
+            return await RestCallAsync<AccountMigrationStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
