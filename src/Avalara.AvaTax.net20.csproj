@@ -145,6 +145,7 @@
     <Compile Include="enums\TaxRuleTypeId.cs" />
     <Compile Include="enums\TaxType.cs" />
     <Compile Include="enums\TextCase.cs" />
+    <Compile Include="enums\TssAccountMigrationId.cs" />
     <Compile Include="enums\Visibility.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
     <Compile Include="enums\WelcomeEmail.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="FileResult.cs" />
     <Compile Include="models\AccountConfigurationModel.cs" />
     <Compile Include="models\AccountLicenseKeyModel.cs" />
+    <Compile Include="models\AccountMigrationStatusModel.cs" />
     <Compile Include="models\AccountModel.cs" />
     <Compile Include="models\ActivateAccountModel.cs" />
     <Compile Include="models\AddressesModel.cs" />
@@ -322,6 +324,7 @@
     <Compile Include="models\LoginVerificationInputModel.cs" />
     <Compile Include="models\LoginVerificationOutputModel.cs" />
     <Compile Include="models\MarketplaceLocationModel.cs" />
+    <Compile Include="models\MarketplaceModel.cs" />
     <Compile Include="models\Message.cs" />
     <Compile Include="models\MrsCompanyModel.cs" />
     <Compile Include="models\MultiCompanyLineItemModel.cs" />
