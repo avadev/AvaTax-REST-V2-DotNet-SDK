@@ -54,5 +54,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         HudsonGroup = 7,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        MRA = 8,
+
     }
 }

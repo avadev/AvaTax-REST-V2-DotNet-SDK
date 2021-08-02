@@ -281,6 +281,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? year { get; set; }
 
         /// <summary>
+        /// The FilingTaskType for this return.
+        /// </summary>
+        public String type { get; set; }
+
+        /// <summary>
         /// The attachments for this return.
         /// </summary>
         public List<FilingAttachmentModel> attachments { get; set; }
