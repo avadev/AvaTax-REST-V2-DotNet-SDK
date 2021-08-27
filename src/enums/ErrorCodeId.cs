@@ -962,6 +962,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        UserAlreadyExist = 613,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UserNotFound = 614,
+
+        /// <summary>
+        /// 
+        /// </summary>
         RefundTypeAndPercentageMismatch = 701,
 
         /// <summary>
