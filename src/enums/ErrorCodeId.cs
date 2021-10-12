@@ -962,6 +962,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        UserAlreadyExist = 613,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UserNotFound = 614,
+
+        /// <summary>
+        /// 
+        /// </summary>
         RefundTypeAndPercentageMismatch = 701,
 
         /// <summary>
@@ -1703,6 +1713,56 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CannotDownloadReport = 2700,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidUnitOfBasis = 2800,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NotApplicableUnitOfBasis = 2801,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidRateTypeTaxTypeMapping = 2802,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxTypeGroup = 2803,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxSubType = 2804,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidProductTypeId = 2805,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxRuleType = 2806,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidHsCode = 2807,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NotApplicableTaxType = 2808,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidTaxTypeCode = 2809,
 
     }
 }

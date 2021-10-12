@@ -27,6 +27,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        ModifiedDate = 77,
+
+        /// <summary>
+        /// 
+        /// </summary>
         PaymentDate = 80,
 
         /// <summary>

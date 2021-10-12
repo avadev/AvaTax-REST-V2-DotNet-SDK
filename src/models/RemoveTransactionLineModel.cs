@@ -37,7 +37,7 @@ namespace Avalara.AvaTax.RestClient
         public DocumentType? documentType { get; set; }
 
         /// <summary>
-        /// List of lines to be added
+        /// List of line numbers to be removed
         /// </summary>
         public List<String> lines { get; set; }
 

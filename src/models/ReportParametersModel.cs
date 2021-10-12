@@ -57,11 +57,6 @@ namespace Avalara.AvaTax.RestClient
         public String dateFormat { get; set; }
 
         /// <summary>
-        /// The culture used your report
-        /// </summary>
-        public String culture { get; set; }
-
-        /// <summary>
         /// The currency code used for your report
         /// </summary>
         public String currencyCode { get; set; }
@@ -87,6 +82,19 @@ namespace Avalara.AvaTax.RestClient
         /// If set, include only documents associated with this merchantSellerId.
         /// </summary>
         public String merchantSellerId { get; set; }
+
+        /// <summary>
+        /// The Document status filter used for report
+        /// For documentStatus, accepted values are: Temporary, Saved, Posted, Committed, Cancelled, Adjusted, Queued, PendingApproval
+        /// </summary>
+        public String documentStatus { get; set; }
+
+        /// <summary>
+        /// If true, modified date will be same as document date
+        /// If false, modified date will not be same as document date
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isModifiedDateSameAsDocumentDate { get; set; }
 
 
         /// <summary>
