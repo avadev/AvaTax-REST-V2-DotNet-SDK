@@ -42,6 +42,71 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        BikeTax = 11,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        LandedCost = 12,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CheckoutBag = 13,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Alcohol = 17,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Amusement = 20,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Hospitality = 21,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RentalLeasing = 23,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        GrossReceipts = 24,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Mattress = 25,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Lumber = 27,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Paint = 28,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Tires = 29,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        EI = 30,
+
+        /// <summary>
+        /// 
+        /// </summary>
         All = 65,
 
         /// <summary>
