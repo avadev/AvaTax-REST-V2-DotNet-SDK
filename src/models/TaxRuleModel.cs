@@ -138,6 +138,7 @@ namespace Avalara.AvaTax.RestClient
         public String entityUseCode { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: , Version: , Message: Please use `taxTypeCode`
         /// Some tax type groups contain multiple different types of tax. To create a rule that affects only one
         /// type of tax within a tax type group, set this value to the code matching the specific tax type within
         /// that group. The custom tax rule will then only apply to taxes calculated for that specific type.
@@ -145,6 +146,16 @@ namespace Avalara.AvaTax.RestClient
         /// For rules that affect all tax types, use the value `A` to match `All` tax types within that group.
         /// </summary>
         public MatchingTaxType? taxTypeId { get; set; }
+
+        /// <summary>
+        /// Indicates the code of the tax type that applies to this rule. Use /api/v2/definitions/taxtypes endpoint to retrieve the list of tax types applicable for your company.
+        /// </summary>
+        public String taxTypeCode { get; set; }
+
+        /// <summary>
+        /// TaxRule Product Detail indicates the HSCode(s) to which the tax rule applies.
+        /// </summary>
+        public List<TaxRuleProductDetailModel> taxRuleProductDetail { get; set; }
 
         /// <summary>
         /// DEPRECATED - Date: 8/27/2018, Version: 18.9, Message: Please use `rateTypeCode`, `taxTypeGroup` and `subTaxType` instead.
@@ -335,6 +346,11 @@ namespace Avalara.AvaTax.RestClient
         /// The user ID of the user who last modified this record.
         /// </summary>
         public Int32? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// The UnitOfBasis for the TaxRule
+        /// </summary>
+        public String unitOfBasis { get; set; }
 
 
         /// <summary>

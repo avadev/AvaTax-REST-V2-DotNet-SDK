@@ -23,6 +23,11 @@ namespace Avalara.AvaTax.RestClient
     public class TransactionBatchItemModel
     {
         /// <summary>
+        /// Represents a transaction memo.
+        /// </summary>
+        public String memo { get; set; }
+
+        /// <summary>
         /// Represents a transaction to be created.
         /// </summary>
         public CreateTransactionModel createTransactionModel { get; set; }
@@ -31,6 +36,11 @@ namespace Avalara.AvaTax.RestClient
         /// Represents an existing transaction to be adjusted.
         /// </summary>
         public BatchAdjustTransactionModel adjustTransactionModel { get; set; }
+
+        /// <summary>
+        /// Represents a transaction to be created or to be adjusted if exists.
+        /// </summary>
+        public CreateOrAdjustTransactionModel createOrAdjustTransactionModel { get; set; }
 
         /// <summary>
         /// Represents an existing transaction to be voided.

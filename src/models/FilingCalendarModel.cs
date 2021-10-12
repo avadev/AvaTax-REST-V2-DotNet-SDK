@@ -80,6 +80,7 @@ namespace Avalara.AvaTax.RestClient
         public String locationCode { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 9/17/2021, Version: 21.9.0, Message: Field will be no longer be available after the 21.9.0 release.
         /// If this calendar is for a location-specific tax return, specify the location-specific behavior here.
         /// </summary>
         public OutletTypeId? outletTypeId { get; set; }
@@ -203,6 +204,7 @@ namespace Avalara.AvaTax.RestClient
         public String phone { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 9/17/2021, Version: 21.9.0, Message: Field will be no longer be available after the 21.9.0 release.
         /// Special filing instructions to be used when filing this return.
         /// Please note that requesting special filing instructions may incur additional costs.
         /// </summary>
@@ -264,6 +266,7 @@ namespace Avalara.AvaTax.RestClient
         public MatchingTaxType taxTypeId { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 9/17/2021, Version: 21.9.0, Message: Field will be no longer be available after the 21.9.0 release.
         /// Internal filing notes.
         /// </summary>
         public String internalNotes { get; set; }

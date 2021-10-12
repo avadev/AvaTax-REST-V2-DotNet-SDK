@@ -28,24 +28,27 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The start date filter for report execution. If no date provided, same date of last month will be used as the startDate.
+        /// Accepts date in short format yyyy-mm-dd as well as date time stamp
         /// </summary>
         public DateTime? startDate { get; set; }
 
         /// <summary>
         /// The end date filter for report execution. If no date provided, today's date will be used as the endDate.
+        /// Accepts date in short format yyyy-mm-dd as well as date time stamp
         /// </summary>
         public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// The transactions in the country you wish to run a report:
-        /// use "ALL" for all countries
-        /// use "ALL Non-US" for all international countries
-        /// or use a single 2-char ISO country code
+        /// The transactions in the country you wish to run a report.
+        /// Use "ALL" for all countries
+        /// Use "ALL Non-US" for all international countries
+        /// Or use a single 2-char ISO country code
         /// </summary>
         public String country { get; set; }
 
         /// <summary>
-        /// The state associated with the transactions you wish to run a report on: use "ALL" for all states.
+        /// The state associated with the transactions you wish to run a report.
+        /// Use "ALL" for all states or 2-char state code.
         /// </summary>
         public String state { get; set; }
 
@@ -60,7 +63,8 @@ namespace Avalara.AvaTax.RestClient
         public ReportDocType? docType { get; set; }
 
         /// <summary>
-        /// The currency your report is displayed in. Example: "USD"
+        /// The currency your report is displayed in.
+        /// Accepts "USD" or leave this blank to get all the documents with all the currencies
         /// </summary>
         public String currencyCode { get; set; }
 
@@ -87,6 +91,20 @@ namespace Avalara.AvaTax.RestClient
         /// If set, include only documents associated with this merchantSellerId.
         /// </summary>
         public String merchantSellerIdentifier { get; set; }
+
+        /// <summary>
+        /// DocumentStatus
+        /// For documentStatus, accepted values are: Saved, Posted, Committed, Cancelled
+        /// </summary>
+        public DocumentStatus? documentStatus { get; set; }
+
+        /// <summary>
+        /// Use this parameter when dateFilter = ModifiedDate.
+        /// For dateFilter = DocumentDate, PaymentDate, TaxDate or ReportingDate, the isModifiedDateSameAsDocumentDate parameter is ignored.
+        /// Set this parameter to true when you would like to get Documents which have the Document Date same as Modified Date.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isModifiedDateSameAsDocumentDate { get; set; }
 
 
         /// <summary>
