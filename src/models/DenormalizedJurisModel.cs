@@ -85,6 +85,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String city { get; set; }
 
+        /// <summary>
+        /// Is Acm flag
+        /// </summary>
+        public Boolean? isAcm { get; set; }
+
+        /// <summary>
+        /// Is Sst flag
+        /// </summary>
+        public Boolean? isSst { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

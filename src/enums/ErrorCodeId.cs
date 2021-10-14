@@ -162,6 +162,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidAuthenticationType = 29,
+
+        /// <summary>
+        /// 
+        /// </summary>
         AuthenticationException = 30,
 
         /// <summary>
@@ -927,6 +932,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        AccountNotWhitelisted = 603,
+
+        /// <summary>
+        /// 
+        /// </summary>
         FreeTrialNotAvailable = 606,
 
         /// <summary>
@@ -968,6 +978,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         UserNotFound = 614,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UserManagementException = 615,
 
         /// <summary>
         /// 
