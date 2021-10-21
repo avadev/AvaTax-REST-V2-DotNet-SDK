@@ -59,5 +59,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         MRA = 8,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        None = 9,
+
     }
 }
