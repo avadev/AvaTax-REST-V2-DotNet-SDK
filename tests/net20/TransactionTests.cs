@@ -112,8 +112,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
-                .WithLine(100.0m, 1, "P0000000")
-                .WithLine(200m)
+                .WithLineItem(100.0m, 1, "P0000000")
+                .WithLineItem(200m)
                 .WithExemptLine(50m, "NT")
                 .WithLineReference("Special Line Reference!", "Also this!")
                 .Create();
@@ -177,8 +177,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                     "TaxOverrideCustomerCode")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
-                .WithLine(100.0m, 1, "P0000000")
-                .WithLine(200m);
+                .WithLineItem(100.0m, 1, "P0000000")
+                .WithLineItem(200m);
 
 
             var transaction = builder.Create();
