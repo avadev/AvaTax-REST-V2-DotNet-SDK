@@ -11456,7 +11456,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            return await RestCallAsync<FileResult>("GET", path, null).ConfigureAwait(false);
+            return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
 
