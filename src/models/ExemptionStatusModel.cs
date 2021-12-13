@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -27,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         public String status { get; set; }
 
         /// <summary>
-        /// Certificate if the customer is exempted
+        /// 
         /// </summary>
         public CertificateModel certificate { get; set; }
 

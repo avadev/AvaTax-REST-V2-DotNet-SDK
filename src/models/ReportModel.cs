@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -42,7 +43,7 @@ namespace Avalara.AvaTax.RestClient
         public String reportType { get; set; }
 
         /// <summary>
-        /// The parametes used to build the report
+        /// 
         /// </summary>
         public ReportParametersModel parameters { get; set; }
 

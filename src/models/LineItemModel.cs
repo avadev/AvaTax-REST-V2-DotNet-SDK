@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -43,12 +44,7 @@ namespace Avalara.AvaTax.RestClient
         public Decimal amount { get; set; }
 
         /// <summary>
-        /// The addresses to use for this transaction line.
-        ///  
-        /// If you set this value to `null`, or if you omit this element from your API call, then instead the transaction
-        /// will use the `addresses` from the document level.
-        ///  
-        /// If you specify any other value besides `null`, only addresses specified for this line will be used for this line.
+        /// 
         /// </summary>
         public AddressesModel addresses { get; set; }
 
@@ -141,7 +137,7 @@ namespace Avalara.AvaTax.RestClient
         public String businessIdentificationNo { get; set; }
 
         /// <summary>
-        /// Specifies a tax override for this line.
+        /// 
         /// </summary>
         public TaxOverrideModel taxOverride { get; set; }
 

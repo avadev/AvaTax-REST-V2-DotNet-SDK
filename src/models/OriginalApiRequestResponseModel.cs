@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -22,12 +23,12 @@ namespace Avalara.AvaTax.RestClient
     public class OriginalApiRequestResponseModel
     {
         /// <summary>
-        /// API request
+        /// 
         /// </summary>
         public CreateTransactionModel request { get; set; }
 
         /// <summary>
-        /// API response
+        /// 
         /// </summary>
         public TransactionModel response { get; set; }
 

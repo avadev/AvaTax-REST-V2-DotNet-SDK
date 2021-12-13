@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -104,11 +105,7 @@ namespace Avalara.AvaTax.RestClient
         public String exemptionNo { get; set; }
 
         /// <summary>
-        /// Default addresses for all lines in this document.
-        ///  
-        /// These addresses are the default values that will be used for any lines that do not have their own
-        /// address information. If you specify addresses for a line, then no default addresses will be loaded
-        /// for that line.
+        /// 
         /// </summary>
         public AddressesModel addresses { get; set; }
 
@@ -152,7 +149,7 @@ namespace Avalara.AvaTax.RestClient
         public String batchCode { get; set; }
 
         /// <summary>
-        /// Specifies a tax override for the entire document
+        /// 
         /// </summary>
         public TaxOverrideModel taxOverride { get; set; }
 

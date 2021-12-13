@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -261,9 +262,15 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? fixedPrepaymentAmount { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: , Version: , Message: The 'taxTypes' list field should be used going forward.
         /// The type of tax to report on this return.
         /// </summary>
         public MatchingTaxType taxTypeId { get; set; }
+
+        /// <summary>
+        /// The list of tax types to report on this return.
+        /// </summary>
+        public List<String> taxTypes { get; set; }
 
         /// <summary>
         /// DEPRECATED - Date: 9/17/2021, Version: 21.9.0, Message: Field will be no longer be available after the 21.9.0 release.

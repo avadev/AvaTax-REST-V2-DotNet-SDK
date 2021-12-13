@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -23,7 +24,7 @@ namespace Avalara.AvaTax.RestClient
     public class ReconstructedMultiDocumentModel
     {
         /// <summary>
-        /// The original request that was used to create a MultiDocument object.
+        /// 
         /// </summary>
         public CreateMultiDocumentModel request { get; set; }
 

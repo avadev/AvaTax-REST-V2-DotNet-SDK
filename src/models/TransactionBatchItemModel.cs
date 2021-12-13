@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -28,22 +29,22 @@ namespace Avalara.AvaTax.RestClient
         public String memo { get; set; }
 
         /// <summary>
-        /// Represents a transaction to be created.
+        /// 
         /// </summary>
         public CreateTransactionModel createTransactionModel { get; set; }
 
         /// <summary>
-        /// Represents an existing transaction to be adjusted.
+        /// 
         /// </summary>
         public BatchAdjustTransactionModel adjustTransactionModel { get; set; }
 
         /// <summary>
-        /// Represents a transaction to be created or to be adjusted if exists.
+        /// 
         /// </summary>
         public CreateOrAdjustTransactionModel createOrAdjustTransactionModel { get; set; }
 
         /// <summary>
-        /// Represents an existing transaction to be voided.
+        /// 
         /// </summary>
         public BatchVoidTransactionModel voidTransactionModel { get; set; }
 

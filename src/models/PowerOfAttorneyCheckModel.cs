@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -52,7 +53,7 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? expirationDate { get; set; }
 
         /// <summary>
-        /// POA download
+        /// 
         /// </summary>
         public ResourceFileDownloadResult availablePoa { get; set; }
 

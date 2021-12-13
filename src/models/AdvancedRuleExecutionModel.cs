@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -57,7 +58,7 @@ namespace Avalara.AvaTax.RestClient
         public String ruleId { get; set; }
 
         /// <summary>
-        /// Advanced rule to execute
+        /// 
         /// </summary>
         public AdvancedRuleModel rule { get; set; }
 
