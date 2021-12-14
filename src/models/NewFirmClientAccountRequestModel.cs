@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -59,7 +60,7 @@ namespace Avalara.AvaTax.RestClient
         public String companyCode { get; set; }
 
         /// <summary>
-        /// Address information of the account being created.
+        /// 
         /// </summary>
         public CompanyAddress companyAddress { get; set; }
 

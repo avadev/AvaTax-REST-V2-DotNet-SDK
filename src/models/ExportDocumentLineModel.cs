@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -88,7 +89,7 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isLocked { get; set; }
 
         /// <summary>
-        /// If set, include only documents associated with this merchantSellerId.
+        /// If set, include only documents associated with these merchantSellerIds.Multiple merchantSellerIds should be sent by comma separated values.
         /// </summary>
         public String merchantSellerIdentifier { get; set; }
 
@@ -105,6 +106,32 @@ namespace Avalara.AvaTax.RestClient
         /// Defaults to false if not specified.
         /// </summary>
         public Boolean? isModifiedDateSameAsDocumentDate { get; set; }
+
+        /// <summary>
+        /// TaxGroup is required to support Sales tax (Sales + SellersUse) and VAT (Input+ Output).
+        /// TaxTypes, such as Lodging, Bottle, LandedCost, Ewaste, BevAlc, etc
+        /// </summary>
+        public String taxGroup { get; set; }
+
+        /// <summary>
+        /// The description of the tax
+        /// </summary>
+        public String taxName { get; set; }
+
+        /// <summary>
+        /// The AvaTax tax code or customer tax code associated with the item or SKU in the transaction
+        /// </summary>
+        public String taxCode { get; set; }
+
+        /// <summary>
+        /// The code your business application uses to identify a customer or vendor
+        /// </summary>
+        public String customerVendorCode { get; set; }
+
+        /// <summary>
+        /// Defines the individual taxes associated with a TaxType category, such as Lodging TaxType which supports numerous TaxSubTypes, including Hotel, Occupancy, ConventionCenter, Accommotations, etc.
+        /// </summary>
+        public String taxSubType { get; set; }
 
 
         /// <summary>

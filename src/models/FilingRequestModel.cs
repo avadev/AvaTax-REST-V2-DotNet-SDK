@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -38,7 +39,7 @@ namespace Avalara.AvaTax.RestClient
         public FilingRequestStatus? filingRequestStatusId { get; set; }
 
         /// <summary>
-        /// The data model object of the request
+        /// 
         /// </summary>
         public FilingRequestDataModel data { get; set; }
 

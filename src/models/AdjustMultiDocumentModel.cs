@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -34,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         public String adjustDescription { get; set; }
 
         /// <summary>
-        /// Replace the current MultiDocument transaction with tax data calculated for this new MultiDocument transaction
+        /// 
         /// </summary>
         public CreateMultiDocumentModel newTransaction { get; set; }
 

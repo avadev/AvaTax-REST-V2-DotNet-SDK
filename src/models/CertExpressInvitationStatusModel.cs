@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -27,9 +28,7 @@ namespace Avalara.AvaTax.RestClient
         public CertExpressInvitationStatus? status { get; set; }
 
         /// <summary>
-        /// The CertExpress invitation for the customer. If you specified an email address in the invitation
-        /// request, this invitation will be sent via email. Otherwise, you are expected to direct the customer
-        /// using a hyperlink directly in your application.
+        /// 
         /// </summary>
         public CertExpressInvitationModel invitation { get; set; }
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -34,10 +35,7 @@ namespace Avalara.AvaTax.RestClient
         public String adjustmentDescription { get; set; }
 
         /// <summary>
-        /// The create transaction model to be created or updated.
-        ///  
-        /// If the transaction does not exist, create transaction.
-        /// If the transaction exists, adjust the existing transaction.
+        /// 
         /// </summary>
         public CreateTransactionModel createTransactionModel { get; set; }
 

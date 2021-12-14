@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -42,7 +43,7 @@ namespace Avalara.AvaTax.RestClient
         public FilingStatusId? status { get; set; }
 
         /// <summary>
-        /// A summary of all taxes compbined for this period
+        /// 
         /// </summary>
         public FilingsTaxSummaryModel regionTaxSummary { get; set; }
 

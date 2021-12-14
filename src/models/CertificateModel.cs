@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -94,15 +95,12 @@ namespace Avalara.AvaTax.RestClient
         public String exemptionNumber { get; set; }
 
         /// <summary>
-        /// The exemption reason that CertCapture audit/internal logic identifies for created certificate.
+        /// 
         /// </summary>
         public ExemptionReasonModel validatedExemptionReason { get; set; }
 
         /// <summary>
-        /// The exemption reason associated with this certificate. For example, the reason code for exemption
-        /// for purposes of resale is `RESALE`.
-        ///  
-        /// For a list of exemption reasons, call `ListCertificateExemptReasons`.
+        /// 
         /// </summary>
         public ExemptionReasonModel exemptionReason { get; set; }
 
@@ -152,7 +150,7 @@ namespace Avalara.AvaTax.RestClient
         public List<PoNumberModel> poNumbers { get; set; }
 
         /// <summary>
-        /// The exposure zone where this certificate is valid.
+        /// 
         /// </summary>
         public ExposureZoneModel exposureZone { get; set; }
 
