@@ -31,6 +31,10 @@ namespace Avalara.AvaTax.RestClient
         /// Tracks the amount of time spent on the most recent API call
         /// </summary>
         public CallDuration LastCallTime { get; set; }
+        /// <summary>
+        /// Client Id - passed in request header
+        /// </summary>
+        public readonly string ClientID;
 
         /// <summary>
         /// Returns the version of the SDK that was compiled
@@ -62,6 +66,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="userConfiguration">User configuration</param>
         public AvaTaxClient(string appName, string appVersion, string machineName, AvaTaxEnvironment environment, UserConfiguration userConfiguration = null)
         {
+            ClientID= String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
             if (userConfiguration != null)
@@ -87,6 +92,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="userConfiguration">User configuration</param>
         public AvaTaxClient(string appName, string appVersion, string machineName, Uri customEnvironment, UserConfiguration userConfiguration = null)
         {
+            ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
             if (userConfiguration != null)
@@ -176,7 +182,14 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public AvaTaxClient WithClientIdentifier(string appName, string appVersion, string machineName)
         {
-            _clientHeaders.Add(Constants.AVALARA_CLIENT_HEADER, String.Format("{0}; {1}; {2}; {3}; {4}", appName, appVersion, "CSharpRestClient", API_VERSION, machineName));
+            if (!_clientHeaders.ContainsKey(Constants.AVALARA_CLIENT_HEADER))
+            {
+                _clientHeaders.Add(Constants.AVALARA_CLIENT_HEADER, ClientID);
+            }
+            else
+            {
+                _clientHeaders[Constants.AVALARA_CLIENT_HEADER] = ClientID;
+            }
             return this;
         }
         #endregion
