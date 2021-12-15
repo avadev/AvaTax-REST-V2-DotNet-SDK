@@ -28,8 +28,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
-                Console.WriteLine(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"));
-                Console.WriteLine(Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
 
 
                 // Verify that we can ping successfully

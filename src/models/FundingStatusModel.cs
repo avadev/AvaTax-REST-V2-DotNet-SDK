@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -67,7 +68,7 @@ namespace Avalara.AvaTax.RestClient
         public String documentName { get; set; }
 
         /// <summary>
-        /// MethodReturn
+        /// 
         /// </summary>
         public FundingESignMethodReturn methodReturn { get; set; }
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -291,12 +292,12 @@ namespace Avalara.AvaTax.RestClient
         public List<FilingAttachmentModel> attachments { get; set; }
 
         /// <summary>
-        /// The excluded carry over credit documents
+        /// 
         /// </summary>
         public FilingReturnCreditModel excludedCarryOverCredits { get; set; }
 
         /// <summary>
-        /// The applied carry over credit documents
+        /// 
         /// </summary>
         public FilingReturnCreditModel appliedCarryOverCredits { get; set; }
 

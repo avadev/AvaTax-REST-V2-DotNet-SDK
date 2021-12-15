@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -25,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
     public class NexusByAddressModel
     {
         /// <summary>
-        /// The address that was provided by the user in the call to `DeclareNexusByAddress`
+        /// 
         /// </summary>
         public DeclareNexusByAddressModel address { get; set; }
 

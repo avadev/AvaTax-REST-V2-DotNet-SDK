@@ -71,6 +71,7 @@
     <Compile Include="enums\AdjustmentTypeId.cs" />
     <Compile Include="enums\AdvancedRuleCrashBehavior.cs" />
     <Compile Include="enums\AdvancedRuleScriptType.cs" />
+    <Compile Include="enums\AgeVerifyFailureCode.cs" />
     <Compile Include="enums\ApiCallStatus.cs" />
     <Compile Include="enums\AuthenticationTypeId.cs" />
     <Compile Include="enums\AvataxDeleteErrorTransactionStatus.cs" />
@@ -146,6 +147,8 @@
     <Compile Include="enums\TaxType.cs" />
     <Compile Include="enums\TextCase.cs" />
     <Compile Include="enums\TssAccountMigrationId.cs" />
+    <Compile Include="enums\UserDefinedFieldDataType.cs" />
+    <Compile Include="enums\UserDefinedFieldType.cs" />
     <Compile Include="enums\Visibility.cs" />
     <Compile Include="enums\VoidReasonCode.cs" />
     <Compile Include="enums\WelcomeEmail.cs" />
@@ -174,6 +177,8 @@
     <Compile Include="models\AdvancedRuleScriptModel.cs" />
     <Compile Include="models\AdvancedRuleTableModel.cs" />
     <Compile Include="models\AdvancedRuleVisibilityModel.cs" />
+    <Compile Include="models\AgeVerifyRequest.cs" />
+    <Compile Include="models\AgeVerifyResult.cs" />
     <Compile Include="models\ApproveAdvancedRuleModel.cs" />
     <Compile Include="models\ApproveFilingsModel.cs" />
     <Compile Include="models\AuditEvent.cs" />
@@ -209,6 +214,7 @@
     <Compile Include="models\CompanyModel.cs" />
     <Compile Include="models\CompanyParameterDetailModel.cs" />
     <Compile Include="models\CompanyReturnSettingModel.cs" />
+    <Compile Include="models\CompanyUserDefinedFieldModel.cs" />
     <Compile Include="models\ComplianceAggregatedTaxRateModel.cs" />
     <Compile Include="models\ComplianceJurisdictionModel.cs" />
     <Compile Include="models\ComplianceJurisdictionRateModel.cs" />
@@ -254,6 +260,7 @@
     <Compile Include="models\EntityUseCodeModel.cs" />
     <Compile Include="models\ErrorCodeOutputModel.cs" />
     <Compile Include="models\ErrorDetail.cs" />
+    <Compile Include="models\ErrorDetails.cs" />
     <Compile Include="models\ErrorInfo.cs" />
     <Compile Include="models\ErrorResult.cs" />
     <Compile Include="models\ErrorTransactionModelBase.cs" />
@@ -398,6 +405,7 @@
     <Compile Include="models\SetPasswordModel.cs" />
     <Compile Include="models\SettingModel.cs" />
     <Compile Include="models\SettleTransactionModel.cs" />
+    <Compile Include="models\ShippingVerifyResult.cs" />
     <Compile Include="models\SkyscraperStatusModel.cs" />
     <Compile Include="models\SubscriptionModel.cs" />
     <Compile Include="models\SubscriptionTypeModel.cs" />

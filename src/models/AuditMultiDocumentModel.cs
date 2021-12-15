@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -22,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     public class AuditMultiDocumentModel
     {
         /// <summary>
-        /// Reconstructed API request/response pair that can be used to adjust or re-create this MultiDocument transaction.
+        /// 
         /// </summary>
         public ReconstructedMultiDocumentModel reconstructed { get; set; }
 
@@ -57,7 +58,7 @@ namespace Avalara.AvaTax.RestClient
         public ApiCallStatus? apiCallStatus { get; set; }
 
         /// <summary>
-        /// Original API request/response
+        /// 
         /// </summary>
         public OriginalApiRequestResponseModel original { get; set; }
 

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
@@ -22,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     public class AddressResolutionModel
     {
         /// <summary>
-        /// The original address
+        /// 
         /// </summary>
         public AddressInfo address { get; set; }
 
@@ -32,7 +33,7 @@ namespace Avalara.AvaTax.RestClient
         public List<ValidatedAddressInfo> validatedAddresses { get; set; }
 
         /// <summary>
-        /// The geospatial coordinates of this address
+        /// 
         /// </summary>
         public CoordinateInfo coordinates { get; set; }
 
