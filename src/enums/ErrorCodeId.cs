@@ -1780,5 +1780,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         InvalidTaxTypeCode = 2809,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        ContentAccessDenied = 2810,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ContentNotFound = 2811,
+
     }
 }
