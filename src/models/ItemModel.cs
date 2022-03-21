@@ -87,6 +87,16 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
+        /// Source of creation of this item
+        /// </summary>
+        public String source { get; set; }
+
+        /// <summary>
+        /// Universal unique code for item
+        /// </summary>
+        public String upc { get; set; }
+
+        /// <summary>
         /// List of classifications that belong to this item.
         /// A single classification consits of a productCode and a systemCode for a particular item.
         /// </summary>

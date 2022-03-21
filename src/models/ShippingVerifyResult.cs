@@ -43,9 +43,9 @@ namespace Avalara.AvaTax.RestClient
         public String failureMessages { get; set; }
 
         /// <summary>
-        /// An enumeration of all the failure codes received across all lines.
+        /// An enumeration of all the failure codes received across all lines. Note: AlcoholContentLimitExceeded is included in API versions 2.2 and later.
         /// </summary>
-        public List<String> failureCodes { get; set; }
+        public List<FailureCodes> failureCodes { get; set; }
 
         /// <summary>
         /// An enumeration of all the warning codes received across all lines that a determination could not be made for.

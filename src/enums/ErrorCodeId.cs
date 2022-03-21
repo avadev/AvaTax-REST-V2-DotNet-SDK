@@ -1483,6 +1483,16 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidRestrictionType = 1733,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidParameter = 1734,
+
+        /// <summary>
+        /// 
+        /// </summary>
         UnsupportedFileFormat = 1800,
 
         /// <summary>
@@ -1704,6 +1714,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         BatchCannotBeCancelledFormatError = 2505,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        BatchTypeNotSupported = 2506,
 
         /// <summary>
         /// 
