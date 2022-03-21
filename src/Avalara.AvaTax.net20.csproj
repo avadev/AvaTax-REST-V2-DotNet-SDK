@@ -73,6 +73,7 @@
     <Compile Include="enums\AdvancedRuleScriptType.cs" />
     <Compile Include="enums\AgeVerifyFailureCode.cs" />
     <Compile Include="enums\ApiCallStatus.cs" />
+    <Compile Include="enums\ApiVersionSchema.cs" />
     <Compile Include="enums\AuthenticationTypeId.cs" />
     <Compile Include="enums\AvataxDeleteErrorTransactionStatus.cs" />
     <Compile Include="enums\BatchStatus.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="enums\ExemptCertReviewStatusId.cs" />
     <Compile Include="enums\ExemptCertStatusId.cs" />
     <Compile Include="enums\ExemptCertTypeId.cs" />
+    <Compile Include="enums\FailureCodes.cs" />
     <Compile Include="enums\FilingFrequencyId.cs" />
     <Compile Include="enums\FilingOptionTypeId.cs" />
     <Compile Include="enums\FilingRequestStatus.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="models\AuditEvent.cs" />
     <Compile Include="models\AuditModel.cs" />
     <Compile Include="models\AuditMultiDocumentModel.cs" />
+    <Compile Include="models\AuditServiceConfigModel.cs" />
     <Compile Include="models\AuditTransactionModel.cs" />
     <Compile Include="models\AvaFileFormModel.cs" />
     <Compile Include="models\AvailableCycleModel.cs" />
@@ -202,6 +205,7 @@
     <Compile Include="models\CertificateModel.cs" />
     <Compile Include="models\CertificateTaxCodeModel.cs" />
     <Compile Include="models\ChangeTransactionCodeModel.cs" />
+    <Compile Include="models\ClassificationDetailsModel.cs" />
     <Compile Include="models\ClassificationModel.cs" />
     <Compile Include="models\ClassificationParameterUsageMapModel.cs" />
     <Compile Include="models\CommitMultiDocumentModel.cs" />
@@ -310,12 +314,21 @@
     <Compile Include="models\IsoRegionModel.cs" />
     <Compile Include="models\ItemBulkUploadInputModel.cs" />
     <Compile Include="models\ItemBulkUploadOutputModel.cs" />
+    <Compile Include="models\ItemCatalogueInputModel.cs" />
+    <Compile Include="models\ItemCatalogueOutputModel.cs" />
     <Compile Include="models\ItemClassificationInputModel.cs" />
     <Compile Include="models\ItemClassificationOutputModel.cs" />
     <Compile Include="models\ItemModel.cs" />
     <Compile Include="models\ItemParameterModel.cs" />
+    <Compile Include="models\ItemRestrictionInputModel.cs" />
+    <Compile Include="models\ItemRestrictionOutputModel.cs" />
     <Compile Include="models\ItemSyncModel.cs" />
     <Compile Include="models\ItemTagDetailModel.cs" />
+    <Compile Include="models\ItemTaxCodeClassificationRequestInputModel.cs" />
+    <Compile Include="models\ItemTaxCodeClassificationRequestOutputModel.cs" />
+    <Compile Include="models\ItemTaxCodeClassificationRequestStatusOutputModel.cs" />
+    <Compile Include="models\ItemTaxCodeModel.cs" />
+    <Compile Include="models\ItemTaxCodeRecommendationsOutputModel.cs" />
     <Compile Include="models\ItemUploadErrorModel.cs" />
     <Compile Include="models\JurisdictionModel.cs" />
     <Compile Include="models\JurisdictionOverrideModel.cs" />
