@@ -1,12 +1,14 @@
 ﻿using Avalara.AvaTax.RestClient;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Net;
+using System.Reflection;
 
-namespace Tests.Avalara.AvaTax.RestClient.net20
+namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
     [TestFixture]
-    public class TransactionTests
+    public class HttpClientTransactionTests
     {
         public AvaTaxClient Client { get; set; }
         public string CompanyCode { get; set; }
@@ -21,10 +23,10 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         {
             try
             {
-                System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;
+                var httpClient = new System.Net.Http.HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
-                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
+                Client = new AvaTaxClient(httpClient,typeof(HttpClientTransactionTests).Name,
+                    typeof(HttpClientTransactionTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -56,7 +58,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                     title = "Owner/CEO"
                 });
 
-                // Add a delay after creating a company
+                // Add a delay
                 System.Threading.Thread.Sleep(6 * 1000);
 
                 // Assert that company setup succeeded
@@ -108,13 +110,15 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
+            var tfn = System.IO.Path.GetTempFileName();
+            Client.LogToFile(tfn);
 
             // Execute a transaction
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
-                .WithLineItem(100.0m, 1, "P0000000")
-                .WithLineItem(200m)
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
                 .WithExemptLine(50m, "NT")
                 .WithLineReference("Special Line Reference!", "Also this!")
                 .Create();
@@ -125,6 +129,9 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.True(String.Equals(lastEvent.RequestUri.ToString(), "https://sandbox-rest.avatax.com/api/v2/transactions/create", StringComparison.CurrentCultureIgnoreCase));
             Assert.AreEqual(lastEvent.Code, HttpStatusCode.Created);
 
+            // Verify that the log file was created
+            Assert.True(System.IO.File.Exists(tfn));
+
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");
             Assert.True(transaction.totalTax > 0.0m, "Transaction should have had some tax");
@@ -132,14 +139,14 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
 
             // Now commit that transaction
-            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, null, null, new CommitTransactionModel { commit = true });
+            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, null, null, new CommitTransactionModel() { commit = true });
 
             // Ensure that this transaction was committed
             Assert.NotNull(commitResult, "Should have been able to call CommitTransaction");
             Assert.True(commitResult.status == DocumentStatus.Committed, "Transaction should have been committed");
 
             // Now void the transaction
-            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, null, null, new VoidTransactionModel
+            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, null, null, new VoidTransactionModel()
             {
                 code = VoidReasonCode.DocVoided
             });
@@ -156,19 +163,6 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         }
 
         [Test]
-        public void TestError()
-        {
-            var err = Assert.Throws<AvaTaxError>(() =>
-            {
-                // This transaction has no lines - should produce an error
-                var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
-                    .Create();
-            });
-            Assert.NotNull(err);
-            Assert.AreEqual(HttpStatusCode.BadRequest, err.statusCode);
-        }
-
-        [Test]
         [Ignore("Ignore TransactionWorkflow")]
 
         public void TaxOverrideExample()
@@ -178,9 +172,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                     "TaxOverrideCustomerCode")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
-                .WithLineItem(100.0m, 1, "P0000000")
-                .WithLineItem(200m);
-
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m);
 
             var transaction = builder.Create();
 

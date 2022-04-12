@@ -2,11 +2,12 @@
 using NUnit.Framework;
 using System;
 using System.Net;
+using Newtonsoft.Json;
 
-namespace Tests.Avalara.AvaTax.RestClient.net20
+namespace Tests.Avalara.AvaTax.RestClient.netstandard
 {
     [TestFixture]
-    public class TransactionTests
+    public class HttpClientTransactionTests
     {
         public AvaTaxClient Client { get; set; }
         public string CompanyCode { get; set; }
@@ -21,10 +22,10 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         {
             try
             {
-                System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;
+                var httpClient = new System.Net.Http.HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
-                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
+                Client = new AvaTaxClient(httpClient,typeof(HttpClientTransactionTests).Assembly.FullName,
+                    typeof(HttpClientTransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -56,7 +57,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
                     title = "Owner/CEO"
                 });
 
-                // Add a delay after creating a company
+                // Add a delay after creating company
                 System.Threading.Thread.Sleep(6 * 1000);
 
                 // Assert that company setup succeeded
@@ -113,8 +114,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
-                .WithLineItem(100.0m, 1, "P0000000")
-                .WithLineItem(200m)
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
                 .WithExemptLine(50m, "NT")
                 .WithLineReference("Special Line Reference!", "Also this!")
                 .Create();
@@ -132,14 +133,14 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.True(transaction.lines[2].ref1.Contains("Reference!"), "Line3 should have had a Ref1.");
 
             // Now commit that transaction
-            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, null, null, new CommitTransactionModel { commit = true });
+            var commitResult = Client.CommitTransaction(TestCompany.companyCode, transaction.code, null, null, new CommitTransactionModel() { commit = true });
 
             // Ensure that this transaction was committed
             Assert.NotNull(commitResult, "Should have been able to call CommitTransaction");
             Assert.True(commitResult.status == DocumentStatus.Committed, "Transaction should have been committed");
 
             // Now void the transaction
-            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, null, null, new VoidTransactionModel
+            var voidResult = Client.VoidTransaction(TestCompany.companyCode, transaction.code, null, null, new VoidTransactionModel()
             {
                 code = VoidReasonCode.DocVoided
             });
@@ -169,18 +170,16 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         }
 
         [Test]
-        [Ignore("Ignore TransactionWorkflow")]
-
-        public void TaxOverrideExample()
+		[Ignore("Ignore TransactionWorkflow")]
+		public void TaxOverrideExample()
         {
             // Create base transaction.
             var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
                     "TaxOverrideCustomerCode")
                 .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
                     "98104", "US")
-                .WithLineItem(100.0m, 1, "P0000000")
-                .WithLineItem(200m);
-
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m);
 
             var transaction = builder.Create();
 
@@ -199,7 +198,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.AreEqual(overrideTransaction.totalTaxCalculated, transaction.totalTaxCalculated, "Total Tax Calculated should be the same.");
             Assert.True(overrideTransaction.totalTax < transaction.totalTax, "Total Tax should not be the same. Overridden transaction should be smaller.");
 
-            // Compare the transaction lines.
+            // Compare the transaction lines
             var overrideLine = overrideTransaction.lines[1];
             var line = transaction.lines[1];
             Assert.AreEqual(overrideLine.isItemTaxable, line.isItemTaxable);
@@ -208,6 +207,26 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
             Assert.AreEqual(1, overrideLine.tax);
             Assert.True(overrideLine.tax < line.tax);
             Assert.AreEqual(TaxOverrideType.TaxAmount, overrideLine.taxOverrideType);
+        }
+
+        [Test]
+        [Ignore("Ignore TransactionWorkflow")]
+
+        public void AuditTransactionTest()
+        {
+            // Execute a transaction
+            var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
+                .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!");
+              
+            var transaction = builder.Create();
+
+
+            var auditResponse = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
         }
     }
 }

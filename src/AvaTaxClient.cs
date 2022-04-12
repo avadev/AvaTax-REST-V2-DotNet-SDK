@@ -26,7 +26,12 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
         private UserConfiguration _userConfiguration = new UserConfiguration();
+#if PORTABLE
+        private static HttpClient _httpClientStatic;
 
+        private readonly HttpClient _httpClient;
+        private HttpClient httpClient => _httpClient ?? _httpClientStatic;
+#endif
         /// <summary>
         /// Tracks the amount of time spent on the most recent API call
         /// </summary>
@@ -73,6 +78,12 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
+#if PORTABLE
+            if (_httpClientStatic == null)
+            {
+                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            }
+#endif
 
             // Setup the URI
             switch (environment) {
@@ -99,8 +110,81 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
+#if PORTABLE
+            if (_httpClientStatic == null)
+            {
+                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            }
+#endif
             _envUri = customEnvironment;
         }
+
+#if PORTABLE
+        /// <summary>
+        /// Generate a client that connects to one of the standard AvaTax servers
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="appName"></param>
+        /// <param name="appVersion"></param>
+        /// <param name="machineName"></param>
+        /// <param name="environment"></param>
+        /// <param name="userConfiguration">User configuration</param>
+        public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName, AvaTaxEnvironment environment, UserConfiguration userConfiguration = null)
+        {
+            ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
+            // Redo the client identifier
+            WithClientIdentifier(appName, appVersion, machineName);
+            if (userConfiguration != null)
+            {
+                _userConfiguration = userConfiguration;
+            }
+            _httpClient = httpClient;
+#if PORTABLE
+            if (_httpClientStatic == null)
+            {
+                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            }
+#endif
+
+            // Setup the URI
+            switch (environment)
+            {
+                case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
+                case AvaTaxEnvironment.Production: _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL); break;
+                default: throw new Exception("Unrecognized Environment");
+            }
+        }
+
+        /// <summary>
+        /// Generate a client that connects to a custom server
+        /// </summary>
+        /// <param name="httpClient"></param>
+        /// <param name="appName"></param>
+        /// <param name="appVersion"></param>
+        /// <param name="machineName"></param>
+        /// <param name="customEnvironment"></param>
+        /// <param name="userConfiguration">User configuration</param>
+        public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName, Uri customEnvironment, UserConfiguration userConfiguration = null)
+        {
+            _httpClient = httpClient;
+            ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
+            // Redo the client identifier
+            WithClientIdentifier(appName, appVersion, machineName);
+            if (userConfiguration != null)
+            {
+                _userConfiguration = userConfiguration;
+            }
+#if PORTABLE
+            if (_httpClientStatic == null)
+            {
+                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            }
+#endif
+            _envUri = customEnvironment;
+        }
+
+#endif
+
         #endregion
 
         #region Security
@@ -441,12 +525,8 @@ namespace Avalara.AvaTax.RestClient
                 // Send
                 cd.FinishSetup();
 
-                HttpResponseMessage response;
-                using (var client = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) })
-                {
-                    response = await client.SendAsync(request).ConfigureAwait(false);
-                }
-
+                HttpResponseMessage response= await httpClient.SendAsync(request).ConfigureAwait(false);
+               
                 return response;
             }
         }
