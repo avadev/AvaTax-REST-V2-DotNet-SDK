@@ -64,6 +64,7 @@
     <Compile Include="FreeTaxRatesTest.cs" />
     <Compile Include="NexusTests.cs" />
     <Compile Include="TaxContentOfflineTest.cs" />
+    <Compile Include="HttpClientTransactionTests.cs" />
     <Compile Include="TransactionTests.cs" />
   </ItemGroup>
   <ItemGroup>

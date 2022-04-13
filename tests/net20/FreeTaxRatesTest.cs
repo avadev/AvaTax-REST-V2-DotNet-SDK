@@ -20,6 +20,7 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         public void Setup()
         {
             try {
+                System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;
                 // Create a client and set up authentication
                 _client = new AvaTaxClient(typeof(FreeTaxRatesTest).Assembly.FullName,
                     typeof(FreeTaxRatesTest).Assembly.GetName().Version.ToString(),
