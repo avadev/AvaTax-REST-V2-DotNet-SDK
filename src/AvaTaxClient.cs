@@ -27,10 +27,7 @@ namespace Avalara.AvaTax.RestClient
         private Uri _envUri;
         private UserConfiguration _userConfiguration = new UserConfiguration();
 #if PORTABLE
-        private static HttpClient _httpClientStatic;
-
-        private readonly HttpClient _httpClient;
-        private HttpClient httpClient => _httpClient ?? _httpClientStatic;
+        private HttpClient httpClient;
 #endif
         /// <summary>
         /// Tracks the amount of time spent on the most recent API call
@@ -78,11 +75,8 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
-#if PORTABLE
-            if (_httpClientStatic == null)
-            {
-                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
-            }
+#if PORTABLE         
+             this.httpClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
 #endif
 
             // Setup the URI
@@ -111,10 +105,7 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 #if PORTABLE
-            if (_httpClientStatic == null)
-            {
-                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
-            }
+            this.httpClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
 #endif
             _envUri = customEnvironment;
         }
@@ -138,13 +129,8 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
-            _httpClient = httpClient;
-#if PORTABLE
-            if (_httpClientStatic == null)
-            {
-                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
-            }
-#endif
+
+            this.httpClient = httpClient ?? new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
 
             // Setup the URI
             switch (environment)
@@ -166,7 +152,6 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="userConfiguration">User configuration</param>
         public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName, Uri customEnvironment, UserConfiguration userConfiguration = null)
         {
-            _httpClient = httpClient;
             ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
@@ -174,12 +159,9 @@ namespace Avalara.AvaTax.RestClient
             {
                 _userConfiguration = userConfiguration;
             }
-#if PORTABLE
-            if (_httpClientStatic == null)
-            {
-                _httpClientStatic = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
-            }
-#endif
+
+            this.httpClient = httpClient ?? new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+
             _envUri = customEnvironment;
         }
 

@@ -105,8 +105,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
         [Test]
-		[Ignore("Ignore TransactionWorkflow")]
-        public void TransactionWorkflow()
+		public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
             var tfn = System.IO.Path.GetTempFileName();
@@ -162,8 +161,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         }
 
         [Test]
-        [Ignore("Ignore TransactionWorkflow")]
-
+        
         public void TaxOverrideExample()
         {
             // Create base transaction.
