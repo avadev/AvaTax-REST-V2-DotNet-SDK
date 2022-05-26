@@ -1493,6 +1493,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        InvalidSystemCode = 1735,
+
+        /// <summary>
+        /// 
+        /// </summary>
         UnsupportedFileFormat = 1800,
 
         /// <summary>

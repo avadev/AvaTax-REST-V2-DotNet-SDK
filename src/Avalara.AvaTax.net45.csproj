@@ -133,6 +133,7 @@
     <Compile Include="enums\ReportDateFilter.cs" />
     <Compile Include="enums\ReportDocType.cs" />
     <Compile Include="enums\ReportFormat.cs" />
+    <Compile Include="enums\ReportSource.cs" />
     <Compile Include="enums\ResolutionQuality.cs" />
     <Compile Include="enums\RoundingLevelId.cs" />
     <Compile Include="enums\RoundingTypeId.cs" />
@@ -325,6 +326,8 @@
     <Compile Include="models\ItemClassificationOutputModel.cs" />
     <Compile Include="models\ItemModel.cs" />
     <Compile Include="models\ItemParameterModel.cs" />
+    <Compile Include="models\ItemPremiumClassificationInputModel.cs" />
+    <Compile Include="models\ItemPremiumClassificationOutputModel.cs" />
     <Compile Include="models\ItemRestrictionInputModel.cs" />
     <Compile Include="models\ItemRestrictionOutputModel.cs" />
     <Compile Include="models\ItemSyncModel.cs" />

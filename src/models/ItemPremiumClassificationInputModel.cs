@@ -12,25 +12,25 @@ using Newtonsoft.Json;
  *
  * @author Genevieve Conty
  * @author Greg Hester
- * Swagger name: AvaTaxBeverageClient
+ * Swagger name: AvaTaxClient
  */
 
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The Result of a call to the /ageVerification/verify endpoint.
+    /// Represents a premium classification associated with an item's HS code for a system code.
     /// </summary>
-    public class AgeVerifyResult
+    public class ItemPremiumClassificationInputModel
     {
         /// <summary>
-        /// Describes whether the individual meets or exceeds the minimum legal drinking age.
+        /// The HsCode for which this premium classification is being created.
         /// </summary>
-        public Boolean? isOfAge { get; set; }
+        public String hsCode { get; set; }
 
         /// <summary>
-        /// A list of failure codes describing why a *false* age determination was made.
+        /// Justification why this HsCode is attached to this item.
         /// </summary>
-        public List<AgeVerifyFailureCode> failureCodes { get; set; }
+        public String justification { get; set; }
 
 
         /// <summary>

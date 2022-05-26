@@ -18,54 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents an item in your company's product catalog.
+    /// Represents a Premium Classification output model associated with an item's SystemCode..
     /// </summary>
-    public class ItemCatalogueInputModel
+    public class ItemPremiumClassificationOutputModel
     {
         /// <summary>
-        /// A unique code representing this item.
+        /// ItemPremiumClassificationDetailId
+        /// </summary>
+        public String id { get; set; }
+
+        /// <summary>
+        /// Item associated with this premium classification.
         /// </summary>
         public String itemCode { get; set; }
 
         /// <summary>
-        /// A friendly description of this item in your product catalog.
+        /// CompanyId with which the Item is associated.
         /// </summary>
-        public String description { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
-        /// A summary for selection of the tax code.
+        /// The HS code associated with this item's premium classification.
         /// </summary>
-        public String summary { get; set; }
+        public String hsCode { get; set; }
 
         /// <summary>
-        /// The tax code of the item.
+        /// SystemCode associated with this premium classificaitons.
         /// </summary>
-        public String taxCode { get; set; }
+        public String systemCode { get; set; }
 
         /// <summary>
-        /// The universal product code of the item.
+        /// Justification why this HsCode is attached to this item.
         /// </summary>
-        public String upc { get; set; }
+        public String justification { get; set; }
 
         /// <summary>
-        /// A way to group similar items.
+        /// The date when this record was created.
         /// </summary>
-        public String itemGroup { get; set; }
+        public DateTime? createdDate { get; set; }
 
         /// <summary>
-        /// A path to the category where item is included.
+        /// The user who created the record.
         /// </summary>
-        public String category { get; set; }
-
-        /// <summary>
-        /// The source of creation of this item.
-        /// </summary>
-        public String source { get; set; }
-
-        /// <summary>
-        /// Additional key-description of the product.
-        /// </summary>
-        public object properties { get; set; }
+        public Int32? createdUserId { get; set; }
 
 
         /// <summary>
