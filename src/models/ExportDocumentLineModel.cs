@@ -133,6 +133,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String taxSubType { get; set; }
 
+        /// <summary>
+        /// Defines report source.
+        /// </summary>
+        public ReportSource? reportSource { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

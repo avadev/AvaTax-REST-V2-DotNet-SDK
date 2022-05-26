@@ -37,6 +37,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? notClassified { get; set; }
 
+        /// <summary>
+        /// The number of items which are failed because of some error
+        /// </summary>
+        public Int32? failed { get; set; }
+
+        /// <summary>
+        /// The number of items which are not found as they may be deleted
+        /// </summary>
+        public Int32? notFound { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -105,5 +105,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         ApprovedToFileOnBehalf = 16,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        FiledByCustomer = 17,
+
     }
 }

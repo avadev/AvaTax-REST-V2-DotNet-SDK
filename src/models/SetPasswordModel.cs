@@ -27,6 +27,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String newPassword { get; set; }
 
+        /// <summary>
+        /// SuppressResetPasswordEmail
+        /// </summary>
+        public Boolean? suppressResetPasswordEmail { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

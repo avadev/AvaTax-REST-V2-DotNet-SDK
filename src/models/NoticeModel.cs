@@ -274,6 +274,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? modifiedUserId { get; set; }
 
+        /// <summary>
+        /// The registration id of the notice
+        /// </summary>
+        public String registrationId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
