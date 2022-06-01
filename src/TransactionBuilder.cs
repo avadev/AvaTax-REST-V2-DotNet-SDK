@@ -349,8 +349,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="reason">Reason of the Tax Override.</param>
         /// <param name="taxAmount">Amount of tax to apply. Required for a TaxAmount Override.</param>
         /// <param name="taxDate">Date of a Tax Override. Required for a TaxDate Override.</param>
+        /// <param name="taxAmountByTaxTypeList">Date of a Tax Override. Required for a TaxDate Override.</param>
         /// <returns></returns>
-        public TransactionBuilder WithLineTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null)
+        public TransactionBuilder WithLineTaxOverride(TaxOverrideType type, string reason, decimal taxAmount = 0, DateTime? taxDate = null, List<TransactionLineTaxAmountByTaxTypeModel> taxAmountByTaxTypeList = null)
         {
             // Address the DateOverride constraint.
             if (type.Equals(TaxOverrideType.TaxDate) && taxDate == null)
@@ -364,7 +365,8 @@ namespace Avalara.AvaTax.RestClient
                 type = type,
                 reason = reason,
                 taxAmount = taxAmount,
-                taxDate = taxDate
+                taxDate = taxDate,
+                taxAmountByTaxTypes = taxAmountByTaxTypeList
             };
 
             // Continue building
