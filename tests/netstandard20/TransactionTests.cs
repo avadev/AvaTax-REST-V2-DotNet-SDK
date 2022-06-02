@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 
@@ -105,7 +106,6 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
         [Test]
-		[Ignore("Ignore TransactionWorkflow")]
         public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
@@ -160,10 +160,8 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         {
             lastEvent = e as AvaTaxCallEventArgs;
         }
-
+        [Ignore("Ignore Override")]
         [Test]
-        [Ignore("Ignore TransactionWorkflow")]
-
         public void TaxOverrideExample()
         {
             // Create base transaction.
@@ -179,10 +177,18 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
             // Ensure this transaction was created.
             Assert.NotNull(transaction, "Transaction should have been created");
 
+            var taxOverrideList = new List<TransactionLineTaxAmountByTaxTypeModel>();
+            var item = new TransactionLineTaxAmountByTaxTypeModel();
+            item.taxTypeId = "123";
+            item.taxAmount = 10;
+            taxOverrideList.Add(item);
             // Add Line-level TaxOverride.
             var overrideTransaction = builder
                 .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Tax Override Reason", 1)
+                .WithLine(300m, 1)
+                .WithLineTaxOverride(TaxOverrideType.TaxAmountByTaxType, "Another reason", 10, null, taxOverrideList)
                 .Create();
+
 
             // Ensure this transaction was created.
             Assert.NotNull(overrideTransaction, "Transaction should have been created");
