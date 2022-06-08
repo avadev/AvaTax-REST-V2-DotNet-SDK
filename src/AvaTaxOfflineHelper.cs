@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+#if !NET20
+using System.Collections.Concurrent;
+#endif
 using System.IO;
 
 namespace Avalara.AvaTax.RestClient
@@ -27,7 +30,12 @@ namespace Avalara.AvaTax.RestClient
         /// is the ZIP code for which you wish to retrieve a TaxRateModel, if
         /// it has been downloaded.
         /// </summary>
+#if NET20
         private static readonly Dictionary<string, TaxRateModel> _ratesByZip = new Dictionary<string, TaxRateModel>();
+#else
+        private static readonly ConcurrentDictionary<string, TaxRateModel> _ratesByZip = new ConcurrentDictionary<string, TaxRateModel>();
+#endif
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AvaTaxOfflineHelper"/> class.
@@ -90,7 +98,11 @@ namespace Avalara.AvaTax.RestClient
                 if (_ratesByZip.ContainsKey(zip)) {
                     zipRate = _ratesByZip[zip];
                 } else if (VerifyLocalZipRateAvailable(zip, path)) {
+#if NET20
                     _ratesByZip.Add(zip, ReadZipRateFile(zip, path));
+#else
+                    _ratesByZip.TryAdd(zip, ReadZipRateFile(zip, path));
+#endif
                     zipRate = _ratesByZip[zip];
                 }
 
