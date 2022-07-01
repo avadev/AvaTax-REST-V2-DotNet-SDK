@@ -33,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         public Int64? filingCalendarId { get; set; }
 
         /// <summary>
+        /// The registration ID from the return's filing calendar.
+        /// </summary>
+        public String registrationId { get; set; }
+
+        /// <summary>
         /// The current status of the filing return.
         /// </summary>
         public FilingStatusId? status { get; set; }

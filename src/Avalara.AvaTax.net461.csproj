@@ -167,6 +167,8 @@
     <Compile Include="models\AccountLicenseKeyModel.cs" />
     <Compile Include="models\AccountMigrationStatusModel.cs" />
     <Compile Include="models\AccountModel.cs" />
+    <Compile Include="models\AccountTsaAccessDurationModel.cs" />
+    <Compile Include="models\AccountTsaAccessModel.cs" />
     <Compile Include="models\ACHEntryDetailModel.cs" />
     <Compile Include="models\ActivateAccountModel.cs" />
     <Compile Include="models\AddressesModel.cs" />
