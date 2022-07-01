@@ -38,6 +38,11 @@ namespace Avalara.AvaTax.RestClient
         public Int64? filingCalendarId { get; set; }
 
         /// <summary>
+        /// The registration ID from the return's filing calendar.
+        /// </summary>
+        public String registrationId { get; set; }
+
+        /// <summary>
         /// The resourceFileId of the return. Will be null if not available.
         /// </summary>
         public Int64? resourceFileId { get; set; }
