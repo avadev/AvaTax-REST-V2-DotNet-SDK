@@ -6,30 +6,67 @@
 		<SignAssembly>true</SignAssembly>
 		<AssemblyOriginatorKeyFile>Avalara.AvaTax.RestClient.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net20'">
-		<DefineConstants>NETFRAMEWORK</DefineConstants>
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net20' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;DEBUG;NET20</DefineConstants>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net20' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;RELEASE;NET20</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net45'">
-		<DefineConstants>NETFRAMEWORK;PORTABLE</DefineConstants>
+	
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net45' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;DEBUG;PORTABLE;NET45</DefineConstants>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net45' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;RELEASE;PORTABLE;NET45</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net461'">
-		<DefineConstants>NETFRAMEWORK;PORTABLE</DefineConstants>
+	
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net461' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;DEBUG;PORTABLE;NET461</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
-		<DefineConstants>NETFRAMEWORK;PORTABLE</DefineConstants>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net461' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;RELEASE;PORTABLE;NET461</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-		<DefineConstants>NETSTANDARD;PORTABLE</DefineConstants>
+	
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net472' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;DEBUG;PORTABLE;NET472</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net472' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DefineConstants>NETFRAMEWORK;TRACE;RELEASE;PORTABLE;NET472</DefineConstants>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<DefineConstants>TRACE;DEBUG:PORTABLE;NETSTANDARD1_6</DefineConstants>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+		<DefineConstants>TRACE;RELEASE;PORTABLE;NETSTANDARD1_6</DefineConstants>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+	
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-		<DefineConstants>NETSTANDARD;PORTABLE</DefineConstants>
+		<DefineConstants>TRACE;DEBUG;PORTABLE;NETSTANDARD2_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<DefineConstants>TRACE;RELEASE;PORTABLE;NETSTANDARD2_0</DefineConstants>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
+
 
 	<ItemGroup>
 		<None Remove="**" />
