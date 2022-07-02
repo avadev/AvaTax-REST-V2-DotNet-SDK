@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Net;
 
-namespace Tests.Avalara.AvaTax.RestClient.net20
+namespace Avalara.AvaTax.RestClient.Test.net20
 {
     [TestFixture]
     class CertificateTests
@@ -21,6 +21,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         [SetUp]
         public void Setup()
         {
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
             try {
                 // Create a client and set up authentication
                 Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,

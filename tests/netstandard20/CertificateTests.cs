@@ -6,7 +6,7 @@ using System.IO;
 using System.Net;
 using System.Reflection;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.netstandard20
 {
     [TestFixture]
     public class CertificateTests

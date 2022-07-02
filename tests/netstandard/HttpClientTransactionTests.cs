@@ -5,7 +5,7 @@ using System;
 using System.Net;
 using System.Reflection;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.netstandard
 {
     [TestFixture]
     public class HttpClientTransactionTests

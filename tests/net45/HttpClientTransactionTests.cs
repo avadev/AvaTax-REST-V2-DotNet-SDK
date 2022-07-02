@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using Newtonsoft.Json;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.net45
 {
     [TestFixture]
     public class HttpClientTransactionTests
@@ -20,6 +20,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [SetUp]
         public void Setup()
         {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             try
             {
                 var httpClient = new System.Net.Http.HttpClient() { Timeout = TimeSpan.FromMinutes(20) };

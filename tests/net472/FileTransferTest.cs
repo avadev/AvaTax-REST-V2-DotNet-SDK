@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Avalara.AvaTax.RestClient.Test.net461
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
     [TestFixture]
     public class FileTransferTest

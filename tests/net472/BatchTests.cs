@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Avalara.AvaTax.RestClient.Test.net461
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
     [TestFixture]
     public class BatchTests

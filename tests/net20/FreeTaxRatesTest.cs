@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Tests.Avalara.AvaTax.RestClient.net20
+namespace Avalara.AvaTax.RestClient.Test.net20
 {
     [TestFixture]
     class FreeTaxRatesTest
@@ -19,8 +19,9 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         [SetUp]
         public void Setup()
         {
-            try {
-                System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;
+            try
+            {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                 // Create a client and set up authentication
                 _client = new AvaTaxClient(typeof(FreeTaxRatesTest).Assembly.FullName,
                     typeof(FreeTaxRatesTest).Assembly.GetName().Version.ToString(),

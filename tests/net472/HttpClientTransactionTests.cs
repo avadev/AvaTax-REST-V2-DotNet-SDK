@@ -4,10 +4,10 @@ using System;
 using System.Net;
 using Newtonsoft.Json;
 
-namespace Avalara.AvaTax.RestClient.Test.net461
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
     [TestFixture]
-    public class TransactionTests
+    public class HttpClientTransactionTests
     {
         public AvaTaxClient Client { get; set; }
         public string CompanyCode { get; set; }
@@ -22,9 +22,10 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         {
             try
             {
+                var httpClient = new System.Net.Http.HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
-                    typeof(TransactionTests).Assembly.GetName().Version.ToString(),
+                Client = new AvaTaxClient(httpClient, typeof(HttpClientTransactionTests).Assembly.FullName,
+                    typeof(HttpClientTransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -104,8 +105,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
         [Test]
-		[Ignore("Ignore TransactionWorkflow")]
-        public void TransactionWorkflow()
+		public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
 
@@ -169,7 +169,6 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         }
 
         [Test]
-		[Ignore("Ignore TransactionWorkflow")]
 		public void TaxOverrideExample()
         {
             // Create base transaction.
@@ -209,8 +208,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         }
 
         [Test]
-        [Ignore("Ignore TransactionWorkflow")]
-
+        
         public void AuditTransactionTest()
         {
             // Execute a transaction
