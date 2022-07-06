@@ -26,10 +26,13 @@ jobs:
     - name: Navigate to Workspace
       run: cd $GITHUB_WORKSPACE    
     - name: Create Assembly Signing Key
-      run: echo $ASSEMBLY_SIGNING_KEY | base64 -d > Avalara.AvaTax.RestClient.snk
+      run: | 
+        echo $ASSEMBLY_SIGNING_KEY | base64 -d > Avalara.AvaTax.RestClient.snk
+        cat Avalara.AvaTax.RestClient.snk
       working-directory: src
       env:
         ASSEMBLY_SIGNING_KEY: ${{ secrets.ASSEMBLY_SIGNING_KEY }}
+    - cat $GITHUB_WORKSPACE/src/Avalara.AvaTax.RestClient.snk
     - name: Restore Tests
       run: dotnet restore Avalara.AvaTax.RestClient.Test.csproj
       working-directory: tests
