@@ -32,7 +32,6 @@ jobs:
       working-directory: src
       env:
         ASSEMBLY_SIGNING_KEY: ${{ secrets.ASSEMBLY_SIGNING_KEY }}
-    - cat $GITHUB_WORKSPACE/src/Avalara.AvaTax.RestClient.snk
     - name: Restore Tests
       run: dotnet restore Avalara.AvaTax.RestClient.Test.csproj
       working-directory: tests
