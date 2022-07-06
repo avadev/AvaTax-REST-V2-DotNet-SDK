@@ -5,7 +5,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+  
+  #workflow_dispatch:
+    
 
 jobs:
   build:
@@ -13,11 +15,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      uses: actions/checkout@v3
     - name: Set env
       run: |
         echo "SANDBOX_USERNAME=${{ secrets.SANDBOX_USERNAME }}" >> $GITHUB_ENV
         echo "SANDBOX_PASSWORD=${{ secrets.SANDBOX_PASSWORD }}" >> $GITHUB_ENV
+    - name: Checkout
+      uses: actions/checkout@v3
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
     - name: Navigate to Workspace
