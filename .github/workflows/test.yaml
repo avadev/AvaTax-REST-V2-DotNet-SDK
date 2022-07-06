@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -22,14 +22,10 @@ jobs:
         echo "SANDBOX_PASSWORD=${{ secrets.SANDBOX_PASSWORD }}" >> $GITHUB_ENV
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: | 
-          2.x.x
-          4.x.x
-          2.2.x
-          3.1.x
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+    - name: Navigate to Workspace
+      run: cd $GITHUB_WORKSPACE    
     - name: Create Assembly Signing Key
       run: echo $ASSEMBLY_SIGNING_KEY | base64 -d > Avalara.AvaTax.RestClient.snk
       working-directory: src
