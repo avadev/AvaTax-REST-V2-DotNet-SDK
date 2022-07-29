@@ -121,6 +121,8 @@
     <Compile Include="enums\PasswordStatusId.cs" />
     <Compile Include="enums\PaymentAccountTypeId.cs" />
     <Compile Include="enums\PaymentType.cs" />
+    <Compile Include="enums\POABusinessUnit.cs" />
+    <Compile Include="enums\POASubscriptionType.cs" />
     <Compile Include="enums\PointOfSaleFileType.cs" />
     <Compile Include="enums\PointOfSalePartnerId.cs" />
     <Compile Include="enums\RateType.cs" />
