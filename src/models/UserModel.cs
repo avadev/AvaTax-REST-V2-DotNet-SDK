@@ -93,6 +93,11 @@ namespace Avalara.AvaTax.RestClient
         public String subjectId { get; set; }
 
         /// <summary>
+        /// The date/time when this record was migrated to Avalara Identity modified.
+        /// </summary>
+        public String migratedDate { get; set; }
+
+        /// <summary>
         /// Suppress new user email
         /// </summary>
         public Boolean? suppressNewUserEmail { get; set; }
