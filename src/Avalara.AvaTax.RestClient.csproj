@@ -48,7 +48,7 @@
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.6' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-		<DefineConstants>TRACE;DEBUG:PORTABLE;NETSTANDARD1_6</DefineConstants>
+		<DefineConstants>TRACE;DEBUG;PORTABLE;NETSTANDARD1_6</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
