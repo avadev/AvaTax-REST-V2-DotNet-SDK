@@ -1,4 +1,4 @@
-name: Build and Test
+name: DotNet Build and Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
   
 jobs:
-  build:
+  test:
     runs-on: windows-latest
     steps:
     - name: Checkout
@@ -39,4 +39,7 @@ jobs:
       working-directory: tests
     - name: Run Tests
       run: dotnet test Avalara.AvaTax.RestClient.Test.csproj --no-build --configuration Release
+      env:
+        SANDBOX_USERNAME: ${{ secrets.SANDBOX_USERNAME }}
+        SANDBOX_PASSWORD: ${{ secrets.SANDBOX_PASSWORD }}
       working-directory: tests
