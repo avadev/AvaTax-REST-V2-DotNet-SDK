@@ -6,34 +6,38 @@ on:
   pull_request:
     branches: [ master ]
   
-  #workflow_dispatch:
-    
-
+#workflow_dispatch:
 jobs:
-  build:
-
+  test:
     runs-on: windows-latest
-
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
     - name: Set env
       run: |
         echo "SANDBOX_USERNAME=${{ secrets.SANDBOX_USERNAME }}" >> $GITHUB_ENV
         echo "SANDBOX_PASSWORD=${{ secrets.SANDBOX_PASSWORD }}" >> $GITHUB_ENV
-    - name: Checkout
-      uses: actions/checkout@v3
+    - name: Setup .NET 
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: | 
+          2.x.x
+          2.2.x
+          3.1.x
+          5.0.x
+          6.0.x
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
-    - name: Create Assembly Signing Key
-      run: | 
-        echo $ASSEMBLY_SIGNING_KEY | base64 -d > src/Avalara.AvaTax.RestClient.snk
-      env:
-        ASSEMBLY_SIGNING_KEY: ${{ secrets.ASSEMBLY_SIGNING_KEY }}
     - name: Restore Tests
       run: dotnet restore Avalara.AvaTax.RestClient.Test.csproj
       working-directory: tests
+    - name: Create Assembly Signing Key
+      run: |
+        echo "${{ secrets.ASSEMBLY_SIGNING_KEY }}" > data.b64 && certutil -decode data.b64 Avalara.AvaTax.RestClient.snk
+      working-directory: src
     - name: Build Tests
       run: dotnet build Avalara.AvaTax.RestClient.Test.csproj --no-restore --configuration Release
       working-directory: tests
     - name: Run Tests
-      run: dotnet test Avalara.AvaTax.RestClient.Test.csproj --no-build --verbosity diag
+      run: dotnet test Avalara.AvaTax.RestClient.Test.csproj --no-build --configuration Release
       working-directory: tests
