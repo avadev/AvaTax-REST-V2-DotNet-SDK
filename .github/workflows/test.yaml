@@ -1,19 +1,14 @@
-name: DotNet- Build and Test
+name: Build and Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, AvaTax-REST-V2-DotNet-SDK-Refactoring ]
   pull_request:
     branches: [ master ]
   
-  #workflow_dispatch:
-    
-
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
