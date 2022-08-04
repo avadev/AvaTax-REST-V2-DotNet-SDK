@@ -1,8 +1,8 @@
-name: DotNet Build and Test
+name: DotNet-RestAPI V2 Build & Test
 
 on:
   push:
-    branches: [ master, AvaTax-REST-V2-DotNet-SDK-Refactoring ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
   
