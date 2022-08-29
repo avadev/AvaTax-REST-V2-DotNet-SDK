@@ -130,7 +130,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// ISO 3166 code identifying the region within the country.
         /// Two and three character ISO 3166 region codes.
-        ///  
+        /// This is a required field if the country is US or CA. For other countries, this is an optional field.
         /// For a full list of all supported codes, please see the Definitions API `ListRegions`.
         /// </summary>
         public String region { get; set; }
