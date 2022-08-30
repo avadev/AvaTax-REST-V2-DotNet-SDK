@@ -21,12 +21,12 @@ namespace Avalara.AvaTax.RestClient
     public enum UserDefinedFieldType
     {
         /// <summary>
-        /// 
+        /// Represents document level user defined type.
         /// </summary>
         Document = 1,
 
         /// <summary>
-        /// 
+        /// Represents line level user defined type.
         /// </summary>
         Line = 2,
 

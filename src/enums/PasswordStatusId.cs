@@ -16,22 +16,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// PasswordStatusId
     /// </summary>
     public enum PasswordStatusId
     {
         /// <summary>
-        /// 
+        /// UserCannotChange
         /// </summary>
         UserCannotChange = 0,
 
         /// <summary>
-        /// 
+        /// UserCanChange
         /// </summary>
         UserCanChange = 1,
 
         /// <summary>
-        /// 
+        /// UserMustChange
         /// </summary>
         UserMustChange = 2,
 

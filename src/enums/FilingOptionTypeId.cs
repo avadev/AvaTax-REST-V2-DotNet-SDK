@@ -16,22 +16,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// A list of possible AvaFile filing option types.
     /// </summary>
     public enum FilingOptionTypeId
     {
         /// <summary>
-        /// 
+        /// Denotes the tax return is being filed on paper.
         /// </summary>
         Paper = 0,
 
         /// <summary>
-        /// 
+        /// Denotes the form can be efiled optionally.
         /// </summary>
         OptionalEfile = 1,
 
         /// <summary>
-        /// 
+        /// Denotes the form is being filed via efile.
         /// </summary>
         MandatoryEfile = 2,
 

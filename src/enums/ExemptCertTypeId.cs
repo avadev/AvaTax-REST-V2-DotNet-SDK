@@ -16,17 +16,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Exempt Cert type
     /// </summary>
     public enum ExemptCertTypeId
     {
         /// <summary>
-        /// 
+        /// Blanked certificate
         /// </summary>
         Blanket = 0,
 
         /// <summary>
-        /// 
+        /// Single use
         /// </summary>
         SingleUse = 1,
 

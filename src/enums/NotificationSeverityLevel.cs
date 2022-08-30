@@ -16,27 +16,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Severity level of a notification.
     /// </summary>
     public enum NotificationSeverityLevel
     {
         /// <summary>
-        /// 
+        /// Low priority notification, Default.
         /// </summary>
         Neutral = 0,
 
         /// <summary>
-        /// 
+        /// Medium priority notification.
         /// </summary>
         Advisory = 1,
 
         /// <summary>
-        /// 
+        /// High priority notification.
         /// </summary>
         Blocking = 2,
 
         /// <summary>
-        /// 
+        /// A completed notification
         /// </summary>
         Complete = -1,
 

@@ -16,17 +16,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Liability Type
     /// </summary>
     public enum LiabilityType
     {
         /// <summary>
-        /// 
+        /// Seller
         /// </summary>
         Seller = 0,
 
         /// <summary>
-        /// 
+        /// BuyersAgent
         /// </summary>
         BuyersAgent = 1,
 

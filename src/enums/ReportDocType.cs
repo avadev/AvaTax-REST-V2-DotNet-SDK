@@ -16,17 +16,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// The output DocumentType for a report
     /// </summary>
     public enum ReportDocType
     {
         /// <summary>
-        /// 
+        /// Output all ConsumerUse tax transactions in the report
         /// </summary>
         ConsumerUse = 67,
 
         /// <summary>
-        /// 
+        /// Output all Sales tax transactions in the report
         /// </summary>
         Sales = 83,
 

@@ -16,27 +16,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Filing Frequency types
     /// </summary>
     public enum NoticePriorityId
     {
         /// <summary>
-        /// 
+        /// Immediate Attention Required
         /// </summary>
         ImmediateAttentionRequired = 1,
 
         /// <summary>
-        /// 
+        /// High
         /// </summary>
         High = 2,
 
         /// <summary>
-        /// 
+        /// Normal
         /// </summary>
         Normal = 3,
 
         /// <summary>
-        /// 
+        /// Low
         /// </summary>
         Low = 4,
 

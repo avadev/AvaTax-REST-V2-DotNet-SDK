@@ -21,22 +21,22 @@ namespace Avalara.AvaTax.RestClient
     public enum UserDefinedFieldDataType
     {
         /// <summary>
-        /// 
+        /// Represents String dataType
         /// </summary>
         String = 0,
 
         /// <summary>
-        /// 
+        /// Represents Number dataType
         /// </summary>
         Number = 1,
 
         /// <summary>
-        /// 
+        /// Represents Date dataType
         /// </summary>
         Date = 2,
 
         /// <summary>
-        /// 
+        /// Represents Boolean dataType
         /// </summary>
         Boolean = 3,
 

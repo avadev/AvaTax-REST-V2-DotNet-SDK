@@ -16,22 +16,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Indicates what level of auditing information is available for a transaction
     /// </summary>
     public enum ApiCallStatus
     {
         /// <summary>
-        /// 
+        /// If the original api call is availabe on S3
         /// </summary>
         OriginalApiCallAvailable = 0,
 
         /// <summary>
-        /// 
+        /// if the original api call is not available, reconstructed api call should always be available
         /// </summary>
         ReconstructedApiCallAvailable = 1,
 
         /// <summary>
-        /// 
+        /// Any other api call status
         /// </summary>
         Any = -1,
 

@@ -16,22 +16,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Status of an Avalara account
     /// </summary>
     public enum AccountTypeId
     {
         /// <summary>
-        /// 
+        /// Regular AvaTax account.
         /// </summary>
         Regular = 1,
 
         /// <summary>
-        /// 
+        /// Firm account.
         /// </summary>
         Firm = 2,
 
         /// <summary>
-        /// 
+        /// Client account created by firm.
         /// </summary>
         FirmClient = 3,
 

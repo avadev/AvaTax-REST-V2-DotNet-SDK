@@ -16,7 +16,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents the different types of DeemedSeller for AVT Marketplace client.
     /// </summary>
     public enum DeemedSellerType
     {
