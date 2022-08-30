@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Tests.Avalara.AvaTax.RestClient.net45
+namespace Avalara.AvaTax.RestClient.Test.net461
 {
     [TestFixture]
     public class FreeTaxRatesTest

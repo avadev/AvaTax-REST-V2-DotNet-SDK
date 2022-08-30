@@ -6,7 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 
-namespace Tests.Avalara.AvaTax.netstandard11
+namespace Avalara.AvaTax.RestClient.Test.netstandard
 {
     public class TestBase
     {

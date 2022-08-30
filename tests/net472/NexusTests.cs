@@ -2,20 +2,15 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Avalara.AvaTax.RestClient.Test.net461
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
     [TestFixture]
-    public class FileTransferTest
+    public class NexusTests
     {
         public AvaTaxClient Client { get; set; }
-        public string DefaultCompanyCode { get; set; }
-        public int DefaultCompanyId { get; set; }
+        public string CompanyCode { get; set; }
         public CompanyModel TestCompany { get; set; }
 
         #region Setup / TearDown
@@ -25,8 +20,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         [SetUp]
         public void Setup()
         {
-            try
-            {
+            try {
                 // Create a client and set up authentication
                 Client = new AvaTaxClient(typeof(TransactionTests).Assembly.FullName,
                     typeof(TransactionTests).Assembly.GetName().Version.ToString(),
@@ -40,11 +34,6 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                 // Assert that ping succeeded
                 Assert.NotNull(pingResult, "Should be able to call Ping");
                 Assert.True(pingResult.authenticated, "Environment variables should provide correct authentication");
-
-                //Get the default company.
-                var defaultCompanyModel = Client.QueryCompanies(string.Empty, "isDefault EQ true", null, null, string.Empty).value.FirstOrDefault();
-
-                DefaultCompanyId = defaultCompanyModel.id;
 
                 // Create a basic company with nexus in the state of Washington
                 TestCompany = Client.CompanyInitialize(new CompanyInitializationModel()
@@ -66,19 +55,14 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                     title = "Owner/CEO"
                 });
 
-                // Add a delay after creating company
-                System.Threading.Thread.Sleep(6 * 1000);
-
                 // Assert that company setup succeeded
                 Assert.NotNull(TestCompany, "Test company should be created");
                 Assert.True(TestCompany.nexus.Count > 0, "Test company should have nexus");
                 Assert.True(TestCompany.locations.Count > 0, "Test company should have locations");
 
                 // Shouldn't fail
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail("Exception in SetUp: " + ex);
+            } catch (Exception ex) {
+                Assert.Fail("Exception in SetUp: " + ex.ToString());
             }
         }
 
@@ -89,8 +73,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         [TearDown]
         public void TearDown()
         {
-            try
-            {
+            try {
 
                 // Re-fetch the company
                 var company = Client.GetCompany(TestCompany.id, null);
@@ -104,70 +87,81 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                 Assert.False(disableResult.isActive, "Company should have been deactivated");
 
                 // Shouldn't fail
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail("Exception in TearDown: " + ex);
+            } catch (Exception ex) {
+                Assert.Fail("Exception in TearDown: " + ex.ToString());
             }
         }
         #endregion
 
-        /// <summary>
-        /// To debug this application, call app must be called with args[0] as username and args[1] as password
-        /// </summary>
         [Test]
-        public async Task TestInitiateExportDocumentLineReport()
+        public void CreateAndDeleteNexus()
         {
-            var exportDocumentLine = new ExportDocumentLineModel()
+            var nexusModels = new List<NexusModel>();
+
+            var stateNexus = new NexusModel
             {
+                id = 0,
+                companyId = TestCompany.id,
                 country = "US",
-               // culture = "en-US",
-                currencyCode = "USD",
-                docType = ReportDocType.Sales,
-                startDate = new DateTime(2012, 1, 1),
-                endDate = DateTime.Today,
-                format = ReportFormat.CSV,
+                region = "AL",
+                jurisTypeId = JurisTypeId.STA,
+                jurisCode = "01",
+                jurisName = "ALABAMA",
+                shortName = "AL",
+                signatureCode = "",
+                stateAssignedNo = "",
+                nexusTypeId = NexusTypeId.SalesOrSellersUseTax,
+                hasLocalNexus = true,
+                hasPermanentEstablishment = true,
+                effectiveDate = new DateTime(2008, 07, 01),
+                endDate = new DateTime(2019, 07, 01)
             };
-            var company = Client.QueryCompanies(null, null, null, null, null);
-            
-            var report = await Client.InitiateExportDocumentLineReportAsync(company.value[0].id, exportDocumentLine);
-            Assert.NotNull(report);
-        }
 
-        [Test]
-        [Ignore("Ignore TestUploadCertificateImage")]
-        public void TestUploadCertificateImage()
-        {
-            //Get the cert number. The account needs to have CertCapture 
-            //be provisioned, already have a certificate created, and the
-            //certificate needs to be valid.
-            var certs = Client.QueryCertificates(DefaultCompanyId, string.Empty, "valid EQ true", null, null, string.Empty).value;
+            var cityNexus = new NexusModel
+            {
+                id = 0,
+                companyId = TestCompany.id,
+                country = "US",
+                region = "AL",
+                jurisTypeId = JurisTypeId.CIT,
+                jurisCode = "00124",
+                jurisName = "ABBEVILLE",
+                shortName = "ABBEVILLE",
+                signatureCode = "",
+                stateAssignedNo = "9356",
+                nexusTypeId = NexusTypeId.SalesTax,
+                hasLocalNexus = true,
+                hasPermanentEstablishment = false,
+                effectiveDate = new DateTime(2008, 07, 01),
+                endDate = new DateTime(2018, 07, 01)
+            };
 
-            var certId = certs.FirstOrDefault().id.Value;            
+            nexusModels.Add(stateNexus);
+            nexusModels.Add(cityNexus);
 
-            //Get an image.
-            using (WebClient webClient = new WebClient()) {
-                byte[] jpgByteArr = webClient.DownloadData("https://developer.avalara.com/public/images/blog/12000-juris.jpg");
+            var nexusModelsAdded = Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
 
-                FileResult fileResult = new FileResult()
-                {
-                    ContentType = "multipart/form-data",
-                    Filename = "test_cert_image.jpg",
-                    Data = jpgByteArr
-                };
+            // Get State nexus
+            NexusModel getALNexus = null;
+            try {
+                getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id.Value, null);
+            } catch (Exception) { }
+            Assert.NotNull(getALNexus);
 
-                //Send request.
-                var certuploadResult = Client.UploadCertificateImage(DefaultCompanyId, certId, fileResult);
+            var fetchedUSNexus = new List<NexusModel> { getALNexus };
 
-                //Response should be "OK"
-                Assert.True(string.Equals(certuploadResult, "\"OK\""));
+            // Get City Nexus
+            NexusModel getCityNexus = null;
+            try {
+                getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
+            } catch (Exception) { }
+            Assert.NotNull(getALNexus);
 
-                //Test download of image attachment.
-                var certAttachment = Client.DownloadCertificateImage(DefaultCompanyId, certId, null, CertificatePreviewType.Pdf);
-                Assert.NotNull(certAttachment);
-                Assert.True(string.Equals(certAttachment.ContentType, "application/pdf"));
-                Assert.True(certAttachment.Data.Length > 1000);
-            }
+            fetchedUSNexus.Add(getCityNexus);
+
+            // Delete Nexus
+            var errorResult = Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
+            Assert.NotNull(errorResult);
         }
     }
 }

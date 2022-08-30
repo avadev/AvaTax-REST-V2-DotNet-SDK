@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.netstandard
 {
     [TestFixture]
     public class BatchTests

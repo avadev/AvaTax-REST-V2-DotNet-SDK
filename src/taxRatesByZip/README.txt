@@ -1,1 +1,0 @@
-This folder stores tax rates by ZIP code.

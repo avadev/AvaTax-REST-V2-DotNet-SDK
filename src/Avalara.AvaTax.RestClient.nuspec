@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Avalara.AvaTax</id>
+
+        <version>22.7.0</version>
+        
+        <title>Avalara AvaTax SDK</title>
+        <description>Add world-class tax estimation and calculation to your project with Avalara's AvaTax suite of APIs and services.</description>
+        <authors>Genevieve Conty, Greg Hester</authors>
+        <language>en-US</language>
+        <projectUrl>https://developer.avalara.com</projectUrl>
+        <icon>images\A-Check-RGB.png</icon>
+        <license type="expression">Apache-2.0</license>
+		<copyright>(C) 2004-2019, Avalara, Inc.</copyright>
+        <tags>tax Avalara AvaTax sales taxes ecommerce</tags>
+        <dependencies>
+            <group targetFramework="net20">
+                <dependency id="Newtonsoft.Json" version="12.0.2" />
+            </group>
+            <group targetFramework="net45">
+                <dependency id="Newtonsoft.Json" version="12.0.2" />
+            </group>
+            <group targetFramework="net461">
+              <dependency id="Newtonsoft.Json" version="12.0.2" />
+            </group>
+            <group targetFramework="net472">
+              <dependency id="Newtonsoft.Json" version="13.0.1" />
+			  <dependency id="System.Net.Http" version="4.3.2" />
+            </group>
+            <group targetFramework=".NETStandard1.6">
+                <dependency id="NETStandard.Library" version="1.6.1" />
+                <dependency id="Newtonsoft.Json" version="12.0.1" />
+                <dependency id="System.Net.Http" version="4.3.2" />
+            </group>
+            <group targetFramework=".NETStandard2.0">
+              <dependency id="NETStandard.Library" version="2.0.0" />
+              <dependency id="Newtonsoft.Json" version="12.0.1" />
+              <dependency id="System.Net.Http" version="4.3.2" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\images\A-Check-RGB.png" target="images\" />
+        <file src="bin\Release\**\Avalara.AvaTax.RestClient.dll" target="lib" />
+		<file src="bin\Release\**\Avalara.AvaTax.RestClient.pdb" target="lib" />
+		<file src="bin\Release\**\Avalara.AvaTax.RestClient.xml" target="lib" />
+    </files>
+</package>

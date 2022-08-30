@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.netstandard20
 {
     [TestFixture]
     class FreeTaxRatesTest

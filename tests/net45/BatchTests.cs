@@ -2,9 +2,10 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.net45
 {
     [TestFixture]
     public class BatchTests
@@ -20,6 +21,7 @@ namespace Tests.Avalara.AvaTax.RestClient.netstandard
         [SetUp]
         public void Setup()
         {
+            System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             try
             {
                 // Create a client and set up authentication

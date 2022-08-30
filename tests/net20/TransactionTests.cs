@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Net;
 
-namespace Tests.Avalara.AvaTax.RestClient.net20
+namespace Avalara.AvaTax.RestClient.Test.net20
 {
     [TestFixture]
     public class TransactionTests
@@ -19,6 +19,8 @@ namespace Tests.Avalara.AvaTax.RestClient.net20
         [SetUp]
         public void Setup()
         {
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
             try
             {
                 System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;

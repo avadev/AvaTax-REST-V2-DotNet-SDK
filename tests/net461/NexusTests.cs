@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tests.Avalara.AvaTax.RestClient.netstandard
+namespace Avalara.AvaTax.RestClient.Test.net461
 {
     [TestFixture]
     public class NexusTests

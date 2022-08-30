@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
-using Tests.Avalara.AvaTax.RestClient.netstandard;
 
-namespace Tests.Avalara.AvaTax.netstandard20
+namespace Avalara.AvaTax.RestClient.Test.netstandard20
 {
     [TestFixture]
     public class ErrorResultTests : TestBase

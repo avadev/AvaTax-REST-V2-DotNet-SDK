@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using Avalara.AvaTax.RestClient;
 
-namespace Avalara.AvaTax.RestClient.Test.net45
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
     /// <summary>
     /// This class provides a wrapper for exceptions that may occur during use of the 

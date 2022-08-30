@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Net;
 
-namespace Avalara.AvaTax.RestClient.Test.net461
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
 	[TestFixture]
 	public class AuditTransactionTests

@@ -1,15 +1,13 @@
 ﻿using Avalara.AvaTax.RestClient;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Reflection;
+using Newtonsoft.Json;
 
-namespace Avalara.AvaTax.RestClient.Test.netstandard20
+namespace Avalara.AvaTax.RestClient.Test.net472
 {
     [TestFixture]
-    public class TransactionTests
+    public class HttpClientTransactionTests
     {
         public AvaTaxClient Client { get; set; }
         public string CompanyCode { get; set; }
@@ -24,9 +22,10 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
         {
             try
             {
+                var httpClient = new System.Net.Http.HttpClient() { Timeout = TimeSpan.FromMinutes(20) };
                 // Create a client and set up authentication
-                Client = new AvaTaxClient(typeof(TransactionTests).Name,
-                    typeof(TransactionTests).GetTypeInfo().Assembly.ImageRuntimeVersion.ToString(),
+                Client = new AvaTaxClient(httpClient, typeof(HttpClientTransactionTests).Assembly.FullName,
+                    typeof(HttpClientTransactionTests).Assembly.GetName().Version.ToString(),
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
@@ -58,7 +57,7 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
                     title = "Owner/CEO"
                 });
 
-                // Add a delay
+                // Add a delay after creating company
                 System.Threading.Thread.Sleep(6 * 1000);
 
                 // Assert that company setup succeeded
@@ -106,11 +105,9 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
         /// To debug this application, call app must be called with args[0] as username and args[1] as password
         /// </summary>
         [Test]
-        public void TransactionWorkflow()
+		public void TransactionWorkflow()
         {
             Client.CallCompleted += Client_CallCompleted;
-            var tfn = System.IO.Path.GetTempFileName();
-            Client.LogToFile(tfn);
 
             // Execute a transaction
             var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
@@ -127,9 +124,6 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
             Assert.True(String.Equals(lastEvent.HttpVerb, "POST", StringComparison.CurrentCultureIgnoreCase));
             Assert.True(String.Equals(lastEvent.RequestUri.ToString(), "https://sandbox-rest.avatax.com/api/v2/transactions/create", StringComparison.CurrentCultureIgnoreCase));
             Assert.AreEqual(lastEvent.Code, HttpStatusCode.Created);
-
-            // Verify that the log file was created
-            Assert.True(System.IO.File.Exists(tfn));
 
             // Ensure this transaction was created, and has three lines, and has some tax
             Assert.NotNull(transaction, "Transaction should have been created");
@@ -160,9 +154,22 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
         {
             lastEvent = e as AvaTaxCallEventArgs;
         }
-        [Ignore("Ignore Override")]
+
         [Test]
-        public void TaxOverrideExample()
+        public void TestError()
+        {
+            var err = Assert.Throws<AvaTaxError>(() =>
+            {
+                // This transaction has no lines - should produce an error
+                var transaction = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                    .Create();
+            });
+            Assert.NotNull(err);
+            Assert.AreEqual(HttpStatusCode.BadRequest, err.statusCode);
+        }
+
+        [Test]
+		public void TaxOverrideExample()
         {
             // Create base transaction.
             var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice,
@@ -177,18 +184,10 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
             // Ensure this transaction was created.
             Assert.NotNull(transaction, "Transaction should have been created");
 
-            var taxOverrideList = new List<TransactionLineTaxAmountByTaxTypeModel>();
-            var item = new TransactionLineTaxAmountByTaxTypeModel();
-            item.taxTypeId = "123";
-            item.taxAmount = 10;
-            taxOverrideList.Add(item);
             // Add Line-level TaxOverride.
             var overrideTransaction = builder
                 .WithLineTaxOverride(TaxOverrideType.TaxAmount, "Tax Override Reason", 1)
-                .WithLine(300m, 1)
-                .WithLineTaxOverride(TaxOverrideType.TaxAmountByTaxType, "Another reason", 10, null, taxOverrideList)
                 .Create();
-
 
             // Ensure this transaction was created.
             Assert.NotNull(overrideTransaction, "Transaction should have been created");
@@ -197,7 +196,7 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
             Assert.AreEqual(overrideTransaction.totalTaxCalculated, transaction.totalTaxCalculated, "Total Tax Calculated should be the same.");
             Assert.True(overrideTransaction.totalTax < transaction.totalTax, "Total Tax should not be the same. Overridden transaction should be smaller.");
 
-            // Compare the transaction lines.
+            // Compare the transaction lines
             var overrideLine = overrideTransaction.lines[1];
             var line = transaction.lines[1];
             Assert.AreEqual(overrideLine.isItemTaxable, line.isItemTaxable);
@@ -206,6 +205,25 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
             Assert.AreEqual(1, overrideLine.tax);
             Assert.True(overrideLine.tax < line.tax);
             Assert.AreEqual(TaxOverrideType.TaxAmount, overrideLine.taxOverrideType);
+        }
+
+        [Test]
+        
+        public void AuditTransactionTest()
+        {
+            // Execute a transaction
+            var builder = new TransactionBuilder(Client, TestCompany.companyCode, DocumentType.SalesInvoice, "ABC")
+                .WithAddress(TransactionAddressType.SingleLocation, "521 S Weller St", null, null, "Seattle", "WA",
+                    "98104", "US")
+                .WithLine(100.0m, 1, "P0000000")
+                .WithLine(200m)
+                .WithExemptLine(50m, "NT")
+                .WithLineReference("Special Line Reference!", "Also this!");
+              
+            var transaction = builder.Create();
+
+
+            var auditResponse = Client.AuditTransaction(TestCompany.companyCode, transaction.code);
         }
     }
 }
