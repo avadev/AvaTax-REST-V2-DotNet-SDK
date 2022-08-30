@@ -43,6 +43,9 @@ jobs:
     - name: Pack Package
       run: dotnet pack Avalara.AvaTax.RestClient.csproj -p:NuspecFile=Avalara.AvaTax.RestClient.nuspec -o . --no-build --configuration Release
       working-directory: src
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
     - name: Publish Package
-      run: dotnet nuget push "Avalara.AvaTax.${{ github.ref }}.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      run: dotnet nuget push "Avalara.AvaTax.${{ steps.vars.outputs.tag }}.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
       working-directory: src
