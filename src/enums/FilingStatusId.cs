@@ -16,7 +16,7 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Filing Status
     /// </summary>
     public enum FilingStatusId
     {

@@ -20,52 +20,37 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// 
     /// </summary>
-    public class AuditEvent
+    public class ProblemDetails
     {
         /// <summary>
         /// 
         /// </summary>
-        public Int64? auditEventId { get; set; }
+        public String type { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Int64? transactionId { get; set; }
+        public String title { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public String correlationId { get; set; }
+        public Int32? status { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public String avalaraUid { get; set; }
+        public String detail { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Int32? auditEventLevelId { get; set; }
+        public String instance { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public DateTime? eventTimestamp { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String source { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String summary { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String details { get; set; }
+        public object extensions { get; set; }
 
 
         /// <summary>

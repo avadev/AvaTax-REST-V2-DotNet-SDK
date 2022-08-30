@@ -16,32 +16,33 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// The date filter type for report
+    ///  "RD" for Reporting Date, "DD" for Document Date, "TD" for Tax Date, "PD" for Payment Date
     /// </summary>
     public enum ReportDateFilter
     {
         /// <summary>
-        /// 
+        /// The date when the transaction is posted
         /// </summary>
         DocumentDate = 68,
 
         /// <summary>
-        /// 
+        /// The date when the transaction is modified
         /// </summary>
         ModifiedDate = 77,
 
         /// <summary>
-        /// 
+        /// The date when the transaction is paid for
         /// </summary>
         PaymentDate = 80,
 
         /// <summary>
-        /// 
+        /// The date when the transaction is added to report
         /// </summary>
         ReportingDate = 82,
 
         /// <summary>
-        /// 
+        /// The date when the transaction is being taxed
         /// </summary>
         TaxDate = 84,
 

@@ -280,6 +280,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public LiabilityType? liabilityType { get; set; }
 
+        /// <summary>
+        /// ID of the AvaTax user creating the transaction. This field will be calculated by AvaTax based on the Company settings and the transaction details.
+        /// </summary>
+        public String avtUserBIN { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

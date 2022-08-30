@@ -21,12 +21,12 @@ namespace Avalara.AvaTax.RestClient
     public enum DeliveryTerms
     {
         /// <summary>
-        /// 
+        /// Delivery At Place (DAP) implies that Duty And Tax will be paid by the Buyer or Consignee of the shipment
         /// </summary>
         DAP = 1,
 
         /// <summary>
-        /// 
+        /// Delivery Duty Paid (DDP) implies that Duty And Tax will be paid by the Shipper
         /// </summary>
         DDP = 2,
 

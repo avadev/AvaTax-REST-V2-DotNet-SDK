@@ -16,17 +16,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Type of certificate preview to download
     /// </summary>
     public enum CertificatePreviewType
     {
         /// <summary>
-        /// 
+        /// Download a full printable PDF
         /// </summary>
         Pdf = 1,
 
         /// <summary>
-        /// 
+        /// Download a single page of the certificate in JPG format
         /// </summary>
         Jpeg = 2,
 

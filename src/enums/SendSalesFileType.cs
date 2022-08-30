@@ -21,12 +21,12 @@ namespace Avalara.AvaTax.RestClient
     public enum SendSalesFileType
     {
         /// <summary>
-        /// 
+        /// File is in Comma Separated Values format
         /// </summary>
         Csv = 0,
 
         /// <summary>
-        /// 
+        /// File is in Javascript Object Notation format
         /// </summary>
         Json = 1,
 

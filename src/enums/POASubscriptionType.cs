@@ -50,5 +50,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         AMRA = 5,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        MRSPremium = 6,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MRSPremier = 7,
+
     }
 }

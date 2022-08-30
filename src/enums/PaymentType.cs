@@ -16,27 +16,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Indicates the type of payments
     /// </summary>
     public enum PaymentType
     {
         /// <summary>
-        /// 
+        /// The payment is for the current payment
         /// </summary>
         CurrentPeriod = 0,
 
         /// <summary>
-        /// 
+        /// The payment is a prepayment
         /// </summary>
         Prepayment = 1,
 
         /// <summary>
-        /// 
+        /// The payment is a prior payment
         /// </summary>
         PriorPayment = 2,
 
         /// <summary>
-        /// 
+        /// The payment is a prior CSP fee
         /// </summary>
         PriorCspFee = 3,
 

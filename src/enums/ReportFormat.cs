@@ -16,12 +16,12 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Different types of formats allowed for exporting a report
     /// </summary>
     public enum ReportFormat
     {
         /// <summary>
-        /// 
+        /// The Comma Separated Values file format
         /// </summary>
         CSV = 0,
 

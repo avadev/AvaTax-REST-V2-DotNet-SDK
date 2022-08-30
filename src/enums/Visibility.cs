@@ -16,27 +16,27 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Visibility for a parameter.
     /// </summary>
     public enum Visibility
     {
         /// <summary>
-        /// 
+        /// Denotes the Parameter is required
         /// </summary>
         Required = 0,
 
         /// <summary>
-        /// 
+        /// Denotes the Parameter is recommended
         /// </summary>
         Recommended = 1,
 
         /// <summary>
-        /// 
+        /// Denotes the Parameter is optional
         /// </summary>
         Optional = 2,
 
         /// <summary>
-        /// 
+        /// Denotes the Parameter is conditional
         /// </summary>
         Conditional = 3,
 

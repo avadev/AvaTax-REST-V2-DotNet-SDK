@@ -16,22 +16,22 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Filing worksheet Type
     /// </summary>
     public enum WorksheetTypeId
     {
         /// <summary>
-        /// 
+        /// The original filing for a period
         /// </summary>
         Original = 0,
 
         /// <summary>
-        /// 
+        /// Represents an amended filing for a period
         /// </summary>
         Amended = 1,
 
         /// <summary>
-        /// 
+        /// Represents a test filing
         /// </summary>
         Test = 2,
 

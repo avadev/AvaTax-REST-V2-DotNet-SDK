@@ -16,17 +16,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// This field will identify who is remitting the tax - Marketplace or Seller.
     /// </summary>
     public enum MarketplaceLiabilityType
     {
         /// <summary>
-        /// 
+        /// MarketPlace
         /// </summary>
         Marketplace = 1,
 
         /// <summary>
-        /// 
+        /// Seller
         /// </summary>
         Seller = 2,
 

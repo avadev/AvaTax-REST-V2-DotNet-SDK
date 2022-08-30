@@ -16,17 +16,17 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Defines report source.
     /// </summary>
     public enum ReportSource
     {
         /// <summary>
-        /// 
+        /// snowflake
         /// </summary>
         SNOWFLAKE = 0,
 
         /// <summary>
-        /// 
+        /// mongodb
         /// </summary>
         MONGODB = 1,
 
