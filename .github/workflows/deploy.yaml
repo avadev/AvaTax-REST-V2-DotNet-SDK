@@ -43,8 +43,10 @@ jobs:
     - name: Pack Package
       run: dotnet pack Avalara.AvaTax.RestClient.csproj -p:NuspecFile=Avalara.AvaTax.RestClient.nuspec -o . --no-build --configuration Release
       working-directory: src
-    - uses: nuget/setup-nuget@v1
+    - name: Install Nuget
+      uses: nuget/setup-nuget@v1
       with:
         nuget-api-key: ${{ secrets.NUGET_API_KEY }}
         nuget-version: 'latest'
-    - run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json'
+    - name: Publish Package to Nuget
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json'
