@@ -1817,5 +1817,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         ContentNotFound = 2811,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        RegistrationNumberNotFound = 2812,
+
     }
 }

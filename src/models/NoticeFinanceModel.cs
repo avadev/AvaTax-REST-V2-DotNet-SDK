@@ -93,6 +93,11 @@ namespace Avalara.AvaTax.RestClient
         public String fileName { get; set; }
 
         /// <summary>
+        /// The payment method on the notice
+        /// </summary>
+        public String paymentMethod { get; set; }
+
+        /// <summary>
         /// The ResourceFileId of the finance detail attachment
         /// </summary>
         public Int64? resourceFileId { get; set; }
