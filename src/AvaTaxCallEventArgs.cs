@@ -44,5 +44,17 @@ namespace Avalara.AvaTax.RestClient
         /// Information about the length of time this API call took to complete
         /// </summary>
         public CallDuration Duration { get; set; }
+
+        /// <summary>
+        /// Information about correlation Id to track logs
+        /// </summary>
+        public string XCorrelationId { get; set; } = null;
+        
+
+        /// <summary>
+        /// Information about error 
+        /// </summary>
+        public string ErrorDetails { get; set; } = null;
+        
     }
 }
