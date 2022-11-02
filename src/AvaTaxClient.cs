@@ -26,6 +26,7 @@ namespace Avalara.AvaTax.RestClient
         private Dictionary<string, string> _clientHeaders = new Dictionary<string, string>();
         private Uri _envUri;
         private UserConfiguration _userConfiguration = new UserConfiguration();
+        private string HEADER_X_CORRELATION_ID = "x-correlation-id";
 #if PORTABLE
         private HttpClient httpClient;
 #endif
@@ -33,6 +34,7 @@ namespace Avalara.AvaTax.RestClient
         /// Tracks the amount of time spent on the most recent API call
         /// </summary>
         public CallDuration LastCallTime { get; set; }
+
         /// <summary>
         /// Client Id - passed in request header
         /// </summary>
@@ -51,13 +53,17 @@ namespace Avalara.AvaTax.RestClient
         public static string SDK_TYPE { get { return "NETSTANDARD1_6"; } }
 #endif
 #if NETSTANDARD2_0
-        public static string SDK_TYPE { get { return "NETSTANDARD2_0"; } }
+        public static string SDK_TYPE
+        {
+            get { return "NETSTANDARD2_0"; }
+        }
 #endif
 #if NET20
         public static string SDK_TYPE { get { return "NET20"; } }
 #endif
 
         #region Constructor
+
         /// <summary>
         /// Generate a client that connects to one of the standard AvaTax servers
         /// </summary>
@@ -66,23 +72,29 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="machineName"></param>
         /// <param name="environment"></param>
         /// <param name="userConfiguration">User configuration</param>
-        public AvaTaxClient(string appName, string appVersion, string machineName, AvaTaxEnvironment environment, UserConfiguration userConfiguration = null)
+        public AvaTaxClient(string appName, string appVersion, string machineName, AvaTaxEnvironment environment,
+            UserConfiguration userConfiguration = null)
         {
-            ClientID= String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
+            ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
             WithClientIdentifier(appName, appVersion, machineName);
             if (userConfiguration != null)
             {
                 _userConfiguration = userConfiguration;
             }
-#if PORTABLE         
-             this.httpClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+#if PORTABLE
+            this.httpClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
 #endif
 
             // Setup the URI
-            switch (environment) {
-                case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
-                case AvaTaxEnvironment.Production: _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL); break;
+            switch (environment)
+            {
+                case AvaTaxEnvironment.Sandbox:
+                    _envUri = new Uri(Constants.AVATAX_SANDBOX_URL);
+                    break;
+                case AvaTaxEnvironment.Production:
+                    _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL);
+                    break;
                 default: throw new Exception("Unrecognized Environment");
             }
         }
@@ -95,7 +107,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="machineName"></param>
         /// <param name="customEnvironment"></param>
         /// <param name="userConfiguration">User configuration</param>
-        public AvaTaxClient(string appName, string appVersion, string machineName, Uri customEnvironment, UserConfiguration userConfiguration = null)
+        public AvaTaxClient(string appName, string appVersion, string machineName, Uri customEnvironment,
+            UserConfiguration userConfiguration = null)
         {
             ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
@@ -120,7 +133,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="machineName"></param>
         /// <param name="environment"></param>
         /// <param name="userConfiguration">User configuration</param>
-        public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName, AvaTaxEnvironment environment, UserConfiguration userConfiguration = null)
+        public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName,
+            AvaTaxEnvironment environment, UserConfiguration userConfiguration = null)
         {
             ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
@@ -130,13 +144,18 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 
-            this.httpClient = httpClient ?? new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            this.httpClient = httpClient ?? new HttpClient()
+                { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
 
             // Setup the URI
             switch (environment)
             {
-                case AvaTaxEnvironment.Sandbox: _envUri = new Uri(Constants.AVATAX_SANDBOX_URL); break;
-                case AvaTaxEnvironment.Production: _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL); break;
+                case AvaTaxEnvironment.Sandbox:
+                    _envUri = new Uri(Constants.AVATAX_SANDBOX_URL);
+                    break;
+                case AvaTaxEnvironment.Production:
+                    _envUri = new Uri(Constants.AVATAX_PRODUCTION_URL);
+                    break;
                 default: throw new Exception("Unrecognized Environment");
             }
         }
@@ -150,7 +169,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="machineName"></param>
         /// <param name="customEnvironment"></param>
         /// <param name="userConfiguration">User configuration</param>
-        public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName, Uri customEnvironment, UserConfiguration userConfiguration = null)
+        public AvaTaxClient(HttpClient httpClient, string appName, string appVersion, string machineName,
+            Uri customEnvironment, UserConfiguration userConfiguration = null)
         {
             ClientID = String.Format("{0}; {1}; {2}; {{0}}; {3}", appName, appVersion, "CSharpRestClient", machineName);
             // Redo the client identifier
@@ -160,7 +180,8 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 
-            this.httpClient = httpClient ?? new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            this.httpClient = httpClient ?? new HttpClient()
+                { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
 
             _envUri = customEnvironment;
         }
@@ -170,6 +191,7 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Security
+
         /// <summary>
         /// Sets the default security header string
         /// </summary>
@@ -215,9 +237,11 @@ namespace Avalara.AvaTax.RestClient
             WithSecurity("Bearer " + bearerToken);
             return this;
         }
+
         #endregion
 
         #region Custom headers
+
         /// <summary>
         /// Add custom header to this client.
         /// </summary>
@@ -234,11 +258,14 @@ namespace Avalara.AvaTax.RestClient
             {
                 _clientHeaders.Add(name, value);
             }
+
             return this;
         }
+
         #endregion
 
         #region Client Identification
+
         /// <summary>
         /// Configure client identification
         /// </summary>
@@ -256,11 +283,14 @@ namespace Avalara.AvaTax.RestClient
             {
                 _clientHeaders[Constants.AVALARA_CLIENT_HEADER] = ClientID;
             }
+
             return this;
         }
+
         #endregion
 
         #region REST Call Interface
+
 #if PORTABLE
         /// <summary>
         /// Implementation of asynchronous client APIs
@@ -293,6 +323,7 @@ namespace Avalara.AvaTax.RestClient
                         {
                             throw ex;
                         }
+
                         retryCount++;
                         await Task.Delay(2 * 1000 * retryCount);
                     }
@@ -302,6 +333,7 @@ namespace Avalara.AvaTax.RestClient
                     }
                 }
             }
+
             return result;
         }
 
@@ -316,15 +348,19 @@ namespace Avalara.AvaTax.RestClient
         /// <returns></returns>
         public T RestCall<T>(string verb, AvaTaxPath relativePath, object content = null)
         {
-            try {
+            try
+            {
                 return RestCallAsync<T>(verb, relativePath, content).Result;
 
                 // Unroll single-exception aggregates for ease of use
-            } catch (AggregateException ex) {
+            }
+            catch (AggregateException ex)
+            {
                 if (ex.InnerExceptions.Count == 1)
                 {
                     ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
+
                 throw;
             }
         }
@@ -350,25 +386,32 @@ namespace Avalara.AvaTax.RestClient
                 {
                     ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
+
                 throw;
             }
         }
 #endif
+
         #endregion
 
         #region Implementation
+
         private JsonSerializerSettings _serializer_settings = null;
+
         private JsonSerializerSettings SerializerSettings
         {
             get
             {
-                if (_serializer_settings == null) {
-                    lock (this) {
+                if (_serializer_settings == null)
+                {
+                    lock (this)
+                    {
                         _serializer_settings = new JsonSerializerSettings();
                         _serializer_settings.NullValueHandling = NullValueHandling.Ignore;
                         _serializer_settings.Converters.Add(new StringEnumConverter());
                     }
                 }
+
                 return _serializer_settings;
             }
         }
@@ -396,26 +439,39 @@ namespace Avalara.AvaTax.RestClient
                     string jsonPayload = null;
                     string mimeType = null;
 
-                    if (content != null && content is FileResult) {
+                    if (content != null && content is FileResult)
+                    {
                         content = ((FileResult)content).Data;
                         mimeType = ((FileResult)content).ContentType;
-                    } else if (content != null) {
+                    }
+                    else if (content != null)
+                    {
                         jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
                         mimeType = "application/json";
                     }
 
                     // Call REST
-                    using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
+                    using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType)
+                               .ConfigureAwait(false))
+                    {
+                        // read X-Correlation-Id from result header
+                        string xCorrelationId =
+                            result.Headers.TryGetValues(HEADER_X_CORRELATION_ID, out var values)
+                                ? values.FirstOrDefault()
+                                : null;
 
                         // Read the result
-                        if (result.IsSuccessStatusCode) {
+                        if (result.IsSuccessStatusCode)
+                        {
                             string contentType = null;
                             string filename = null;
                             if (result.Content.Headers.ContentLength > 0)
                             {
                                 contentType = result.Content.Headers.GetValues("Content-Type").FirstOrDefault();
-                                filename = GetDispositionFilename(result.Content.Headers.GetValues("Content-Disposition").FirstOrDefault());
+                                filename = GetDispositionFilename(result.Content.Headers
+                                    .GetValues("Content-Disposition").FirstOrDefault());
                             }
+
                             var fr = new FileResult()
                             {
                                 ContentType = contentType,
@@ -428,22 +484,44 @@ namespace Avalara.AvaTax.RestClient
                             this.LastCallTime = cd;
 
                             // Capture information about this API call and make it available for logging
-                            var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseBody = fr.Data, Duration = cd };
+                            var eventargs = new AvaTaxCallEventArgs()
+                            {
+                                HttpVerb = verb.ToUpper(),
+                                Code = result.StatusCode,
+                                RequestUri = new Uri(_envUri, relativePath.ToString()),
+                                RequestBody = jsonPayload,
+                                ResponseBody = fr.Data,
+                                Duration = cd,
+                                XCorrelationId = xCorrelationId
+                            };
                             OnCallCompleted(eventargs);
                             return fr;
 
                             // Handle exceptions and convert them to AvaTax results
-                        } else {
+                        }
+                        else
+                        {
                             var errorResponseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
                             var err = DeserializeErrorResult(errorResponseString, result.StatusCode);
                             cd.FinishParse();
                             this.LastCallTime = cd;
 
                             // Capture information about this API call error and make it available for logging
-                            var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload, ResponseString = errorResponseString, Duration = cd };
+                            var eventargs = new AvaTaxCallEventArgs()
+                            {
+                                HttpVerb = verb.ToUpper(),
+                                Code = result.StatusCode,
+                                RequestUri = new Uri(_envUri, relativePath.ToString()),
+                                RequestBody = jsonPayload,
+                                ResponseString = errorResponseString,
+                                Duration = cd,
+                                XCorrelationId = xCorrelationId,
+                                ErrorDetails = err.ToString()
+                            };
                             OnCallCompleted(eventargs);
 
-                            if (result.StatusCode == HttpStatusCode.InternalServerError || result.StatusCode == HttpStatusCode.RequestTimeout)
+                            if (result.StatusCode == HttpStatusCode.InternalServerError ||
+                                result.StatusCode == HttpStatusCode.RequestTimeout)
                             {
                                 throw new AvaTaxServerError(err, result.StatusCode);
                             }
@@ -462,6 +540,7 @@ namespace Avalara.AvaTax.RestClient
                         {
                             throw ex;
                         }
+
                         retryCount++;
                         await Task.Delay(2 * 1000 * retryCount);
                     }
@@ -484,10 +563,12 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="jsonPayload"></param>
         /// <param name="mimeType"></param>
         /// <returns></returns>
-        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb, AvaTaxPath relativePath, object jsonPayload, string mimeType = null)
+        private async Task<HttpResponseMessage> InternalRestCallAsync(CallDuration cd, string verb,
+            AvaTaxPath relativePath, object jsonPayload, string mimeType = null)
         {
             // Setup the request
-            using (var request = new HttpRequestMessage()) {
+            using (var request = new HttpRequestMessage())
+            {
                 request.Method = new HttpMethod(verb);
                 request.RequestUri = new Uri(_envUri, relativePath.ToString());
 
@@ -498,17 +579,20 @@ namespace Avalara.AvaTax.RestClient
                 }
 
                 //Add payload if present.
-                if (mimeType == "multipart/form-data") {
+                if (mimeType == "multipart/form-data")
+                {
                     request.Content = jsonPayload as MultipartFormDataContent;
-                } else if (jsonPayload != null) {
+                }
+                else if (jsonPayload != null)
+                {
                     request.Content = new StringContent(jsonPayload as string, Encoding.UTF8, mimeType);
                 }
 
                 // Send
                 cd.FinishSetup();
 
-                HttpResponseMessage response= await httpClient.SendAsync(request).ConfigureAwait(false);
-               
+                HttpResponseMessage response = await httpClient.SendAsync(request).ConfigureAwait(false);
+
                 return response;
             }
         }
@@ -521,7 +605,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="relativePath"></param>
         /// <param name="content"></param>
         /// <returns></returns>
-        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null, CallDuration cd = null)
+        private async Task<string> RestCallStringAsync(string verb, AvaTaxPath relativePath, object content = null,
+            CallDuration cd = null)
         {
             if (cd == null) cd = new CallDuration();
 
@@ -529,7 +614,8 @@ namespace Avalara.AvaTax.RestClient
             object jsonPayload = null;
             string mimeType = null;
 
-            if (content != null && content is FileResult) {
+            if (content != null && content is FileResult)
+            {
                 var fr = (FileResult)content;
                 mimeType = fr.ContentType;
                 MultipartFormDataContent mpfdc = new MultipartFormDataContent("----dataBoundary");
@@ -537,13 +623,22 @@ namespace Avalara.AvaTax.RestClient
                 byteArrayContent.Headers.Add("Content-Type", "application/octet-stream");
                 mpfdc.Add(byteArrayContent, fr.Filename, fr.Filename);
                 jsonPayload = mpfdc;
-            } else if (content != null) {
+            }
+            else if (content != null)
+            {
                 jsonPayload = JsonConvert.SerializeObject(content, SerializerSettings);
                 mimeType = "application/json";
             }
 
             // Call REST
-            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType).ConfigureAwait(false)) {
+            using (var result = await InternalRestCallAsync(cd, verb, relativePath, jsonPayload, mimeType)
+                       .ConfigureAwait(false))
+            {
+                // read X-Correlation-Id from result header
+                string xCorrelationId =
+                    result.Headers.TryGetValues(HEADER_X_CORRELATION_ID, out var values)
+                        ? values.FirstOrDefault()
+                        : null;
 
                 // Read the result
                 var responseString = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -555,17 +650,45 @@ namespace Avalara.AvaTax.RestClient
                 cd.FinishReceive(sd, dd, td);
 
                 // Capture information about this API call and make it available for logging
-                var eventargs = new AvaTaxCallEventArgs() { HttpVerb = verb.ToUpper(), Code = result.StatusCode, RequestUri = new Uri(_envUri, relativePath.ToString()), RequestBody = jsonPayload as string, ResponseString = responseString, Duration = cd };
+                var eventargs = new AvaTaxCallEventArgs()
+                {
+                    HttpVerb = verb.ToUpper(),
+                    Code = result.StatusCode,
+                    RequestUri = new Uri(_envUri, relativePath.ToString()),
+                    RequestBody = jsonPayload as string,
+                    ResponseString = responseString,
+                    Duration = cd,
+                    XCorrelationId = xCorrelationId,
+                };
                 OnCallCompleted(eventargs);
 
                 // Deserialize the result
-                if (result.IsSuccessStatusCode) {
+                if (result.IsSuccessStatusCode)
+                {
                     return responseString;
-                } else {
+                }
+                else
+                {
                     var err = DeserializeErrorResult(responseString, result.StatusCode);
                     cd.FinishParse();
                     this.LastCallTime = cd;
-                    if (result.StatusCode == HttpStatusCode.InternalServerError || result.StatusCode == HttpStatusCode.RequestTimeout)
+
+                    // Capture information about this API call error and make it available for logging
+                    eventargs = new AvaTaxCallEventArgs()
+                    {
+                        HttpVerb = verb.ToUpper(),
+                        Code = result.StatusCode,
+                        RequestUri = new Uri(_envUri, relativePath.ToString()),
+                        RequestBody = jsonPayload as string,
+                        ResponseString = responseString,
+                        Duration = cd,
+                        XCorrelationId = xCorrelationId,
+                        ErrorDetails = err.ToString()
+                    };
+                    OnCallCompleted(eventargs);
+
+                    if (result.StatusCode == HttpStatusCode.InternalServerError ||
+                        result.StatusCode == HttpStatusCode.RequestTimeout)
                     {
                         throw new AvaTaxServerError(err, result.StatusCode);
                     }
@@ -580,15 +703,19 @@ namespace Avalara.AvaTax.RestClient
         private TimeSpan? DetectDuration(HttpResponseMessage result, string name)
         {
             IEnumerable<string> values = null;
-            if (result.Headers.TryGetValues(name, out values)) {
+            if (result.Headers.TryGetValues(name, out values))
+            {
                 var firstHeader = values.FirstOrDefault();
-                if (firstHeader != null) {
+                if (firstHeader != null)
+                {
                     TimeSpan duration = default(TimeSpan);
-                    if (TimeSpan.TryParse(firstHeader, out duration)) {
+                    if (TimeSpan.TryParse(firstHeader, out duration))
+                    {
                         return duration;
                     }
                 }
             }
+
             return null;
         }
 
@@ -612,9 +739,11 @@ namespace Avalara.AvaTax.RestClient
                 {
                     ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
+
                 throw;
             }
         }
+
 #else
         /// <summary>
         /// Direct implementation of client APIs to object values
@@ -655,7 +784,8 @@ namespace Avalara.AvaTax.RestClient
 
             // Convert the name-value pairs into a byte array
             wr.Method = verb;
-            if (content != null) {
+            if (content != null)
+            {
                 wr.ContentType = Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
 
@@ -666,36 +796,46 @@ namespace Avalara.AvaTax.RestClient
                 wr.ContentLength = data.Length;
 
                 // Call the server
-                using (var s = wr.GetRequestStream()) {
+                using (var s = wr.GetRequestStream())
+                {
                     s.Write(data, 0, data.Length);
                     s.Close();
                 }
             }
 
             // Transmit, and get back the response, save it to a temp file
-            try {
-                using (var response = wr.GetResponse()) {
-                    using (var inStream = response.GetResponseStream()) {
+            try
+            {
+                using (var response = wr.GetResponse())
+                {
+                    using (var inStream = response.GetResponseStream())
+                    {
                         const int BUFFER_SIZE = 1024;
                         var chunks = new List<byte>();
-                        var totalBytes = 0; 
+                        var totalBytes = 0;
                         var bytesRead = 0;
 
                         do
                         {
                             var buffer = new byte[BUFFER_SIZE];
                             bytesRead = inStream.Read(buffer, 0, BUFFER_SIZE);
-                            if (bytesRead == BUFFER_SIZE) {
+                            if (bytesRead == BUFFER_SIZE)
+                            {
                                 chunks.AddRange(buffer);
-                            } else {
-                                for (int i = 0; i < bytesRead; i++) {
+                            }
+                            else
+                            {
+                                for (int i = 0; i < bytesRead; i++)
+                                {
                                     chunks.Add(buffer[i]);
                                 }
                             }
+
                             totalBytes += bytesRead;
                         } while (bytesRead > 0);
-        
-                        if(totalBytes <= 0) {
+
+                        if (totalBytes <= 0)
+                        {
                             throw new IOException("Response contained no data");
                         }
 
@@ -708,27 +848,52 @@ namespace Avalara.AvaTax.RestClient
                         };
 
                         // Track the API call
-                        var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseBody = fr.Data, RequestUri = new Uri(path) };
+                        var eventargs = new AvaTaxCallEventArgs()
+                        {
+                            Code = ((HttpWebResponse)response).StatusCode,
+                            Duration = null,
+                            HttpVerb = wr.Method,
+                            RequestBody = jsonPayload,
+                            ResponseBody = fr.Data,
+                            RequestUri = new Uri(path),
+                            XCorrelationId = response.Headers.Get(HEADER_X_CORRELATION_ID)
+                        };
                         OnCallCompleted(eventargs);
                         return fr;
                     }
                 }
 
                 // Catch a web exception
-            } catch (WebException webex) {
+            }
+            catch (WebException webex)
+            {
                 HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
-                if (httpWebResponse != null) {
-                    using (Stream stream = httpWebResponse.GetResponseStream()) {
-                        using (StreamReader reader = new StreamReader(stream)) {
+                if (httpWebResponse != null)
+                {
+                    using (Stream stream = httpWebResponse.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(stream))
+                        {
                             var errString = reader.ReadToEnd();
 
                             // Track the API call
                             var statusCode = ((HttpWebResponse)httpWebResponse).StatusCode;
-                            var eventargs = new AvaTaxCallEventArgs() { Code = statusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
+                            var err = DeserializeErrorResult(errString, statusCode);
+                            var eventargs = new AvaTaxCallEventArgs()
+                            {
+                                Code = statusCode,
+                                Duration = null,
+                                HttpVerb = wr.Method,
+                                RequestBody = jsonPayload,
+                                ResponseString = errString,
+                                RequestUri = new Uri(path),
+                                XCorrelationId = httpWebResponse.Headers.Get(HEADER_X_CORRELATION_ID),
+                                ErrorDetails = err.ToString()
+                            };
                             OnCallCompleted(eventargs);
 
                             // Pass on the error
-                            var err = DeserializeErrorResult(errString, statusCode);
+
                             throw new AvaTaxError(err, httpWebResponse.StatusCode);
                         }
                     }
@@ -767,17 +932,19 @@ namespace Avalara.AvaTax.RestClient
             wr.Method = verb;
 
             //Upload file.
-            if (content != null && content is FileResult) {
+            if (content != null && content is FileResult)
+            {
                 wr.KeepAlive = true;
                 var fr = (FileResult)content;
                 mimeType = fr.ContentType;
                 content = fr.Data;
                 string dataBoundary = "----dataBoundary";
                 wr.ContentType = "multipart/form-data; boundary=" + dataBoundary;
-                byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "\r\n");                
+                byte[] boundaryBytes = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "\r\n");
                 Stream rs = wr.GetRequestStream();
                 rs.Write(boundaryBytes, 0, boundaryBytes.Length);
-                string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
+                string headerTemplate =
+                    "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
                 string header = string.Format(headerTemplate, fr.Filename, fr.Filename, fr.ContentType);
                 byte[] headerBytes = Encoding.UTF8.GetBytes(header);
                 rs.Write(headerBytes, 0, headerBytes.Length);
@@ -785,7 +952,9 @@ namespace Avalara.AvaTax.RestClient
                 byte[] trailer = Encoding.ASCII.GetBytes("\r\n--" + dataBoundary + "--\r\n");
                 rs.Write(trailer, 0, trailer.Length);
                 rs.Close();
-            } else if (content != null) {
+            }
+            else if (content != null)
+            {
                 wr.ContentType = mimeType ?? Constants.JSON_MIME_TYPE;
                 wr.ServicePoint.Expect100Continue = false;
 
@@ -796,21 +965,35 @@ namespace Avalara.AvaTax.RestClient
                 wr.ContentLength = data.Length;
 
                 // Call the server
-                using (var s = wr.GetRequestStream()) {
+                using (var s = wr.GetRequestStream())
+                {
                     s.Write(data, 0, data.Length);
                     s.Close();
                 }
             }
 
             // Transmit, and get back the response, save it to a temp file
-            try {
-                using (var response = wr.GetResponse()) {
-                    using (var inStream = response.GetResponseStream()) {
-                        using (var reader = new StreamReader(inStream)) {
+            try
+            {
+                using (var response = wr.GetResponse())
+                {
+                    using (var inStream = response.GetResponseStream())
+                    {
+                        using (var reader = new StreamReader(inStream))
+                        {
                             var responseString = reader.ReadToEnd();
 
                             // Track the API call
-                            var eventargs = new AvaTaxCallEventArgs() { Code = ((HttpWebResponse)response).StatusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = responseString, RequestUri = new Uri(path) };
+                            var eventargs = new AvaTaxCallEventArgs()
+                            {
+                                Code = ((HttpWebResponse)response).StatusCode,
+                                Duration = null,
+                                HttpVerb = wr.Method,
+                                RequestBody = jsonPayload,
+                                ResponseString = responseString,
+                                RequestUri = new Uri(path),
+                                XCorrelationId = response.Headers.Get(HEADER_X_CORRELATION_ID)
+                            };
                             OnCallCompleted(eventargs);
 
                             // Here's the results
@@ -819,21 +1002,37 @@ namespace Avalara.AvaTax.RestClient
                     }
                 }
 
-            // Catch a web exception
-            } catch (WebException webex) {
+                // Catch a web exception
+            }
+            catch (WebException webex)
+            {
                 HttpWebResponse httpWebResponse = webex.Response as HttpWebResponse;
-                if (httpWebResponse != null) {
-                    using (Stream stream = httpWebResponse.GetResponseStream()) {
-                        using (StreamReader reader = new StreamReader(stream)) {
+                if (httpWebResponse != null)
+                {
+                    using (Stream stream = httpWebResponse.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(stream))
+                        {
                             var errString = reader.ReadToEnd();
 
                             // Track the API call
                             var statusCode = ((HttpWebResponse)httpWebResponse).StatusCode;
-                            var eventargs = new AvaTaxCallEventArgs() { Code = statusCode, Duration = null, HttpVerb = wr.Method, RequestBody = jsonPayload, ResponseString = errString, RequestUri = new Uri(path) };
+                            var err = DeserializeErrorResult(errString, statusCode);
+
+                            var eventargs = new AvaTaxCallEventArgs()
+                            {
+                                Code = statusCode,
+                                Duration = null,
+                                HttpVerb = wr.Method,
+                                RequestBody = jsonPayload,
+                                ResponseString = errString,
+                                RequestUri = new Uri(path),
+                                XCorrelationId = httpWebResponse.Headers.Get(HEADER_X_CORRELATION_ID),
+                                ErrorDetails = err.ToString()
+                            };
                             OnCallCompleted(eventargs);
 
                             // Here's the results
-                            var err = DeserializeErrorResult(errString, statusCode);
                             throw new AvaTaxError(err, httpWebResponse.StatusCode);
                         }
                     }
@@ -848,11 +1047,16 @@ namespace Avalara.AvaTax.RestClient
         {
             var endslash = url1.EndsWith("/");
             var startslash = url2.StartsWith("/");
-            if (endslash && startslash) {
+            if (endslash && startslash)
+            {
                 return url1 + url2.Substring(1);
-            } else if (!endslash && !startslash) {
+            }
+            else if (!endslash && !startslash)
+            {
                 return url1 + "/" + url2;
-            } else {
+            }
+            else
+            {
                 return url1 + url2;
             }
         }
@@ -867,9 +1071,11 @@ namespace Avalara.AvaTax.RestClient
         {
             const string filename = "filename=";
             int index = contentDisposition.LastIndexOf(filename, StringComparison.OrdinalIgnoreCase);
-            if (index > -1) {
+            if (index > -1)
+            {
                 return contentDisposition.Substring(index + filename.Length);
             }
+
             return contentDisposition;
         }
 
@@ -892,7 +1098,8 @@ namespace Avalara.AvaTax.RestClient
                 {
                     error = new ErrorInfo
                     {
-                        message = $"The server returned {(int)statusCode} {statusCode} but the response is in an unexpected format."
+                        message =
+                            $"The server returned {(int)statusCode} {statusCode} but the response is in an unexpected format."
                             + "  See details for the complete response.",
                         target = ErrorTargetCode.Unknown,
                         details = new List<ErrorDetail>()
@@ -910,6 +1117,7 @@ namespace Avalara.AvaTax.RestClient
         #endregion
 
         #region Logging
+
         /// <summary>
         /// Hook this event to capture information about API calls
         /// </summary>
@@ -935,6 +1143,7 @@ namespace Avalara.AvaTax.RestClient
         }
 
         private string _logFileName = null;
+
         private void LogFile_CallCompleted(object sender, EventArgs e)
         {
             var evt = e as AvaTaxCallEventArgs;
@@ -942,14 +1151,22 @@ namespace Avalara.AvaTax.RestClient
             // Write to disk
             var g = Guid.NewGuid().ToString();
             StringBuilder sb = new StringBuilder();
-            sb.Append($"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestBody}\r\n");
-            if (evt.ResponseString != null) {
-                sb.Append($"=== RESPONSE {g}: {evt.Code} Type: JSON ===\r\n{evt.ResponseString}\r\n=== END {g} ===\r\n");
-            } else {
-                sb.Append($"=== RESPONSE {g}: {evt.Code} Type: FILE ===\r\n{evt.ResponseBody?.Length} bytes\r\n=== END {g} ===\r\n");
+            sb.Append(
+                $"=== REQUEST {g}: {evt.HttpVerb} {evt.RequestUri.ToString()} Timestamp: {DateTime.UtcNow} ===\r\n{evt.RequestBody}\r\n");
+            if (evt.ResponseString != null)
+            {
+                sb.Append(
+                    $"=== RESPONSE {g}: {evt.Code} Type: JSON ===\r\n{evt.ResponseString}\r\n=== END {g} ===\r\n");
             }
+            else
+            {
+                sb.Append(
+                    $"=== RESPONSE {g}: {evt.Code} Type: FILE ===\r\n{evt.ResponseBody?.Length} bytes\r\n=== END {g} ===\r\n");
+            }
+
             File.AppendAllText(_logFileName, sb.ToString(), Encoding.UTF8);
         }
+
         #endregion
     }
 }
