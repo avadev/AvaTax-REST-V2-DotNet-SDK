@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Greg Hester <greg.hester@avalara.com>
  * @copyright  2004-2019 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    22.10.0
+ * @version    22.11.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "22.10.0"; } }
+        public static string API_VERSION { get { return "22.11.0"; } }
 
 #region Methods
 
@@ -62,7 +62,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LicenseKeyModel>("POST", path, model);
         }
 
@@ -93,7 +93,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AccountModel>("POST", path, model);
         }
 
@@ -145,7 +145,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("end", endDate);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<AuditModel>>("GET", path, null);
         }
 
@@ -176,7 +176,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LicenseKeyModel>("POST", path, model);
         }
 
@@ -203,7 +203,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -230,7 +230,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AccountModel>("GET", path, null);
         }
 
@@ -262,7 +262,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<AccountConfigurationModel>>("GET", path, null);
         }
 
@@ -283,7 +283,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AccountLicenseKeyModel>("GET", path, null);
         }
 
@@ -304,7 +304,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekeys");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<AccountLicenseKeyModel>>("GET", path, null);
         }
 
@@ -344,7 +344,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<AccountModel>>("GET", path, null);
         }
 
@@ -377,7 +377,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<AccountConfigurationModel>>("POST", path, model);
         }
 
@@ -423,7 +423,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
             path.AddQuery("textCase", textCase);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AddressResolutionModel>("GET", path, null);
         }
 
@@ -449,7 +449,7 @@ namespace Avalara.AvaTax.RestClient
         public AddressResolutionModel ResolveAddressPost(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AddressResolutionModel>("POST", path, model);
         }
 
@@ -469,7 +469,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AdvancedRuleLookupFileModel>("POST", path, model);
         }
 
@@ -488,7 +488,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -507,7 +507,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<AdvancedRuleLookupFileModel>>("GET", path, null);
         }
 
@@ -526,7 +526,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AdvancedRuleLookupFileModel>("GET", path, null);
         }
 
@@ -546,7 +546,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AdvancedRuleLookupFileModel>("PUT", path, model);
         }
 
@@ -568,7 +568,7 @@ namespace Avalara.AvaTax.RestClient
         public List<AvaFileFormModel> CreateAvaFileForms(List<AvaFileFormModel> model)
         {
             var path = new AvaTaxPath("/api/v2/avafileforms");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<AvaFileFormModel>>("POST", path, model);
         }
 
@@ -590,7 +590,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -612,7 +612,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AvaFileFormModel>("GET", path, null);
         }
 
@@ -641,7 +641,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<AvaFileFormModel>>("GET", path, null);
         }
 
@@ -665,7 +665,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AvaFileFormModel>("PUT", path, model);
         }
 
@@ -699,7 +699,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<BatchModel>("POST", path, null);
         }
 
@@ -739,7 +739,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<BatchModel>>("POST", path, model);
         }
 
@@ -777,7 +777,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/transactions");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CreateTransactionBatchResponseModel>("POST", path, model);
         }
 
@@ -809,7 +809,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -834,7 +834,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallFile("GET", path, null);
         }
 
@@ -871,7 +871,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<BatchModel>("GET", path, null);
         }
 
@@ -922,7 +922,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<BatchModel>>("GET", path, null);
         }
 
@@ -968,7 +968,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<BatchModel>>("GET", path, null);
         }
 
@@ -989,8 +989,8 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -1007,7 +1007,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CertExpressInvitationStatusModel>>("POST", path, model);
         }
 
@@ -1028,8 +1028,8 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -1049,7 +1049,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CertExpressInvitationModel>("GET", path, null);
         }
 
@@ -1070,8 +1070,8 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -1097,7 +1097,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertExpressInvitationModel>>("GET", path, null);
         }
 
@@ -1142,7 +1142,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
             path.AddQuery("$preValidatedExemptionReason", preValidatedExemptionReason);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CertificateModel>>("POST", path, model);
         }
 
@@ -1178,7 +1178,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -1219,7 +1219,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallFile("GET", path, null);
         }
 
@@ -1265,7 +1265,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CertificateModel>("GET", path, null);
         }
 
@@ -1293,7 +1293,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ProvisionStatusModel>("GET", path, null);
         }
 
@@ -1331,7 +1331,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateAttributeModel>>("POST", path, model);
         }
 
@@ -1370,7 +1370,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerModel>>("POST", path, model);
         }
 
@@ -1407,7 +1407,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateAttributeModel>>("GET", path, null);
         }
 
@@ -1447,7 +1447,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerModel>>("GET", path, null);
         }
 
@@ -1499,7 +1499,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateModel>>("GET", path, null);
         }
 
@@ -1529,7 +1529,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ProvisionStatusModel>("POST", path, null);
         }
 
@@ -1567,7 +1567,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateAttributeModel>>("POST", path, model);
         }
 
@@ -1607,7 +1607,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerModel>>("POST", path, model);
         }
 
@@ -1642,7 +1642,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CertificateModel>("PUT", path, model);
         }
 
@@ -1680,7 +1680,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallString("POST", path, file);
         }
 
@@ -1723,7 +1723,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/certify");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallString("GET", path, null);
         }
 
@@ -1757,7 +1757,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallString("POST", path, model);
         }
 
@@ -1788,7 +1788,7 @@ namespace Avalara.AvaTax.RestClient
         public CompanyModel CompanyInitialize(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyModel>("POST", path, model);
         }
 
@@ -1812,7 +1812,7 @@ namespace Avalara.AvaTax.RestClient
         public List<CompanyModel> CreateCompanies(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CompanyModel>>("POST", path, model);
         }
 
@@ -1844,7 +1844,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CompanyParameterDetailModel>>("POST", path, model);
         }
 
@@ -1880,7 +1880,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FundingStatusModel>("POST", path, model);
         }
 
@@ -1901,7 +1901,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -1929,7 +1929,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -1954,7 +1954,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FundingConfigurationModel>("GET", path, null);
         }
 
@@ -1981,7 +1981,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<FundingConfigurationModel>>("GET", path, null);
         }
 
@@ -2019,7 +2019,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyModel>("GET", path, null);
         }
 
@@ -2051,7 +2051,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CompanyConfigurationModel>>("GET", path, null);
         }
 
@@ -2080,7 +2080,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyParameterDetailModel>("GET", path, null);
         }
 
@@ -2114,7 +2114,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallString("GET", path, null);
         }
 
@@ -2143,7 +2143,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("periodyear", periodyear);
             path.ApplyField("periodmonth", periodmonth);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ACHEntryDetailModel>>("GET", path, null);
         }
 
@@ -2181,7 +2181,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CompanyParameterDetailModel>>("GET", path, null);
         }
 
@@ -2206,7 +2206,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<FundingStatusModel>>("GET", path, null);
         }
 
@@ -2227,7 +2227,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<MrsCompanyModel> ListMrsCompanies()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<MrsCompanyModel>>("GET", path, null);
         }
 
@@ -2272,7 +2272,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CompanyModel>>("GET", path, null);
         }
 
@@ -2305,7 +2305,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CompanyConfigurationModel>>("POST", path, model);
         }
 
@@ -2337,7 +2337,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyModel>("PUT", path, model);
         }
 
@@ -2367,7 +2367,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyParameterDetailModel>("PUT", path, model);
         }
 
@@ -2402,7 +2402,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ComplianceJurisdictionRateModel>("GET", path, null);
         }
 
@@ -2426,7 +2426,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ContactModel>>("POST", path, model);
         }
 
@@ -2449,7 +2449,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -2474,7 +2474,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ContactModel>("GET", path, null);
         }
 
@@ -2506,7 +2506,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ContactModel>>("GET", path, null);
         }
 
@@ -2538,7 +2538,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ContactModel>>("GET", path, null);
         }
 
@@ -2566,7 +2566,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ContactModel>("PUT", path, model);
         }
 
@@ -2603,7 +2603,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CustomerModel>>("POST", path, model);
         }
 
@@ -2638,7 +2638,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CustomerModel>("DELETE", path, null);
         }
 
@@ -2681,7 +2681,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CustomerModel>("GET", path, null);
         }
 
@@ -2720,7 +2720,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerAttributeModel>>("PUT", path, model);
         }
 
@@ -2756,7 +2756,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateModel>>("POST", path, model);
         }
 
@@ -2793,7 +2793,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/billto/{code}/shipto/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("code", code);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CustomerModel>("POST", path, model);
         }
 
@@ -2831,7 +2831,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerAttributeModel>>("GET", path, null);
         }
 
@@ -2880,7 +2880,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateModel>>("GET", path, null);
         }
 
@@ -2922,7 +2922,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ExemptionStatusModel>("GET", path, null);
         }
 
@@ -2970,7 +2970,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerModel>>("GET", path, null);
         }
 
@@ -3009,7 +3009,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CustomerAttributeModel>>("PUT", path, model);
         }
 
@@ -3045,7 +3045,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateModel>>("POST", path, model);
         }
 
@@ -3081,7 +3081,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CustomerModel>("PUT", path, model);
         }
 
@@ -3104,7 +3104,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<DataSourceModel>>("POST", path, model);
         }
 
@@ -3128,7 +3128,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -3152,7 +3152,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<DataSourceModel>("GET", path, null);
         }
 
@@ -3182,7 +3182,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<DataSourceModel>>("GET", path, null);
         }
 
@@ -3213,7 +3213,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<DataSourceModel>>("GET", path, null);
         }
 
@@ -3238,7 +3238,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<DataSourceModel>("PUT", path, model);
         }
 
@@ -3270,7 +3270,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
@@ -3296,7 +3296,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
         }
 
@@ -3319,7 +3319,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<MarketplaceModel>>("GET", path, null);
         }
 
@@ -3347,7 +3347,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<AvaFileFormModel>>("GET", path, null);
         }
 
@@ -3378,7 +3378,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CertificateAttributeModel>>("GET", path, null);
         }
 
@@ -3407,7 +3407,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ExemptionReasonModel>>("GET", path, null);
         }
 
@@ -3436,7 +3436,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ExposureZoneModel>>("GET", path, null);
         }
 
@@ -3461,7 +3461,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ClassificationParameterUsageMapModel>>("GET", path, null);
         }
 
@@ -3486,7 +3486,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CommunicationsTSPairModel>>("GET", path, null);
         }
 
@@ -3510,7 +3510,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CommunicationsTransactionTypeModel>>("GET", path, null);
         }
 
@@ -3534,7 +3534,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CommunicationsTSPairModel>>("GET", path, null);
         }
 
@@ -3559,7 +3559,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<IsoCountryModel>>("GET", path, null);
         }
 
@@ -3589,7 +3589,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CoverLetterModel>>("GET", path, null);
         }
 
@@ -3627,7 +3627,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
@@ -3651,7 +3651,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<HsCodeModel> ListCrossBorderSections()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<HsCodeModel>>("GET", path, null);
         }
 
@@ -3677,7 +3677,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CurrencyModel>>("GET", path, null);
         }
 
@@ -3704,7 +3704,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<EntityUseCodeModel>>("GET", path, null);
         }
 
@@ -3728,7 +3728,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<FilingFrequencyModel>>("GET", path, null);
         }
 
@@ -3756,7 +3756,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<JurisdictionModel>>("GET", path, null);
         }
 
@@ -3799,7 +3799,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
@@ -3839,7 +3839,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>>("GET", path, null);
         }
 
@@ -3862,7 +3862,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("taxTypeId", taxTypeId);
             path.ApplyField("taxSubTypeId", taxSubTypeId);
             path.AddQuery("rateTypeId", rateTypeId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<String>>("GET", path, null);
         }
 
@@ -3908,7 +3908,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<LocationQuestionModel>>("GET", path, null);
         }
 
@@ -3933,7 +3933,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SkyscraperStatusModel>>("GET", path, null);
         }
 
@@ -3956,7 +3956,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<MarketplaceLocationModel>>("GET", path, null);
         }
 
@@ -3981,7 +3981,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4037,7 +4037,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4064,7 +4064,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4093,7 +4093,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4124,7 +4124,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
             path.ApplyField("formCode", formCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NexusByTaxFormModel>("GET", path, null);
         }
 
@@ -4151,7 +4151,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -4175,7 +4175,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusTaxTypeGroupModel>>("GET", path, null);
         }
 
@@ -4199,7 +4199,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeCustomerFundingOptionModel>>("GET", path, null);
         }
 
@@ -4223,7 +4223,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeCustomerTypeModel>>("GET", path, null);
         }
 
@@ -4247,7 +4247,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeFilingTypeModel>>("GET", path, null);
         }
 
@@ -4271,7 +4271,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticePriorityModel>>("GET", path, null);
         }
 
@@ -4295,7 +4295,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeReasonModel>>("GET", path, null);
         }
 
@@ -4319,7 +4319,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeResponsibilityModel>>("GET", path, null);
         }
 
@@ -4343,7 +4343,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeRootCauseModel>>("GET", path, null);
         }
 
@@ -4367,7 +4367,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeStatusModel>>("GET", path, null);
         }
 
@@ -4391,7 +4391,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NoticeTypeModel>>("GET", path, null);
         }
 
@@ -4416,7 +4416,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ParameterModel>>("GET", path, null);
         }
 
@@ -4460,7 +4460,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ParameterModel>>("GET", path, null);
         }
 
@@ -4485,7 +4485,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ParameterUsageModel>>("GET", path, null);
         }
 
@@ -4505,7 +4505,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<String>>("GET", path, null);
         }
 
@@ -4528,7 +4528,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<PostalCodeModel>>("GET", path, null);
         }
 
@@ -4559,7 +4559,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<PreferredProgramModel>>("GET", path, null);
         }
 
@@ -4587,7 +4587,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
@@ -4625,7 +4625,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ProductClassificationSystemModel>>("GET", path, null);
         }
 
@@ -4651,7 +4651,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<RateTypeModel>>("GET", path, null);
         }
 
@@ -4681,7 +4681,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<RateTypesModel>>("GET", path, null);
         }
 
@@ -4706,7 +4706,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
 
@@ -4733,7 +4733,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
 
@@ -4757,7 +4757,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ResourceFileTypeModel>>("GET", path, null);
         }
 
@@ -4782,7 +4782,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ReturnsParameterUsageModel>>("GET", path, null);
         }
 
@@ -4807,7 +4807,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SecurityRoleModel>>("GET", path, null);
         }
 
@@ -4833,7 +4833,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SubscriptionTypeModel>>("GET", path, null);
         }
 
@@ -4856,7 +4856,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TagsModel>>("GET", path, null);
         }
 
@@ -4880,7 +4880,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxAuthorityModel>>("GET", path, null);
         }
 
@@ -4906,7 +4906,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxAuthorityFormModel>>("GET", path, null);
         }
 
@@ -4930,7 +4930,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxAuthorityTypeModel>>("GET", path, null);
         }
 
@@ -4961,7 +4961,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
@@ -4982,7 +4982,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/taxcodetypes");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxCodeTypesModel>("GET", path, null);
         }
 
@@ -5006,7 +5006,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<FormMasterModel>>("GET", path, null);
         }
 
@@ -5030,7 +5030,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
@@ -5058,7 +5058,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
@@ -5086,7 +5086,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
 
@@ -5110,7 +5110,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxTypeGroupModel>>("GET", path, null);
         }
 
@@ -5135,7 +5135,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxTypeModel>>("GET", path, null);
         }
 
@@ -5164,7 +5164,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<UnitOfBasisModel>>("GET", path, null);
         }
 
@@ -5189,7 +5189,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<UomModel>>("GET", path, null);
         }
 
@@ -5215,7 +5215,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<CompanyDistanceThresholdModel>>("POST", path, model);
         }
 
@@ -5242,7 +5242,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5269,7 +5269,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyDistanceThresholdModel>("GET", path, null);
         }
 
@@ -5304,7 +5304,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null);
         }
 
@@ -5340,7 +5340,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null);
         }
 
@@ -5371,7 +5371,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyDistanceThresholdModel>("PUT", path, model);
         }
 
@@ -5395,7 +5395,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ECommerceTokenOutputModel>("POST", path, model);
         }
 
@@ -5419,7 +5419,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ECommerceTokenOutputModel>>("PUT", path, model);
         }
 
@@ -5440,7 +5440,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/approve");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5469,7 +5469,7 @@ namespace Avalara.AvaTax.RestClient
         public FirmClientLinkageOutputModel CreateAndLinkNewFirmClientAccount(NewFirmClientAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/createandlinkclient");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("POST", path, model);
         }
 
@@ -5489,7 +5489,7 @@ namespace Avalara.AvaTax.RestClient
         public FirmClientLinkageOutputModel CreateFirmClientLinkage(FirmClientLinkageInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("POST", path, model);
         }
 
@@ -5510,7 +5510,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5531,7 +5531,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("GET", path, null);
         }
 
@@ -5552,7 +5552,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
             path.AddQuery("$filter", filter);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<FirmClientLinkageOutputModel>>("GET", path, null);
         }
 
@@ -5573,7 +5573,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reject");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5594,7 +5594,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reset");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5615,7 +5615,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/revoke");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
         }
 
@@ -5644,7 +5644,7 @@ namespace Avalara.AvaTax.RestClient
         public NewAccountModel RequestFreeTrial(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NewAccountModel>("POST", path, model);
         }
 
@@ -5681,7 +5681,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FundingStatusModel>("GET", path, null);
         }
 
@@ -5716,7 +5716,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FundingStatusModel>("GET", path, null);
         }
 
@@ -5743,7 +5743,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5772,7 +5772,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -5802,7 +5802,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/upload");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemBulkUploadOutputModel>("POST", path, model);
         }
 
@@ -5832,7 +5832,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ItemClassificationOutputModel>>("POST", path, model);
         }
 
@@ -5866,7 +5866,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ItemParameterModel>>("POST", path, model);
         }
 
@@ -5896,7 +5896,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ItemModel>>("POST", path, model);
         }
 
@@ -5917,13 +5917,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="model">Tags you wish to associate with the Item</param>
-        public List<ItemTagDetailModel> CreateItemTags(Int32 companyId, Int32 itemId, List<ItemTagDetailModel> model)
+        public List<ItemTagDetailOutputModel> CreateItemTags(Int32 companyId, Int32 itemId, List<ItemTagDetailInputModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
-            return RestCall<List<ItemTagDetailModel>>("POST", path, model);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
+            return RestCall<List<ItemTagDetailOutputModel>>("POST", path, model);
         }
 
 
@@ -5948,7 +5948,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemTaxCodeClassificationRequestOutputModel>("POST", path, model);
         }
 
@@ -5985,7 +5985,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue/{itemCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemCode", itemCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6016,7 +6016,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6045,7 +6045,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6076,7 +6076,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6103,7 +6103,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("itemTagDetailId", itemTagDetailId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6128,7 +6128,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6165,7 +6165,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemTaxCodeClassificationRequestStatusOutputModel>>("GET", path, null);
         }
 
@@ -6196,7 +6196,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemModel>("GET", path, null);
         }
 
@@ -6225,7 +6225,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemClassificationOutputModel>("GET", path, null);
         }
 
@@ -6256,7 +6256,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemParameterModel>("GET", path, null);
         }
 
@@ -6279,7 +6279,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* tagName</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        public FetchResult<ItemTagDetailModel> GetItemTags(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
+        public FetchResult<ItemTagDetailOutputModel> GetItemTags(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
@@ -6287,8 +6287,8 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
-            return RestCall<FetchResult<ItemTagDetailModel>>("GET", path, null);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
+            return RestCall<FetchResult<ItemTagDetailOutputModel>>("GET", path, null);
         }
 
 
@@ -6321,7 +6321,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemCode", itemCode);
             path.ApplyField("systemCode", systemCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemPremiumClassificationOutputModel>("GET", path, null);
         }
 
@@ -6356,7 +6356,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemTaxCodeRecommendationsOutputModel>>("GET", path, null);
         }
 
@@ -6396,7 +6396,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemRestrictionOutputModel>>("GET", path, null);
         }
 
@@ -6434,7 +6434,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemClassificationOutputModel>>("GET", path, null);
         }
 
@@ -6474,7 +6474,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemParameterModel>>("GET", path, null);
         }
 
@@ -6525,7 +6525,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("tagName", tagName);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
@@ -6564,7 +6564,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
@@ -6607,7 +6607,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
         }
 
@@ -6633,7 +6633,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemCatalogueOutputModel>("POST", path, model);
         }
 
@@ -6666,7 +6666,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/sync");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SyncItemsResponseModel>("POST", path, model);
         }
 
@@ -6701,7 +6701,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemModel>("PUT", path, model);
         }
 
@@ -6733,7 +6733,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemClassificationOutputModel>("PUT", path, model);
         }
 
@@ -6765,7 +6765,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ItemParameterModel>("PUT", path, model);
         }
 
@@ -6792,7 +6792,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<JurisdictionOverrideModel>>("POST", path, model);
         }
 
@@ -6815,7 +6815,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -6843,7 +6843,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<JurisdictionOverrideModel>("GET", path, null);
         }
 
@@ -6882,7 +6882,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
@@ -6919,7 +6919,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<JurisdictionOverrideModel>>("GET", path, null);
         }
 
@@ -6943,7 +6943,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<JurisdictionOverrideModel>("PUT", path, model);
         }
 
@@ -6977,7 +6977,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<LocationParameterModel>>("POST", path, model);
         }
 
@@ -6999,7 +6999,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<LocationModel>>("POST", path, model);
         }
 
@@ -7022,7 +7022,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -7053,7 +7053,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -7087,7 +7087,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LocationModel>("GET", path, null);
         }
 
@@ -7118,7 +7118,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LocationParameterModel>("GET", path, null);
         }
 
@@ -7158,7 +7158,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<LocationParameterModel>>("GET", path, null);
         }
 
@@ -7200,7 +7200,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<LocationModel>>("GET", path, null);
         }
 
@@ -7241,7 +7241,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<LocationModel>>("GET", path, null);
         }
 
@@ -7267,7 +7267,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LocationModel>("PUT", path, model);
         }
 
@@ -7299,7 +7299,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LocationParameterModel>("PUT", path, model);
         }
 
@@ -7324,7 +7324,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<LocationValidationModel>("GET", path, null);
         }
 
@@ -7368,7 +7368,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7413,7 +7413,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AuditMultiDocumentModel>("GET", path, null);
         }
 
@@ -7449,7 +7449,7 @@ namespace Avalara.AvaTax.RestClient
         public MultiDocumentModel CommitMultiDocumentTransaction(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7511,7 +7511,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7556,7 +7556,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("GET", path, null);
         }
 
@@ -7608,7 +7608,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("GET", path, null);
         }
 
@@ -7664,7 +7664,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<MultiDocumentModel>>("GET", path, null);
         }
 
@@ -7734,7 +7734,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7768,7 +7768,7 @@ namespace Avalara.AvaTax.RestClient
         public MultiDocumentModel VerifyMultiDocumentTransaction(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7809,7 +7809,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<MultiDocumentModel>("POST", path, model);
         }
 
@@ -7849,7 +7849,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<NexusModel>>("POST", path, model);
         }
 
@@ -7882,7 +7882,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<NexusParameterDetailModel>>("POST", path, model);
         }
 
@@ -7918,7 +7918,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byaddress");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<NexusByAddressModel>>("POST", path, model);
         }
 
@@ -7950,7 +7950,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("cascadeDelete", cascadeDelete);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -7980,7 +7980,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8008,7 +8008,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8040,7 +8040,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NexusModel>("GET", path, null);
         }
 
@@ -8076,7 +8076,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NexusByTaxFormModel>("GET", path, null);
         }
 
@@ -8106,7 +8106,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NexusParameterDetailModel>("GET", path, null);
         }
 
@@ -8147,7 +8147,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -8190,7 +8190,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -8229,7 +8229,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusParameterDetailModel>>("GET", path, null);
         }
 
@@ -8268,7 +8268,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NexusModel>>("GET", path, null);
         }
 
@@ -8310,7 +8310,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NexusModel>("PUT", path, model);
         }
 
@@ -8342,7 +8342,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NexusParameterDetailModel>("PUT", path, model);
         }
 
@@ -8363,7 +8363,7 @@ namespace Avalara.AvaTax.RestClient
         public NoticeResponsibilityModel CreateNoticeResponsibilityType(CreateNoticeResponsibilityTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NoticeResponsibilityModel>("POST", path, model);
         }
 
@@ -8384,7 +8384,7 @@ namespace Avalara.AvaTax.RestClient
         public NoticeRootCauseModel CreateNoticeRootCauseType(CreateNoticeRootCauseTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NoticeRootCauseModel>("POST", path, model);
         }
 
@@ -8405,7 +8405,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities/{responsibilityId}");
             path.ApplyField("responsibilityId", responsibilityId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8426,7 +8426,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses/{rootCauseId}");
             path.ApplyField("rootCauseId", rootCauseId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8460,7 +8460,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}/dismiss");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NotificationModel>("PUT", path, null);
         }
 
@@ -8488,7 +8488,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NotificationModel>("GET", path, null);
         }
 
@@ -8525,7 +8525,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<NotificationModel>>("GET", path, null);
         }
 
@@ -8560,7 +8560,7 @@ namespace Avalara.AvaTax.RestClient
         public NewAccountModel RequestNewAccount(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NewAccountModel>("POST", path, model);
         }
 
@@ -8586,7 +8586,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/entitlements/{offer}");
             path.ApplyField("id", id);
             path.ApplyField("offer", offer);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<OfferModel>("POST", path, null);
         }
 
@@ -8610,7 +8610,7 @@ namespace Avalara.AvaTax.RestClient
         public List<AccountModel> CreateAccount(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<AccountModel>>("POST", path, model);
         }
 
@@ -8643,7 +8643,7 @@ namespace Avalara.AvaTax.RestClient
         public List<NotificationModel> CreateNotifications(List<NotificationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/notifications");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<NotificationModel>>("POST", path, model);
         }
 
@@ -8670,7 +8670,7 @@ namespace Avalara.AvaTax.RestClient
         public SubscriptionTypeModel CreateServiceTypes(SubscriptionTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/servicetypes");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SubscriptionTypeModel>("POST", path, model);
         }
 
@@ -8696,7 +8696,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<SubscriptionModel>>("POST", path, model);
         }
 
@@ -8721,7 +8721,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8752,7 +8752,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8777,7 +8777,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8803,7 +8803,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -8836,7 +8836,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SubscriptionTypeModel>>("GET", path, null);
         }
 
@@ -8866,7 +8866,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
             path.AddQuery("isUndoMigrateRequest", isUndoMigrateRequest);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallString("POST", path, model);
         }
 
@@ -8891,7 +8891,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AccountModel>("PUT", path, model);
         }
 
@@ -8923,7 +8923,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<NotificationModel>("PUT", path, model);
         }
 
@@ -8950,7 +8950,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SubscriptionTypeModel>("PUT", path, model);
         }
 
@@ -8981,7 +8981,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SubscriptionModel>("PUT", path, model);
         }
 
@@ -9015,7 +9015,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallFile("GET", path, null);
         }
 
@@ -9042,7 +9042,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<ReportModel>("GET", path, null);
         }
 
@@ -9083,7 +9083,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ReportModel>>("POST", path, model);
         }
 
@@ -9120,7 +9120,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("pageKey", pageKey);
             path.AddQuery("$skip", skip);
             path.AddQuery("$top", top);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<ReportModel>>("GET", path, null);
         }
 
@@ -9156,7 +9156,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<SettingModel>>("POST", path, model);
         }
 
@@ -9188,7 +9188,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -9220,7 +9220,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SettingModel>("GET", path, null);
         }
 
@@ -9263,7 +9263,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SettingModel>>("GET", path, null);
         }
 
@@ -9304,7 +9304,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SettingModel>>("GET", path, null);
         }
 
@@ -9341,7 +9341,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SettingModel>("PUT", path, model);
         }
 
@@ -9366,7 +9366,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SubscriptionModel>("GET", path, null);
         }
 
@@ -9400,7 +9400,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
@@ -9432,7 +9432,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
@@ -9458,7 +9458,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<TaxCodeModel>>("POST", path, model);
         }
 
@@ -9481,7 +9481,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -9508,7 +9508,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxCodeModel>("GET", path, null);
         }
 
@@ -9546,7 +9546,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
@@ -9582,7 +9582,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxCodeModel>>("GET", path, null);
         }
 
@@ -9612,7 +9612,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxCodeModel>("PUT", path, model);
         }
 
@@ -9655,7 +9655,7 @@ namespace Avalara.AvaTax.RestClient
         public FileResult BuildTaxContentFile(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallFile("POST", path, model);
         }
 
@@ -9709,7 +9709,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallFile("GET", path, null);
         }
 
@@ -9771,7 +9771,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date.ToString("o"));
             path.AddQuery("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallFile("GET", path, null);
         }
 
@@ -9834,7 +9834,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxRateModel>("GET", path, null);
         }
 
@@ -9882,7 +9882,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxRateModel>("GET", path, null);
         }
 
@@ -9916,7 +9916,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<TaxRuleModel>>("POST", path, model);
         }
 
@@ -9951,7 +9951,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -9986,7 +9986,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxRuleModel>("GET", path, null);
         }
 
@@ -10032,7 +10032,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxRuleModel>>("GET", path, null);
         }
 
@@ -10076,7 +10076,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TaxRuleModel>>("GET", path, null);
         }
 
@@ -10112,7 +10112,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TaxRuleModel>("PUT", path, model);
         }
 
@@ -10154,7 +10154,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10211,7 +10211,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10257,7 +10257,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AuditTransactionModel>("GET", path, null);
         }
 
@@ -10305,7 +10305,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<AuditTransactionModel>("GET", path, null);
         }
 
@@ -10332,7 +10332,7 @@ namespace Avalara.AvaTax.RestClient
         public BulkLockTransactionResult BulkLockTransaction(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<BulkLockTransactionResult>("POST", path, model);
         }
 
@@ -10389,7 +10389,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10444,7 +10444,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10499,7 +10499,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10561,7 +10561,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10600,8 +10600,28 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Fetches the Variance data generated for all the transactions done by Company.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyCode"></param>
+        public VarianceResponseModel GetAllVarianceReportByCompanyCode(String companyCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/AllVariance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
+            return RestCall<VarianceResponseModel>("GET", path, null);
         }
 
 
@@ -10653,7 +10673,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("GET", path, null);
         }
 
@@ -10689,7 +10709,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("GET", path, null);
         }
 
@@ -10728,8 +10748,30 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Fetches the Variance data generated for particular Company by transaction ID
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyCode"></param>
+        /// <param name="transactionId"></param>
+        public VarianceResponseModel GetVarianceReportByCompanyCodeByTransactionId(String companyCode, String transactionId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionId}/variance");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionId", transactionId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
+            return RestCall<VarianceResponseModel>("GET", path, null);
         }
 
 
@@ -10790,7 +10832,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<TransactionModel>>("GET", path, null);
         }
 
@@ -10847,7 +10889,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10916,7 +10958,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
             path.AddQuery("useTaxDateOverride", useTaxDateOverride);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -10971,7 +11013,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -11020,7 +11062,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, null);
         }
 
@@ -11066,8 +11108,29 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, null);
+        }
+
+
+        /// <summary>
+        /// Generates the Variance report which will capture the difference between "Tax Calculated by Avalara" Vs "Actual Tax" paid at custom clearance at line / header level.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyCode"></param>
+        /// <param name="model"></param>
+        public VarianceResponseModel VarianceReport(String companyCode, List<VarianceRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/variance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
+            return RestCall<VarianceResponseModel>("POST", path, model);
         }
 
 
@@ -11120,7 +11183,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -11176,7 +11239,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<TransactionModel>("POST", path, model);
         }
 
@@ -11200,7 +11263,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<UPCModel>>("POST", path, model);
         }
 
@@ -11224,7 +11287,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -11249,7 +11312,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<UPCModel>("GET", path, null);
         }
 
@@ -11285,7 +11348,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<UPCModel>>("GET", path, null);
         }
 
@@ -11319,7 +11382,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<UPCModel>>("GET", path, null);
         }
 
@@ -11347,7 +11410,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<UPCModel>("PUT", path, model);
         }
 
@@ -11371,7 +11434,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -11395,7 +11458,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.AddQuery("udfType", udfType);
             path.AddQuery("allowDefaults", allowDefaults);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<CompanyUserDefinedFieldModel>>("GET", path, null);
         }
 
@@ -11420,7 +11483,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields");
             path.ApplyField("companyId", companyId);
             path.AddQuery("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<CompanyUserDefinedFieldModel>("POST", path, model);
         }
 
@@ -11446,7 +11509,7 @@ namespace Avalara.AvaTax.RestClient
         public String ChangePassword(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCallString("PUT", path, model);
         }
 
@@ -11476,7 +11539,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<UserModel>>("POST", path, model);
         }
 
@@ -11504,7 +11567,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
         }
 
@@ -11534,7 +11597,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<UserModel>("GET", path, null);
         }
 
@@ -11571,7 +11634,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<UserEntitlementModel>("GET", path, null);
         }
 
@@ -11613,7 +11676,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<UserModel>>("GET", path, null);
         }
 
@@ -11655,7 +11718,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<UserModel>>("GET", path, null);
         }
 
@@ -11682,7 +11745,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<UserModel>("PUT", path, model);
         }
 
@@ -11706,7 +11769,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<SubscriptionModel>("GET", path, null);
         }
 
@@ -11728,7 +11791,7 @@ namespace Avalara.AvaTax.RestClient
         public FetchResult<SubscriptionModel> ListMySubscriptions()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<FetchResult<SubscriptionModel>>("GET", path, null);
         }
 
@@ -11762,8 +11825,89 @@ namespace Avalara.AvaTax.RestClient
         public PingResultModel Ping()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"22.11.0");
             return RestCall<PingResultModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Fetches a previously stored age verification response.
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public AgeVerifyResult findAgeVerification(AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/find");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            return RestCall<AgeVerifyResult>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Stores an age verification response for the account.
+        /// </summary>
+        /// <remarks>
+        /// The request field must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, request field may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// 
+        /// 
+        /// The response field must meet the following criteria in order to be evaluated:
+        /// * *isOfAge*, *failureCodes* are required fields
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="model">Information about the individual whose age has been verified and the corresponding age verification response.</param>
+        public void storeAgeVerification(StoreAgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            RestCallString("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Conditionally performs an age verification check. If a record matching the request is found in the internal store, the associated response is returned. Otherwise, an age verification check is performed and the response is stored if the individual is determined to be of age.
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="simulatedFailureCode">(Optional) The failure code included in the simulated response of the endpoint. Note that this endpoint is only available in Sandbox for testing purposes.</param>
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public StoreIfVerifiedResult storeIfVerified(String simulatedFailureCode, AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/storeIfVerified");
+            path.AddQuery("simulatedFailureCode", simulatedFailureCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID,"");
+            return RestCall<StoreIfVerifiedResult>("PUT", path, model);
         }
 
 
@@ -11963,7 +12107,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/resetlicensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LicenseKeyModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -11995,7 +12139,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/activate");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12038,7 +12182,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("end", end);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<AuditModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12070,7 +12214,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LicenseKeyModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12098,7 +12242,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12126,7 +12270,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AccountModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12159,7 +12303,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<AccountConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12181,7 +12325,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekey/{licensekeyname}");
             path.ApplyField("id", id);
             path.ApplyField("licensekeyname", licensekeyname);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AccountLicenseKeyModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12203,7 +12347,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/licensekeys");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<AccountLicenseKeyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12244,7 +12388,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<AccountModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12278,7 +12422,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<AccountConfigurationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12325,7 +12469,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
             path.AddQuery("textCase", textCase);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AddressResolutionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12352,7 +12496,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<AddressResolutionModel> ResolveAddressPostAsync(AddressValidationInfo model)
         {
             var path = new AvaTaxPath("/api/v2/addresses/resolve");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AddressResolutionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12373,7 +12517,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AdvancedRuleLookupFileModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12393,7 +12537,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12413,7 +12557,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/companies/{companyId}/lookupFiles");
             path.ApplyField("accountId", accountId);
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<AdvancedRuleLookupFileModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12433,7 +12577,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AdvancedRuleLookupFileModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12454,7 +12598,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/advancedrules/accounts/{accountId}/lookupFiles/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AdvancedRuleLookupFileModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -12477,7 +12621,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<AvaFileFormModel>> CreateAvaFileFormsAsync(List<AvaFileFormModel> model)
         {
             var path = new AvaTaxPath("/api/v2/avafileforms");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<AvaFileFormModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12500,7 +12644,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12523,7 +12667,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AvaFileFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12553,7 +12697,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12578,7 +12722,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/avafileforms/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AvaFileFormModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -12613,7 +12757,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}/cancel");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<BatchModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -12654,7 +12798,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<BatchModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12693,7 +12837,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/transactions");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CreateTransactionBatchResponseModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12726,7 +12870,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -12752,7 +12896,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("batchId", batchId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12790,7 +12934,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<BatchModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12842,7 +12986,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<BatchModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12889,7 +13033,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<BatchModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12911,8 +13055,8 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -12929,7 +13073,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certexpressinvites");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CertExpressInvitationStatusModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -12951,8 +13095,8 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -12972,7 +13116,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CertExpressInvitationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -12994,8 +13138,8 @@ namespace Avalara.AvaTax.RestClient
         /// your company so that they can be used for tax exemptions.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -13021,7 +13165,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertExpressInvitationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13067,7 +13211,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates");
             path.ApplyField("companyId", companyId);
             path.AddQuery("$preValidatedExemptionReason", preValidatedExemptionReason);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13104,7 +13248,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -13146,7 +13290,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("$page", page);
             path.AddQuery("$type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13193,7 +13337,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CertificateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13222,7 +13366,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ProvisionStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13261,7 +13405,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13301,7 +13445,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13339,7 +13483,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13380,7 +13524,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13433,7 +13577,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13464,7 +13608,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/setup");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ProvisionStatusModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -13503,7 +13647,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13544,7 +13688,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/customers/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13580,7 +13724,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CertificateModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -13619,7 +13763,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/attachment");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallStringAsync("POST", path, file).ConfigureAwait(false);
         }
 
@@ -13663,7 +13807,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/certify");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13698,7 +13842,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13730,7 +13874,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<CompanyModel> CompanyInitializeAsync(CompanyInitializationModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/initialize");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13755,7 +13899,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<CompanyModel>> CreateCompaniesAsync(List<CompanyModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CompanyModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13788,7 +13932,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CompanyParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13825,7 +13969,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FundingStatusModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -13847,7 +13991,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -13876,7 +14020,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -13902,7 +14046,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configuration");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FundingConfigurationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13930,7 +14074,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/funding/configurations");
             path.ApplyField("companyId", companyId);
             path.AddQuery("currency", currency);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<FundingConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -13969,7 +14113,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14002,7 +14146,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CompanyConfigurationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14032,7 +14176,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyParameterDetailModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14067,7 +14211,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14097,7 +14241,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("periodyear", periodyear);
             path.ApplyField("periodmonth", periodmonth);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ACHEntryDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14136,7 +14280,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CompanyParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14162,7 +14306,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/funding");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<FundingStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14184,7 +14328,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync()
         {
             var path = new AvaTaxPath("/api/v2/companies/mrs");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<MrsCompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14230,7 +14374,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CompanyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14264,7 +14408,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/configuration");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CompanyConfigurationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14297,7 +14441,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14328,7 +14472,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/parameters/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14364,7 +14508,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ComplianceJurisdictionRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14389,7 +14533,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ContactModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14413,7 +14557,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -14439,7 +14583,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ContactModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14472,7 +14616,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ContactModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14505,7 +14649,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ContactModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14534,7 +14678,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/contacts/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ContactModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14572,7 +14716,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CustomerModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14608,7 +14752,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CustomerModel>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -14652,7 +14796,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CustomerModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14692,7 +14836,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerAttributeModel>>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -14729,7 +14873,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14767,7 +14911,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/billto/{code}/shipto/link");
             path.ApplyField("companyId", companyId);
             path.ApplyField("code", code);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CustomerModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -14806,7 +14950,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14856,7 +15000,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14899,7 +15043,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             path.ApplyField("country", country);
             path.ApplyField("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ExemptionStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14948,7 +15092,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -14988,7 +15132,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/attributes/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CustomerAttributeModel>>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -15025,7 +15169,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/certificates/unlink");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -15062,7 +15206,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("customerCode", customerCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CustomerModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -15086,7 +15230,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<DataSourceModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -15111,7 +15255,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -15136,7 +15280,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<DataSourceModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15167,7 +15311,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<DataSourceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15199,7 +15343,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<DataSourceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15225,7 +15369,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/datasources/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<DataSourceModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -15258,7 +15402,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/{country}/{hsCode}/hierarchy");
             path.ApplyField("country", country);
             path.ApplyField("hsCode", hsCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15285,7 +15429,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15309,7 +15453,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<MarketplaceModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15338,7 +15482,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<AvaFileFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15370,7 +15514,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CertificateAttributeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15400,7 +15544,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ExemptionReasonModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15430,7 +15574,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ExposureZoneModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15456,7 +15600,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ClassificationParameterUsageMapModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15482,7 +15626,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15507,7 +15651,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CommunicationsTransactionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15532,7 +15676,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CommunicationsTSPairModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15558,7 +15702,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<IsoCountryModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15589,7 +15733,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CoverLetterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15628,7 +15772,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15653,7 +15797,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<HsCodeModel>> ListCrossBorderSectionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/definitions/crossborder/sections");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<HsCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15680,7 +15824,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CurrencyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15708,7 +15852,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<EntityUseCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15733,7 +15877,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<FilingFrequencyModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15762,7 +15906,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<JurisdictionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15806,7 +15950,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15847,7 +15991,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15871,7 +16015,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("taxTypeId", taxTypeId);
             path.ApplyField("taxSubTypeId", taxSubTypeId);
             path.AddQuery("rateTypeId", rateTypeId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<String>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15918,7 +16062,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<LocationQuestionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15944,7 +16088,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SkyscraperStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15968,7 +16112,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<MarketplaceLocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -15994,7 +16138,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16051,7 +16195,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16079,7 +16223,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16109,7 +16253,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16141,7 +16285,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/definitions/nexus/byform/{formCode}");
             path.ApplyField("formCode", formCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16169,7 +16313,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16194,7 +16338,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusTaxTypeGroupModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16219,7 +16363,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeCustomerFundingOptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16244,7 +16388,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeCustomerTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16269,7 +16413,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeFilingTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16294,7 +16438,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticePriorityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16319,7 +16463,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeReasonModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16344,7 +16488,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeResponsibilityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16369,7 +16513,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeRootCauseModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16394,7 +16538,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeStatusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16419,7 +16563,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NoticeTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16445,7 +16589,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16490,7 +16634,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16516,7 +16660,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ParameterUsageModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16537,7 +16681,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/permissions");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<String>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16561,7 +16705,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<PostalCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16593,7 +16737,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<PreferredProgramModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16622,7 +16766,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16661,7 +16805,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("$countryCode", countryCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ProductClassificationSystemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16688,7 +16832,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<RateTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16719,7 +16863,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<RateTypesModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16745,7 +16889,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16773,7 +16917,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16798,7 +16942,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ResourceFileTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16824,7 +16968,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ReturnsParameterUsageModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16850,7 +16994,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SecurityRoleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16877,7 +17021,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16901,7 +17045,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TagsModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16926,7 +17070,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxAuthorityModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16953,7 +17097,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxAuthorityFormModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -16978,7 +17122,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxAuthorityTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17010,7 +17154,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17032,7 +17176,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/definitions/taxcodetypes");
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxCodeTypesModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17057,7 +17201,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<FormMasterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17082,7 +17226,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17111,7 +17255,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17140,7 +17284,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17165,7 +17309,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxTypeGroupModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17191,7 +17335,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17221,7 +17365,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<UnitOfBasisModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17247,7 +17391,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<UomModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17274,7 +17418,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<CompanyDistanceThresholdModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17302,7 +17446,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17330,7 +17474,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyDistanceThresholdModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17366,7 +17510,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17403,7 +17547,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CompanyDistanceThresholdModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17435,7 +17579,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/distancethresholds/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyDistanceThresholdModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -17460,7 +17604,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ECommerceTokenOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17485,7 +17629,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/ecommercetokens");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ECommerceTokenOutputModel>>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -17507,7 +17651,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/approve");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17537,7 +17681,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FirmClientLinkageOutputModel> CreateAndLinkNewFirmClientAccountAsync(NewFirmClientAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/createandlinkclient");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17558,7 +17702,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FirmClientLinkageOutputModel> CreateFirmClientLinkageAsync(FirmClientLinkageInputModel model)
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17580,7 +17724,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17602,7 +17746,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17624,7 +17768,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages");
             path.AddQuery("$filter", filter);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<FirmClientLinkageOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17646,7 +17790,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reject");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17668,7 +17812,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/reset");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17690,7 +17834,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/firmclientlinkages/{id}/revoke");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -17720,7 +17864,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NewAccountModel> RequestFreeTrialAsync(FreeTrialRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17758,7 +17902,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17794,7 +17938,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -17822,7 +17966,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17852,7 +17996,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -17883,7 +18027,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/upload");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemBulkUploadOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17914,7 +18058,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ItemClassificationOutputModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17949,7 +18093,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ItemParameterModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -17980,7 +18124,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ItemModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18002,13 +18146,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="model">Tags you wish to associate with the Item</param>
-        public async Task<List<ItemTagDetailModel>> CreateItemTagsAsync(Int32 companyId, Int32 itemId, List<ItemTagDetailModel> model)
+        public async Task<List<ItemTagDetailOutputModel>> CreateItemTagsAsync(Int32 companyId, Int32 itemId, List<ItemTagDetailInputModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
-            return await RestCallAsync<List<ItemTagDetailModel>>("POST", path, model).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
+            return await RestCallAsync<List<ItemTagDetailOutputModel>>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -18034,7 +18178,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/classificationrequests/taxcode");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemTaxCodeClassificationRequestOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18072,7 +18216,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue/{itemCode}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemCode", itemCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18104,7 +18248,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18134,7 +18278,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18166,7 +18310,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18194,7 +18338,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("itemTagDetailId", itemTagDetailId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18220,7 +18364,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18258,7 +18402,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemTaxCodeClassificationRequestStatusOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18290,7 +18434,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18320,7 +18464,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemClassificationOutputModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18352,7 +18496,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemParameterModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18376,7 +18520,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* tagName</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        public async Task<FetchResult<ItemTagDetailModel>> GetItemTagsAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
+        public async Task<FetchResult<ItemTagDetailOutputModel>> GetItemTagsAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
@@ -18384,8 +18528,8 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
-            return await RestCallAsync<FetchResult<ItemTagDetailModel>>("GET", path, null).ConfigureAwait(false);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
+            return await RestCallAsync<FetchResult<ItemTagDetailOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -18419,7 +18563,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemCode", itemCode);
             path.ApplyField("systemCode", systemCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemPremiumClassificationOutputModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18455,7 +18599,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemTaxCodeRecommendationsOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18496,7 +18640,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemRestrictionOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18535,7 +18679,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemClassificationOutputModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18576,7 +18720,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18628,7 +18772,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
             path.AddQuery("tagName", tagName);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18668,7 +18812,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18712,7 +18856,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18739,7 +18883,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/itemcatalogue");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemCatalogueOutputModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18773,7 +18917,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/sync");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SyncItemsResponseModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18809,7 +18953,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18842,7 +18986,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemClassificationOutputModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18875,7 +19019,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ItemParameterModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -18903,7 +19047,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<JurisdictionOverrideModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -18927,7 +19071,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -18956,7 +19100,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<JurisdictionOverrideModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -18996,7 +19140,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19034,7 +19178,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<JurisdictionOverrideModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19059,7 +19203,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/jurisdictionoverrides/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<JurisdictionOverrideModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -19094,7 +19238,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{locationId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<LocationParameterModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19117,7 +19261,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<LocationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19141,7 +19285,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -19173,7 +19317,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -19208,7 +19352,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LocationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19240,7 +19384,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LocationParameterModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19281,7 +19425,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<LocationParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19324,7 +19468,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<LocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19366,7 +19510,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<LocationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19393,7 +19537,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LocationModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -19426,7 +19570,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("locationId", locationId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LocationParameterModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -19452,7 +19596,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/locations/{id}/validate");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<LocationValidationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19497,7 +19641,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19543,7 +19687,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/audit");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AuditMultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19580,7 +19724,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<MultiDocumentModel> CommitMultiDocumentTransactionAsync(CommitMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/commit");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19643,7 +19787,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19689,7 +19833,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19742,7 +19886,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19799,7 +19943,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<MultiDocumentModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -19870,7 +20014,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("code", code);
             path.ApplyField("type", type);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19905,7 +20049,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<MultiDocumentModel> VerifyMultiDocumentTransactionAsync(VerifyMultiDocumentModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/verify");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19947,7 +20091,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/multidocument/{code}/type/{type}/void");
             path.ApplyField("code", code);
             path.ApplyField("type", type);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<MultiDocumentModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -19988,7 +20132,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<NexusModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20022,7 +20166,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<NexusParameterDetailModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20059,7 +20203,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/byaddress");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<NexusByAddressModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20092,7 +20236,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("cascadeDelete", cascadeDelete);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20123,7 +20267,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20152,7 +20296,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{nexusId}/parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20185,7 +20329,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NexusModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20222,7 +20366,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("formCode", formCode);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NexusByTaxFormModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20253,7 +20397,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NexusParameterDetailModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20295,7 +20439,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20339,7 +20483,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20379,7 +20523,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusParameterDetailModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20419,7 +20563,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NexusModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20462,7 +20606,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/nexus/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NexusModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20495,7 +20639,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.ApplyField("nexusId", nexusId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NexusParameterDetailModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -20517,7 +20661,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NoticeResponsibilityModel> CreateNoticeResponsibilityTypeAsync(CreateNoticeResponsibilityTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NoticeResponsibilityModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20539,7 +20683,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NoticeRootCauseModel> CreateNoticeRootCauseTypeAsync(CreateNoticeRootCauseTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NoticeRootCauseModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20561,7 +20705,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/responsibilities/{responsibilityId}");
             path.ApplyField("responsibilityId", responsibilityId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20583,7 +20727,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notices/rootcauses/{rootCauseId}");
             path.ApplyField("rootCauseId", rootCauseId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20618,7 +20762,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}/dismiss");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NotificationModel>("PUT", path, null).ConfigureAwait(false);
         }
 
@@ -20647,7 +20791,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NotificationModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20685,7 +20829,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<NotificationModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -20721,7 +20865,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<NewAccountModel> RequestNewAccountAsync(NewAccountRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20748,7 +20892,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{id}/entitlements/{offer}");
             path.ApplyField("id", id);
             path.ApplyField("offer", offer);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<OfferModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -20773,7 +20917,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<AccountModel>> CreateAccountAsync(AccountModel model)
         {
             var path = new AvaTaxPath("/api/v2/accounts");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<AccountModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20807,7 +20951,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<NotificationModel>> CreateNotificationsAsync(List<NotificationModel> model)
         {
             var path = new AvaTaxPath("/api/v2/notifications");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<NotificationModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20835,7 +20979,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<SubscriptionTypeModel> CreateServiceTypesAsync(SubscriptionTypeModel model)
         {
             var path = new AvaTaxPath("/api/v2/servicetypes");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SubscriptionTypeModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20862,7 +21006,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<SubscriptionModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -20888,7 +21032,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20920,7 +21064,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20946,7 +21090,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -20973,7 +21117,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -21007,7 +21151,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SubscriptionTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21038,7 +21182,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/passwords/{userId}/reset");
             path.ApplyField("userId", userId);
             path.AddQuery("isUndoMigrateRequest", isUndoMigrateRequest);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21064,7 +21208,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AccountModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21097,7 +21241,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<NotificationModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21125,7 +21269,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SubscriptionTypeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21157,7 +21301,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SubscriptionModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21192,7 +21336,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}/attachment");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21220,7 +21364,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/reports/{id}");
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<ReportModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21262,7 +21406,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/reports/exportdocumentline/initiate");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ReportModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21300,7 +21444,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("pageKey", pageKey);
             path.AddQuery("$skip", skip);
             path.AddQuery("$top", top);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<ReportModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21337,7 +21481,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<SettingModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21370,7 +21514,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -21403,7 +21547,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SettingModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21447,7 +21591,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SettingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21489,7 +21633,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SettingModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21527,7 +21671,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/settings/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SettingModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21553,7 +21697,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/subscriptions/{id}");
             path.ApplyField("accountId", accountId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SubscriptionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21588,7 +21732,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21621,7 +21765,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21648,7 +21792,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<TaxCodeModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21672,7 +21816,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -21700,7 +21844,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxCodeModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21739,7 +21883,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21776,7 +21920,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21807,7 +21951,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxcodes/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxCodeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -21851,7 +21995,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FileResult> BuildTaxContentFileAsync(PointOfSaleDataRequestModel model)
         {
             var path = new AvaTaxPath("/api/v2/pointofsaledata/build");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallFileAsync("POST", path, model).ConfigureAwait(false);
         }
 
@@ -21906,7 +22050,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("format", format);
             path.AddQuery("partnerId", partnerId);
             path.AddQuery("includeJurisCodes", includeJurisCodes);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -21969,7 +22113,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxratesbyzipcode/download/{date}");
             path.ApplyField("date", date.ToString("o"));
             path.AddQuery("region", region);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallFileAsync("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22033,7 +22177,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("region", region);
             path.AddQuery("postalCode", postalCode);
             path.AddQuery("country", country);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22082,7 +22226,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/taxrates/bypostalcode");
             path.AddQuery("country", country);
             path.AddQuery("postalCode", postalCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxRateModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22117,7 +22261,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<TaxRuleModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22153,7 +22297,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -22189,7 +22333,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxRuleModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22236,7 +22380,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxRuleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22281,7 +22425,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TaxRuleModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22318,7 +22462,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/taxrules/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TaxRuleModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -22361,7 +22505,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/add");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22419,7 +22563,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22466,7 +22610,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionCode}/audit");
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AuditTransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22515,7 +22659,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyCode", companyCode);
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<AuditTransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22543,7 +22687,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<BulkLockTransactionResult> BulkLockTransactionAsync(BulkLockTransactionModel model)
         {
             var path = new AvaTaxPath("/api/v2/transactions/lock");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<BulkLockTransactionResult>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22601,7 +22745,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22657,7 +22801,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22713,7 +22857,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/createoradjust");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22776,7 +22920,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/transactions/create");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -22816,8 +22960,29 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/transactions/lines/delete");
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Fetches the Variance data generated for all the transactions done by Company.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
+        /// </remarks>
+		
+        /// <param name="companyCode"></param>
+        public async Task<VarianceResponseModel> GetAllVarianceReportByCompanyCodeAsync(String companyCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/AllVariance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
+            return await RestCallAsync<VarianceResponseModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -22870,7 +23035,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22907,7 +23072,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.ApplyField("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -22947,8 +23112,31 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/transactions/{id}");
             path.ApplyField("id", id);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Fetches the Variance data generated for particular Company by transaction ID;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
+        /// </remarks>
+		
+        /// <param name="companyCode"></param>
+        /// <param name="transactionId"></param>
+        public async Task<VarianceResponseModel> GetVarianceReportByCompanyCodeByTransactionIdAsync(String companyCode, String transactionId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/transactions/{transactionId}/variance");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("transactionId", transactionId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
+            return await RestCallAsync<VarianceResponseModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -23010,7 +23198,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<TransactionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23068,7 +23256,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23138,7 +23326,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$include", include);
             path.AddQuery("documentType", documentType);
             path.AddQuery("useTaxDateOverride", useTaxDateOverride);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23194,7 +23382,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23244,7 +23432,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, null).ConfigureAwait(false);
         }
 
@@ -23291,8 +23479,30 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Generates the Variance report which will capture the difference between "Tax Calculated by Avalara" Vs "Actual Tax" paid at custom clearance at line / header level.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, BasicReturns.;
+        /// </remarks>
+		
+        /// <param name="companyCode"></param>
+        /// <param name="model"></param>
+        public async Task<VarianceResponseModel> VarianceReportAsync(String companyCode, List<VarianceRequestModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyCode}/variance");
+            path.ApplyField("companyCode", companyCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
+            return await RestCallAsync<VarianceResponseModel>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -23346,7 +23556,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23403,7 +23613,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("transactionCode", transactionCode);
             path.AddQuery("documentType", documentType);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<TransactionModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23428,7 +23638,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs");
             path.ApplyField("companyId", companyId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<UPCModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23453,7 +23663,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -23479,7 +23689,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<UPCModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23516,7 +23726,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<UPCModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23551,7 +23761,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<UPCModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23580,7 +23790,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/upcs/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<UPCModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -23605,7 +23815,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields/{id}");
             path.ApplyField("companyId", companyId);
             path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -23630,7 +23840,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             path.AddQuery("udfType", udfType);
             path.AddQuery("allowDefaults", allowDefaults);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<CompanyUserDefinedFieldModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23656,7 +23866,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/userdefinedfields");
             path.ApplyField("companyId", companyId);
             path.AddQuery("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<CompanyUserDefinedFieldModel>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23683,7 +23893,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<String> ChangePasswordAsync(PasswordChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/passwords");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -23714,7 +23924,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users");
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<UserModel>>("POST", path, model).ConfigureAwait(false);
         }
 
@@ -23743,7 +23953,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
         }
 
@@ -23774,7 +23984,7 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<UserModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23812,7 +24022,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}/entitlements");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<UserEntitlementModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23855,7 +24065,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<UserModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23898,7 +24108,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<UserModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23926,7 +24136,7 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/accounts/{accountId}/users/{id}");
             path.ApplyField("id", id);
             path.ApplyField("accountId", accountId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<UserModel>("PUT", path, model).ConfigureAwait(false);
         }
 
@@ -23951,7 +24161,7 @@ namespace Avalara.AvaTax.RestClient
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions/{serviceTypeId}");
             path.ApplyField("serviceTypeId", serviceTypeId);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<SubscriptionModel>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -23974,7 +24184,7 @@ namespace Avalara.AvaTax.RestClient
         public async Task<FetchResult<SubscriptionModel>> ListMySubscriptionsAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/subscriptions");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<FetchResult<SubscriptionModel>>("GET", path, null).ConfigureAwait(false);
         }
 
@@ -24009,8 +24219,92 @@ namespace Avalara.AvaTax.RestClient
         public async Task<PingResultModel> PingAsync()
         {
             var path = new AvaTaxPath("/api/v2/utilities/ping");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.10.0");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"22.11.0");
             return await RestCallAsync<PingResultModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Fetches a previously stored age verification response.;
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*];
+        /// </remarks>
+		
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public async Task<AgeVerifyResult> findAgeVerificationAsync(AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/find");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            return await RestCallAsync<AgeVerifyResult>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Stores an age verification response for the account.;
+        /// </summary>
+        /// <remarks>
+        /// The request field must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, request field may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*]
+        /// 
+        /// 
+        /// The response field must meet the following criteria in order to be evaluated:
+        /// * *isOfAge*, *failureCodes* are required fields;
+        /// </remarks>
+		
+        /// <param name="model">Information about the individual whose age has been verified and the corresponding age verification response.</param>
+        public async Task storeAgeVerificationAsync(StoreAgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Conditionally performs an age verification check. If a record matching the request is found in the internal store, the associated response is returned. Otherwise, an age verification check is performed and the response is stored if the individual is determined to be of age.;
+        /// </summary>
+        /// <remarks>
+        /// The request must meet the following criteria in order to be evaluated:
+        /// * *firstName*, *lastName*, and *address* are required fields.
+        /// * One of the following sets of attributes are required for the *address*:
+        ///  * *line1, city, region*
+        ///  * *line1, postalCode*
+        /// 
+        /// * Optionally, the request may use the following parameters:
+        /// * A *DOB* (Date of Birth) field. The value should be ISO-8601 compliant (e.g. 2020-07-21).
+        /// * Beyond the required *address* fields above, a *country* field is permitted
+        ///  * The valid values for this attribute are [*US, USA*];
+        /// </remarks>
+		
+        /// <param name="simulatedFailureCode">(Optional) The failure code included in the simulated response of the endpoint. Note that this endpoint is only available in Sandbox for testing purposes.</param>
+        /// <param name="model">Information about the individual whose age is being verified.</param>
+        public async Task<StoreIfVerifiedResult> storeIfVerifiedAsync(String simulatedFailureCode, AgeVerifyRequest model)
+        {
+            var path = new AvaTaxPath("/api/v2/ageverification/store/identity/storeIfVerified");
+            path.AddQuery("simulatedFailureCode", simulatedFailureCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID ,"");
+            return await RestCallAsync<StoreIfVerifiedResult>("PUT", path, model).ConfigureAwait(false);
         }
 
 
