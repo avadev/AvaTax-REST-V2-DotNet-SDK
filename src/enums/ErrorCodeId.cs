@@ -1229,6 +1229,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        MultiDocumentTransactionAlreadyExists = 1304,
+
+        /// <summary>
+        /// 
+        /// </summary>
         DateMismatch = 1305,
 
         /// <summary>

@@ -110,7 +110,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of item tags.
         /// </summary>
-        public List<ItemTagDetailModel> tags { get; set; }
+        public List<ItemTagDetailInputModel> tags { get; set; }
 
 
         /// <summary>
