@@ -30,5 +30,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         MONGODB = 1,
 
+        /// <summary>
+        /// snowflake dld
+        /// </summary>
+        SNOWFLAKE_DLD = 2,
+
     }
 }

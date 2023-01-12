@@ -88,6 +88,11 @@ namespace Avalara.AvaTax.RestClient
         public String rateTypeId { get; set; }
 
         /// <summary>
+        /// StateFips value of this jurisdiction
+        /// </summary>
+        public String stateFips { get; set; }
+
+        /// <summary>
         /// The date this jurisdiction starts to take effect on tax calculations
         /// </summary>
         public DateTime? effectiveDate { get; set; }

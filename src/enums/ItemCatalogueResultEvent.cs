@@ -16,29 +16,29 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Liability Type
+    /// 
     /// </summary>
-    public enum LiabilityType
+    public enum ItemCatalogueResultEvent
     {
         /// <summary>
-        /// Seller
+        /// 
         /// </summary>
-        Seller = 0,
+        ItemCreated = 0,
 
         /// <summary>
-        /// BuyersAgent
+        /// 
         /// </summary>
-        BuyersAgent = 1,
+        ItemUpdated = 1,
 
         /// <summary>
-        /// Buyer
+        /// 
         /// </summary>
-        Buyer = 2,
+        ItemDeleted = 2,
 
         /// <summary>
-        /// ThirdParty
+        /// 
         /// </summary>
-        ThirdParty = 3,
+        Error = 3,
 
     }
 }

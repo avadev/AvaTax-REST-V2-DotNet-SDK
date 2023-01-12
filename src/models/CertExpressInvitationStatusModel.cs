@@ -24,6 +24,8 @@ namespace Avalara.AvaTax.RestClient
     {
         /// <summary>
         /// The status of the CertExpress invitation for this customer. If this status says
+        /// InProgress then CertExpress website is currently building a landing page for the customer. 
+        /// Please wait about 10 seconds and fetch this request again to see when it will be ready.
         /// </summary>
         public CertExpressInvitationStatus? status { get; set; }
 

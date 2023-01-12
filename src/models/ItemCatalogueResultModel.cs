@@ -20,32 +20,27 @@ namespace Avalara.AvaTax.RestClient
     /// <summary>
     /// 
     /// </summary>
-    public class ProblemDetails
+    public class ItemCatalogueResultModel
     {
         /// <summary>
-        /// 
+        /// The unique ID number of this item.
         /// </summary>
-        public String type { get; set; }
+        public Int64? itemId { get; set; }
 
         /// <summary>
-        /// 
+        /// A unique code representing this item.
         /// </summary>
-        public String title { get; set; }
+        public String itemCode { get; set; }
 
         /// <summary>
-        /// 
+        /// A CRUD event for item db operations
         /// </summary>
-        public Int32? status { get; set; }
+        public ItemCatalogueResultEvent? itemEvent { get; set; }
 
         /// <summary>
-        /// 
+        /// Contains list of errors for item catalogue entry
         /// </summary>
-        public String detail { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public String instance { get; set; }
+        public List<String> errors { get; set; }
 
 
         /// <summary>
