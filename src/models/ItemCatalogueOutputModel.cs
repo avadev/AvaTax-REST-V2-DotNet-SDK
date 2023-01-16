@@ -28,9 +28,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? total { get; set; }
 
         /// <summary>
-        /// List of the items that failed during creation because of an error.
+        /// List of the items that is created, updated, deleted or failed (error)
         /// </summary>
-        public List<ItemUploadErrorModel> failed { get; set; }
+        public List<ItemCatalogueResultModel> result { get; set; }
 
 
         /// <summary>

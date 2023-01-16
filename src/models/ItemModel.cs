@@ -112,6 +112,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<ItemTagDetailInputModel> tags { get; set; }
 
+        /// <summary>
+        /// Additional key-description of the product.
+        /// </summary>
+        public object properties { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

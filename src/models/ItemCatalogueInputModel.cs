@@ -23,6 +23,11 @@ namespace Avalara.AvaTax.RestClient
     public class ItemCatalogueInputModel
     {
         /// <summary>
+        /// The unique ID number of this item.
+        /// </summary>
+        public Int64? itemId { get; set; }
+
+        /// <summary>
         /// A unique code representing this item.
         /// </summary>
         public String itemCode { get; set; }
@@ -66,6 +71,16 @@ namespace Avalara.AvaTax.RestClient
         /// Additional key-description of the product.
         /// </summary>
         public object properties { get; set; }
+
+        /// <summary>
+        /// Classifications Attached to the Product
+        /// </summary>
+        public List<ClassificationModel> classifications { get; set; }
+
+        /// <summary>
+        /// Parameters Attached to the Product
+        /// </summary>
+        public List<ItemParameterModel> parameters { get; set; }
 
 
         /// <summary>
