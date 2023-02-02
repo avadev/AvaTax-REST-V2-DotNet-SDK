@@ -388,6 +388,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CompanyReturnSettingModel> settings { get; set; }
 
+        /// <summary>
+        /// Auto Lock Override Day
+        /// </summary>
+        public Int32? autoLockOverrideDay { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

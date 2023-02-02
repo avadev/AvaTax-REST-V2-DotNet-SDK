@@ -68,6 +68,11 @@ namespace Avalara.AvaTax.RestClient
         public String source { get; set; }
 
         /// <summary>
+        /// The Id of this item at the source
+        /// </summary>
+        public String sourceEntityId { get; set; }
+
+        /// <summary>
         /// Additional key-description of the product.
         /// </summary>
         public object properties { get; set; }
