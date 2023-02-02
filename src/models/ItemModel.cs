@@ -92,6 +92,11 @@ namespace Avalara.AvaTax.RestClient
         public String source { get; set; }
 
         /// <summary>
+        /// The Id of this item at the source
+        /// </summary>
+        public String sourceEntityId { get; set; }
+
+        /// <summary>
         /// Universal unique code for item
         /// </summary>
         public String upc { get; set; }

@@ -86,6 +86,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isClone { get; set; }
 
         /// <summary>
+        /// Auto Lock Override Day
+        /// </summary>
+        public Int32? autoLockOverrideDay { get; set; }
+
+        /// <summary>
         /// The two character ISO 3166 country code of the country that issued the tax form for this filing calendar.
         /// </summary>
         public String country { get; set; }

@@ -32,6 +32,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String description { get; set; }
 
+        /// <summary>
+        /// Priority of Suggested tax code description
+        /// </summary>
+        public Int32? rank { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

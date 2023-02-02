@@ -33,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         public String itemCode { get; set; }
 
         /// <summary>
+        /// The Id of this item at the source
+        /// </summary>
+        public String sourceEntityId { get; set; }
+
+        /// <summary>
         /// A CRUD event for item db operations
         /// </summary>
         public ItemCatalogueResultEvent? itemEvent { get; set; }
