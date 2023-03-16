@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 /*
  * AvaTax API Client Library
  *
- * (c) 2004-2019 Avalara, Inc.
+ * (c) 2004-2023 Avalara, Inc.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author Genevieve Conty
- * @author Greg Hester
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
  * Swagger name: AvaTaxClient
  */
 
@@ -279,6 +279,11 @@ namespace Avalara.AvaTax.RestClient
         /// LiabilityType identifies the party liable to file the tax. This field is used to filter taxes from reports and tax filings as appropriate.
         /// </summary>
         public LiabilityType? liabilityType { get; set; }
+
+        /// <summary>
+        /// ChargedTo identifies the party responsible for covering the tax. This field is used to filter taxes from reports and tax filings as appropriate.
+        /// </summary>
+        public ChargedTo? chargedTo { get; set; }
 
         /// <summary>
         /// ID of the AvaTax user creating the transaction. This field will be calculated by AvaTax based on the Company settings and the transaction details.
