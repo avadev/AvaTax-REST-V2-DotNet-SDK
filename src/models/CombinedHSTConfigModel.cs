@@ -18,34 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a tax code classification request status output model
+    /// An AvaTax account.
     /// </summary>
-    public class ItemTaxCodeClassificationRequestStatusOutputModel
+    public class CombinedHSTConfigModel
     {
         /// <summary>
-        /// The unique Request Id of classification request
+        /// The unique ID number assigned to this account.
         /// </summary>
-        public Int32? requestId { get; set; }
+        public Int32 accountId { get; set; }
+
+        /// <summary>
+        /// Company Codes to Exclude from change.
+        /// </summary>
+        public List<String> excludedCompanyCodes { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public ClassificationDetailsModel classificationDetails { get; set; }
-
-        /// <summary>
-        /// The total number of items for which classification is initiated in request
-        /// </summary>
-        public Int32? totalItems { get; set; }
-
-        /// <summary>
-        /// The status of classification request
-        /// </summary>
-        public String status { get; set; }
-
-        /// <summary>
-        /// The date/time when this request was created.
-        /// </summary>
-        public DateTime? createdDate { get; set; }
+        public DateTime? endDate { get; set; }
 
 
         /// <summary>
