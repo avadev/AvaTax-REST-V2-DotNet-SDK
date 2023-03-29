@@ -281,6 +281,11 @@ namespace Avalara.AvaTax.RestClient
         public LiabilityType? liabilityType { get; set; }
 
         /// <summary>
+        /// ChargedTo identifies the party responsible for covering the tax. This field is used to filter taxes from reports and tax filings as appropriate.
+        /// </summary>
+        public ChargedTo? chargedTo { get; set; }
+
+        /// <summary>
         /// ID of the AvaTax user creating the transaction. This field will be calculated by AvaTax based on the Company settings and the transaction details.
         /// </summary>
         public String avtUserBIN { get; set; }

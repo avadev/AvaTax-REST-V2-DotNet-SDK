@@ -123,6 +123,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String taxSubType { get; set; }
 
+        /// <summary>
+        /// Defines the compression mode of the result file
+        /// For compression, the accepted values are: NONE, GZIP
+        /// </summary>
+        public Compression? compression { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

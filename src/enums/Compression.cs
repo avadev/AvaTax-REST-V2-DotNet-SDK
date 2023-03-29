@@ -16,19 +16,19 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Defines report source.
+    /// Defines compression
     /// </summary>
-    public enum ReportSource
+    public enum Compression
     {
         /// <summary>
-        /// snowflake
+        /// none
         /// </summary>
-        SNOWFLAKE = 0,
+        NONE = 0,
 
         /// <summary>
-        /// mongodb
+        /// gzip
         /// </summary>
-        MONGODB = 1,
+        GZIP = 1,
 
     }
 }
