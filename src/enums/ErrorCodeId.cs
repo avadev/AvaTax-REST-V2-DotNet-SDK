@@ -1507,6 +1507,11 @@ namespace Avalara.AvaTax.RestClient
         NoItemsForClassification = 1736,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidFileName = 1737,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
