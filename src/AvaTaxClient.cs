@@ -647,24 +647,24 @@ namespace Avalara.AvaTax.RestClient
                 var sd = DetectDuration(result, "serverduration");
                 var dd = DetectDuration(result, "dataduration");
                 var td = DetectDuration(result, "serviceduration");
-                cd.FinishReceive(sd, dd, td);
-
-                // Capture information about this API call and make it available for logging
-                var eventargs = new AvaTaxCallEventArgs()
-                {
-                    HttpVerb = verb.ToUpper(),
-                    Code = result.StatusCode,
-                    RequestUri = new Uri(_envUri, relativePath.ToString()),
-                    RequestBody = jsonPayload as string,
-                    ResponseString = responseString,
-                    Duration = cd,
-                    XCorrelationId = xCorrelationId,
-                };
-                OnCallCompleted(eventargs);
+                cd.FinishReceive(sd, dd, td);                
 
                 // Deserialize the result
                 if (result.IsSuccessStatusCode)
                 {
+                    // Capture information about this API call and make it available for logging
+                    var eventargs = new AvaTaxCallEventArgs()
+                    {
+                        HttpVerb = verb.ToUpper(),
+                        Code = result.StatusCode,
+                        RequestUri = new Uri(_envUri, relativePath.ToString()),
+                        RequestBody = jsonPayload as string,
+                        ResponseString = responseString,
+                        Duration = cd,
+                        XCorrelationId = xCorrelationId,
+                    };
+                    OnCallCompleted(eventargs);
+
                     return responseString;
                 }
                 else
@@ -674,7 +674,7 @@ namespace Avalara.AvaTax.RestClient
                     this.LastCallTime = cd;
 
                     // Capture information about this API call error and make it available for logging
-                    eventargs = new AvaTaxCallEventArgs()
+                    var eventargs = new AvaTaxCallEventArgs()
                     {
                         HttpVerb = verb.ToUpper(),
                         Code = result.StatusCode,
