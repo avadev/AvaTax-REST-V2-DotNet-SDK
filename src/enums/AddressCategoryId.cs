@@ -67,5 +67,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         NonPhysical = 8,
 
+        /// <summary>
+        /// Address refers to the vendor's location, used for ACU transaction
+        /// </summary>
+        Vendor = 9,
+
     }
 }

@@ -127,6 +127,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public DateTime? endDate { get; set; }
 
+        /// <summary>
+        /// The isAcm specific to this jurisdiction.
+        /// </summary>
+        public Boolean? isAcm { get; set; }
+
+        /// <summary>
+        /// The isSst specific to this jurisdiction.
+        /// </summary>
+        public Boolean? isSst { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

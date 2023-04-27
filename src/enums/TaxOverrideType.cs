@@ -77,5 +77,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         TaxAmountByTaxType = 7,
 
+        /// <summary>
+        /// To support ACU transaction
+        /// </summary>
+        VendorChargedTax = 8,
+
     }
 }

@@ -151,9 +151,14 @@ namespace Avalara.AvaTax.RestClient
         BatchServiceAdmin = 25,
 
         /// <summary>
-        /// ECMUser
+        /// ECMAccountUser
         /// </summary>
-        ECMUser = 26,
+        ECMAccountUser = 26,
+
+        /// <summary>
+        /// ECMCompanyUser
+        /// </summary>
+        ECMCompanyUser = 27,
 
     }
 }

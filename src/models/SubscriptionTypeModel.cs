@@ -32,6 +32,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String description { get; set; }
 
+        /// <summary>
+        /// TaxTypeGroupIdSK to be associated with ServiceType
+        /// </summary>
+        public Int32? taxTypeGroupIdSK { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

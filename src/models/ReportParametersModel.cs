@@ -129,6 +129,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Compression? compression { get; set; }
 
+        /// <summary>
+        /// If true, include document line details in the generated report.
+        /// If false, include only document line in the generated report.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? includeDocumentLineDetails { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
