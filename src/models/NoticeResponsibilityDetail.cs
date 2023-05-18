@@ -18,34 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Tax Notice Status Model
+    /// NoticeResponsibility Model
     /// </summary>
-    public class NoticeStatusModel
+    public class NoticeResponsibilityDetail
     {
         /// <summary>
-        /// The unique ID number of this tax authority type.
+        /// The unique ID number of this filing frequency.
         /// </summary>
-        public Int32 id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The description name of this tax authority type.
+        /// TaxNoticeId
         /// </summary>
-        public String description { get; set; }
+        public Int32 noticeId { get; set; }
 
         /// <summary>
-        /// True if a tax notice in this status is considered 'open' and has more work expected to be done before it is closed.
+        /// TaxNoticeResponsibilityId
         /// </summary>
-        public Boolean? isOpen { get; set; }
-
-        /// <summary>
-        /// If a list of status values is to be displayed in a dropdown, they should be displayed in this numeric order.
-        /// </summary>
-        public Int32? sortOrder { get; set; }
-
-        /// <summary>
-        /// The active Flag of this tax authority type.
-        /// </summary>
-        public Boolean? activeFlag { get; set; }
+        public Int32 taxNoticeResponsibilityId { get; set; }
 
 
         /// <summary>
