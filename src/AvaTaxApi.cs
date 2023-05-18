@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    23.4.1
+ * @version    23.5.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "23.4.1"; } }
+        public static string API_VERSION { get { return "23.5.0"; } }
 
 #region Methods
 
@@ -4321,7 +4321,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify all the different tax notice statuses.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder, activeFlag</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4511,13 +4511,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<PostalCodeModel> ListPostalCodes(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeExpiredPostalCodes">If set to true, returns expired postal codes. Defaults to false</param>
+        public FetchResult<PostalCodeModel> ListPostalCodes(String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeExpiredPostalCodes)
         {
             var path = new AvaTaxPath("/api/v2/definitions/postalcodes");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("includeExpiredPostalCodes", includeExpiredPostalCodes);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<PostalCodeModel>>("GET", path, null);
         }
@@ -4974,7 +4976,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -9530,7 +9532,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this tax code</param>
@@ -9560,7 +9562,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
@@ -9598,7 +9600,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -9818,8 +9820,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -9883,8 +9887,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -10498,6 +10504,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
@@ -10555,6 +10563,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// The field `type` identifies the kind of transaction - for example, a sale, purchase, or refund. If you do not specify
         /// a `type` value, you will receive an estimate of type `SalesOrder`, which will not be recorded.
         ///  
@@ -16523,7 +16533,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API is intended to be useful to identify all the different tax notice statuses.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* isOpen, sortOrder, activeFlag</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -16720,13 +16730,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<PostalCodeModel>> ListPostalCodesAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeExpiredPostalCodes">If set to true, returns expired postal codes. Defaults to false</param>
+        public async Task<FetchResult<PostalCodeModel>> ListPostalCodesAsync(String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeExpiredPostalCodes)
         {
             var path = new AvaTaxPath("/api/v2/definitions/postalcodes");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("includeExpiredPostalCodes", includeExpiredPostalCodes);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<PostalCodeModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -17200,7 +17212,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -21899,7 +21911,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this tax code</param>
@@ -21930,7 +21942,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these tax codes</param>
@@ -21969,7 +21981,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
@@ -22194,8 +22206,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -22260,8 +22274,10 @@ namespace Avalara.AvaTax.RestClient
         /// This API assumes that you are selling general tangible personal property at a retail point-of-sale
         /// location in the United States only.
         ///  
-        /// For more powerful tax calculation, please consider upgrading to the `CreateTransaction` API,
-        /// which supports features including, but not limited to:
+        /// Please be advised that this endpoint is designed for approximate tax rate estimation only and 
+        /// may not yield precise results. For a more powerful and accurate tax estimation, upgrade to the 
+        /// `CreateTransaction` API, which offers a variety of advanced features including, but not limited
+        /// to:
         ///  
         /// * Nexus declarations
         /// * Taxability based on product/service type
@@ -22889,6 +22905,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// If you don't specify the field `type` in your request, you will get an estimate of type `SalesOrder`, which will not be recorded in the database.
         ///  
         /// A transaction represents a unique potentially taxable action that your company has recorded, and transactions include actions like
@@ -22947,6 +22965,8 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// To generate a refund for a transaction, use the `RefundTransaction` API.
         ///  
+        /// An address is required for calculation. If no address is provided at the line level, the document level address will be used.
+        /// 
         /// The field `type` identifies the kind of transaction - for example, a sale, purchase, or refund. If you do not specify
         /// a `type` value, you will receive an estimate of type `SalesOrder`, which will not be recorded.
         ///  
