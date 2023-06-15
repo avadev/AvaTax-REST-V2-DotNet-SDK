@@ -30,5 +30,50 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         DDP = 2,
 
+        /// <summary>
+        /// Free on Board
+        /// </summary>
+        FOB = 3,
+
+        /// <summary>
+        /// Free Carrier
+        /// </summary>
+        FCA = 4,
+
+        /// <summary>
+        /// Free Alongside Ship
+        /// </summary>
+        FAS = 5,
+
+        /// <summary>
+        /// Ex Works
+        /// </summary>
+        EXW = 6,
+
+        /// <summary>
+        /// Delivered at Place Unloaded
+        /// </summary>
+        DPU = 7,
+
+        /// <summary>
+        /// Carriage Paid To
+        /// </summary>
+        CPT = 8,
+
+        /// <summary>
+        /// Carriage Insurance Paid To
+        /// </summary>
+        CIP = 9,
+
+        /// <summary>
+        /// Cost, Insurance, and Freight
+        /// </summary>
+        CIF = 10,
+
+        /// <summary>
+        /// Cost And Freight
+        /// </summary>
+        CFR = 11,
+
     }
 }
