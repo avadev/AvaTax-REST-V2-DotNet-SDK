@@ -1512,6 +1512,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidFileName = 1737,
 
         /// <summary>
+        /// 
+        /// </summary>
+        NoClassificationForSameHsCode = 1738,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,

@@ -4035,7 +4035,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        FundingStatusModel ActivateFundingRequest(Int64 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType);
+        FundingStatusModel ActivateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType);
 
         /// <summary>
         /// Retrieve status about a funding setup request
@@ -4568,7 +4568,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
         /// <param name="itemId">The item id.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode, IsPremium</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -6237,27 +6237,6 @@ namespace Avalara.AvaTax.RestClient
         List<NotificationModel> CreateNotifications(List<NotificationModel> model);
 
         /// <summary>
-        /// Create Avalara-supported subscription (ServiceTypes)
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Create one service/subscription object.
-        ///  
-        /// Returns the newly created Avalara-supported subscription (service) type.
-        /// This API is intended to be useful for adding new Avalara-supported subscription type (service type).
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="model">The subscription type object you wish to create.</param>
-        SubscriptionTypeModel CreateServiceTypes(SubscriptionTypeModel model);
-
-        /// <summary>
         /// Create a new subscription
         /// </summary>
         /// <remarks>
@@ -6317,24 +6296,6 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The id of the notification you wish to delete.</param>
         List<ErrorDetail> DeleteNotification(Int64 id);
-
-        /// <summary>
-        /// Delete a single Subscription (ServiceTypes) object
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Marks the Subscription (ServiceTypes) object identified by this URL as deleted.
-        /// This API is useful for deleting an existing Avalara-supported subscription type (service type).
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="id">The unique ID number of the Subscription object you wish to delete.</param>
-        List<ErrorDetail> DeleteServiceType(Int32 id);
 
         /// <summary>
         /// Delete a single subscription
@@ -6441,26 +6402,6 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The id of the notification you wish to update.</param>
         /// <param name="model">The notification object you wish to update.</param>
         NotificationModel UpdateNotification(Int64 id, NotificationModel model);
-
-        /// <summary>
-        /// Update existing Avalara-supported subscription (ServiceTypes)
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Returns the updated Avalara-supported service types.
-        /// This API is intended to be useful for updating an existing subscription(service) type detail.
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="id">The unique ID number of the existing subscription type object to replace.</param>
-        /// <param name="model">The subscription type object to update.</param>
-        SubscriptionTypeModel UpdateServiceType(Int32 id, SubscriptionTypeModel model);
 
         /// <summary>
         /// Update a single subscription
@@ -12984,7 +12925,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        Task<FundingStatusModel> ActivateFundingRequestAsync(Int64 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType);
+        Task<FundingStatusModel> ActivateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13541,7 +13482,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The company id.</param>
         /// <param name="itemId">The item id.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode, IsPremium</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -15274,28 +15215,6 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Create Avalara-supported subscription (ServiceTypes);
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Create one service/subscription object.
-        ///  
-        /// Returns the newly created Avalara-supported subscription (service) type.
-        /// This API is intended to be useful for adding new Avalara-supported subscription type (service type).
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
-        /// </remarks>
-		
-        /// <param name="model">The subscription type object you wish to create.</param>
-        Task<SubscriptionTypeModel> CreateServiceTypesAsync(SubscriptionTypeModel model);
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
         /// Create a new subscription;
         /// </summary>
         /// <remarks>
@@ -15357,25 +15276,6 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="id">The id of the notification you wish to delete.</param>
         Task<List<ErrorDetail>> DeleteNotificationAsync(Int64 id);
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Delete a single Subscription (ServiceTypes) object;
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Marks the Subscription (ServiceTypes) object identified by this URL as deleted.
-        /// This API is useful for deleting an existing Avalara-supported subscription type (service type).
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
-        /// </remarks>
-		
-        /// <param name="id">The unique ID number of the Subscription object you wish to delete.</param>
-        Task<List<ErrorDetail>> DeleteServiceTypeAsync(Int32 id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15487,27 +15387,6 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The id of the notification you wish to update.</param>
         /// <param name="model">The notification object you wish to update.</param>
         Task<NotificationModel> UpdateNotificationAsync(Int64 id, NotificationModel model);
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Update existing Avalara-supported subscription (ServiceTypes);
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Returns the updated Avalara-supported service types.
-        /// This API is intended to be useful for updating an existing subscription(service) type detail.
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
-        /// </remarks>
-		
-        /// <param name="id">The unique ID number of the existing subscription type object to replace.</param>
-        /// <param name="model">The subscription type object to update.</param>
-        Task<SubscriptionTypeModel> UpdateServiceTypeAsync(Int32 id, SubscriptionTypeModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>

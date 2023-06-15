@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    23.5.0
+ * @version    23.6.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "23.5.0"; } }
+        public static string API_VERSION { get { return "23.6.1"; } }
 
 #region Methods
 
@@ -5706,7 +5706,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        public FundingStatusModel ActivateFundingRequest(Int64 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
+        public FundingStatusModel ActivateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
@@ -6452,7 +6452,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
         /// <param name="itemId">The item id.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode, IsPremium</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8683,33 +8683,6 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Create Avalara-supported subscription (ServiceTypes)
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Create one service/subscription object.
-        ///  
-        /// Returns the newly created Avalara-supported subscription (service) type.
-        /// This API is intended to be useful for adding new Avalara-supported subscription type (service type).
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="model">The subscription type object you wish to create.</param>
-        public SubscriptionTypeModel CreateServiceTypes(SubscriptionTypeModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/servicetypes");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
-            return RestCall<SubscriptionTypeModel>("POST", path, model);
-        }
-
-
-        /// <summary>
         /// Create a new subscription
         /// </summary>
         /// <remarks>
@@ -8785,31 +8758,6 @@ namespace Avalara.AvaTax.RestClient
         public List<ErrorDetail> DeleteNotification(Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
-            path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
-            return RestCall<List<ErrorDetail>>("DELETE", path, null);
-        }
-
-
-        /// <summary>
-        /// Delete a single Subscription (ServiceTypes) object
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Marks the Subscription (ServiceTypes) object identified by this URL as deleted.
-        /// This API is useful for deleting an existing Avalara-supported subscription type (service type).
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="id">The unique ID number of the Subscription object you wish to delete.</param>
-        public List<ErrorDetail> DeleteServiceType(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ErrorDetail>>("DELETE", path, null);
@@ -8959,33 +8907,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<NotificationModel>("PUT", path, model);
-        }
-
-
-        /// <summary>
-        /// Update existing Avalara-supported subscription (ServiceTypes)
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Returns the updated Avalara-supported service types.
-        /// This API is intended to be useful for updating an existing subscription(service) type detail.
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="id">The unique ID number of the existing subscription type object to replace.</param>
-        /// <param name="model">The subscription type object to update.</param>
-        public SubscriptionTypeModel UpdateServiceType(Int32 id, SubscriptionTypeModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
-            path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
-            return RestCall<SubscriptionTypeModel>("PUT", path, model);
         }
 
 
@@ -17970,7 +17891,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int64 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
+        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
@@ -18740,7 +18661,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The company id.</param>
         /// <param name="itemId">The item id.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* productCode, systemCode, IsPremium</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -21035,34 +20956,6 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Create Avalara-supported subscription (ServiceTypes);
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Create one service/subscription object.
-        ///  
-        /// Returns the newly created Avalara-supported subscription (service) type.
-        /// This API is intended to be useful for adding new Avalara-supported subscription type (service type).
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
-        /// </remarks>
-		
-        /// <param name="model">The subscription type object you wish to create.</param>
-        public async Task<SubscriptionTypeModel> CreateServiceTypesAsync(SubscriptionTypeModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/servicetypes");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
-            return await RestCallAsync<SubscriptionTypeModel>("POST", path, model).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
         /// Create a new subscription;
         /// </summary>
         /// <remarks>
@@ -21140,32 +21033,6 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<ErrorDetail>> DeleteNotificationAsync(Int64 id)
         {
             var path = new AvaTaxPath("/api/v2/notifications/{id}");
-            path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
-            return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Delete a single Subscription (ServiceTypes) object;
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Marks the Subscription (ServiceTypes) object identified by this URL as deleted.
-        /// This API is useful for deleting an existing Avalara-supported subscription type (service type).
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
-        /// </remarks>
-		
-        /// <param name="id">The unique ID number of the Subscription object you wish to delete.</param>
-        public async Task<List<ErrorDetail>> DeleteServiceTypeAsync(Int32 id)
-        {
-            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ErrorDetail>>("DELETE", path, null).ConfigureAwait(false);
@@ -21320,34 +21187,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<NotificationModel>("PUT", path, model).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// Update existing Avalara-supported subscription (ServiceTypes);
-        /// </summary>
-        /// <remarks>
-        /// For Registrar Use Only
-        /// This API is for use by Avalara Registrar administrative users only.
-        ///  
-        /// Returns the updated Avalara-supported service types.
-        /// This API is intended to be useful for updating an existing subscription(service) type detail.
-        /// You may always contact Avalara's sales department for information on available products or services.
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API requires one of the following user roles: BatchServiceAdmin, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
-        /// </remarks>
-		
-        /// <param name="id">The unique ID number of the existing subscription type object to replace.</param>
-        /// <param name="model">The subscription type object to update.</param>
-        public async Task<SubscriptionTypeModel> UpdateServiceTypeAsync(Int32 id, SubscriptionTypeModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/servicetypes/{id}");
-            path.ApplyField("id", id);
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
-            return await RestCallAsync<SubscriptionTypeModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
