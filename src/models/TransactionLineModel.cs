@@ -275,6 +275,13 @@ namespace Avalara.AvaTax.RestClient
         public List<TransactionLineDetailModel> details { get; set; }
 
         /// <summary>
+        /// Optional: A list of Account payable Sales tax details for this line item.
+        ///  
+        /// To fetch this list, add the query string `?$include=AccountPayableSalesTaxDetails` to your URL.
+        /// </summary>
+        public List<TransactionLineDetailModel> accountPayableSalesTaxDetails { get; set; }
+
+        /// <summary>
         /// Optional: A list of non-passthrough tax details for this line item.
         ///  
         /// Tax details represent taxes being charged by various tax authorities. Taxes that appear in the `nonPassthroughDetails` collection are

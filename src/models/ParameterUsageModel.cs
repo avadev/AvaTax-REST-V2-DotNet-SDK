@@ -94,6 +94,11 @@ namespace Avalara.AvaTax.RestClient
         public List<String> values { get; set; }
 
         /// <summary>
+        /// If the parameter is of enumeration data type, then this list will be populated with description for each enum value.
+        /// </summary>
+        public List<String> valueDescriptions { get; set; }
+
+        /// <summary>
         /// The unit of measurement type of the parameter
         /// </summary>
         public String measurementType { get; set; }

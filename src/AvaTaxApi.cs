@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    23.6.1
+ * @version    23.7.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "23.6.1"; } }
+        public static string API_VERSION { get { return "23.7.0"; } }
 
 #region Methods
 
@@ -4464,7 +4464,7 @@ namespace Avalara.AvaTax.RestClient
         /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* values</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* values, valueDescriptions</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -9847,6 +9847,32 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create new Country Coefficients. If already exist update them.
+        /// </summary>
+        /// <remarks>
+        /// Create one or more Country Coefficients for particular country.
+        ///  
+        /// We would like to use country coefficients during Cross-Border calculations to slightly increase or decrease
+        /// a calculation for a line based on the tax-subtype and Country of destination for a transaction.
+        ///  
+        /// This will allow AvaTax to minimize the variance caused between actual transaction taken place on ground Vs Tax
+        /// Calculated by AvaTax.
+        ///  
+        /// Make sure to use the same API to update the country coefficients that is already present in the database.
+        /// This will make existing entry for specific country as ineffective for that date. And new entry created will get applicable
+        /// to the newer transactions.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="model">The Country Coefficients for specific country you wish to create.</param>
+        public List<CountryCoefficientsResponseModel> CreateCountryCoefficients(CountryCoefficientsRequestEntity model)
+        {
+            var path = new AvaTaxPath("/api/v2/countryCoefficients");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<CountryCoefficientsResponseModel>>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new tax rule
         /// </summary>
         /// <remarks>
@@ -9947,6 +9973,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<TaxRuleModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve country coefficients for specific country
+        /// </summary>
+        /// <remarks>
+        /// Retrieve all or any specific records of Country Coefficients based on the filters(optional) for specific country.
+        ///  
+        ///  Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///  Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="country">Country for which data need to be pulled for.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* CoefficientsId, AccountId, ModifiedUserId, CreatedUserId</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CountryCoefficientsEntity> ListCountryCoefficients(String country, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/{country}/CountryCoefficients");
+            path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<CountryCoefficientsEntity>>("GET", path, null);
         }
 
 
@@ -10094,6 +10150,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * Lines
         ///  * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         ///  * Summary (implies details)
         ///  * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10138,6 +10195,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10316,6 +10374,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10372,6 +10431,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10435,6 +10495,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10498,6 +10559,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10544,6 +10606,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * Lines
         ///  * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         ///  * Summary (implies details)
         ///  * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10606,6 +10669,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10692,6 +10756,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10759,6 +10824,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10820,6 +10886,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10886,6 +10953,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10945,6 +11013,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -10994,6 +11063,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -11040,6 +11110,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -11114,6 +11185,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -11170,6 +11242,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -16602,7 +16675,7 @@ namespace Avalara.AvaTax.RestClient
         /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* values</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* values, valueDescriptions</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -22153,6 +22226,33 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Create new Country Coefficients. If already exist update them.;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more Country Coefficients for particular country.
+        ///  
+        /// We would like to use country coefficients during Cross-Border calculations to slightly increase or decrease
+        /// a calculation for a line based on the tax-subtype and Country of destination for a transaction.
+        ///  
+        /// This will allow AvaTax to minimize the variance caused between actual transaction taken place on ground Vs Tax
+        /// Calculated by AvaTax.
+        ///  
+        /// Make sure to use the same API to update the country coefficients that is already present in the database.
+        /// This will make existing entry for specific country as ineffective for that date. And new entry created will get applicable
+        /// to the newer transactions.;
+        /// </remarks>
+		
+        /// <param name="model">The Country Coefficients for specific country you wish to create.</param>
+        public async Task<List<CountryCoefficientsResponseModel>> CreateCountryCoefficientsAsync(CountryCoefficientsRequestEntity model)
+        {
+            var path = new AvaTaxPath("/api/v2/countryCoefficients");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<CountryCoefficientsResponseModel>>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new tax rule;
         /// </summary>
         /// <remarks>
@@ -22255,6 +22355,37 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<TaxRuleModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve country coefficients for specific country;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve all or any specific records of Country Coefficients based on the filters(optional) for specific country.
+        ///  
+        ///  Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        ///  Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.;
+        /// </remarks>
+		
+        /// <param name="country">Country for which data need to be pulled for.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* CoefficientsId, AccountId, ModifiedUserId, CreatedUserId</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CountryCoefficientsEntity>> ListCountryCoefficientsAsync(String country, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/{country}/CountryCoefficients");
+            path.ApplyField("country", country);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<CountryCoefficientsEntity>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -22406,6 +22537,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * Lines
         ///  * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         ///  * Summary (implies details)
         ///  * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22451,6 +22583,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22633,6 +22766,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22690,6 +22824,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22754,6 +22889,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22818,6 +22954,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22865,6 +23002,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * Lines
         ///  * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         ///  * Summary (implies details)
         ///  * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -22929,6 +23067,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23017,6 +23156,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23086,6 +23226,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23148,6 +23289,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23215,6 +23357,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23275,6 +23418,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23325,6 +23469,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23372,6 +23517,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23448,6 +23594,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
@@ -23505,6 +23652,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// * Lines
         /// * Details (implies lines)
+        /// * AccountPayableSalesTaxDetails (implies lines - only for Account Payable transaction)
         /// * Summary (implies details)
         /// * Addresses
         /// * SummaryOnly (omit lines and details - reduces API response size)
