@@ -777,6 +777,21 @@ namespace Avalara.AvaTax.RestClient
             _model.isSellerImporterOfRecord = true;
             return this;
         }
+        
+        /// <summary>
+        /// To track merchant transactions on your marketplace, you can leverage the merchantSellerIdentifier field. 
+        /// This field identifies the merchant facilitating sales on your marketplace.
+        /// </summary>
+        /// <param name="merchantSellerIdentifier">ID of the merchant selling on the Marketplace. This field must be populated by Marketplace.</param>
+        /// <param name="marketplaceLiabilityType">This field will identify who is remitting Marketplace or Seller. This field must be populated by Marketplace.</param>
+        /// <returns></returns>
+        public TransactionBuilder WithMerchantSeller(string merchantSellerIdentifier,  MarketplaceLiabilityType? marketplaceLiabilityType)
+        {
+            var l = GetMostRecentLine("WithMerchantSeller");
+            l.merchantSellerIdentifier = merchantSellerIdentifier;
+            l.marketplaceLiabilityType = marketplaceLiabilityType;
+            return this;
+        }
 
         /// <summary>
         /// Set the description of the transaction
