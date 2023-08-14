@@ -46,7 +46,7 @@ namespace Avalara.AvaTax.RestClient.Test.net472
             Assert.True(tr.totalRate > 0.05m);
 
             // Washington
-            tr = await Client.TaxRatesByAddressAsync("100 Ravine Lane NE", null, null, "Bainbridge Island", "WA", "98110", "US");
+            tr = await Client.TaxRatesByAddressAsync("522 Stadium Pl S", null, null, "Seattle", "WA", "98104", "US");
             Assert.NotNull(tr);
             Assert.True(tr.totalRate > 0.05m);
 
