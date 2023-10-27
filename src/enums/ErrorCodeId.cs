@@ -879,6 +879,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        LineFetchLimitExceeded = 314,
+
+        /// <summary>
+        /// 
+        /// </summary>
         InvalidDocumentTypesToFetch = 315,
 
         /// <summary>
@@ -1517,6 +1522,11 @@ namespace Avalara.AvaTax.RestClient
         NoClassificationForSameHsCode = 1738,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidValueError = 1739,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1836,6 +1846,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         RegistrationNumberNotFound = 2812,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidCostCenter = 2813,
 
     }
 }

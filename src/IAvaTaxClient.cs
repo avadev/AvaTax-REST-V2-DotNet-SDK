@@ -446,6 +446,57 @@ namespace Avalara.AvaTax.RestClient
         AdvancedRuleLookupFileModel UpdateLookupFile(Int32 accountId, String id, AdvancedRuleLookupFileModel model);
 
         /// <summary>
+        /// Create new rule
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this AP Config Setting object</param>
+        /// <param name="model">The AP Config Setting you wish to create.</param>
+        APConfigSettingSuccessResponseModel CreateAPConfigSetting(Int32 companyid, APConfigSettingRequestModel model);
+
+        /// <summary>
+        /// Retrieve rule for this company
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that defined this rule</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<APConfigSettingSuccessResponseModel> GetAPConfigSettingByCompany(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Retrieve all rules
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<APConfigSettingSuccessResponseModel> QueryAPConfigSetting(String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Update a AP config setting
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this AP config setting object</param>
+        /// <param name="model">The AP config setting object you wish to update.</param>
+        APConfigSettingSuccessResponseModel UpdateAPConfigSetting(Int32 companyid, APConfigSettingRequestModel model);
+
+        /// <summary>
         /// Create a new AvaFileForm
         /// </summary>
         /// <remarks>
@@ -1948,6 +1999,93 @@ namespace Avalara.AvaTax.RestClient
         ContactModel UpdateContact(Int32 companyId, Int32 id, ContactModel model);
 
         /// <summary>
+        /// Bulk upload cost centers
+        /// </summary>
+        /// <remarks>
+        /// Allows bulk upload of cost centers for the specified company. Use the companyId path parameter to identify the company for which the cost centers should be uploaded.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center bulk upload model.</param>
+        CostCenterBulkUploadOutputModel BulkUploadCostCenters(Int32 companyid, CostCenterBulkUploadInputModel model);
+
+        /// <summary>
+        /// Create new cost center
+        /// </summary>
+        /// <remarks>
+        /// Creates one or more new item objects attached to this company.
+        /// 
+        /// Costcenter is defined as function or department within a company which is not directly going to generate revenues and profits to the company but is still incurring expenses to the company for its operations.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center you wish to create.</param>
+        CostCenterSuccessResponseModel CreateCostCenter(Int32 companyid, CostCenterRequestModel model);
+
+        /// <summary>
+        /// Delete cost center for the given id
+        /// </summary>
+        /// <remarks>
+        /// Deletes a cost center with the specified costcenterId that belongs to the company.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        TaxProfileErrorResponseModel DeleteCostCenter(Int32 companyid, Int64 costcenterid);
+
+        /// <summary>
+        /// Retrieve a single cost center
+        /// </summary>
+        /// <remarks>
+        /// Retrieves details of a single cost center identified by costcenterId, which is owned by the company.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        CostCenterSuccessResponseModel GetCostCenterById(Int32 companyid, Int64 costcenterid);
+
+        /// <summary>
+        /// Retrieve cost centers for this company
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of cost centers attached to this company. You can apply filters to retrieve specific records.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that defined these cost centers</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<CostCenterSuccessResponseModel> ListCostCentersByCompany(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Retrieve all cost centers
+        /// </summary>
+        /// <remarks>
+        /// Retrieves all cost centers available. You can apply filters to retrieve specific records.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<CostCenterSuccessResponseModel> QueryCostCenters(String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Update a single cost center
+        /// </summary>
+        /// <remarks>
+        /// Updates a single cost center owned by the company. Use the costcenterId path parameter to identify the cost center to update.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        /// <param name="model">The cost center object you wish to update.</param>
+        CostCenterSuccessResponseModel UpdateCostCenter(Int32 companyid, Int64 costcenterid, CostCenterRequestModel model);
+
+        /// <summary>
         /// Create customers for this company
         /// </summary>
         /// <remarks>
@@ -3342,7 +3480,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="country">The country to examine for rate types</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -8837,6 +8975,42 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
         /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
         ShippingVerifyResult verifyShipment(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" );
+
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be deregistered by ASV
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code of generated by AvaTax batch transaction upload</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        void enqueueBatchDeregistration(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" );
+
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be registered by ASV
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code generated by AvaTax for batch transaction upload process</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        void enqueueBatchRegistration(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" );
+
+        /// <summary>
+        /// Gets records for current and previously processed batch registration jobs
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="accountId">(Optional): For users with access to multiple accounts, filters results to those associated with the specified Account ID. If not specified, the Account ID defaults to the one associated with the account</param>
+        GetBatchesResult getBatchRegistrationData(String accountId);
 #endregion
 #region Asynchronous
 #if PORTABLE
@@ -9219,6 +9393,61 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID/GUID of the company lookup file to be updated</param>
         /// <param name="model">The new values to update the lookup file</param>
         Task<AdvancedRuleLookupFileModel> UpdateLookupFileAsync(Int32 accountId, String id, AdvancedRuleLookupFileModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create new rule;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this AP Config Setting object</param>
+        /// <param name="model">The AP Config Setting you wish to create.</param>
+        Task<APConfigSettingSuccessResponseModel> CreateAPConfigSettingAsync(Int32 companyid, APConfigSettingRequestModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve rule for this company;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that defined this rule</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<APConfigSettingSuccessResponseModel>> GetAPConfigSettingByCompanyAsync(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all rules;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<APConfigSettingSuccessResponseModel>> QueryAPConfigSettingAsync(String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a AP config setting;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this AP config setting object</param>
+        /// <param name="model">The AP config setting object you wish to update.</param>
+        Task<APConfigSettingSuccessResponseModel> UpdateAPConfigSettingAsync(Int32 companyid, APConfigSettingRequestModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -10783,6 +11012,100 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Bulk upload cost centers;
+        /// </summary>
+        /// <remarks>
+        /// Allows bulk upload of cost centers for the specified company. Use the companyId path parameter to identify the company for which the cost centers should be uploaded.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center bulk upload model.</param>
+        Task<CostCenterBulkUploadOutputModel> BulkUploadCostCentersAsync(Int32 companyid, CostCenterBulkUploadInputModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create new cost center;
+        /// </summary>
+        /// <remarks>
+        /// Creates one or more new item objects attached to this company.
+        /// 
+        /// Costcenter is defined as function or department within a company which is not directly going to generate revenues and profits to the company but is still incurring expenses to the company for its operations.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center you wish to create.</param>
+        Task<CostCenterSuccessResponseModel> CreateCostCenterAsync(Int32 companyid, CostCenterRequestModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete cost center for the given id;
+        /// </summary>
+        /// <remarks>
+        /// Deletes a cost center with the specified costcenterId that belongs to the company.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        Task<TaxProfileErrorResponseModel> DeleteCostCenterAsync(Int32 companyid, Int64 costcenterid);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single cost center;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves details of a single cost center identified by costcenterId, which is owned by the company.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        Task<CostCenterSuccessResponseModel> GetCostCenterByIdAsync(Int32 companyid, Int64 costcenterid);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve cost centers for this company;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of cost centers attached to this company. You can apply filters to retrieve specific records.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that defined these cost centers</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<CostCenterSuccessResponseModel>> ListCostCentersByCompanyAsync(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all cost centers;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves all cost centers available. You can apply filters to retrieve specific records.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<CostCenterSuccessResponseModel>> QueryCostCentersAsync(String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a single cost center;
+        /// </summary>
+        /// <remarks>
+        /// Updates a single cost center owned by the company. Use the costcenterId path parameter to identify the cost center to update.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        /// <param name="model">The cost center object you wish to update.</param>
+        Task<CostCenterSuccessResponseModel> UpdateCostCenterAsync(Int32 companyid, Int64 costcenterid, CostCenterRequestModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create customers for this company;
         /// </summary>
         /// <remarks>
@@ -12246,7 +12569,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="country">The country to examine for rate types</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -17962,6 +18285,45 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
         /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
         Task<ShippingVerifyResult> verifyShipmentAsync(String companyCode, String transactionCode, String documentType, String api_version = "" , String x_avalara_version = "" );
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be deregistered by ASV;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code of generated by AvaTax batch transaction upload</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        Task enqueueBatchDeregistrationAsync(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" );
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be registered by ASV;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code generated by AvaTax for batch transaction upload process</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        Task enqueueBatchRegistrationAsync(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" );
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Gets records for current and previously processed batch registration jobs;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="accountId">(Optional): For users with access to multiple accounts, filters results to those associated with the specified Account ID. If not specified, the Account ID defaults to the one associated with the account</param>
+        Task<GetBatchesResult> getBatchRegistrationDataAsync(String accountId);
 #endif
 #endregion
     }

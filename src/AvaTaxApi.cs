@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    23.8.1
+ * @version    23.10.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "23.8.1"; } }
+        public static string API_VERSION { get { return "23.10.1"; } }
 
 #region Methods
 
@@ -548,6 +548,94 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<AdvancedRuleLookupFileModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Create new rule
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this AP Config Setting object</param>
+        /// <param name="model">The AP Config Setting you wish to create.</param>
+        public APConfigSettingSuccessResponseModel CreateAPConfigSetting(Int32 companyid, APConfigSettingRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/apconfigsetting");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<APConfigSettingSuccessResponseModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve rule for this company
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that defined this rule</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<APConfigSettingSuccessResponseModel> GetAPConfigSettingByCompany(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/apconfigsetting");
+            path.ApplyField("companyid", companyid);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<APConfigSettingSuccessResponseModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all rules
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<APConfigSettingSuccessResponseModel> QueryAPConfigSetting(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/apconfigsetting");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<APConfigSettingSuccessResponseModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a AP config setting
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this AP config setting object</param>
+        /// <param name="model">The AP config setting object you wish to update.</param>
+        public APConfigSettingSuccessResponseModel UpdateAPConfigSetting(Int32 companyid, APConfigSettingRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/apconfigsetting");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<APConfigSettingSuccessResponseModel>("PUT", path, model);
         }
 
 
@@ -2533,6 +2621,154 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ContactModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Bulk upload cost centers
+        /// </summary>
+        /// <remarks>
+        /// Allows bulk upload of cost centers for the specified company. Use the companyId path parameter to identify the company for which the cost centers should be uploaded.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center bulk upload model.</param>
+        public CostCenterBulkUploadOutputModel BulkUploadCostCenters(Int32 companyid, CostCenterBulkUploadInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/$upload");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<CostCenterBulkUploadOutputModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Create new cost center
+        /// </summary>
+        /// <remarks>
+        /// Creates one or more new item objects attached to this company.
+        /// 
+        /// Costcenter is defined as function or department within a company which is not directly going to generate revenues and profits to the company but is still incurring expenses to the company for its operations.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center you wish to create.</param>
+        public CostCenterSuccessResponseModel CreateCostCenter(Int32 companyid, CostCenterRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<CostCenterSuccessResponseModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete cost center for the given id
+        /// </summary>
+        /// <remarks>
+        /// Deletes a cost center with the specified costcenterId that belongs to the company.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        public TaxProfileErrorResponseModel DeleteCostCenter(Int32 companyid, Int64 costcenterid)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/{costcenterid}");
+            path.ApplyField("companyid", companyid);
+            path.ApplyField("costcenterid", costcenterid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<TaxProfileErrorResponseModel>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single cost center
+        /// </summary>
+        /// <remarks>
+        /// Retrieves details of a single cost center identified by costcenterId, which is owned by the company.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        public CostCenterSuccessResponseModel GetCostCenterById(Int32 companyid, Int64 costcenterid)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/{costcenterid}");
+            path.ApplyField("companyid", companyid);
+            path.ApplyField("costcenterid", costcenterid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<CostCenterSuccessResponseModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve cost centers for this company
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of cost centers attached to this company. You can apply filters to retrieve specific records.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that defined these cost centers</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CostCenterSuccessResponseModel> ListCostCentersByCompany(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters");
+            path.ApplyField("companyid", companyid);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<CostCenterSuccessResponseModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all cost centers
+        /// </summary>
+        /// <remarks>
+        /// Retrieves all cost centers available. You can apply filters to retrieve specific records.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CostCenterSuccessResponseModel> QueryCostCenters(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/costcenters");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<CostCenterSuccessResponseModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a single cost center
+        /// </summary>
+        /// <remarks>
+        /// Updates a single cost center owned by the company. Use the costcenterId path parameter to identify the cost center to update.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        /// <param name="model">The cost center object you wish to update.</param>
+        public CostCenterSuccessResponseModel UpdateCostCenter(Int32 companyid, Int64 costcenterid, CostCenterRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/{costcenterid}");
+            path.ApplyField("companyid", companyid);
+            path.ApplyField("costcenterid", costcenterid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<CostCenterSuccessResponseModel>("PUT", path, model);
         }
 
 
@@ -4631,7 +4867,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="country">The country to examine for rate types</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12107,6 +12343,77 @@ namespace Avalara.AvaTax.RestClient
             return RestCall<ShippingVerifyResult>("GET", path, null);
         }
 
+
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be deregistered by ASV
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code of generated by AvaTax batch transaction upload</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public void enqueueBatchDeregistration(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" )
+        {
+            var path = new AvaTaxPath("/api/v2/asv/companies/{companyCode}/batches/{batchCode}/deregister");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("batchCode", batchCode);
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("PUT", path, null);
+        }
+
+
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be registered by ASV
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code generated by AvaTax for batch transaction upload process</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public void enqueueBatchRegistration(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" )
+        {
+            var path = new AvaTaxPath("/api/v2/asv/companies/{companyCode}/batches/{batchCode}/register");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("batchCode", batchCode);
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("PUT", path, null);
+        }
+
+
+        /// <summary>
+        /// Gets records for current and previously processed batch registration jobs
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <param name="accountId">(Optional): For users with access to multiple accounts, filters results to those associated with the specified Account ID. If not specified, the Account ID defaults to the one associated with the account</param>
+        public GetBatchesResult getBatchRegistrationData(String accountId)
+        {
+            var path = new AvaTaxPath("/api/v2/asv/batches");
+            path.AddQuery("accountId", accountId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<GetBatchesResult>("GET", path, null);
+        }
+
 #endregion
 
 #region Asynchronous
@@ -12636,6 +12943,98 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<AdvancedRuleLookupFileModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create new rule;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this AP Config Setting object</param>
+        /// <param name="model">The AP Config Setting you wish to create.</param>
+        public async Task<APConfigSettingSuccessResponseModel> CreateAPConfigSettingAsync(Int32 companyid, APConfigSettingRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/apconfigsetting");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<APConfigSettingSuccessResponseModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve rule for this company;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that defined this rule</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<APConfigSettingSuccessResponseModel>> GetAPConfigSettingByCompanyAsync(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/apconfigsetting");
+            path.ApplyField("companyid", companyid);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<APConfigSettingSuccessResponseModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all rules;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* meta, amount, varianceForIgnore, varianceForAccrue, variancePercent</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<APConfigSettingSuccessResponseModel>> QueryAPConfigSettingAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/apconfigsetting");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<APConfigSettingSuccessResponseModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a AP config setting;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this AP config setting object</param>
+        /// <param name="model">The AP config setting object you wish to update.</param>
+        public async Task<APConfigSettingSuccessResponseModel> UpdateAPConfigSettingAsync(Int32 companyid, APConfigSettingRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/apconfigsetting");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<APConfigSettingSuccessResponseModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -14680,6 +15079,161 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ContactModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Bulk upload cost centers;
+        /// </summary>
+        /// <remarks>
+        /// Allows bulk upload of cost centers for the specified company. Use the companyId path parameter to identify the company for which the cost centers should be uploaded.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center bulk upload model.</param>
+        public async Task<CostCenterBulkUploadOutputModel> BulkUploadCostCentersAsync(Int32 companyid, CostCenterBulkUploadInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/$upload");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<CostCenterBulkUploadOutputModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create new cost center;
+        /// </summary>
+        /// <remarks>
+        /// Creates one or more new item objects attached to this company.
+        /// 
+        /// Costcenter is defined as function or department within a company which is not directly going to generate revenues and profits to the company but is still incurring expenses to the company for its operations.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="model">The cost center you wish to create.</param>
+        public async Task<CostCenterSuccessResponseModel> CreateCostCenterAsync(Int32 companyid, CostCenterRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters");
+            path.ApplyField("companyid", companyid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<CostCenterSuccessResponseModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete cost center for the given id;
+        /// </summary>
+        /// <remarks>
+        /// Deletes a cost center with the specified costcenterId that belongs to the company.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        public async Task<TaxProfileErrorResponseModel> DeleteCostCenterAsync(Int32 companyid, Int64 costcenterid)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/{costcenterid}");
+            path.ApplyField("companyid", companyid);
+            path.ApplyField("costcenterid", costcenterid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<TaxProfileErrorResponseModel>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single cost center;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves details of a single cost center identified by costcenterId, which is owned by the company.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        public async Task<CostCenterSuccessResponseModel> GetCostCenterByIdAsync(Int32 companyid, Int64 costcenterid)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/{costcenterid}");
+            path.ApplyField("companyid", companyid);
+            path.ApplyField("costcenterid", costcenterid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<CostCenterSuccessResponseModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve cost centers for this company;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a list of cost centers attached to this company. You can apply filters to retrieve specific records.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that defined these cost centers</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CostCenterSuccessResponseModel>> ListCostCentersByCompanyAsync(Int32 companyid, String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters");
+            path.ApplyField("companyid", companyid);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<CostCenterSuccessResponseModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all cost centers;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves all cost centers available. You can apply filters to retrieve specific records.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* companyId, meta, defaultItem</param>
+        /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CostCenterSuccessResponseModel>> QueryCostCentersAsync(String filter, String include, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/costcenters");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$include", include);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<CostCenterSuccessResponseModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a single cost center;
+        /// </summary>
+        /// <remarks>
+        /// Updates a single cost center owned by the company. Use the costcenterId path parameter to identify the cost center to update.;
+        /// </remarks>
+		
+        /// <param name="companyid">The ID of the company that owns this cost center object</param>
+        /// <param name="costcenterid">The primary key of this cost center</param>
+        /// <param name="model">The cost center object you wish to update.</param>
+        public async Task<CostCenterSuccessResponseModel> UpdateCostCenterAsync(Int32 companyid, Int64 costcenterid, CostCenterRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyid}/costcenters/{costcenterid}");
+            path.ApplyField("companyid", companyid);
+            path.ApplyField("costcenterid", costcenterid);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<CostCenterSuccessResponseModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -16848,7 +17402,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="country">The country to examine for rate types</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -24543,6 +25097,80 @@ namespace Avalara.AvaTax.RestClient
             }
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ShippingVerifyResult>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be deregistered by ASV;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code of generated by AvaTax batch transaction upload</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public async Task enqueueBatchDeregistrationAsync(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" )
+        {
+            var path = new AvaTaxPath("/api/v2/asv/companies/{companyCode}/batches/{batchCode}/deregister");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("batchCode", batchCode);
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("PUT", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Enqueues a batch of AvaTax transactions to be registered by ASV;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="companyCode">The company code of the company that recorded the transaction</param>
+        /// <param name="batchCode">The batch code generated by AvaTax for batch transaction upload process</param>
+        /// <param name="api_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2</param>
+        /// <param name="x_avalara_version">(Optional): API version that should satisfy the request. If omitted, defaults to 2.2. Header takes precendence if both header and query parameters are present.</param>
+        public async Task enqueueBatchRegistrationAsync(String companyCode, String batchCode, String api_version = "" , String x_avalara_version = "" )
+        {
+            var path = new AvaTaxPath("/api/v2/asv/companies/{companyCode}/batches/{batchCode}/register");
+            path.ApplyField("companyCode", companyCode);
+            path.ApplyField("batchCode", batchCode);
+            if(!String.IsNullOrEmpty(api_version)){
+                path.AddQuery("api-version", api_version);
+            }
+            if(!String.IsNullOrEmpty(x_avalara_version)){
+                WithCustomHeader("x-avalara-version", x_avalara_version);
+            }
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("PUT", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxBeverageClient
+        /// <summary>
+        /// Gets records for current and previously processed batch registration jobs;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="accountId">(Optional): For users with access to multiple accounts, filters results to those associated with the specified Account ID. If not specified, the Account ID defaults to the one associated with the account</param>
+        public async Task<GetBatchesResult> getBatchRegistrationDataAsync(String accountId)
+        {
+            var path = new AvaTaxPath("/api/v2/asv/batches");
+            path.AddQuery("accountId", accountId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<GetBatchesResult>("GET", path, null).ConfigureAwait(false);
         }
 
 #endif
