@@ -165,6 +165,32 @@ namespace Avalara.AvaTax.RestClient
         CustomsOrder = 11,
 
         /// <summary>
+        /// Represents a proposed movement of inventory from one jurisdiction to another.
+        ///  
+        ///  This document type is used when physical goods are shipped from one jurisdiction to another, and it
+        ///  may cause updates in the tax liability for various jurisdictions.
+        ///  
+        ///  For an inventory transfer invoice, the `companyCode` of the transaction refers to the owner of the inventory
+        ///  that will be moved from one location to another.
+        ///  
+        ///  This is a permanent document and is recorded in AvaTax.
+        /// </summary>
+        InventoryTransferOutboundInvoice = 12,
+
+        /// <summary>
+        /// Represents a proposed movement of inventory from one jurisdiction to another.
+        ///  
+        ///  This document type is used when physical goods are shipped from one jurisdiction to another, and it
+        ///  may cause updates in the tax liability for various jurisdictions.
+        ///  
+        ///  For an inventory transfer invoice, the `companyCode` of the transaction refers to the owner of the inventory
+        ///  that will be moved from one location to another.
+        ///  
+        ///  This is a temporary document type and is not saved in tax history.
+        /// </summary>
+        InventoryTransferOutboundOrder = 13,
+
+        /// <summary>
         /// Not a real document type.
         ///  
         ///  This value is used when querying for documents. You can specify the type `Any` in some cases to permit the

@@ -96,5 +96,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         VarianceImport = 14,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        CostCenterImport = 15,
+
     }
 }
