@@ -190,6 +190,16 @@ namespace Avalara.AvaTax.RestClient
         public String createdByUserName { get; set; }
 
         /// <summary>
+        /// The user who modified the notice
+        /// </summary>
+        public String modifiedUserName { get; set; }
+
+        /// <summary>
+        /// The user who closed the notice
+        /// </summary>
+        public String closedByUserName { get; set; }
+
+        /// <summary>
         /// The unique ID number of the user that owns the notice
         /// </summary>
         public Int32? ownedByUserId { get; set; }

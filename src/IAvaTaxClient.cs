@@ -282,6 +282,21 @@ namespace Avalara.AvaTax.RestClient
         List<AccountLicenseKeyModel> GetLicenseKeys(Int32 id);
 
         /// <summary>
+        /// Retrieve a list of MRS Accounts
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///  
+        /// Get a list of accounts with an active MRS service.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        FetchResult<MrsCompanyModel> ListMrsAccounts();
+
+        /// <summary>
         /// Retrieve all accounts
         /// </summary>
         /// <remarks>
@@ -337,13 +352,15 @@ namespace Avalara.AvaTax.RestClient
         List<AccountConfigurationModel> SetAccountConfiguration(Int32 id, List<AccountConfigurationModel> model);
 
         /// <summary>
-        /// Retrieve geolocation information for a specified address
+        /// Retrieve geolocation information for a specified US or Canadian address
         /// </summary>
         /// <remarks>
-        /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the
-        /// 'messages' structure to learn more about problems with this address.
+        /// Resolve a US or Canadian address against Avalara's address validation system. Note that this API is 
+        /// valid for US and Canadian addresses only. 
+        /// 
+        /// If the address can be resolved, this API provides the latitude and longitude of the resolved location. 
+        /// The value `resolutionQuality` can be used to identify how closely this address can be located. If the 
+        /// address cannot be clearly located, use the `messages` structure to learn more about problems with this address.
         /// This is the same API as the POST /api/v2/addresses/resolve endpoint.
         /// Both verbs are supported to provide for flexible implementation.
         ///  
@@ -369,14 +386,16 @@ namespace Avalara.AvaTax.RestClient
         AddressResolutionModel ResolveAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, TextCase? textCase);
 
         /// <summary>
-        /// Retrieve geolocation information for a specified address
+        /// Retrieve geolocation information for a specified US or Canadian address
         /// </summary>
         /// <remarks>
-        /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the
-        /// 'messages' structure to learn more about problems with this address.
-        /// This is the same API as the GET /api/v2/addresses/resolve endpoint.
+        /// Resolve a US or Canadian address against Avalara's address validation system. Note that this API is 
+        /// valid for US and Canadian addresses only. 
+        /// 
+        /// If the address can be resolved, this API provides the latitude and longitude of the resolved location. 
+        /// The value `resolutionQuality` can be used to identify how closely this address can be located. If the 
+        /// address cannot be clearly located, use the `messages` structure to learn more about problems with this 
+        /// address. This is the same API as the GET /api/v2/addresses/resolve endpoint.
         /// Both verbs are supported to provide for flexible implementation.
         /// 
         /// ### Security Policies
@@ -2101,8 +2120,8 @@ namespace Avalara.AvaTax.RestClient
         /// nested object, please call 'GetCustomer' API with appropriate $include parameters.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2128,8 +2147,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2140,7 +2159,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
-        CustomerModel DeleteCustomer(Int32 companyId, String customerCode);
+        void DeleteCustomer(Int32 companyId, String customerCode);
 
         /// <summary>
         /// Retrieve a single customer
@@ -2161,8 +2180,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the customer.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2192,8 +2211,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2220,8 +2239,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2280,8 +2299,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2307,8 +2326,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2346,8 +2365,8 @@ namespace Avalara.AvaTax.RestClient
         /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2380,8 +2399,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the customer.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2414,8 +2433,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2442,8 +2461,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2470,8 +2489,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -2969,6 +2988,23 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         FetchResult<JurisdictionRateTypeTaxTypeMappingModel> ListJurisdictionsByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// List jurisdictions hierarchy based on the filter provided
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all Avalara-supported taxing jurisdictions hirearchy.
+        ///  
+        /// This API Lists the hierarchical relationship of jurisdictions for US states, identifying the cities and special taxing jurisdictions (STJs) for a given county within a state.
+        ///  
+        /// The rate, salesRate, and useRate fields are not available on the JurisdictionHirearchyModels returned by this API.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* parentId, nexus, rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<JurisdictionHierarchyModel> ListJurisdictionsHierarchy(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// List jurisdiction types based on the provided taxTypeId, taxSubTypeId, country, and rateTypeId
@@ -3954,6 +3990,36 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of the DistanceThreshold object to replace.</param>
         /// <param name="model">The new DistanceThreshold object to store.</param>
         CompanyDistanceThresholdModel UpdateDistanceThreshold(Int32 companyId, Int64 id, CompanyDistanceThresholdModel model);
+
+        /// <summary>
+        /// Create Domain control verification
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="model"></param>
+        DcvCreationResponse CreateDcv(DomainNameViewModel model);
+
+        /// <summary>
+        /// Get domain control verifications by logged in user/domain name.
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* Id, Context, Token, Status, EmailId, CreatedOn, CreatedBy, UpdatedOn, UpdatedBy</param>
+        List<DcvViewModel> FilterDcv(String filter);
+
+        /// <summary>
+        /// Get domain control verification by domainControlVerificationId
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="domainControlVerificationId"></param>
+        DcvViewModel GetDcvById(String domainControlVerificationId);
 
         /// <summary>
         /// Create a new eCommerce token.
@@ -6046,7 +6112,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
         ///  
-        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name. 
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
@@ -9223,6 +9289,22 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Retrieve a list of MRS Accounts;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        ///  
+        /// Get a list of accounts with an active MRS service.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        Task<FetchResult<MrsCompanyModel>> ListMrsAccountsAsync();
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Retrieve all accounts;
         /// </summary>
         /// <remarks>
@@ -9280,13 +9362,15 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Retrieve geolocation information for a specified address;
+        /// Retrieve geolocation information for a specified US or Canadian address;
         /// </summary>
         /// <remarks>
-        /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the
-        /// 'messages' structure to learn more about problems with this address.
+        /// Resolve a US or Canadian address against Avalara's address validation system. Note that this API is 
+        /// valid for US and Canadian addresses only. 
+        /// 
+        /// If the address can be resolved, this API provides the latitude and longitude of the resolved location. 
+        /// The value `resolutionQuality` can be used to identify how closely this address can be located. If the 
+        /// address cannot be clearly located, use the `messages` structure to learn more about problems with this address.
         /// This is the same API as the POST /api/v2/addresses/resolve endpoint.
         /// Both verbs are supported to provide for flexible implementation.
         ///  
@@ -9313,14 +9397,16 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Retrieve geolocation information for a specified address;
+        /// Retrieve geolocation information for a specified US or Canadian address;
         /// </summary>
         /// <remarks>
-        /// Resolve an address against Avalara's address-validation system. If the address can be resolved, this API
-        /// provides the latitude and longitude of the resolved location. The value 'resolutionQuality' can be used
-        /// to identify how closely this address can be located. If the address cannot be clearly located, use the
-        /// 'messages' structure to learn more about problems with this address.
-        /// This is the same API as the GET /api/v2/addresses/resolve endpoint.
+        /// Resolve a US or Canadian address against Avalara's address validation system. Note that this API is 
+        /// valid for US and Canadian addresses only. 
+        /// 
+        /// If the address can be resolved, this API provides the latitude and longitude of the resolved location. 
+        /// The value `resolutionQuality` can be used to identify how closely this address can be located. If the 
+        /// address cannot be clearly located, use the `messages` structure to learn more about problems with this 
+        /// address. This is the same API as the GET /api/v2/addresses/resolve endpoint.
         /// Both verbs are supported to provide for flexible implementation.
         /// 
         /// ### Security Policies
@@ -11121,8 +11207,8 @@ namespace Avalara.AvaTax.RestClient
         /// nested object, please call 'GetCustomer' API with appropriate $include parameters.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11149,8 +11235,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11161,7 +11247,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
-        Task<CustomerModel> DeleteCustomerAsync(Int32 companyId, String customerCode);
+        Task DeleteCustomerAsync(Int32 companyId, String customerCode);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -11183,8 +11269,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the customer.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11215,8 +11301,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11244,8 +11330,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11306,8 +11392,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11334,8 +11420,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11374,8 +11460,8 @@ namespace Avalara.AvaTax.RestClient
         /// see the `CreateCertExpressInvitation` API to create an invitation link for this customer.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11409,8 +11495,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the customer.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11444,8 +11530,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11473,8 +11559,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -11502,8 +11588,8 @@ namespace Avalara.AvaTax.RestClient
         /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
@@ -12028,6 +12114,24 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         Task<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>> ListJurisdictionsByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List jurisdictions hierarchy based on the filter provided;
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of all Avalara-supported taxing jurisdictions hirearchy.
+        ///  
+        /// This API Lists the hierarchical relationship of jurisdictions for US states, identifying the cities and special taxing jurisdictions (STJs) for a given county within a state.
+        ///  
+        /// The rate, salesRate, and useRate fields are not available on the JurisdictionHirearchyModels returned by this API.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* parentId, nexus, rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<JurisdictionHierarchyModel>> ListJurisdictionsHierarchyAsync(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13071,6 +13175,39 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of the DistanceThreshold object to replace.</param>
         /// <param name="model">The new DistanceThreshold object to store.</param>
         Task<CompanyDistanceThresholdModel> UpdateDistanceThresholdAsync(Int32 companyId, Int64 id, CompanyDistanceThresholdModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create Domain control verification;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="model"></param>
+        Task<DcvCreationResponse> CreateDcvAsync(DomainNameViewModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Get domain control verifications by logged in user/domain name.;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* Id, Context, Token, Status, EmailId, CreatedOn, CreatedBy, UpdatedOn, UpdatedBy</param>
+        Task<List<DcvViewModel>> FilterDcvAsync(String filter);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Get domain control verification by domainControlVerificationId;
+        /// </summary>
+        /// <remarks>
+        /// ;
+        /// </remarks>
+		
+        /// <param name="domainControlVerificationId"></param>
+        Task<DcvViewModel> GetDcvByIdAsync(String domainControlVerificationId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15249,7 +15386,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// A parameter added to an nexus will be used by default in tax calculation but will not show on the transaction line referencing the nexus.
         ///  
-        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name. 
+        /// A parameter specified on a transaction line will override an nexus parameter if they share the same parameter name.
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
