@@ -78,6 +78,11 @@ namespace Avalara.AvaTax.RestClient
         public Int64? resourceFileId { get; set; }
 
         /// <summary>
+        /// documentId
+        /// </summary>
+        public Int64? documentId { get; set; }
+
+        /// <summary>
         /// The date/time when this record was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }

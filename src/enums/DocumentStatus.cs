@@ -108,6 +108,11 @@ namespace Avalara.AvaTax.RestClient
         PendingApproval = 7,
 
         /// <summary>
+        /// This new status is added for Reporting API to download get reports with Saved(1) and Posted(2) state.
+        /// </summary>
+        Uncommitted = 12,
+
+        /// <summary>
         /// DEPRECATED - Represents "a document in any status" when searching. Please search using the
         ///  [Filtering in REST](/avatax/filtering-in-rest/) documentation.
         /// </summary>

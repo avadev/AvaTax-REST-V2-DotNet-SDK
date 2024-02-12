@@ -103,6 +103,11 @@ namespace Avalara.AvaTax.RestClient
         public Int64? resourceFileId { get; set; }
 
         /// <summary>
+        /// documentId
+        /// </summary>
+        public Int64? documentId { get; set; }
+
+        /// <summary>
         /// The date when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    23.11.0
+ * @version    24.2.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "23.11.0"; } }
+        public static string API_VERSION { get { return "24.2.0"; } }
 
 #region Methods
 
@@ -1109,7 +1109,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
@@ -1148,7 +1148,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
@@ -1190,7 +1190,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
@@ -1235,8 +1235,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Your tax transaction must contain the correct customer code
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         ///  
         /// If the users specified in the certificates do not exist, the API will create the user and link them to the certificate
@@ -1244,7 +1244,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID number of the company recording this certificate</param>
@@ -1274,14 +1274,14 @@ namespace Avalara.AvaTax.RestClient
         /// Revoked certificates can no longer be used.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1311,14 +1311,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1355,14 +1355,14 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
@@ -1398,7 +1398,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company ID to check</param>
@@ -1426,14 +1426,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1465,14 +1465,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1503,14 +1503,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1540,14 +1540,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1583,14 +1583,14 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID number of the company to search</param>
@@ -1634,7 +1634,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId"></param>
@@ -1662,14 +1662,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1702,14 +1702,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -1737,14 +1737,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
@@ -1775,14 +1775,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -2486,6 +2486,161 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve all unique jurisnames based on filter.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="effectiveDate">Used to limit the jurisnames returned.</param>
+        /// <param name="endDate">Used to limit the jurisnames returned.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<JurisNameModel> QueryJurisNames(String country, String region, DateTime? effectiveDate, DateTime? endDate, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/jurisnames/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("endDate", endDate);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<JurisNameModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all RateOptions.
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="effectiveDate">Used to limit the jurisdictions or rates returned.</param>
+        /// <param name="endDate">Used to limit the jurisdictions or rates returned.</param>
+        /// <param name="aggregationOption">Aggregation method used.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxRegionId, taxTypeCodeName, taxSubTypeCode, taxSubTypeCodeName, rateTypeCodeName, componentRate, taxAuthorityId, cityName, countyName, effDate, endDate</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ComplianceRateOptionModel> QueryRateOptions(String country, String region, DateTime? effectiveDate, DateTime? endDate, StackAggregationOption? aggregationOption, Int32? top, Int32? skip, String filter, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/rateOptions/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("endDate", endDate);
+            path.AddQuery("aggregationOption", aggregationOption);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ComplianceRateOptionModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve StateConfig information
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* effDate, endDate, hasBoundary, hasRates, isLocalAdmin, isLocalNexus, isSerState, minBoundaryLevelId, sstStatusId, state, stateFips, boundaryTableBaseName, stjCount, tsStateId, isJaasEnabled, hasSSTBoundary</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ComplianceStateConfigModel> QueryStateConfig(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/stateconfig");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ComplianceStateConfigModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all State Reporting Codes based on filter.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="effectiveDate">Used to limit the StateReportingCodes or rates returned.</param>
+        /// <param name="endDate">Used to limit the StateReportingCodes or rates returned.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* label</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ReportCodeOptionModel> QueryStateReportingCodes(String country, String region, DateTime? effectiveDate, DateTime? endDate, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/stateReportingCodes/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("endDate", endDate);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ReportCodeOptionModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve all tax type mappings based on filter.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK, taxTypeIdSK, taxSubTypeIdSK, generalOrStandardRateTypeIdSK, taxTypeGroupId, taxTypeId, country, generalOrStandardRateTypeId</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<TaxTypeMappingModel> QueryTaxTypeMappings(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/taxtypemappings");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<TaxTypeMappingModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Create a new contact
         /// </summary>
         /// <remarks>
@@ -2820,7 +2975,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -2854,7 +3009,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -2895,7 +3050,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -2935,7 +3090,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded the provided customer</param>
@@ -2971,7 +3126,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -3008,7 +3163,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company defining customers.</param>
@@ -3047,7 +3202,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded the provided customer</param>
@@ -3082,7 +3237,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -3134,7 +3289,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -3178,7 +3333,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -3224,7 +3379,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded the customer</param>
@@ -3260,7 +3415,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -3296,7 +3451,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -3971,7 +4126,7 @@ namespace Avalara.AvaTax.RestClient
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate, isAcm, isSst, createDate, isLocalAdmin, taxAuthorityTypeId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4081,7 +4236,7 @@ namespace Avalara.AvaTax.RestClient
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionHirearchyModels returned by this API.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* parentId, nexus, rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* parentId, nexus, rate, salesRate, signatureCode, useRate, isAcm, isSst, createDate, isLocalAdmin, taxAuthorityTypeId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5986,35 +6141,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FirmClientLinkageOutputModel>("POST", path, null);
-        }
-
-
-        /// <summary>
-        /// FREE API - Request a free trial of AvaTax
-        /// </summary>
-        /// <remarks>
-        /// Call this API to obtain a free AvaTax account.
-        ///  
-        /// This API is free to use. No authentication credentials are required to call this API. You must read and
-        /// accept [Avalara's terms and conditions](https://www1.avalara.com/us/en/legal/terms.html) for the account to be
-        /// created.
-        ///  
-        /// If all conditions are met, this API will grant a free trial version of AvaTax. For a list of functionality
-        /// available in the free trial and its limitations, please see the [AvaTax Developer Website Free Trial page](https://developer.avalara.com/avatax/signup/).
-        ///  
-        /// After your free trial concludes, you will still be able to use the [Free AvaTax API Suite](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Free/).
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API may be called without providing authentication credentials.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="model">Required information to provision a free trial account.</param>
-        public NewAccountModel RequestFreeTrial(FreeTrialRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
-            return RestCall<NewAccountModel>("POST", path, model);
         }
 
 
@@ -13625,7 +13751,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that will record certificates</param>
@@ -13665,7 +13791,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
@@ -13708,7 +13834,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that issued this invitation</param>
@@ -13754,8 +13880,8 @@ namespace Avalara.AvaTax.RestClient
         /// * Your tax transaction must contain the correct customer code
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         ///  
         /// If the users specified in the certificates do not exist, the API will create the user and link them to the certificate
@@ -13763,7 +13889,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, ProStoresOperator, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The ID number of the company recording this certificate</param>
@@ -13794,14 +13920,14 @@ namespace Avalara.AvaTax.RestClient
         /// Revoked certificates can no longer be used.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -13832,14 +13958,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -13877,14 +14003,14 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
@@ -13921,7 +14047,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The company ID to check</param>
@@ -13950,14 +14076,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -13990,14 +14116,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -14029,14 +14155,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -14067,14 +14193,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -14111,14 +14237,14 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The ID number of the company to search</param>
@@ -14163,7 +14289,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId"></param>
@@ -14192,14 +14318,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -14233,14 +14359,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -14269,14 +14395,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The ID number of the company that recorded this certificate</param>
@@ -14308,14 +14434,14 @@ namespace Avalara.AvaTax.RestClient
         /// log onto the administrative website for the product you purchased.
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
-        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption 
-        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption 
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
         /// certificate storage for this company, call `RequestCertificateSetup`.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
@@ -15042,6 +15168,166 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Retrieve all unique jurisnames based on filter.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
+        /// </remarks>
+		
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="effectiveDate">Used to limit the jurisnames returned.</param>
+        /// <param name="endDate">Used to limit the jurisnames returned.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<JurisNameModel>> QueryJurisNamesAsync(String country, String region, DateTime? effectiveDate, DateTime? endDate, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/jurisnames/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("endDate", endDate);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<JurisNameModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all RateOptions.;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
+        /// </remarks>
+		
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="effectiveDate">Used to limit the jurisdictions or rates returned.</param>
+        /// <param name="endDate">Used to limit the jurisdictions or rates returned.</param>
+        /// <param name="aggregationOption">Aggregation method used.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxRegionId, taxTypeCodeName, taxSubTypeCode, taxSubTypeCodeName, rateTypeCodeName, componentRate, taxAuthorityId, cityName, countyName, effDate, endDate</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ComplianceRateOptionModel>> QueryRateOptionsAsync(String country, String region, DateTime? effectiveDate, DateTime? endDate, StackAggregationOption? aggregationOption, Int32? top, Int32? skip, String filter, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/rateOptions/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("endDate", endDate);
+            path.AddQuery("aggregationOption", aggregationOption);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ComplianceRateOptionModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve StateConfig information;
+        /// </summary>
+        /// <remarks>
+        /// This API is available by invitation only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* effDate, endDate, hasBoundary, hasRates, isLocalAdmin, isLocalNexus, isSerState, minBoundaryLevelId, sstStatusId, state, stateFips, boundaryTableBaseName, stjCount, tsStateId, isJaasEnabled, hasSSTBoundary</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ComplianceStateConfigModel>> QueryStateConfigAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/stateconfig");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ComplianceStateConfigModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all State Reporting Codes based on filter.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
+        /// </remarks>
+		
+        /// <param name="country">The two-character ISO-3166 code for the country.</param>
+        /// <param name="region">The two or three character region code for the region.</param>
+        /// <param name="effectiveDate">Used to limit the StateReportingCodes or rates returned.</param>
+        /// <param name="endDate">Used to limit the StateReportingCodes or rates returned.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* label</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ReportCodeOptionModel>> QueryStateReportingCodesAsync(String country, String region, DateTime? effectiveDate, DateTime? endDate, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/stateReportingCodes/{country}/{region}");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("endDate", endDate);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ReportCodeOptionModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all tax type mappings based on filter.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK, taxTypeIdSK, taxSubTypeIdSK, generalOrStandardRateTypeIdSK, taxTypeGroupId, taxTypeId, country, generalOrStandardRateTypeId</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<TaxTypeMappingModel>> QueryTaxTypeMappingsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/compliance/taxtypemappings");
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<TaxTypeMappingModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new contact;
         /// </summary>
         /// <remarks>
@@ -15389,7 +15675,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15424,7 +15710,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15466,7 +15752,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15507,7 +15793,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded the provided customer</param>
@@ -15544,7 +15830,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15582,7 +15868,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company defining customers.</param>
@@ -15622,7 +15908,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded the provided customer</param>
@@ -15658,7 +15944,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15711,7 +15997,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15756,7 +16042,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15803,7 +16089,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded the customer</param>
@@ -15840,7 +16126,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -15877,7 +16163,7 @@ namespace Avalara.AvaTax.RestClient
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
-        /// * This API depends on the following active services:*Required* (all): AvaTaxPro.;
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
@@ -16577,7 +16863,7 @@ namespace Avalara.AvaTax.RestClient
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionModels returned by this API.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rate, salesRate, signatureCode, useRate, isAcm, isSst, createDate, isLocalAdmin, taxAuthorityTypeId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -16690,7 +16976,7 @@ namespace Avalara.AvaTax.RestClient
         /// The rate, salesRate, and useRate fields are not available on the JurisdictionHirearchyModels returned by this API.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* parentId, nexus, rate, salesRate, signatureCode, useRate, isAcm, isSst</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* parentId, nexus, rate, salesRate, signatureCode, useRate, isAcm, isSst, createDate, isLocalAdmin, taxAuthorityTypeId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -18667,36 +18953,6 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FirmClientLinkageOutputModel>("POST", path, null).ConfigureAwait(false);
-        }
-
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// FREE API - Request a free trial of AvaTax;
-        /// </summary>
-        /// <remarks>
-        /// Call this API to obtain a free AvaTax account.
-        ///  
-        /// This API is free to use. No authentication credentials are required to call this API. You must read and
-        /// accept [Avalara's terms and conditions](https://www1.avalara.com/us/en/legal/terms.html) for the account to be
-        /// created.
-        ///  
-        /// If all conditions are met, this API will grant a free trial version of AvaTax. For a list of functionality
-        /// available in the free trial and its limitations, please see the [AvaTax Developer Website Free Trial page](https://developer.avalara.com/avatax/signup/).
-        ///  
-        /// After your free trial concludes, you will still be able to use the [Free AvaTax API Suite](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Free/).
-        /// 
-        /// ### Security Policies
-        /// 
-        /// * This API may be called without providing authentication credentials.;
-        /// </remarks>
-		
-        /// <param name="model">Required information to provision a free trial account.</param>
-        public async Task<NewAccountModel> RequestFreeTrialAsync(FreeTrialRequestModel model)
-        {
-            var path = new AvaTaxPath("/api/v2/accounts/freetrials/request");
-            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
-            return await RestCallAsync<NewAccountModel>("POST", path, model).ConfigureAwait(false);
         }
 
 

@@ -18,64 +18,59 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The tax region jurisdiction model.
+    /// Represents TaxTypeMapping Model
     /// </summary>
-    public class TaxRegionJurisdictionModel
+    public class TaxTypeMappingModel
     {
         /// <summary>
-        /// The id of the jurisdiction.
+        /// TaxTypeMappingId
         /// </summary>
-        public Int32? jurisdictionId { get; set; }
+        public Int32? taxTypeMappingId { get; set; }
 
         /// <summary>
-        /// The id of the tax region.
+        /// TaxTypeGroupIdSK
         /// </summary>
-        public Int32? taxRegionId { get; set; }
+        public Int32? taxTypeGroupIdSK { get; set; }
 
         /// <summary>
-        /// The id of the jurisdiction level.
+        /// TaxTypeIdSK
         /// </summary>
-        public Int32? jurisdictionLevelId { get; set; }
+        public Int32? taxTypeIdSK { get; set; }
 
         /// <summary>
-        /// The rock name.
+        /// TaxSubTypeIdSK
         /// </summary>
-        public String rockName { get; set; }
+        public Int32? taxSubTypeIdSK { get; set; }
 
         /// <summary>
-        /// The report level.
+        /// GeneralOrStandardRateTypeIdSK
         /// </summary>
-        public Int32? reportLevel { get; set; }
+        public Int32? generalOrStandardRateTypeIdSK { get; set; }
 
         /// <summary>
-        /// The state assigned code.
+        /// TaxTypeGroupId
         /// </summary>
-        public String stateAssignedCode { get; set; }
+        public String taxTypeGroupId { get; set; }
 
         /// <summary>
-        /// The id of the tax authority.
+        /// TaxTypeId
         /// </summary>
-        public Int32? taxAuthorityId { get; set; }
+        public String taxTypeId { get; set; }
 
         /// <summary>
-        /// The signature code.
+        /// TaxSubTypeId
         /// </summary>
-        public String signatureCode { get; set; }
+        public String taxSubTypeId { get; set; }
 
         /// <summary>
-        /// The date in which this tax region jurisdiction starts to take effect.
+        /// Country
         /// </summary>
-        public DateTime? effectiveDate { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// The date in which this tax region jurisdiction stops to take effect.
+        /// GeneralOrStandardRateTypeId
         /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The modifiedDate of the tax region jurisdiction.
-        /// </summary>
-        public DateTime? modifiedDate { get; set; }
+        public String generalOrStandardRateTypeId { get; set; }
 
 
         /// <summary>

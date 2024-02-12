@@ -1852,5 +1852,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         InvalidCostCenter = 2813,
 
+        /// <summary>
+        /// Occurs when a Header value is incorrect or invalid in some way
+        /// </summary>
+        InvalidHTTPHeader = 3000,
+
     }
 }
