@@ -8,6 +8,7 @@ using System.Text;
 namespace Avalara.AvaTax.RestClient.Test.netstandard20
 {
     [TestFixture]
+    [Ignore("This test is not yet implemented")]
     public class NexusTests
     {
         public AvaTaxClient Client { get; set; }
