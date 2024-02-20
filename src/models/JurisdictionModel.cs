@@ -137,6 +137,26 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isSst { get; set; }
 
+        /// <summary>
+        /// The CreateDate specific to this jurisdiction.
+        /// </summary>
+        public DateTime? createDate { get; set; }
+
+        /// <summary>
+        /// IsLocalAdmin.
+        /// </summary>
+        public Boolean? isLocalAdmin { get; set; }
+
+        /// <summary>
+        /// ModifiedDate
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// TaxAuthorityTypeId.
+        /// </summary>
+        public Int32? taxAuthorityTypeId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
