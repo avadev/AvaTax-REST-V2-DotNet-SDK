@@ -18,24 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Request model for the returns specific nexus fetch API
     /// </summary>
-    public class UnitOfBasisModel
+    public class NexusForReturnsRequestModel
     {
         /// <summary>
-        /// UnitOfBasisId
+        /// Description of the desired nexus tax type group (e.g. SalesAndUse, Lodging, etc.)
         /// </summary>
-        public Int32? unitOfBasisId { get; set; }
+        public String nexusTaxTypeGroup { get; set; }
 
         /// <summary>
-        /// UnitOfBasis Name
+        /// The nexus type id desired (optional)
         /// </summary>
-        public String unitOfBasis { get; set; }
+        public NexusTypeId? nexusTypeId { get; set; }
 
         /// <summary>
-        /// A boolean value based on the current definition of a Fee in AvaTax
+        /// The local nexus type id desired (optional)
         /// </summary>
-        public Boolean? isFee { get; set; }
+        public LocalNexusTypeId? localNexusTypeId { get; set; }
+
+        /// <summary>
+        /// Flag indicating whether the response should include inactive nexus entries (optional)
+        /// </summary>
+        public Boolean? showHistorical { get; set; }
+
+        /// <summary>
+        /// Flag indicating whether to only include SST nexus entries in the response (optional)
+        /// </summary>
+        public Boolean? showSSTOnly { get; set; }
 
 
         /// <summary>

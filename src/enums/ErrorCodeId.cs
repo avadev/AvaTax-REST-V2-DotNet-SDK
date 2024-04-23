@@ -1527,6 +1527,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidValueError = 1739,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ItemDualWriteParameterValueMismatchError = 1740,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1720,6 +1725,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         CannotCreateNestedObjects = 2402,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidUsername = 2403,
 
         /// <summary>
         /// User's SubjectId not updated by DB query

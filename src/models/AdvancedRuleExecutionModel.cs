@@ -72,6 +72,26 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String customerDataId { get; set; }
 
+        /// <summary>
+        /// Creator of the rule
+        /// </summary>
+        public String createdBy { get; set; }
+
+        /// <summary>
+        /// When the rule execution was created
+        /// </summary>
+        public String createdOn { get; set; }
+
+        /// <summary>
+        /// Last updater of the rule execution
+        /// </summary>
+        public String modifiedBy { get; set; }
+
+        /// <summary>
+        /// When the rule execution was last updated
+        /// </summary>
+        public String modifiedOn { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

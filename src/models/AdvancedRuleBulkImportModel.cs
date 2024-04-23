@@ -18,24 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Input model for the Advanced Rules bulk import API
     /// </summary>
-    public class UnitOfBasisModel
+    public class AdvancedRuleBulkImportModel
     {
         /// <summary>
-        /// UnitOfBasisId
+        /// Flag to try updating existing rules instead of just append
         /// </summary>
-        public Int32? unitOfBasisId { get; set; }
+        public Boolean? replaceExisting { get; set; }
 
         /// <summary>
-        /// UnitOfBasis Name
+        /// List of rule executions to import
         /// </summary>
-        public String unitOfBasis { get; set; }
-
-        /// <summary>
-        /// A boolean value based on the current definition of a Fee in AvaTax
-        /// </summary>
-        public Boolean? isFee { get; set; }
+        public List<AdvancedRuleExecutionModel> executions { get; set; }
 
 
         /// <summary>
