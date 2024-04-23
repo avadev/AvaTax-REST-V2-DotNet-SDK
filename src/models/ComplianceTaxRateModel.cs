@@ -77,6 +77,31 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? rateTypeTaxTypeMappingId { get; set; }
 
+        /// <summary>
+        /// The date this rate was created.
+        /// </summary>
+        public DateTime? createDate { get; set; }
+
+        /// <summary>
+        /// The Source.
+        /// </summary>
+        public String source { get; set; }
+
+        /// <summary>
+        /// The currency Code.
+        /// </summary>
+        public String currencyCode { get; set; }
+
+        /// <summary>
+        /// The uom Id.
+        /// </summary>
+        public Int32? uomId { get; set; }
+
+        /// <summary>
+        /// The date this rate was modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

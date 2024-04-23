@@ -23,21 +23,6 @@ namespace Avalara.AvaTax.RestClient
     public class AdvancedRuleFullDetailsModel
     {
         /// <summary>
-        /// The code script for the rule
-        /// </summary>
-        public String script { get; set; }
-
-        /// <summary>
-        /// Script run for validating customer data
-        /// </summary>
-        public String customerDataValidatorScript { get; set; }
-
-        /// <summary>
-        /// Has the rule been approved
-        /// </summary>
-        public Boolean? isApproved { get; set; }
-
-        /// <summary>
         /// Creator of the rule
         /// </summary>
         public String createdBy { get; set; }
@@ -46,21 +31,6 @@ namespace Avalara.AvaTax.RestClient
         /// When the rule was created
         /// </summary>
         public String createdOn { get; set; }
-
-        /// <summary>
-        /// Last updater of the rule
-        /// </summary>
-        public String modifiedBy { get; set; }
-
-        /// <summary>
-        /// When the rule was last updated
-        /// </summary>
-        public String modifiedOn { get; set; }
-
-        /// <summary>
-        /// Approver of the rule
-        /// </summary>
-        public String approvedBy { get; set; }
 
         /// <summary>
         /// Is this a system rule as opposed to customer-facing
@@ -86,11 +56,6 @@ namespace Avalara.AvaTax.RestClient
         /// The version of the rule
         /// </summary>
         public Int32? version { get; set; }
-
-        /// <summary>
-        /// Account Ids the rule is visible for in CUP, when IsVisibleInCUP = false
-        /// </summary>
-        public List<Int32> accountsVisibleFor { get; set; }
 
         /// <summary>
         /// Unique identifier for a rule

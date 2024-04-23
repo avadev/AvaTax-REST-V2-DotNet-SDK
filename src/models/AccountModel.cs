@@ -92,6 +92,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isSamlEnabled { get; set; }
 
+        /// <summary>
+        /// A boolean flag to identify if the account is deleted
+        /// </summary>
+        public Boolean? isDeleted { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -43,9 +43,24 @@ namespace Avalara.AvaTax.RestClient
         public List<String> names { get; set; }
 
         /// <summary>
-        /// The name of the user who created the determination factor.
+        /// The name of the user who created any applied determination factor.
         /// </summary>
-        public String createdBy { get; set; }
+        public List<String> createdBy { get; set; }
+
+        /// <summary>
+        /// The determination factor entityUseCode.
+        /// </summary>
+        public String entityUseCode { get; set; }
+
+        /// <summary>
+        /// The determination factor exemptCertId.
+        /// </summary>
+        public String exemptCertId { get; set; }
+
+        /// <summary>
+        /// The determination factor exemptNo.
+        /// </summary>
+        public String exemptNo { get; set; }
 
 
         /// <summary>

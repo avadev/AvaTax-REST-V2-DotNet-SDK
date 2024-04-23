@@ -110,7 +110,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// IsJaasEnabled
         /// </summary>
-        public Int32? isJaasEnabled { get; set; }
+        public Boolean? isJaasEnabled { get; set; }
 
         /// <summary>
         /// The name of the country.

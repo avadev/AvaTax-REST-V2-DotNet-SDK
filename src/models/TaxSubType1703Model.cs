@@ -18,24 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents RateTypeTaxTypeMapping Model
     /// </summary>
-    public class UnitOfBasisModel
+    public class TaxSubType1703Model
     {
         /// <summary>
-        /// UnitOfBasisId
+        /// TaxSubTypeIdSK
         /// </summary>
-        public Int32? unitOfBasisId { get; set; }
+        public Int32? taxSubTypeIdSK { get; set; }
 
         /// <summary>
-        /// UnitOfBasis Name
+        /// TaxSubTypeId
         /// </summary>
-        public String unitOfBasis { get; set; }
+        public String taxSubTypeId { get; set; }
 
         /// <summary>
-        /// A boolean value based on the current definition of a Fee in AvaTax
+        /// Description
         /// </summary>
-        public Boolean? isFee { get; set; }
+        public String description { get; set; }
 
 
         /// <summary>

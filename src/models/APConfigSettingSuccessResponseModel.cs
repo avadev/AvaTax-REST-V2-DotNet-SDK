@@ -40,22 +40,83 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The Amount
         /// </summary>
-        public Int64? amount { get; set; }
+        public Decimal? amount { get; set; }
 
         /// <summary>
         /// The Variance For Ignore
         /// </summary>
-        public Int64? varianceForIgnore { get; set; }
+        public Decimal? varianceForIgnore { get; set; }
 
         /// <summary>
         /// The Variance For Accrue
         /// </summary>
-        public Int64? varianceForAccrue { get; set; }
+        public Decimal? varianceForAccrue { get; set; }
 
         /// <summary>
         /// The Variance Percent
         /// </summary>
-        public Int64? variancePercent { get; set; }
+        public Decimal? variancePercent { get; set; }
+
+        /// <summary>
+        /// The Ap Config Tolerance Type
+        /// BATCH or REALTIME
+        /// </summary>
+        public ApConfigToleranceType? apConfigToleranceType { get; set; }
+
+        /// <summary>
+        /// Pay Billed Do Not Accrue
+        /// </summary>
+        public Decimal? payAsBilledNoAccrual { get; set; }
+
+        /// <summary>
+        /// Pay Billed Accrue
+        /// </summary>
+        public Decimal? payAsBilledAccrueUndercharge { get; set; }
+
+        /// <summary>
+        /// ShortPay Items UnderCharge
+        /// </summary>
+        public Decimal? shortPayItemsAccrueUndercharge { get; set; }
+
+        /// <summary>
+        /// Review UnderCharge
+        /// </summary>
+        public Decimal? markForReviewUndercharge { get; set; }
+
+        /// <summary>
+        /// Reject UnderCharge
+        /// </summary>
+        public Decimal? rejectUndercharge { get; set; }
+
+        /// <summary>
+        /// Pay As BilledOvercharge
+        /// </summary>
+        public Decimal? payAsBilledOvercharge { get; set; }
+
+        /// <summary>
+        /// Short Pay Avalara CalculatedTax
+        /// </summary>
+        public Decimal? shortPayAvalaraCalculated { get; set; }
+
+        /// <summary>
+        /// Short Pay Items
+        /// </summary>
+        public Decimal? shortPayItemsAccrueOvercharge { get; set; }
+
+        /// <summary>
+        /// Review OverCharge
+        /// </summary>
+        public Decimal? markForReviewOvercharge { get; set; }
+
+        /// <summary>
+        /// Reject OverCharge
+        /// </summary>
+        public Decimal? rejectOvercharge { get; set; }
+
+        /// <summary>
+        /// Is Active
+        /// </summary>
+        public Boolean? isActive { get; set; }
 
 
         /// <summary>

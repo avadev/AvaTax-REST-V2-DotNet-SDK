@@ -18,24 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Model for the results of importing a single rule execution with the Advanced Rules bulk import API
     /// </summary>
-    public class UnitOfBasisModel
+    public class AdvancedRuleImportResultModel
     {
         /// <summary>
-        /// UnitOfBasisId
+        /// Name of rule execution
         /// </summary>
-        public Int32? unitOfBasisId { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// UnitOfBasis Name
+        /// Import result status code (e.g. Success, ValidationFailed, NotCreated, etc.)
         /// </summary>
-        public String unitOfBasis { get; set; }
+        public String importResult { get; set; }
 
         /// <summary>
-        /// A boolean value based on the current definition of a Fee in AvaTax
+        /// Import result status message (e.g. list of validation errors)
         /// </summary>
-        public Boolean? isFee { get; set; }
+        public String importDetails { get; set; }
+
+        /// <summary>
+        /// Rule execution unique identifier
+        /// </summary>
+        public String ruleExecutionId { get; set; }
+
+        /// <summary>
+        /// Unique identifier of rule to execute
+        /// </summary>
+        public String ruleId { get; set; }
 
 
         /// <summary>

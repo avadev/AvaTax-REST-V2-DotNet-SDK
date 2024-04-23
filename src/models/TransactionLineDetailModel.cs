@@ -73,6 +73,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? exemptReasonId { get; set; }
 
         /// <summary>
+        /// The rule according to which portion of this detail was considered exempt.
+        /// </summary>
+        public Int32? exemptRuleId { get; set; }
+
+        /// <summary>
         /// True if this detail element represented an in-state transaction.
         /// </summary>
         public Boolean? inState { get; set; }

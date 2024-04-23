@@ -102,6 +102,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? suppressNewUserEmail { get; set; }
 
+        /// <summary>
+        /// A boolean flag to identify if the user is deleted
+        /// </summary>
+        public Boolean? isDeleted { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

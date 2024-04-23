@@ -254,6 +254,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<CustomerSupplierModel> supplierandcustomers { get; set; }
 
+        /// <summary>
+        /// A boolean flag to identify if the company is deleted
+        /// </summary>
+        public Boolean? isDeleted { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

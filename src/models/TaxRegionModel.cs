@@ -107,6 +107,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<DenormalizedJurisModel> jurisdictions { get; set; }
 
+        /// <summary>
+        /// The date this tax region was created.
+        /// </summary>
+        public DateTime? createDate { get; set; }
+
+        /// <summary>
+        /// The date this tax region was modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// Food SER Code
+        /// </summary>
+        public String foodSERCode { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
