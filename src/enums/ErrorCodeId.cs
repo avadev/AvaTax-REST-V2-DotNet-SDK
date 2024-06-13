@@ -1532,6 +1532,16 @@ namespace Avalara.AvaTax.RestClient
         ItemDualWriteParameterValueMismatchError = 1740,
 
         /// <summary>
+        /// 
+        /// </summary>
+        DuplicateItemIdsInTaxCodeClassificationRequest = 1741,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        TooManyItemIdsInTaxCodeClassificationRequest = 1742,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1861,6 +1871,16 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         InvalidCostCenter = 2813,
+
+        /// <summary>
+        /// Sync flow restricts one record for Item model
+        /// </summary>
+        TooManyItemsInSyncFlowRequest = 2814,
+
+        /// <summary>
+        /// IMS-2096: Recommendation status update rule
+        /// </summary>
+        InvalidTaxCodeIdInRecommendationStatusUpdate = 2815,
 
         /// <summary>
         /// Occurs when a Header value is incorrect or invalid in some way

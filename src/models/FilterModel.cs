@@ -18,14 +18,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a tax code classification request input model
+    /// Filter Model
     /// </summary>
-    public class ItemTaxCodeClassificationRequestInputModel
+    public class FilterModel
     {
         /// <summary>
-        /// Item ids for which classification has to be initiated
+        /// Filter
         /// </summary>
-        public List<Int64> itemIds { get; set; }
+        public String filter { get; set; }
 
 
         /// <summary>

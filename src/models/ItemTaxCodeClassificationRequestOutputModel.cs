@@ -23,12 +23,12 @@ namespace Avalara.AvaTax.RestClient
     public class ItemTaxCodeClassificationRequestOutputModel
     {
         /// <summary>
-        /// The unique ID of the classification request
+        /// The unique Request Id of classification request
         /// </summary>
         public Int32? requestId { get; set; }
 
         /// <summary>
-        /// The unique ID of the company that created the classification request.
+        /// The unique ID number of the company that has created classification request.
         /// </summary>
         public Int32? companyId { get; set; }
 
@@ -38,12 +38,12 @@ namespace Avalara.AvaTax.RestClient
         public String request { get; set; }
 
         /// <summary>
-        /// The status of the classification request
+        /// The status of classification request
         /// </summary>
         public String status { get; set; }
 
         /// <summary>
-        /// The request type of the classification request
+        /// The request type of classification request
         /// </summary>
         public String requestType { get; set; }
 

@@ -18,39 +18,34 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to upload a file to Resource Files
+    /// GL account request model
     /// </summary>
-    public class ResourceFileUploadRequestModel
+    public class GLAccountRequestModel
     {
         /// <summary>
-        /// This stream contains the bytes of the file being uploaded.
+        /// The entity use code
         /// </summary>
-        public Byte[] content { get; set; }
+        public String entityUseCode { get; set; }
 
         /// <summary>
-        /// The username adding the file
+        /// The "effective from" date
         /// </summary>
-        public String username { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// The account ID to which this file will be attached.
+        /// The end date
         /// </summary>
-        public Int32? accountId { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// The company ID to which this file will be attached.
+        /// 
         /// </summary>
-        public Int32? companyId { get; set; }
+        public Int64TaxProfileObjectReferenceModel defaultItem { get; set; }
 
         /// <summary>
-        /// The original name of this file.
+        /// The GL account code
         /// </summary>
-        public String name { get; set; }
-
-        /// <summary>
-        /// Length of the file in bytes.
-        /// </summary>
-        public Int64? length { get; set; }
+        public String glAccountCode { get; set; }
 
 
         /// <summary>

@@ -85,6 +85,11 @@ namespace Avalara.AvaTax.RestClient
         public String attributeType { get; set; }
 
         /// <summary>
+        /// The sub-type of parameter as determined by its application.
+        /// </summary>
+        public String attributeSubType { get; set; }
+
+        /// <summary>
         /// If the parameter is of enumeration data type, then this list will be populated with all of the possible enumeration values.
         /// </summary>
         public List<String> values { get; set; }

@@ -25,7 +25,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        PayAsBilledMatch = 0,
+        NoAccrualMatch = 0,
 
         /// <summary>
         /// 
@@ -45,12 +45,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        PayAsBilledNoAccrual = 4,
+        NoAccrualUndercharge = 4,
 
         /// <summary>
         /// 
         /// </summary>
-        PayAsBilledAccrueUndercharge = 5,
+        AccruedUndercharge = 5,
 
         /// <summary>
         /// 
@@ -60,7 +60,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        MarkForReviewUndercharge = 7,
+        NeedReviewUndercharge = 7,
 
         /// <summary>
         /// 
@@ -70,7 +70,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        PayAsBilledOvercharge = 9,
+        NoAccrualOvercharge = 9,
 
         /// <summary>
         /// 
@@ -95,32 +95,52 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        AmountThresholdNotMet = 14,
+        NoAccrualAmountThresholdNotMet = 14,
 
         /// <summary>
         /// 
         /// </summary>
-        CostCenterExempted = 15,
+        NoAccrualExemptedCostCenter = 15,
 
         /// <summary>
         /// 
         /// </summary>
-        ItemExempted = 16,
+        NoAccrualExemptedItem = 16,
 
         /// <summary>
         /// 
         /// </summary>
-        TrustedVendor = 17,
+        NoAccrualTrustedVendor = 17,
 
         /// <summary>
         /// 
         /// </summary>
-        AccruedByVendor = 18,
+        AccruedVendor = 18,
 
         /// <summary>
         /// 
         /// </summary>
-        Ignored = 19,
+        NeedReviewVendor = 19,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoAccrualExemptedVendor = 20,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoAccrualExemptedGLAccount = 21,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PendingAccrualVendor = 22,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PendingAccrualUndercharge = 23,
 
     }
 }

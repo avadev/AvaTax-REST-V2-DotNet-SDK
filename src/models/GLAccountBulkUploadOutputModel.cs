@@ -18,39 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to upload a file to Resource Files
+    /// Represents a bulk upload response model.
     /// </summary>
-    public class ResourceFileUploadRequestModel
+    public class GLAccountBulkUploadOutputModel
     {
         /// <summary>
-        /// This stream contains the bytes of the file being uploaded.
+        /// The total number of processed objects
         /// </summary>
-        public Byte[] content { get; set; }
+        public Int32? total { get; set; }
 
         /// <summary>
-        /// The username adding the file
+        /// A dictionary of the object and a respective list of errors
         /// </summary>
-        public String username { get; set; }
-
-        /// <summary>
-        /// The account ID to which this file will be attached.
-        /// </summary>
-        public Int32? accountId { get; set; }
-
-        /// <summary>
-        /// The company ID to which this file will be attached.
-        /// </summary>
-        public Int32? companyId { get; set; }
-
-        /// <summary>
-        /// The original name of this file.
-        /// </summary>
-        public String name { get; set; }
-
-        /// <summary>
-        /// Length of the file in bytes.
-        /// </summary>
-        public Int64? length { get; set; }
+        public List<GLAccountUploadErrorModel> failed { get; set; }
 
 
         /// <summary>

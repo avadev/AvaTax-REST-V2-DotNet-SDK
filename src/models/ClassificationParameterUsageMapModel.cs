@@ -38,7 +38,7 @@ namespace Avalara.AvaTax.RestClient
         public String taxTypeGroupId { get; set; }
 
         /// <summary>
-        /// This defines if the parameter is recommeded ,optional or mandatory
+        /// This defines if the parameter is recommended ,optional or mandatory
         /// </summary>
         public Visibility? visibility { get; set; }
 
@@ -46,6 +46,11 @@ namespace Avalara.AvaTax.RestClient
         /// The type of parameter as determined by its application, e.g. Product, Transaction, Calculated
         /// </summary>
         public String attributeType { get; set; }
+
+        /// <summary>
+        /// The sub-type of parameter as determined by its application.
+        /// </summary>
+        public String attributeSubType { get; set; }
 
         /// <summary>
         /// The name of the property. To use this property, add a field on the `parameters` object of a [CreateTransaction](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/) call.

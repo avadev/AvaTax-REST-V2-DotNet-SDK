@@ -63,6 +63,11 @@ namespace Avalara.AvaTax.RestClient
         public String attributeType { get; set; }
 
         /// <summary>
+        /// The sub-type of parameter as determined by its application.
+        /// </summary>
+        public String attributeSubType { get; set; }
+
+        /// <summary>
         /// The name of the property. To use this property, add a field on the `parameters` object of a [CreateTransaction](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/) call.
         /// </summary>
         public String name { get; set; }
