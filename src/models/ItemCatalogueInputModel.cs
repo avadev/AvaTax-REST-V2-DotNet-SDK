@@ -38,19 +38,24 @@ namespace Avalara.AvaTax.RestClient
         public String description { get; set; }
 
         /// <summary>
-        /// A summary for selection of the tax code.
-        /// </summary>
-        public String summary { get; set; }
-
-        /// <summary>
         /// The tax code of the item.
         /// </summary>
         public String taxCode { get; set; }
 
         /// <summary>
+        /// Type of item
+        /// </summary>
+        public String itemType { get; set; }
+
+        /// <summary>
         /// The universal product code of the item.
         /// </summary>
         public String upc { get; set; }
+
+        /// <summary>
+        /// A summary for selection of the tax code.
+        /// </summary>
+        public String summary { get; set; }
 
         /// <summary>
         /// A way to group similar items.

@@ -416,52 +416,26 @@ namespace Avalara.AvaTax.RestClient
         /// falls above or below the tolerance/threshold limits.
         ///  
         /// Available AP status codes are:
-        /// 1. PayAsBilledMatch
-        /// 2. PayAsBilledNoAccrual
-        /// 3. PayAsBilledAccrueUndercharge
-        /// 4. ShortPayItemsAccrueUndercharge
-        /// 5. MarkForReviewUndercharge
-        /// 6. RejectUndercharge
-        /// 7. ShortPayItemsAccrueOvercharge
-        /// 8. MarkForReviewOvercharge
-        /// 9. RejectOvercharge
-        /// 10. RejectMatch
-        /// 11. MarkForReviewMatch
-        /// 12. ShortPayItemsAccrueMatch
-        /// 13. PayAsBilledOvercharge
-        /// 14. ShortPayAvalaraCalculated
-        /// 15. AmountThresholdNotMet
-        /// 16. TrustedVendor
-        /// 17. CostCenterExempted
-        /// 18. ItemExempted
-        /// 19. AccruedByVendor
+        /// 1. NoAccrualMatch
+        /// 2. NoAccrualUndercharge
+        /// 3. NoAccrualOvercharge
+        /// 4. NoAccrualAmountThresholdNotMet
+        /// 5. NoAccrualTrustedVendor
+        /// 6. NoAccrualExemptedCostCenter
+        /// 7. NoAccrualExemptedItem
+        /// 8. NoAccrualExemptedVendor
+        /// 9. AccruedUndercharge
+        /// 10. AccruedVendor
+        /// 11. NeedReviewUndercharge
+        /// 12. NeedReviewVendor
+        /// 13. PendingAccrualVendor
+        /// 14. PendingAccrualUndercharge
         /// </summary>
         public APStatus? apStatusCode { get; set; }
 
         /// <summary>
         /// An Accounts Payable (AP) status indicates an action that needs to be taken when the tolerance amount falls 
         /// above or below certain threshold limits.
-        ///  
-        /// Available AP statuses are:
-        /// 1. Ignored - No variance, pay as billed (PayAsBilledMatch)
-        /// 2. Ignored - Undercharged, pay as billed (PayAsBilledNoAccrual)
-        /// 3. Accrued - Pay bill and accrue undercharge variance (PayAsBilledAccrueUndercharge)
-        /// 4. Accrued - Pay for items and accrue all tax (ShortPayItemsAccrueUndercharge)
-        /// 5. Needs review - Undercharged (MarkForReviewUndercharge)
-        /// 6. Ignored - Reject undercharged transaction (RejectUndercharge)
-        /// 7. Accrued - Pay for items and accrue all tax (ShortPayItemsAccrueOvercharge)
-        /// 8. Needs review - Overcharged (MarkForReviewOvercharge)
-        /// 9. Ignored - Reject overcharged transaction (RejectOvercharge)
-        /// 10. Ignored - No variance, reject transaction (RejectMatch)
-        /// 11. Needs review - No variance (MarkForReviewMatch)
-        /// 12. Accrued - No variance, pay for items and accrue all tax (ShortPayItemsAccrueMatch)
-        /// 13. Ignored - Overcharged, pay as billed (PayAsBilledOvercharge)
-        /// 14. Ignored - Overcharged, pay Avalara’s calculated tax (ShortPayAvalaraCalculated)
-        /// 15. Ignored - Amount threshold not met (AmountThresholdNotMet)
-        /// 16. Ignored - Use trusted vendor’s calculations (TrustedVendor)
-        /// 17. Ignored - Cost center exempted from tax (CostCenterExempted)
-        /// 18. Ignored - Item exempted from tax (ItemExempted)
-        /// 19. Accrued - Accrued by Vendor (AccruedByVendor)
         /// </summary>
         public String apStatus { get; set; }
 

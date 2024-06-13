@@ -18,39 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to upload a file to Resource Files
+    /// Tax Code Recommendation Output Model
     /// </summary>
-    public class ResourceFileUploadRequestModel
+    public class TaxCodeRecommendationsOutputModel
     {
         /// <summary>
-        /// This stream contains the bytes of the file being uploaded.
+        /// Recommended TaxCode
         /// </summary>
-        public Byte[] content { get; set; }
+        public String taxCode { get; set; }
 
         /// <summary>
-        /// The username adding the file
+        /// Recommended TaxCode Level
         /// </summary>
-        public String username { get; set; }
-
-        /// <summary>
-        /// The account ID to which this file will be attached.
-        /// </summary>
-        public Int32? accountId { get; set; }
-
-        /// <summary>
-        /// The company ID to which this file will be attached.
-        /// </summary>
-        public Int32? companyId { get; set; }
-
-        /// <summary>
-        /// The original name of this file.
-        /// </summary>
-        public String name { get; set; }
-
-        /// <summary>
-        /// Length of the file in bytes.
-        /// </summary>
-        public Int64? length { get; set; }
+        public String level { get; set; }
 
 
         /// <summary>

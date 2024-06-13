@@ -38,16 +38,16 @@ namespace Avalara.AvaTax.RestClient
         public String itemCode { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Date: 11/13/2018, Version: 18.12, Message: For identifying an `Item` with `Avalara TaxCode`, please call the [CreateItemClassification API] with your ItemCode and the Avalara TaxCode.
         /// The unique ID number of the tax code that is applied when selling this item.
-        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
+        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string;
+        /// you do not need to specify both values.
         /// </summary>
         public Int32? taxCodeId { get; set; }
 
         /// <summary>
-        /// DEPRECATED - Date: 11/13/2018, Version: 18.12, Message: For identifying an `Item` with `Avalara TaxCode`, please call the [CreateItemClassification API] with your ItemCode and the Avalara TaxCode.
         /// The unique code string of the Tax Code that is applied when selling this item.
-        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string; you do not need to specify both values.
+        /// When creating or updating an item, you can either specify the Tax Code ID number or the Tax Code string;
+        /// you do not need to specify both values.
         /// </summary>
         public String taxCode { get; set; }
 
@@ -87,7 +87,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? modifiedUserId { get; set; }
 
         /// <summary>
-        /// Source of creation of this item
+        /// Source of creation of this.
         /// </summary>
         public String source { get; set; }
 
@@ -97,13 +97,23 @@ namespace Avalara.AvaTax.RestClient
         public String sourceEntityId { get; set; }
 
         /// <summary>
+        /// Type of item
+        /// </summary>
+        public String itemType { get; set; }
+
+        /// <summary>
         /// Universal unique code for item
         /// </summary>
         public String upc { get; set; }
 
         /// <summary>
+        /// Long Summary for Item
+        /// </summary>
+        public String summary { get; set; }
+
+        /// <summary>
         /// List of classifications that belong to this item.
-        /// A single classification consits of a productCode and a systemCode for a particular item.
+        /// A single classification consists of a productCode and a systemCode for a particular item.
         /// </summary>
         public List<ClassificationModel> classifications { get; set; }
 
@@ -121,6 +131,16 @@ namespace Avalara.AvaTax.RestClient
         /// Additional key-description of the product.
         /// </summary>
         public object properties { get; set; }
+
+        /// <summary>
+        /// List of item status
+        /// </summary>
+        public List<ItemStatusOutputModel> itemStatus { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public TaxCodeRecommendationStatusOutputModel taxCodeRecommendationStatus { get; set; }
 
 
         /// <summary>

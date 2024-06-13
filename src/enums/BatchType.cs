@@ -101,5 +101,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         CostCenterImport = 15,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        GLAccountImport = 16,
+
     }
 }

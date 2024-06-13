@@ -18,39 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to upload a file to Resource Files
+    /// GL account response model
     /// </summary>
-    public class ResourceFileUploadRequestModel
+    public class GLAccountSuccessResponseModel
     {
         /// <summary>
-        /// This stream contains the bytes of the file being uploaded.
+        /// The GL account ID
         /// </summary>
-        public Byte[] content { get; set; }
+        public Int64? glAccountId { get; set; }
 
         /// <summary>
-        /// The username adding the file
-        /// </summary>
-        public String username { get; set; }
-
-        /// <summary>
-        /// The account ID to which this file will be attached.
-        /// </summary>
-        public Int32? accountId { get; set; }
-
-        /// <summary>
-        /// The company ID to which this file will be attached.
+        /// The company ID to which this GL account belongs
         /// </summary>
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The original name of this file.
+        /// 
         /// </summary>
-        public String name { get; set; }
+        public TaxProfileMetaDataModel meta { get; set; }
 
         /// <summary>
-        /// Length of the file in bytes.
+        /// The entity use code
         /// </summary>
-        public Int64? length { get; set; }
+        public String entityUseCode { get; set; }
+
+        /// <summary>
+        /// The "effective from" date
+        /// </summary>
+        public DateTime? effectiveDate { get; set; }
+
+        /// <summary>
+        /// The end date
+        /// </summary>
+        public DateTime? endDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int64TaxProfileObjectReferenceModel defaultItem { get; set; }
+
+        /// <summary>
+        /// The GL account code
+        /// </summary>
+        public String glAccountCode { get; set; }
 
 
         /// <summary>
