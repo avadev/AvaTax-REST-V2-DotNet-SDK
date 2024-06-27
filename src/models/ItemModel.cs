@@ -142,6 +142,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public TaxCodeRecommendationStatusOutputModel taxCodeRecommendationStatus { get; set; }
 
+        /// <summary>
+        /// Item tax code recommendations
+        /// </summary>
+        public List<TaxCodeRecommendationOutputModel> taxCodeRecommendations { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

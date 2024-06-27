@@ -73,12 +73,15 @@ namespace Avalara.AvaTax.RestClient
         public String batchCode { get; set; }
 
         /// <summary>
-        /// The three-character ISO 4217 currency code that was used for payment for this transaction.
+        /// The three-character ISO 4217 currency code representing the ‘invoice currency’ (the currency the transaction was invoiced in). 
+        /// If this is different than the currency the tax liability needs to be reported in, you’ll also need to provide the 
+        /// `exchangeRateCurrencyCode` and the `exchangeRate` for conversion to the reporting country.
         /// </summary>
         public String currencyCode { get; set; }
 
         /// <summary>
-        /// The three-character ISO 4217 exchange rate currency code that was used for payment for this transaction.
+        /// The three-character ISO 4217 currency code representing the ‘reporting currency’ (the currency the transaction’s tax liability needs to be reported in). 
+        /// You can leave this blank if the invoice currency provided in the `currencyCode` field is also the reporting currency.
         /// </summary>
         public String exchangeRateCurrencyCode { get; set; }
 
@@ -268,7 +271,8 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? exchangeRateEffectiveDate { get; set; }
 
         /// <summary>
-        /// If this transaction included foreign currency exchange, this is the exchange rate that was used.
+        /// The currency exchange rate from the invoice currency (`currencyCode`) to the reporting currency (`exchangeRateCurrencyCode`).
+        /// This only needs to be set if the invoice currency and the reporting currency are different. It defaults to 1.0.
         /// </summary>
         public Decimal? exchangeRate { get; set; }
 

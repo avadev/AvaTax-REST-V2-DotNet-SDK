@@ -110,6 +110,11 @@ namespace Avalara.AvaTax.RestClient
         public String status { get; set; }
 
         /// <summary>
+        /// The status of the certificate as displayed on https://exemptions.avalara.com. Can take values
+        /// </summary>
+        public CertificateEcmStatus? ecmStatus { get; set; }
+
+        /// <summary>
         /// The date/time when this record was created.
         /// </summary>
         public DateTime? createdDate { get; set; }
@@ -160,6 +165,41 @@ namespace Avalara.AvaTax.RestClient
         /// You can fetch this data by specifying `$include=attributes` when calling a certificate fetch API.
         /// </summary>
         public List<CertificateAttributeModel> attributes { get; set; }
+
+        /// <summary>
+        /// A list of certificate update histories for this certificate.
+        ///  
+        /// You can fetch this data by specifying `$include=histories` when calling a certificate fetch API.
+        /// </summary>
+        public List<HistoryModel> histories { get; set; }
+
+        /// <summary>
+        /// A list of certificate update histories for this certificate.
+        ///  
+        /// You can fetch this data by specifying `$include=jobs` when calling a certificate fetch API.
+        /// </summary>
+        public List<CustomerJobModel> jobs { get; set; }
+
+        /// <summary>
+        /// A list of certificate logs for this certificate.
+        ///  
+        /// You can fetch this data by specifying `$include=logs` when calling a certificate fetch API.
+        /// </summary>
+        public List<CertificateLogModel> logs { get; set; }
+
+        /// <summary>
+        /// A list of invalid reasons if the certificate status is not valid
+        ///  
+        /// You can fetch this data by specifying `$include=invalid_reasons` when calling a certificate fetch API.
+        /// </summary>
+        public List<CertificateInvalidReasonModel> invalidReasons { get; set; }
+
+        /// <summary>
+        /// A list of custom defined fields for this certificate
+        ///  
+        /// You can fetch this data by specifying `$include=custom_fields` when calling a certificate fetch API.
+        /// </summary>
+        public List<CustomFieldModel> customFields { get; set; }
 
         /// <summary>
         /// The unique ID number of current AvaTax Exemption Certificate that refers this certificate.
