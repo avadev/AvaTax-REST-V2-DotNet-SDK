@@ -178,6 +178,16 @@ namespace Avalara.AvaTax.RestClient
         public List<ExposureZoneModel> exposureZones { get; set; }
 
         /// <summary>
+        /// A list of bill-to customer records that are connected to this ship-to customer.
+        ///  
+        /// Customer records represent businesses or individuals who can provide exemption certificates. Some customers
+        /// may have certificates that are linked to their shipping address or their billing address. To group these
+        /// customer records together, you may link multiple bill-to and ship-to addresses together to represent a single
+        /// entity that has multiple different addresses of different kinds.
+        /// </summary>
+        public List<CustomerModel> billTos { get; set; }
+
+        /// <summary>
         /// A list of ship-to customer records that are connected to this bill-to customer.
         ///  
         /// Customer records represent businesses or individuals who can provide exemption certificates. Some customers
@@ -193,6 +203,31 @@ namespace Avalara.AvaTax.RestClient
         /// You can fetch this data by specifying `$include=attributes` when calling a customer fetch API.
         /// </summary>
         public List<CustomerAttributeModel> attributes { get; set; }
+
+        /// <summary>
+        /// List if active certificates with exemption reasons
+        /// </summary>
+        public List<ActiveCertificateModel> activeCertificates { get; set; }
+
+        /// <summary>
+        /// List of field update histories for this customer
+        /// </summary>
+        public List<HistoryModel> histories { get; set; }
+
+        /// <summary>
+        /// List of jobs for this customer
+        /// </summary>
+        public List<CustomerJobModel> jobs { get; set; }
+
+        /// <summary>
+        /// List of logs for this customer
+        /// </summary>
+        public List<CertificateLogModel> logs { get; set; }
+
+        /// <summary>
+        /// List of states where this customer ships to
+        /// </summary>
+        public List<StateModel> shipToStates { get; set; }
 
 
         /// <summary>

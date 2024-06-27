@@ -1181,7 +1181,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
         ///  * attributes - Retrieves all attributes applied to the certificate.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2378,7 +2378,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
         ///  * attributes - Retrieves all attributes applied to the certificate.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2446,7 +2446,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* shipTos</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4377,7 +4377,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemId">The ID of the item you wish to delete the classifications.</param>
-        List<ErrorDetail> BatchDeleteItemClassifications(Int32 companyId, Int64 itemId);
+        List<AssociatedObjectDeletedErrorDetailsModel> BatchDeleteItemClassifications(Int32 companyId, Int64 itemId);
 
         /// <summary>
         /// Delete all parameters for an item
@@ -4398,7 +4398,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemId">The ID of the item you wish to delete the parameters.</param>
-        List<ErrorDetail> BatchDeleteItemParameters(Int32 companyId, Int64 itemId);
+        List<AssociatedObjectDeletedErrorDetailsModel> BatchDeleteItemParameters(Int32 companyId, Int64 itemId);
 
         /// <summary>
         /// Bulk upload items from a product catalog
@@ -4559,7 +4559,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemCode">The code of the item you want to delete.</param>
-        List<ErrorDetail> DeleteCatalogueItem(Int32 companyId, String itemCode);
+        List<ObjectDeletedErrorModel> DeleteCatalogueItem(Int32 companyId, String itemCode);
 
         /// <summary>
         /// Delete a single item
@@ -4582,7 +4582,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
-        List<ErrorDetail> DeleteItem(Int32 companyId, Int64 id);
+        List<ObjectDeletedErrorModel> DeleteItem(Int32 companyId, Int64 id);
 
         /// <summary>
         /// Delete a single item classification.
@@ -4602,7 +4602,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The company id.</param>
         /// <param name="itemId">The item id.</param>
         /// <param name="id">The item classification id.</param>
-        List<ErrorDetail> DeleteItemClassification(Int32 companyId, Int64 itemId, Int64 id);
+        List<ObjectDeletedErrorModel> DeleteItemClassification(Int32 companyId, Int64 itemId, Int64 id);
 
         /// <summary>
         /// Delete a single item parameter
@@ -4624,7 +4624,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The company id</param>
         /// <param name="itemId">The item id</param>
         /// <param name="id">The parameter id</param>
-        List<ErrorDetail> DeleteItemParameter(Int32 companyId, Int64 itemId, Int64 id);
+        List<ObjectDeletedErrorModel> DeleteItemParameter(Int32 companyId, Int64 itemId, Int64 id);
 
         /// <summary>
         /// Delete item tag by id
@@ -4642,7 +4642,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="itemTagDetailId">The ID of the item tag detail you wish to delete.</param>
-        List<ErrorDetail> DeleteItemTag(Int32 companyId, Int64 itemId, Int32 itemTagDetailId);
+        List<ObjectDeletedErrorModel> DeleteItemTag(Int32 companyId, Int64 itemId, Int32 itemTagDetailId);
 
         /// <summary>
         /// Delete all item tags
@@ -4659,7 +4659,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
-        List<ErrorDetail> DeleteItemTags(Int32 companyId, Int64 itemId);
+        List<AssociatedObjectDeletedErrorDetailsModel> DeleteItemTags(Int32 companyId, Int64 itemId);
 
         /// <summary>
         /// Retrieve a single item
@@ -4758,7 +4758,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId"></param>
         /// <param name="itemId"></param>
-        TaxCodeRecommendationsOutputModel GetItemTaxCodeRecommendations(Int32 companyId, Int64 itemId);
+        List<TaxCodeRecommendationOutputModel> GetItemTaxCodeRecommendations(Int32 companyId, Int64 itemId);
 
         /// <summary>
         /// Retrieve premium classification for a company's item based on its ItemCode and SystemCode.
@@ -4895,6 +4895,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Classifications
         /// * Tags
         /// * Properties
+        /// * TaxCodeRecommendationStatus
         /// 
         /// ### Security Policies
         /// 
@@ -4902,7 +4903,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -4933,7 +4934,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -4992,7 +4993,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -5070,8 +5071,9 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
+        /// <param name="isRecommendationSelected">If true then Set recommendation status to RecommendationSelected</param>
         /// <param name="model">The item object you wish to update.</param>
-        ItemModel UpdateItem(Int32 companyId, Int64 id, ItemModel model);
+        ItemModel UpdateItem(Int32 companyId, Int64 id, Boolean? isRecommendationSelected, ItemModel model);
 
         /// <summary>
         /// Update an item classification.
@@ -10318,7 +10320,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
         ///  * attributes - Retrieves all attributes applied to the certificate.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11568,7 +11570,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
         ///  * attributes - Retrieves all attributes applied to the certificate.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11638,7 +11640,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* shipTos</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -13682,7 +13684,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemId">The ID of the item you wish to delete the classifications.</param>
-        Task<List<ErrorDetail>> BatchDeleteItemClassificationsAsync(Int32 companyId, Int64 itemId);
+        Task<List<AssociatedObjectDeletedErrorDetailsModel>> BatchDeleteItemClassificationsAsync(Int32 companyId, Int64 itemId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13704,7 +13706,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemId">The ID of the item you wish to delete the parameters.</param>
-        Task<List<ErrorDetail>> BatchDeleteItemParametersAsync(Int32 companyId, Int64 itemId);
+        Task<List<AssociatedObjectDeletedErrorDetailsModel>> BatchDeleteItemParametersAsync(Int32 companyId, Int64 itemId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13872,7 +13874,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemCode">The code of the item you want to delete.</param>
-        Task<List<ErrorDetail>> DeleteCatalogueItemAsync(Int32 companyId, String itemCode);
+        Task<List<ObjectDeletedErrorModel>> DeleteCatalogueItemAsync(Int32 companyId, String itemCode);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13896,7 +13898,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="id">The ID of the item you wish to delete.</param>
-        Task<List<ErrorDetail>> DeleteItemAsync(Int32 companyId, Int64 id);
+        Task<List<ObjectDeletedErrorModel>> DeleteItemAsync(Int32 companyId, Int64 id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13917,7 +13919,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The company id.</param>
         /// <param name="itemId">The item id.</param>
         /// <param name="id">The item classification id.</param>
-        Task<List<ErrorDetail>> DeleteItemClassificationAsync(Int32 companyId, Int64 itemId, Int64 id);
+        Task<List<ObjectDeletedErrorModel>> DeleteItemClassificationAsync(Int32 companyId, Int64 itemId, Int64 id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13940,7 +13942,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The company id</param>
         /// <param name="itemId">The item id</param>
         /// <param name="id">The parameter id</param>
-        Task<List<ErrorDetail>> DeleteItemParameterAsync(Int32 companyId, Int64 itemId, Int64 id);
+        Task<List<ObjectDeletedErrorModel>> DeleteItemParameterAsync(Int32 companyId, Int64 itemId, Int64 id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13959,7 +13961,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="itemTagDetailId">The ID of the item tag detail you wish to delete.</param>
-        Task<List<ErrorDetail>> DeleteItemTagAsync(Int32 companyId, Int64 itemId, Int32 itemTagDetailId);
+        Task<List<ObjectDeletedErrorModel>> DeleteItemTagAsync(Int32 companyId, Int64 itemId, Int32 itemTagDetailId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13977,7 +13979,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
-        Task<List<ErrorDetail>> DeleteItemTagsAsync(Int32 companyId, Int64 itemId);
+        Task<List<AssociatedObjectDeletedErrorDetailsModel>> DeleteItemTagsAsync(Int32 companyId, Int64 itemId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -14081,7 +14083,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId"></param>
         /// <param name="itemId"></param>
-        Task<TaxCodeRecommendationsOutputModel> GetItemTaxCodeRecommendationsAsync(Int32 companyId, Int64 itemId);
+        Task<List<TaxCodeRecommendationOutputModel>> GetItemTaxCodeRecommendationsAsync(Int32 companyId, Int64 itemId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -14223,6 +14225,7 @@ namespace Avalara.AvaTax.RestClient
         /// * Classifications
         /// * Tags
         /// * Properties
+        /// * TaxCodeRecommendationStatus
         /// 
         /// ### Security Policies
         /// 
@@ -14230,7 +14233,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -14262,7 +14265,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -14323,7 +14326,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -14404,8 +14407,9 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that this item belongs to.</param>
         /// <param name="id">The ID of the item you wish to update</param>
+        /// <param name="isRecommendationSelected">If true then Set recommendation status to RecommendationSelected</param>
         /// <param name="model">The item object you wish to update.</param>
-        Task<ItemModel> UpdateItemAsync(Int32 companyId, Int64 id, ItemModel model);
+        Task<ItemModel> UpdateItemAsync(Int32 companyId, Int64 id, Boolean? isRecommendationSelected, ItemModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>

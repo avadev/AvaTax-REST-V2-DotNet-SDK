@@ -28,9 +28,34 @@ namespace Avalara.AvaTax.RestClient
     public class CustomFieldModel
     {
         /// <summary>
+        /// Custom field ID
+        /// </summary>
+        public Int32? id { get; set; }
+
+        /// <summary>
         /// The name of the custom field.
         /// </summary>
         public String name { get; set; }
+
+        /// <summary>
+        /// Custom field type
+        /// </summary>
+        public String type { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String possibleValues { get; set; }
+
+        /// <summary>
+        /// Custom field uses data entry or not?
+        /// </summary>
+        public Boolean? usesDataEntry { get; set; }
+
+        /// <summary>
+        /// Custom field is required in data entry or not?
+        /// </summary>
+        public Boolean? requiredInDataEntry { get; set; }
 
         /// <summary>
         /// The value of the custom field.

@@ -155,7 +155,9 @@ namespace Avalara.AvaTax.RestClient
         public TaxOverrideModel taxOverride { get; set; }
 
         /// <summary>
-        /// The three-character ISO 4217 currency code for this transaction.
+        /// The three-character ISO 4217 currency code representing the ‘invoice currency’ (the currency the transaction was invoiced in). 
+        /// If this is different than the currency the tax liability needs to be reported in, you’ll also need to provide the 
+        /// `exchangeRateCurrencyCode` and the `exchangeRate` for conversion to the reporting country.
         /// </summary>
         public String currencyCode { get; set; }
 
@@ -166,10 +168,8 @@ namespace Avalara.AvaTax.RestClient
         public ServiceMode? serviceMode { get; set; }
 
         /// <summary>
-        /// Currency exchange rate from this transaction to the company base currency.
-        ///  
-        /// This only needs to be set if the transaction currency is different than the company base currency.
-        /// It defaults to 1.0.
+        /// The currency exchange rate from the invoice currency (`currencyCode`) to the reporting currency (`exchangeRateCurrencyCode`).
+        /// This only needs to be set if the invoice currency and the reporting currency are different. It defaults to 1.0.
         /// </summary>
         public Decimal? exchangeRate { get; set; }
 
@@ -179,7 +179,8 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? exchangeRateEffectiveDate { get; set; }
 
         /// <summary>
-        /// Optional three-character ISO 4217 reporting exchange rate currency code for this transaction. The default value is USD.
+        /// The three-character ISO 4217 currency code representing the ‘reporting currency’ (the currency the transaction’s tax liability needs to be reported in). 
+        /// You can leave this blank if the invoice currency provided in the `currencyCode` field is also the reporting currency.
         /// </summary>
         public String exchangeRateCurrencyCode { get; set; }
 
