@@ -57,32 +57,32 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
 		<DefineConstants>TRACE;DEBUG;PORTABLE;NETSTANDARD2_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
 		<DefineConstants>TRACE;RELEASE;PORTABLE;NETSTANDARD2_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
 		<DefineConstants>TRACE;DEBUG;PORTABLE;NET6_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
 		<DefineConstants>TRACE;RELEASE;PORTABLE;NET6_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' AND '$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
 		<DefineConstants>TRACE;DEBUG;PORTABLE;NET8_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' AND '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
 		<DefineConstants>TRACE;RELEASE;PORTABLE;NET8_0</DefineConstants>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
