@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net451;net45;net461;net472;netcoreapp2.2.8;netcoreapp3.1</TargetFrameworks>
+		<TargetFrameworks>net451;net45;net461;net472;netcoreapp2.2.8;netcoreapp3.1;net6.0</TargetFrameworks>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net451'">
@@ -14,6 +14,8 @@
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="**\*.*" />
@@ -63,7 +65,7 @@
 		  <SetTargetFramework>TargetFramework=net472</SetTargetFramework>
 		</ProjectReference>
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2.8'">
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="NUnit" Version="3.12.0" />
 		<PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
@@ -83,6 +85,17 @@
 		<Compile Include="netstandard20\*.cs" />
 		<ProjectReference Include="..\src\Avalara.AvaTax.RestClient.csproj">
 		  <SetTargetFramework>TargetFramework=netstandard2.0</SetTargetFramework>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Nunit" Version="3.13.3" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<Compile Include="net6.0\*.cs" />
+		<ProjectReference Include="..\src\Avalara.AvaTax.RestClient.csproj">
+		  <SetTargetFramework>TargetFramework=net6.0</SetTargetFramework>
 		</ProjectReference>
 	</ItemGroup>
 </Project>
