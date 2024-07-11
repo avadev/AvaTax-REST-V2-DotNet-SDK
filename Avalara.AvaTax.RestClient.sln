@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35004.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalara.AvaTax.RestClient", "src\Avalara.AvaTax.RestClient.csproj", "{F0EEC671-76CD-47C3-8671-FA178139B2A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalara.AvaTax.RestClient.Test", "tests\Avalara.AvaTax.RestClient.Test.csproj", "{88267F39-00E4-4D70-8E76-EA601E43CCA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalara.AvaTax.RestClient.Tests", "tests\Avalara.AvaTax.RestClient.Tests.csproj", "{88267F39-00E4-4D70-8E76-EA601E43CCA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
