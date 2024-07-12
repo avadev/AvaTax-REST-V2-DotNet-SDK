@@ -145,7 +145,8 @@ namespace Avalara.AvaTax.RestClient
             TextWriter writer = null;
 
             try {
-                Directory.GetAccessControl(path);
+                DirectoryInfo directory = new DirectoryInfo(path);
+                directory.GetAccessControl();
                 var content = JsonConvert.SerializeObject(zipRate);
                 writer = new StreamWriter(Path.Combine(path, zip + ".json"));
                 writer.Write(content);
