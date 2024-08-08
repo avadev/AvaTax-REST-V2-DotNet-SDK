@@ -293,6 +293,41 @@ namespace Avalara.AvaTax.RestClient
             return this;
         }
 
+
+        /// <summary>
+        /// Add an address to this line with lat/long
+        /// </summary>
+        /// <param name="type">Address Type. Can be ShipFrom, ShipTo, PointOfOrderAcceptance, PointOfOrderOrigin, SingleLocation.</param>
+        /// <param name="line1">Street address, attention line, or business name of the location.</param>
+        /// <param name="line2">Street address, business name, or apartment/unit number of the location.</param>
+        /// <param name="line3">Street address or apartment/unit number of the location.</param>
+        /// <param name="city">City of the location.</param>
+        /// <param name="region">State or Region of the location.</param>
+        /// <param name="postalCode">Postal/zip code of the location.</param>
+        /// <param name="country">Two-letter country code of the location.</param>
+        /// <param name="latitude">latitude of the location</param>
+        /// <param name="longitude">longitude of the location</param>
+        /// <returns></returns>
+        public TransactionBuilder WithLineAddress(TransactionAddressType type, string line1, string line2, string line3, string city, string region, string postalCode, string country, decimal latitude, decimal longitude)
+        {
+            var line = GetMostRecentLine("WithLineAddress");
+            if (line.addresses == null) line.addresses = new AddressesModel();
+            var ai = new AddressLocationInfo
+            {
+                line1 = line1,
+                line2 = line2,
+                line3 = line3,
+                city = city,
+                region = region,
+                postalCode = postalCode,
+                country = country,
+                latitude = latitude,
+                longitude = longitude
+            };
+            SetAddress(line.addresses, type, ai);
+            return this;
+        }
+
         /// <summary>
         /// Add an address to this line using an existing company location code.
         /// 
