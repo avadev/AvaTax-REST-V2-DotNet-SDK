@@ -18,34 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Credit Transaction Details
     /// </summary>
-    public class ItemCatalogueResultModel
+    public class CreditTransactionDetails
     {
         /// <summary>
-        /// The unique ID number of this item.
+        /// DocCode
         /// </summary>
-        public Int64? itemId { get; set; }
+        public String docCode { get; set; }
 
         /// <summary>
-        /// A unique code representing this item.
+        /// DocDate
         /// </summary>
-        public String itemCode { get; set; }
+        public DateTime? docDate { get; set; }
 
         /// <summary>
-        /// The unique identifier of this item at the source
+        /// TotalExempt
         /// </summary>
-        public String sourceEntityId { get; set; }
+        public Decimal? totalExempt { get; set; }
 
         /// <summary>
-        /// A CRUD event for item db operations
+        /// TotalTaxable
         /// </summary>
-        public ItemCatalogueResultEvent? itemEvent { get; set; }
+        public Decimal? totalTaxable { get; set; }
 
         /// <summary>
-        /// Contains list of errors for item catalogue entry
+        /// TotalTax
         /// </summary>
-        public List<String> errors { get; set; }
+        public Decimal? totalTax { get; set; }
+
+        /// <summary>
+        /// Lines
+        /// </summary>
+        public List<CreditTransactionDetailLines> lines { get; set; }
 
 
         /// <summary>

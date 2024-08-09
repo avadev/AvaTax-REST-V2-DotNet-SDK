@@ -98,6 +98,16 @@ namespace Avalara.AvaTax.RestClient
         public String type { get; set; }
 
         /// <summary>
+        /// The three-character liability currency code.
+        /// </summary>
+        public String liabilityCurrencyCode { get; set; }
+
+        /// <summary>
+        /// The three-character filing calendar currency code for this return. For example if country is 'US' then currency is 'USD'. Similarly, if country is 'CA' then currency is 'CAD', etc.
+        /// </summary>
+        public String filingCalendarCurrencyCode { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public FilingsTaxSummaryModel returnTaxSummary { get; set; }

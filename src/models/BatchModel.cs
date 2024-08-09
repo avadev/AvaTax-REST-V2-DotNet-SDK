@@ -33,14 +33,14 @@ namespace Avalara.AvaTax.RestClient
         public String batchAgent { get; set; }
 
         /// <summary>
-        /// Any optional flags provided for this batch
-        /// </summary>
-        public String options { get; set; }
-
-        /// <summary>
         /// The unique ID number of this batch.
         /// </summary>
         public Int32? id { get; set; }
+
+        /// <summary>
+        /// Any optional flags provided for this batch
+        /// </summary>
+        public String options { get; set; }
 
         /// <summary>
         /// The user-friendly readable name for this batch.

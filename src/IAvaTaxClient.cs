@@ -4065,6 +4065,56 @@ namespace Avalara.AvaTax.RestClient
         DcvViewModel GetDcvById(String domainControlVerificationId);
 
         /// <summary>
+        /// Delete AFC event notifications.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="isDlq">Specify `true` to delete event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        FetchResult<EventMessageResponse> DeleteAfcEventNotifications(Boolean? isDlq, EventDeleteMessageModel model);
+
+        /// <summary>
+        /// Delete company event notifications
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        FetchResult<EventMessageResponse> DeleteEventNotifications(Int32 companyId, EventDeleteMessageModel model);
+
+        /// <summary>
+        /// Retrieve company event notifications.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        FetchResult<EventMessageResponse> GetEventNotifications(Int32 companyId);
+
+        /// <summary>
+        /// Retrieve AFC event notifications
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="isDlq">Specify `true` to retrieve event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        FetchResult<EventMessageResponse> ListAfcEventNotifications(Boolean? isDlq);
+
+        /// <summary>
         /// Create a new eCommerce token.
         /// </summary>
         /// <remarks>
@@ -4912,6 +4962,27 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="itemStatus">A comma separated list of item status on the basis of which you want to filter Items</param>
         /// <param name="taxCodeRecommendationStatus">Tax code recommendation status on the basis of which you want to filter Items</param>
         FetchResult<ItemModel> ListItemsByCompany(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy, String tagName, String itemStatus, String taxCodeRecommendationStatus);
+
+        /// <summary>
+        /// Retrieve the parameters by companyId and itemId.
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of parameters based on the company's service types and the item code.
+        /// Ignores nexus if a service type is configured in the 'IgnoreNexusForServiceTypes' configuration section.
+        /// Ignores nexus for the AvaAlcohol service type.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">Company Identifier.</param>
+        /// <param name="itemId">Item Identifier.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* serviceTypes, regularExpression, attributeSubType, values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<ParameterModel> ListRecommendedParameterByCompanyIdAndItemId(Int32 companyId, Int32 itemId, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// Retrieve all items
@@ -13353,6 +13424,60 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete AFC event notifications.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.;
+        /// </remarks>
+		
+        /// <param name="isDlq">Specify `true` to delete event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        Task<FetchResult<EventMessageResponse>> DeleteAfcEventNotificationsAsync(Boolean? isDlq, EventDeleteMessageModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete company event notifications;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        Task<FetchResult<EventMessageResponse>> DeleteEventNotificationsAsync(Int32 companyId, EventDeleteMessageModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve company event notifications.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        Task<FetchResult<EventMessageResponse>> GetEventNotificationsAsync(Int32 companyId);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve AFC event notifications;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.;
+        /// </remarks>
+		
+        /// <param name="isDlq">Specify `true` to retrieve event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        Task<FetchResult<EventMessageResponse>> ListAfcEventNotificationsAsync(Boolean? isDlq);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new eCommerce token.;
         /// </summary>
         /// <remarks>
@@ -14242,6 +14367,28 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="itemStatus">A comma separated list of item status on the basis of which you want to filter Items</param>
         /// <param name="taxCodeRecommendationStatus">Tax code recommendation status on the basis of which you want to filter Items</param>
         Task<FetchResult<ItemModel>> ListItemsByCompanyAsync(Int32 companyId, String filter, String include, Int32? top, Int32? skip, String orderBy, String tagName, String itemStatus, String taxCodeRecommendationStatus);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve the parameters by companyId and itemId.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of parameters based on the company's service types and the item code.
+        /// Ignores nexus if a service type is configured in the 'IgnoreNexusForServiceTypes' configuration section.
+        /// Ignores nexus for the AvaAlcohol service type.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">Company Identifier.</param>
+        /// <param name="itemId">Item Identifier.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* serviceTypes, regularExpression, attributeSubType, values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<ParameterModel>> ListRecommendedParameterByCompanyIdAndItemIdAsync(Int32 companyId, Int32 itemId, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>

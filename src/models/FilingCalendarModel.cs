@@ -393,6 +393,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Int32? autoLockOverrideDay { get; set; }
 
+        /// <summary>
+        /// The three-character currency code according to country. For example if country is 'US' then currency is 'USD'. Similarly, if country is 'CA' then currency is 'CAD', etc.
+        /// </summary>
+        public String currency { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
