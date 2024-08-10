@@ -32,6 +32,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<TransactionBatchItemModel> transactions { get; set; }
 
+        /// <summary>
+        /// Any optional flags provided for this batch
+        /// </summary>
+        public String options { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

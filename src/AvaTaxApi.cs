@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    24.6.3
+ * @version    24.8.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "24.6.3"; } }
+        public static string API_VERSION { get { return "24.8.0"; } }
 
 #region Methods
 
@@ -5814,6 +5814,84 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete AFC event notifications.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="isDlq">Specify `true` to delete event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        public FetchResult<EventMessageResponse> DeleteAfcEventNotifications(Boolean? isDlq, EventDeleteMessageModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/afc");
+            path.AddQuery("isDlq", isDlq);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<EventMessageResponse>>("DELETE", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete company event notifications
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        public FetchResult<EventMessageResponse> DeleteEventNotifications(Int32 companyId, EventDeleteMessageModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/companies/{companyId}");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<EventMessageResponse>>("DELETE", path, model);
+        }
+
+
+        /// <summary>
+        /// Retrieve company event notifications.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        public FetchResult<EventMessageResponse> GetEventNotifications(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/companies/{companyId}");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<EventMessageResponse>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve AFC event notifications
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="isDlq">Specify `true` to retrieve event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        public FetchResult<EventMessageResponse> ListAfcEventNotifications(Boolean? isDlq)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/afc");
+            path.AddQuery("isDlq", isDlq);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<EventMessageResponse>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Create a new eCommerce token.
         /// </summary>
         /// <remarks>
@@ -7021,6 +7099,39 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("taxCodeRecommendationStatus", taxCodeRecommendationStatus);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve the parameters by companyId and itemId.
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of parameters based on the company's service types and the item code.
+        /// Ignores nexus if a service type is configured in the 'IgnoreNexusForServiceTypes' configuration section.
+        /// Ignores nexus for the AvaAlcohol service type.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">Company Identifier.</param>
+        /// <param name="itemId">Item Identifier.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* serviceTypes, regularExpression, attributeSubType, values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ParameterModel> ListRecommendedParameterByCompanyIdAndItemId(Int32 companyId, Int32 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ParameterModel>>("GET", path, null);
         }
 
 
@@ -18652,6 +18763,88 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete AFC event notifications.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.;
+        /// </remarks>
+		
+        /// <param name="isDlq">Specify `true` to delete event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        public async Task<FetchResult<EventMessageResponse>> DeleteAfcEventNotificationsAsync(Boolean? isDlq, EventDeleteMessageModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/afc");
+            path.AddQuery("isDlq", isDlq);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<EventMessageResponse>>("DELETE", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete company event notifications;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        /// <param name="model">Details of the event you want to delete.</param>
+        public async Task<FetchResult<EventMessageResponse>> DeleteEventNotificationsAsync(Int32 companyId, EventDeleteMessageModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/companies/{companyId}");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<EventMessageResponse>>("DELETE", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve company event notifications.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPro, ECMPremium.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded these event notifications.</param>
+        public async Task<FetchResult<EventMessageResponse>> GetEventNotificationsAsync(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/companies/{companyId}");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<EventMessageResponse>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve AFC event notifications;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.;
+        /// </remarks>
+		
+        /// <param name="isDlq">Specify `true` to retrieve event notifications from the dead letter queue; otherwise, specify `false`.</param>
+        public async Task<FetchResult<EventMessageResponse>> ListAfcEventNotificationsAsync(Boolean? isDlq)
+        {
+            var path = new AvaTaxPath("/api/v2/event-notifications/afc");
+            path.AddQuery("isDlq", isDlq);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<EventMessageResponse>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new eCommerce token.;
         /// </summary>
         /// <remarks>
@@ -19901,6 +20094,40 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("taxCodeRecommendationStatus", taxCodeRecommendationStatus);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve the parameters by companyId and itemId.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of parameters based on the company's service types and the item code.
+        /// Ignores nexus if a service type is configured in the 'IgnoreNexusForServiceTypes' configuration section.
+        /// Ignores nexus for the AvaAlcohol service type.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">Company Identifier.</param>
+        /// <param name="itemId">Item Identifier.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* serviceTypes, regularExpression, attributeSubType, values</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ParameterModel>> ListRecommendedParameterByCompanyIdAndItemIdAsync(Int32 companyId, Int32 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ParameterModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 

@@ -18,34 +18,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Encloses the delete message command.
     /// </summary>
-    public class ItemCatalogueResultModel
+    public class EventDeleteMessageModel
     {
         /// <summary>
-        /// The unique ID number of this item.
+        /// Command details for the delete message
         /// </summary>
-        public Int64? itemId { get; set; }
-
-        /// <summary>
-        /// A unique code representing this item.
-        /// </summary>
-        public String itemCode { get; set; }
-
-        /// <summary>
-        /// The unique identifier of this item at the source
-        /// </summary>
-        public String sourceEntityId { get; set; }
-
-        /// <summary>
-        /// A CRUD event for item db operations
-        /// </summary>
-        public ItemCatalogueResultEvent? itemEvent { get; set; }
-
-        /// <summary>
-        /// Contains list of errors for item catalogue entry
-        /// </summary>
-        public List<String> errors { get; set; }
+        public List<EventDeleteBatchMessageModel> eventDeleteBatchMessageCommands { get; set; }
 
 
         /// <summary>

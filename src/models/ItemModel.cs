@@ -92,7 +92,7 @@ namespace Avalara.AvaTax.RestClient
         public String source { get; set; }
 
         /// <summary>
-        /// The Id of this item at the source
+        /// The unique identifier of this item at the source
         /// </summary>
         public String sourceEntityId { get; set; }
 
@@ -103,17 +103,23 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Universal unique code for item
+        ///  
+        /// Deprecated - As of 6/25/2024, this field is deprecated. Instead of using this field, you can pass this value as a parameter. `The parameter name is UPC`.
         /// </summary>
         public String upc { get; set; }
 
         /// <summary>
         /// Long Summary for Item
+        ///  
+        /// Deprecated - As of 6/25/2024, this field is deprecated. Instead of using this field, you can pass this value as a parameter. `The parameter name is Summary`.
         /// </summary>
         public String summary { get; set; }
 
         /// <summary>
         /// List of classifications that belong to this item.
         /// A single classification consists of a productCode and a systemCode for a particular item.
+        ///  
+        /// Please note: `taxCode` (ProductCode for SystemCode `AVATAXCODE`) is being removed from `classifications`. You can still find it in the `taxCode` field.
         /// </summary>
         public List<ClassificationModel> classifications { get; set; }
 
