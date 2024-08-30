@@ -26,7 +26,7 @@ namespace Avalara.AvaTax.RestClient
     public class CertificateModel
     {
         /// <summary>
-        /// Unique ID number of this certificate.
+        /// The unique ID number of this certificate.
         /// </summary>
         public Int32? id { get; set; }
 
@@ -105,12 +105,12 @@ namespace Avalara.AvaTax.RestClient
         public ExemptionReasonModel exemptionReason { get; set; }
 
         /// <summary>
-        /// The status of the certificate
+        /// The status of the certificate.
         /// </summary>
         public String status { get; set; }
 
         /// <summary>
-        /// The status of the certificate as displayed on https://exemptions.avalara.com. Can take values
+        /// The status of the certificate as displayed on https://exemptions.avalara.com. The values in `CertificateEcmStatus` include all the possible status values.
         /// </summary>
         public CertificateEcmStatus? ecmStatus { get; set; }
 
@@ -135,7 +135,7 @@ namespace Avalara.AvaTax.RestClient
         public String businessNumberType { get; set; }
 
         /// <summary>
-        /// Number of pages contained within this certificate.
+        /// The number of pages contained within this certificate.
         /// </summary>
         public Int32? pageCount { get; set; }
 
@@ -167,35 +167,35 @@ namespace Avalara.AvaTax.RestClient
         public List<CertificateAttributeModel> attributes { get; set; }
 
         /// <summary>
-        /// A list of certificate update histories for this certificate.
+        /// A list of update histories for this certificate.
         ///  
         /// You can fetch this data by specifying `$include=histories` when calling a certificate fetch API.
         /// </summary>
         public List<HistoryModel> histories { get; set; }
 
         /// <summary>
-        /// A list of certificate update histories for this certificate.
+        /// A list of jobs for this certificate.
         ///  
         /// You can fetch this data by specifying `$include=jobs` when calling a certificate fetch API.
         /// </summary>
         public List<CustomerJobModel> jobs { get; set; }
 
         /// <summary>
-        /// A list of certificate logs for this certificate.
+        /// A list of logs for this certificate.
         ///  
         /// You can fetch this data by specifying `$include=logs` when calling a certificate fetch API.
         /// </summary>
         public List<CertificateLogModel> logs { get; set; }
 
         /// <summary>
-        /// A list of invalid reasons if the certificate status is not valid
+        /// For a certificate with an invalid status, this lists the reasons why the certificate is invalid.
         ///  
         /// You can fetch this data by specifying `$include=invalid_reasons` when calling a certificate fetch API.
         /// </summary>
         public List<CertificateInvalidReasonModel> invalidReasons { get; set; }
 
         /// <summary>
-        /// A list of custom defined fields for this certificate
+        /// A list of custom defined fields for this certificate.
         ///  
         /// You can fetch this data by specifying `$include=custom_fields` when calling a certificate fetch API.
         /// </summary>

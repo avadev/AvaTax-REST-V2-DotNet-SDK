@@ -184,7 +184,7 @@ namespace Avalara.AvaTax.RestClient
         public String taxTypeGroupId { get; set; }
 
         /// <summary>
-        /// The name of the tax against which this tax amount was calculated.
+        /// The name of the tax against which this tax amount was calculated. Note: This output field is informational, and the values in this field may change. As such, we discourage hardcoding any string matching on this field.
         /// </summary>
         public String taxName { get; set; }
 

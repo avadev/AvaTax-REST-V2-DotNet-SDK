@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     public class CustomerModel
     {
         /// <summary>
-        /// Unique ID number of this customer.
+        /// The unique ID number of this customer.
         /// </summary>
         public Int32? id { get; set; }
 
@@ -205,27 +205,27 @@ namespace Avalara.AvaTax.RestClient
         public List<CustomerAttributeModel> attributes { get; set; }
 
         /// <summary>
-        /// List if active certificates with exemption reasons
+        /// A list of active certificates with exemption reasons.
         /// </summary>
         public List<ActiveCertificateModel> activeCertificates { get; set; }
 
         /// <summary>
-        /// List of field update histories for this customer
+        /// A list of field update histories for this customer.
         /// </summary>
         public List<HistoryModel> histories { get; set; }
 
         /// <summary>
-        /// List of jobs for this customer
+        /// A list of jobs for this customer.
         /// </summary>
         public List<CustomerJobModel> jobs { get; set; }
 
         /// <summary>
-        /// List of logs for this customer
+        /// A list of logs for this customer.
         /// </summary>
         public List<CertificateLogModel> logs { get; set; }
 
         /// <summary>
-        /// List of states where this customer ships to
+        /// A list of states where this customer ships to.
         /// </summary>
         public List<StateModel> shipToStates { get; set; }
 

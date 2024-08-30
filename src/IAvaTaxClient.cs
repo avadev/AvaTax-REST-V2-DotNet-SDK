@@ -984,6 +984,11 @@ namespace Avalara.AvaTax.RestClient
         /// * customers - Retrieves the list of customers linked to the certificate.
         /// * po_numbers - Retrieves all PO numbers tied to the certificate.
         /// * attributes - Retrieves all attributes applied to the certificate.
+        /// * histories - Retrieves the certificate update history
+        /// * jobs - Retrieves the jobs for this certificate
+        /// * logs - Retrieves the certificate log
+        /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        /// * custom_fields - Retrieves custom fields set for this certificate
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -1002,7 +1007,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
-        ///  * attributes - Retrieves all attributes applied to the certificate.</param>
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
         CertificateModel GetCertificate(Int32 companyId, Int32 id, String include);
 
         /// <summary>
@@ -1163,7 +1173,12 @@ namespace Avalara.AvaTax.RestClient
         /// * customers - Retrieves the list of customers linked to the certificate.
         /// * po_numbers - Retrieves all PO numbers tied to the certificate.
         /// * attributes - Retrieves all attributes applied to the certificate.
-        ///  
+        /// * histories - Retrieves the certificate update history
+        /// * jobs - Retrieves the jobs for this certificate
+        /// * logs - Retrieves the certificate log
+        /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        /// * custom_fields - Retrieves custom fields set for this certificate
+        /// 
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -1180,7 +1195,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
-        ///  * attributes - Retrieves all attributes applied to the certificate.</param>
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -1328,6 +1348,43 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this certificate</param>
         /// <param name="file">The exemption certificate file you wanted to upload. Accepted formats are: PDF, JPEG, TIFF, PNG.</param>
         String UploadCertificateImage(Int32 companyId, Int32 id, FileResult file);
+
+        /// <summary>
+        /// Retrieve a single communication certificate.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID number of the company to search</param>
+        /// <param name="certificateId">The ID number of the certifificate to search</param>
+        CommunicationCertificateResponse GetCommunicationCertificate(Int32 companyId, Int32 certificateId);
+
+        /// <summary>
+        /// Retrieve all communication certificates.
+        /// </summary>
+        /// <remarks>
+        /// List all account objects that can be seen by the current user.
+        ///  
+        /// This API lists all accounts you are allowed to see. In general, most users will only be able to see their own account.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters. 
+        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* EffectiveDate, ExpirationDate, TaxNumber, Exemptions</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="companyId">The ID number of the company to search</param>
+        CommunicationCertificateResponsePage ListCommunicationCertificates(String filter, Int32? top, Int32? skip, String orderBy, Int32 companyId);
 
         /// <summary>
         /// Checks whether the integration being used to set up this company and run transactions onto this company is compliant to all requirements.
@@ -2004,7 +2061,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns these contacts</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* scsContactId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2026,7 +2083,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* scsContactId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2210,9 +2267,16 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         ///  
-        /// * Certificates - Fetch a list of certificates linked to this customer.
-        /// * CustomFields - Fetch a list of custom fields associated to this customer.
+        /// * certificates - Fetch a list of certificates linked to this customer.
         /// * attributes - Retrieves all attributes applied to the customer.
+        /// * active_certificates - Retrieves all the active certificates linked to this customer
+        /// * histories - Retrieves the update history for this customer
+        /// * logs - Retrieves customer logs
+        /// * jobs - Retrieves customer jobs
+        /// * billTos - Retrieves bill-tos linked with this customer
+        /// * shipTos - Retrieves ship-tos linked with this customer
+        /// * shipToStates - Retrieves ship-to states for this customer
+        /// * custom_fields - Retrieves custom fields set for this customer
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -2377,7 +2441,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
-        ///  * attributes - Retrieves all attributes applied to the certificate.</param>
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -2430,9 +2499,17 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         ///  
-        /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// * certificates - Fetch a list of certificates linked to this customer.
         /// * attributes - Retrieves all attributes applied to the customer.
-        ///  
+        /// * active_certificates - Retrieves all the active certificates linked to this customer
+        /// * histories - Retrieves the update history for this customer
+        /// * logs - Retrieves customer logs
+        /// * jobs - Retrieves customer jobs
+        /// * billTos - Retrieves bill-tos linked with this customer
+        /// * shipTos - Retrieves ship-tos linked with this customer
+        /// * shipToStates - Retrieves ship-to states for this customer
+        /// * custom_fields - Retrieves custom fields set for this customer
+        /// 
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -2445,7 +2522,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
-        /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
+        /// <param name="include">OPTIONAL - You can specify any of the values in `certificates`, `attributes`, `active_certificates`, `histories`, `logs`, `jobs`, `billTos`, `shipTos`, `shipToStates`, and `custom_fields` to fetch additional information for this certificate.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -4982,7 +5059,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<ParameterModel> ListRecommendedParameterByCompanyIdAndItemId(Int32 companyId, Int32 itemId, String filter, Int32? top, Int32? skip, String orderBy);
+        FetchResult<ParameterModel> ListRecommendedParameterByCompanyIdAndItemId(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// Retrieve all items
@@ -10188,6 +10265,11 @@ namespace Avalara.AvaTax.RestClient
         /// * customers - Retrieves the list of customers linked to the certificate.
         /// * po_numbers - Retrieves all PO numbers tied to the certificate.
         /// * attributes - Retrieves all attributes applied to the certificate.
+        /// * histories - Retrieves the certificate update history
+        /// * jobs - Retrieves the jobs for this certificate
+        /// * logs - Retrieves the certificate log
+        /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        /// * custom_fields - Retrieves custom fields set for this certificate
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -10206,7 +10288,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
-        ///  * attributes - Retrieves all attributes applied to the certificate.</param>
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
         Task<CertificateModel> GetCertificateAsync(Int32 companyId, Int32 id, String include);
 
         /// Swagger Name: AvaTaxClient
@@ -10373,7 +10460,12 @@ namespace Avalara.AvaTax.RestClient
         /// * customers - Retrieves the list of customers linked to the certificate.
         /// * po_numbers - Retrieves all PO numbers tied to the certificate.
         /// * attributes - Retrieves all attributes applied to the certificate.
-        ///  
+        /// * histories - Retrieves the certificate update history
+        /// * jobs - Retrieves the jobs for this certificate
+        /// * logs - Retrieves the certificate log
+        /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        /// * custom_fields - Retrieves custom fields set for this certificate
+        /// 
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -10390,7 +10482,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
-        ///  * attributes - Retrieves all attributes applied to the certificate.</param>
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -10543,6 +10640,45 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this certificate</param>
         /// <param name="file">The exemption certificate file you wanted to upload. Accepted formats are: PDF, JPEG, TIFF, PNG.</param>
         Task<String> UploadCertificateImageAsync(Int32 companyId, Int32 id, FileResult file);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single communication certificate.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID number of the company to search</param>
+        /// <param name="certificateId">The ID number of the certifificate to search</param>
+        Task<CommunicationCertificateResponse> GetCommunicationCertificateAsync(Int32 companyId, Int32 certificateId);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all communication certificates.;
+        /// </summary>
+        /// <remarks>
+        /// List all account objects that can be seen by the current user.
+        ///  
+        /// This API lists all accounts you are allowed to see. In general, most users will only be able to see their own account.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters. 
+        /// For more information about filtering in REST, please see the documentation at http://developer.avalara.com/avatax/filtering-in-rest/ .
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API depends on the following active services:*Required* (all): ECMPremiumComms, ECMProComms.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* EffectiveDate, ExpirationDate, TaxNumber, Exemptions</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="companyId">The ID number of the company to search</param>
+        Task<CommunicationCertificateResponsePage> ListCommunicationCertificatesAsync(String filter, Int32? top, Int32? skip, String orderBy, Int32 companyId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -11250,7 +11386,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns these contacts</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* scsContactId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11273,7 +11409,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, FirmAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* scsContactId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11468,9 +11604,16 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         ///  
-        /// * Certificates - Fetch a list of certificates linked to this customer.
-        /// * CustomFields - Fetch a list of custom fields associated to this customer.
+        /// * certificates - Fetch a list of certificates linked to this customer.
         /// * attributes - Retrieves all attributes applied to the customer.
+        /// * active_certificates - Retrieves all the active certificates linked to this customer
+        /// * histories - Retrieves the update history for this customer
+        /// * logs - Retrieves customer logs
+        /// * jobs - Retrieves customer jobs
+        /// * billTos - Retrieves bill-tos linked with this customer
+        /// * shipTos - Retrieves ship-tos linked with this customer
+        /// * shipToStates - Retrieves ship-to states for this customer
+        /// * custom_fields - Retrieves custom fields set for this customer
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -11640,7 +11783,12 @@ namespace Avalara.AvaTax.RestClient
         ///  
         ///  * customers - Retrieves the list of customers linked to the certificate.
         ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
-        ///  * attributes - Retrieves all attributes applied to the certificate.</param>
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, status, ecmStatus, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -11695,9 +11843,17 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can use the `$include` parameter to fetch the following additional objects for expansion:
         ///  
-        /// * Certificates - Fetch a list of certificates linked to this customer.
+        /// * certificates - Fetch a list of certificates linked to this customer.
         /// * attributes - Retrieves all attributes applied to the customer.
-        ///  
+        /// * active_certificates - Retrieves all the active certificates linked to this customer
+        /// * histories - Retrieves the update history for this customer
+        /// * logs - Retrieves customer logs
+        /// * jobs - Retrieves customer jobs
+        /// * billTos - Retrieves bill-tos linked with this customer
+        /// * shipTos - Retrieves ship-tos linked with this customer
+        /// * shipToStates - Retrieves ship-to states for this customer
+        /// * custom_fields - Retrieves custom fields set for this customer
+        /// 
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -11710,7 +11866,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
-        /// <param name="include">OPTIONAL - You can specify the value `certificates` to fetch information about certificates linked to the customer.</param>
+        /// <param name="include">OPTIONAL - You can specify any of the values in `certificates`, `attributes`, `active_certificates`, `histories`, `logs`, `jobs`, `billTos`, `shipTos`, `shipToStates`, and `custom_fields` to fetch additional information for this certificate.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -14388,7 +14544,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<ParameterModel>> ListRecommendedParameterByCompanyIdAndItemIdAsync(Int32 companyId, Int32 itemId, String filter, Int32? top, Int32? skip, String orderBy);
+        Task<FetchResult<ParameterModel>> ListRecommendedParameterByCompanyIdAndItemIdAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>

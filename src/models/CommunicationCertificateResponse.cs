@@ -18,54 +18,54 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Certificate with exemption reason and exposure zone. This is exposed in the URL's `$includes`.
+    /// Encloses communication certificate details
     /// </summary>
-    public class ActiveCertificateModel
+    public class CommunicationCertificateResponse
     {
         /// <summary>
-        /// The unique ID number of this certificate.
+        /// Certificate Id
         /// </summary>
-        public Int64? id { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The date/time when this certificate was created.
+        /// Certificate effective date
         /// </summary>
-        public DateTime? created { get; set; }
+        public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// The date/time when this certificate was last modified.
+        /// Certificate expiration date
         /// </summary>
-        public DateTime? modified { get; set; }
+        public DateTime? expirationDate { get; set; }
 
         /// <summary>
-        /// The expected tax number for this certificate.
+        /// Certificate exemption reason
         /// </summary>
-        public String expectedTaxNumber { get; set; }
+        public String exemptionReason { get; set; }
 
         /// <summary>
-        /// The actual tax number for this certificate.
+        /// Certificate exemption region
         /// </summary>
-        public String actualTaxNumber { get; set; }
+        public String exemptionRegion { get; set; }
 
         /// <summary>
-        /// 
+        /// Certificate tax number
         /// </summary>
-        public ExposureZoneModel exposureZone { get; set; }
+        public String taxNumber { get; set; }
 
         /// <summary>
-        /// 
+        /// Certificate status
         /// </summary>
-        public ExemptionReasonModel expectedTaxCode { get; set; }
+        public String certificateStatus { get; set; }
 
         /// <summary>
-        /// 
+        /// Customers which have this certificate
         /// </summary>
-        public ExemptionReasonModel actualTaxCode { get; set; }
+        public List<CommunicationCustomerResponse> customers { get; set; }
 
         /// <summary>
-        /// 
+        /// Tax details of this certificate
         /// </summary>
-        public CertificateModel certificate { get; set; }
+        public List<CommunicationTaxTypeResponse> exemptions { get; set; }
 
 
         /// <summary>

@@ -41,6 +41,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? requestWidget { get; set; }
 
+        /// <summary>
+        /// Currency
+        /// </summary>
+        public String currency { get; set; }
+
+        /// <summary>
+        /// AgreementType
+        /// </summary>
+        public String agreementType { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
