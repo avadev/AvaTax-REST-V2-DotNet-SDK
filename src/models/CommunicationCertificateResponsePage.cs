@@ -18,34 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The certificate log for a customer. This is exposed in the URL's `$includes`.
+    /// Encloses count and model value details
     /// </summary>
-    public class CertificateLogModel
+    public class CommunicationCertificateResponsePage
     {
         /// <summary>
-        /// The unique ID number of this log entry.
+        /// Count of records
         /// </summary>
-        public Int64? id { get; set; }
+        public Int32? count { get; set; }
 
         /// <summary>
-        /// The unique ID number of this certificate.
+        /// Requested model list
         /// </summary>
-        public Int64? certificateId { get; set; }
-
-        /// <summary>
-        /// The name of this account.
-        /// </summary>
-        public String account { get; set; }
-
-        /// <summary>
-        /// The log entry description.
-        /// </summary>
-        public String entry { get; set; }
-
-        /// <summary>
-        /// The date/time when this certificate log was created.
-        /// </summary>
-        public DateTime? created { get; set; }
+        public List<CommunicationCertificateResponse> value { get; set; }
 
 
         /// <summary>

@@ -18,27 +18,27 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Invalid reason for the certificate
+    /// The reason the certificate is invalid.
     /// </summary>
     public class CertificateInvalidReasonModel
     {
         /// <summary>
-        /// 
+        /// The unique ID of this invalid reason.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// 
+        /// The name of this certificate invalid reason.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// 
+        /// A description of the certificate invalid reason.
         /// </summary>
         public String description { get; set; }
 
         /// <summary>
-        /// 
+        /// This value is `true` if the invalid reason is a system code.
         /// </summary>
         public Boolean? systemCode { get; set; }
 

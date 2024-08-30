@@ -18,22 +18,22 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Customer job model. Exposed in url $includes
+    /// Customer job model. This is exposed in the URL's `$includes`.
     /// </summary>
     public class CustomerJobModel
     {
         /// <summary>
-        /// ID
+        /// The unique ID number of this customer's job.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// Job number
+        /// The job number of this customer.
         /// </summary>
         public Int32? jobNumber { get; set; }
 
         /// <summary>
-        /// Job name
+        /// The job name of this customer.
         /// </summary>
         public String name { get; set; }
 

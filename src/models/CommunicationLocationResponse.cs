@@ -18,39 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Update history for Avalara.AvaTax.AccountServices.Models.v2.CustomerModel and Avalara.AvaTax.AccountServices.Models.v2.CertificateModel. This is exposed in the URL's `$includes`.
+    /// Encloses communication location details
     /// </summary>
-    public class HistoryModel
+    public class CommunicationLocationResponse
     {
         /// <summary>
-        /// The unique ID number of this history.
+        /// Communication tax country
         /// </summary>
-        public Int32? id { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// The account name this history belongs to.
+        /// Communication tax state
         /// </summary>
-        public String account { get; set; }
+        public String state { get; set; }
 
         /// <summary>
-        /// The name of the field to update.
+        /// Communication tax County
         /// </summary>
-        public String field { get; set; }
+        public String county { get; set; }
 
         /// <summary>
-        /// The old value of the field.
+        /// Communication tax city
         /// </summary>
-        public String oldValue { get; set; }
-
-        /// <summary>
-        /// The new value of the field.
-        /// </summary>
-        public String newValue { get; set; }
-
-        /// <summary>
-        /// The date/time when this history was created.
-        /// </summary>
-        public DateTime? created { get; set; }
+        public String city { get; set; }
 
 
         /// <summary>

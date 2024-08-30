@@ -1883,6 +1883,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidTaxCodeIdInRecommendationStatusUpdate = 2815,
 
         /// <summary>
+        /// ECM communication certificates error
+        /// </summary>
+        CommunicationCertificatesError = 2816,
+
+        /// <summary>
+        /// Invalid currency and aggrement type combination
+        /// </summary>
+        InvalidCurrencyAggrementType = 2817,
+
+        /// <summary>
         /// Occurs when a Header value is incorrect or invalid in some way
         /// </summary>
         InvalidHTTPHeader = 3000,

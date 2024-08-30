@@ -30,17 +30,17 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        ShortPayItemsAccrueMatch = 1,
+        AccruedShortPayItemsMatch = 1,
 
         /// <summary>
         /// 
         /// </summary>
-        MarkForReviewMatch = 2,
+        NeedReviewMatch = 2,
 
         /// <summary>
         /// 
         /// </summary>
-        RejectMatch = 3,
+        NoAccrualRejectMatch = 3,
 
         /// <summary>
         /// 
@@ -55,7 +55,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        ShortPayItemsAccrueUndercharge = 6,
+        AccruedShortPayItemsUndercharge = 6,
 
         /// <summary>
         /// 
@@ -65,7 +65,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        RejectUndercharge = 8,
+        NoAccrualRejectUndercharge = 8,
 
         /// <summary>
         /// 
@@ -75,22 +75,22 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        ShortPayAvalaraCalculated = 10,
+        NoAccrualShortPayAvalaraCalculated = 10,
 
         /// <summary>
         /// 
         /// </summary>
-        ShortPayItemsAccrueOvercharge = 11,
+        AccruedShortPayItemsOvercharge = 11,
 
         /// <summary>
         /// 
         /// </summary>
-        MarkForReviewOvercharge = 12,
+        NeedReviewOvercharge = 12,
 
         /// <summary>
         /// 
         /// </summary>
-        RejectOvercharge = 13,
+        NoAccrualRejectOvercharge = 13,
 
         /// <summary>
         /// 
@@ -141,6 +141,66 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         PendingAccrualUndercharge = 23,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PendingShortPayItemsUndercharge = 24,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PendingShortPayItemsMatch = 25,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PendingShortPayItemsOvercharge = 26,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShortPayItemsAccrueMatch = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MarkForReviewMatch = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RejectMatch = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShortPayItemsAccrueUndercharge = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RejectUndercharge = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShortPayAvalaraCalculated = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ShortPayItemsAccrueOvercharge = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        MarkForReviewOvercharge = -1,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RejectOvercharge = -1,
 
     }
 }
