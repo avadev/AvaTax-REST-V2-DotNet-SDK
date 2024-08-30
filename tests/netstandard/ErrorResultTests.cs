@@ -52,7 +52,10 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard
             }
 
             Assert.NotNull(avataxError);
-            Assert.True(avataxError.error.error.message.Contains("Field oldPassword is required"));
+            var details = avataxError.error.error.details[0];
+            var code = avataxError.error.error.code;
+            Assert.True(details.description.Contains("oldPassword"));
+            Assert.True(code == ErrorCodeId.ValueRequiredError);
         }
     }
 }
