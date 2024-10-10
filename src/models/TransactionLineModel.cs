@@ -345,6 +345,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String summary { get; set; }
 
+        /// <summary>
+        /// The percentage of input VAT/GST that is recoverable.
+        /// </summary>
+        public Decimal? recoverabilityPercentage { get; set; }
+
+        /// <summary>
+        /// The amount of input VAT/GST that is recoverable based on the recoverability percentage.
+        /// </summary>
+        public Decimal? recoverableAmount { get; set; }
+
+        /// <summary>
+        /// The amount of input VAT/GST that is not recoverable.
+        /// </summary>
+        public Decimal? nonRecoverableAmount { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
