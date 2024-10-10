@@ -33,7 +33,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// A unique code for this contact.
+        /// A unique code for this contact which is unique throughout company.
         /// </summary>
         public String contactCode { get; set; }
 

@@ -1893,9 +1893,39 @@ namespace Avalara.AvaTax.RestClient
         InvalidCurrencyAggrementType = 2817,
 
         /// <summary>
+        /// ItemTaxCodeRecommendation Status can't be set without particular state of recommendation
+        /// </summary>
+        InvalidTaxCodeRecommendationStatusUpdate = 2818,
+
+        /// <summary>
+        /// Filing Request Error Codes
+        /// </summary>
+        DuplicateFilingRequest = 2819,
+
+        /// <summary>
         /// Occurs when a Header value is incorrect or invalid in some way
         /// </summary>
         InvalidHTTPHeader = 3000,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SCSServiceUnreachable = 3001,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DuplicateContactCode = 3002,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SCSServerError = 3003,
+
+        /// <summary>
+        /// Occurs when user reconciliation happens and unable to create user at AvaTax
+        /// </summary>
+        UserReconciliationError = 3004,
 
     }
 }

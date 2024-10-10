@@ -30,5 +30,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         MONGODB = 1,
 
+        /// <summary>
+        /// returns api
+        /// </summary>
+        RETURNSAPI = 2,
+
     }
 }

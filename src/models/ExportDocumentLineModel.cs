@@ -151,6 +151,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? includeDocumentLineDetails { get; set; }
 
+        /// <summary>
+        /// If true, include multi tax line details in the generated report.
+        /// If false, include document or document line in the generated report based on includeDocumentLineDetails.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? includeMultiTaxLineDetails { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
