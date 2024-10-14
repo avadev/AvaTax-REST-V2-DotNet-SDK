@@ -6,6 +6,7 @@ namespace Avalara.AvaTax.RestClient
     public class UserConfiguration
     {
         private int _timeOutInMinutes;
+        private int _timeOutInSeconds;
         private int _maxRetryAttempts;
 
         /// <summary>
@@ -18,6 +19,26 @@ namespace Avalara.AvaTax.RestClient
             {
                 _timeOutInMinutes = value <= 0 ? 20 : value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets timeout in seconds. If set to a non-zero value, overrides TimeoutInMinutes.
+        /// </summary>
+        public int TimeoutInSeconds
+        {
+            get { return _timeOutInSeconds; }
+            set
+            {
+                _timeOutInSeconds = value <= 0 ? 0 : value;
+            }
+        }
+
+        /// <summary>
+        /// Get <see cref="TimeSpan"/> for the currently set timeout period.
+        /// </summary>
+        public TimeSpan GetTimeOutTimeSpan()
+        {
+            return _timeOutInSeconds > 0 ? TimeSpan.FromSeconds(_timeOutInSeconds) : TimeSpan.FromMinutes(_timeOutInMinutes);
         }
 
         /// <summary>
@@ -39,6 +60,7 @@ namespace Avalara.AvaTax.RestClient
         {
             this._maxRetryAttempts = 0;
             this._timeOutInMinutes = 20;
+            this._timeOutInSeconds = 0;
         }
     }
 }
