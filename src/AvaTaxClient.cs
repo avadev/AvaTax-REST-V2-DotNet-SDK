@@ -83,7 +83,7 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 #if PORTABLE
-            this.httpClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            this.httpClient = new HttpClient() { Timeout = _userConfiguration.GetTimeOutTimeSpan() };
 #endif
 
             // Setup the URI
@@ -118,7 +118,7 @@ namespace Avalara.AvaTax.RestClient
                 _userConfiguration = userConfiguration;
             }
 #if PORTABLE
-            this.httpClient = new HttpClient() { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+            this.httpClient = new HttpClient() { Timeout = _userConfiguration.GetTimeOutTimeSpan() };
 #endif
             _envUri = customEnvironment;
         }
@@ -145,7 +145,7 @@ namespace Avalara.AvaTax.RestClient
             }
 
             this.httpClient = httpClient ?? new HttpClient()
-                { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+                { Timeout = _userConfiguration.GetTimeOutTimeSpan() };
 
             // Setup the URI
             switch (environment)
@@ -181,7 +181,7 @@ namespace Avalara.AvaTax.RestClient
             }
 
             this.httpClient = httpClient ?? new HttpClient()
-                { Timeout = TimeSpan.FromMinutes(_userConfiguration.TimeoutInMinutes) };
+                { Timeout = _userConfiguration.GetTimeOutTimeSpan() };
 
             _envUri = customEnvironment;
         }
