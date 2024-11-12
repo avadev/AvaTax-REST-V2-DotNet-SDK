@@ -16,29 +16,24 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Defines report source.
+    /// Defines returns report type.
     /// </summary>
-    public enum ReportSource
+    public enum ReturnsReportType
     {
         /// <summary>
-        /// snowflake
+        /// liability summary return detail hospitality
         /// </summary>
-        SNOWFLAKE = 0,
+        LIABILITYSUMMARYRETURNDETAILHOSPITALITY = 0,
 
         /// <summary>
-        /// mongodb
+        /// liability summary return detail
         /// </summary>
-        MONGODB = 1,
+        LIABILITYSUMMARYRETURNDETAIL = 1,
 
         /// <summary>
-        /// returns api
+        /// liability carry over credit
         /// </summary>
-        RETURNSAPI = 2,
-
-        /// <summary>
-        /// tax region and tax type
-        /// </summary>
-        TAXREGION = 3,
+        LIABILITYCARRYOVERCREDIT = 2,
 
     }
 }

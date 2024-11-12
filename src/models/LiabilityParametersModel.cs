@@ -18,39 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// ViewModel to get Domain control verification
+    /// The model for liability parameters definitions
     /// </summary>
-    public class DcvViewModel
+    public class LiabilityParametersModel
     {
         /// <summary>
-        /// Unique id of the Domain control verification
+        /// The type of Returns liability report to be generated
         /// </summary>
-        public String id { get; set; }
+        public ReturnsLiabilityType? liabilityType { get; set; }
 
         /// <summary>
-        /// Domain name for which Domain control verification record is created
+        /// The type of Returns report to be generated
         /// </summary>
-        public String domainName { get; set; }
+        public ReturnsReportType? returnsReportType { get; set; }
 
         /// <summary>
-        /// 
+        /// The Hospitality Account ID with Subscription Type as AvaLoding
         /// </summary>
-        public Context context { get; set; }
+        public Int32? hospitalityAccountId { get; set; }
 
         /// <summary>
-        /// Unique token for Domain control verification
+        /// Filter report based on the year
         /// </summary>
-        public String token { get; set; }
+        public Int32? year { get; set; }
 
         /// <summary>
-        /// Status of the domain Verified/Pending/Cancelled
+        /// Filter report based on the month
         /// </summary>
-        public String status { get; set; }
+        public object month { get; set; }
 
         /// <summary>
-        /// Email id of the user who create Domain control verification
+        /// Filter report based on the country code
         /// </summary>
-        public String emailId { get; set; }
+        public String country { get; set; }
+
+        /// <summary>
+        /// Filter report based on the region code or state code
+        /// </summary>
+        public String region { get; set; }
 
 
         /// <summary>

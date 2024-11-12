@@ -30,7 +30,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        public List<VarianceResponseEntity> varianceResponses { get; set; }
+        public List<VarianceResponseEntity> variance { get; set; }
 
 
         /// <summary>
