@@ -139,6 +139,11 @@ namespace Avalara.AvaTax.RestClient
         public ReportSource? reportSource { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public LiabilityParametersModel liabilityParameters { get; set; }
+
+        /// <summary>
         /// Defines the compression mode of the result file
         /// For compression, the accepted values are: NONE, GZIP
         /// </summary>

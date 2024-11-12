@@ -1542,6 +1542,16 @@ namespace Avalara.AvaTax.RestClient
         TooManyItemIdsInTaxCodeClassificationRequest = 1742,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidProductCodeLength = 1743,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidProductCodeFormat = 1744,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1926,6 +1936,101 @@ namespace Avalara.AvaTax.RestClient
         /// Occurs when user reconciliation happens and unable to create user at AvaTax
         /// </summary>
         UserReconciliationError = 3004,
+
+        /// <summary>
+        /// Occurs when a patch operation is attempted on a field that is not allowed to be patched
+        /// </summary>
+        InvalidHttpPatchRequest = 3005,
+
+        /// <summary>
+        /// Occurs when a patch operation other than 'given' operation is performed for the fields
+        /// </summary>
+        UnsupportedPatchOperationError = 3006,
+
+        /// <summary>
+        /// Occurs when system code and country code does not have active mapping.
+        /// </summary>
+        SystemCodeAndCountryCodeMismatch = 3007,
+
+        /// <summary>
+        /// Occurs when multiple entries for system code and country code exists.
+        /// </summary>
+        DuplicateSystemAndCountryForItem = 3008,
+
+        /// <summary>
+        /// Avalara Gateway errors:
+        /// </summary>
+        NotFound = 4001,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Unexpected = 4002,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoHostFound = 4003,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        UnexpectedAuth = 4004,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SiteSelectionFailed = 4006,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DropDefaultUsername = 4007,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DropDefaultNotMigrated = 4008,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DropBearerAuth = 4009,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        SiteSelectionError = 4010,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        RateLimitExceeded = 4011,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoHealthySite = 4012,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ClientDisconnected = 4013,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ServiceDisconnected = 4014,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ServiceTimeout = 4015,
+
+        /// <summary>
+        /// Error string from the service unknown
+        /// </summary>
+        UnexpectedError = -1,
 
     }
 }
