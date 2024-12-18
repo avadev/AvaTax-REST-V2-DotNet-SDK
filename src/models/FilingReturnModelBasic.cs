@@ -117,6 +117,11 @@ namespace Avalara.AvaTax.RestClient
         public String formCode { get; set; }
 
         /// <summary>
+        /// The unique code of the form, prefixed by the country code.
+        /// </summary>
+        public String taxFormCode { get; set; }
+
+        /// <summary>
         /// A description for the return.
         /// </summary>
         public String description { get; set; }

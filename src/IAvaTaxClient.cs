@@ -4420,7 +4420,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        FundingStatusModel ActivateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType);
+        /// <param name="currency">Currency</param>
+        /// <param name="agreementType">Agreement Type</param>
+        FundingStatusModel ActivateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, String currency, String agreementType);
 
         /// <summary>
         /// Retrieve status about a funding setup request
@@ -13911,7 +13913,9 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        Task<FundingStatusModel> ActivateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType);
+        /// <param name="currency">Currency</param>
+        /// <param name="agreementType">Agreement Type</param>
+        Task<FundingStatusModel> ActivateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, String currency, String agreementType);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
