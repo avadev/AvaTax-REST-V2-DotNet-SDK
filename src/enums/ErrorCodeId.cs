@@ -1552,6 +1552,11 @@ namespace Avalara.AvaTax.RestClient
         InvalidProductCodeFormat = 1744,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidCountryAssignment = 1745,
+
+        /// <summary>
         /// SendSales API errors
         /// </summary>
         UnsupportedFileFormat = 1800,
@@ -1956,6 +1961,16 @@ namespace Avalara.AvaTax.RestClient
         /// Occurs when multiple entries for system code and country code exists.
         /// </summary>
         DuplicateSystemAndCountryForItem = 3008,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidHsCodeClassificationStatusOverride = 3009,
+
+        /// <summary>
+        /// Occurs when the field name provided in the request isn't valid.
+        /// </summary>
+        InvalidField = 3010,
 
         /// <summary>
         /// Avalara Gateway errors:

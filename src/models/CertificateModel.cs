@@ -43,7 +43,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Expiration date when this certificate will no longer be valid.
         /// </summary>
-        public DateTime expirationDate { get; set; }
+        public DateTime? expirationDate { get; set; }
 
         /// <summary>
         /// File name for the image of this certificate.

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    24.11.2
+ * @version    24.12.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "24.11.2"; } }
+        public static string API_VERSION { get { return "24.12.0"; } }
 
 #region Methods
 
@@ -6303,12 +6303,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        public FundingStatusModel ActivateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
+        /// <param name="currency">Currency</param>
+        /// <param name="agreementType">Agreement Type</param>
+        public FundingStatusModel ActivateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, String currency, String agreementType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
+            path.AddQuery("currency", currency);
+            path.AddQuery("agreementType", agreementType);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FundingStatusModel>("GET", path, null);
         }
@@ -19416,12 +19420,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The unique ID number of this funding request</param>
         /// <param name="businessUnit">The company's business unit</param>
         /// <param name="subscriptionType">The company's subscription type</param>
-        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType)
+        /// <param name="currency">Currency</param>
+        /// <param name="agreementType">Agreement Type</param>
+        public async Task<FundingStatusModel> ActivateFundingRequestAsync(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, String currency, String agreementType)
         {
             var path = new AvaTaxPath("/api/v2/fundingrequests/{id}/widget");
             path.ApplyField("id", id);
             path.AddQuery("businessUnit", businessUnit);
             path.AddQuery("subscriptionType", subscriptionType);
+            path.AddQuery("currency", currency);
+            path.AddQuery("agreementType", agreementType);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FundingStatusModel>("GET", path, null).ConfigureAwait(false);
         }
