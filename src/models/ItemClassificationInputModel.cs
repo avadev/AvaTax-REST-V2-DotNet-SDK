@@ -32,6 +32,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String systemCode { get; set; }
 
+        /// <summary>
+        /// The country associated with the product.
+        /// </summary>
+        public String country { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

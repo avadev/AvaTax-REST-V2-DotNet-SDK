@@ -18,24 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a premium classification associated with an item's HS code for a system code.
+    /// The HS code classification error model.
     /// </summary>
-    public class ItemPremiumClassificationInputModel
+    public class HSCodeClassificationError
     {
         /// <summary>
-        /// The HsCode for which this premium classification is being created.
+        /// The error code.
         /// </summary>
-        public String hsCode { get; set; }
+        public String code { get; set; }
 
         /// <summary>
-        /// Justification why this HsCode is attached to this item.
+        /// The error message
         /// </summary>
-        public String justification { get; set; }
+        public String message { get; set; }
 
         /// <summary>
-        /// The two-character ISO 3166 country code for which this premium classification is being created.
+        /// Target is source where failure is happened.
         /// </summary>
-        public String country { get; set; }
+        public String target { get; set; }
+
+        /// <summary>
+        /// The fault code
+        /// </summary>
+        public String faultCode { get; set; }
 
 
         /// <summary>

@@ -979,7 +979,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
-        UserAlreadyExist = 613,
+        UserAlreadyExists = 613,
 
         /// <summary>
         /// 
@@ -1971,6 +1971,11 @@ namespace Avalara.AvaTax.RestClient
         /// Occurs when the field name provided in the request isn't valid.
         /// </summary>
         InvalidField = 3010,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DuplicatePatchOperation = 3011,
 
         /// <summary>
         /// Avalara Gateway errors:
