@@ -48,9 +48,19 @@ namespace Avalara.AvaTax.RestClient
         public String systemCode { get; set; }
 
         /// <summary>
+        /// A unique code representing this item.
+        /// </summary>
+        public String country { get; set; }
+
+        /// <summary>
         /// If there is an premium classification justification present for this classification
         /// </summary>
         public Boolean? isPremium { get; set; }
+
+        /// <summary>
+        /// This represents the type of classification event.
+        /// </summary>
+        public String classificationEvent { get; set; }
 
 
         /// <summary>

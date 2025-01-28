@@ -23,6 +23,11 @@ namespace Avalara.AvaTax.RestClient
     public class ClassificationModel
     {
         /// <summary>
+        /// The unique ID of the classification.
+        /// </summary>
+        public Int64? id { get; set; }
+
+        /// <summary>
         /// The product code of an item in a given system.
         /// </summary>
         public String productCode { get; set; }
@@ -31,6 +36,11 @@ namespace Avalara.AvaTax.RestClient
         /// The system code in which the product belongs.
         /// </summary>
         public String systemCode { get; set; }
+
+        /// <summary>
+        /// The country where the product belongs.
+        /// </summary>
+        public String country { get; set; }
 
         /// <summary>
         /// If there is an premium classification justification present for this classification

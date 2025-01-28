@@ -18,54 +18,64 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a Premium Classification output model associated with an item's SystemCode..
+    /// Represent HS code classification for a given item.
     /// </summary>
-    public class ItemPremiumClassificationOutputModel
+    public class ItemHSCodeClassificationStatusModel
     {
         /// <summary>
-        /// ItemPremiumClassificationDetailId
+        /// The unique ID of this HS code classification.
         /// </summary>
         public String id { get; set; }
 
         /// <summary>
-        /// Item associated with this premium classification.
-        /// </summary>
-        public String itemCode { get; set; }
-
-        /// <summary>
-        /// CompanyId with which the Item is associated.
+        /// The unique ID of the company that owns this HS code classification.
         /// </summary>
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The HS code associated with this item's premium classification.
+        /// A unique code representing the item
         /// </summary>
-        public String hsCode { get; set; }
+        public Int64? itemId { get; set; }
 
         /// <summary>
-        /// SystemCode associated with this premium classificaitons.
+        /// The country for which the item is getting classified.
         /// </summary>
-        public String systemCode { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// Justification why this HsCode is attached to this item.
+        /// The status of the HS code classification
         /// </summary>
-        public String justification { get; set; }
+        public String status { get; set; }
+
+        /// <summary>
+        /// The description for the HS code classification being created/updated.
+        /// </summary>
+        public String details { get; set; }
 
         /// <summary>
         /// The date when this record was created.
         /// </summary>
-        public DateTime? createdDate { get; set; }
+        public DateTime? createdAt { get; set; }
 
         /// <summary>
-        /// The user who created the record.
+        /// The ID of the user who created this record.
         /// </summary>
-        public Int32? createdUserId { get; set; }
+        public Int64? createdUserId { get; set; }
 
         /// <summary>
-        /// The country code associated with this premium classification.
+        /// The date/time when this record was last modified.
         /// </summary>
-        public String country { get; set; }
+        public DateTime? modifiedAt { get; set; }
+
+        /// <summary>
+        /// The ID of the user who last modified this record.
+        /// </summary>
+        public Int64? modifiedUserId { get; set; }
+
+        /// <summary>
+        /// The date/time when the request for this record was completed.
+        /// </summary>
+        public DateTime? completedAt { get; set; }
 
 
         /// <summary>
