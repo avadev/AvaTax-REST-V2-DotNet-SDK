@@ -113,6 +113,11 @@ namespace Avalara.AvaTax.RestClient
         public String filingCalendarCurrencyCode { get; set; }
 
         /// <summary>
+        /// Can the return be unlocked or not.
+        /// </summary>
+        public Boolean? canUnlock { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public FilingsTaxSummaryModel returnTaxSummary { get; set; }
