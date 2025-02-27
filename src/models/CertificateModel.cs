@@ -106,6 +106,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The status of the certificate.
+        /// Possible values for status COMPLETE,PENDING,PENDING-FUTURE,PENDING-MULTI,PENDING-SINGLE,REVOKED
         /// </summary>
         public String status { get; set; }
 
