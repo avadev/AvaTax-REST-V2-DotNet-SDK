@@ -456,6 +456,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String apStatus { get; set; }
 
+        /// <summary>
+        /// The name of the vendor
+        /// </summary>
+        public String vendorName { get; set; }
+
+        /// <summary>
+        /// The transaction-level variance (the difference between Vendor Charged Tax and AvaTax Calculated Tax) that has been calculated for this AP transaction.
+        /// </summary>
+        public Decimal? varianceAmount { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
