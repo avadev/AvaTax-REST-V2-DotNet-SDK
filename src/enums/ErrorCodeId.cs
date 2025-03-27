@@ -2048,6 +2048,26 @@ namespace Avalara.AvaTax.RestClient
         ServiceTimeout = 4015,
 
         /// <summary>
+        /// File Validation Service (FVS) Errors
+        /// </summary>
+        UnsupportedMediaType = 4016,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidMediaType = 4017,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        FileSizeLimitExceeded = 4018,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidImage = 4019,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,

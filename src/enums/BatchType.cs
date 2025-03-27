@@ -106,5 +106,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         GLAccountImport = 16,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        AdvancedRulesImport = 17,
+
     }
 }

@@ -61,7 +61,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Nexus Type
         /// </summary>
-        public String nexusTypeId { get; set; }
+        public NexusTypeId? nexusTypeId { get; set; }
 
         /// <summary>
         /// Has Local Nexus?
