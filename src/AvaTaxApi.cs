@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    25.3.0
+ * @version    25.3.2
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "25.3.0"; } }
+        public static string API_VERSION { get { return "25.3.2"; } }
 
 #region Methods
 
@@ -721,6 +721,38 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Create a new Advanced Rules batch
+        /// </summary>
+        /// <remarks>
+        /// Create a new Advanced Rules batch objects attached to this company.
+        ///  
+        /// When an Advanced Rules batch is created, it is added to the AvaTax Batch v2 Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
+        /// operation.
+        ///  
+        /// The maximum content length of the request body is limited to 28.6 MB. If this limit
+        /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
+        /// the API is called from a browser). In this situation, please split the request into
+        /// smaller batches.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this batch.</param>
+        /// <param name="model">The Advanced Rules batch you wish to create.</param>
+        public CreateAdvancedRulesBatchResponseModel CreateAdvancedRulesBatch(Int32 companyId, CreateAdvancedRulesBatchRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/advancedrules");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<CreateAdvancedRulesBatchResponseModel>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Create a new batch
         /// </summary>
         /// <remarks>
@@ -1200,6 +1232,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete Certificate Custom Fields
+        /// </summary>
+        /// <remarks>
+        /// Deletes custom fields for a specified certificate.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">Delete custom fields request model</param>
+        public void DeleteCertificateCustomFields(Int32 companyId, Int32 id, List<DeleteCustomFields> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("DELETE", path, model);
+        }
+
+
+        /// <summary>
         /// Download an image for this certificate
         /// </summary>
         /// <remarks>
@@ -1479,6 +1541,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieve Certificate Custom Fields
+        /// </summary>
+        /// <remarks>
+        /// This API is used to retrieve custom fields for a certificate.
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        public ExemptionStatusModel ListCustomFieldsForCertificate(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ExemptionStatusModel>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// List all certificates for a company
         /// </summary>
         /// <remarks>
@@ -1499,7 +1589,7 @@ namespace Avalara.AvaTax.RestClient
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -1684,6 +1774,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update Certificate Custom Fields
+        /// </summary>
+        /// <remarks>
+        /// Updates the values of custom fields for a certificate
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The request model containing updated custom field values</param>
+        public void UpdateCertificateCustomFields(Int32 companyId, Int32 id, UpdateCustomFieldsModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Upload an image or PDF attachment for this certificate
         /// </summary>
         /// <remarks>
@@ -1845,12 +1965,12 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
         /// <param name="model"></param>
-        public String ChangeFilingStatus(Int32 id, FilingStatusChangeModel model)
+        public CompanyFilingStatus? ChangeFilingStatus(Int32 id, FilingStatusChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
-            return RestCallString("POST", path, model);
+            return RestCall<CompanyFilingStatus?>("POST", path, model);
         }
 
 
@@ -2202,12 +2322,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id"></param>
-        public String GetFilingStatus(Int32 id)
+        public CompanyFilingStatus? GetFilingStatus(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
-            return RestCallString("GET", path, null);
+            return RestCall<CompanyFilingStatus?>("GET", path, null);
         }
 
 
@@ -3004,6 +3124,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete custom fields
+        /// </summary>
+        /// <remarks>
+        /// Deletes the value of the custom field.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">Delete custom fields request model</param>
+        public void DeleteCustomFields(Int32 companyId, String customerCode, List<DeleteCustomFields> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("DELETE", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve a single customer
         /// </summary>
         /// <remarks>
@@ -3170,7 +3320,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is intended to identify whether a customer has any active certificates.
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -3287,12 +3437,40 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Retrieves a list of custom fields for a specified customer within a company.
+        /// </summary>
+        /// <remarks>
+        /// This API is used to retrieve custom field for a customer.
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        public ExemptionStatusModel ListCustomFieldsForCustomer(Int32 companyId, String customerCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ExemptionStatusModel>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieves a list of inactive certificates for a specified customer within a company.
         /// </summary>
         /// <remarks>
-        /// This API is used to retrieve inactive certificates for a customer. Inactive certificates may include expired, 
+        /// This API is used to retrieve inactive certificates for a customer. Inactive certificates may include expired,
         /// revoked, or otherwise non-compliant certificates.
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -3382,7 +3560,7 @@ namespace Avalara.AvaTax.RestClient
         /// * shipTos - Retrieves ship-tos linked with this customer
         /// * shipToStates - Retrieves ship-to states for this customer
         /// * custom_fields - Retrieves custom fields set for this customer
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -3522,6 +3700,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<CustomerModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Update custom fields
+        /// </summary>
+        /// <remarks>
+        /// Update the value of the custom field.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">Update custom fields request model</param>
+        public void UpdateCustomFields(Int32 companyId, String customerCode, UpdateCustomFieldsModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("PUT", path, model);
         }
 
 
@@ -10626,7 +10834,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
         ///  
-        /// NOTE: This API does not work for Tennessee tax holiday scenarios.
+        /// NOTE: This API does not work for sales tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
@@ -10669,7 +10877,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
         ///  
-        /// NOTE: This API does not work for Tennessee tax holiday scenarios.
+        /// NOTE: This API does not work for sales tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
@@ -13912,6 +14120,39 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Create a new Advanced Rules batch;
+        /// </summary>
+        /// <remarks>
+        /// Create a new Advanced Rules batch objects attached to this company.
+        ///  
+        /// When an Advanced Rules batch is created, it is added to the AvaTax Batch v2 Queue and will be
+        /// processed as quickly as possible in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
+        /// operation.
+        ///  
+        /// The maximum content length of the request body is limited to 28.6 MB. If this limit
+        /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
+        /// the API is called from a browser). In this situation, please split the request into
+        /// smaller batches.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this batch.</param>
+        /// <param name="model">The Advanced Rules batch you wish to create.</param>
+        public async Task<CreateAdvancedRulesBatchResponseModel> CreateAdvancedRulesBatchAsync(Int32 companyId, CreateAdvancedRulesBatchRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/advancedrules");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<CreateAdvancedRulesBatchResponseModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new batch;
         /// </summary>
         /// <remarks>
@@ -14403,6 +14644,37 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete Certificate Custom Fields;
+        /// </summary>
+        /// <remarks>
+        /// Deletes custom fields for a specified certificate.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">Delete custom fields request model</param>
+        public async Task DeleteCertificateCustomFieldsAsync(Int32 companyId, Int32 id, List<DeleteCustomFields> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("DELETE", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Download an image for this certificate;
         /// </summary>
         /// <remarks>
@@ -14689,6 +14961,35 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Retrieve Certificate Custom Fields;
+        /// </summary>
+        /// <remarks>
+        /// This API is used to retrieve custom fields for a certificate.
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        public async Task<ExemptionStatusModel> ListCustomFieldsForCertificateAsync(Int32 companyId, Int32 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ExemptionStatusModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// List all certificates for a company;
         /// </summary>
         /// <remarks>
@@ -14709,7 +15010,7 @@ namespace Avalara.AvaTax.RestClient
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -14899,6 +15200,37 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Update Certificate Custom Fields;
+        /// </summary>
+        /// <remarks>
+        /// Updates the values of custom fields for a certificate
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
+        /// <param name="id">The unique ID number of this certificate</param>
+        /// <param name="model">The request model containing updated custom field values</param>
+        public async Task UpdateCertificateCustomFieldsAsync(Int32 companyId, Int32 id, UpdateCustomFieldsModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Upload an image or PDF attachment for this certificate;
         /// </summary>
         /// <remarks>
@@ -15064,12 +15396,12 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="id"></param>
         /// <param name="model"></param>
-        public async Task<String> ChangeFilingStatusAsync(Int32 id, FilingStatusChangeModel model)
+        public async Task<CompanyFilingStatus?> ChangeFilingStatusAsync(Int32 id, FilingStatusChangeModel model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
-            return await RestCallStringAsync("POST", path, model).ConfigureAwait(false);
+            return await RestCallAsync<CompanyFilingStatus?>("POST", path, model).ConfigureAwait(false);
         }
 
 
@@ -15433,12 +15765,12 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="id"></param>
-        public async Task<String> GetFilingStatusAsync(Int32 id)
+        public async Task<CompanyFilingStatus?> GetFilingStatusAsync(Int32 id)
         {
             var path = new AvaTaxPath("/api/v2/companies/{id}/filingstatus");
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
-            return await RestCallStringAsync("GET", path, null).ConfigureAwait(false);
+            return await RestCallAsync<CompanyFilingStatus?>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -16264,6 +16596,37 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete custom fields;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the value of the custom field.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">Delete custom fields request model</param>
+        public async Task DeleteCustomFieldsAsync(Int32 companyId, String customerCode, List<DeleteCustomFields> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("DELETE", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Retrieve a single customer;
         /// </summary>
         /// <remarks>
@@ -16434,7 +16797,7 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// This API is intended to identify whether a customer has any active certificates.
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -16554,12 +16917,41 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Retrieves a list of custom fields for a specified customer within a company.;
+        /// </summary>
+        /// <remarks>
+        /// This API is used to retrieve custom field for a customer.
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        public async Task<ExemptionStatusModel> ListCustomFieldsForCustomerAsync(Int32 companyId, String customerCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ExemptionStatusModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Retrieves a list of inactive certificates for a specified customer within a company.;
         /// </summary>
         /// <remarks>
-        /// This API is used to retrieve inactive certificates for a customer. Inactive certificates may include expired, 
+        /// This API is used to retrieve inactive certificates for a customer. Inactive certificates may include expired,
         /// revoked, or otherwise non-compliant certificates.
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -16651,7 +17043,7 @@ namespace Avalara.AvaTax.RestClient
         /// * shipTos - Retrieves ship-tos linked with this customer
         /// * shipToStates - Retrieves ship-to states for this customer
         /// * custom_fields - Retrieves custom fields set for this customer
-        /// 
+        ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -16794,6 +17186,37 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("customerCode", customerCode);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<CustomerModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update custom fields;
+        /// </summary>
+        /// <remarks>
+        /// Update the value of the custom field.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">Update custom fields request model</param>
+        public async Task UpdateCustomFieldsAsync(Int32 companyId, String customerCode, UpdateCustomFieldsModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/customers/{customerCode}/custom-fields");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("customerCode", customerCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("PUT", path, model).ConfigureAwait(false);
         }
 
 
@@ -24136,7 +24559,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a single location at a time, please use `BuildTaxContentFileForLocation`.
         ///  
-        /// NOTE: This API does not work for Tennessee tax holiday scenarios.
+        /// NOTE: This API does not work for sales tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 
@@ -24180,7 +24603,7 @@ namespace Avalara.AvaTax.RestClient
         /// This API builds the file on demand, and is limited to files with no more than 7500 scenarios. To build a tax content
         /// file for a multiple locations in a single file, please use `BuildTaxContentFile`.
         ///  
-        /// NOTE: This API does not work for Tennessee tax holiday scenarios.
+        /// NOTE: This API does not work for sales tax holiday scenarios.
         /// 
         /// ### Security Policies
         /// 

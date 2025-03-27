@@ -32,6 +32,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String customerNumber { get; set; }
 
+        /// <summary>
+        /// Customer name
+        /// </summary>
+        public String name { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

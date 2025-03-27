@@ -18,19 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Input model for the Advanced Rules bulk import API
+    /// Represents a create advanced rules batch request model.
     /// </summary>
-    public class AdvancedRuleBulkImportModel
+    public class CreateAdvancedRulesBatchRequestModel
     {
+        /// <summary>
+        /// The user-friendly readable name for this batch.
+        /// </summary>
+        public String name { get; set; }
+
         /// <summary>
         /// Flag to try updating existing rules instead of just append
         /// </summary>
         public Boolean? replaceExisting { get; set; }
 
         /// <summary>
-        /// Flag to forbid reordering of the rules when all existing rules are updated
+        /// Any optional flags provided for this batch
         /// </summary>
-        public Boolean? doNotReorder { get; set; }
+        public String options { get; set; }
 
         /// <summary>
         /// List of rule executions to import
