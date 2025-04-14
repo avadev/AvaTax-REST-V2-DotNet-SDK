@@ -26,17 +26,17 @@
             </group>
             <group targetFramework="net472">
               <dependency id="Newtonsoft.Json" version="13.0.1" />
-			  <dependency id="System.Net.Http" version="4.3.2" />
+			  <dependency id="System.Net.Http" version="4.3.4" />
             </group>
             <group targetFramework=".NETStandard1.6">
                 <dependency id="NETStandard.Library" version="1.6.1" />
                 <dependency id="Newtonsoft.Json" version="13.0.1" />
-                <dependency id="System.Net.Http" version="4.3.2" />
+                <dependency id="System.Net.Http" version="4.3.4" />
             </group>
             <group targetFramework=".NETStandard2.0">
               <dependency id="NETStandard.Library" version="2.0.0" />
               <dependency id="Newtonsoft.Json" version="13.0.1" />
-              <dependency id="System.Net.Http" version="4.3.2" />
+              <dependency id="System.Net.Http" version="4.3.4" />
             </group>
         </dependencies>
     </metadata>
