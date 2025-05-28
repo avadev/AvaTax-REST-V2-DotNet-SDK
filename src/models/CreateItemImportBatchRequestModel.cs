@@ -18,34 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Model for the results of importing a single rule execution with the Advanced Rules bulk import API
+    /// Represents a create item import batch request model.
     /// </summary>
-    public class AdvancedRuleImportResultModel
+    public class CreateItemImportBatchRequestModel
     {
         /// <summary>
-        /// Name of rule execution
+        /// The user-friendly readable name for this batch
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// Import result status code (e.g. Success, ValidationFailed, NotCreated, etc.)
+        /// List of items to import
         /// </summary>
-        public BulkImportStatus? importResult { get; set; }
-
-        /// <summary>
-        /// Import result status message (e.g. list of validation errors)
-        /// </summary>
-        public String importDetails { get; set; }
-
-        /// <summary>
-        /// Rule execution unique identifier
-        /// </summary>
-        public String ruleExecutionId { get; set; }
-
-        /// <summary>
-        /// Unique identifier of rule to execute
-        /// </summary>
-        public String ruleId { get; set; }
+        public List<ItemModel> items { get; set; }
 
 
         /// <summary>

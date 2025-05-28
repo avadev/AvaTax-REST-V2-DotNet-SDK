@@ -2068,6 +2068,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidImage = 4019,
 
         /// <summary>
+        /// 
+        /// </summary>
+        ImageAlreadyLinked = 4020,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ItemIdMismatch = 4021,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,

@@ -111,5 +111,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         AdvancedRulesImport = 17,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        ItemImportV2 = 18,
+
     }
 }

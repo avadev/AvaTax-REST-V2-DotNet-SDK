@@ -160,5 +160,45 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         ECMCompanyUser = 27,
 
+        /// <summary>
+        /// ReturnsOnlyAccountAdmin
+        /// </summary>
+        ReturnsOnlyAccountAdmin = 28,
+
+        /// <summary>
+        /// ReturnsOnlyAccountUser
+        /// </summary>
+        ReturnsOnlyAccountUser = 29,
+
+        /// <summary>
+        /// ReturnsOnlyCompanyAdmin
+        /// </summary>
+        ReturnsOnlyCompanyAdmin = 30,
+
+        /// <summary>
+        /// ReturnsOnlyCompanyUser
+        /// </summary>
+        ReturnsOnlyCompanyUser = 31,
+
+        /// <summary>
+        /// AvaTaxOnlyAccountAdmin
+        /// </summary>
+        AvaTaxOnlyAccountAdmin = 32,
+
+        /// <summary>
+        /// AvaTaxOnlyAccountUser
+        /// </summary>
+        AvaTaxOnlyAccountUser = 33,
+
+        /// <summary>
+        /// AvaTaxOnlyCompanyAdmin
+        /// </summary>
+        AvaTaxOnlyCompanyAdmin = 34,
+
+        /// <summary>
+        /// AvaTaxOnlyCompanyUser
+        /// </summary>
+        AvaTaxOnlyCompanyUser = 35,
+
     }
 }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    25.3.2
+ * @version    25.5.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "25.3.2"; } }
+        public static string API_VERSION { get { return "25.5.1"; } }
 
 #region Methods
 
@@ -2472,7 +2472,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts, parameters, supplierandcustomers</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts, parameters, supplierandcustomers, isAdvSave</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4386,7 +4386,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         public List<ItemHSCodeClassificationStatusOutputModel> ListItemHSCodeClassificationStatus()
@@ -4403,7 +4403,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         public List<ItemTaxCodeRecommendationStatusModel> ListItemsRecommendationsStatus()
@@ -4420,7 +4420,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         public List<ItemStatusModel> ListItemsStatus()
@@ -5192,7 +5192,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyCode">Company code.</param>
@@ -6958,7 +6958,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="model">Tags you wish to associate with the Item</param>
-        public List<ItemTagDetailOutputModel> CreateItemTags(Int32 companyId, Int32 itemId, List<ItemTagDetailInputModel> model)
+        public List<ItemTagDetailOutputModel> CreateItemTags(Int32 companyId, Int64 itemId, List<ItemTagDetailInputModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
@@ -7209,7 +7209,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company for which to retrieve the SLA details.</param>
@@ -7236,7 +7236,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -7265,7 +7265,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -7296,7 +7296,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -7323,7 +7323,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -7352,7 +7352,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId"></param>
@@ -7384,7 +7384,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -7440,7 +7440,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -7478,7 +7478,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id.</param>
@@ -7518,7 +7518,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The company id</param>
@@ -7558,7 +7558,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item object.</param>
@@ -7621,7 +7621,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -7666,7 +7666,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">Company Identifier.</param>
@@ -7742,7 +7742,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
@@ -7781,7 +7781,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -7821,7 +7821,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
@@ -8037,6 +8037,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("itemId", itemId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ItemClassificationOutputModel>>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Add/update an item parameter.
+        /// </summary>
+        /// <remarks>
+        /// Add/update an item parameter.
+        ///  
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        ///  
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that this item belongs to.</param>
+        /// <param name="itemId">The ID of the item you want to update.</param>
+        /// <param name="model">The item parameter object you want to upsert.</param>
+        public List<ItemParameterModel> UpsertItemParameter(Int32 companyId, Int64 itemId, List<ItemParameterModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemParameterModel>>("PUT", path, model);
         }
 
 
@@ -15920,7 +15950,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="include">A comma separated list of objects to fetch underneath this company. Any object with a URL path underneath this company can be fetched by specifying its name.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts, parameters, supplierandcustomers</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* IsFein, contacts, items, locations, nexus, settings, taxCodes, taxRules, upcs, nonReportingChildCompanies, exemptCerts, parameters, supplierandcustomers, isAdvSave</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -17898,7 +17928,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         public async Task<List<ItemHSCodeClassificationStatusOutputModel>> ListItemHSCodeClassificationStatusAsync()
@@ -17916,7 +17946,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         public async Task<List<ItemTaxCodeRecommendationStatusModel>> ListItemsRecommendationsStatusAsync()
@@ -17934,7 +17964,7 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         public async Task<List<ItemStatusModel>> ListItemsStatusAsync()
@@ -18733,7 +18763,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyCode">Company code.</param>
@@ -20568,7 +20598,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that defined these items</param>
         /// <param name="itemId">The ID of the item as defined by the company that owns this tag.</param>
         /// <param name="model">Tags you wish to associate with the Item</param>
-        public async Task<List<ItemTagDetailOutputModel>> CreateItemTagsAsync(Int32 companyId, Int32 itemId, List<ItemTagDetailInputModel> model)
+        public async Task<List<ItemTagDetailOutputModel>> CreateItemTagsAsync(Int32 companyId, Int64 itemId, List<ItemTagDetailInputModel> model)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/tags");
             path.ApplyField("companyId", companyId);
@@ -20828,7 +20858,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company for which to retrieve the SLA details.</param>
@@ -20856,7 +20886,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -20886,7 +20916,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -20918,7 +20948,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -20946,7 +20976,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -20976,7 +21006,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId"></param>
@@ -21009,7 +21039,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -21067,7 +21097,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item object</param>
@@ -21106,7 +21136,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id.</param>
@@ -21147,7 +21177,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The company id</param>
@@ -21188,7 +21218,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this item object.</param>
@@ -21252,7 +21282,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -21298,7 +21328,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">Company Identifier.</param>
@@ -21376,7 +21406,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
@@ -21416,7 +21446,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
@@ -21457,7 +21487,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
@@ -21679,6 +21709,37 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("itemId", itemId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ItemClassificationOutputModel>>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Add/update an item parameter.;
+        /// </summary>
+        /// <remarks>
+        /// Add/update an item parameter.
+        ///  
+        /// Some items can be taxed differently depending on the properties of that item, such as the item grade or by a particular measurement of that item. In AvaTax, these tax-affecting properties are called "parameters".
+        ///  
+        /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
+        ///  
+        /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that this item belongs to.</param>
+        /// <param name="itemId">The ID of the item you want to update.</param>
+        /// <param name="model">The item parameter object you want to upsert.</param>
+        public async Task<List<ItemParameterModel>> UpsertItemParameterAsync(Int32 companyId, Int64 itemId, List<ItemParameterModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemParameterModel>>("PUT", path, model).ConfigureAwait(false);
         }
 
 
