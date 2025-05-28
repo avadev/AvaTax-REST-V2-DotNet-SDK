@@ -259,6 +259,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isDeleted { get; set; }
 
+        /// <summary>
+        /// A boolean flag to identify if the company saves advanced rules after calculation.
+        /// </summary>
+        public Boolean? isAdvSave { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

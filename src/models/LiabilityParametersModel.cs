@@ -43,9 +43,12 @@ namespace Avalara.AvaTax.RestClient
         public Int32? year { get; set; }
 
         /// <summary>
-        /// Filter report based on the month
+        /// Filter report based on the month. Accepts a single integer value between 1 and 12 representing the calendar month.
+        /// Validation behavior:
+        /// - If an invalid value is provided, the Execute button will be disabled in Swagger UI
+        /// - Invalid month value will result in a JsonFormatError when called through Postman
         /// </summary>
-        public object month { get; set; }
+        public Int32? month { get; set; }
 
         /// <summary>
         /// Filter report based on the country code
