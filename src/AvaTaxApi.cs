@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    25.5.1
+ * @version    25.6.2
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "25.5.1"; } }
+        public static string API_VERSION { get { return "25.6.2"; } }
 
 #region Methods
 
@@ -1838,6 +1838,37 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCallString("POST", path, file);
+        }
+
+
+        /// <summary>
+        /// Retrieves a list of location records associated with the specified company.
+        /// This endpoint is secured and requires appropriate subscription and permission levels.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique identifier of the company whose locations are being requested.</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ClerkLocationModel> ListLocationByCompany(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/clerk/locations");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ClerkLocationModel>>("GET", path, null);
         }
 
 
@@ -5707,7 +5738,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieves the list of Avalara-supported system tax codes.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// 
         /// ### Security Policies
@@ -7092,6 +7123,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete the image associated with an item.
+        /// </summary>
+        /// <remarks>
+        /// Delete the image associated with an item.
+        ///  
+        /// Permanently deletes both the image and its association with the specified item.
+        /// This endpoint allows users to manage product visual representations by removing outdated or incorrect images,
+        /// and cleaning up unused resources in the system.
+        /// Once deleted, the image association cannot be recovered. To use the image again, it must be re-uploaded and
+        /// re-linked with the item.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageId">The unique ID of the image to delete.</param>
+        public List<AssociatedObjectDeletedErrorDetailsModel> DeleteItemImage(Int32 companyId, Int64 itemId, String imageId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images/{imageId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("imageId", imageId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<AssociatedObjectDeletedErrorDetailsModel>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
         /// Delete a single item parameter
         /// </summary>
         /// <remarks>
@@ -7404,6 +7466,34 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Get the image associated with an item.
+        /// </summary>
+        /// <remarks>
+        /// Get the image file for the specified image ID linked to the item.
+        ///  
+        /// This endpoint allows users to retrieve and display product images in user interfaces or to verify the current
+        /// image associated with a specific item.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageId">The unique ID of the image to retrieve.</param>
+        public ItemImageDetailOutputModel GetProductImage(Int32 companyId, Int64 itemId, String imageId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images/{imageId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("imageId", imageId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemImageDetailOutputModel>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// Create an HS code classification request.
         /// </summary>
         /// <remarks>
@@ -7625,7 +7715,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -7745,7 +7835,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -7826,7 +7916,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -7904,6 +7994,35 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<SyncItemsResponseModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Update an existing image for an item.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint allows users to update the existing image associated with a specific item by uploading a new image file.
+        ///  
+        /// The updated image serves as the item's visual representation and will be used for tax code recommendation purposes.
+        ///  
+        /// Restrictions:
+        /// - Supported formats: JPEG, GIF, PNG
+        /// - Maximum file size: 10MB
+        /// - Maximum file name length allowed: 200 characters
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageId">The unique ID of the image to update.</param>
+        /// <param name="imageFile"></param>
+        public ItemImageDetailsModel UpdateImage(Int32 companyId, Int64 itemId, String imageId, FileResult imageFile)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images/{imageId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("imageId", imageId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemImageDetailsModel>("PUT", path, null);
         }
 
 
@@ -8007,6 +8126,33 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemParameterModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Upload an image for an item.
+        /// </summary>
+        /// <remarks>
+        /// This endpoint allows users to upload an image file for a specific item.
+        ///  
+        /// The uploaded image serves as the item's visual representation and will be used for tax code recommendation purposes.
+        ///  
+        /// Restrictions:
+        /// - Supported formats: JPEG, GIF, PNG
+        /// - Maximum file size: 10MB
+        /// - Maximum file name length allowed: 200 characters
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageFile"></param>
+        public ItemImageDetailsModel UploadImage(Int32 companyId, Int64 itemId, FileResult imageFile)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemImageDetailsModel>("POST", path, null);
         }
 
 
@@ -10665,7 +10811,7 @@ namespace Avalara.AvaTax.RestClient
         /// Create one or more new taxcode objects attached to this company.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// 
         /// ### Security Policies
@@ -10714,7 +10860,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get the taxcode object identified by this URL.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// 
         /// ### Security Policies
@@ -10741,7 +10887,7 @@ namespace Avalara.AvaTax.RestClient
         /// List all taxcode objects attached to this company.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
@@ -10779,7 +10925,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get multiple taxcode objects across all companies.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
@@ -10815,7 +10961,7 @@ namespace Avalara.AvaTax.RestClient
         /// Replace the existing taxcode object at this URL with an updated object.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.
@@ -15300,6 +15446,38 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Retrieves a list of location records associated with the specified company.
+        /// This endpoint is secured and requires appropriate subscription and permission levels.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique identifier of the company whose locations are being requested.</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ClerkLocationModel>> ListLocationByCompanyAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/clerk/locations");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ClerkLocationModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Retrieve a single communication certificate.;
         /// </summary>
         /// <remarks>
@@ -19297,7 +19475,7 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieves the list of Avalara-supported system tax codes.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// 
         /// ### Security Policies
@@ -20737,6 +20915,38 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete the image associated with an item.;
+        /// </summary>
+        /// <remarks>
+        /// Delete the image associated with an item.
+        ///  
+        /// Permanently deletes both the image and its association with the specified item.
+        /// This endpoint allows users to manage product visual representations by removing outdated or incorrect images,
+        /// and cleaning up unused resources in the system.
+        /// Once deleted, the image association cannot be recovered. To use the image again, it must be re-uploaded and
+        /// re-linked with the item.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageId">The unique ID of the image to delete.</param>
+        public async Task<List<AssociatedObjectDeletedErrorDetailsModel>> DeleteItemImageAsync(Int32 companyId, Int64 itemId, String imageId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images/{imageId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("imageId", imageId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<AssociatedObjectDeletedErrorDetailsModel>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Delete a single item parameter;
         /// </summary>
         /// <remarks>
@@ -21060,6 +21270,35 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Get the image associated with an item.;
+        /// </summary>
+        /// <remarks>
+        /// Get the image file for the specified image ID linked to the item.
+        ///  
+        /// This endpoint allows users to retrieve and display product images in user interfaces or to verify the current
+        /// image associated with a specific item.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageId">The unique ID of the image to retrieve.</param>
+        public async Task<ItemImageDetailOutputModel> GetProductImageAsync(Int32 companyId, Int64 itemId, String imageId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images/{imageId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("imageId", imageId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemImageDetailOutputModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create an HS code classification request.;
         /// </summary>
         /// <remarks>
@@ -21286,7 +21525,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -21409,7 +21648,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -21492,7 +21731,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -21572,6 +21811,36 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<SyncItemsResponseModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update an existing image for an item.;
+        /// </summary>
+        /// <remarks>
+        /// This endpoint allows users to update the existing image associated with a specific item by uploading a new image file.
+        ///  
+        /// The updated image serves as the item's visual representation and will be used for tax code recommendation purposes.
+        ///  
+        /// Restrictions:
+        /// - Supported formats: JPEG, GIF, PNG
+        /// - Maximum file size: 10MB
+        /// - Maximum file name length allowed: 200 characters;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageId">The unique ID of the image to update.</param>
+        /// <param name="imageFile"></param>
+        public async Task<ItemImageDetailsModel> UpdateImageAsync(Int32 companyId, Int64 itemId, String imageId, FileResult imageFile)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images/{imageId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("imageId", imageId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemImageDetailsModel>("PUT", path, null).ConfigureAwait(false);
         }
 
 
@@ -21678,6 +21947,34 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemParameterModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Upload an image for an item.;
+        /// </summary>
+        /// <remarks>
+        /// This endpoint allows users to upload an image file for a specific item.
+        ///  
+        /// The uploaded image serves as the item's visual representation and will be used for tax code recommendation purposes.
+        ///  
+        /// Restrictions:
+        /// - Supported formats: JPEG, GIF, PNG
+        /// - Maximum file size: 10MB
+        /// - Maximum file name length allowed: 200 characters;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="itemId">The unique ID of the item.</param>
+        /// <param name="imageFile"></param>
+        public async Task<ItemImageDetailsModel> UploadImageAsync(Int32 companyId, Int64 itemId, FileResult imageFile)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/images");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemImageDetailsModel>("POST", path, null).ConfigureAwait(false);
         }
 
 
@@ -24415,7 +24712,7 @@ namespace Avalara.AvaTax.RestClient
         /// Create one or more new taxcode objects attached to this company.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// 
         /// ### Security Policies
@@ -24466,7 +24763,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get the taxcode object identified by this URL.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// 
         /// ### Security Policies
@@ -24494,7 +24791,7 @@ namespace Avalara.AvaTax.RestClient
         /// List all taxcode objects attached to this company.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
@@ -24533,7 +24830,7 @@ namespace Avalara.AvaTax.RestClient
         /// Get multiple taxcode objects across all companies.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         ///  
         /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
@@ -24570,7 +24867,7 @@ namespace Avalara.AvaTax.RestClient
         /// Replace the existing taxcode object at this URL with an updated object.
         /// A 'TaxCode' represents a uniquely identified type of product, good, or service.
         /// Avalara supports correct tax rates and taxability rules for all TaxCodes in all supported jurisdictions.
-        /// If you identify your products by tax code in your 'Create Transacion' API calls, Avalara will correctly calculate tax rates and
+        /// If you identify your products by tax code in your 'Create Transaction' API calls, Avalara will correctly calculate tax rates and
         /// taxability rules for this product in all supported jurisdictions.
         /// All data from the existing object will be replaced with data in the object you PUT.
         /// To set a field's value to null, you may either set its value to null or omit that field from the object you post.

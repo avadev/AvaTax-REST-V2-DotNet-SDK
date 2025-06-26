@@ -18,31 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction.
+    /// Represents a single patch operation
     /// </summary>
-    public class BatchVoidTransactionModel
+    public class PatchOperation
     {
         /// <summary>
-        /// Company Code - Specify the code of the company for this transaction.
+        /// The operation to perform (add, replace, remove, etc.)
         /// </summary>
-        public String companyCode { get; set; }
+        public String op { get; set; }
 
         /// <summary>
-        /// Please specify the transaction code of the transaction to void.
+        /// Path to the property being modified
         /// </summary>
-        public String transactionCode { get; set; }
+        public String path { get; set; }
 
         /// <summary>
-        /// Specifies the type of document to void.
+        /// Value as a string (for add and replace operations)
         /// </summary>
-        public String documentType { get; set; }
-
-        /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
-        /// </summary>
-        public VoidReasonCode code { get; set; }
+        public String value { get; set; }
 
 
         /// <summary>

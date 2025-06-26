@@ -18,31 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A request to void a previously created transaction.
+    /// Represents a physical location used in exemption certificate management.
     /// </summary>
-    public class BatchVoidTransactionModel
+    public class ClerkLocationModel
     {
         /// <summary>
-        /// Company Code - Specify the code of the company for this transaction.
+        /// Unique identifier for the location.
         /// </summary>
-        public String companyCode { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// Please specify the transaction code of the transaction to void.
+        /// Display name of the location.
         /// </summary>
-        public String transactionCode { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// Specifies the type of document to void.
+        /// Code used to reference this location.
         /// </summary>
-        public String documentType { get; set; }
+        public String code { get; set; }
 
         /// <summary>
-        /// Please specify the reason for voiding or cancelling this transaction.
-        /// To void the transaction, please specify the reason 'DocVoided'.
-        /// If you do not provide a reason, the void command will fail.
+        /// Primary street address of the location.
         /// </summary>
-        public VoidReasonCode code { get; set; }
+        public String address_line1 { get; set; }
+
+        /// <summary>
+        /// Additional address details (e.g., suite, building).
+        /// </summary>
+        public String address_line2 { get; set; }
+
+        /// <summary>
+        /// City in which the location is situated.
+        /// </summary>
+        public String city { get; set; }
+
+        /// <summary>
+        /// Postal or ZIP code of the location.
+        /// </summary>
+        public String zip { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public StateModel state { get; set; }
 
 
         /// <summary>

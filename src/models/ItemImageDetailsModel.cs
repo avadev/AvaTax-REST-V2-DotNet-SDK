@@ -18,41 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Replace an existing transaction recorded in AvaTax with a new one.
+    /// Item image details model
     /// </summary>
-    public class BatchAdjustTransactionModel
+    public class ItemImageDetailsModel
     {
         /// <summary>
-        /// Specifies the code of the company for this transaction.
+        /// Guid Primary key for ItemImage
         /// </summary>
-        public String companyCode { get; set; }
+        public String itemImageId { get; set; }
 
         /// <summary>
-        /// Please specify the transaction code of the transaction to void.
+        /// Numeric primary key for ItemImage
         /// </summary>
-        public String transactionCode { get; set; }
+        public Int64? itemImageDetailId { get; set; }
 
         /// <summary>
-        /// Specifies the type of document to void.
+        /// Gets or sets the company ID associated with the item image.
         /// </summary>
-        public String documentType { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
-        /// A reason code indicating why this adjustment was made
+        /// Gets or sets the item ID.
         /// </summary>
-        public AdjustmentReason adjustmentReason { get; set; }
+        public Int64? itemId { get; set; }
 
         /// <summary>
-        /// If the AdjustmentReason is "Other", specify the reason here.
-        ///  
-        /// This is required when the AdjustmentReason is 8 (Other).
+        /// Gets or sets the creation timestamp of the item image.
         /// </summary>
-        public String adjustmentDescription { get; set; }
+        public DateTime? createdAt { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the ID of the user who created the item image.
         /// </summary>
-        public CreateTransactionModel newTransaction { get; set; }
+        public Int32? createdUserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last modification timestamp of the item image.
+        /// </summary>
+        public DateTime? modifiedAt { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the user who last modified the item image.
+        /// </summary>
+        public Int32? modifiedUserId { get; set; }
 
 
         /// <summary>
