@@ -21,14 +21,19 @@ namespace Avalara.AvaTax.RestClient
     public enum TextCase
     {
         /// <summary>
+        /// Default (casing determined by address standardization setting in Avalara)
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
         /// Upper case
         /// </summary>
-        Upper = 0,
+        Upper = 1,
 
         /// <summary>
         /// Mixed Case
         /// </summary>
-        Mixed = 1,
+        Mixed = 2,
 
     }
 }

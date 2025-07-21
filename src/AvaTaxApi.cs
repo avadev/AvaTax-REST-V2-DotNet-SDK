@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    25.6.2
+ * @version    25.7.1
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "25.6.2"; } }
+        public static string API_VERSION { get { return "25.7.1"; } }
 
 #region Methods
 
@@ -789,6 +789,38 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("companyId", companyId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<BatchModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Create item import batch.
+        /// </summary>
+        /// <remarks>
+        /// Create a new item import batch objects attached to this company.
+        ///  
+        /// When an item import batch is created, it is added to the AvaTax Batch v2 Queue and will be
+        /// processed in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
+        /// operation.
+        ///  
+        /// The maximum content length of the request body is limited to 28.6 MB. If this limit
+        /// exceeds then a 404 Not Found status is returned (possibly with a CORS error if
+        /// the API is called from a browser). In this situation, please split the request into
+        /// smaller batches.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this batch.</param>
+        /// <param name="model">The item import batch you wish to create.</param>
+        public CreateItemImportBatchResponseModel CreateItemImportBatch(Int32 companyId, CreateItemImportBatchRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/items");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<CreateItemImportBatchResponseModel>("POST", path, model);
         }
 
 
@@ -1842,7 +1874,7 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
-        /// Retrieves a list of location records associated with the specified company.
+        /// Retrieves a list of location records associated with the specified account.
         /// This endpoint is secured and requires appropriate subscription and permission levels.
         /// </summary>
         /// <remarks>
@@ -1852,16 +1884,16 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The unique identifier of the company whose locations are being requested.</param>
+        /// <param name="accountId">The unique identifier of the account whose locations are being requested.</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<ClerkLocationModel> ListLocationByCompany(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public FetchResult<ClerkLocationModel> ListLocationByAccount(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/clerk/locations");
-            path.ApplyField("companyId", companyId);
+            var path = new AvaTaxPath("/api/v2/companies/{accountId}/clerk/locations");
+            path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
@@ -14370,6 +14402,39 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Create item import batch.;
+        /// </summary>
+        /// <remarks>
+        /// Create a new item import batch objects attached to this company.
+        ///  
+        /// When an item import batch is created, it is added to the AvaTax Batch v2 Queue and will be
+        /// processed in the order it was received. To check the
+        /// status of a batch, fetch the batch and retrieve the results of the batch
+        /// operation.
+        ///  
+        /// The maximum content length of the request body is limited to 28.6 MB. If this limit
+        /// exceeds then a 404 Not Found status is returned (possibly with a CORS error if
+        /// the API is called from a browser). In this situation, please split the request into
+        /// smaller batches.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this batch.</param>
+        /// <param name="model">The item import batch you wish to create.</param>
+        public async Task<CreateItemImportBatchResponseModel> CreateItemImportBatchAsync(Int32 companyId, CreateItemImportBatchRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/batches/items");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<CreateItemImportBatchResponseModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new transaction batch;
         /// </summary>
         /// <remarks>
@@ -15446,7 +15511,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Retrieves a list of location records associated with the specified company.
+        /// Retrieves a list of location records associated with the specified account.
         /// This endpoint is secured and requires appropriate subscription and permission levels.;
         /// </summary>
         /// <remarks>
@@ -15456,16 +15521,16 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
         /// </remarks>
 		
-        /// <param name="companyId">The unique identifier of the company whose locations are being requested.</param>
+        /// <param name="accountId">The unique identifier of the account whose locations are being requested.</param>
         /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<ClerkLocationModel>> ListLocationByCompanyAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        public async Task<FetchResult<ClerkLocationModel>> ListLocationByAccountAsync(Int32 accountId, String include, String filter, Int32? top, Int32? skip, String orderBy)
         {
-            var path = new AvaTaxPath("/api/v2/companies/{companyId}/clerk/locations");
-            path.ApplyField("companyId", companyId);
+            var path = new AvaTaxPath("/api/v2/companies/{accountId}/clerk/locations");
+            path.ApplyField("accountId", accountId);
             path.AddQuery("$include", include);
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);

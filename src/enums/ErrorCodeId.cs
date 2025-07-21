@@ -2078,6 +2078,11 @@ namespace Avalara.AvaTax.RestClient
         ItemIdMismatch = 4021,
 
         /// <summary>
+        /// 
+        /// </summary>
+        InvalidFileNameLength = 4022,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,
