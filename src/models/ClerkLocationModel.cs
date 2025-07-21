@@ -40,12 +40,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Primary street address of the location.
         /// </summary>
-        public String address_line1 { get; set; }
+        public String addressLine1 { get; set; }
 
         /// <summary>
         /// Additional address details (e.g., suite, building).
         /// </summary>
-        public String address_line2 { get; set; }
+        public String addressLine2 { get; set; }
 
         /// <summary>
         /// City in which the location is situated.
@@ -58,9 +58,49 @@ namespace Avalara.AvaTax.RestClient
         public String zip { get; set; }
 
         /// <summary>
-        /// 
+        /// A unique ID number that represents this state, region, or province.
         /// </summary>
-        public StateModel state { get; set; }
+        public Int32? stateId { get; set; }
+
+        /// <summary>
+        /// The state, region, or province name as known in US English.
+        /// </summary>
+        public String stateName { get; set; }
+
+        /// <summary>
+        /// The abbreviated two or three character ISO 3166 state, province, or region code.
+        /// </summary>
+        public String stateInitials { get; set; }
+
+        /// <summary>
+        /// The unique ID number of this country as defined in Avalara's certificate management system.
+        /// </summary>
+        public Int32? countryId { get; set; }
+
+        /// <summary>
+        /// The name of this country in US English.
+        /// </summary>
+        public String countryName { get; set; }
+
+        /// <summary>
+        /// The three-character ISO 3166 code for this country.
+        /// </summary>
+        public String countryInitials { get; set; }
+
+        /// <summary>
+        /// id of the client (client_id)
+        /// </summary>
+        public Int32? clientId { get; set; }
+
+        /// <summary>
+        /// name of the client
+        /// </summary>
+        public String clientName { get; set; }
+
+        /// <summary>
+        /// The Avalara AvaTax™ CompanyId this client maps to.
+        /// </summary>
+        public String avataxCompanyId { get; set; }
 
 
         /// <summary>

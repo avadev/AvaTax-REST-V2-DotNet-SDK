@@ -312,6 +312,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Decimal? nonRecoverableAmount { get; set; }
 
+        /// <summary>
+        /// Indicates the VAT code for this detail.
+        /// </summary>
+        public String vatCode { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
