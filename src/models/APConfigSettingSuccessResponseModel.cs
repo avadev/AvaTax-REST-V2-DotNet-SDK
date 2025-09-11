@@ -38,9 +38,14 @@ namespace Avalara.AvaTax.RestClient
         public TaxProfileMetaDataModel meta { get; set; }
 
         /// <summary>
-        /// The Amount
+        /// The Amount Threshold To Ignore Transaction
         /// </summary>
         public Decimal? amount { get; set; }
+
+        /// <summary>
+        /// The Amount Threshold To Mark Transaction For Manual Review
+        /// </summary>
+        public Decimal? amountToMarkForReview { get; set; }
 
         /// <summary>
         /// The Variance For Ignore

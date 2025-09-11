@@ -16,34 +16,34 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the type of authentication provided to the API call
+    /// The status of a custom rule as returned by the custom rule summary endpoint.
     /// </summary>
-    public enum AuthenticationTypeId
+    public enum CustomRuleStatus
     {
         /// <summary>
-        /// This API call was not authenticated.
+        /// The status of the rule is unknown.
         /// </summary>
-        None = 0,
+        Unknown = 0,
 
         /// <summary>
-        /// This API call was authenticated by your username/password.
+        /// The rule is enabled and effective on the current date.
         /// </summary>
-        UsernamePassword = 1,
+        Active = 1,
 
         /// <summary>
-        /// This API call was authenticated by your Avalara Account ID and private license key.
+        /// The rule is not enabled.
         /// </summary>
-        AccountIdLicenseKey = 2,
+        Inactive = 2,
 
         /// <summary>
-        /// This API call was authenticated by OpenID Bearer Token.
+        /// The rule is marked enabled, but it is past the end date of the rule.
         /// </summary>
-        OpenIdBearerToken = 3,
+        Expired = 3,
 
         /// <summary>
-        /// This API call was authenticated by mTLS client certificate.
+        /// The rule is marked enabled, but it is before the first effective date of the rule.
         /// </summary>
-        ClientMtlsCertificate = 4,
+        Future = 4,
 
     }
 }

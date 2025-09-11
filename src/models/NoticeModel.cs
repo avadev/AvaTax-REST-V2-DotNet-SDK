@@ -210,11 +210,6 @@ namespace Avalara.AvaTax.RestClient
         public String description { get; set; }
 
         /// <summary>
-        /// The ava file form id of the notice
-        /// </summary>
-        public Int32? avaFileFormId { get; set; }
-
-        /// <summary>
         /// The id of the revenue contact
         /// </summary>
         public Int32? revenueContactId { get; set; }
