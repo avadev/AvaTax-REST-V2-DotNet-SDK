@@ -2083,6 +2083,16 @@ namespace Avalara.AvaTax.RestClient
         InvalidFileNameLength = 4022,
 
         /// <summary>
+        /// MTCC related error code
+        /// </summary>
+        RequiredParametersNotFound = 4023,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        NoClassificationsFound = 4024,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,
