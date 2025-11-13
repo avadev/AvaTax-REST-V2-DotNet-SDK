@@ -1,0 +1,250 @@
+using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+/*
+ * AvaTax API Client Library
+ *
+ * (c) 2004-2023 Avalara, Inc.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Jonathan Wenger <jonathan.wenger@avalara.com>
+ * @author Sachin Baijal <sachin.baijal@avalara.com>
+ * Swagger name: AvaTaxClient
+ */
+
+namespace Avalara.AvaTax.RestClient
+{
+    /// <summary>
+    /// Represents a vendor from whom you purchase products and/or services.
+    /// This model inherits all properties from CustomerModel and adds vendor-specific functionality.
+    /// </summary>
+    public class VendorModel
+    {
+        /// <summary>
+        /// Indicates whether this entity is a vendor.
+        /// This flag helps distinguish vendors from regular customers in the system.
+        /// Note: This field is automatically set to true for vendor endpoints and cannot be overridden by user filters.
+        /// </summary>
+        public Boolean? isVendor { get; set; }
+
+        /// <summary>
+        /// The unique ID number of this customer.
+        /// </summary>
+        public Int32? id { get; set; }
+
+        /// <summary>
+        /// The unique ID number of the AvaTax company that recorded this customer.
+        /// </summary>
+        public Int32 companyId { get; set; }
+
+        /// <summary>
+        /// The unique code identifying this customer. Must be unique within your company.
+        ///  
+        /// This code should be used in the `customerCode` field of any call that creates or adjusts a transaction
+        /// in order to ensure that all exemptions that apply to this customer are correctly considered.
+        ///  
+        /// Note: This field is case sensitive.
+        /// </summary>
+        public String customerCode { get; set; }
+
+        /// <summary>
+        /// A customer-configurable alternate ID number for this customer. You may set this value to match any
+        /// other system that would like to reference this customer record.
+        /// </summary>
+        public String alternateId { get; set; }
+
+        /// <summary>
+        /// A friendly name identifying this customer.
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// Indicates the "Attn:" component of the address for this customer, if this customer requires mailings to be shipped
+        /// to the attention of a specific person or department name.
+        /// </summary>
+        public String attnName { get; set; }
+
+        /// <summary>
+        /// First line of the street address of this customer.
+        /// </summary>
+        public String line1 { get; set; }
+
+        /// <summary>
+        /// Second line of the street address of this customer.
+        /// </summary>
+        public String line2 { get; set; }
+
+        /// <summary>
+        /// City component of the street address of this customer.
+        /// </summary>
+        public String city { get; set; }
+
+        /// <summary>
+        /// Postal Code / Zip Code component of the address of this customer.
+        /// </summary>
+        public String postalCode { get; set; }
+
+        /// <summary>
+        /// The main phone number for this customer.
+        /// </summary>
+        public String phoneNumber { get; set; }
+
+        /// <summary>
+        /// The fax phone number for this customer, if any.
+        /// </summary>
+        public String faxNumber { get; set; }
+
+        /// <summary>
+        /// The main email address for this customer.
+        /// </summary>
+        public String emailAddress { get; set; }
+
+        /// <summary>
+        /// The name of the main contact person for this customer.
+        /// </summary>
+        public String contactName { get; set; }
+
+        /// <summary>
+        /// Date when this customer last executed a transaction.
+        /// </summary>
+        public DateTime? lastTransaction { get; set; }
+
+        /// <summary>
+        /// The date when this record was created.
+        /// </summary>
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// The date/time when this record was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// Name or ISO 3166 code identifying the country.
+        ///  
+        /// This field supports many different country identifiers:
+        ///  * Two character ISO 3166 codes
+        ///  * Three character ISO 3166 codes
+        ///  * Fully spelled out names of the country in ISO supported languages
+        ///  * Common alternative spellings for many countries
+        ///  
+        /// For a full list of all supported codes and names, please see the Definitions API `ListCountries`.
+        /// </summary>
+        public String country { get; set; }
+
+        /// <summary>
+        /// ISO 3166 code identifying the region within the country.
+        /// Two and three character ISO 3166 region codes.
+        /// This is a required field if the country is US or CA. For other countries, this is an optional field.
+        /// For a full list of all supported codes, please see the Definitions API `ListRegions`.
+        /// </summary>
+        public String region { get; set; }
+
+        /// <summary>
+        /// True if this customer record is specifically used for bill-to purposes.
+        /// </summary>
+        public Boolean? isBill { get; set; }
+
+        /// <summary>
+        /// True if this customer record is specifically used for ship-to purposes.
+        /// </summary>
+        public Boolean? isShip { get; set; }
+
+        /// <summary>
+        /// For customers in the United States, this field is the federal taxpayer ID number. For businesses, this is
+        /// a Federal Employer Identification Number. For individuals, this will be a Social Security Number.
+        /// </summary>
+        public String taxpayerIdNumber { get; set; }
+
+        /// <summary>
+        /// A list of exemption certficates that apply to this customer. You can fetch this data by specifying
+        /// `$include=certificates` when calling a customer fetch API.
+        /// </summary>
+        public List<CertificateModel> certificates { get; set; }
+
+        /// <summary>
+        /// A list of custom fields defined on this customer.
+        ///  
+        /// For more information about custom fields, see the [Avalara Help Center article about custom fields](https://help.avalara.com/0021_Avalara_CertCapture/All_About_CertCapture/Edit_or_Remove_Details_about_Customers).
+        /// </summary>
+        public List<CustomFieldModel> customFields { get; set; }
+
+        /// <summary>
+        /// A list of exposure zones where you do business with this customer.
+        ///  
+        /// To keep track of certificates that are needed for each customer, set this value to a list of all exposure zones where you
+        /// sell products to this customer. You can find a list of exposure zones by calling `ListExposureZones`.
+        ///  
+        /// This field is often called "Ship-To States" or "Ship-To Zones", since it generally refers to locations where you ship products
+        /// when this customer makes a purchase.
+        ///  
+        /// This field is useful for audit purposes since it helps you ensure you have the necessary certificates for each customer.
+        /// </summary>
+        public List<ExposureZoneModel> exposureZones { get; set; }
+
+        /// <summary>
+        /// A list of bill-to customer records that are connected to this ship-to customer.
+        ///  
+        /// Customer records represent businesses or individuals who can provide exemption certificates. Some customers
+        /// may have certificates that are linked to their shipping address or their billing address. To group these
+        /// customer records together, you may link multiple bill-to and ship-to addresses together to represent a single
+        /// entity that has multiple different addresses of different kinds.
+        /// </summary>
+        public List<CustomerModel> billTos { get; set; }
+
+        /// <summary>
+        /// A list of ship-to customer records that are connected to this bill-to customer.
+        ///  
+        /// Customer records represent businesses or individuals who can provide exemption certificates. Some customers
+        /// may have certificates that are linked to their shipping address or their billing address. To group these
+        /// customer records together, you may link multiple bill-to and ship-to addresses together to represent a single
+        /// entity that has multiple different addresses of different kinds.
+        /// </summary>
+        public List<CustomerModel> shipTos { get; set; }
+
+        /// <summary>
+        /// A list of attributes that apply to this customer.
+        ///  
+        /// You can fetch this data by specifying `$include=attributes` when calling a customer fetch API.
+        /// </summary>
+        public List<CustomerAttributeModel> attributes { get; set; }
+
+        /// <summary>
+        /// A list of active certificates with exemption reasons.
+        /// </summary>
+        public List<ActiveCertificateModel> activeCertificates { get; set; }
+
+        /// <summary>
+        /// A list of field update histories for this customer.
+        /// </summary>
+        public List<HistoryModel> histories { get; set; }
+
+        /// <summary>
+        /// A list of jobs for this customer.
+        /// </summary>
+        public List<CustomerJobModel> jobs { get; set; }
+
+        /// <summary>
+        /// A list of logs for this customer.
+        /// </summary>
+        public List<CertificateLogModel> logs { get; set; }
+
+        /// <summary>
+        /// A list of states where this customer ships to.
+        /// </summary>
+        public List<StateModel> shipToStates { get; set; }
+
+
+        /// <summary>
+        /// Convert this object to a JSON string of itself
+        /// </summary>
+        /// <returns>A JSON string of this object</returns>
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this, new JsonSerializerSettings() { Formatting = Formatting.Indented });
+        }
+    }
+}

@@ -70,11 +70,6 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? continueOnError { get; set; }
 
         /// <summary>
-        /// Whether the rule is deleted
-        /// </summary>
-        public Boolean? isDeleted { get; set; }
-
-        /// <summary>
         /// Version number of the rule
         /// </summary>
         public Int32? version { get; set; }

@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    25.9.0
+ * @version    25.11.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "25.9.0"; } }
+        public static string API_VERSION { get { return "25.11.0"; } }
 
 #region Methods
 
@@ -2786,7 +2786,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK, taxTypeIdSK, taxSubTypeIdSK, generalOrStandardRateTypeIdSK, taxTypeGroupId, taxTypeId, country, generalOrStandardRateTypeId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK, taxTypeIdSK, taxSubTypeIdSK, generalOrStandardRateTypeIdSK, taxTypeGroupId, taxTypeId, country, generalOrStandardRateTypeId, isCustomContent</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4588,7 +4588,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<JurisdictionRateTypeTaxTypeMappingModel> ListJurisdictionsByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content jurisdictions (default: false)</param>
+        public FetchResult<JurisdictionRateTypeTaxTypeMappingModel> ListJurisdictionsByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
             path.ApplyField("country", country);
@@ -4600,6 +4601,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>>("GET", path, null);
         }
@@ -4643,13 +4645,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="taxTypeId">The taxtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="rateTypeId">The ratetype for which you want to retrieve the jurisdiction information</param>
-        public List<String> ListJurisdictionTypesByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, String rateTypeId)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content jurisdiction types (default: false)</param>
+        public List<String> ListJurisdictionTypesByRateTypeTaxTypeMapping(String country, String taxTypeId, String taxSubTypeId, String rateTypeId, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictionTypes/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
             path.ApplyField("country", country);
             path.ApplyField("taxTypeId", taxTypeId);
             path.ApplyField("taxSubTypeId", taxSubTypeId);
             path.AddQuery("rateTypeId", rateTypeId);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<String>>("GET", path, null);
         }
@@ -5486,7 +5490,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<RateTypesModel> ListRateTypesByCountryTaxTypeTaxSubType(String country, String taxTypeId, String taxSubTypeId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content rate types (default: false)</param>
+        public FetchResult<RateTypesModel> ListRateTypesByCountryTaxTypeTaxSubType(String country, String taxTypeId, String taxSubTypeId, String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/ratetypes");
             path.ApplyField("country", country);
@@ -5496,6 +5501,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<RateTypesModel>>("GET", path, null);
         }
@@ -5573,7 +5579,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<IsoRegionModel> ListRegionsByCountryAndTaxTypeAndTaxSubTypeAndRateType(Int32 companyId, String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String jurisdictionTypeId, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content regions (default: false)</param>
+        public FetchResult<IsoRegionModel> ListRegionsByCountryAndTaxTypeAndTaxSubTypeAndRateType(Int32 companyId, String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String jurisdictionTypeId, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/companies/{companyId}/countries/{country}/regions/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/rateTypeId/{rateTypeId}/jurisdictionTypeId/{jurisdictionTypeId}");
             path.ApplyField("companyId", companyId);
@@ -5585,6 +5592,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<IsoRegionModel>>("GET", path, null);
         }
@@ -5650,7 +5658,7 @@ namespace Avalara.AvaTax.RestClient
         /// You cannot change your subscriptions directly through the API.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* system, taxTypeGroupIdSK</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -5878,7 +5886,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<TaxSubTypeModel> ListTaxSubTypesByCountryAndTaxType(String country, String taxTypeId, Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content tax sub types (default: false)</param>
+        public FetchResult<TaxSubTypeModel> ListTaxSubTypesByCountryAndTaxType(String country, String taxTypeId, Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxsubtypes/countries/{country}/taxtypes/{taxTypeId}");
             path.ApplyField("country", country);
@@ -5888,6 +5897,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxSubTypeModel>>("GET", path, null);
         }
@@ -5957,7 +5967,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<TaxTypeModel> ListTaxTypesByNexusAndCountry(String country, Int32 companyId, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content tax types (default: false)</param>
+        public FetchResult<TaxTypeModel> ListTaxTypesByNexusAndCountry(String country, Int32 companyId, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxtypes/countries/{country}");
             path.ApplyField("country", country);
@@ -5965,6 +5976,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<TaxTypeModel>>("GET", path, null);
         }
@@ -6885,6 +6897,10 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Create/Update one or more item objects attached to this company.
         ///  
+        /// Recommended number of items to create/update in a single call is upto 100.
+        ///  
+        /// Currently, the maximum number of items that can be created/updated in a single call is 500 (This limit is subject to change).
+        ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
@@ -6978,6 +6994,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates one or more new item objects attached to this company.
+        ///  
+        /// Recommended number of items to create in a single call is upto 50.
+        ///  
+        /// Currently, the maximum number of items that can be created in a single call is 500 (This limit is subject to change).
         ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
@@ -7974,6 +7994,10 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Creates/updates one or more item objects with additional properties and the AvaTax category attached to this company.
         ///  
+        /// Recommended number of items to create/update in a single call is upto 100.
+        ///  
+        /// Currently, the maximum number of items that can be created/updated in a single call is 1000 (This limit is subject to change).
+        ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. Use this endpoint to create
         /// a new or update an existing item. This can be used to sync the items with Avalara. For example, an accounting software
         /// system can use this to sync all their items from an ERP with Avalara.
@@ -8005,7 +8029,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Any invalid or duplicate items will be ignored. To diagnose why an item is not created, use the normal create transaction API to receive validation information.
         ///  
-        /// This API is currently limited to 1000 items per call (the limit is subject to change).
+        /// This API is currently limited to 500 items per call (the limit is subject to change).
         ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
@@ -10251,7 +10275,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* system, taxTypeGroupIdSK</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -13304,6 +13328,235 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/utilities/ping");
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<PingResultModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all vendor certificates for a company
+        /// </summary>
+        /// <remarks>
+        /// List all certificates recorded by a company
+        ///  
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a vendor's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please
+        /// log onto the administrative website for the product you purchased.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * customers - Retrieves the list of vendors linked to the certificate.
+        /// * po_numbers - Retrieves all PO numbers tied to the certificate.
+        /// * attributes - Retrieves all attributes applied to the certificate.
+        /// * histories - Retrieves the certificate update history
+        /// * jobs - Retrieves the jobs for this certificate
+        /// * logs - Retrieves the certificate log
+        /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        /// * custom_fields - Retrieves custom fields set for this certificate
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        ///  
+        /// Note* Filtering not supported for any documentType field.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID number of the company to search</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * customers - Retrieves the list of vendors linked to the certificate.
+        ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<VendorCertificateModel> QueryVendorCertificates(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/{companyId}/vendor-certificates");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<VendorCertificateModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single vendor
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the vendor identified by this URL.
+        ///  
+        /// A vendor object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this vendor object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * certificates - Fetch a list of certificates linked to this vendor.
+        /// * attributes - Retrieves all attributes applied to the vendor.
+        /// * active_certificates - Retrieves all the active certificates linked to this vendor
+        /// * histories - Retrieves the update history for this vendor
+        /// * logs - Retrieves vendor logs
+        /// * jobs - Retrieves vendor jobs
+        /// * billTos - Retrieves bill-tos linked with this vendor
+        /// * shipTos - Retrieves ship-tos linked with this vendor
+        /// * shipToStates - Retrieves ship-to states for this vendor
+        /// * custom_fields - Retrieves custom fields set for this vendor
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode"></param>
+        /// <param name="include">Specify optional additional objects to include in this fetch request</param>
+        public VendorModel GetVendor(Int32 companyId, String vendorCode, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            path.AddQuery("$include", include);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<VendorModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List certificates linked to a vendor
+        /// </summary>
+        /// <remarks>
+        /// List all certificates linked to a vendor.
+        ///  
+        /// A vendor object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `vendorCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `vendorCode` value and
+        /// identify any certificates linked to this `vendor` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        ///  
+        /// You can filter certificates by exposure zone name using the $filter parameter with the syntax:
+        /// `$filter=exposureZoneName eq 'ZoneName'` or `$filter=contains(exposureZoneName,'PartialName')`
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode">The unique code representing this vendor</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * vendors - Retrieves the list of vendors linked to the certificate.
+        ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<VendorCertificateModel> ListCertificatesForVendor(Int32 companyId, String vendorCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}/certificates");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<VendorCertificateModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List all vendors for this company
+        /// </summary>
+        /// <remarks>
+        /// List all vendors recorded by this company matching the specified criteria.
+        ///  
+        /// A vendor object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `vendorCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `vendorCode` value and
+        /// identify any certificates linked to this `vendor` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * certificates - Fetch a list of certificates linked to this vendor.
+        /// * attributes - Retrieves all attributes applied to the vendor.
+        /// * active_certificates - Retrieves all the active certificates linked to this vendor
+        /// * histories - Retrieves the update history for this vendor
+        /// * logs - Retrieves vendor logs
+        /// * jobs - Retrieves vendor jobs
+        /// * billTos - Retrieves bill-tos linked with this vendor
+        /// * shipTos - Retrieves ship-tos linked with this vendor
+        /// * shipToStates - Retrieves ship-to states for this vendor
+        /// * custom_fields - Retrieves custom fields set for this vendor
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        ///  
+        /// Note* Filtering not supported for isVendor field.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="include">OPTIONAL - You can specify any of the values in `certificates`, `attributes`, `active_certificates`, `histories`, `logs`, `jobs`, `billTos`, `shipTos`, `shipToStates`, and `custom_fields` to fetch additional information for this certificate.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<VendorModel> QueryVendors(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<VendorModel>>("GET", path, null);
         }
 
 
@@ -16452,7 +16705,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API depends on the following active services:*Returns* (at least one of): Mrs, MRSComplianceManager, AvaTaxCsp.*Firm Managed* (for accounts managed by a firm): ARA, ARAManaged.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK, taxTypeIdSK, taxSubTypeIdSK, generalOrStandardRateTypeIdSK, taxTypeGroupId, taxTypeId, country, generalOrStandardRateTypeId</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK, taxTypeIdSK, taxSubTypeIdSK, generalOrStandardRateTypeIdSK, taxTypeGroupId, taxTypeId, country, generalOrStandardRateTypeId, isCustomContent</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -18315,7 +18568,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>> ListJurisdictionsByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content jurisdictions (default: false)</param>
+        public async Task<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>> ListJurisdictionsByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String region, String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
             path.ApplyField("country", country);
@@ -18327,6 +18581,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionRateTypeTaxTypeMappingModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -18372,13 +18627,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="taxTypeId">The taxtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the jurisdiction information</param>
         /// <param name="rateTypeId">The ratetype for which you want to retrieve the jurisdiction information</param>
-        public async Task<List<String>> ListJurisdictionTypesByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, String rateTypeId)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content jurisdiction types (default: false)</param>
+        public async Task<List<String>> ListJurisdictionTypesByRateTypeTaxTypeMappingAsync(String country, String taxTypeId, String taxSubTypeId, String rateTypeId, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictionTypes/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}");
             path.ApplyField("country", country);
             path.ApplyField("taxTypeId", taxTypeId);
             path.ApplyField("taxSubTypeId", taxSubTypeId);
             path.AddQuery("rateTypeId", rateTypeId);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<String>>("GET", path, null).ConfigureAwait(false);
         }
@@ -19245,7 +19502,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<RateTypesModel>> ListRateTypesByCountryTaxTypeTaxSubTypeAsync(String country, String taxTypeId, String taxSubTypeId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content rate types (default: false)</param>
+        public async Task<FetchResult<RateTypesModel>> ListRateTypesByCountryTaxTypeTaxSubTypeAsync(String country, String taxTypeId, String taxSubTypeId, String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/countries/{country}/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/ratetypes");
             path.ApplyField("country", country);
@@ -19255,6 +19513,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<RateTypesModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -19335,7 +19594,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAndTaxTypeAndTaxSubTypeAndRateTypeAsync(Int32 companyId, String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String jurisdictionTypeId, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content regions (default: false)</param>
+        public async Task<FetchResult<IsoRegionModel>> ListRegionsByCountryAndTaxTypeAndTaxSubTypeAndRateTypeAsync(Int32 companyId, String country, String taxTypeId, String taxSubTypeId, Int32 rateTypeId, String jurisdictionTypeId, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/companies/{companyId}/countries/{country}/regions/taxtypes/{taxTypeId}/taxsubtypes/{taxSubTypeId}/rateTypeId/{rateTypeId}/jurisdictionTypeId/{jurisdictionTypeId}");
             path.ApplyField("companyId", companyId);
@@ -19347,6 +19607,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<IsoRegionModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -19415,7 +19676,7 @@ namespace Avalara.AvaTax.RestClient
         /// You cannot change your subscriptions directly through the API.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* system, taxTypeGroupIdSK</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -19652,7 +19913,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<TaxSubTypeModel>> ListTaxSubTypesByCountryAndTaxTypeAsync(String country, String taxTypeId, Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content tax sub types (default: false)</param>
+        public async Task<FetchResult<TaxSubTypeModel>> ListTaxSubTypesByCountryAndTaxTypeAsync(String country, String taxTypeId, Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxsubtypes/countries/{country}/taxtypes/{taxTypeId}");
             path.ApplyField("country", country);
@@ -19662,6 +19924,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxSubTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -19734,7 +19997,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<TaxTypeModel>> ListTaxTypesByNexusAndCountryAsync(String country, Int32 companyId, Int32? top, Int32? skip, String orderBy)
+        /// <param name="includeCustomContent">Optional query parameter to include custom content tax types (default: false)</param>
+        public async Task<FetchResult<TaxTypeModel>> ListTaxTypesByNexusAndCountryAsync(String country, Int32 companyId, Int32? top, Int32? skip, String orderBy, Boolean? includeCustomContent)
         {
             var path = new AvaTaxPath("/api/v2/definitions/taxtypes/countries/{country}");
             path.ApplyField("country", country);
@@ -19742,6 +20006,7 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<TaxTypeModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -20701,6 +20966,10 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Create/Update one or more item objects attached to this company.
         ///  
+        /// Recommended number of items to create/update in a single call is upto 100.
+        ///  
+        /// Currently, the maximum number of items that can be created/updated in a single call is 500 (This limit is subject to change).
+        ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
@@ -20797,6 +21066,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Creates one or more new item objects attached to this company.
+        ///  
+        /// Recommended number of items to create in a single call is upto 50.
+        ///  
+        /// Currently, the maximum number of items that can be created in a single call is 500 (This limit is subject to change).
         ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
@@ -21823,6 +22096,10 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Creates/updates one or more item objects with additional properties and the AvaTax category attached to this company.
         ///  
+        /// Recommended number of items to create/update in a single call is upto 100.
+        ///  
+        /// Currently, the maximum number of items that can be created/updated in a single call is 1000 (This limit is subject to change).
+        ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. Use this endpoint to create
         /// a new or update an existing item. This can be used to sync the items with Avalara. For example, an accounting software
         /// system can use this to sync all their items from an ERP with Avalara.
@@ -21855,7 +22132,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Any invalid or duplicate items will be ignored. To diagnose why an item is not created, use the normal create transaction API to receive validation information.
         ///  
-        /// This API is currently limited to 1000 items per call (the limit is subject to change).
+        /// This API is currently limited to 500 items per call (the limit is subject to change).
         ///  
         /// Items are a way of separating your tax calculation process from your tax configuration details. If you choose, you
         /// can provide `itemCode` values for each `CreateTransaction()` API call rather than specifying tax codes, parameters, descriptions,
@@ -24167,7 +24444,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeGroupIdSK</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* system, taxTypeGroupIdSK</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -27300,6 +27577,239 @@ namespace Avalara.AvaTax.RestClient
             var path = new AvaTaxPath("/api/v2/utilities/ping");
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<PingResultModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List all vendor certificates for a company;
+        /// </summary>
+        /// <remarks>
+        /// List all certificates recorded by a company
+        ///  
+        /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
+        /// can contain information about a vendor's eligibility for exemption from sales or use taxes based on
+        /// criteria you specify when you store the certificate. To view or manage your certificates directly, please
+        /// log onto the administrative website for the product you purchased.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * customers - Retrieves the list of vendors linked to the certificate.
+        /// * po_numbers - Retrieves all PO numbers tied to the certificate.
+        /// * attributes - Retrieves all attributes applied to the certificate.
+        /// * histories - Retrieves the certificate update history
+        /// * jobs - Retrieves the jobs for this certificate
+        /// * logs - Retrieves the certificate log
+        /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        /// * custom_fields - Retrieves custom fields set for this certificate
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        ///  
+        /// Note* Filtering not supported for any documentType field.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID number of the company to search</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * customers - Retrieves the list of vendors linked to the certificate.
+        ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<VendorCertificateModel>> QueryVendorCertificatesAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/{companyId}/vendor-certificates");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<VendorCertificateModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single vendor;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve the vendor identified by this URL.
+        ///  
+        /// A vendor object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `customerCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `customerCode` value and
+        /// identify any certificates linked to this vendor object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * certificates - Fetch a list of certificates linked to this vendor.
+        /// * attributes - Retrieves all attributes applied to the vendor.
+        /// * active_certificates - Retrieves all the active certificates linked to this vendor
+        /// * histories - Retrieves the update history for this vendor
+        /// * logs - Retrieves vendor logs
+        /// * jobs - Retrieves vendor jobs
+        /// * billTos - Retrieves bill-tos linked with this vendor
+        /// * shipTos - Retrieves ship-tos linked with this vendor
+        /// * shipToStates - Retrieves ship-to states for this vendor
+        /// * custom_fields - Retrieves custom fields set for this vendor
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode"></param>
+        /// <param name="include">Specify optional additional objects to include in this fetch request</param>
+        public async Task<VendorModel> GetVendorAsync(Int32 companyId, String vendorCode, String include)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            path.AddQuery("$include", include);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<VendorModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List certificates linked to a vendor;
+        /// </summary>
+        /// <remarks>
+        /// List all certificates linked to a vendor.
+        ///  
+        /// A vendor object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `vendorCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `vendorCode` value and
+        /// identify any certificates linked to this `vendor` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        ///  
+        /// You can filter certificates by exposure zone name using the $filter parameter with the syntax:
+        /// `$filter=exposureZoneName eq 'ZoneName'` or `$filter=contains(exposureZoneName,'PartialName')`
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode">The unique code representing this vendor</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * vendors - Retrieves the list of vendors linked to the certificate.
+        ///  * po_numbers - Retrieves all PO numbers tied to the certificate.
+        ///  * attributes - Retrieves all attributes applied to the certificate.
+        ///  * histories - Retrieves the certificate update history
+        ///  * jobs - Retrieves the jobs for this certificate
+        ///  * logs - Retrieves the certificate log
+        ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
+        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<VendorCertificateModel>> ListCertificatesForVendorAsync(Int32 companyId, String vendorCode, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}/certificates");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<VendorCertificateModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List all vendors for this company;
+        /// </summary>
+        /// <remarks>
+        /// List all vendors recorded by this company matching the specified criteria.
+        ///  
+        /// A vendor object defines information about a person or business that purchases products from your
+        /// company. When you create a tax transaction in AvaTax, you can use the `vendorCode` from this
+        /// record in your `CreateTransaction` API call. AvaTax will search for this `vendorCode` value and
+        /// identify any certificates linked to this `vendor` object. If any certificate applies to the transaction,
+        /// AvaTax will record the appropriate elements of the transaction as exempt and link it to the `certificate`.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * certificates - Fetch a list of certificates linked to this vendor.
+        /// * attributes - Retrieves all attributes applied to the vendor.
+        /// * active_certificates - Retrieves all the active certificates linked to this vendor
+        /// * histories - Retrieves the update history for this vendor
+        /// * logs - Retrieves vendor logs
+        /// * jobs - Retrieves vendor jobs
+        /// * billTos - Retrieves bill-tos linked with this vendor
+        /// * shipTos - Retrieves ship-tos linked with this vendor
+        /// * shipToStates - Retrieves ship-to states for this vendor
+        /// * custom_fields - Retrieves custom fields set for this vendor
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        ///  
+        /// Note* Filtering not supported for isVendor field.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="include">OPTIONAL - You can specify any of the values in `certificates`, `attributes`, `active_certificates`, `histories`, `logs`, `jobs`, `billTos`, `shipTos`, `shipToStates`, and `custom_fields` to fetch additional information for this certificate.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<VendorModel>> QueryVendorsAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("$include", include);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<VendorModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 

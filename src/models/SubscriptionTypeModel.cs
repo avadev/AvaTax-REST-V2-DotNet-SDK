@@ -33,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         public String description { get; set; }
 
         /// <summary>
+        /// Identifies the system this ServiceType belongs to - Avatax, ECM, Avatax-Returns etc,
+        /// </summary>
+        public String system { get; set; }
+
+        /// <summary>
         /// TaxTypeGroupIdSK to be associated with ServiceType
         /// </summary>
         public Int32? taxTypeGroupIdSK { get; set; }

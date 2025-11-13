@@ -1367,6 +1367,16 @@ namespace Avalara.AvaTax.RestClient
         AdvancedRuleError = 1605,
 
         /// <summary>
+        /// Represents an error occurred in dynamic rules
+        /// </summary>
+        DynamicRuleError = 1620,
+
+        /// <summary>
+        /// Error for when dynamic rule validation has errors
+        /// </summary>
+        RuleValidationError = 1621,
+
+        /// <summary>
         /// Miscellaneous
         /// </summary>
         TaxRuleRequiresNexus = 1701,
@@ -2091,6 +2101,11 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </summary>
         NoClassificationsFound = 4024,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidAddressOrGeoCoordinates = 4025,
 
         /// <summary>
         /// Error string from the service unknown

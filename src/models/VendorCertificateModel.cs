@@ -18,13 +18,31 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// A certificate is a document stored in either AvaTax Exemptions or CertCapture. The certificate document
-    /// can contain information about a customer's eligibility for exemption from sales or use taxes based on
-    /// criteria you specify when you store the certificate. To view or manage your certificates directly, please
-    /// log onto the administrative website for the product you purchased.
+    /// Represents a certificate document for vendors.
+    /// This model inherits all properties from CertificateModel and adds vendor-specific functionality.
     /// </summary>
-    public class CertificateModel
+    public class VendorCertificateModel
     {
+        /// <summary>
+        /// The unique ID number of the document type for this vendor certificate.
+        /// </summary>
+        public Int32? documentTypeId { get; set; }
+
+        /// <summary>
+        /// The name of the document type for this vendor certificate.
+        /// </summary>
+        public String documentTypeName { get; set; }
+
+        /// <summary>
+        /// The description of the document type for this vendor certificate.
+        /// </summary>
+        public String documentTypeDescription { get; set; }
+
+        /// <summary>
+        /// Indicates whether this document type is for outgoing documents.
+        /// </summary>
+        public Boolean? documentTypeOutgoing { get; set; }
+
         /// <summary>
         /// The unique ID number of this certificate.
         /// </summary>
