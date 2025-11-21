@@ -204,6 +204,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String options { get; set; }
 
+        /// <summary>
+        /// The tariff code (HS Code) associated with this tax rule.
+        /// On the TaxRuleModel, this must be converted to TaxRuleProductDetailModel.
+        /// </summary>
+        public String tariffCode { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

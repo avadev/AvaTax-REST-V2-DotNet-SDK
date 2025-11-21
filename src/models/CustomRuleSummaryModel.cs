@@ -48,6 +48,11 @@ namespace Avalara.AvaTax.RestClient
         public CustomRuleSubtype? subtype { get; set; }
 
         /// <summary>
+        /// The description of the subtypes of the custom rule
+        /// </summary>
+        public List<String> subtypeDescription { get; set; }
+
+        /// <summary>
         /// Name or ISO 3166 codes identifying the region where this rule will apply.
         /// </summary>
         public List<String> country { get; set; }

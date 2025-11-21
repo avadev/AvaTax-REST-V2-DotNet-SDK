@@ -114,6 +114,20 @@ namespace Avalara.AvaTax.RestClient
         public String country { get; set; }
 
         /// <summary>
+        /// Geospatial latitude measurement, in Decimal Degrees floating point format.
+        /// If provided along with longitude, these coordinates will be used for tax calculations
+        /// and will take precedence over the address fields.
+        /// </summary>
+        public Decimal? latitude { get; set; }
+
+        /// <summary>
+        /// Geospatial longitude measurement, in Decimal Degrees floating point format.
+        /// If provided along with latitude, these coordinates will be used for tax calculations
+        /// and will take precedence over the address fields.
+        /// </summary>
+        public Decimal? longitude { get; set; }
+
+        /// <summary>
         /// Set this flag to true to indicate that this is the default location for this company.
         /// </summary>
         public Boolean? isDefault { get; set; }
