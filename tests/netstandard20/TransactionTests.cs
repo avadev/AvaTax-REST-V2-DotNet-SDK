@@ -67,7 +67,8 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
                 Assert.True(TestCompany.locations.Count > 0, "Test company should have locations");
 
                 // Shouldn't fail
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Assert.Fail("Exception in SetUp: " + ex);
             }
@@ -95,7 +96,8 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
                 Assert.False(disableResult.isActive, "Company should have been deactivated");
 
                 // Shouldn't fail
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Assert.Fail("Exception in TearDown: " + ex);
             }
