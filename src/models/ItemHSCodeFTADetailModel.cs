@@ -18,14 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Represents HS Code FTA (Free Trade Agreement) Details.
     /// </summary>
-    public class ErrorResult
+    public class ItemHSCodeFTADetailModel
     {
         /// <summary>
-        /// 
+        /// The name of the FTA.
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public String name { get; set; }
+
+        /// <summary>
+        /// The rate for this FTA.
+        /// </summary>
+        public String rate { get; set; }
+
+        /// <summary>
+        /// The unit of measure.
+        /// </summary>
+        public String uom { get; set; }
 
 
         /// <summary>

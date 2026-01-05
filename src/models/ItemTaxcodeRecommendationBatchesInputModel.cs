@@ -18,29 +18,36 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about the error that occurred
+    /// Represents an input model of a single item for tax code recommendation batches (both synchronous and asynchronous).
     /// </summary>
-    public class ErrorInfo
+    public class ItemTaxcodeRecommendationBatchesInputModel
     {
         /// <summary>
-        /// Type of error that occurred
+        /// A brief description of the item.
         /// </summary>
-        public ErrorCodeId? code { get; set; }
+        public String description { get; set; }
 
         /// <summary>
-        /// Short one-line message to summaryize what went wrong
+        /// The category of the item.
+        /// For example: "Home > Kitchen > Mugs"
         /// </summary>
-        public String message { get; set; }
+        public String category { get; set; }
 
         /// <summary>
-        /// What object or service caused the error?
+        /// The type of item. (optional)
+        /// Examples: "Physical", "Digital", "Service", "Freight"
         /// </summary>
-        public ErrorTargetCode? target { get; set; }
+        public String itemType { get; set; }
 
         /// <summary>
-        /// Array of detailed error messages
+        /// The Universal Product Code (UPC) associated with the item. (optional)
         /// </summary>
-        public List<ErrorDetail> details { get; set; }
+        public String upc { get; set; }
+
+        /// <summary>
+        /// A summary or detailed description of the item. (optional)
+        /// </summary>
+        public String summary { get; set; }
 
 
         /// <summary>

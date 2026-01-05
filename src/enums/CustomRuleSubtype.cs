@@ -175,5 +175,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         TaxRuleExemptEntity = 30,
 
+        /// <summary>
+        /// Defines one or more custom content rules.
+        /// </summary>
+        CustomTax = 31,
+
     }
 }

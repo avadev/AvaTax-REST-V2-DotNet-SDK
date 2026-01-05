@@ -18,14 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Represents the output model for tax code batches creation.
     /// </summary>
-    public class ErrorResult
+    public class TaxcodeBatchOutputModel
     {
         /// <summary>
-        /// 
+        /// The unique ID of the company.
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public Int32? companyId { get; set; }
+
+        /// <summary>
+        /// The batch identifier.
+        /// </summary>
+        public Int64? batchId { get; set; }
 
 
         /// <summary>

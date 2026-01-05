@@ -160,6 +160,11 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        NoAccrualExemptedMapping = 27,
+
+        /// <summary>
+        /// 
+        /// </summary>
         ShortPayItemsAccrueMatch = -1,
 
         /// <summary>

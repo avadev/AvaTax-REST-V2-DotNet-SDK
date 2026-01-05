@@ -129,6 +129,11 @@ namespace Avalara.AvaTax.RestClient
         public List<ItemParameterModel> parameters { get; set; }
 
         /// <summary>
+        /// List of item custom parameters
+        /// </summary>
+        public List<ItemCustomParametersModel> customParameters { get; set; }
+
+        /// <summary>
         /// List of item tags.
         /// </summary>
         public List<ItemTagDetailInputModel> tags { get; set; }

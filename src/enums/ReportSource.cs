@@ -40,5 +40,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         TAXREGION = 3,
 
+        /// <summary>
+        /// accounts payable document
+        /// </summary>
+        APDOCUMENT = 4,
+
+        /// <summary>
+        /// accounts payable document line detail
+        /// </summary>
+        APDOCUMENTLINEDETAIL = 5,
+
     }
 }

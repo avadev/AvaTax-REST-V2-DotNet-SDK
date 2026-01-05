@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    25.11.0
+ * @version    25.12.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "25.11.0"; } }
+        public static string API_VERSION { get { return "25.12.0"; } }
 
 #region Methods
 
@@ -6836,6 +6836,45 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Parse natural language query into structured filters
+        /// </summary>
+        /// <remarks>
+        /// Parse natural language queries into structured API filters. This endpoint forwards the query to NLQ (Natural Language Query)
+        /// service for interpretation and returns only the intent and structured filters.
+        ///  
+        /// Example queries:
+        /// - "give me items created in last 1 week which are having status complete"
+        /// - "show me all items with item code CERMUG"
+        /// - "find items containing 'mug' in description"
+        ///  
+        /// Response format:
+        /// {
+        ///  "intent": "GET",
+        ///  "filters": {
+        ///  "createdDate": { "value": "from: 2025-09-12 to: 2025-09-19" },
+        ///  "itemStatus": { "value": ["Complete"] }
+        ///  }
+        /// }
+        ///  
+        /// Raw NLQ responses are logged for debugging purposes.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns these items</param>
+        /// <param name="model">Natural language search request</param>
+        public NaturalLanguageSearchResponseModel AIsearch(Int32 companyId, NaturalLanguageSearchRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/nlq/$parse");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<NaturalLanguageSearchResponseModel>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Delete all classifications for an item
         /// </summary>
         /// <remarks>
@@ -6855,6 +6894,35 @@ namespace Avalara.AvaTax.RestClient
         public List<AssociatedObjectDeletedErrorDetailsModel> BatchDeleteItemClassifications(Int32 companyId, Int64 itemId)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<AssociatedObjectDeletedErrorDetailsModel>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Delete all custom parameters for an item
+        /// </summary>
+        /// <remarks>
+        /// Delete all the custom parameters for a given item.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this item.</param>
+        /// <param name="itemId">The ID of the item you wish to delete the custom parameters.</param>
+        public List<AssociatedObjectDeletedErrorDetailsModel> BatchDeleteItemCustomParameters(Int32 companyId, Int64 itemId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
@@ -6908,6 +6976,9 @@ namespace Avalara.AvaTax.RestClient
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         ///  
         /// The tax code takes precedence over the tax code id if both are provided.
+        ///  
+        /// Please provide all the countries of destination values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -6956,6 +7027,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add custom parameters to an item.
+        /// </summary>
+        /// <remarks>
+        /// Add custom parameters to an item.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this item custom parameter.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="model">The item custom parameters you wish to create.</param>
+        public List<ItemCustomParametersModel> CreateItemCustomParameters(Int32 companyId, Int64 itemId, List<ItemCustomParametersModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemCustomParametersModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Add parameters to an item.
         /// </summary>
         /// <remarks>
@@ -6970,6 +7071,8 @@ namespace Avalara.AvaTax.RestClient
         /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Product`
         ///  
         /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -7004,6 +7107,9 @@ namespace Avalara.AvaTax.RestClient
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        ///  
+        /// Please provide all the countries of destination values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         ///  
         /// The tax code takes precedence over the tax code id if both are provided.
         /// 
@@ -7175,6 +7281,37 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete a single item custom parameter
+        /// </summary>
+        /// <remarks>
+        /// Delete a single item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The custom parameter id</param>
+        public List<ObjectDeletedErrorModel> DeleteItemCustomParameter(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ObjectDeletedErrorModel>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
         /// Delete the image associated with an item.
         /// </summary>
         /// <remarks>
@@ -7314,6 +7451,28 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Fetch Additional HS Duty Details for items
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company for which you want to get additional HS Duty Details.</param>
+        /// <param name="itemId"></param>
+        /// <param name="model">Additional HS Code Duty Details input Model</param>
+        public List<ItemHSCodeDutyDetailModel> FetchAdditionalHSCodeDutyDetails(Int32 companyId, Int64 itemId, List<ItemAdditionalHSCodeDutyInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/hsdutydetails/$fetch-additional-hsdutydetails");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemHSCodeDutyDetailModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Retrieve the HS code classification SLA details for a company.
         /// </summary>
         /// <remarks>
@@ -7393,6 +7552,37 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<ItemClassificationOutputModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a single item custom parameter
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The custom parameter id</param>
+        public ItemCustomParametersModel GetItemCustomParameter(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemCustomParametersModel>("GET", path, null);
         }
 
 
@@ -7546,6 +7736,30 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Get the real-time tax code recommendations for the specified items without saving item data.
+        /// </summary>
+        /// <remarks>
+        /// Provides immediate tax code recommendations for item details submitted in the request. Item data is processed only for recommendation purposes and is not persisted.
+        ///  
+        /// Maximum items per request: 50 (subject to change).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="model">The list of items to analyze for tax code recommendations (maximum 50).</param>
+        public List<ItemTaxcodeRecommendationBatchesOutputModel> GetSyncTaxCodeRecommendations(Int32 companyId, List<ItemTaxcodeRecommendationBatchesInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/$taxcode-recommendations");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemTaxcodeRecommendationBatchesOutputModel>>("POST", path, model);
+        }
+
+
+        /// <summary>
         /// Create an HS code classification request.
         /// </summary>
         /// <remarks>
@@ -7640,6 +7854,46 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<ItemClassificationOutputModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve custom parameters for an item
+        /// </summary>
+        /// <remarks>
+        /// List custom parameters for an item.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, name, value</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<ItemCustomParametersModel> ListItemCustomParameters(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ItemCustomParametersModel>>("GET", path, null);
         }
 
 
@@ -7767,7 +8021,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -7887,7 +8141,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -7968,7 +8222,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -8003,6 +8257,9 @@ namespace Avalara.AvaTax.RestClient
         /// system can use this to sync all their items from an ERP with Avalara.
         ///  
         /// Parameters and Classifications can be added with the Item.
+        ///  
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -8036,6 +8293,9 @@ namespace Avalara.AvaTax.RestClient
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        ///  
+        /// Please provide all the countries of destination values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -8154,6 +8414,38 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Update an item custom parameter
+        /// </summary>
+        /// <remarks>
+        /// Update an item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The item custom parameter id</param>
+        /// <param name="model">The item custom parameter object you wish to update.</param>
+        public ItemCustomParametersModel UpdateItemCustomParameter(Int32 companyId, Int64 itemId, Int64 id, ItemCustomParametersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemCustomParametersModel>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Update an item parameter
         /// </summary>
         /// <remarks>
@@ -8164,6 +8456,9 @@ namespace Avalara.AvaTax.RestClient
         /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
         ///  
         /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        ///  
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -8243,6 +8538,36 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Add/update an item custom parameter
+        /// </summary>
+        /// <remarks>
+        /// Add/update an item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="model">The item custom parameter object you wish to Upsert.</param>
+        public List<ItemCustomParametersModel> UpsertItemCustomParameter(Int32 companyId, Int64 itemId, List<ItemCustomParametersModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemCustomParametersModel>>("PUT", path, model);
+        }
+
+
+        /// <summary>
         /// Add/update an item parameter.
         /// </summary>
         /// <remarks>
@@ -8253,6 +8578,9 @@ namespace Avalara.AvaTax.RestClient
         /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
         ///  
         /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        ///  
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -20903,6 +21231,46 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Parse natural language query into structured filters;
+        /// </summary>
+        /// <remarks>
+        /// Parse natural language queries into structured API filters. This endpoint forwards the query to NLQ (Natural Language Query)
+        /// service for interpretation and returns only the intent and structured filters.
+        ///  
+        /// Example queries:
+        /// - "give me items created in last 1 week which are having status complete"
+        /// - "show me all items with item code CERMUG"
+        /// - "find items containing 'mug' in description"
+        ///  
+        /// Response format:
+        /// {
+        ///  "intent": "GET",
+        ///  "filters": {
+        ///  "createdDate": { "value": "from: 2025-09-12 to: 2025-09-19" },
+        ///  "itemStatus": { "value": ["Complete"] }
+        ///  }
+        /// }
+        ///  
+        /// Raw NLQ responses are logged for debugging purposes.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns these items</param>
+        /// <param name="model">Natural language search request</param>
+        public async Task<NaturalLanguageSearchResponseModel> AIsearchAsync(Int32 companyId, NaturalLanguageSearchRequestModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/nlq/$parse");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<NaturalLanguageSearchResponseModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Delete all classifications for an item;
         /// </summary>
         /// <remarks>
@@ -20922,6 +21290,36 @@ namespace Avalara.AvaTax.RestClient
         public async Task<List<AssociatedObjectDeletedErrorDetailsModel>> BatchDeleteItemClassificationsAsync(Int32 companyId, Int64 itemId)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/classifications");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<AssociatedObjectDeletedErrorDetailsModel>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete all custom parameters for an item;
+        /// </summary>
+        /// <remarks>
+        /// Delete all the custom parameters for a given item.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this item.</param>
+        /// <param name="itemId">The ID of the item you wish to delete the custom parameters.</param>
+        public async Task<List<AssociatedObjectDeletedErrorDetailsModel>> BatchDeleteItemCustomParametersAsync(Int32 companyId, Int64 itemId)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
             path.ApplyField("companyId", companyId);
             path.ApplyField("itemId", itemId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
@@ -20977,6 +21375,9 @@ namespace Avalara.AvaTax.RestClient
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
         ///  
         /// The tax code takes precedence over the tax code id if both are provided.
+        ///  
+        /// Please provide all the countries of destination values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -21027,6 +21428,37 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Add custom parameters to an item.;
+        /// </summary>
+        /// <remarks>
+        /// Add custom parameters to an item.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this item custom parameter.</param>
+        /// <param name="itemId">The item id.</param>
+        /// <param name="model">The item custom parameters you wish to create.</param>
+        public async Task<List<ItemCustomParametersModel>> CreateItemCustomParametersAsync(Int32 companyId, Int64 itemId, List<ItemCustomParametersModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemCustomParametersModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Add parameters to an item.;
         /// </summary>
         /// <remarks>
@@ -21041,6 +21473,8 @@ namespace Avalara.AvaTax.RestClient
         /// To see available parameters for this item, call `/api/v2/definitions/parameters?$filter=attributeType eq Product`
         ///  
         /// Some parameters are only available for use if you have subscribed to specific AvaTax services. To see which parameters you are able to use, add the query parameter "$showSubscribed=true" to the parameter definition call above.
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -21076,6 +21510,9 @@ namespace Avalara.AvaTax.RestClient
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        ///  
+        /// Please provide all the countries of destination values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         ///  
         /// The tax code takes precedence over the tax code id if both are provided.
         /// 
@@ -21253,6 +21690,38 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete a single item custom parameter;
+        /// </summary>
+        /// <remarks>
+        /// Delete a single item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The custom parameter id</param>
+        public async Task<List<ObjectDeletedErrorModel>> DeleteItemCustomParameterAsync(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ObjectDeletedErrorModel>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Delete the image associated with an item.;
         /// </summary>
         /// <remarks>
@@ -21397,6 +21866,29 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Fetch Additional HS Duty Details for items;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company for which you want to get additional HS Duty Details.</param>
+        /// <param name="itemId"></param>
+        /// <param name="model">Additional HS Code Duty Details input Model</param>
+        public async Task<List<ItemHSCodeDutyDetailModel>> FetchAdditionalHSCodeDutyDetailsAsync(Int32 companyId, Int64 itemId, List<ItemAdditionalHSCodeDutyInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/hsdutydetails/$fetch-additional-hsdutydetails");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemHSCodeDutyDetailModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Retrieve the HS code classification SLA details for a company.;
         /// </summary>
         /// <remarks>
@@ -21478,6 +21970,38 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("id", id);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<ItemClassificationOutputModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single item custom parameter;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The custom parameter id</param>
+        public async Task<ItemCustomParametersModel> GetItemCustomParameterAsync(Int32 companyId, Int64 itemId, Int64 id)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemCustomParametersModel>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -21637,6 +22161,31 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Get the real-time tax code recommendations for the specified items without saving item data.;
+        /// </summary>
+        /// <remarks>
+        /// Provides immediate tax code recommendations for item details submitted in the request. Item data is processed only for recommendation purposes and is not persisted.
+        ///  
+        /// Maximum items per request: 50 (subject to change).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="model">The list of items to analyze for tax code recommendations (maximum 50).</param>
+        public async Task<List<ItemTaxcodeRecommendationBatchesOutputModel>> GetSyncTaxCodeRecommendationsAsync(Int32 companyId, List<ItemTaxcodeRecommendationBatchesInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/$taxcode-recommendations");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemTaxcodeRecommendationBatchesOutputModel>>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create an HS code classification request.;
         /// </summary>
         /// <remarks>
@@ -21733,6 +22282,47 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<ItemClassificationOutputModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve custom parameters for an item;
+        /// </summary>
+        /// <remarks>
+        /// List custom parameters for an item.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The company id</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, name, value</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<ItemCustomParametersModel>> ListItemCustomParametersAsync(Int32 companyId, Int64 itemId, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ItemCustomParametersModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -21863,7 +22453,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -21986,7 +22576,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -22069,7 +22659,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -22105,6 +22695,9 @@ namespace Avalara.AvaTax.RestClient
         /// system can use this to sync all their items from an ERP with Avalara.
         ///  
         /// Parameters and Classifications can be added with the Item.
+        ///  
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -22139,6 +22732,9 @@ namespace Avalara.AvaTax.RestClient
         /// and other data fields. AvaTax will automatically look up each `itemCode` and apply the correct tax codes and parameters
         /// from the item table instead. This allows your CreateTransaction call to be as simple as possible, and your tax compliance
         /// team can manage your item catalog and adjust the tax behavior of items without having to modify your software.
+        ///  
+        /// Please provide all the countries of destination values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -22261,6 +22857,39 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Update an item custom parameter;
+        /// </summary>
+        /// <remarks>
+        /// Update an item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="id">The item custom parameter id</param>
+        /// <param name="model">The item custom parameter object you wish to update.</param>
+        public async Task<ItemCustomParametersModel> UpdateItemCustomParameterAsync(Int32 companyId, Int64 itemId, Int64 id, ItemCustomParametersModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters/{id}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            path.ApplyField("id", id);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemCustomParametersModel>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Update an item parameter;
         /// </summary>
         /// <remarks>
@@ -22271,6 +22900,9 @@ namespace Avalara.AvaTax.RestClient
         /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
         ///  
         /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        ///  
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 
@@ -22353,6 +22985,37 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Add/update an item custom parameter;
+        /// </summary>
+        /// <remarks>
+        /// Add/update an item custom parameter.
+        ///  
+        /// Custom parameters provide extra information about an item that can be used for various business purposes.
+        /// These parameters are stored as key-value pairs where the parameter name is the key and the value is the corresponding data.
+        ///  
+        /// Custom parameters can be used to store custom attributes, metadata, or any other supplementary information
+        /// that doesn't fit into the standard item fields.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The company id.</param>
+        /// <param name="itemId">The item id</param>
+        /// <param name="model">The item custom parameter object you wish to Upsert.</param>
+        public async Task<List<ItemCustomParametersModel>> UpsertItemCustomParameterAsync(Int32 companyId, Int64 itemId, List<ItemCustomParametersModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/{itemId}/custom-parameters");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("itemId", itemId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemCustomParametersModel>>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Add/update an item parameter.;
         /// </summary>
         /// <remarks>
@@ -22363,6 +23026,9 @@ namespace Avalara.AvaTax.RestClient
         /// A parameter added to an item will be used by default in tax calculation but will not show on the transaction line referencing the item .
         ///  
         /// A parameter specified on a transaction line will override an item parameter if they share the same parameter name.
+        ///  
+        /// Please provide all the countries parameter values as a valid two letter ISO-3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// 
         /// ### Security Policies
         /// 

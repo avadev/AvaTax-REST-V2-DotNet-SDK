@@ -18,59 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a parameter associated with a company.
+    /// Represents HS Code Restriction Details.
     /// </summary>
-    public class CustomerSupplierCountryParamModel
+    public class ItemHSCodeRestrictionDetailModel
     {
         /// <summary>
-        /// Identifier for company parameter
+        /// The type of restriction.
         /// </summary>
-        public Int64? id { get; set; }
+        public String type { get; set; }
 
         /// <summary>
-        /// CompanyId associated with the parameter
+        /// The regulation governing this restriction.
         /// </summary>
-        public Int32? companyId { get; set; }
+        public String regulation { get; set; }
 
         /// <summary>
-        /// Identifier for company parameter
+        /// The name of the restriction.
         /// </summary>
-        public Int64? customerId { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// 
+        /// The summary of the restriction.
         /// </summary>
-        public String customerCode { get; set; }
+        public String summary { get; set; }
 
         /// <summary>
-        /// 
+        /// The government agency responsible for this restriction.
         /// </summary>
-        public String country { get; set; }
+        public String governmentAgency { get; set; }
 
         /// <summary>
-        /// 
+        /// The compliance title.
         /// </summary>
-        public Boolean? isEstablished { get; set; }
+        public String complianceTitle { get; set; }
 
         /// <summary>
-        /// 
+        /// The compliance message.
         /// </summary>
-        public String businessIdentificationNo { get; set; }
+        public String complianceMessage { get; set; }
 
         /// <summary>
-        /// 
+        /// The compliance citation or reference.
         /// </summary>
-        public Boolean? isRegisteredThroughFiscalRep { get; set; }
-
-        /// <summary>
-        /// VAT number for the customer/supplier in this country
-        /// </summary>
-        public String vatNumber { get; set; }
-
-        /// <summary>
-        /// Status of VAT number validation (0=NotValidated, 1=Valid, 2=Invalid, 3=Unverifiable, 4=ValidationError, 5=UnsupportedCountry)
-        /// </summary>
-        public Int32? vatNumberStatus { get; set; }
+        public String complianceCitation { get; set; }
 
 
         /// <summary>

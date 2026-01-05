@@ -29,6 +29,8 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// Country of destination for this HS code classification.
+        /// Please provide all the values as valid 2-letter ISO 3166 country code.
+        /// Refer to 'ListCountries' api to get valid country code for any country if needed.
         /// </summary>
         public List<String> countryOfDestinations { get; set; }
 

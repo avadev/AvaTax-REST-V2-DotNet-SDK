@@ -18,14 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Represents HS Code Punitive Rate Details.
     /// </summary>
-    public class ErrorResult
+    public class ItemHSCodePunitiveRateDetailModel
     {
         /// <summary>
-        /// 
+        /// The rate for this punitive duty.
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public String rate { get; set; }
+
+        /// <summary>
+        /// The unit of measure.
+        /// </summary>
+        public String uom { get; set; }
+
+        /// <summary>
+        /// Whether this rate is stackable with other rates.
+        /// </summary>
+        public Boolean? isStackable { get; set; }
+
+        /// <summary>
+        /// Whether this is a tax on tax.
+        /// </summary>
+        public Boolean? isTaxOnTax { get; set; }
 
 
         /// <summary>

@@ -18,14 +18,26 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Class to accommodate Custom defined parameters
     /// </summary>
-    public class ErrorResult
+    public class ItemCustomParametersModel
     {
         /// <summary>
-        /// 
+        /// The unique ID number of this item custom parameter
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public Int64? id { get; set; }
+
+        /// <summary>
+        /// A unique code representing this item custom parameter.
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
+        /// The value of the custom parameter for this item.
+        /// When creating or updating an item, you can specify custom parameter values
+        /// to store additional metadata or business-specific information.
+        /// </summary>
+        public String value { get; set; }
 
 
         /// <summary>

@@ -87,6 +87,21 @@ namespace Avalara.AvaTax.RestClient
         MatchTax = 12,
 
         /// <summary>
+        /// Matches based on jurisdiction and a custom tax type and subtype.
+        /// </summary>
+        CustomTax = 13,
+
+        /// <summary>
+        /// Matches based on address jurisdictions.
+        /// </summary>
+        MatchJurisdiction = 14,
+
+        /// <summary>
+        /// Matches based on the entity use code.
+        /// </summary>
+        MatchEntityUseCode = 15,
+
+        /// <summary>
         /// Unspecified action.
         /// </summary>
         Action = 256,

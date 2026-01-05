@@ -18,14 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Response model for natural language search
     /// </summary>
-    public class ErrorResult
+    public class NaturalLanguageSearchResponseModel
     {
         /// <summary>
-        /// 
+        /// Intent of the search query (e.g., "GET" for read operations, "WRITE" for write operations)
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public String intent { get; set; }
+
+        /// <summary>
+        /// Structured filters extracted from the natural language query
+        /// </summary>
+        public object filters { get; set; }
 
 
         /// <summary>
