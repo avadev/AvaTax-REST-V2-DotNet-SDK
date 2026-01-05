@@ -18,14 +18,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Represents a filter value that can be a string, array, or object
     /// </summary>
-    public class ErrorResult
+    public class FilterValue
     {
         /// <summary>
-        /// 
+        /// The filter value - can be string, array, or object
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public object value { get; set; }
 
 
         /// <summary>

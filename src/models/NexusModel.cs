@@ -72,7 +72,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This field is defined by Avalara. All Avalara-defined fields must match an Avalara-defined nexus object found by calling `ListNexus`.
         /// </summary>
-        public JurisdictionType? jurisdictionTypeId { get; set; }
+        public JurisdictionType jurisdictionTypeId { get; set; }
 
         /// <summary>
         /// The code identifying the jurisdiction in which this company declared nexus.

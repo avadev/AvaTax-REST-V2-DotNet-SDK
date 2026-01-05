@@ -18,14 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Helper function for throwing known error response
+    /// Represents HS Code CVD (Countervailing Duty) and ADD (Anti-Dumping Duty) Details.
     /// </summary>
-    public class ErrorResult
+    public class ItemHSCodeCvdAddDetailModel
     {
         /// <summary>
-        /// 
+        /// The type of duty (cvd, add, etc.).
         /// </summary>
-        public ErrorInfo error { get; set; }
+        public String type { get; set; }
+
+        /// <summary>
+        /// The rate for this duty.
+        /// </summary>
+        public String rate { get; set; }
+
+        /// <summary>
+        /// The unit of measure.
+        /// </summary>
+        public String uom { get; set; }
 
 
         /// <summary>

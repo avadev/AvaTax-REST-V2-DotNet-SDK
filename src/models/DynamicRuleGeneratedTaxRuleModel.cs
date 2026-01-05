@@ -210,6 +210,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String tariffCode { get; set; }
 
+        /// <summary>
+        /// For tax rules that are calculated using units of measurement,
+        /// this indicates the unit of measurement type used to calculate the amounts for this rule.
+        /// </summary>
+        public String unitOfBasis { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

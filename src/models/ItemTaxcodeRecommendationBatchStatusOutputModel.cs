@@ -18,29 +18,31 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Information about the error that occurred
+    /// Represents the output model containing the status and results of a tax code recommendation batch.
     /// </summary>
-    public class ErrorInfo
+    public class ItemTaxcodeRecommendationBatchStatusOutputModel
     {
         /// <summary>
-        /// Type of error that occurred
+        /// The unique ID of the batch.
         /// </summary>
-        public ErrorCodeId? code { get; set; }
+        public Int64? batchId { get; set; }
 
         /// <summary>
-        /// Short one-line message to summaryize what went wrong
+        /// The current processing status of the batch.
+        /// Possible values: "Pending", "Processing", "Completed", "Failed", "Deleted"
+        /// </summary>
+        public String batchStatus { get; set; }
+
+        /// <summary>
+        /// The list of items with their tax code recommendations.
+        /// This property is populated only when the batch status is "Completed".
+        /// </summary>
+        public List<ItemTaxcodeRecommendationBatchesOutputModel> value { get; set; }
+
+        /// <summary>
+        /// An optional message providing additional information about the batch.
         /// </summary>
         public String message { get; set; }
-
-        /// <summary>
-        /// What object or service caused the error?
-        /// </summary>
-        public ErrorTargetCode? target { get; set; }
-
-        /// <summary>
-        /// Array of detailed error messages
-        /// </summary>
-        public List<ErrorDetail> details { get; set; }
 
 
         /// <summary>

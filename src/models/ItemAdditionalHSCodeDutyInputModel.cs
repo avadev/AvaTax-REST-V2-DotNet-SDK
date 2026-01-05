@@ -18,59 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a parameter associated with a company.
+    /// Represents input model for additional HS Code Duty Details request.
     /// </summary>
-    public class CustomerSupplierCountryParamModel
+    public class ItemAdditionalHSCodeDutyInputModel
     {
         /// <summary>
-        /// Identifier for company parameter
+        /// The unique ID of the item.
         /// </summary>
-        public Int64? id { get; set; }
+        public Int64 itemId { get; set; }
 
         /// <summary>
-        /// CompanyId associated with the parameter
+        /// The unique ID of the company.
         /// </summary>
-        public Int32? companyId { get; set; }
+        public Int32 companyId { get; set; }
 
         /// <summary>
-        /// Identifier for company parameter
+        /// The country of import.
         /// </summary>
-        public Int64? customerId { get; set; }
+        public String countryOfImport { get; set; }
 
         /// <summary>
-        /// 
+        /// The country of export.
         /// </summary>
-        public String customerCode { get; set; }
+        public String countryOfExport { get; set; }
 
         /// <summary>
-        /// 
+        /// The country of origin.
         /// </summary>
-        public String country { get; set; }
+        public String countryOfOrigin { get; set; }
 
         /// <summary>
-        /// 
+        /// The manufacturer name.
         /// </summary>
-        public Boolean? isEstablished { get; set; }
+        public String manufacturerName { get; set; }
 
         /// <summary>
-        /// 
+        /// The country of import.
         /// </summary>
-        public String businessIdentificationNo { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Boolean? isRegisteredThroughFiscalRep { get; set; }
-
-        /// <summary>
-        /// VAT number for the customer/supplier in this country
-        /// </summary>
-        public String vatNumber { get; set; }
-
-        /// <summary>
-        /// Status of VAT number validation (0=NotValidated, 1=Valid, 2=Invalid, 3=Unverifiable, 4=ValidationError, 5=UnsupportedCountry)
-        /// </summary>
-        public Int32? vatNumberStatus { get; set; }
+        public String hscode { get; set; }
 
 
         /// <summary>
