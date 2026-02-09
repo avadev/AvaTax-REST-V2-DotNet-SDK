@@ -200,6 +200,11 @@ namespace Avalara.AvaTax.RestClient
         public String taxSubType { get; set; }
 
         /// <summary>
+        /// The currency code to use for this rule.
+        /// </summary>
+        public String currencyCode { get; set; }
+
+        /// <summary>
         /// Supports custom options for your tax rule.
         /// </summary>
         public String options { get; set; }

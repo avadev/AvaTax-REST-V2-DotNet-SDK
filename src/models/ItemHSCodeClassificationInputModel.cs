@@ -65,6 +65,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isExportControl { get; set; }
 
         /// <summary>
+        /// Indicates whether this classification is for compliance purposes.
+        /// </summary>
+        public Boolean isCompliance { get; set; }
+
+        /// <summary>
         /// Instructions related to this item classification.
         /// </summary>
         public String instructions { get; set; }
