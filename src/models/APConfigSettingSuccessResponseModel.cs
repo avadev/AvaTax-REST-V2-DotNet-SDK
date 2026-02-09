@@ -48,6 +48,11 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? amountToMarkForReview { get; set; }
 
         /// <summary>
+        /// Ignore threshold when Vendor Charged Tax is zero
+        /// </summary>
+        public Boolean? ignoreThresholdWhenVCTZero { get; set; }
+
+        /// <summary>
         /// The Variance For Ignore
         /// </summary>
         public Decimal? varianceForIgnore { get; set; }

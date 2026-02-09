@@ -57,6 +57,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String hscode { get; set; }
 
+        /// <summary>
+        /// The country of import.
+        /// </summary>
+        public Boolean isAdditionalDuty { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

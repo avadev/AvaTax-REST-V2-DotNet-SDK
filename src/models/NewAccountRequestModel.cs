@@ -183,6 +183,11 @@ namespace Avalara.AvaTax.RestClient
         public AccountTypeId? accountType { get; set; }
 
         /// <summary>
+        /// Set this to true if this is a test account
+        /// </summary>
+        public Boolean? isTest { get; set; }
+
+        /// <summary>
         /// United States Taxpayer ID number, usually your Employer Identification Number if you are a business or your
         /// Social Security Number if you are an individual.
         /// This value is required if the address provided is inside the US and if you subscribed to the Avalara Managed Returns or SST Certified Service Provider service. Otherwise it is optional.

@@ -25,6 +25,11 @@ namespace Avalara.AvaTax.RestClient
     public class DynamicRuleInputModel
     {
         /// <summary>
+        /// Unique identifier for the execution
+        /// </summary>
+        public Int32? id { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public DynamicRuleDefinitionInputModel definition { get; set; }
