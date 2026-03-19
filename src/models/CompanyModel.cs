@@ -264,6 +264,16 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isAdvSave { get; set; }
 
+        /// <summary>
+        /// The url of the company.
+        /// </summary>
+        public String companyUrl { get; set; }
+
+        /// <summary>
+        /// The description of the company.
+        /// </summary>
+        public String companyDescription { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

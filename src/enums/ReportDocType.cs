@@ -21,6 +21,11 @@ namespace Avalara.AvaTax.RestClient
     public enum ReportDocType
     {
         /// <summary>
+        /// Output all tax transactions in the report
+        /// </summary>
+        All = 65,
+
+        /// <summary>
         /// Output all ConsumerUse tax transactions in the report
         /// </summary>
         ConsumerUse = 67,

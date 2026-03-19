@@ -200,5 +200,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         AvaTaxOnlyCompanyUser = 35,
 
+        /// <summary>
+        /// AvaTaxOnlyUserAdmin
+        /// </summary>
+        AvaTaxOnlyUserAdmin = 36,
+
     }
 }
