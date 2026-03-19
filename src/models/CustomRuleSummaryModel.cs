@@ -33,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
+        /// The name of the custom rule
+        /// </summary>
+        public String name { get; set; }
+
+        /// <summary>
         /// The status of the custom rule
         /// </summary>
         public CustomRuleStatus? status { get; set; }
@@ -43,7 +48,7 @@ namespace Avalara.AvaTax.RestClient
         public CustomRuleType? type { get; set; }
 
         /// <summary>
-        /// The subtypes of the custom rule
+        /// The subtypes (categories) of the custom rule
         /// </summary>
         public CustomRuleSubtype? subtype { get; set; }
 
@@ -63,19 +68,49 @@ namespace Avalara.AvaTax.RestClient
         public List<String> region { get; set; }
 
         /// <summary>
+        /// The type(s) of the jurisdiction(s) to which this rule applies.
+        /// </summary>
+        public JurisdictionType? jurisdictionTypeId { get; set; }
+
+        /// <summary>
+        /// The name(s) of the jurisdiction(s) to which this rule applies.
+        /// </summary>
+        public List<String> jurisName { get; set; }
+
+        /// <summary>
+        /// The code(s) of the jurisdiction(s) to which this rule applies.
+        /// </summary>
+        public List<String> jurisCode { get; set; }
+
+        /// <summary>
         /// For rules that apply to a specific tax code only, this specifies which tax code is affected by this rule.
         /// </summary>
         public List<String> taxCode { get; set; }
 
         /// <summary>
-        /// Indicates the codes of the tax type that applies to this rule.
+        /// Indicates the codes of the tax type that this rule applies to.
         /// </summary>
         public List<String> taxType { get; set; }
+
+        /// <summary>
+        /// Indicates the codes of the tax sub types that this rule applies to.
+        /// </summary>
+        public List<String> taxSubType { get; set; }
+
+        /// <summary>
+        /// Indicates the rate types that this rule applies to.
+        /// </summary>
+        public List<String> rateTypeCode { get; set; }
 
         /// <summary>
         /// The entity use code to which this rule applies.
         /// </summary>
         public List<String> entityUseCode { get; set; }
+
+        /// <summary>
+        /// The company location codes to which this rule is associated with.
+        /// </summary>
+        public List<String> companyLocationCode { get; set; }
 
         /// <summary>
         /// The order of the rule executions (only applies to advanced rules)

@@ -50,5 +50,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         APDOCUMENTLINEDETAIL = 5,
 
+        /// <summary>
+        /// document line detail all taxes
+        /// </summary>
+        DOCUMENTLINEDETAILALLTAXES = 6,
+
     }
 }

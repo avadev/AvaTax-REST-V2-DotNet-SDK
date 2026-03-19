@@ -33,6 +33,21 @@ namespace Avalara.AvaTax.RestClient
         public String unitOfBasis { get; set; }
 
         /// <summary>
+        /// UnitOfBasis measurement type ID
+        /// </summary>
+        public Int32? measurementTypeId { get; set; }
+
+        /// <summary>
+        /// UnitOfBasis measurement type code
+        /// </summary>
+        public String measurementTypeCode { get; set; }
+
+        /// <summary>
+        /// UnitOfBasis attributes used
+        /// </summary>
+        public List<String> attributesUsed { get; set; }
+
+        /// <summary>
         /// A boolean value based on the current definition of a Fee in AvaTax
         /// </summary>
         public Boolean? isFee { get; set; }

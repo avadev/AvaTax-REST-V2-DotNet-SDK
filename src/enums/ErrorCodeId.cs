@@ -2108,6 +2108,26 @@ namespace Avalara.AvaTax.RestClient
         InvalidAddressOrGeoCoordinates = 4025,
 
         /// <summary>
+        /// IDP relater error code
+        /// </summary>
+        QueryParsingError = 4026,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ValueMismatch = 4027,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        InvalidStatusForHSVerification = 4028,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotVerifyHSCode = 4029,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,

@@ -116,5 +116,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         ItemImportV2 = 18,
 
+        /// <summary>
+        /// This batch type represents VAT number validation data being uploaded.
+        ///  Each line contains a business name, VAT number, and country code to be validated against VIES.
+        /// </summary>
+        VatValidationImport = 19,
+
     }
 }

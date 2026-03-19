@@ -63,11 +63,13 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 02/18/2026, Version: 26.3.0, Message: This field is deprecated. Please do not use it. This will be removed from the model on 08/18/2027.
         /// Number of partitions to split the report into.
         /// </summary>
         public Int32? numberOfPartitions { get; set; }
 
         /// <summary>
+        /// DEPRECATED - Date: 02/18/2026, Version: 26.3.0, Message: This field is deprecated. Please do not use it. This will be removed from the model on 08/18/2027.
         /// The zero-based partition number to retrieve in this export request.
         /// </summary>
         public Int32? partition { get; set; }
@@ -147,6 +149,53 @@ namespace Avalara.AvaTax.RestClient
         /// Defaults to false if not specified.
         /// </summary>
         public Boolean? includeMultiTaxLineDetails { get; set; }
+
+        /// <summary>
+        /// If true, shows all transactions that are in the incorrect currency.
+        /// If false, hides all transactions that are in the incorrect currency.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? incorrectCurrencyOnly { get; set; }
+
+        /// <summary>
+        /// If true, shows all additional transaction attributes.
+        /// If false, hides all additional transaction attributes.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? includeAdditionalAttributes { get; set; }
+
+        /// <summary>
+        /// If true, shows all user defined fields.
+        /// If false, hides all user defined fields.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? includeUserDefinedFields { get; set; }
+
+        /// <summary>
+        /// Sets the ImportId for Accounts Payable reports.
+        /// Defaults to an empty string if not specified.
+        /// </summary>
+        public String importId { get; set; }
+
+        /// <summary>
+        /// If true, filter using the user-defined field at the document line level.
+        /// If false, filter using the user-defined field at the document level.
+        /// Defaults to true if not specified.
+        /// </summary>
+        public Boolean? filterAtLineLevel { get; set; }
+
+        /// <summary>
+        /// Sets a user-defined field filter as a name/value pair.
+        /// Only one name/value pair is allowed.
+        /// Returns null if both name and value are not set.
+        /// </summary>
+        public object udfFilter { get; set; }
+
+        /// <summary>
+        /// The names of the jurisdictions for which document lines are fetched.
+        /// Defaults to null if not specified.
+        /// </summary>
+        public List<String> jurisdictionNames { get; set; }
 
 
         /// <summary>
