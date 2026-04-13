@@ -317,6 +317,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String vatCode { get; set; }
 
+        /// <summary>
+        /// Contains granular duty details as a list of key-value pairs.
+        /// This field provides additional detailed information about duty calculations
+        /// specific to TCS (Tax Calculation Service) operations.
+        /// </summary>
+        public List<object> granularDutyDetails { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
