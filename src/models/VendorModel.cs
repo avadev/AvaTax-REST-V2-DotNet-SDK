@@ -31,6 +31,11 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? isVendor { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public VendorAdditionalInfoModel vendorAdditionalInfo { get; set; }
+
+        /// <summary>
         /// The unique ID number of this customer.
         /// </summary>
         public Int32? id { get; set; }
