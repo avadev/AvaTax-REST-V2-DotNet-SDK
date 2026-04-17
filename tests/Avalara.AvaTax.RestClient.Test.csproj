@@ -12,6 +12,7 @@
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net472'">
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+		<RuntimeFrameworkVersion>2.2.1</RuntimeFrameworkVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
 	</PropertyGroup>
@@ -20,7 +21,7 @@
 		<None Remove="**" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net451'">
-		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Nunit" Version="3.13.3" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -31,7 +32,7 @@
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Nunit" Version="3.13.3" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -42,7 +43,7 @@
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
-		<PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Nunit" Version="3.13.3" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -55,6 +56,7 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
 		<PackageReference Include="Nunit" Version="3.13.3" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -69,6 +71,7 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
 		<Compile Include="netstandard\*.cs" />
 		<ProjectReference Include="..\src\Avalara.AvaTax.RestClient.csproj">
 		  <SetTargetFramework>TargetFramework=netstandard1.6</SetTargetFramework>
@@ -80,6 +83,7 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="System.Xml.ReaderWriter" Version="4.3.1" />
 		<Compile Include="netstandard20\*.cs" />
 		<ProjectReference Include="..\src\Avalara.AvaTax.RestClient.csproj">
 		  <SetTargetFramework>TargetFramework=netstandard2.0</SetTargetFramework>
