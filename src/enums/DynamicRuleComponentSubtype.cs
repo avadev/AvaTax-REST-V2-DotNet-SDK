@@ -102,6 +102,11 @@ namespace Avalara.AvaTax.RestClient
         MatchEntityUseCode = 15,
 
         /// <summary>
+        /// Matches based on after-calculation messages.
+        /// </summary>
+        MatchMessage = 16,
+
+        /// <summary>
         /// Unspecified action.
         /// </summary>
         Action = 256,
@@ -190,6 +195,16 @@ namespace Avalara.AvaTax.RestClient
         /// Updates an exemption stauts.
         /// </summary>
         TaxRuleExemptEntity = 273,
+
+        /// <summary>
+        /// Adds a message or invoice message to the transaction response.
+        /// </summary>
+        AddMessage = 288,
+
+        /// <summary>
+        /// Adds a line to the transaction.
+        /// </summary>
+        AddLine = 289,
 
         /// <summary>
         /// Unspecified variable.

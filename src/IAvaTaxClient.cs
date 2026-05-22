@@ -1678,6 +1678,25 @@ namespace Avalara.AvaTax.RestClient
         FundingStatusModel CreateFundingRequest(Int32 id, POABusinessUnit? businessUnit, POASubscriptionType? subscriptionType, FundingInitiateModel model);
 
         /// <summary>
+        /// Create VAT Numbers for a company
+        /// </summary>
+        /// <remarks>
+        /// Create one or more VAT number records for a company.
+        /// Each record is validated synchronously against the ELR / Directory Search service
+        /// (which proxies VIES). The response includes validation results:
+        /// `vatNumberStatus`, `registeredBusinessName`, `businessNameStatus`, `validationDate`,
+        /// and `validationSource`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns these VAT numbers</param>
+        /// <param name="model">The VAT number records you wish to create</param>
+        List<CustomerVatNumberModel> CreateVatNumbers(Int32 companyId, List<CustomerVatNumberModel> model);
+
+        /// <summary>
         /// Delete a single company
         /// </summary>
         /// <remarks>
@@ -1710,6 +1729,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The company id</param>
         /// <param name="id">The parameter id</param>
         List<ErrorDetail> DeleteCompanyParameter(Int32 companyId, Int64 id);
+
+        /// <summary>
+        /// Delete a single VAT Number
+        /// </summary>
+        /// <remarks>
+        /// Marks the VAT number record identified by this URL as deleted.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this VAT number</param>
+        /// <param name="id">The unique ID of the VAT number record to delete</param>
+        List<ErrorDetail> DeleteVatNumber(Int32 companyId, Int64 id);
 
         /// <summary>
         /// Check the funding configuration of a company
@@ -1871,6 +1905,21 @@ namespace Avalara.AvaTax.RestClient
         CompanyFilingStatus? GetFilingStatus(Int32 id);
 
         /// <summary>
+        /// Retrieve a single VAT Number
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single VAT Number record by its unique ID.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this VAT number</param>
+        /// <param name="id">The unique ID of the VAT number record</param>
+        CustomerVatNumberModel GetVatNumber(Int32 companyId, Int64 id);
+
+        /// <summary>
         /// Get ACH entry detail report for company and period
         /// </summary>
         /// <remarks>
@@ -1949,6 +1998,39 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         FetchResult<MrsCompanyModel> ListMrsCompanies();
+
+        /// <summary>
+        /// Retrieve VAT Numbers for a company
+        /// </summary>
+        /// <remarks>
+        /// Retrieve all VAT Numbers associated with this company.
+        ///  
+        /// A VAT Number represents a customer's VAT identification number that has been validated
+        /// against VIES (VAT Information Exchange System).
+        ///  
+        /// Search for specific records using the `$filter` parameter. Supported filters include:
+        /// * `vatNumber` - Filter by VAT number
+        /// * `country` - Filter by country code (e.g., "GB", "DE")
+        /// * `vatNumberStatus` - Filter by VAT number validation status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
+        /// * `businessNameStatus` - Filter by business name comparison status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
+        /// * `businessName` - Filter by business name
+        ///  
+        /// Order results using `$orderBy`. Common orderings:
+        /// * `vatNumber ASC` - Order by VAT number ascending
+        /// * `validationDate DESC` - Order by most recently validated first
+        /// * `modifiedDate DESC` - Order by most recently modified first
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* createdDate, modifiedDate</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<CustomerVatNumberModel> ListVatNumbers(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// Retrieve all companies
@@ -2056,6 +2138,52 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The company parameter id</param>
         /// <param name="model">The company parameter object you wish to update.</param>
         CompanyParameterDetailModel UpdateCompanyParameterDetail(Int32 companyId, Int64 id, CompanyParameterDetailModel model);
+
+        /// <summary>
+        /// Update a single VAT Number
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing VAT number record with the data in the object you PUT.
+        ///  
+        /// Only `vatNumber`, `businessName`, and `country` fields can be updated. The
+        /// validation-related fields (`vatNumberStatus`, `registeredBusinessName`,
+        /// `businessNameStatus`, `validationDate`, `validationSource`) are managed by the
+        /// system and are refreshed automatically: every successful PUT re-triggers a
+        /// synchronous VAT validation against the ELR / Directory Search service (which
+        /// proxies VIES). This makes "Fix" flows work as expected — correcting an
+        /// invalid VAT number immediately updates its status.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this VAT number</param>
+        /// <param name="id">The unique ID of the VAT number record to update</param>
+        /// <param name="model">The VAT number object you wish to update</param>
+        CustomerVatNumberModel UpdateVatNumber(Int32 companyId, Int64 id, CustomerVatNumberModel model);
+
+        /// <summary>
+        /// Validate a VAT Number without storing it
+        /// </summary>
+        /// <remarks>
+        /// Performs a synchronous VAT number validation against the ELR / Directory Search service
+        /// (which proxies VIES) without persisting any record in the `CustomerVatNumber` table.
+        ///  
+        /// This is useful for UI flows that allow the user to "test" a VAT number before
+        /// deciding whether to add it. The response payload mirrors the shape returned by
+        /// the create/update endpoints, but `id`, `createdDate`, and `modifiedDate` are not set.
+        /// Business-name comparison is not performed here; use the create endpoint to persist
+        /// and obtain a `businessNameStatus`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company on whose behalf the validation is performed</param>
+        /// <param name="model">The VAT number to validate (vatNumber, country)</param>
+        CustomerVatNumberModel ValidateVatNumber(Int32 companyId, CustomerVatNumberModel model);
 
         /// <summary>
         /// Retrieve all unique jurisnames based on filter.
@@ -3005,21 +3133,6 @@ namespace Avalara.AvaTax.RestClient
         FetchResult<HsCodeModel> GetCrossBorderCode(String country, String hsCode);
 
         /// <summary>
-        /// Test whether a form supports online login verification
-        /// </summary>
-        /// <remarks>
-        /// This API is intended to be useful to identify whether the user should be allowed
-        /// to automatically verify their login and password. This API will provide a result only if the form supports automatic online login verification.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="form">The name of the form you would like to verify. This is the tax form code</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxFormCodes, scraperType, expectedResponseTime, requiredFilingCalendarDataFields</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<SkyscraperStatusModel> GetLoginVerifierByForm(String form, String filter, Int32? top, Int32? skip, String orderBy);
-
-        /// <summary>
         /// List all market place locations.
         /// </summary>
         /// <remarks>
@@ -3469,21 +3582,6 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         FetchResult<LocationQuestionModel> ListLocationQuestionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude, String filter, Int32? top, Int32? skip, String orderBy);
-
-        /// <summary>
-        /// List all forms where logins can be verified automatically
-        /// </summary>
-        /// <remarks>
-        /// List all forms where logins can be verified automatically.
-        /// This API is intended to be useful to identify whether the user should be allowed
-        /// to automatically verify their login and password.
-        /// </remarks>
-        /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxFormCodes, scraperType, expectedResponseTime, requiredFilingCalendarDataFields</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<SkyscraperStatusModel> ListLoginVerifiers(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// Retrieve the list of locations for a marketplace.
@@ -4524,6 +4622,37 @@ namespace Avalara.AvaTax.RestClient
         FetchResult<ECommerceTokenOutputModel> RefreshECommerceToken(Int32 companyId, RefreshECommerceTokenInputModel model);
 
         /// <summary>
+        /// List economic nexus threshold statuses for a company
+        /// </summary>
+        /// <remarks>
+        /// Returns precomputed economic nexus threshold statuses for a company, sourced from a cache
+        /// refreshed weekly from Snowflake.
+        ///  
+        /// When the optional `region` query parameter is provided, only the matching jurisdiction row is included in `states`.
+        /// If no row exists for that company and region, `states` is an empty array (still 200 OK).
+        ///  
+        /// TPS currently binds this filter as query parameter `state`; use the same value. If the public contract standardizes on `region`,
+        /// TPS or api-gateway should accept or rewrite `region` so filtering still applies.
+        ///  
+        /// Production traffic is served by TPS; api-gateway should route this path to TPS.
+        ///  
+        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS or the cache has not loaded, TPS returns 503.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The Avalara company identifier.</param>
+        /// <param name="region">Optional two-letter US state/region postal code (case-insensitive), same meaning as the `state` column in the data store. When provided, `states` contains at most one item; if there is no data for that company and region, `states` is an empty array (200 OK).</param>
+        /// <param name="include">Standard Avalara `$include` query option (see other v2 list APIs).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        ThresholdStatusesModel GetEcoNexusThresholds(Int32 companyId, String region, String include, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
         /// Approves linkage to a firm for a client account
         /// </summary>
         /// <remarks>
@@ -4687,6 +4816,19 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="model">FirmClientLinkage record</param>
         FirmClientLinkageOutputModel UpdateFirmClientLinkage(FirmClientLinkageModel model);
+
+        /// <summary>
+        /// Resolves a form type to an extraction task identifier.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="form_type">The form type to resolve (e.g., "W-9").</param>
+        FormTypeMappingModel ResolveFormTypeTask(String form_type);
 
         /// <summary>
         /// Request the javascript for a funding setup widget
@@ -5062,6 +5204,26 @@ namespace Avalara.AvaTax.RestClient
         List<ItemTagDetailOutputModel> CreateItemTags(Int32 companyId, Int64 itemId, List<ItemTagDetailInputModel> model);
 
         /// <summary>
+        /// Creates a batch to generate tax code recommendations asynchronously.
+        /// </summary>
+        /// <remarks>
+        /// Creates a new batch for asynchronous tax code recommendations processing.
+        /// The batch is processed asynchronously, and you can check the status using the GetBatchTaxCodeRecommendations endpoint.
+        ///  
+        /// Maximum items created per request: 2,000 (subject to change).
+        ///  
+        /// Batches are automatically deleted after 1 day.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="model">The list of items to include in the batch (maximum 2,000).</param>
+        List<TaxcodeBatchOutputModel> CreateTaxcodeBatch(Int32 companyId, List<ItemTaxcodeRecommendationBatchesInputModel> model);
+
+        /// <summary>
         /// Create a new tax code classification request
         /// </summary>
         /// <remarks>
@@ -5079,6 +5241,23 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that creates this request.</param>
         /// <param name="model">The request you wish to create.</param>
         ItemTaxCodeClassificationRequestOutputModel CreateTaxCodeClassificationRequest(Int32 companyId, ItemTaxCodeClassificationRequestInputModel model);
+
+        /// <summary>
+        /// Deletes a tax code recommendation batch.
+        /// </summary>
+        /// <remarks>
+        /// Deletes the specified tax code recommendation batch.
+        ///  
+        /// Returns '404 Not Found' if the batch is already deleted, does not exist, or belongs to a different company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="batchId">The unique ID of the batch to delete.</param>
+        List<ObjectDeletedErrorModel> DeleteBatchTaxCodeRecommendations(Int32 companyId, Int64 batchId);
 
         /// <summary>
         /// Delete a single item
@@ -5108,6 +5287,20 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemCode">The code of the item you want to delete.</param>
         List<ObjectDeletedErrorModel> DeleteCatalogueItem(Int32 companyId, String itemCode);
+
+        /// <summary>
+        /// Deletes HS Code classification status for the item by status id.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company to which this item belongs</param>
+        /// <param name="itemId">The ID of the item</param>
+        /// <param name="id">The HS Code classification status id.</param>
+        void DeleteHSCodeClassificationStatus(Int32 companyId, Int64 itemId, String id);
 
         /// <summary>
         /// Delete a single item
@@ -5282,6 +5475,26 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="itemId">The unique ID of the item for which you want to get additional HS Duty Details.</param>
         /// <param name="model">Additional HS Code Duty Details input Model</param>
         List<ItemHSCodeDutyDetailModel> FetchAdditionalHSCodeDutyDetails(Int32 companyId, Int64 itemId, List<ItemAdditionalHSCodeDutyInputModel> model);
+
+        /// <summary>
+        /// Retrieves the status and results of a tax code recommendation batch.
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the status and results of a tax code recommendation batch for the specified company.
+        /// If the batch status is "Completed", the response includes the tax code recommendations for all items in the batch.
+        /// If the batch status is "Waiting", "Processing", or any other non-complete status, only the status information is returned.
+        /// Returns '404 Not Found' if the batch has been deleted or does not exist.
+        ///  
+        /// Batches are automatically deleted after 1 day.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="batchId">The unique ID of the recommendation batch.</param>
+        ItemTaxcodeRecommendationBatchStatusOutputModel GetBatchTaxCodeRecommendations(Int32 companyId, Int64 batchId);
 
         /// <summary>
         /// Retrieve the HS code classification SLA details for a company.
@@ -7626,7 +7839,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API is available to Avalara system-level (registrar-level) users only.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -7702,6 +7915,21 @@ namespace Avalara.AvaTax.RestClient
         SubscriptionModel UpdateSubscription(Int32 accountId, Int32 id, SubscriptionModel model);
 
         /// <summary>
+        /// Download an audit log report
+        /// </summary>
+        /// <remarks>
+        /// Downloads the file associated with an audit log report.
+        /// If the report is not yet complete, you will receive a `ReportNotFinished` error.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="id">The unique ID of the audit log report</param>
+        FileResult DownloadAuditLogReport(String id);
+
+        /// <summary>
         /// Download a report
         /// </summary>
         /// <remarks>
@@ -7727,6 +7955,34 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The unique ID number of this report</param>
         FileResult DownloadReport(Int64 id);
+
+        /// <summary>
+        /// Initiate an ExportAuditLogs report task
+        /// </summary>
+        /// <remarks>
+        /// Begins running an `ExportAuditLogs` report task and returns the identity of the report.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="model">Options to filter the audit log export.</param>
+        List<ReportAuditLogResponseModel> ExportAuditLogs(ReportAuditLogModel model);
+
+        /// <summary>
+        /// Get an audit log report by id
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the status and details of an audit log report task.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="id">The unique ID of the audit log report</param>
+        ReportAuditLogResponseModel GetAuditLogReport(String id);
 
         /// <summary>
         /// Retrieve a single report
@@ -9729,7 +9985,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="model">An object containing your current password and the new password.</param>
@@ -9751,7 +10007,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
@@ -9771,7 +10027,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user you wish to delete.</param>
@@ -9791,7 +10047,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -9821,7 +10077,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -9847,7 +10103,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="accountId">The accountID of the user you wish to list.</param>
@@ -9879,7 +10135,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="include">Optional fetch commands.</param>
@@ -9900,7 +10156,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="id">The ID of the user you wish to update.</param>
@@ -12035,6 +12291,26 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Create VAT Numbers for a company;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more VAT number records for a company.
+        /// Each record is validated synchronously against the ELR / Directory Search service
+        /// (which proxies VIES). The response includes validation results:
+        /// `vatNumberStatus`, `registeredBusinessName`, `businessNameStatus`, `validationDate`,
+        /// and `validationSource`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns these VAT numbers</param>
+        /// <param name="model">The VAT number records you wish to create</param>
+        Task<List<CustomerVatNumberModel>> CreateVatNumbersAsync(Int32 companyId, List<CustomerVatNumberModel> model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Delete a single company;
         /// </summary>
         /// <remarks>
@@ -12068,6 +12344,22 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The company id</param>
         /// <param name="id">The parameter id</param>
         Task<List<ErrorDetail>> DeleteCompanyParameterAsync(Int32 companyId, Int64 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a single VAT Number;
+        /// </summary>
+        /// <remarks>
+        /// Marks the VAT number record identified by this URL as deleted.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this VAT number</param>
+        /// <param name="id">The unique ID of the VAT number record to delete</param>
+        Task<List<ErrorDetail>> DeleteVatNumberAsync(Int32 companyId, Int64 id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -12237,6 +12529,22 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Retrieve a single VAT Number;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single VAT Number record by its unique ID.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this VAT number</param>
+        /// <param name="id">The unique ID of the VAT number record</param>
+        Task<CustomerVatNumberModel> GetVatNumberAsync(Int32 companyId, Int64 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Get ACH entry detail report for company and period;
         /// </summary>
         /// <remarks>
@@ -12318,6 +12626,40 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         Task<FetchResult<MrsCompanyModel>> ListMrsCompaniesAsync();
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve VAT Numbers for a company;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve all VAT Numbers associated with this company.
+        ///  
+        /// A VAT Number represents a customer's VAT identification number that has been validated
+        /// against VIES (VAT Information Exchange System).
+        ///  
+        /// Search for specific records using the `$filter` parameter. Supported filters include:
+        /// * `vatNumber` - Filter by VAT number
+        /// * `country` - Filter by country code (e.g., "GB", "DE")
+        /// * `vatNumberStatus` - Filter by VAT number validation status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
+        /// * `businessNameStatus` - Filter by business name comparison status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
+        /// * `businessName` - Filter by business name
+        ///  
+        /// Order results using `$orderBy`. Common orderings:
+        /// * `vatNumber ASC` - Order by VAT number ascending
+        /// * `validationDate DESC` - Order by most recently validated first
+        /// * `modifiedDate DESC` - Order by most recently modified first
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* createdDate, modifiedDate</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<CustomerVatNumberModel>> ListVatNumbersAsync(Int32 companyId, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -12429,6 +12771,54 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="id">The company parameter id</param>
         /// <param name="model">The company parameter object you wish to update.</param>
         Task<CompanyParameterDetailModel> UpdateCompanyParameterDetailAsync(Int32 companyId, Int64 id, CompanyParameterDetailModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a single VAT Number;
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing VAT number record with the data in the object you PUT.
+        ///  
+        /// Only `vatNumber`, `businessName`, and `country` fields can be updated. The
+        /// validation-related fields (`vatNumberStatus`, `registeredBusinessName`,
+        /// `businessNameStatus`, `validationDate`, `validationSource`) are managed by the
+        /// system and are refreshed automatically: every successful PUT re-triggers a
+        /// synchronous VAT validation against the ELR / Directory Search service (which
+        /// proxies VIES). This makes "Fix" flows work as expected — correcting an
+        /// invalid VAT number immediately updates its status.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this VAT number</param>
+        /// <param name="id">The unique ID of the VAT number record to update</param>
+        /// <param name="model">The VAT number object you wish to update</param>
+        Task<CustomerVatNumberModel> UpdateVatNumberAsync(Int32 companyId, Int64 id, CustomerVatNumberModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Validate a VAT Number without storing it;
+        /// </summary>
+        /// <remarks>
+        /// Performs a synchronous VAT number validation against the ELR / Directory Search service
+        /// (which proxies VIES) without persisting any record in the `CustomerVatNumber` table.
+        ///  
+        /// This is useful for UI flows that allow the user to "test" a VAT number before
+        /// deciding whether to add it. The response payload mirrors the shape returned by
+        /// the create/update endpoints, but `id`, `createdDate`, and `modifiedDate` are not set.
+        /// Business-name comparison is not performed here; use the create endpoint to persist
+        /// and obtain a `businessNameStatus`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company on whose behalf the validation is performed</param>
+        /// <param name="model">The VAT number to validate (vatNumber, country)</param>
+        Task<CustomerVatNumberModel> ValidateVatNumberAsync(Int32 companyId, CustomerVatNumberModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13422,22 +13812,6 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Test whether a form supports online login verification;
-        /// </summary>
-        /// <remarks>
-        /// This API is intended to be useful to identify whether the user should be allowed
-        /// to automatically verify their login and password. This API will provide a result only if the form supports automatic online login verification.;
-        /// </remarks>
-		
-        /// <param name="form">The name of the form you would like to verify. This is the tax form code</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxFormCodes, scraperType, expectedResponseTime, requiredFilingCalendarDataFields</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<SkyscraperStatusModel>> GetLoginVerifierByFormAsync(String form, String filter, Int32? top, Int32? skip, String orderBy);
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
         /// List all market place locations.;
         /// </summary>
         /// <remarks>
@@ -13912,22 +14286,6 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         Task<FetchResult<LocationQuestionModel>> ListLocationQuestionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Decimal? latitude, Decimal? longitude, String filter, Int32? top, Int32? skip, String orderBy);
-
-        /// Swagger Name: AvaTaxClient
-        /// <summary>
-        /// List all forms where logins can be verified automatically;
-        /// </summary>
-        /// <remarks>
-        /// List all forms where logins can be verified automatically.
-        /// This API is intended to be useful to identify whether the user should be allowed
-        /// to automatically verify their login and password.;
-        /// </remarks>
-		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxFormCodes, scraperType, expectedResponseTime, requiredFilingCalendarDataFields</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<SkyscraperStatusModel>> ListLoginVerifiersAsync(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15032,6 +15390,38 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// List economic nexus threshold statuses for a company;
+        /// </summary>
+        /// <remarks>
+        /// Returns precomputed economic nexus threshold statuses for a company, sourced from a cache
+        /// refreshed weekly from Snowflake.
+        ///  
+        /// When the optional `region` query parameter is provided, only the matching jurisdiction row is included in `states`.
+        /// If no row exists for that company and region, `states` is an empty array (still 200 OK).
+        ///  
+        /// TPS currently binds this filter as query parameter `state`; use the same value. If the public contract standardizes on `region`,
+        /// TPS or api-gateway should accept or rewrite `region` so filtering still applies.
+        ///  
+        /// Production traffic is served by TPS; api-gateway should route this path to TPS.
+        ///  
+        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS or the cache has not loaded, TPS returns 503.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The Avalara company identifier.</param>
+        /// <param name="region">Optional two-letter US state/region postal code (case-insensitive), same meaning as the `state` column in the data store. When provided, `states` contains at most one item; if there is no data for that company and region, `states` is an empty array (200 OK).</param>
+        /// <param name="include">Standard Avalara `$include` query option (see other v2 list APIs).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<ThresholdStatusesModel> GetEcoNexusThresholdsAsync(Int32 companyId, String region, String include, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Approves linkage to a firm for a client account;
         /// </summary>
         /// <remarks>
@@ -15205,6 +15595,20 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="model">FirmClientLinkage record</param>
         Task<FirmClientLinkageOutputModel> UpdateFirmClientLinkageAsync(FirmClientLinkageModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Resolves a form type to an extraction task identifier.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="form_type">The form type to resolve (e.g., "W-9").</param>
+        Task<FormTypeMappingModel> ResolveFormTypeTaskAsync(String form_type);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15599,6 +16003,27 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Creates a batch to generate tax code recommendations asynchronously.;
+        /// </summary>
+        /// <remarks>
+        /// Creates a new batch for asynchronous tax code recommendations processing.
+        /// The batch is processed asynchronously, and you can check the status using the GetBatchTaxCodeRecommendations endpoint.
+        ///  
+        /// Maximum items created per request: 2,000 (subject to change).
+        ///  
+        /// Batches are automatically deleted after 1 day.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="model">The list of items to include in the batch (maximum 2,000).</param>
+        Task<List<TaxcodeBatchOutputModel>> CreateTaxcodeBatchAsync(Int32 companyId, List<ItemTaxcodeRecommendationBatchesInputModel> model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create a new tax code classification request;
         /// </summary>
         /// <remarks>
@@ -15616,6 +16041,24 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that creates this request.</param>
         /// <param name="model">The request you wish to create.</param>
         Task<ItemTaxCodeClassificationRequestOutputModel> CreateTaxCodeClassificationRequestAsync(Int32 companyId, ItemTaxCodeClassificationRequestInputModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Deletes a tax code recommendation batch.;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the specified tax code recommendation batch.
+        ///  
+        /// Returns '404 Not Found' if the batch is already deleted, does not exist, or belongs to a different company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="batchId">The unique ID of the batch to delete.</param>
+        Task<List<ObjectDeletedErrorModel>> DeleteBatchTaxCodeRecommendationsAsync(Int32 companyId, Int64 batchId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15646,6 +16089,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="itemCode">The code of the item you want to delete.</param>
         Task<List<ObjectDeletedErrorModel>> DeleteCatalogueItemAsync(Int32 companyId, String itemCode);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Deletes HS Code classification status for the item by status id.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company to which this item belongs</param>
+        /// <param name="itemId">The ID of the item</param>
+        /// <param name="id">The HS Code classification status id.</param>
+        Task DeleteHSCodeClassificationStatusAsync(Int32 companyId, Int64 itemId, String id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15829,6 +16287,27 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="itemId">The unique ID of the item for which you want to get additional HS Duty Details.</param>
         /// <param name="model">Additional HS Code Duty Details input Model</param>
         Task<List<ItemHSCodeDutyDetailModel>> FetchAdditionalHSCodeDutyDetailsAsync(Int32 companyId, Int64 itemId, List<ItemAdditionalHSCodeDutyInputModel> model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieves the status and results of a tax code recommendation batch.;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the status and results of a tax code recommendation batch for the specified company.
+        /// If the batch status is "Completed", the response includes the tax code recommendations for all items in the batch.
+        /// If the batch status is "Waiting", "Processing", or any other non-complete status, only the status information is returned.
+        /// Returns '404 Not Found' if the batch has been deleted or does not exist.
+        ///  
+        /// Batches are automatically deleted after 1 day.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="batchId">The unique ID of the recommendation batch.</param>
+        Task<ItemTaxcodeRecommendationBatchStatusOutputModel> GetBatchTaxCodeRecommendationsAsync(Int32 companyId, Int64 batchId);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -18266,7 +18745,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
         /// * This API is available to Avalara system-level (registrar-level) users only.;
         /// </remarks>
 		
@@ -18346,6 +18825,22 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Download an audit log report;
+        /// </summary>
+        /// <remarks>
+        /// Downloads the file associated with an audit log report.
+        /// If the report is not yet complete, you will receive a `ReportNotFinished` error.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="id">The unique ID of the audit log report</param>
+        Task<FileResult> DownloadAuditLogReportAsync(String id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Download a report;
         /// </summary>
         /// <remarks>
@@ -18371,6 +18866,36 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="id">The unique ID number of this report</param>
         Task<FileResult> DownloadReportAsync(Int64 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Initiate an ExportAuditLogs report task;
+        /// </summary>
+        /// <remarks>
+        /// Begins running an `ExportAuditLogs` report task and returns the identity of the report.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="model">Options to filter the audit log export.</param>
+        Task<List<ReportAuditLogResponseModel>> ExportAuditLogsAsync(ReportAuditLogModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Get an audit log report by id;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the status and details of an audit log report task.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="id">The unique ID of the audit log report</param>
+        Task<ReportAuditLogResponseModel> GetAuditLogReportAsync(String id);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -20439,7 +20964,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="model">An object containing your current password and the new password.</param>
@@ -20462,7 +20987,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="accountId">The unique ID number of the account where these users will be created.</param>
@@ -20483,7 +21008,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.;
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, Compliance Root User, CSPTester, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TreasuryAdmin.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user you wish to delete.</param>
@@ -20504,7 +21029,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -20535,7 +21060,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user to retrieve.</param>
@@ -20562,7 +21087,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="accountId">The accountID of the user you wish to list.</param>
@@ -20595,7 +21120,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, SystemOperator, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="include">Optional fetch commands.</param>
@@ -20617,7 +21142,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// ### Security Policies
         /// 
-        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, AvaTaxOnlyUserAdmin, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPTester, FirmAdmin, FirmUser, Registrar, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
         /// </remarks>
 		
         /// <param name="id">The ID of the user you wish to update.</param>

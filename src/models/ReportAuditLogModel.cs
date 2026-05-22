@@ -18,39 +18,29 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the output model for tax code recommendation batches (both synchronous and asynchronous).
+    /// An input model for requesting an export of audit logs
     /// </summary>
-    public class ItemTaxcodeRecommendationBatchesOutputModel
+    public class ReportAuditLogModel
     {
         /// <summary>
-        /// A brief description of the item.
+        /// The list of operations for this audit log report.
         /// </summary>
-        public String description { get; set; }
+        public List<ReportAuditLogOperationInputModel> operations { get; set; }
 
         /// <summary>
-        /// The category of the item.
+        /// The start date for the audit log report.
         /// </summary>
-        public String category { get; set; }
+        public DateTime? startDate { get; set; }
 
         /// <summary>
-        /// The type of item. Examples: "Physical", "Digital", "Service", "Freight"
+        /// The end date for the audit log report.
         /// </summary>
-        public String itemType { get; set; }
+        public DateTime? endDate { get; set; }
 
         /// <summary>
-        /// The Universal Product Code (UPC) associated with the item.
+        /// The compression type for the report output (e.g., "NONE", "GZIP").
         /// </summary>
-        public String upc { get; set; }
-
-        /// <summary>
-        /// A summary or detailed description of the item.
-        /// </summary>
-        public String summary { get; set; }
-
-        /// <summary>
-        /// The list of generated tax code recommendations for this item.
-        /// </summary>
-        public List<ItemTaxcodeRecommendationBaseBatchOutputModel> taxCodeRecommendations { get; set; }
+        public Compression? compression { get; set; }
 
 
         /// <summary>

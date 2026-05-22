@@ -122,5 +122,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         VatValidationImport = 19,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        TxnWithDynamicParamBag = 20,
+
     }
 }
