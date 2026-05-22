@@ -18,42 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Base model for custom rules that can be either DynamicRuleModel or AdvancedRuleExecutionModel or TaxRuleModel
+    /// Model which can provide a summary of any custom rule variety.
+    /// Custom rules is the umbrella term for traditional Tax Rules,
+    /// legacy Advanced Rules (transaction rules), and the newest Dynamic Rules.
     /// </summary>
     public class CustomRuleSummaryModel
     {
         /// <summary>
-        /// The unique identifier for this custom rule summary
+        /// The unique identifier for this custom rule.
         /// </summary>
         public String id { get; set; }
 
         /// <summary>
-        /// The company ID that the custom rule belongs to
+        /// The company ID that the custom rule belongs to.
         /// </summary>
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The name of the custom rule
+        /// The name of the custom rule.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// The status of the custom rule
+        /// The status of the custom rule.
         /// </summary>
         public CustomRuleStatus? status { get; set; }
 
         /// <summary>
-        /// The type of custom rule
+        /// The type of rule entity which this custom rule is.
         /// </summary>
         public CustomRuleType? type { get; set; }
 
         /// <summary>
-        /// The subtypes (categories) of the custom rule
+        /// The subtypes (categories or actions) of the custom rule.
         /// </summary>
         public CustomRuleSubtype? subtype { get; set; }
 
         /// <summary>
-        /// The description of the subtypes of the custom rule
+        /// The description of the subtypes of the custom rule.
         /// </summary>
         public List<String> subtypeDescription { get; set; }
 
@@ -113,7 +115,7 @@ namespace Avalara.AvaTax.RestClient
         public List<String> companyLocationCode { get; set; }
 
         /// <summary>
-        /// The order of the rule executions (only applies to advanced rules)
+        /// The index order of the rule execution (only applies to advanced rules).
         /// </summary>
         public Int32? order { get; set; }
 
@@ -138,7 +140,7 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? createdDate { get; set; }
 
         /// <summary>
-        /// The rule entity data, which can be either a TaxRuleModel, a DynamicRuleModel, or an AdvancedRuleExecutionModel
+        /// The rule entity data, which can be either a TaxRuleModel, a DynamicRuleModel, or an AdvancedRuleExecutionModel.
         /// </summary>
         public object ruleEntity { get; set; }
 
