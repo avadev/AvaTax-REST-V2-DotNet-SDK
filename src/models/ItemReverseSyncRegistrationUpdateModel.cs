@@ -18,39 +18,26 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Update model for an existing Connector Data Sync (reverse sync) webhook registration.
+    ///  
+    /// Only the fields included in the request body will be updated.
     /// </summary>
-    public class ReportAuditLogModel
+    public class ItemReverseSyncRegistrationUpdateModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// The webhook callback URL that the connector exposes to receive notifications.
         /// </summary>
-        public String reportType { get; set; }
+        public String url { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// The registration delivery channel (for example, Webhook). Omit to leave the persisted value unchanged.
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public ItemReverseSyncTypeName? typeName { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// The list of events this registration subscribes to.
         /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public ItemReverseSyncEventType? events { get; set; }
 
 
         /// <summary>

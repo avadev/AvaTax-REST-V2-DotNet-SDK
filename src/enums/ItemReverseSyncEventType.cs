@@ -16,19 +16,14 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Different types of formats allowed for exporting a report
+    /// 
     /// </summary>
-    public enum ReportFormat
+    public enum ItemReverseSyncEventType
     {
         /// <summary>
-        /// The Comma Separated Values file format
+        /// 
         /// </summary>
-        CSV = 0,
-
-        /// <summary>
-        /// The JavaScript Object Notation file format
-        /// </summary>
-        JSON = 1,
+        HSCodeAssigned = 1,
 
     }
 }

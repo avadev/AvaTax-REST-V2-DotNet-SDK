@@ -18,34 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The output model for audit log report parameter definitions.
+    /// Response for HS code verification batch requests. When Avalara.ItemMasterCoreService.Models.v2.ItemHSCodeVerificationOutputModel.failed is non-empty, no rows were persisted or published.
     /// </summary>
-    public class ReportAuditLogParametersModel
+    public class ItemHSCodeVerificationOutputModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// Number of rows in the request (same as request array length).
         /// </summary>
-        public String reportType { get; set; }
+        public Int32? total { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// Rows that failed validation; empty when the full batch was accepted.
         /// </summary>
-        public List<ReportAuditLogReportModel> reports { get; set; }
-
-        /// <summary>
-        /// The start date for the audit log report.
-        /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
+        public List<ItemHSCodeVerificationFailedRowModel> failed { get; set; }
 
 
         /// <summary>

@@ -28,9 +28,9 @@ namespace Avalara.AvaTax.RestClient
         public Int64? id { get; set; }
 
         /// <summary>
-        /// The type of the report
+        /// The account id associated with the report
         /// </summary>
-        public String reportType { get; set; }
+        public Int32? accountId { get; set; }
 
         /// <summary>
         /// 

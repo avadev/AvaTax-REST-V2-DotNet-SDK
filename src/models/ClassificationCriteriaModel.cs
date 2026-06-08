@@ -18,39 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Tariff classification criteria flags used when mode is `auto_partial`.
     /// </summary>
-    public class ReportAuditLogModel
+    public class ClassificationCriteriaModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// When true, include items with no tariff code assigned.
         /// </summary>
-        public String reportType { get; set; }
+        public Boolean? NoTariffCodeAssigned { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// When true, include items with an invalid tariff code.
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public Boolean? InvalidTariffCode { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// When true, include items whose tariff code needs review.
         /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public Boolean? TariffCodeNeedsReview { get; set; }
 
 
         /// <summary>

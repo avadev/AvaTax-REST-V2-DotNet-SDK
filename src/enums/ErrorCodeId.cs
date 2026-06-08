@@ -2128,6 +2128,31 @@ namespace Avalara.AvaTax.RestClient
         CannotVerifyHSCode = 4029,
 
         /// <summary>
+        /// 
+        /// </summary>
+        RequestAlreadyInProgress = 4030,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ClassificationSettingsInProgress = 4031,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        CannotDeleteEntity = 4032,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        IncorrectValueForField = 4033,
+
+        /// <summary>
+        /// AP Threshold inheritance restriction — child company inherits AP Threshold settings from parent
+        /// </summary>
+        APThresholdInheritanceRestriction = 4034,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,

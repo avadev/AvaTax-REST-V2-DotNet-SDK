@@ -17,7 +17,7 @@ using System.Threading.Tasks;
  * @author     Sachin Baijal <sachin.baijal@avalara.com>
  * @copyright  2004-2023 Avalara, Inc.
  * @license    https://www.apache.org/licenses/LICENSE-2.0
- * @version    26.5.0
+ * @version    26.6.0
  * @link       https://github.com/avadev/AvaTax-REST-V2-DotNet-SDK
  */
 
@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// Returns the version number of the API used to generate this class
         /// </summary>
-        public static string API_VERSION { get { return "26.5.0"; } }
+        public static string API_VERSION { get { return "26.6.0"; } }
 
 #region Methods
 
@@ -1355,6 +1355,7 @@ namespace Avalara.AvaTax.RestClient
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
+        /// * jurisdictions - Retrieves the list of jurisdictions associated with the certificate
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -1378,7 +1379,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * jobs - Retrieves the jobs for this certificate
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
-        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        ///  * custom_fields - Retrieves custom fields set for this certificate
+        ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
         public CertificateModel GetCertificate(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
@@ -1601,6 +1603,49 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List local exempt jurisdictions for a given exposure zone and tax code
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of jurisdictions that are valid for a given combination of exposure zone
+        /// and exemption tax code. The returned jurisdictions can be used to add valid jurisdictions
+        /// to a certificate.
+        ///  
+        /// Both `exposureZone` and `taxCode` are mandatory query parameters.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID number of the company</param>
+        /// <param name="exposureZone">Required. The exposure zone name used to filter valid jurisdictions (e.g., "California").</param>
+        /// <param name="taxCode">Required. The exemption tax code used to filter valid jurisdictions (e.g., "RESALE").</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* region, country, customerUsageType</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public FetchResult<CertificateJurisdictionListModel> ListLocalExemptJurisdictions(Int32 companyId, String exposureZone, String taxCode, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/jurisdictions");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("exposureZone", exposureZone);
+            path.AddQuery("taxCode", taxCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<CertificateJurisdictionListModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// List all certificates for a company
         /// </summary>
         /// <remarks>
@@ -1621,6 +1666,7 @@ namespace Avalara.AvaTax.RestClient
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
+        /// * jurisdictions - Retrieves the list of jurisdictions associated with the certificate
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -1643,7 +1689,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * jobs - Retrieves the jobs for this certificate
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
-        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        ///  * custom_fields - Retrieves custom fields set for this certificate
+        ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -2624,6 +2671,10 @@ namespace Avalara.AvaTax.RestClient
         /// * `vatNumberStatus` - Filter by VAT number validation status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
         /// * `businessNameStatus` - Filter by business name comparison status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
         /// * `businessName` - Filter by business name
+        /// * `validationSource` - Filter by validation source ('VIES' or 'ELR')
+        /// * `validationDate` - Filter by last validation timestamp (e.g., `validationDate gt 2026-01-01`)
+        /// * `createdDate` - Filter by record creation timestamp (e.g., `createdDate ge 2026-01-01`)
+        /// * `modifiedDate` - Filter by record modification timestamp (e.g., `modifiedDate gt 2026-05-01T00:00:00Z`)
         ///  
         /// Order results using `$orderBy`. Common orderings:
         /// * `vatNumber ASC` - Order by VAT number ascending
@@ -2636,7 +2687,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* createdDate, modifiedDate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3686,7 +3737,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * jobs - Retrieves the jobs for this certificate
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
-        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        ///  * custom_fields - Retrieves custom fields set for this certificate
+        ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -4671,6 +4723,23 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// List of all event types that can be subscribed to for Item reverse sync webhook registrations.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        public List<ItemReverseSyncEventDefinitionOutputModel> ListItemReverseSyncEvents()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/items/events");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ItemReverseSyncEventDefinitionOutputModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
         /// List of all recommendation status which can be assigned to an item
         /// </summary>
         /// <remarks>
@@ -4720,13 +4789,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public FetchResult<JurisdictionModel> ListJurisdictions(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="companyId">Optional query parameter; when set, the result set is restricted to jurisdictions in regions
+        ///  where the company has nexus. When omitted, all jurisdiction rows are eligible before filter is applied.</param>
+        public FetchResult<JurisdictionModel> ListJurisdictions(String filter, Int32? top, Int32? skip, String orderBy, Int32? companyId)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictions");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("companyId", companyId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionModel>>("GET", path, null);
         }
@@ -4841,6 +4913,54 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<JurisdictionHierarchyModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List tax types, subtypes, and rate types applicable for a given jurisdiction
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of tax type and subtype groups, and optionally the available rate types for each group, applicable for a given jurisdiction.
+        ///  
+        /// This API lets you filter tax types and rate types based on whether they may apply in a given jurisdiction and provides a description of each.
+        /// 
+        /// If a company ID is provided, then only the tax types for which the company has nexus are shown.
+        /// 
+        /// If custom content is included, then all available custom tax types are included in the result if the calling user has the appropriate subscription
+        /// and the tax types are available in the jurisdiction's country.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="country">ISO country code (e.g. `US`)</param>
+        /// <param name="region">ISO region or state/province code (e.g. `CA` for California)</param>
+        /// <param name="jurisdictionTypeId">Jurisdiction type identifier (e.g. `STA` for state)</param>
+        /// <param name="jurisdictionCode">Code identifying a specific jurisdiction</param>
+        /// <param name="companyId">Optional query parameter. When set, tax type/subtype pairs are filtered to those which correspond to the company's 
+        /// configured nexus. When omitted, no nexus-based filtering is applied.</param>
+        /// <param name="effectiveDate">Optional query parameter. When companyId is not provided, this is the date used to filter
+        /// effective tax types and rate types. Defaults to the current date.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rateTypes</param>
+        /// <param name="includeCustomContent">When true, merges in potentially applicable custom tax types and subtypes into result (i.e. for which no system content is defined). Defaults to false.</param>
+        /// <param name="includeRateTypes">Query parameter `$includeRateTypes`. When true (default), returns the rate types available for each tax type + subtype pair in the result.</param>
+        public FetchResult<JurisdictionTaxTypesAndSubTypesModel> ListJurisdictionTaxTypesAndSubTypes(String country, String region, String jurisdictionTypeId, String jurisdictionCode, Int32? companyId, DateTime? effectiveDate, Int32? top, Int32? skip, String orderBy, String filter, Boolean? includeCustomContent, Boolean? includeRateTypes)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/{country}/{region}/{jurisdictionTypeId}/{jurisdictionCode}/taxTypesAndSubTypes");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.ApplyField("jurisdictionTypeId", jurisdictionTypeId);
+            path.ApplyField("jurisdictionCode", jurisdictionCode);
+            path.AddQuery("companyId", companyId);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
+            path.AddQuery("$includeRateTypes", includeRateTypes);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<JurisdictionTaxTypesAndSubTypesModel>>("GET", path, null);
         }
 
 
@@ -8949,6 +9069,144 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("itemId", itemId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<List<ItemParameterModel>>("PUT", path, model);
+        }
+
+
+        /// <summary>
+        /// Verify the HSCode to be valid/invalid
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID of the company</param>
+        /// <param name="model">The request model for HS Code Verification</param>
+        public ItemHSCodeVerificationOutputModel VerifyHSCode(Int32 companyId, List<ItemHSCodeVerificationInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/hscodes/$verify");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemHSCodeVerificationOutputModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Create a webhook registration for a company.
+        /// </summary>
+        /// <remarks>
+        /// Creates a webhook registration for the specified company. The registration defines a
+        /// connector, callback URL, registration type, and subscribed events.
+        ///  
+        /// The customer must pass the connector name in `connectorName`; this value is also
+        /// used as the OAuth scope for the registration.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company for which you want to create the registration.</param>
+        /// <param name="model">The webhook registration details to create.</param>
+        public ItemReverseSyncRegistrationOutputModel CreateReverseSyncRegistration(Int32 companyId, ItemReverseSyncRegistrationInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemReverseSyncRegistrationOutputModel>("POST", path, model);
+        }
+
+
+        /// <summary>
+        /// Delete a webhook registration.
+        /// </summary>
+        /// <remarks>
+        /// Deletes the webhook registration identified by the specified registration ID for the given company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this registration.</param>
+        /// <param name="registrationId">The ID of the registration to delete.</param>
+        public List<ObjectDeletedErrorModel> DeleteReverseSyncRegistration(Int32 companyId, Int64 registrationId)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations/{registrationId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("registrationId", registrationId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<List<ObjectDeletedErrorModel>>("DELETE", path, null);
+        }
+
+
+        /// <summary>
+        /// Retrieve a webhook registration.
+        /// </summary>
+        /// <remarks>
+        /// Returns the webhook registration identified by the specified registration ID for the given company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this registration.</param>
+        /// <param name="registrationId">The ID of the registration.</param>
+        public ItemReverseSyncRegistrationOutputModel GetReverseSyncRegistration(Int32 companyId, Int64 registrationId)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations/{registrationId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("registrationId", registrationId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemReverseSyncRegistrationOutputModel>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// List webhook registrations for a company.
+        /// </summary>
+        /// <remarks>
+        /// Returns all webhook registrations for the specified company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns the webhook registrations.</param>
+        public FetchResult<ItemReverseSyncRegistrationOutputModel> ListReverseSyncRegistrations(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<FetchResult<ItemReverseSyncRegistrationOutputModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a webhook registration.
+        /// </summary>
+        /// <remarks>
+        /// Updates the webhook registration with the provided fields. Only the fields included in the
+        /// request body are updated.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this registration.</param>
+        /// <param name="registrationId">The ID of the registration to update.</param>
+        /// <param name="model">The registration fields to update.</param>
+        public ItemReverseSyncRegistrationOutputModel UpdateReverseSyncRegistration(Int32 companyId, Int64 registrationId, ItemReverseSyncRegistrationUpdateModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations/{registrationId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("registrationId", registrationId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<ItemReverseSyncRegistrationOutputModel>("PATCH", path, model);
         }
 
 
@@ -14205,6 +14463,38 @@ namespace Avalara.AvaTax.RestClient
 
 
         /// <summary>
+        /// Delete a vendor record
+        /// </summary>
+        /// <remarks>
+        /// Deletes the vendor object referenced by this URL.
+        ///  
+        /// A vendor object defines information about a person or business that you purchase products from.
+        /// The same CertCapture customer resource is used for vendors (isVendor flag). Deleting removes the record.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode">The unique code representing this vendor</param>
+        public void DeleteVendor(Int32 companyId, String vendorCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            RestCallString("DELETE", path, null);
+        }
+
+
+        /// <summary>
         /// Retrieve a single vendor
         /// </summary>
         /// <remarks>
@@ -14228,7 +14518,7 @@ namespace Avalara.AvaTax.RestClient
         /// * shipTos - Retrieves ship-tos linked with this vendor
         /// * shipToStates - Retrieves ship-to states for this vendor
         /// * custom_fields - Retrieves custom fields set for this vendor
-        ///  
+        /// * vendorAdditionalInfo - Retrieves vendorAdditionalInfo for this vendor
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -14335,6 +14625,7 @@ namespace Avalara.AvaTax.RestClient
         /// * shipTos - Retrieves ship-tos linked with this vendor
         /// * shipToStates - Retrieves ship-to states for this vendor
         /// * custom_fields - Retrieves custom fields set for this vendor
+        /// * vendorAdditionalInfo - Retrieves vendorAdditionalInfo for vendors
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -14366,6 +14657,41 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
             return RestCall<FetchResult<VendorModel>>("GET", path, null);
+        }
+
+
+        /// <summary>
+        /// Update a single vendor
+        /// </summary>
+        /// <remarks>
+        /// Replace the vendor object with a new record.
+        ///  
+        /// A vendor object defines information about a person or business that you purchase products from.
+        /// When you create a tax transaction in AvaTax, you can use the `vendorCode` from this
+        /// record. AvaTax will search for this `vendorCode` value and identify any certificates
+        /// linked to this vendor object.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode">The unique code representing this vendor</param>
+        /// <param name="model">The new vendor model that will replace the existing record at this URL</param>
+        public VendorModel UpdateVendor(Int32 companyId, String vendorCode, VendorModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID, API_VERSION);
+            return RestCall<VendorModel>("PUT", path, model);
         }
 
 
@@ -16040,6 +16366,7 @@ namespace Avalara.AvaTax.RestClient
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
+        /// * jurisdictions - Retrieves the list of jurisdictions associated with the certificate
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -16063,7 +16390,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * jobs - Retrieves the jobs for this certificate
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
-        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        ///  * custom_fields - Retrieves custom fields set for this certificate
+        ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
         public async Task<CertificateModel> GetCertificateAsync(Int32 companyId, Int32 id, String include)
         {
             var path = new AvaTaxPath("/api/v2/companies/{companyId}/certificates/{id}");
@@ -16293,6 +16621,50 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// List local exempt jurisdictions for a given exposure zone and tax code;
+        /// </summary>
+        /// <remarks>
+        /// Returns the list of jurisdictions that are valid for a given combination of exposure zone
+        /// and exemption tax code. The returned jurisdictions can be used to add valid jurisdictions
+        /// to a certificate.
+        ///  
+        /// Both `exposureZone` and `taxCode` are mandatory query parameters.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID number of the company</param>
+        /// <param name="exposureZone">Required. The exposure zone name used to filter valid jurisdictions (e.g., "California").</param>
+        /// <param name="taxCode">Required. The exemption tax code used to filter valid jurisdictions (e.g., "RESALE").</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* region, country, customerUsageType</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        public async Task<FetchResult<CertificateJurisdictionListModel>> ListLocalExemptJurisdictionsAsync(Int32 companyId, String exposureZone, String taxCode, String filter, Int32? top, Int32? skip, String orderBy)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/jurisdictions");
+            path.ApplyField("companyId", companyId);
+            path.AddQuery("exposureZone", exposureZone);
+            path.AddQuery("taxCode", taxCode);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<CertificateJurisdictionListModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// List all certificates for a company;
         /// </summary>
         /// <remarks>
@@ -16313,6 +16685,7 @@ namespace Avalara.AvaTax.RestClient
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
+        /// * jurisdictions - Retrieves the list of jurisdictions associated with the certificate
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -16335,7 +16708,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * jobs - Retrieves the jobs for this certificate
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
-        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        ///  * custom_fields - Retrieves custom fields set for this certificate
+        ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -17348,6 +17722,10 @@ namespace Avalara.AvaTax.RestClient
         /// * `vatNumberStatus` - Filter by VAT number validation status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
         /// * `businessNameStatus` - Filter by business name comparison status (0=NotValidated, 1=Valid, 2=Invalid, 3=Error)
         /// * `businessName` - Filter by business name
+        /// * `validationSource` - Filter by validation source ('VIES' or 'ELR')
+        /// * `validationDate` - Filter by last validation timestamp (e.g., `validationDate gt 2026-01-01`)
+        /// * `createdDate` - Filter by record creation timestamp (e.g., `createdDate ge 2026-01-01`)
+        /// * `modifiedDate` - Filter by record modification timestamp (e.g., `modifiedDate gt 2026-05-01T00:00:00Z`)
         ///  
         /// Order results using `$orderBy`. Common orderings:
         /// * `vatNumber ASC` - Order by VAT number ascending
@@ -17360,7 +17738,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* createdDate, modifiedDate</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -18444,7 +18822,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * jobs - Retrieves the jobs for this certificate
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
-        ///  * custom_fields - Retrieves custom fields set for this certificate</param>
+        ///  * custom_fields - Retrieves custom fields set for this certificate
+        ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -19463,6 +19842,24 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// List of all event types that can be subscribed to for Item reverse sync webhook registrations.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        public async Task<List<ItemReverseSyncEventDefinitionOutputModel>> ListItemReverseSyncEventsAsync()
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/items/events");
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ItemReverseSyncEventDefinitionOutputModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// List of all recommendation status which can be assigned to an item;
         /// </summary>
         /// <remarks>
@@ -19514,13 +19911,16 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        public async Task<FetchResult<JurisdictionModel>> ListJurisdictionsAsync(String filter, Int32? top, Int32? skip, String orderBy)
+        /// <param name="companyId">Optional query parameter; when set, the result set is restricted to jurisdictions in regions
+        ///  where the company has nexus. When omitted, all jurisdiction rows are eligible before filter is applied.</param>
+        public async Task<FetchResult<JurisdictionModel>> ListJurisdictionsAsync(String filter, Int32? top, Int32? skip, String orderBy, Int32? companyId)
         {
             var path = new AvaTaxPath("/api/v2/definitions/jurisdictions");
             path.AddQuery("$filter", filter);
             path.AddQuery("$top", top);
             path.AddQuery("$skip", skip);
             path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("companyId", companyId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionModel>>("GET", path, null).ConfigureAwait(false);
         }
@@ -19638,6 +20038,55 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<JurisdictionHierarchyModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List tax types, subtypes, and rate types applicable for a given jurisdiction;
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of tax type and subtype groups, and optionally the available rate types for each group, applicable for a given jurisdiction.
+        ///  
+        /// This API lets you filter tax types and rate types based on whether they may apply in a given jurisdiction and provides a description of each.
+        /// 
+        /// If a company ID is provided, then only the tax types for which the company has nexus are shown.
+        /// 
+        /// If custom content is included, then all available custom tax types are included in the result if the calling user has the appropriate subscription
+        /// and the tax types are available in the jurisdiction's country.;
+        /// </remarks>
+		
+        /// <param name="country">ISO country code (e.g. `US`)</param>
+        /// <param name="region">ISO region or state/province code (e.g. `CA` for California)</param>
+        /// <param name="jurisdictionTypeId">Jurisdiction type identifier (e.g. `STA` for state)</param>
+        /// <param name="jurisdictionCode">Code identifying a specific jurisdiction</param>
+        /// <param name="companyId">Optional query parameter. When set, tax type/subtype pairs are filtered to those which correspond to the company's 
+        /// configured nexus. When omitted, no nexus-based filtering is applied.</param>
+        /// <param name="effectiveDate">Optional query parameter. When companyId is not provided, this is the date used to filter
+        /// effective tax types and rate types. Defaults to the current date.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* rateTypes</param>
+        /// <param name="includeCustomContent">When true, merges in potentially applicable custom tax types and subtypes into result (i.e. for which no system content is defined). Defaults to false.</param>
+        /// <param name="includeRateTypes">Query parameter `$includeRateTypes`. When true (default), returns the rate types available for each tax type + subtype pair in the result.</param>
+        public async Task<FetchResult<JurisdictionTaxTypesAndSubTypesModel>> ListJurisdictionTaxTypesAndSubTypesAsync(String country, String region, String jurisdictionTypeId, String jurisdictionCode, Int32? companyId, DateTime? effectiveDate, Int32? top, Int32? skip, String orderBy, String filter, Boolean? includeCustomContent, Boolean? includeRateTypes)
+        {
+            var path = new AvaTaxPath("/api/v2/definitions/jurisdictions/{country}/{region}/{jurisdictionTypeId}/{jurisdictionCode}/taxTypesAndSubTypes");
+            path.ApplyField("country", country);
+            path.ApplyField("region", region);
+            path.ApplyField("jurisdictionTypeId", jurisdictionTypeId);
+            path.ApplyField("jurisdictionCode", jurisdictionCode);
+            path.AddQuery("companyId", companyId);
+            path.AddQuery("effectiveDate", effectiveDate);
+            path.AddQuery("$top", top);
+            path.AddQuery("$skip", skip);
+            path.AddQuery("$orderBy", orderBy);
+            path.AddQuery("$filter", filter);
+            path.AddQuery("$includeCustomContent", includeCustomContent);
+            path.AddQuery("$includeRateTypes", includeRateTypes);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<JurisdictionTaxTypesAndSubTypesModel>>("GET", path, null).ConfigureAwait(false);
         }
 
 
@@ -23890,6 +24339,150 @@ namespace Avalara.AvaTax.RestClient
             path.ApplyField("itemId", itemId);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<List<ItemParameterModel>>("PUT", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Verify the HSCode to be valid/invalid;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID of the company</param>
+        /// <param name="model">The request model for HS Code Verification</param>
+        public async Task<ItemHSCodeVerificationOutputModel> VerifyHSCodeAsync(Int32 companyId, List<ItemHSCodeVerificationInputModel> model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/items/hscodes/$verify");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemHSCodeVerificationOutputModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create a webhook registration for a company.;
+        /// </summary>
+        /// <remarks>
+        /// Creates a webhook registration for the specified company. The registration defines a
+        /// connector, callback URL, registration type, and subscribed events.
+        ///  
+        /// The customer must pass the connector name in `connectorName`; this value is also
+        /// used as the OAuth scope for the registration.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company for which you want to create the registration.</param>
+        /// <param name="model">The webhook registration details to create.</param>
+        public async Task<ItemReverseSyncRegistrationOutputModel> CreateReverseSyncRegistrationAsync(Int32 companyId, ItemReverseSyncRegistrationInputModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemReverseSyncRegistrationOutputModel>("POST", path, model).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a webhook registration.;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the webhook registration identified by the specified registration ID for the given company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this registration.</param>
+        /// <param name="registrationId">The ID of the registration to delete.</param>
+        public async Task<List<ObjectDeletedErrorModel>> DeleteReverseSyncRegistrationAsync(Int32 companyId, Int64 registrationId)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations/{registrationId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("registrationId", registrationId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<List<ObjectDeletedErrorModel>>("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a webhook registration.;
+        /// </summary>
+        /// <remarks>
+        /// Returns the webhook registration identified by the specified registration ID for the given company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this registration.</param>
+        /// <param name="registrationId">The ID of the registration.</param>
+        public async Task<ItemReverseSyncRegistrationOutputModel> GetReverseSyncRegistrationAsync(Int32 companyId, Int64 registrationId)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations/{registrationId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("registrationId", registrationId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemReverseSyncRegistrationOutputModel>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List webhook registrations for a company.;
+        /// </summary>
+        /// <remarks>
+        /// Returns all webhook registrations for the specified company.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns the webhook registrations.</param>
+        public async Task<FetchResult<ItemReverseSyncRegistrationOutputModel>> ListReverseSyncRegistrationsAsync(Int32 companyId)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations");
+            path.ApplyField("companyId", companyId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<FetchResult<ItemReverseSyncRegistrationOutputModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a webhook registration.;
+        /// </summary>
+        /// <remarks>
+        /// Updates the webhook registration with the provided fields. Only the fields included in the
+        /// request body are updated.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this registration.</param>
+        /// <param name="registrationId">The ID of the registration to update.</param>
+        /// <param name="model">The registration fields to update.</param>
+        public async Task<ItemReverseSyncRegistrationOutputModel> UpdateReverseSyncRegistrationAsync(Int32 companyId, Int64 registrationId, ItemReverseSyncRegistrationUpdateModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/connector-sync/companies/{companyId}/registrations/{registrationId}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("registrationId", registrationId);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<ItemReverseSyncRegistrationOutputModel>("PATCH", path, model).ConfigureAwait(false);
         }
 
 
@@ -29292,6 +29885,39 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Delete a vendor record;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the vendor object referenced by this URL.
+        ///  
+        /// A vendor object defines information about a person or business that you purchase products from.
+        /// The same CertCapture customer resource is used for vendors (isVendor flag). Deleting removes the record.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode">The unique code representing this vendor</param>
+        public async Task DeleteVendorAsync(Int32 companyId, String vendorCode)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            await RestCallStringAsync("DELETE", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Retrieve a single vendor;
         /// </summary>
         /// <remarks>
@@ -29315,7 +29941,7 @@ namespace Avalara.AvaTax.RestClient
         /// * shipTos - Retrieves ship-tos linked with this vendor
         /// * shipToStates - Retrieves ship-to states for this vendor
         /// * custom_fields - Retrieves custom fields set for this vendor
-        ///  
+        /// * vendorAdditionalInfo - Retrieves vendorAdditionalInfo for this vendor
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
         /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
@@ -29424,6 +30050,7 @@ namespace Avalara.AvaTax.RestClient
         /// * shipTos - Retrieves ship-tos linked with this vendor
         /// * shipToStates - Retrieves ship-to states for this vendor
         /// * custom_fields - Retrieves custom fields set for this vendor
+        /// * vendorAdditionalInfo - Retrieves vendorAdditionalInfo for vendors
         ///  
         /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
         /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
@@ -29455,6 +30082,42 @@ namespace Avalara.AvaTax.RestClient
             path.AddQuery("$orderBy", orderBy);
             _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
             return await RestCallAsync<FetchResult<VendorModel>>("GET", path, null).ConfigureAwait(false);
+        }
+
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a single vendor;
+        /// </summary>
+        /// <remarks>
+        /// Replace the vendor object with a new record.
+        ///  
+        /// A vendor object defines information about a person or business that you purchase products from.
+        /// When you create a tax transaction in AvaTax, you can use the `vendorCode` from this
+        /// record. AvaTax will search for this `vendorCode` value and identify any certificates
+        /// linked to this vendor object.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this vendor</param>
+        /// <param name="vendorCode">The unique code representing this vendor</param>
+        /// <param name="model">The new vendor model that will replace the existing record at this URL</param>
+        public async Task<VendorModel> UpdateVendorAsync(Int32 companyId, String vendorCode, VendorModel model)
+        {
+            var path = new AvaTaxPath("/api/v2/companies/{companyId}/vendors/{vendorCode}");
+            path.ApplyField("companyId", companyId);
+            path.ApplyField("vendorCode", vendorCode);
+            _clientHeaders[Constants.AVALARA_CLIENT_HEADER]=string.Format(ClientID , API_VERSION);
+            return await RestCallAsync<VendorModel>("PUT", path, model).ConfigureAwait(false);
         }
 
 

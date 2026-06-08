@@ -18,39 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Request body for creating company classification settings (`POST /classification-settings`).
     /// </summary>
-    public class ReportAuditLogModel
+    public class ClassificationSettingsInputModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// Classification mode: typically Avalara.ItemMasterCoreService.Common.ClassificationSettingsConstants.Modes.AutoFull or Avalara.ItemMasterCoreService.Common.ClassificationSettingsConstants.Modes.AutoPartial.
         /// </summary>
-        public String reportType { get; set; }
+        public String mode { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// 
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public ClassificationCriteriaModel criteria { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// 
         /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public CountryScopeModel countryScope { get; set; }
 
 
         /// <summary>

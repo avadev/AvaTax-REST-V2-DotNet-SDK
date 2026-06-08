@@ -18,39 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// One tax type + subtype combination for a jurisdiction.
     /// </summary>
-    public class ReportAuditLogModel
+    public class JurisdictionTaxTypesAndSubTypesModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// ID of the tax type.
         /// </summary>
-        public String reportType { get; set; }
+        public String taxTypeId { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// Text description of the tax type.
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public String taxTypeDescription { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// ID of the tax subtype.
         /// </summary>
-        public DateTime? startDate { get; set; }
+        public String taxSubTypeId { get; set; }
 
         /// <summary>
-        /// The end date for the audit log report.
+        /// Text description of the tax subtype.
         /// </summary>
-        public DateTime? endDate { get; set; }
+        public String taxSubTypeDescription { get; set; }
 
         /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
+        /// Summary tax type display name derived from tax type and subtype.
         /// </summary>
-        public Compression? compression { get; set; }
+        public String jurisdictionTaxTypeSubtypeDescription { get; set; }
 
         /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
+        /// Populated when `$includeRateTypes=true` (default). Empty when rate types are omitted.
         /// </summary>
-        public String reportSource { get; set; }
+        public List<RateTypesModel> rateTypes { get; set; }
 
 
         /// <summary>

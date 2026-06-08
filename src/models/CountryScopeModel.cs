@@ -18,34 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The output model for audit log report parameter definitions.
+    /// Restricts automated classification to all nexus countries or an explicit list.
     /// </summary>
-    public class ReportAuditLogParametersModel
+    public class CountryScopeModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// Avalara.ItemMasterCoreService.Common.ClassificationSettingsConstants.CountryScopeTypes.All or Avalara.ItemMasterCoreService.Common.ClassificationSettingsConstants.CountryScopeTypes.Selected.
         /// </summary>
-        public String reportType { get; set; }
+        public String type { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// ISO 3166 alpha-2 codes when `type` is `selected`; ignored for `all`.
         /// </summary>
-        public List<ReportAuditLogReportModel> reports { get; set; }
-
-        /// <summary>
-        /// The start date for the audit log report.
-        /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
+        public List<String> countries { get; set; }
 
 
         /// <summary>

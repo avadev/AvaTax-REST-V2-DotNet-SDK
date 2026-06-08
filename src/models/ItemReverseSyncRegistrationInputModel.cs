@@ -18,39 +18,33 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Input model used to create a Connector Data Sync (reverse sync) webhook registration.
+    ///  
+    /// A registration tells Avalara which connector should be notified when an item-related
+    /// event occurs (currently `HSCodeAssigned`), the callback URL to invoke, and the
+    /// events the connector wishes to subscribe to.
     /// </summary>
-    public class ReportAuditLogModel
+    public class ItemReverseSyncRegistrationInputModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// The connector name. This value is also used as the OAuth scope for the registration.
         /// </summary>
-        public String reportType { get; set; }
+        public String connectorName { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// The webhook callback URL that the connector exposes to receive notifications.
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public String url { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// The registration delivery channel (for example, Webhook).
         /// </summary>
-        public DateTime? startDate { get; set; }
+        public ItemReverseSyncTypeName typeName { get; set; }
 
         /// <summary>
-        /// The end date for the audit log report.
+        /// The list of events this registration subscribes to.
         /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public ItemReverseSyncEventType events { get; set; }
 
 
         /// <summary>

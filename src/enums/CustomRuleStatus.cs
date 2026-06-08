@@ -45,5 +45,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Future = 4,
 
+        /// <summary>
+        /// The rule is marked as draft and will not execute unless specifically enabled for testing.
+        /// </summary>
+        Draft = 5,
+
     }
 }
