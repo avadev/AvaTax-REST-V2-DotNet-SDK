@@ -18,39 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Represents a valid jurisdiction that can be linked to a certificate.
+    ///  
+    /// This model is returned by the `ListJurisdictions` API, which lists the jurisdictions
+    /// that are valid for a given exposure zone and exemption tax code. The returned
+    /// jurisdictions can then be used to add valid jurisdictions to a certificate.
     /// </summary>
-    public class ReportAuditLogModel
+    public class CertificateJurisdictionListModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// The code identifying the jurisdiction.
         /// </summary>
-        public String reportType { get; set; }
+        public String code { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// The name of the jurisdiction.
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// The type of the jurisdiction (e.g., Special, State, County, City).
         /// </summary>
-        public DateTime? startDate { get; set; }
+        public String type { get; set; }
 
         /// <summary>
-        /// The end date for the audit log report.
+        /// The region (for example, the two-letter state or province abbreviation) where
+        /// this jurisdiction applies.
         /// </summary>
-        public DateTime? endDate { get; set; }
+        public String region { get; set; }
 
         /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
+        /// The ISO country code for this jurisdiction.
         /// </summary>
-        public Compression? compression { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
+        /// The customer usage type (entity use code) associated with this jurisdiction.
         /// </summary>
-        public String reportSource { get; set; }
+        public String customerUsageType { get; set; }
 
 
         /// <summary>

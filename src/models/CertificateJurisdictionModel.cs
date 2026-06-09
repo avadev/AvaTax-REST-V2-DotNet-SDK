@@ -18,39 +18,31 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Represents a jurisdiction associated with a certificate.
+    /// A certificate can be linked to one or more jurisdictions indicating the tax
+    /// authority regions where the certificate applies.
     /// </summary>
-    public class ReportAuditLogModel
+    public class CertificateJurisdictionModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// Unique ID number
         /// </summary>
-        public String reportType { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// The type of the jurisdiction (e.g., State, County, City).
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public String type { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// The name of the jurisdiction.
         /// </summary>
-        public DateTime? startDate { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The end date for the audit log report.
+        /// The FIPS code or identifier for the jurisdiction.
         /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public String code { get; set; }
 
 
         /// <summary>

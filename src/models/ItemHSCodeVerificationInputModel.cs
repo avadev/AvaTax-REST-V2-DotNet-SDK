@@ -18,39 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Represents a HsCodeClassification SLA Response for a given company.
     /// </summary>
-    public class ReportAuditLogModel
+    public class ItemHSCodeVerificationInputModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// The unique ID of this item.
         /// </summary>
-        public String reportType { get; set; }
+        public Int64 itemId { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// The country code for HS code verification (2-letter ISO 3166 country code).
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// The HS code to verify.
         /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public String hsCode { get; set; }
 
 
         /// <summary>

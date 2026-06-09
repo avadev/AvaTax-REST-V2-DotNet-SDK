@@ -64,6 +64,18 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean continueOnError { get; set; }
 
+        /// <summary>
+        /// Whether this is a draft rule; draft rules are not executed
+        /// on transactions unless specifically enabled for testing
+        /// </summary>
+        public Boolean? isDraft { get; set; }
+
+        /// <summary>
+        /// The execution priority of the rule, which is used for sorting rules; within
+        /// each execution step, rules with a lower priority value are executed earlier
+        /// </summary>
+        public Int32? priority { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

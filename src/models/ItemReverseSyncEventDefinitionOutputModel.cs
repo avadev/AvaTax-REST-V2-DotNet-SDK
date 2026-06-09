@@ -18,39 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// An input model for requesting an export of audit logs
+    /// Item Reverse Sync Event Definition Output Model
     /// </summary>
-    public class ReportAuditLogModel
+    public class ItemReverseSyncEventDefinitionOutputModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// Id
         /// </summary>
-        public String reportType { get; set; }
+        public Int32? id { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// Name
         /// </summary>
-        public List<ReportAuditLogReportInputModel> reports { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The start date for the audit log report.
+        /// Description
         /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
-
-        /// <summary>
-        /// The source of the report (e.g., "AUDITLOGS").
-        /// </summary>
-        public String reportSource { get; set; }
+        public String description { get; set; }
 
 
         /// <summary>

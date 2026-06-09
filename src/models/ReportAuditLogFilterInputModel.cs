@@ -18,34 +18,19 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The output model for audit log report parameter definitions.
+    /// Represents a filter within audit log report input parameters.
     /// </summary>
-    public class ReportAuditLogParametersModel
+    public class ReportAuditLogFilterInputModel
     {
         /// <summary>
-        /// The type of the report (e.g., "audit").
+        /// The name of the filter (column name).
         /// </summary>
-        public String reportType { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The list of reports for this audit log report.
+        /// The values for this filter.
         /// </summary>
-        public List<ReportAuditLogReportModel> reports { get; set; }
-
-        /// <summary>
-        /// The start date for the audit log report.
-        /// </summary>
-        public DateTime? startDate { get; set; }
-
-        /// <summary>
-        /// The end date for the audit log report.
-        /// </summary>
-        public DateTime? endDate { get; set; }
-
-        /// <summary>
-        /// The compression type for the report output (e.g., "NONE", "GZIP").
-        /// </summary>
-        public Compression? compression { get; set; }
+        public List<String> values { get; set; }
 
 
         /// <summary>

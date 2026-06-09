@@ -185,6 +185,14 @@ namespace Avalara.AvaTax.RestClient
         public String exposureZoneName { get; set; }
 
         /// <summary>
+        /// A list of jurisdictions associated with this certificate, indicating the tax authority
+        /// regions where the certificate applies. A certificate can have one or more jurisdictions.
+        ///  
+        /// You can fetch this data by specifying `$include=jurisdictions` when calling a certificate fetch API.
+        /// </summary>
+        public List<CertificateJurisdictionModel> jurisdictions { get; set; }
+
+        /// <summary>
         /// A list of certificate attributes that apply to this certificate.
         ///  
         /// You can fetch this data by specifying `$include=attributes` when calling a certificate fetch API.
