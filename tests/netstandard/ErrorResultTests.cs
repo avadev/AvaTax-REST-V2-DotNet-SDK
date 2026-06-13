@@ -40,6 +40,8 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard
         public async Task JsonErrorResult()
         {
             AvaTaxError avataxError = null;
+            AvaTaxCallEventArgs callCompletedEvent = null;
+            _client.CallCompleted += (sender, e) => callCompletedEvent = e as AvaTaxCallEventArgs;
             try
             {
                 var result = await _client.ChangePasswordAsync(new PasswordChangeModel
@@ -52,10 +54,13 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard
             }
 
             Assert.NotNull(avataxError);
+            Assert.NotNull(callCompletedEvent);
             var details = avataxError.error.error.details[0];
             var code = avataxError.error.error.code;
             Assert.True(details.description.Contains("oldPassword"));
             Assert.True(code == ErrorCodeId.ValueRequiredError);
+            Assert.False(string.IsNullOrWhiteSpace(callCompletedEvent.XCorrelationId));
+            Assert.AreEqual(callCompletedEvent.XCorrelationId, avataxError.XCorrelationId);
         }
     }
 }

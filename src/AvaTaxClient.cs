@@ -523,11 +523,11 @@ namespace Avalara.AvaTax.RestClient
                             if (result.StatusCode == HttpStatusCode.InternalServerError ||
                                 result.StatusCode == HttpStatusCode.RequestTimeout)
                             {
-                                throw new AvaTaxServerError(err, result.StatusCode);
+                                throw new AvaTaxServerError(err, result.StatusCode, xCorrelationId);
                             }
                             else
                             {
-                                throw new AvaTaxError(err, result.StatusCode);
+                                throw new AvaTaxError(err, result.StatusCode, xCorrelationId);
                             }
                         }
                     }
@@ -690,11 +690,11 @@ namespace Avalara.AvaTax.RestClient
                     if (result.StatusCode == HttpStatusCode.InternalServerError ||
                         result.StatusCode == HttpStatusCode.RequestTimeout)
                     {
-                        throw new AvaTaxServerError(err, result.StatusCode);
+                        throw new AvaTaxServerError(err, result.StatusCode, xCorrelationId);
                     }
                     else
                     {
-                        throw new AvaTaxError(err, result.StatusCode);
+                        throw new AvaTaxError(err, result.StatusCode, xCorrelationId);
                     }
                 }
             }
@@ -894,7 +894,7 @@ namespace Avalara.AvaTax.RestClient
 
                             // Pass on the error
 
-                            throw new AvaTaxError(err, httpWebResponse.StatusCode);
+                            throw new AvaTaxError(err, httpWebResponse.StatusCode, httpWebResponse.Headers.Get(HEADER_X_CORRELATION_ID));
                         }
                     }
                 }
@@ -1033,7 +1033,7 @@ namespace Avalara.AvaTax.RestClient
                             OnCallCompleted(eventargs);
 
                             // Here's the results
-                            throw new AvaTaxError(err, httpWebResponse.StatusCode);
+                            throw new AvaTaxError(err, httpWebResponse.StatusCode, httpWebResponse.Headers.Get(HEADER_X_CORRELATION_ID));
                         }
                     }
                 }
