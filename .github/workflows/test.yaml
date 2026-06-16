@@ -9,6 +9,10 @@ on:
 jobs:
   test:
     runs-on: windows-latest
+    # Fork PRs run in the "integration" environment (required reviewers),
+    # so a maintainer must approve before sandbox secrets are exposed.
+    # Push / same-repo PRs resolve to an empty environment = no gate.
+    environment: ${{ github.event.pull_request.head.repo.fork == true && 'integration' || '' }}
     steps:
     - name: Checkout
       uses: actions/checkout@v3
