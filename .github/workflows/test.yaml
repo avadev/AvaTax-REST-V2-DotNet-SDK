@@ -26,12 +26,8 @@ jobs:
     - name: Restore Tests
       run: dotnet restore Avalara.AvaTax.RestClient.Test.csproj
       working-directory: tests
-    - name: Create Assembly Signing Key
-      run: |
-        echo "${{ secrets.ASSEMBLY_SIGNING_KEY }}" > data.b64 && certutil -decode data.b64 Avalara.AvaTax.RestClient.snk
-      working-directory: src
     - name: Build Tests
-      run: dotnet build Avalara.AvaTax.RestClient.Test.csproj --no-restore --configuration Release
+      run: dotnet build Avalara.AvaTax.RestClient.Test.csproj --no-restore --configuration Release -p:SignAssembly=false
       working-directory: tests
     - name: Run Tests
       run: dotnet test Avalara.AvaTax.RestClient.Test.csproj --no-build --configuration Release
