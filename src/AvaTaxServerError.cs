@@ -13,7 +13,18 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="errorResult">Error Result</param>
         /// <param name="statusCode">HTTP status code</param>
         public AvaTaxServerError(ErrorResult errorResult, HttpStatusCode statusCode)
-            : base(errorResult, statusCode)
+            : this(errorResult, statusCode, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes <see cref="AvaTaxServerError"/> class
+        /// </summary>
+        /// <param name="errorResult">Error Result</param>
+        /// <param name="statusCode">HTTP status code</param>
+        /// <param name="xCorrelationId">Response correlation ID</param>
+        public AvaTaxServerError(ErrorResult errorResult, HttpStatusCode statusCode, string xCorrelationId)
+            : base(errorResult, statusCode, xCorrelationId)
         {
         }
     }
