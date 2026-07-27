@@ -70,5 +70,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Offline = 9,
 
+        /// <summary>
+        /// Transaction was created by the /offset endpoint to reverse a previously committed,
+        ///  locked document while preserving the original jurisdiction-level tax splits.
+        /// </summary>
+        Offset = 10,
+
     }
 }

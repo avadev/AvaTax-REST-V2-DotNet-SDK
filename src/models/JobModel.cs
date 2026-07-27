@@ -18,44 +18,48 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a jurisdiction associated with a certificate.
-    /// A certificate can be linked to one or more jurisdictions indicating the tax
-    /// authority regions where the certificate applies.
+    /// A job associated with a certificate or customer. Used for $include=jobs on certificate/customer
+    /// fetch APIs, and as the request/response body for the standalone Jobs CRUD endpoints.
     /// </summary>
-    public class CertificateJurisdictionModel
+    public class JobModel
     {
         /// <summary>
-        /// Unique ID number
+        /// The unique ID number of this job.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The type of the jurisdiction (e.g., State, County, City).
+        /// The job number of this job.
         /// </summary>
-        public String type { get; set; }
+        public String jobNumber { get; set; }
 
         /// <summary>
-        /// The name of the jurisdiction.
+        /// The name of this job.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// The FIPS code or identifier for the jurisdiction.
+        /// The date when this job was created.
         /// </summary>
-        public String code { get; set; }
+        public DateTime? createdDate { get; set; }
 
         /// <summary>
-        /// Whether sales-tax exemption applies for this jurisdiction. Default `true`.
-        /// Set `false` to opt the jurisdiction out of the sales-tax validator while
-        /// keeping any `taxTypeMappings` rows in scope.
+        /// The date when this job was last modified.
         /// </summary>
-        public Boolean? isSalesTaxApplicable { get; set; }
+        public DateTime? modifiedDate { get; set; }
 
         /// <summary>
-        /// List of multi-tax mapping rows attached to this jurisdiction. Each row references
-        /// a TPS tax-type / sub-tax-type combination sourced from `GET /v2/tax-types`.
+        /// 
         /// </summary>
-        public List<CertificateJurisdictionTaxMappingModel> taxTypeMappings { get; set; }
+        public ExposureZoneModel exposureZone { get; set; }
+
+        /// <summary>
+        /// A list of phases associated with this job.
+        ///  
+        /// You can fetch this data by specifying `$include=phases` when calling a job fetch API.
+        /// Use `$include=phases,tasks` to also expand the tasks within each phase.
+        /// </summary>
+        public List<JobPhaseModel> phases { get; set; }
 
 
         /// <summary>

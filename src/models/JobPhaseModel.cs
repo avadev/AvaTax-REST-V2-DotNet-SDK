@@ -18,44 +18,44 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a jurisdiction associated with a certificate.
-    /// A certificate can be linked to one or more jurisdictions indicating the tax
-    /// authority regions where the certificate applies.
+    /// A phase within a certificate job.
     /// </summary>
-    public class CertificateJurisdictionModel
+    public class JobPhaseModel
     {
         /// <summary>
-        /// Unique ID number
+        /// The unique ID number of this phase.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The type of the jurisdiction (e.g., State, County, City).
-        /// </summary>
-        public String type { get; set; }
-
-        /// <summary>
-        /// The name of the jurisdiction.
+        /// The name of this phase.
         /// </summary>
         public String name { get; set; }
 
         /// <summary>
-        /// The FIPS code or identifier for the jurisdiction.
+        /// The ID of the job this phase belongs to.
         /// </summary>
-        public String code { get; set; }
+        public Int32? jobId { get; set; }
 
         /// <summary>
-        /// Whether sales-tax exemption applies for this jurisdiction. Default `true`.
-        /// Set `false` to opt the jurisdiction out of the sales-tax validator while
-        /// keeping any `taxTypeMappings` rows in scope.
+        /// The unique code for this phase.
         /// </summary>
-        public Boolean? isSalesTaxApplicable { get; set; }
+        public String phaseCode { get; set; }
 
         /// <summary>
-        /// List of multi-tax mapping rows attached to this jurisdiction. Each row references
-        /// a TPS tax-type / sub-tax-type combination sourced from `GET /v2/tax-types`.
+        /// The date when this phase was created.
         /// </summary>
-        public List<CertificateJurisdictionTaxMappingModel> taxTypeMappings { get; set; }
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// The date when this phase was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// A list of tasks within this phase.
+        /// </summary>
+        public List<JobTaskModel> tasks { get; set; }
 
 
         /// <summary>

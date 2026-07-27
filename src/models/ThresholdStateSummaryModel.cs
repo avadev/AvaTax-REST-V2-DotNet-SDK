@@ -18,19 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Economic nexus threshold status for a single US state.
+    /// Economic nexus threshold status for a single US region.
     /// </summary>
     public class ThresholdStateSummaryModel
     {
         /// <summary>
-        /// Two-letter US state postal code (e.g. CA, TX, WA). Matches the database column `state`; use that name in `$filter`.
+        /// Opaque unique identifier for this threshold record (UUID from the upstream data source).
         /// </summary>
-        public String state { get; set; }
+        public String id { get; set; }
 
         /// <summary>
-        /// Full display name of the state.
+        /// Two-letter US state postal code (e.g. CA, TX, WA).
         /// </summary>
-        public String stateName { get; set; }
+        public String region { get; set; }
+
+        /// <summary>
+        /// Full display name of the region.
+        /// </summary>
+        public String regionName { get; set; }
 
         /// <summary>
         /// Threshold status as determined by the upstream data pipeline. Typical values: 'met', 'notmet'.
@@ -58,12 +63,12 @@ namespace Avalara.AvaTax.RestClient
         public String triggerType { get; set; }
 
         /// <summary>
-        /// The configured transaction count threshold for this state, if applicable.
+        /// The configured transaction count threshold for this region, if applicable.
         /// </summary>
         public Int64? transactionThreshold { get; set; }
 
         /// <summary>
-        /// The configured sales amount threshold for this state, if applicable.
+        /// The configured sales amount threshold for this region, if applicable.
         /// </summary>
         public Decimal? salesThreshold { get; set; }
 

@@ -18,44 +18,41 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a jurisdiction associated with a certificate.
-    /// A certificate can be linked to one or more jurisdictions indicating the tax
-    /// authority regions where the certificate applies.
+    /// Represents one multi-tax mapping row attached to a certificate jurisdiction.
+    /// Each row references a TPS tax-type / sub-tax-type combination that the
+    /// certificate is exempt for.
     /// </summary>
-    public class CertificateJurisdictionModel
+    public class CertificateJurisdictionTaxMappingModel
     {
         /// <summary>
-        /// Unique ID number
+        /// Unique ID number of this mapping row.
         /// </summary>
         public Int32? id { get; set; }
 
         /// <summary>
-        /// The type of the jurisdiction (e.g., State, County, City).
+        /// TPS surrogate identifier for the tax type.
         /// </summary>
-        public String type { get; set; }
+        public Int32? taxTypeId { get; set; }
 
         /// <summary>
-        /// The name of the jurisdiction.
+        /// TPS label for the tax type (e.g. `"Automotive"`).
         /// </summary>
-        public String name { get; set; }
+        public String taxType { get; set; }
 
         /// <summary>
-        /// The FIPS code or identifier for the jurisdiction.
+        /// TPS surrogate identifier for the sub-tax type.
         /// </summary>
-        public String code { get; set; }
+        public Int32? subTaxTypeId { get; set; }
 
         /// <summary>
-        /// Whether sales-tax exemption applies for this jurisdiction. Default `true`.
-        /// Set `false` to opt the jurisdiction out of the sales-tax validator while
-        /// keeping any `taxTypeMappings` rows in scope.
+        /// TPS label for the sub-tax type.
         /// </summary>
-        public Boolean? isSalesTaxApplicable { get; set; }
+        public String subTaxType { get; set; }
 
         /// <summary>
-        /// List of multi-tax mapping rows attached to this jurisdiction. Each row references
-        /// a TPS tax-type / sub-tax-type combination sourced from `GET /v2/tax-types`.
+        /// TPS `taxTypeMappingId`. Used as the diff key on PUT.
         /// </summary>
-        public List<CertificateJurisdictionTaxMappingModel> taxTypeMappings { get; set; }
+        public Int32? sourceMappingId { get; set; }
 
 
         /// <summary>
