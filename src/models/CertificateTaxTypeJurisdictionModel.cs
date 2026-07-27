@@ -18,44 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a jurisdiction associated with a certificate.
-    /// A certificate can be linked to one or more jurisdictions indicating the tax
-    /// authority regions where the certificate applies.
+    /// Represents one TPS-Nexus jurisdiction node nested under a Avalara.AvaTax.AccountServices.Models.v2.CertificateTaxSubTypeModel.
     /// </summary>
-    public class CertificateJurisdictionModel
+    public class CertificateTaxTypeJurisdictionModel
     {
         /// <summary>
-        /// Unique ID number
+        /// ISO-2 country code (e.g. `"US"`).
         /// </summary>
-        public Int32? id { get; set; }
+        public String country { get; set; }
 
         /// <summary>
-        /// The type of the jurisdiction (e.g., State, County, City).
+        /// Region code within the country (e.g. two-letter state abbreviation).
+        /// </summary>
+        public String region { get; set; }
+
+        /// <summary>
+        /// Jurisdiction type (e.g. `"State"`, `"County"`, `"City"`).
         /// </summary>
         public String type { get; set; }
 
         /// <summary>
-        /// The name of the jurisdiction.
-        /// </summary>
-        public String name { get; set; }
-
-        /// <summary>
-        /// The FIPS code or identifier for the jurisdiction.
+        /// FIPS-style jurisdiction code.
         /// </summary>
         public String code { get; set; }
 
         /// <summary>
-        /// Whether sales-tax exemption applies for this jurisdiction. Default `true`.
-        /// Set `false` to opt the jurisdiction out of the sales-tax validator while
-        /// keeping any `taxTypeMappings` rows in scope.
+        /// Human-readable name of the jurisdiction.
         /// </summary>
-        public Boolean? isSalesTaxApplicable { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// List of multi-tax mapping rows attached to this jurisdiction. Each row references
-        /// a TPS tax-type / sub-tax-type combination sourced from `GET /v2/tax-types`.
+        /// Short display name.
         /// </summary>
-        public List<CertificateJurisdictionTaxMappingModel> taxTypeMappings { get; set; }
+        public String shortName { get; set; }
 
 
         /// <summary>

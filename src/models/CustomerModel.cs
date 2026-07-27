@@ -215,11 +215,6 @@ namespace Avalara.AvaTax.RestClient
         public List<HistoryModel> histories { get; set; }
 
         /// <summary>
-        /// A list of jobs for this customer.
-        /// </summary>
-        public List<CustomerJobModel> jobs { get; set; }
-
-        /// <summary>
         /// A list of logs for this customer.
         /// </summary>
         public List<CertificateLogModel> logs { get; set; }

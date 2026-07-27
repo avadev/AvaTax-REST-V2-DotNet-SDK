@@ -212,6 +212,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public List<String> jurisdictionNames { get; set; }
 
+        /// <summary>
+        /// If true, include Point of Order Acceptance (POA) and Point of Order Origin (POO) in the generated report.
+        /// If false, exclude POA and POO from the generated report.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? includePOAandPOO { get; set; }
+
+        /// <summary>
+        /// List of company IDs to include in the report.
+        /// Only supported for the Document Line and Document Line Detail reports
+        /// (reportSource = SNOWFLAKE with includeMultiTaxLineDetails = false).
+        /// If not specified, only the current company is included.
+        /// </summary>
+        public List<Int32> companyIds { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

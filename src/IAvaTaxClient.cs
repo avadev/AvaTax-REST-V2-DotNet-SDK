@@ -1058,6 +1058,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         /// * histories - Retrieves the certificate update history
         /// * jobs - Retrieves the jobs for this certificate
+        /// * jobs.phases - Retrieves the jobs along with their phases
+        /// * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
@@ -1083,6 +1085,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * attributes - Retrieves all attributes applied to the certificate.
         ///  * histories - Retrieves the certificate update history
         ///  * jobs - Retrieves the jobs for this certificate
+        ///  * jobs.phases - Retrieves the jobs along with their phases
+        ///  * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
@@ -1201,6 +1205,38 @@ namespace Avalara.AvaTax.RestClient
         FetchResult<CertificateAttributeModel> ListAttributesForCertificate(Int32 companyId, Int32 id);
 
         /// <summary>
+        /// List the certificate tax-type hierarchy available to this company
+        /// </summary>
+        /// <remarks>
+        /// Returns the TPS multi-tax type hierarchy that is applicable when configuring exemption
+        /// certificates for the given country. The returned tax types can be used to populate
+        /// `taxTypeMappings` entries on a certificate jurisdiction via POST / PUT certificate.
+        ///  
+        /// This endpoint is scoped to the certificate (CertCapture) domain and does not return the
+        /// generic AvaTax tax-type catalog. For the generic catalog see the `Definitions` APIs.
+        ///  
+        /// `country` is a mandatory query parameter.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID number of the company</param>
+        /// <param name="country">Required. ISO-2 country code used to filter the tax-type hierarchy (e.g., "US").</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeId, country, taxSubTypeDetails</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<CertificateTaxTypeModel> ListCertificateTaxTypes(Int32 companyId, String country, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
         /// List customers linked to this certificate
         /// </summary>
         /// <remarks>
@@ -1299,6 +1335,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         /// * histories - Retrieves the certificate update history
         /// * jobs - Retrieves the jobs for this certificate
+        /// * jobs.phases - Retrieves the jobs along with their phases
+        /// * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
@@ -1323,11 +1361,13 @@ namespace Avalara.AvaTax.RestClient
         ///  * attributes - Retrieves all attributes applied to the certificate.
         ///  * histories - Retrieves the certificate update history
         ///  * jobs - Retrieves the jobs for this certificate
+        ///  * jobs.phases - Retrieves the jobs along with their phases
+        ///  * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2515,6 +2555,28 @@ namespace Avalara.AvaTax.RestClient
         CostCenterSuccessResponseModel UpdateCostCenter(Int32 companyid, Int64 costcenterid, CostCenterRequestModel model);
 
         /// <summary>
+        /// Add ship-to states to a customer
+        /// </summary>
+        /// <remarks>
+        /// Adds one or more ship-to states to the specified customer.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of ship-to states to add to this customer</param>
+        FetchResult<StateModel> AddShipToStatesForCustomer(Int32 companyId, String customerCode, List<StateModel> model);
+
+        /// <summary>
         /// Create customers for this company
         /// </summary>
         /// <remarks>
@@ -2809,7 +2871,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -2856,6 +2918,27 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
         ExemptionStatusModel ListInActiveCertificatesForCustomer(Int32 companyId, String customerCode);
+
+        /// <summary>
+        /// List ship-to states linked to a customer
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the ship-to states associated with the specified customer.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        FetchResult<StateModel> ListShipToStatesForCustomer(Int32 companyId, String customerCode);
 
         /// <summary>
         /// List valid certificates for a location
@@ -2932,6 +3015,28 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         FetchResult<CustomerModel> QueryCustomers(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Remove ship-to states from a customer
+        /// </summary>
+        /// <remarks>
+        /// Removes one or more ship-to states from the specified customer.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of ship-to states to remove from this customer</param>
+        FetchResult<StateModel> RemoveShipToStatesForCustomer(Int32 companyId, String customerCode, List<StateModel> model);
 
         /// <summary>
         /// Unlink attributes from a customer
@@ -3535,6 +3640,10 @@ namespace Avalara.AvaTax.RestClient
         /// It is intended to allow you to create a "Jurisdiction Override", which allows an address to be configured as belonging to a nearby
         /// jurisdiction in AvaTax.
         ///  
+        /// You can widen the search by supplying the optional `radius` parameter (in miles). Supported values are
+        /// 5 (default), 10, 20, 30, and 40. If the desired tax region is not found at 5 miles, retry with a larger radius.
+        /// This only affects tax-region retrieval for this request; it does not change tax calculation once a region is selected.
+        ///  
         /// The results of this API call can be passed to the `CreateJurisdictionOverride` API call.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
@@ -3545,11 +3654,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
+        /// <param name="radius">Optional. The search radius in miles used to find nearby tax regions. Allowed values are 5, 10,
+        /// 20, 30, and 40; when omitted the default of 5 miles is used. A larger radius widens the search for
+        /// this request only and does not change the default behavior for other requests. Any other value
+        /// is rejected with a validation error.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country, Jurisdictions</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<JurisdictionOverrideModel> ListJurisdictionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, String filter, Int32? top, Int32? skip, String orderBy);
+        FetchResult<JurisdictionOverrideModel> ListJurisdictionsByAddress(String line1, String line2, String line3, String city, String region, String postalCode, String country, Int32? radius, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// List jurisdictions based on the provided taxTypeId, taxSubTypeId, country, and rateTypeId
@@ -4704,21 +4817,25 @@ namespace Avalara.AvaTax.RestClient
         FetchResult<ECommerceTokenOutputModel> RefreshECommerceToken(Int32 companyId, RefreshECommerceTokenInputModel model);
 
         /// <summary>
-        /// List economic nexus threshold statuses for a company
+        /// Get economic nexus threshold statuses for a company
         /// </summary>
         /// <remarks>
-        /// Returns precomputed economic nexus threshold statuses for a company, sourced from a cache
-        /// refreshed weekly from Snowflake.
+        /// Returns precomputed economic nexus threshold statuses for a company, sourced from an in-memory
+        /// cache refreshed periodically from Snowflake. All responses are served from cache;
+        /// Snowflake is never queried on the request path.
         ///  
-        /// When the optional `region` query parameter is provided, only the matching jurisdiction row is included in `states`.
-        /// If no row exists for that company and region, `states` is an empty array (still 200 OK).
+        /// When the optional `region` query parameter is provided, only the matching jurisdiction row
+        /// is included in `states`. If no row exists for that company and region, `states` is
+        /// an empty array (200 OK).
         ///  
-        /// TPS currently binds this filter as query parameter `state`; use the same value. If the public contract standardizes on `region`,
-        /// TPS or api-gateway should accept or rewrite `region` so filtering still applies.
+        /// When `lastRefreshedAt` is absent from the response, the cache has not yet completed its
+        /// first refresh; callers should treat absence as "cache freshness unknown".
         ///  
         /// Production traffic is served by TPS; api-gateway should route this path to TPS.
         ///  
-        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS or the cache has not loaded, TPS returns 503.
+        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS,
+        /// a 503 is returned with no `Retry-After` (misconfiguration requires redeployment).
+        /// If the cache is still initializing, a 503 is returned with `Retry-After: 300`.
         /// 
         /// ### Security Policies
         /// 
@@ -4726,13 +4843,11 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The Avalara company identifier.</param>
-        /// <param name="region">Optional two-letter US state/region postal code (case-insensitive), same meaning as the `state` column in the data store. When provided, `states` contains at most one item; if there is no data for that company and region, `states` is an empty array (200 OK).</param>
-        /// <param name="include">Standard Avalara `$include` query option (see other v2 list APIs).</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        ThresholdStatusesModel GetEcoNexusThresholds(Int32 companyId, String region, String include, String filter, Int32? top, Int32? skip, String orderBy);
+        /// <param name="region">Optional two-letter US state postal code to filter results (case-insensitive).
+        ///  When provided, `states` contains at most one item; if there is no data for that company
+        ///  and region, `states` is an empty array (200 OK). Must be exactly two characters; otherwise returns 400.
+        ///  Matches the `region` field on each item in the response.</param>
+        EcoNexusThresholdsModel GetEcoNexusThresholds(Int32 companyId, String region);
 
         /// <summary>
         /// Approves linkage to a firm for a client account
@@ -6416,7 +6531,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company for which you want to create the registration.</param>
         /// <param name="model">The webhook registration details to create.</param>
-        ItemReverseSyncRegistrationOutputModel CreateReverseSyncRegistration(Int32 companyId, ItemReverseSyncRegistrationInputModel model);
+        ItemReverseSyncRegistrationOutputModel CreateReverseSyncRegistration(Int32 companyId, List<ItemReverseSyncRegistrationInputModel> model);
 
         /// <summary>
         /// Delete a webhook registration.
@@ -6478,6 +6593,213 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="registrationId">The ID of the registration to update.</param>
         /// <param name="model">The registration fields to update.</param>
         ItemReverseSyncRegistrationOutputModel UpdateReverseSyncRegistration(Int32 companyId, Int64 registrationId, ItemReverseSyncRegistrationUpdateModel model);
+
+        /// <summary>
+        /// Create a new job for a company
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="model">The job to create</param>
+        JobModel CreateJob(Int32 companyId, JobModel model);
+
+        /// <summary>
+        /// Create a new phase on a job
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="model">The phase to create</param>
+        JobPhaseModel CreateJobPhase(Int32 companyId, Int32 jobId, JobPhaseModel model);
+
+        /// <summary>
+        /// Create a new task on a phase
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="model">The task to create</param>
+        JobTaskModel CreateJobTask(Int32 companyId, Int32 jobId, Int32 phaseId, JobTaskModel model);
+
+        /// <summary>
+        /// Delete a job
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="id">The unique ID number of the job to delete</param>
+        JobModel DeleteJob(Int32 companyId, Int32 id);
+
+        /// <summary>
+        /// Delete a phase from a job
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase to delete</param>
+        JobPhaseModel DeleteJobPhase(Int32 companyId, Int32 jobId, Int32 phaseId);
+
+        /// <summary>
+        /// Delete a task from a phase
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="taskId">The unique ID number of the task to delete</param>
+        JobTaskModel DeleteJobTask(Int32 companyId, Int32 jobId, Int32 phaseId, Int32 taskId);
+
+        /// <summary>
+        /// Retrieve a single job
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single job by its unique ID.
+        ///  
+        /// A job represents construction or project work that exemption certificates can be associated with. Each
+        /// job can contain one or more phases, and each phase can contain one or more tasks.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * phases - Retrieves the list of phases for this job.
+        /// * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases, so requesting `tasks` will also expand `phases`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="id">The unique ID number of the job</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * phases - Retrieves the list of phases for this job.
+        ///  * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases, so requesting `tasks` will also expand `phases`.</param>
+        JobModel GetJob(Int32 companyId, Int32 id, String include);
+
+        /// <summary>
+        /// List all jobs for a company
+        /// </summary>
+        /// <remarks>
+        /// List all jobs recorded by a company.
+        ///  
+        /// A job represents construction or project work that exemption certificates can be associated with. Each
+        /// job can contain one or more phases, and each phase can contain one or more tasks.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * phases - Retrieves the list of phases for each job.
+        /// * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases, so requesting `tasks` will also expand `phases`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * phases - Retrieves the list of phases for each job.
+        ///  * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exposureZone, phases</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<JobModel> ListJobs(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Update an existing job
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="id">The unique ID number of the job to update</param>
+        /// <param name="model">The updated job data</param>
+        JobModel UpdateJob(Int32 companyId, Int32 id, JobModel model);
+
+        /// <summary>
+        /// Update an existing phase on a job
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="model">The updated phase data</param>
+        JobPhaseModel UpdateJobPhase(Int32 companyId, Int32 jobId, Int32 phaseId, JobPhaseModel model);
+
+        /// <summary>
+        /// Update an existing task on a phase
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="taskId">The unique ID number of the task</param>
+        /// <param name="model">The updated task data</param>
+        JobTaskModel UpdateJobTask(Int32 companyId, Int32 jobId, Int32 phaseId, Int32 taskId, JobTaskModel model);
 
         /// <summary>
         /// Create one or more overrides
@@ -8093,15 +8415,27 @@ namespace Avalara.AvaTax.RestClient
         /// Download an audit log report
         /// </summary>
         /// <remarks>
-        /// Downloads the file associated with an audit log report.
-        /// If the report is not yet complete, you will receive a `ReportNotFinished` error.
+        /// This API downloads the file associated with an audit log report.
+        ///  
+        /// If the report is not yet complete, you will receive a `ReportNotFinished` error. To check if a report is complete,
+        /// use the `GetAuditLogReport` API.
+        ///  
+        /// Reports are run on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run a report, you should follow these steps:
+        ///  
+        /// * Begin a report by calling the report's ExportAuditLogs API.
+        /// * In the result of the ExportAuditLogs API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetAuditLogReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadAuditLogReport` to retrieve the file.
+        ///  
+        /// * We throttle this API. You can only call this API up to 5 times in a minute.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="id">The unique ID of the audit log report</param>
+        /// <param name="id">The unique ID number of this report</param>
         FileResult DownloadAuditLogReport(String id);
 
         /// <summary>
@@ -8136,27 +8470,62 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Begins running an `ExportAuditLogs` report task and returns the identity of the report.
+        ///  
+        /// Reports are run on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run a report, you should follow these steps:
+        ///  
+        /// * Begin a report by calling the report's ExportAuditLogs API.
+        /// * In the result of the ExportAuditLogs API, you receive a report's `id` value.
+        /// * All reports with `InQueue` status are picked up by the report service and processed in the background.
+        /// * Reports that are picked up by the report service will have an `InProgress` status.
+        /// * Reports will be updated to `Completed` status when the report is ready for download.
+        /// * Check the status of a report by calling `GetAuditLogReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadAuditLogReport` to retrieve the file.
+        ///  
+        /// The `ExportAuditLogs` report produces information about audit records within your account.
+        ///  
+        /// The following `reportType` values are supported:
+        /// * `audit` - Exports audit records for configuration changes. Requires `reportSubType` to specify the table name.
+        /// * `audittransactionlogs` - Exports transaction audit logs.
+        ///  
+        /// When `reportType` is `audit`, the `reportSubType` field supports the following valid table names:
+        /// `NEXUS`, `USER`, `COMPANY`, `ACCOUNT`, `COMPANYLOCATION`, `ACCOUNTSETTING`, `COMPANYLOCATIONSETTING`,
+        /// `COMPANYSETTING`, `TAXCODE`, `TAXRULE`, `ADDRESSSERVICECONFIG`, `AUDITADVANCEDRULE`, `COMPANYCONTACT`,
+        /// `COMPANYLOCATIONPARAMETERDETAIL`, `COMPANYLOCATIONSETTINGCONFIG`, `COMPANYPARAMETERDETAIL`, `COMPANYRETURN`,
+        /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`.
+        ///  
+        /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="model">Options to filter the audit log export.</param>
+        /// <param name="model">Options that may be configured to customize the report.</param>
         List<ReportAuditLogResponseModel> ExportAuditLogs(ReportAuditLogModel model);
 
         /// <summary>
-        /// Get an audit log report by id
+        /// Retrieve a single audit log report
         /// </summary>
         /// <remarks>
-        /// Retrieves the status and details of an audit log report task.
+        /// Retrieve a single audit log report by its unique ID number.
+        ///  
+        /// Reports are run on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run a report, you should follow these steps:
+        ///  
+        /// * Begin a report by calling the report's ExportAuditLogs API.
+        /// * In the result of the ExportAuditLogs API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetAuditLogReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadAuditLogReport` to retrieve the file.
+        ///  
+        /// This API call returns information about audit log report types.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="id">The unique ID of the audit log report</param>
+        /// <param name="id">The unique ID number of the report to retrieve</param>
         ReportAuditLogResponseModel GetAuditLogReport(String id);
 
         /// <summary>
@@ -8200,7 +8569,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         ///  
-        /// The currently supported reports are: **Document Line**, **Document Line Detail**, **Multitax Line Detail**, **Liability**, **Tax Region**, **AP Document**, **AP Document Detail**, and **Document Line Detail All Taxes**.
+        /// The currently supported reports are: **Document**, **Document Summary**, **Document Line**, **Document Line Detail**, **Multitax Line Detail**, **Liability**, **Tax Region**, **AP Document**, **AP Document Detail**, and **Document Line Detail All Taxes**.
         /// 
         /// ### Security Policies
         /// 
@@ -8226,6 +8595,13 @@ namespace Avalara.AvaTax.RestClient
         /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
         ///  
         /// This API call returns information about all report types across your entire account.
+        ///  
+        /// Audit-log report types (`audit`, `audittransactionlogs`) are not included in this list; retrieve those via the
+        /// `GetAuditLogReport` / `DownloadAuditLogReport` APIs.
+        ///  
+        /// Pagination note: when the response includes a non-null `pageKey` (next link), more results may exist and the
+        /// caller should follow it, even if the current page returned fewer than the requested number of records. This can
+        /// happen when a `$filter` is applied, because matches are evaluated server-side across backend pages.
         /// 
         /// ### Security Policies
         /// 
@@ -8236,7 +8612,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="pageKey">Provide a page key to retrieve the next page of results.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        FetchResult<ReportModel> ListReports(Int32? companyId, String pageKey, Int32? skip, Int32? top);
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* reportType, parameters, status, size, format, file, createdUser, completedDate</param>
+        FetchResult<ReportModel> ListReports(Int32? companyId, String pageKey, Int32? skip, Int32? top, String filter);
 
         /// <summary>
         /// Create a new setting
@@ -10446,7 +10823,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -10585,7 +10962,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11875,6 +12252,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         /// * histories - Retrieves the certificate update history
         /// * jobs - Retrieves the jobs for this certificate
+        /// * jobs.phases - Retrieves the jobs along with their phases
+        /// * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
@@ -11900,6 +12279,8 @@ namespace Avalara.AvaTax.RestClient
         ///  * attributes - Retrieves all attributes applied to the certificate.
         ///  * histories - Retrieves the certificate update history
         ///  * jobs - Retrieves the jobs for this certificate
+        ///  * jobs.phases - Retrieves the jobs along with their phases
+        ///  * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
@@ -12023,6 +12404,39 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// List the certificate tax-type hierarchy available to this company;
+        /// </summary>
+        /// <remarks>
+        /// Returns the TPS multi-tax type hierarchy that is applicable when configuring exemption
+        /// certificates for the given country. The returned tax types can be used to populate
+        /// `taxTypeMappings` entries on a certificate jurisdiction via POST / PUT certificate.
+        ///  
+        /// This endpoint is scoped to the certificate (CertCapture) domain and does not return the
+        /// generic AvaTax tax-type catalog. For the generic catalog see the `Definitions` APIs.
+        ///  
+        /// `country` is a mandatory query parameter.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID number of the company</param>
+        /// <param name="country">Required. ISO-2 country code used to filter the tax-type hierarchy (e.g., "US").</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxTypeId, country, taxSubTypeDetails</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<CertificateTaxTypeModel>> ListCertificateTaxTypesAsync(Int32 companyId, String country, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// List customers linked to this certificate;
         /// </summary>
         /// <remarks>
@@ -12124,6 +12538,8 @@ namespace Avalara.AvaTax.RestClient
         /// * attributes - Retrieves all attributes applied to the certificate.
         /// * histories - Retrieves the certificate update history
         /// * jobs - Retrieves the jobs for this certificate
+        /// * jobs.phases - Retrieves the jobs along with their phases
+        /// * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         /// * logs - Retrieves the certificate log
         /// * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         /// * custom_fields - Retrieves custom fields set for this certificate
@@ -12148,11 +12564,13 @@ namespace Avalara.AvaTax.RestClient
         ///  * attributes - Retrieves all attributes applied to the certificate.
         ///  * histories - Retrieves the certificate update history
         ///  * jobs - Retrieves the jobs for this certificate
+        ///  * jobs.phases - Retrieves the jobs along with their phases
+        ///  * jobs.tasks - Retrieves the jobs along with their phases and the tasks within each phase
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -13397,6 +13815,29 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Add ship-to states to a customer;
+        /// </summary>
+        /// <remarks>
+        /// Adds one or more ship-to states to the specified customer.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of ship-to states to add to this customer</param>
+        Task<FetchResult<StateModel>> AddShipToStatesForCustomerAsync(Int32 companyId, String customerCode, List<StateModel> model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Create customers for this company;
         /// </summary>
         /// <remarks>
@@ -13700,7 +14141,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -13749,6 +14190,28 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
         /// <param name="customerCode">The unique code representing this customer</param>
         Task<ExemptionStatusModel> ListInActiveCertificatesForCustomerAsync(Int32 companyId, String customerCode);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List ship-to states linked to a customer;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves the ship-to states associated with the specified customer.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        Task<FetchResult<StateModel>> ListShipToStatesForCustomerAsync(Int32 companyId, String customerCode);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -13827,6 +14290,29 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         Task<FetchResult<CustomerModel>> QueryCustomersAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Remove ship-to states from a customer;
+        /// </summary>
+        /// <remarks>
+        /// Removes one or more ship-to states from the specified customer.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that recorded this customer</param>
+        /// <param name="customerCode">The unique code representing this customer</param>
+        /// <param name="model">The list of ship-to states to remove from this customer</param>
+        Task<FetchResult<StateModel>> RemoveShipToStatesForCustomerAsync(Int32 companyId, String customerCode, List<StateModel> model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -14464,6 +14950,10 @@ namespace Avalara.AvaTax.RestClient
         /// It is intended to allow you to create a "Jurisdiction Override", which allows an address to be configured as belonging to a nearby
         /// jurisdiction in AvaTax.
         ///  
+        /// You can widen the search by supplying the optional `radius` parameter (in miles). Supported values are
+        /// 5 (default), 10, 20, 30, and 40. If the desired tax region is not found at 5 miles, retry with a larger radius.
+        /// This only affects tax-region retrieval for this request; it does not change tax calculation once a region is selected.
+        ///  
         /// The results of this API call can be passed to the `CreateJurisdictionOverride` API call.;
         /// </remarks>
 		
@@ -14474,11 +14964,15 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="region">The region, state, or province code portion of this address.</param>
         /// <param name="postalCode">The postal code or zip code portion of this address.</param>
         /// <param name="country">The two-character ISO-3166 code of the country portion of this address.</param>
+        /// <param name="radius">Optional. The search radius in miles used to find nearby tax regions. Allowed values are 5, 10,
+        /// 20, 30, and 40; when omitted the default of 5 miles is used. A larger radius widens the search for
+        /// this request only and does not change the default behavior for other requests. Any other value
+        /// is rejected with a validation error.</param>
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* country, Jurisdictions</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<JurisdictionOverrideModel>> ListJurisdictionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, String filter, Int32? top, Int32? skip, String orderBy);
+        Task<FetchResult<JurisdictionOverrideModel>> ListJurisdictionsByAddressAsync(String line1, String line2, String line3, String city, String region, String postalCode, String country, Int32? radius, String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15702,21 +16196,25 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// List economic nexus threshold statuses for a company;
+        /// Get economic nexus threshold statuses for a company;
         /// </summary>
         /// <remarks>
-        /// Returns precomputed economic nexus threshold statuses for a company, sourced from a cache
-        /// refreshed weekly from Snowflake.
+        /// Returns precomputed economic nexus threshold statuses for a company, sourced from an in-memory
+        /// cache refreshed periodically from Snowflake. All responses are served from cache;
+        /// Snowflake is never queried on the request path.
         ///  
-        /// When the optional `region` query parameter is provided, only the matching jurisdiction row is included in `states`.
-        /// If no row exists for that company and region, `states` is an empty array (still 200 OK).
+        /// When the optional `region` query parameter is provided, only the matching jurisdiction row
+        /// is included in `states`. If no row exists for that company and region, `states` is
+        /// an empty array (200 OK).
         ///  
-        /// TPS currently binds this filter as query parameter `state`; use the same value. If the public contract standardizes on `region`,
-        /// TPS or api-gateway should accept or rewrite `region` so filtering still applies.
+        /// When `lastRefreshedAt` is absent from the response, the cache has not yet completed its
+        /// first refresh; callers should treat absence as "cache freshness unknown".
         ///  
         /// Production traffic is served by TPS; api-gateway should route this path to TPS.
         ///  
-        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS or the cache has not loaded, TPS returns 503.
+        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS,
+        /// a 503 is returned with no `Retry-After` (misconfiguration requires redeployment).
+        /// If the cache is still initializing, a 503 is returned with `Retry-After: 300`.
         /// 
         /// ### Security Policies
         /// 
@@ -15724,13 +16222,11 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The Avalara company identifier.</param>
-        /// <param name="region">Optional two-letter US state/region postal code (case-insensitive), same meaning as the `state` column in the data store. When provided, `states` contains at most one item; if there is no data for that company and region, `states` is an empty array (200 OK).</param>
-        /// <param name="include">Standard Avalara `$include` query option (see other v2 list APIs).</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
-        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
-        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<ThresholdStatusesModel> GetEcoNexusThresholdsAsync(Int32 companyId, String region, String include, String filter, Int32? top, Int32? skip, String orderBy);
+        /// <param name="region">Optional two-letter US state postal code to filter results (case-insensitive).
+        ///  When provided, `states` contains at most one item; if there is no data for that company
+        ///  and region, `states` is an empty array (200 OK). Must be exactly two characters; otherwise returns 400.
+        ///  Matches the `region` field on each item in the response.</param>
+        Task<EcoNexusThresholdsModel> GetEcoNexusThresholdsAsync(Int32 companyId, String region);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -17494,7 +17990,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company for which you want to create the registration.</param>
         /// <param name="model">The webhook registration details to create.</param>
-        Task<ItemReverseSyncRegistrationOutputModel> CreateReverseSyncRegistrationAsync(Int32 companyId, ItemReverseSyncRegistrationInputModel model);
+        Task<ItemReverseSyncRegistrationOutputModel> CreateReverseSyncRegistrationAsync(Int32 companyId, List<ItemReverseSyncRegistrationInputModel> model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -17560,6 +18056,224 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="registrationId">The ID of the registration to update.</param>
         /// <param name="model">The registration fields to update.</param>
         Task<ItemReverseSyncRegistrationOutputModel> UpdateReverseSyncRegistrationAsync(Int32 companyId, Int64 registrationId, ItemReverseSyncRegistrationUpdateModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create a new job for a company;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="model">The job to create</param>
+        Task<JobModel> CreateJobAsync(Int32 companyId, JobModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create a new phase on a job;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="model">The phase to create</param>
+        Task<JobPhaseModel> CreateJobPhaseAsync(Int32 companyId, Int32 jobId, JobPhaseModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create a new task on a phase;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="model">The task to create</param>
+        Task<JobTaskModel> CreateJobTaskAsync(Int32 companyId, Int32 jobId, Int32 phaseId, JobTaskModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a job;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="id">The unique ID number of the job to delete</param>
+        Task<JobModel> DeleteJobAsync(Int32 companyId, Int32 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a phase from a job;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase to delete</param>
+        Task<JobPhaseModel> DeleteJobPhaseAsync(Int32 companyId, Int32 jobId, Int32 phaseId);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a task from a phase;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="taskId">The unique ID number of the task to delete</param>
+        Task<JobTaskModel> DeleteJobTaskAsync(Int32 companyId, Int32 jobId, Int32 phaseId, Int32 taskId);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single job;
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a single job by its unique ID.
+        ///  
+        /// A job represents construction or project work that exemption certificates can be associated with. Each
+        /// job can contain one or more phases, and each phase can contain one or more tasks.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * phases - Retrieves the list of phases for this job.
+        /// * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases, so requesting `tasks` will also expand `phases`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="id">The unique ID number of the job</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * phases - Retrieves the list of phases for this job.
+        ///  * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases, so requesting `tasks` will also expand `phases`.</param>
+        Task<JobModel> GetJobAsync(Int32 companyId, Int32 id, String include);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List all jobs for a company;
+        /// </summary>
+        /// <remarks>
+        /// List all jobs recorded by a company.
+        ///  
+        /// A job represents construction or project work that exemption certificates can be associated with. Each
+        /// job can contain one or more phases, and each phase can contain one or more tasks.
+        ///  
+        /// You can use the `$include` parameter to fetch the following additional objects for expansion:
+        ///  
+        /// * phases - Retrieves the list of phases for each job.
+        /// * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases, so requesting `tasks` will also expand `phases`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="include">OPTIONAL: A comma separated list of special fetch options. You can specify one or more of the following:
+        ///  
+        ///  * phases - Retrieves the list of phases for each job.
+        ///  * tasks - Retrieves the list of tasks within each phase. Tasks are nested under phases</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exposureZone, phases</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<JobModel>> ListJobsAsync(Int32 companyId, String include, String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update an existing job;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="id">The unique ID number of the job to update</param>
+        /// <param name="model">The updated job data</param>
+        Task<JobModel> UpdateJobAsync(Int32 companyId, Int32 id, JobModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update an existing phase on a job;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="model">The updated phase data</param>
+        Task<JobPhaseModel> UpdateJobPhaseAsync(Int32 companyId, Int32 jobId, Int32 phaseId, JobPhaseModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update an existing task on a phase;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company</param>
+        /// <param name="jobId">The unique ID number of the job</param>
+        /// <param name="phaseId">The unique ID number of the phase</param>
+        /// <param name="taskId">The unique ID number of the task</param>
+        /// <param name="model">The updated task data</param>
+        Task<JobTaskModel> UpdateJobTaskAsync(Int32 companyId, Int32 jobId, Int32 phaseId, Int32 taskId, JobTaskModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -19239,15 +19953,27 @@ namespace Avalara.AvaTax.RestClient
         /// Download an audit log report;
         /// </summary>
         /// <remarks>
-        /// Downloads the file associated with an audit log report.
-        /// If the report is not yet complete, you will receive a `ReportNotFinished` error.
+        /// This API downloads the file associated with an audit log report.
+        ///  
+        /// If the report is not yet complete, you will receive a `ReportNotFinished` error. To check if a report is complete,
+        /// use the `GetAuditLogReport` API.
+        ///  
+        /// Reports are run on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run a report, you should follow these steps:
+        ///  
+        /// * Begin a report by calling the report's ExportAuditLogs API.
+        /// * In the result of the ExportAuditLogs API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetAuditLogReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadAuditLogReport` to retrieve the file.
+        ///  
+        /// * We throttle this API. You can only call this API up to 5 times in a minute.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="id">The unique ID of the audit log report</param>
+        /// <param name="id">The unique ID number of this report</param>
         Task<FileResult> DownloadAuditLogReportAsync(String id);
 
         /// Swagger Name: AvaTaxClient
@@ -19284,28 +20010,63 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         /// <remarks>
         /// Begins running an `ExportAuditLogs` report task and returns the identity of the report.
+        ///  
+        /// Reports are run on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run a report, you should follow these steps:
+        ///  
+        /// * Begin a report by calling the report's ExportAuditLogs API.
+        /// * In the result of the ExportAuditLogs API, you receive a report's `id` value.
+        /// * All reports with `InQueue` status are picked up by the report service and processed in the background.
+        /// * Reports that are picked up by the report service will have an `InProgress` status.
+        /// * Reports will be updated to `Completed` status when the report is ready for download.
+        /// * Check the status of a report by calling `GetAuditLogReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadAuditLogReport` to retrieve the file.
+        ///  
+        /// The `ExportAuditLogs` report produces information about audit records within your account.
+        ///  
+        /// The following `reportType` values are supported:
+        /// * `audit` - Exports audit records for configuration changes. Requires `reportSubType` to specify the table name.
+        /// * `audittransactionlogs` - Exports transaction audit logs.
+        ///  
+        /// When `reportType` is `audit`, the `reportSubType` field supports the following valid table names:
+        /// `NEXUS`, `USER`, `COMPANY`, `ACCOUNT`, `COMPANYLOCATION`, `ACCOUNTSETTING`, `COMPANYLOCATIONSETTING`,
+        /// `COMPANYSETTING`, `TAXCODE`, `TAXRULE`, `ADDRESSSERVICECONFIG`, `AUDITADVANCEDRULE`, `COMPANYCONTACT`,
+        /// `COMPANYLOCATIONPARAMETERDETAIL`, `COMPANYLOCATIONSETTINGCONFIG`, `COMPANYPARAMETERDETAIL`, `COMPANYRETURN`,
+        /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`.
+        ///  
+        /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="model">Options to filter the audit log export.</param>
+        /// <param name="model">Options that may be configured to customize the report.</param>
         Task<List<ReportAuditLogResponseModel>> ExportAuditLogsAsync(ReportAuditLogModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Get an audit log report by id;
+        /// Retrieve a single audit log report;
         /// </summary>
         /// <remarks>
-        /// Retrieves the status and details of an audit log report task.
+        /// Retrieve a single audit log report by its unique ID number.
+        ///  
+        /// Reports are run on the server. When complete, the report file will be available for download
+        /// for up to 30 days after completion. To run a report, you should follow these steps:
+        ///  
+        /// * Begin a report by calling the report's ExportAuditLogs API.
+        /// * In the result of the ExportAuditLogs API, you receive back a report's `id` value.
+        /// * Check the status of a report by calling `GetAuditLogReport` and passing in the report's `id` value.
+        /// * When a report's status is `Completed`, call `DownloadAuditLogReport` to retrieve the file.
+        ///  
+        /// This API call returns information about audit log report types.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ProStoresOperator, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="id">The unique ID of the audit log report</param>
+        /// <param name="id">The unique ID number of the report to retrieve</param>
         Task<ReportAuditLogResponseModel> GetAuditLogReportAsync(String id);
 
         /// Swagger Name: AvaTaxClient
@@ -19351,7 +20112,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         ///  
-        /// The currently supported reports are: **Document Line**, **Document Line Detail**, **Multitax Line Detail**, **Liability**, **Tax Region**, **AP Document**, **AP Document Detail**, and **Document Line Detail All Taxes**.
+        /// The currently supported reports are: **Document**, **Document Summary**, **Document Line**, **Document Line Detail**, **Multitax Line Detail**, **Liability**, **Tax Region**, **AP Document**, **AP Document Detail**, and **Document Line Detail All Taxes**.
         /// 
         /// ### Security Policies
         /// 
@@ -19378,6 +20139,13 @@ namespace Avalara.AvaTax.RestClient
         /// * When a report's status is `Completed`, call `DownloadReport` to retrieve the file.
         ///  
         /// This API call returns information about all report types across your entire account.
+        ///  
+        /// Audit-log report types (`audit`, `audittransactionlogs`) are not included in this list; retrieve those via the
+        /// `GetAuditLogReport` / `DownloadAuditLogReport` APIs.
+        ///  
+        /// Pagination note: when the response includes a non-null `pageKey` (next link), more results may exist and the
+        /// caller should follow it, even if the current page returned fewer than the requested number of records. This can
+        /// happen when a `$filter` is applied, because matches are evaluated server-side across backend pages.
         /// 
         /// ### Security Policies
         /// 
@@ -19388,7 +20156,8 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="pageKey">Provide a page key to retrieve the next page of results.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
-        Task<FetchResult<ReportModel>> ListReportsAsync(Int32? companyId, String pageKey, Int32? skip, Int32? top);
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* reportType, parameters, status, size, format, file, createdUser, completedDate</param>
+        Task<FetchResult<ReportModel>> ListReportsAsync(Int32? companyId, String pageKey, Int32? skip, Int32? top, String filter);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -21672,7 +22441,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -21815,7 +22584,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>

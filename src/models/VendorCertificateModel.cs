@@ -189,6 +189,10 @@ namespace Avalara.AvaTax.RestClient
         /// regions where the certificate applies. A certificate can have one or more jurisdictions.
         ///  
         /// You can fetch this data by specifying `$include=jurisdictions` when calling a certificate fetch API.
+        ///  
+        /// This collection itself is not filterable; use the sub-fields `jurisdictions.type_id`,
+        /// `jurisdictions.name`, or `jurisdictions.code` (exposed via the computed properties below)
+        /// to filter certificates by jurisdiction.
         /// </summary>
         public List<CertificateJurisdictionModel> jurisdictions { get; set; }
 
@@ -207,11 +211,18 @@ namespace Avalara.AvaTax.RestClient
         public List<HistoryModel> histories { get; set; }
 
         /// <summary>
-        /// A list of jobs for this certificate.
+        /// The jobs (and their phases / tasks) associated with this certificate.
         ///  
-        /// You can fetch this data by specifying `$include=jobs` when calling a certificate fetch API.
+        /// On POST / PUT: supply the `id` of each existing job — and optionally nested phase /
+        /// task `id`s — to link them to this certificate. All other fields on each entry
+        /// (`name`, `jobNumber`, `isExplicit`, etc.) are server-computed and ignored
+        /// on input.
+        ///  
+        /// On GET: populated when `$include=jobs` is specified. Use `$include=jobs.phases`
+        /// to also expand the phases within each job, and `$include=jobs.tasks` to expand the
+        /// tasks within each phase (which implies `jobs` and `jobs.phases`).
         /// </summary>
-        public List<CustomerJobModel> jobs { get; set; }
+        public List<CertificateJobModel> jobs { get; set; }
 
         /// <summary>
         /// A list of logs for this certificate.
