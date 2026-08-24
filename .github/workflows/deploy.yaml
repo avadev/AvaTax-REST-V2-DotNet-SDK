@@ -36,6 +36,9 @@ jobs:
       env:
         SANDBOX_USERNAME: ${{ secrets.SANDBOX_USERNAME }}
         SANDBOX_PASSWORD: ${{ secrets.SANDBOX_PASSWORD }}
+        # Must match test.yaml: without this the suite initializes a company per
+        # test, and the sandbox cannot find a company it has just created.
+        SANDBOX_COMPANY_CODE: ${{ vars.SANDBOX_COMPANY_CODE }}
       working-directory: tests
     - name: Build Package
       run: dotnet build --no-restore --configuration Release
