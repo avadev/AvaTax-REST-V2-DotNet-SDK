@@ -38,4 +38,8 @@ jobs:
       env:
         SANDBOX_USERNAME: ${{ secrets.SANDBOX_USERNAME }}
         SANDBOX_PASSWORD: ${{ secrets.SANDBOX_PASSWORD }}
+        # Reuse one existing sandbox company instead of initializing a throwaway
+        # one per test. Leave the repository variable unset to go back to
+        # creating companies.
+        SANDBOX_COMPANY_CODE: ${{ vars.SANDBOX_COMPANY_CODE }}
       working-directory: tests

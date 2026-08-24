@@ -45,7 +45,7 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard
                 DefaultCompanyId = defaultCompanyModel.id;
 
                 // Create a basic company with nexus in the state of Washington
-                TestCompany = Client.CompanyInitialize(new CompanyInitializationModel()
+                TestCompany = TestCompanyFactory.Existing(Client) ?? Client.CompanyInitialize(new CompanyInitializationModel()
                 {
                     city = "Bainbridge Island",
                     companyCode = Guid.NewGuid().ToString().Substring(0, 25),
@@ -86,6 +86,12 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard
         public void TearDown()
         {
             try {
+
+                // A reused company is not ours to deactivate
+                if (TestCompanyFactory.IsReusing)
+                {
+                    return;
+                }
 
                 // Re-fetch the company
                 var company = Client.GetCompany(TestCompany.id, null);
