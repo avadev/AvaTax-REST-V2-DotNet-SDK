@@ -155,16 +155,16 @@ namespace Avalara.AvaTax.RestClient.Test.net461
             List<NexusModel> nexusModelsAdded = null;
             try
             {
-                nexusModelsAdded = Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
+                nexusModelsAdded = CreateTestNexus(stateNexus, cityNexus);
                 Assert.NotNull(nexusModelsAdded, "Nexus should have been created");
                 Assert.AreEqual(2, nexusModelsAdded.Count, "Both nexus should have been created");
 
                 // Get State nexus
-                var getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id.Value, null);
+                var getALNexus = FetchNexus(nexusModelsAdded[0].id.Value);
                 Assert.NotNull(getALNexus, "Should have been able to fetch the state nexus");
 
                 // Get City Nexus
-                var getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
+                var getCityNexus = FetchNexus(nexusModelsAdded[1].id.Value);
                 Assert.NotNull(getCityNexus, "Should have been able to fetch the city nexus");
 
                 // Delete Nexus
@@ -176,6 +176,97 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                 // Leave nothing behind, whatever happened above.
                 DeleteTestNexus();
             }
+        }
+
+        /// <summary>
+        /// Attempts allowed when a jurisdiction still looks occupied.
+        /// </summary>
+        private const int CreateAttempts = 3;
+
+        /// <summary>
+        /// Attempts allowed when fetching a nexus that was just created.
+        /// </summary>
+        private const int FetchAttempts = 5;
+
+        /// <summary>
+        /// Milliseconds to wait between attempts.
+        /// </summary>
+        private const int RetryDelayMilliseconds = 2 * 1000;
+
+        /// <summary>
+        /// Create the two nexus, retrying past DuplicateNexusError.
+        ///
+        /// The nexus list can serve a stale read, so cleanup can find nothing to
+        /// remove while the entries are in fact still there. Clearing again after a
+        /// pause is the only way to tell a genuine duplicate from a stale list.
+        /// </summary>
+        /// <param name="stateNexus">State nexus to create.</param>
+        /// <param name="cityNexus">City nexus to create.</param>
+        private List<NexusModel> CreateTestNexus(NexusModel stateNexus, NexusModel cityNexus)
+        {
+            for (var attempt = 1; ; ++attempt)
+            {
+                try
+                {
+                    return Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
+                }
+                catch (AvaTaxError e)
+                {
+                    if (attempt >= CreateAttempts || !IsDuplicateNexus(e))
+                    {
+                        throw;
+                    }
+
+                    TestContext.Progress.WriteLine($"Nexus still present on attempt {attempt}, "
+                        + "clearing and retrying: " + ApiCallLog.Describe(e));
+                    System.Threading.Thread.Sleep(RetryDelayMilliseconds);
+                    DeleteTestNexus();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fetch a nexus, allowing for the read lag that can leave one that was just
+        /// created briefly invisible. Returns null once the attempts run out, so the
+        /// caller's assertion is what reports the failure.
+        /// </summary>
+        /// <param name="nexusId">Nexus to fetch.</param>
+        private NexusModel FetchNexus(Int32 nexusId)
+        {
+            for (var attempt = 1; attempt <= FetchAttempts; ++attempt)
+            {
+                try
+                {
+                    var nexus = Client.GetNexus(TestCompany.id, nexusId, null);
+                    if (nexus != null)
+                    {
+                        return nexus;
+                    }
+
+                    TestContext.Progress.WriteLine($"Nexus {nexusId} fetched as null on attempt {attempt}.");
+                }
+                catch (AvaTaxError e)
+                {
+                    TestContext.Progress.WriteLine($"Nexus {nexusId} not fetchable on attempt {attempt}: "
+                        + ApiCallLog.Describe(e));
+                }
+
+                System.Threading.Thread.Sleep(RetryDelayMilliseconds);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// True when the error says the nexus already exists.
+        /// </summary>
+        /// <param name="error">Error to inspect.</param>
+        private static bool IsDuplicateNexus(AvaTaxError error)
+        {
+            return error != null
+                && error.error != null
+                && error.error.error != null
+                && error.error.error.code == ErrorCodeId.DuplicateNexusError;
         }
 
         /// <summary>
