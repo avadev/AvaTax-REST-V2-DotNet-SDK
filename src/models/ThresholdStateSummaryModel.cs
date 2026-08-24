@@ -23,7 +23,7 @@ namespace Avalara.AvaTax.RestClient
     public class ThresholdStateSummaryModel
     {
         /// <summary>
-        /// Opaque unique identifier for this threshold record (UUID from the upstream data source).
+        /// The unique identifier of this threshold status.
         /// </summary>
         public String id { get; set; }
 
@@ -38,27 +38,27 @@ namespace Avalara.AvaTax.RestClient
         public String regionName { get; set; }
 
         /// <summary>
-        /// Threshold status as determined by the upstream data pipeline. Typical values: 'met', 'notmet'.
+        /// Whether the economic nexus threshold has been met for this region. Typical values: 'met', 'notmet'.
         /// </summary>
         public String status { get; set; }
 
         /// <summary>
-        /// Label describing the measurement window used for threshold evaluation (e.g. 'Prior calendar year').
+        /// Label describing the measurement window used to evaluate the threshold (e.g. 'Prior calendar year').
         /// </summary>
         public String thresholdTimeframe { get; set; }
 
         /// <summary>
-        /// Start of the threshold evaluation window.
+        /// The start of the measurement window.
         /// </summary>
         public DateTime? thresholdStartDate { get; set; }
 
         /// <summary>
-        /// End of the threshold evaluation window.
+        /// The end of the measurement window.
         /// </summary>
         public DateTime? thresholdEndDate { get; set; }
 
         /// <summary>
-        /// What triggered the threshold evaluation. Typical values: 'Sales', 'Transactions'.
+        /// The measure the threshold is evaluated against. Typical values: 'Sales', 'Transactions'.
         /// </summary>
         public String triggerType { get; set; }
 
@@ -73,17 +73,17 @@ namespace Avalara.AvaTax.RestClient
         public Decimal? salesThreshold { get; set; }
 
         /// <summary>
-        /// Actual total sales amount in the evaluation window.
+        /// The company's total sales amount within the measurement window.
         /// </summary>
         public Decimal? totalSalesAmount { get; set; }
 
         /// <summary>
-        /// Actual total transaction count in the evaluation window.
+        /// The company's total transaction count within the measurement window.
         /// </summary>
         public Int64? totalTransactions { get; set; }
 
         /// <summary>
-        /// UTC timestamp of when the upstream Snowflake source record was last modified.
+        /// The UTC date and time when this threshold status was last modified.
         /// </summary>
         public DateTime? sourceLastUpdatedAt { get; set; }
 

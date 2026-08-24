@@ -47,5 +47,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         SSTNonVolunteer = 4,
 
+        /// <summary>
+        /// Indicates the entity is only required to collect seller's use tax.
+        /// </summary>
+        SellersUseTax = 5,
+
     }
 }

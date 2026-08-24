@@ -18,23 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Response model for GET /api/v2/companies/{companyId}/econexusthresholds.
+    /// The economic nexus threshold statuses evaluated for a company.
     /// </summary>
     public class EcoNexusThresholdsModel
     {
         /// <summary>
-        /// The Avalara company identifier.
+        /// The unique ID number of the company to which these threshold statuses belong.
         /// </summary>
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// Per-state threshold summaries for the company. Empty array if no evaluated data exists.
+        /// The per-state threshold statuses for this company.
+        /// Empty when no threshold status has been evaluated for the company.
         /// </summary>
         public List<ThresholdStateSummaryModel> states { get; set; }
 
         /// <summary>
-        /// UTC timestamp of when the TPS in-memory cache last successfully refreshed from Snowflake.
-        /// Omitted when a refresh has not yet completed.
+        /// The UTC date and time when these threshold statuses were last updated.
+        /// Omitted when the age of the data is not known.
         /// </summary>
         public DateTime? lastRefreshedAt { get; set; }
 

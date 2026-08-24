@@ -52,6 +52,13 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Boolean? isFee { get; set; }
 
+        /// <summary>
+        /// Metadata for the parameters (attributes) this unit of basis uses for tax calculation. Each
+        /// entry describes an attribute listed in Avalara.AvaTax.AccountServices.Models.v2.UnitOfBasisModel.attributesUsed that is present in the
+        /// parameter dictionary, including engine-derived attributes such as Qty.
+        /// </summary>
+        public List<ParameterMetadataModel> parameterMetadata { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

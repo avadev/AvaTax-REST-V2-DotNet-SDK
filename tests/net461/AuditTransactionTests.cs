@@ -1,4 +1,4 @@
-using Avalara.AvaTax.RestClient;
+﻿using Avalara.AvaTax.RestClient;
 using NUnit.Framework;
 using System;
 using System.Net;
@@ -27,6 +27,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
 					Environment.MachineName,
 					AvaTaxEnvironment.Sandbox)
 					.WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+				ApiCallLog.Attach(Client);
 
 				// Verify that we can ping successfully
 				var pingResult = Client.Ping();
@@ -36,7 +37,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
 				Assert.True(pingResult.authenticated, "Environment variables should provide correct authentication");
 
 				// Create a basic company with nexus in the state of Washington
-				TestCompany = Client.CompanyInitialize(new CompanyInitializationModel()
+				TestCompany = TestCompanyFactory.Existing(Client) ?? Client.CompanyInitialize(new CompanyInitializationModel()
 				{
 					city = "Bainbridge Island",
 					companyCode = Guid.NewGuid().ToString().Substring(0, 25),
@@ -80,6 +81,12 @@ namespace Avalara.AvaTax.RestClient.Test.net461
 		{
 			try
 			{
+
+				// A reused company is not ours to deactivate
+				if (TestCompanyFactory.IsReusing)
+				{
+				    return;
+				}
 
 				// Re-fetch the company
 				var company = Client.GetCompany(TestCompany.id, null);

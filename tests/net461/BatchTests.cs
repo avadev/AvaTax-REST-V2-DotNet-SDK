@@ -28,6 +28,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+                ApiCallLog.Attach(Client);
 
 
                 // Verify that we can ping successfully
@@ -38,7 +39,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                 Assert.True(pingResult.authenticated, "Environment variables should provide correct authentication");
 
                 // Create a basic company with nexus in the state of Washington
-                TestCompany = Client.CompanyInitialize(new CompanyInitializationModel()
+                TestCompany = TestCompanyFactory.Existing(Client) ?? Client.CompanyInitialize(new CompanyInitializationModel()
                 {
                     city = "Bainbridge Island",
                     companyCode = Guid.NewGuid().ToString("N").Substring(0, 25),
@@ -77,6 +78,12 @@ namespace Avalara.AvaTax.RestClient.Test.net461
         {
             try
             {
+                // A reused company is not ours to deactivate
+                if (TestCompanyFactory.IsReusing)
+                {
+                    return;
+                }
+
                 // Re-fetch the company
                 var company = Client.GetCompany(TestCompany.id, null);
 
@@ -131,12 +138,16 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                 files = new List<BatchFileModel> { batchFileModel }
             };
 
+            // Track the current API call so a failure identifies which step broke.
+            var step = "CreateBatches";
+
             // Send the batch!
             try
             {
                 var batchResult = Client.CreateBatches(TestCompany.id, new List<BatchModel> { batchRequest });
                 Assert.NotNull(batchResult, "Batch not sent.");
                 Assert.True(batchResult.Count > 0, "No batches created.");
+                step = "GetBatch";
 
                 // Check that the batch comes out of Waiting state using a linear backoff strategy.
                 var waiting = true;
@@ -172,6 +183,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                     $"BatchId: {batchResult[0].id} should either complete or error out.");
 
                 // We should be able to get back the batch file we sent
+                step = "DownloadBatch";
                 var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
                 Assert.NotNull(fileResult);
 
@@ -181,10 +193,11 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                 Assert.AreEqual(batchFileModel.contentType, fileResult.ContentType);
             } catch (AvaTaxError e)
             {
-                Assert.True(false, $"AvaTaxError: {e.error.error.details?[0].message}");
+                Assert.True(false, $"AvaTaxError in {step}: HTTP {(int)e.statusCode} ({e.statusCode}); "
+                    + $"X-Correlation-Id: {e.XCorrelationId}; {e.error}");
             } catch (Exception e)
             {
-                Assert.True(false, $"Unknown Exception! {e.Message}");
+                Assert.True(false, $"Unknown Exception in {step}! {e}");
             }
         }
     }

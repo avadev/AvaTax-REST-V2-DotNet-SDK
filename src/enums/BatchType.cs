@@ -129,7 +129,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// This batch type represents import of Custom Rules.
-        ///  They can contain legacy tax rules, advanced rules, and dynamic rules.
+        ///  They can contain legacy tax rules and custom rules.
         /// </summary>
         CustomRuleImport = 21,
 

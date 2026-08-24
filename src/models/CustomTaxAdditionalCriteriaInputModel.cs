@@ -19,27 +19,24 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Optional additional criteria for when a custom tax should apply. This model is
-    /// structurally identical to `DynamicRuleDefinitionInputModel` but is kept as a distinct
+    /// structurally identical to `CustomRuleDefinitionInputModel` but is kept as a distinct
     /// type so that the custom tax surface can evolve independently of the underlying dynamic
     /// rule definition. The nodes defined here are prepended to the main custom tax node when
-    /// the custom tax is translated into a dynamic rule at persistence time.
+    /// the custom tax is translated into a custom rule at persistence time.
     /// <br>
     /// This is the input variant used when creating or updating a custom tax.
     /// </summary>
     public class CustomTaxAdditionalCriteriaInputModel
     {
         /// <summary>
-        /// Define fixed components with rule-wide scope. Variables are computed once and can be
-        /// referenced by nodes in the execution graph via tokens such as `{{Variables.MyVar}}`.
+        /// Define fixed components with rule-wide scope.
         /// </summary>
-        public List<DynamicRuleComponentInputModel> variables { get; set; }
+        public List<CustomRuleComponentInputModel> variables { get; set; }
 
         /// <summary>
-        /// Define components which make up the execution graph. Each node represents a condition
-        /// or action that runs as part of evaluating the custom tax; nodes are linked together via
-        /// the `next` property on each component.
+        /// Define components which make up the execution graph for custom tax preconditions.
         /// </summary>
-        public List<DynamicRuleComponentInputModel> nodes { get; set; }
+        public List<CustomRuleComponentInputModel> nodes { get; set; }
 
 
         /// <summary>

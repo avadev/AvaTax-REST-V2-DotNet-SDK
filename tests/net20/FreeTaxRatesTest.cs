@@ -28,6 +28,7 @@ namespace Avalara.AvaTax.RestClient.Test.net20
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+                ApiCallLog.Attach(_client);
             } catch (Exception ex) {
                 Assert.Fail("Exception in SetUp: " + ex);
             }

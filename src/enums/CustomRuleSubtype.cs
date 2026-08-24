@@ -180,5 +180,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         CustomTax = 31,
 
+        /// <summary>
+        /// Override a liability decision.
+        /// </summary>
+        UpdateLiabilityDecision = 32,
+
+        /// <summary>
+        /// Adds a message or invoice message to the transaction response.
+        /// </summary>
+        AddMessage = 33,
+
+        /// <summary>
+        /// Match on data source, origination site, and destination state, with effective ranges.
+        ///  This emulates the conditions of the "Seller Remits Aggregator" advanced rule.
+        /// </summary>
+        MatchSellerRemits = 34,
+
     }
 }

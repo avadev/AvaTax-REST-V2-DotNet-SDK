@@ -26,17 +26,17 @@ namespace Avalara.AvaTax.RestClient
         Unknown = 0,
 
         /// <summary>
-        /// A tax rule.
+        /// A legacy tax rule.
         /// </summary>
         TaxRule = 1,
 
         /// <summary>
-        /// An advanced rule.
+        /// A legacy advanced rule.
         /// </summary>
         AdvancedRule = 2,
 
         /// <summary>
-        /// A dynamic rule.
+        /// A graph-based custom rule.
         /// </summary>
         DynamicRule = 3,
 

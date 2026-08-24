@@ -19,7 +19,7 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Represents a create Custom Rules import batch request model. The payload is the Custom Rules
-    /// export envelope (tax rules, dynamic rules, and advanced rules) which is stored as JSON in S3
+    /// export envelope (tax rules, custom rules, and advanced rules) which is stored as JSON in S3
     /// and processed downstream by BatchV2.
     /// </summary>
     public class CreateCustomRulesBatchRequestModel
@@ -76,9 +76,9 @@ namespace Avalara.AvaTax.RestClient
         public String advancedRuleFilter { get; set; }
 
         /// <summary>
-        /// The dynamic-rule-specific filter used to produce the export, if any.
+        /// The custom-rule-specific filter used to produce the export, if any.
         /// </summary>
-        public String dynamicRuleFilter { get; set; }
+        public String customRuleFilter { get; set; }
 
         /// <summary>
         /// The order-by clause used to produce the export, if any.
@@ -106,9 +106,9 @@ namespace Avalara.AvaTax.RestClient
         public Int32? taxRuleCount { get; set; }
 
         /// <summary>
-        /// The number of dynamic rules contained in this payload.
+        /// The number of custom rules contained in this payload.
         /// </summary>
-        public Int32? dynamicRuleCount { get; set; }
+        public Int32? customRuleCount { get; set; }
 
         /// <summary>
         /// The number of advanced rules contained in this payload.
@@ -122,16 +122,16 @@ namespace Avalara.AvaTax.RestClient
         public List<TaxRuleModel> taxRules { get; set; }
 
         /// <summary>
-        /// The dynamic (graph-based) rules to import. Stored verbatim so downstream processing receives
+        /// The custom (graph-based) rules to import. Stored verbatim so downstream processing receives
         /// the exact exported shape.
         /// </summary>
-        public List<DynamicRuleInputModel> dynamicRules { get; set; }
+        public List<CustomRuleInputModel> customRules { get; set; }
 
         /// <summary>
         /// The advanced rules to import. Stored verbatim so downstream processing receives the exact
         /// exported shape.
         /// </summary>
-        public List<AdvancedRuleModel> advancedRules { get; set; }
+        public List<AdvancedRuleExecutionModel> advancedRules { get; set; }
 
 
         /// <summary>
