@@ -56,8 +56,8 @@ namespace Avalara.AvaTax.RestClient.Test.netstandard20
                     title = "Owner/CEO"
                 });
 
-                // Wait for the company to become usable rather than assuming a fixed delay
-                CompanyProvisioning.WaitForCompany(_client, _testCompany);
+                // Add a delay after creating a company
+                System.Threading.Thread.Sleep(6 * 1000);
 
                 // Assert that company setup succeeded
                 Assert.NotNull(_testCompany, "Test company should be created");

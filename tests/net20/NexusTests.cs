@@ -56,9 +56,6 @@ namespace Avalara.AvaTax.RestClient.Test.net20
                     title = "Owner/CEO"
                 });
 
-                // Wait for the company to become usable before the tests touch it
-                CompanyProvisioning.WaitForCompany(Client, TestCompany);
-
                 // Assert that company setup succeeded
                 Assert.NotNull(TestCompany, "Test company should be created");
                 Assert.True(TestCompany.nexus.Count > 0, "Test company should have nexus");
