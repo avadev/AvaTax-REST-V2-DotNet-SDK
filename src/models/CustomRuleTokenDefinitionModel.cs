@@ -18,26 +18,35 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The economic nexus threshold statuses evaluated for a company.
+    /// Represents a valid expression token in Custom Rules, i.e. the variables, delimited by double curly braces,
+    /// that may be used when performing string manipulation or evaluating formulas within a Custom Rule.
     /// </summary>
-    public class EcoNexusThresholdsModel
+    public class CustomRuleTokenDefinitionModel
     {
         /// <summary>
-        /// The unique ID number of the company to which these threshold statuses belong.
+        /// Full contents of the token, including the prefix, but excluding functions.
         /// </summary>
-        public Int32? companyId { get; set; }
+        public String token { get; set; }
 
         /// <summary>
-        /// The per-state threshold statuses for this company.
-        /// Empty when no threshold status has been evaluated for the company.
+        /// The type of the token before evaluation. Usually this corresponds to the prefix.
         /// </summary>
-        public List<ThresholdStateSummaryModel> states { get; set; }
+        public String tokenType { get; set; }
 
         /// <summary>
-        /// The UTC date and time when these threshold statuses were last updated.
-        /// Omitted when the age of the data is not known.
+        /// The type of the token after evaluation.
         /// </summary>
-        public DateTime? lastRefreshedAt { get; set; }
+        public String evaluatedType { get; set; }
+
+        /// <summary>
+        /// Filterable token category.
+        /// </summary>
+        public String category { get; set; }
+
+        /// <summary>
+        /// Details about the token's purpose or usage.
+        /// </summary>
+        public String description { get; set; }
 
 
         /// <summary>

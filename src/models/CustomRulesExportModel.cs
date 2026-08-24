@@ -18,18 +18,12 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a create Custom Rules import batch request model. The payload is the Custom Rules
-    /// export envelope (tax rules, custom rules, and advanced rules) which is stored as JSON in S3
-    /// and processed downstream by BatchV2.
+    /// A portable export envelope containing the custom rules (tax rules, custom rules, and
+    /// advanced rules) matched by an ExportCustomRules request. This envelope can be re-imported
+    /// into another company or account using the CreateCustomRulesBatch endpoint.
     /// </summary>
-    public class CreateCustomRulesBatchRequestModel
+    public class CustomRulesExportModel
     {
-        /// <summary>
-        /// The user-friendly readable name for this batch. Optional - when omitted it is derived
-        /// from Avalara.AvaTax.AccountServices.Models.v2.CreateCustomRulesBatchRequestModel.kind and Avalara.AvaTax.AccountServices.Models.v2.CreateCustomRulesBatchRequestModel.exportedAt.
-        /// </summary>
-        public String name { get; set; }
-
         /// <summary>
         /// The kind of export this payload represents (e.g. "CustomRulesExport").
         /// </summary>
@@ -41,7 +35,7 @@ namespace Avalara.AvaTax.RestClient
         public String schemaVersion { get; set; }
 
         /// <summary>
-        /// The UTC timestamp when the source rules were exported.
+        /// The UTC timestamp when the rules were exported.
         /// </summary>
         public DateTime? exportedAt { get; set; }
 
@@ -116,20 +110,17 @@ namespace Avalara.AvaTax.RestClient
         public Int32? advancedRuleCount { get; set; }
 
         /// <summary>
-        /// The traditional tax rules to import. Stored verbatim so downstream processing receives the
-        /// exact exported shape.
+        /// The traditional tax rules matched by this export.
         /// </summary>
         public List<TaxRuleModel> taxRules { get; set; }
 
         /// <summary>
-        /// The custom (graph-based) rules to import. Stored verbatim so downstream processing receives
-        /// the exact exported shape.
+        /// The custom (graph-based) rules matched by this export.
         /// </summary>
-        public List<CustomRuleInputModel> customRules { get; set; }
+        public List<CustomRuleOutputModel> customRules { get; set; }
 
         /// <summary>
-        /// The advanced rules to import. Stored verbatim so downstream processing receives the exact
-        /// exported shape.
+        /// The advanced rules matched by this export.
         /// </summary>
         public List<AdvancedRuleExecutionModel> advancedRules { get; set; }
 

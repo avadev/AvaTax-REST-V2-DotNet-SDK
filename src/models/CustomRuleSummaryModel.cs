@@ -18,9 +18,9 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Model which can provide a summary of any custom rule variety.
-    /// Custom rules is the umbrella term for traditional Tax Rules,
-    /// legacy Advanced Rules (transaction rules), and the newest Dynamic Rules.
+    /// Provides a unified, normalized summary of a custom rule, independent of its underlying type.
+    /// It surfaces the common identifying and applicability fields - such as name, status, jurisdictions,
+    /// tax types, and effective dates - so that a company's rules can be listed, filtered, and reviewed together.
     /// </summary>
     public class CustomRuleSummaryModel
     {
@@ -60,12 +60,12 @@ namespace Avalara.AvaTax.RestClient
         public List<String> subtypeDescription { get; set; }
 
         /// <summary>
-        /// Name or ISO 3166 codes identifying the region where this rule will apply.
+        /// Name or ISO 3166 codes identifying the country or countries where this rule will apply.
         /// </summary>
         public List<String> country { get; set; }
 
         /// <summary>
-        /// Name or ISO 3166 code identifying the country where this rule will apply.
+        /// Name or ISO 3166 code identifying the region or regions where this rule will apply.
         /// </summary>
         public List<String> region { get; set; }
 
@@ -140,7 +140,7 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? createdDate { get; set; }
 
         /// <summary>
-        /// The rule entity data, which can be either a TaxRuleModel, a DynamicRuleModel, or an AdvancedRuleExecutionModel.
+        /// The rule entity data, which can be either a TaxRuleModel, a CustomRuleOutputModel, or an AdvancedRuleExecutionModel.
         /// </summary>
         public object ruleEntity { get; set; }
 

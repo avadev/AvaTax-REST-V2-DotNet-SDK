@@ -165,6 +165,21 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// 
         /// </summary>
+        AccruedDPPAppliedMatch = 28,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccruedDPPAppliedUndercharge = 29,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        AccruedDPPAppliedOvercharge = 30,
+
+        /// <summary>
+        /// 
+        /// </summary>
         ShortPayItemsAccrueMatch = -1,
 
         /// <summary>

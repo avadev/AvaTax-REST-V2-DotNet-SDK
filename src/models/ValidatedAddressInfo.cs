@@ -34,6 +34,14 @@ namespace Avalara.AvaTax.RestClient
         public String addressType { get; set; }
 
         /// <summary>
+        /// Residential/Business Delivery Indicator. One of:
+        /// * Business
+        /// * Residential
+        /// * Unknown
+        /// </summary>
+        public String deliveryIndicator { get; set; }
+
+        /// <summary>
         /// First line of the street address
         /// </summary>
         public String line1 { get; set; }

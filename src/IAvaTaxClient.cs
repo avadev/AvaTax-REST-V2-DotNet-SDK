@@ -610,6 +610,10 @@ namespace Avalara.AvaTax.RestClient
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         ///  
+        /// Set `skipTransactionValidation` to true to defer transaction type, company code, and
+        /// nested model validation until BatchV2 processes each transaction. Per-transaction
+        /// validation failures are then written to the batch error file without blocking upload.
+        ///  
         /// The maximum content length of the request body is limited to 28.6 MB. If this limit
         /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
         /// the API is called from a browser). In this situation, please split the request into
@@ -2555,6 +2559,107 @@ namespace Avalara.AvaTax.RestClient
         CostCenterSuccessResponseModel UpdateCostCenter(Int32 companyid, Int64 costcenterid, CostCenterRequestModel model);
 
         /// <summary>
+        /// Create one or more currency rounding rules
+        /// </summary>
+        /// <remarks>
+        /// Create one or more currency rounding rules for this account. Each rule sets the rounding
+        /// precision for a currency over an effective-date window.
+        ///  
+        /// Windows for the same currency may overlap - for a given tax date the rule with the latest
+        /// `effDate` whose window contains that date applies. Two rules that share a `currencyCode`
+        /// and `effDate` are ambiguous and are rejected, whether the duplicate is against an existing
+        /// rule or against another rule in the same request.
+        ///  
+        /// A rule can only be created for a currency that already has an Avalara system default (see
+        /// `GET api/v2/definitions/currencyroundingrules`).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="accountId">The unique ID number of the account that owns these currency rounding rules.</param>
+        /// <param name="model">The currency rounding rule object or objects you wish to create.</param>
+        List<AccountCurrencyRoundingRuleModel> CreateCurrencyRoundingRules(Int32 accountId, List<AccountCurrencyRoundingRuleModel> model);
+
+        /// <summary>
+        /// Delete a single currency rounding rule
+        /// </summary>
+        /// <remarks>
+        /// Deletes the currency rounding rule identified by this URL. After deletion, calculation for
+        /// that currency falls back to the Avalara default rule (or standard decimal precision if none).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="accountId">The unique ID number of the account that owns this currency rounding rule.</param>
+        /// <param name="id">The unique ID number of the currency rounding rule to delete.</param>
+        List<ErrorDetail> DeleteCurrencyRoundingRule(Int32 accountId, Int32 id);
+
+        /// <summary>
+        /// Retrieve a single currency rounding rule
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single currency rounding rule identified by this URL.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="accountId">The ID of the account that owns this currency rounding rule.</param>
+        /// <param name="id">The unique ID number of the currency rounding rule to retrieve.</param>
+        AccountCurrencyRoundingRuleModel GetCurrencyRoundingRule(Int32 accountId, Int32 id);
+
+        /// <summary>
+        /// Retrieve all currency rounding rules for this account.
+        /// </summary>
+        /// <remarks>
+        /// Lists all account-specific currency rounding rules for this account.
+        ///  
+        /// Only rules created for this account are returned. When no rule exists for a currency on a
+        /// transaction's tax date, the tax engine automatically applies the Avalara system default for
+        /// that currency; if no system default exists, standard decimal precision is used (no rounding).
+        ///  
+        /// Each rule's `precision` is `0` (whole currency unit) or `2` (standard decimal cents).
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderBy` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="accountId">The ID of the account whose currency rounding rules you wish to list.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* createdDate, createdUserId, modifiedUserId</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<AccountCurrencyRoundingRuleModel> ListCurrencyRoundingRules(Int32 accountId, String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Update a currency rounding rule
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing currency rounding rule at this URL with an updated object.
+        ///  
+        /// All data from the existing object will be replaced with data in the object you PUT.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="accountId">The unique ID number of the account that owns this currency rounding rule.</param>
+        /// <param name="id">The unique ID number of the currency rounding rule to replace.</param>
+        /// <param name="model">The new currency rounding rule object to store.</param>
+        AccountCurrencyRoundingRuleModel UpdateCurrencyRoundingRule(Int32 accountId, Int32 id, AccountCurrencyRoundingRuleModel model);
+
+        /// <summary>
         /// Add ship-to states to a customer
         /// </summary>
         /// <remarks>
@@ -3296,7 +3401,7 @@ namespace Avalara.AvaTax.RestClient
         /// 
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributesUsed</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributesUsed, parameterMetadata</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3372,7 +3477,7 @@ namespace Avalara.AvaTax.RestClient
         /// check and provision account.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, companyId, name, tag, description, created, modified, region, country</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, companyId, tag, description, created, modified, region, country</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3534,6 +3639,26 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         FetchResult<CurrencyModel> ListCurrencies(String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// List the Avalara system default currency rounding rules.
+        /// </summary>
+        /// <remarks>
+        /// Lists the Avalara system default currency rounding rules - the rounding Avalara applies to
+        /// a currency when an account has no rule of its own.
+        ///  
+        /// Only currencies in this list may have an account-specific
+        /// `AccountCurrencyRoundingRuleModel` created for them.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderBy` parameters.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        FetchResult<CurrencyRoundingRuleDefaultModel> ListCurrencyRoundingRuleDefaults(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported entity use codes
@@ -4550,10 +4675,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="taxTypeId">The taxtype for which you want to retrieve the unitofbasis information</param>
         /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the unitofbasis information</param>
         /// <param name="rateTypeId">The ratetype for which you want to retrieve the unitofbasis information</param>
+        /// <param name="state">Optional. The State/region (e.g. ```CO```) to narrow the unitofbasis results to a specific jurisdiction. When omitted, results are not narrowed by state.</param>
+        /// <param name="jurisTypeId">Optional. The jurisdiction type to filter by. Accepted values are ```STA``` (state), ```CTY``` (county), ```CIT``` (city), or ```STJ``` (special jurisdiction). When omitted, results are not narrowed by jurisdiction type.</param>
+        /// <param name="jurisCode">Optional. The local jurisdiction code to filter by (used together with state/jurisTypeId). When omitted, results are not narrowed by jurisdiction code.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<UnitOfBasisModel> ListUnitOfBasisByCountryAndTaxTypeAndTaxSubTypeAndRateType(String country, String taxTypeId, String taxSubTypeId, String rateTypeId, Int32? top, Int32? skip, String orderBy);
+        FetchResult<UnitOfBasisModel> ListUnitOfBasisByCountryAndTaxTypeAndTaxSubTypeAndRateType(String country, String taxTypeId, String taxSubTypeId, String rateTypeId, String state, String jurisTypeId, String jurisCode, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// List all defined units of measurement
@@ -4817,36 +4945,35 @@ namespace Avalara.AvaTax.RestClient
         FetchResult<ECommerceTokenOutputModel> RefreshECommerceToken(Int32 companyId, RefreshECommerceTokenInputModel model);
 
         /// <summary>
-        /// Get economic nexus threshold statuses for a company
+        /// Retrieve economic nexus threshold statuses for a company
         /// </summary>
         /// <remarks>
-        /// Returns precomputed economic nexus threshold statuses for a company, sourced from an in-memory
-        /// cache refreshed periodically from Snowflake. All responses are served from cache;
-        /// Snowflake is never queried on the request path.
+        /// Retrieve the economic nexus threshold status for each US state in which activity has been
+        /// evaluated for this company.
         ///  
-        /// When the optional `region` query parameter is provided, only the matching jurisdiction row
-        /// is included in `states`. If no row exists for that company and region, `states` is
-        /// an empty array (200 OK).
+        /// Each entry in `states` describes the measurement window used, the sales and transaction
+        /// thresholds that apply to that state, the company's totals for the window, and whether
+        /// the threshold has been met.
         ///  
-        /// When `lastRefreshedAt` is absent from the response, the cache has not yet completed its
-        /// first refresh; callers should treat absence as "cache freshness unknown".
+        /// Threshold statuses are evaluated on a recurring schedule rather than at request time.
+        /// Use `lastRefreshedAt` to determine how current the returned data is; when it is absent
+        /// from the response, the age of the data is not known.
         ///  
-        /// Production traffic is served by TPS; api-gateway should route this path to TPS.
+        /// When the optional `region` query parameter is provided, only the matching state is included
+        /// in `states`. If no threshold status exists for that company and region, `states` is returned
+        /// as an empty array with a 200 response.
         ///  
-        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS,
-        /// a 503 is returned with no `Retry-After` (misconfiguration requires redeployment).
-        /// If the cache is still initializing, a 503 is returned with `Retry-After: 300`.
+        /// Requires the `NexusFetch` permission for the target company.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="companyId">The Avalara company identifier.</param>
-        /// <param name="region">Optional two-letter US state postal code to filter results (case-insensitive).
-        ///  When provided, `states` contains at most one item; if there is no data for that company
-        ///  and region, `states` is an empty array (200 OK). Must be exactly two characters; otherwise returns 400.
-        ///  Matches the `region` field on each item in the response.</param>
+        /// <param name="companyId">The ID of the company to retrieve threshold statuses for.</param>
+        /// <param name="region">Optional two-letter US state postal code used to filter the results (case-insensitive).
+        ///  When provided, `states` contains at most one entry, matched against the `region` field of each entry.
+        ///  Must be exactly two characters; otherwise this endpoint returns 400.</param>
         EcoNexusThresholdsModel GetEcoNexusThresholds(Int32 companyId, String region);
 
         /// <summary>
@@ -6071,15 +6198,16 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can specify a comma-separated list of countries in the `hsCodeDoesNotExistsInCountries` query parameter if you want to filter items on the basis of whether an HS code does not exist for the provided countries.
         ///  
+        /// `tagName`, `itemStatus`, `taxCodeRecommendationStatus`, `hsCodeClassificationStatus`, `hsCodeExistsInCountries`, and `hsCodeDoesNotExistsInCountries`
+        /// are mutually exclusive: if more than one is supplied in the same request, only the first one in that listed order is applied and the rest are ignored.
+        /// `tagName`, `itemStatus`, `taxCodeRecommendationStatus`, and `hsCodeClassificationStatus` require a `companyId`;
+        /// they are not supported on the cross-company `QueryItems` endpoint.
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Parameters
         /// * Classifications
         /// * Tags
-        /// * Properties
-        /// * TaxCodeRecommendationStatus
-        /// * HsCodeClassificationStatus
-        /// * TaxCodeDetails
         /// 
         /// ### Security Policies
         /// 
@@ -6087,7 +6215,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6169,7 +6297,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -6228,7 +6356,7 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -8492,7 +8620,8 @@ namespace Avalara.AvaTax.RestClient
         /// `NEXUS`, `USER`, `COMPANY`, `ACCOUNT`, `COMPANYLOCATION`, `ACCOUNTSETTING`, `COMPANYLOCATIONSETTING`,
         /// `COMPANYSETTING`, `TAXCODE`, `TAXRULE`, `ADDRESSSERVICECONFIG`, `AUDITADVANCEDRULE`, `COMPANYCONTACT`,
         /// `COMPANYLOCATIONPARAMETERDETAIL`, `COMPANYLOCATIONSETTINGCONFIG`, `COMPANYPARAMETERDETAIL`, `COMPANYRETURN`,
-        /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`.
+        /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`,
+        /// `FILINGTASKSTATUSHISTORY`, `COMPANYSTATUSHISTORY`.
         ///  
         /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         /// 
@@ -10016,7 +10145,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="dataSourceId">Optionally filter transactions to those from a specific data source.</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, exchangeRateProvider, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11788,6 +11917,10 @@ namespace Avalara.AvaTax.RestClient
         /// predict when a batch will complete. If high performance processing is
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
+        ///  
+        /// Set `skipTransactionValidation` to true to defer transaction type, company code, and
+        /// nested model validation until BatchV2 processes each transaction. Per-transaction
+        /// validation failures are then written to the batch error file without blocking upload.
         ///  
         /// The maximum content length of the request body is limited to 28.6 MB. If this limit
         /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
@@ -13815,6 +13948,112 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
+        /// Create one or more currency rounding rules;
+        /// </summary>
+        /// <remarks>
+        /// Create one or more currency rounding rules for this account. Each rule sets the rounding
+        /// precision for a currency over an effective-date window.
+        ///  
+        /// Windows for the same currency may overlap - for a given tax date the rule with the latest
+        /// `effDate` whose window contains that date applies. Two rules that share a `currencyCode`
+        /// and `effDate` are ambiguous and are rejected, whether the duplicate is against an existing
+        /// rule or against another rule in the same request.
+        ///  
+        /// A rule can only be created for a currency that already has an Avalara system default (see
+        /// `GET api/v2/definitions/currencyroundingrules`).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="accountId">The unique ID number of the account that owns these currency rounding rules.</param>
+        /// <param name="model">The currency rounding rule object or objects you wish to create.</param>
+        Task<List<AccountCurrencyRoundingRuleModel>> CreateCurrencyRoundingRulesAsync(Int32 accountId, List<AccountCurrencyRoundingRuleModel> model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a single currency rounding rule;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the currency rounding rule identified by this URL. After deletion, calculation for
+        /// that currency falls back to the Avalara default rule (or standard decimal precision if none).
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="accountId">The unique ID number of the account that owns this currency rounding rule.</param>
+        /// <param name="id">The unique ID number of the currency rounding rule to delete.</param>
+        Task<List<ErrorDetail>> DeleteCurrencyRoundingRuleAsync(Int32 accountId, Int32 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single currency rounding rule;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single currency rounding rule identified by this URL.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="accountId">The ID of the account that owns this currency rounding rule.</param>
+        /// <param name="id">The unique ID number of the currency rounding rule to retrieve.</param>
+        Task<AccountCurrencyRoundingRuleModel> GetCurrencyRoundingRuleAsync(Int32 accountId, Int32 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all currency rounding rules for this account.;
+        /// </summary>
+        /// <remarks>
+        /// Lists all account-specific currency rounding rules for this account.
+        ///  
+        /// Only rules created for this account are returned. When no rule exists for a currency on a
+        /// transaction's tax date, the tax engine automatically applies the Avalara system default for
+        /// that currency; if no system default exists, standard decimal precision is used (no rounding).
+        ///  
+        /// Each rule's `precision` is `0` (whole currency unit) or `2` (standard decimal cents).
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderBy` parameters.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
+        /// </remarks>
+		
+        /// <param name="accountId">The ID of the account whose currency rounding rules you wish to list.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* createdDate, createdUserId, modifiedUserId</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<AccountCurrencyRoundingRuleModel>> ListCurrencyRoundingRulesAsync(Int32 accountId, String filter, String include, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update a currency rounding rule;
+        /// </summary>
+        /// <remarks>
+        /// Replace the existing currency rounding rule at this URL with an updated object.
+        ///  
+        /// All data from the existing object will be replaced with data in the object you PUT.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, BatchServiceAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="accountId">The unique ID number of the account that owns this currency rounding rule.</param>
+        /// <param name="id">The unique ID number of the currency rounding rule to replace.</param>
+        /// <param name="model">The new currency rounding rule object to store.</param>
+        Task<AccountCurrencyRoundingRuleModel> UpdateCurrencyRoundingRuleAsync(Int32 accountId, Int32 id, AccountCurrencyRoundingRuleModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
         /// Add ship-to states to a customer;
         /// </summary>
         /// <remarks>
@@ -14585,7 +14824,7 @@ namespace Avalara.AvaTax.RestClient
         /// ;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributesUsed</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributesUsed, parameterMetadata</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -14665,7 +14904,7 @@ namespace Avalara.AvaTax.RestClient
         /// check and provision account.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, companyId, name, tag, description, created, modified, region, country</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* id, companyId, tag, description, created, modified, region, country</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -14836,6 +15075,27 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         Task<FetchResult<CurrencyModel>> ListCurrenciesAsync(String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List the Avalara system default currency rounding rules.;
+        /// </summary>
+        /// <remarks>
+        /// Lists the Avalara system default currency rounding rules - the rounding Avalara applies to
+        /// a currency when an account has no rule of its own.
+        ///  
+        /// Only currencies in this list may have an account-specific
+        /// `AccountCurrencyRoundingRuleModel` created for them.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/) .
+        /// Paginate your results using the `$top`, `$skip`, and `$orderBy` parameters.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        Task<FetchResult<CurrencyRoundingRuleDefaultModel>> ListCurrencyRoundingRuleDefaultsAsync(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15912,10 +16172,13 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="taxTypeId">The taxtype for which you want to retrieve the unitofbasis information</param>
         /// <param name="taxSubTypeId">The taxsubtype for which you want to retrieve the unitofbasis information</param>
         /// <param name="rateTypeId">The ratetype for which you want to retrieve the unitofbasis information</param>
+        /// <param name="state">Optional. The State/region (e.g. ```CO```) to narrow the unitofbasis results to a specific jurisdiction. When omitted, results are not narrowed by state.</param>
+        /// <param name="jurisTypeId">Optional. The jurisdiction type to filter by. Accepted values are ```STA``` (state), ```CTY``` (county), ```CIT``` (city), or ```STJ``` (special jurisdiction). When omitted, results are not narrowed by jurisdiction type.</param>
+        /// <param name="jurisCode">Optional. The local jurisdiction code to filter by (used together with state/jurisTypeId). When omitted, results are not narrowed by jurisdiction code.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<UnitOfBasisModel>> ListUnitOfBasisByCountryAndTaxTypeAndTaxSubTypeAndRateTypeAsync(String country, String taxTypeId, String taxSubTypeId, String rateTypeId, Int32? top, Int32? skip, String orderBy);
+        Task<FetchResult<UnitOfBasisModel>> ListUnitOfBasisByCountryAndTaxTypeAndTaxSubTypeAndRateTypeAsync(String country, String taxTypeId, String taxSubTypeId, String rateTypeId, String state, String jurisTypeId, String jurisCode, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -16196,36 +16459,35 @@ namespace Avalara.AvaTax.RestClient
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
-        /// Get economic nexus threshold statuses for a company;
+        /// Retrieve economic nexus threshold statuses for a company;
         /// </summary>
         /// <remarks>
-        /// Returns precomputed economic nexus threshold statuses for a company, sourced from an in-memory
-        /// cache refreshed periodically from Snowflake. All responses are served from cache;
-        /// Snowflake is never queried on the request path.
+        /// Retrieve the economic nexus threshold status for each US state in which activity has been
+        /// evaluated for this company.
         ///  
-        /// When the optional `region` query parameter is provided, only the matching jurisdiction row
-        /// is included in `states`. If no row exists for that company and region, `states` is
-        /// an empty array (200 OK).
+        /// Each entry in `states` describes the measurement window used, the sales and transaction
+        /// thresholds that apply to that state, the company's totals for the window, and whether
+        /// the threshold has been met.
         ///  
-        /// When `lastRefreshedAt` is absent from the response, the cache has not yet completed its
-        /// first refresh; callers should treat absence as "cache freshness unknown".
+        /// Threshold statuses are evaluated on a recurring schedule rather than at request time.
+        /// Use `lastRefreshedAt` to determine how current the returned data is; when it is absent
+        /// from the response, the age of the data is not known.
         ///  
-        /// Production traffic is served by TPS; api-gateway should route this path to TPS.
+        /// When the optional `region` query parameter is provided, only the matching state is included
+        /// in `states`. If no threshold status exists for that company and region, `states` is returned
+        /// as an empty array with a 200 response.
         ///  
-        /// This endpoint requires the `NexusFetch` permission. If EcoNexus is not configured in TPS,
-        /// a 503 is returned with no `Retry-After` (misconfiguration requires redeployment).
-        /// If the cache is still initializing, a 503 is returned with `Retry-After: 300`.
+        /// Requires the `NexusFetch` permission for the target company.
         /// 
         /// ### Security Policies
         /// 
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, FirmAdmin, FirmUser, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="companyId">The Avalara company identifier.</param>
-        /// <param name="region">Optional two-letter US state postal code to filter results (case-insensitive).
-        ///  When provided, `states` contains at most one item; if there is no data for that company
-        ///  and region, `states` is an empty array (200 OK). Must be exactly two characters; otherwise returns 400.
-        ///  Matches the `region` field on each item in the response.</param>
+        /// <param name="companyId">The ID of the company to retrieve threshold statuses for.</param>
+        /// <param name="region">Optional two-letter US state postal code used to filter the results (case-insensitive).
+        ///  When provided, `states` contains at most one entry, matched against the `region` field of each entry.
+        ///  Must be exactly two characters; otherwise this endpoint returns 400.</param>
         Task<EcoNexusThresholdsModel> GetEcoNexusThresholdsAsync(Int32 companyId, String region);
 
         /// Swagger Name: AvaTaxClient
@@ -17512,15 +17774,16 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// You can specify a comma-separated list of countries in the `hsCodeDoesNotExistsInCountries` query parameter if you want to filter items on the basis of whether an HS code does not exist for the provided countries.
         ///  
+        /// `tagName`, `itemStatus`, `taxCodeRecommendationStatus`, `hsCodeClassificationStatus`, `hsCodeExistsInCountries`, and `hsCodeDoesNotExistsInCountries`
+        /// are mutually exclusive: if more than one is supplied in the same request, only the first one in that listed order is applied and the rest are ignored.
+        /// `tagName`, `itemStatus`, `taxCodeRecommendationStatus`, and `hsCodeClassificationStatus` require a `companyId`;
+        /// they are not supported on the cross-company `QueryItems` endpoint.
+        ///  
         /// You may specify one or more of the following values in the `$include` parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
         /// * Parameters
         /// * Classifications
         /// * Tags
-        /// * Properties
-        /// * TaxCodeRecommendationStatus
-        /// * HsCodeClassificationStatus
-        /// * TaxCodeDetails
         /// 
         /// ### Security Policies
         /// 
@@ -17528,7 +17791,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that defined these items</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -17613,7 +17876,7 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -17674,7 +17937,7 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that defined these items.</param>
         /// <param name="tag">The master tag to be associated with item.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* taxCode, source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* source, sourceEntityId, itemType, upc, summary, classifications, parameters, customParameters, tags, properties, itemStatus, taxCodeRecommendationStatus, taxCodeRecommendations, taxCodeDetails, hsCodeClassificationStatus, image</param>
         /// <param name="include">A comma separated list of additional data to retrieve.</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
@@ -20032,7 +20295,8 @@ namespace Avalara.AvaTax.RestClient
         /// `NEXUS`, `USER`, `COMPANY`, `ACCOUNT`, `COMPANYLOCATION`, `ACCOUNTSETTING`, `COMPANYLOCATIONSETTING`,
         /// `COMPANYSETTING`, `TAXCODE`, `TAXRULE`, `ADDRESSSERVICECONFIG`, `AUDITADVANCEDRULE`, `COMPANYCONTACT`,
         /// `COMPANYLOCATIONPARAMETERDETAIL`, `COMPANYLOCATIONSETTINGCONFIG`, `COMPANYPARAMETERDETAIL`, `COMPANYRETURN`,
-        /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`.
+        /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`,
+        /// `FILINGTASKSTATUSHISTORY`, `COMPANYSTATUSHISTORY`.
         ///  
         /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         /// 
@@ -21605,7 +21869,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="dataSourceId">Optionally filter transactions to those from a specific data source.</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, exchangeRateProvider, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>

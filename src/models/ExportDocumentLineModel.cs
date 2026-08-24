@@ -187,6 +187,30 @@ namespace Avalara.AvaTax.RestClient
         public Boolean? includeUserDefinedFields { get; set; }
 
         /// <summary>
+        /// If true, shows document level user defined fields.
+        /// If false, hides document level user defined fields.
+        /// Only honored for DocumentLineDetailAllTaxes and DocumentLineDetail reports.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isDocUdfFlag { get; set; }
+
+        /// <summary>
+        /// If true, shows document line level user defined fields.
+        /// If false, hides document line level user defined fields.
+        /// Only honored for DocumentLineDetailAllTaxes and DocumentLineDetail reports.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isDLUdfFlag { get; set; }
+
+        /// <summary>
+        /// If true, shows line level tax breakdown.
+        /// If false, hides line level tax breakdown.
+        /// Only honored for DocumentLineDetailAllTaxes and DocumentLineDetail reports.
+        /// Defaults to false if not specified.
+        /// </summary>
+        public Boolean? isLineLevelTaxbreakdown { get; set; }
+
+        /// <summary>
         /// Sets the ImportId for Accounts Payable reports.
         /// Defaults to an empty string if not specified.
         /// </summary>

@@ -36,16 +36,16 @@ namespace Avalara.AvaTax.RestClient
         public String jurisCode { get; set; }
 
         /// <summary>
-        /// Optionally set a different effective date for this jurisdiction. This date cannot be
-        /// earlier than the base effective date set for the entire custom tax. When omitted, the
-        /// jurisdiction inherits the custom tax's effective date.
+        /// Optionally set a different effective date for this jurisdiction. This date cannot be earlier than the base
+        /// effective date set for the entire custom tax. When omitted, the jurisdiction inherits the custom tax's
+        /// effective date.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// Optionally set a different expiration date for this jurisdiction. This date cannot be
-        /// later than the base expiration date set for the entire custom tax. When omitted, the
-        /// jurisdiction inherits the custom tax's end date.
+        /// Optionally set a different expiration date for this jurisdiction. This date cannot be later than the base
+        /// expiration date set for the entire custom tax. When omitted, the jurisdiction inherits the custom tax's end
+        /// date.
         /// </summary>
         public DateTime? endDate { get; set; }
 

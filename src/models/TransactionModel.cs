@@ -86,6 +86,13 @@ namespace Avalara.AvaTax.RestClient
         public String exchangeRateCurrencyCode { get; set; }
 
         /// <summary>
+        /// The name of the exchange rate provider that supplied the rate used to convert this transaction’s tax values into the
+        /// reporting currency (`exchangeRateCurrencyCode`) — for example `ECB` (European Central Bank), `BOC` (Bank of Canada), or `OpenExchange` (Open Exchange Rates).
+        /// This is populated when AvaTax sourced the exchange rate from its internal Exchange Rate Service; it is blank when the caller supplied the `exchangeRate`.
+        /// </summary>
+        public String exchangeRateProvider { get; set; }
+
+        /// <summary>
         /// DEPRECATED - Date: 10/16/2017, Version: 17.11, Message: Please use entityUseCode instead.
         /// The customer usage type for this transaction. Customer usage types often affect exemption or taxability rules.
         /// </summary>
@@ -447,6 +454,9 @@ namespace Avalara.AvaTax.RestClient
         /// 25. PendingShortPayItemsUndercharge
         /// 26. PendingShortPayItemsMatch
         /// 27. PendingShortPayItemsOvercharge
+        /// 28. AccruedDPPAppliedMatch
+        /// 29. AccruedDPPAppliedUndercharge
+        /// 30. AccruedDPPAppliedOvercharge
         /// </summary>
         public APStatus? apStatusCode { get; set; }
 

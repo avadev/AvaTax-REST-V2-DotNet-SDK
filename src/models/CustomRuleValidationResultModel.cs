@@ -18,34 +18,36 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents a create transaction batch request model.
+    /// Represents the complete validation result for a custom rule, including a summary,
+    /// individual messages, an execution plan, and affected tax rules.
     /// </summary>
-    public class CreateTransactionBatchRequestModel
+    public class CustomRuleValidationResultModel
     {
         /// <summary>
-        /// The user-friendly readable name for this batch.
+        /// 
         /// </summary>
-        public String name { get; set; }
+        public CustomRuleValidationSummaryModel summary { get; set; }
 
         /// <summary>
-        /// The list of transactions contained in this batch.
+        /// A list of detailed validation messages (errors, warnings, info).
         /// </summary>
-        public List<TransactionBatchItemModel> transactions { get; set; }
+        public List<CustomRuleValidationMessageModel> messages { get; set; }
 
         /// <summary>
-        /// Any optional flags provided for this batch
+        /// A list of steps outlining the execution plan for the custom rule.
+        /// This can help in understanding how the rule will be processed.
         /// </summary>
-        public String options { get; set; }
+        public List<CustomRuleValidationPlanStepModel> executionPlan { get; set; }
 
         /// <summary>
-        /// Skips upload-time transaction type, company code, and nested model validation when true.
-        /// The transactions are instead validated individually while BatchV2 processes the batch,
-        /// and transaction validation failures are written to the batch error file.
-        ///  
-        /// An explicit value overrides the BatchProcessing configuration default. If omitted, the
-        /// configured SkipTransactionValidation value is used.
+        /// A list of tax rules that would be generated or affected by this custom rule if it were saved.
         /// </summary>
-        public Boolean? skipTransactionValidation { get; set; }
+        public List<CustomRuleGeneratedTaxRuleModel> taxRules { get; set; }
+
+        /// <summary>
+        /// The list of lookup files used by this rule.
+        /// </summary>
+        public List<String> lookupFilesUsed { get; set; }
 
 
         /// <summary>

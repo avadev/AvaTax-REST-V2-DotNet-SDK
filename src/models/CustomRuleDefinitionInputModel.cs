@@ -18,25 +18,20 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Optional additional criteria for when a custom tax should apply. This model is
-    /// structurally identical to `CustomRuleDefinitionOutputModel` but is kept as a
-    /// distinct type so that the custom tax surface can evolve independently of the underlying
-    /// custom rule definition. The nodes defined here are prepended to the main custom tax node
-    /// when the custom tax is translated into a custom rule at persistence time.
-    /// <br>
-    /// This is the output variant returned by Custom Tax read endpoints.
+    /// Represents the definition of a Custom Rule, which defines its execution flow.
     /// </summary>
-    public class CustomTaxAdditionalCriteriaOutputModel
+    public class CustomRuleDefinitionInputModel
     {
         /// <summary>
         /// Define fixed components with rule-wide scope.
         /// </summary>
-        public List<CustomRuleComponentOutputModel> variables { get; set; }
+        public List<CustomRuleComponentInputModel> variables { get; set; }
 
         /// <summary>
-        /// Define components which make up the execution graph for custom tax preconditions.
+        /// Define components which make up the execution graph.
+        /// The graph must be directed and acyclic.
         /// </summary>
-        public List<CustomRuleComponentOutputModel> nodes { get; set; }
+        public List<CustomRuleComponentInputModel> nodes { get; set; }
 
 
         /// <summary>

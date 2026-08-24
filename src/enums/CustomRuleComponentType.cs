@@ -16,29 +16,29 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The type of a custom rule
+    /// Represents the type of component in a graph-based custom rule.
     /// </summary>
-    public enum CustomRuleType
+    public enum CustomRuleComponentType
     {
         /// <summary>
-        /// An unknown rule type.
+        /// Unknown component type.
         /// </summary>
         Unknown = 0,
 
         /// <summary>
-        /// A legacy tax rule.
+        /// A condition component that evaluates an expression and returns boolean results.
         /// </summary>
-        TaxRule = 1,
+        Condition = 1,
 
         /// <summary>
-        /// A legacy advanced rule.
+        /// An action component that executes a specific operation when a rule is triggered.
         /// </summary>
-        AdvancedRule = 2,
+        Action = 2,
 
         /// <summary>
-        /// A graph-based custom rule.
+        /// A variable component that defines a named value that can be referenced within rules.
         /// </summary>
-        DynamicRule = 3,
+        Variable = 3,
 
     }
 }

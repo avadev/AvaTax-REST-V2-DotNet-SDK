@@ -18,46 +18,39 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Represents the a field available in the Custom Rules interface.
     /// </summary>
-    public class UnitOfBasisModel
+    public class CustomRuleFieldDefinitionModel
     {
         /// <summary>
-        /// UnitOfBasisId
+        /// The internal name of the field. This is also the field's name as it appears in tokens.
         /// </summary>
-        public Int32? unitOfBasisId { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// UnitOfBasis Name
+        /// Formatted display or "nice" name of the field.
         /// </summary>
-        public String unitOfBasis { get; set; }
+        public String title { get; set; }
 
         /// <summary>
-        /// UnitOfBasis measurement type ID
+        /// A description of the field's usage and purpose.
         /// </summary>
-        public Int32? measurementTypeId { get; set; }
+        public String description { get; set; }
 
         /// <summary>
-        /// UnitOfBasis measurement type code
+        /// The category of the field; useful for filtering.
         /// </summary>
-        public String measurementTypeCode { get; set; }
+        public String category { get; set; }
 
         /// <summary>
-        /// UnitOfBasis attributes used
+        /// 
         /// </summary>
-        public List<String> attributesUsed { get; set; }
+        public CustomRuleFieldLevelDefinitionModel documentLevel { get; set; }
 
         /// <summary>
-        /// A boolean value based on the current definition of a Fee in AvaTax
+        /// 
         /// </summary>
-        public Boolean? isFee { get; set; }
-
-        /// <summary>
-        /// Metadata for the parameters (attributes) this unit of basis uses for tax calculation. Each
-        /// entry describes an attribute listed in Avalara.AvaTax.AccountServices.Models.v2.UnitOfBasisModel.attributesUsed that is present in the
-        /// parameter dictionary, including engine-derived attributes such as Qty.
-        /// </summary>
-        public List<ParameterMetadataModel> parameterMetadata { get; set; }
+        public CustomRuleFieldLevelDefinitionModel lineLevel { get; set; }
 
 
         /// <summary>

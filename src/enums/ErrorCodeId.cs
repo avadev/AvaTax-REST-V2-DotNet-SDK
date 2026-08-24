@@ -1377,6 +1377,11 @@ namespace Avalara.AvaTax.RestClient
         RuleValidationError = 1621,
 
         /// <summary>
+        /// Represents an error occurred in custom rules
+        /// </summary>
+        CustomRuleError = 1699,
+
+        /// <summary>
         /// Miscellaneous
         /// </summary>
         TaxRuleRequiresNexus = 1701,
@@ -2151,6 +2156,11 @@ namespace Avalara.AvaTax.RestClient
         /// AP Threshold inheritance restriction — child company inherits AP Threshold settings from parent
         /// </summary>
         APThresholdInheritanceRestriction = 4034,
+
+        /// <summary>
+        /// Input contains unsupported characters which cannot be recognized
+        /// </summary>
+        InputContainsUnsupportedCharacters = 4035,
 
         /// <summary>
         /// Error string from the service unknown

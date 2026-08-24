@@ -19,6 +19,8 @@ namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
     /// Describes a single taxability override row for a custom tax.
+    /// Pattern matching is performed on the optional criteria to map taxability values to jurisdictions,
+    /// where omitted values are treated as wildcards.
     /// <br>
     /// This is the input variant used when creating or updating a custom tax. Each taxability
     /// row defines whether an item is taxable or not, optionally scoped to a specific
@@ -27,34 +29,32 @@ namespace Avalara.AvaTax.RestClient
     public class CustomTaxTaxabilityInputModel
     {
         /// <summary>
-        /// Whether this tax treatment sets an item as taxable or not taxable. When true, items
-        /// matching the other criteria are taxable under this custom tax; when false, they are
-        /// explicitly marked as not taxable.
+        /// Whether this tax treatment sets an item as taxable or not taxable. When true, items matching the other
+        /// criteria are taxable under this custom tax; when false, they are explicitly marked as not taxable.
         /// </summary>
         public Boolean taxable { get; set; }
 
         /// <summary>
-        /// Optionally specify the maximum taxable amount. Any portion of the base above this cap
-        /// is not taxed under this taxability treatment.
+        /// Optionally specify the maximum taxable amount. Any portion of the base above this cap is not taxed under this
+        /// taxability treatment.
         /// </summary>
         public Decimal? cap { get; set; }
 
         /// <summary>
-        /// Optionally specify the per-unit threshold that must be met to apply this tax treatment.
-        /// If the line amount is below the threshold, this treatment does not apply.
+        /// Optionally specify the per-unit threshold that must be met to apply this tax treatment. If the line amount is
+        /// below the threshold, this treatment does not apply.
         /// </summary>
         public Decimal? threshold { get; set; }
 
         /// <summary>
-        /// Optionally set the type of jurisdiction this tax treatment applies to, e.g. State or
-        /// City. When combined with `jurisCode`, the taxability is scoped to the matching
-        /// jurisdiction only.
+        /// Optionally set the type of jurisdiction this tax treatment applies to, e.g. State or City. When combined with
+        /// `jurisCode`, the taxability is scoped to the matching jurisdiction only.
         /// </summary>
         public JurisdictionType? jurisdictionTypeId { get; set; }
 
         /// <summary>
-        /// Optionally set the specific jurisdiction this tax treatment applies to. This should be
-        /// one of the jurisdictions defined on the parent custom tax.
+        /// Optionally set the specific jurisdiction this tax treatment applies to. This should be one of the
+        /// jurisdictions defined on the parent custom tax.
         /// </summary>
         public String jurisCode { get; set; }
 
@@ -64,32 +64,32 @@ namespace Avalara.AvaTax.RestClient
         public String rateTypeCode { get; set; }
 
         /// <summary>
-        /// Optionally set a specific tax code this tax treatment applies to. Tax codes identify
-        /// product or service categories for taxation.
+        /// Optionally set a specific tax code this tax treatment applies to. Tax codes identify product or service
+        /// categories for taxation.
         /// </summary>
         public String taxCode { get; set; }
 
         /// <summary>
-        /// Optionally set a specific tariff code this tax treatment applies to. Tariff codes are
-        /// used for cross-border and customs taxation.
+        /// Optionally set a specific tariff code this tax treatment applies to. Tariff codes are used for cross-border
+        /// and customs taxation.
         /// </summary>
         public String tariffCode { get; set; }
 
         /// <summary>
-        /// Optionally set a specific entity use code this tax treatment applies to. Entity use
-        /// codes describe customer usage such as resale, manufacturing, or government use.
+        /// Optionally set a specific entity use code this tax treatment applies to. Entity use codes describe customer
+        /// usage such as resale, manufacturing, or government use.
         /// </summary>
         public String entityUseCode { get; set; }
 
         /// <summary>
-        /// Optionally set a different effective date for this tax treatment. This date cannot be
-        /// earlier than the base effective date set for the entire custom tax.
+        /// Optionally set a different effective date for this tax treatment. This date cannot be earlier
+        /// than the base effective date set for the entire custom tax.
         /// </summary>
         public DateTime? effectiveDate { get; set; }
 
         /// <summary>
-        /// Optionally set a different expiration date for this tax treatment. This date cannot be
-        /// later than the base expiration date set for the entire custom tax.
+        /// Optionally set a different expiration date for this tax treatment. This date cannot be later
+        /// than the base expiration date set for the entire custom tax.
         /// </summary>
         public DateTime? endDate { get; set; }
 
@@ -99,22 +99,21 @@ namespace Avalara.AvaTax.RestClient
         public String currencyCode { get; set; }
 
         /// <summary>
-        /// Whether this tax treatment applies to all child jurisdictions or only the specified one.
-        /// When true, the treatment is applied to every jurisdiction beneath the one identified by
-        /// `jurisCode`; when false or null, only the exact jurisdiction is matched.
+        /// Whether this tax treatment applies to all child jurisdictions or only the specified one. When true, the
+        /// treatment is applied to every jurisdiction beneath the one identified by `jurisCode`; when false or null, only
+        /// the exact jurisdiction is matched.
         /// </summary>
         public Boolean? isAllJuris { get; set; }
 
         /// <summary>
-        /// Optionally override the sourcing to Origin, Destination, or blank (default). Sourcing
-        /// controls which location of the transaction (origin or destination) is used to evaluate
-        /// this tax treatment.
+        /// Optionally override the sourcing to Origin, Destination, or blank (default). Sourcing controls which location
+        /// of the transaction (origin or destination) is used to evaluate this tax treatment.
         /// </summary>
         public String sourcing { get; set; }
 
         /// <summary>
-        /// Optional advanced settings for this tax treatment. The allowed values depend on the
-        /// tax type and are documented separately.
+        /// Optional advanced settings for this tax treatment. The allowed values depend on the tax type and are
+        /// documented separately.
         /// </summary>
         public List<String> options { get; set; }
 

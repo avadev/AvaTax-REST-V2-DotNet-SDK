@@ -18,26 +18,14 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// The economic nexus threshold statuses evaluated for a company.
+    /// Model for constructing a simple template graph based on user selected node subtypes
     /// </summary>
-    public class EcoNexusThresholdsModel
+    public class CustomRuleTemplateRequestModel
     {
         /// <summary>
-        /// The unique ID number of the company to which these threshold statuses belong.
+        /// The node types that must be included in the resulting template
         /// </summary>
-        public Int32? companyId { get; set; }
-
-        /// <summary>
-        /// The per-state threshold statuses for this company.
-        /// Empty when no threshold status has been evaluated for the company.
-        /// </summary>
-        public List<ThresholdStateSummaryModel> states { get; set; }
-
-        /// <summary>
-        /// The UTC date and time when these threshold statuses were last updated.
-        /// Omitted when the age of the data is not known.
-        /// </summary>
-        public DateTime? lastRefreshedAt { get; set; }
+        public List<String> nodeSubtypes { get; set; }
 
 
         /// <summary>

@@ -18,46 +18,49 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// 
+    /// Information about a field at a specific "level" (Document or Line).
     /// </summary>
-    public class UnitOfBasisModel
+    public class CustomRuleFieldLevelDefinitionModel
     {
         /// <summary>
-        /// UnitOfBasisId
+        /// The JSON type of the field.
         /// </summary>
-        public Int32? unitOfBasisId { get; set; }
+        public String type { get; set; }
 
         /// <summary>
-        /// UnitOfBasis Name
+        /// The internal expression type of the field.
         /// </summary>
-        public String unitOfBasis { get; set; }
+        public String expressionType { get; set; }
 
         /// <summary>
-        /// UnitOfBasis measurement type ID
+        /// Whether the field is deprecated or not.
         /// </summary>
-        public Int32? measurementTypeId { get; set; }
+        public Boolean? deprecated { get; set; }
 
         /// <summary>
-        /// UnitOfBasis measurement type code
+        /// Optional list of enumerated values.
         /// </summary>
-        public String measurementTypeCode { get; set; }
+        public List<CustomRuleEnumValueModel> anyOf { get; set; }
 
         /// <summary>
-        /// UnitOfBasis attributes used
+        /// The execution steps in which the field is readable.
         /// </summary>
-        public List<String> attributesUsed { get; set; }
+        public List<String> readSteps { get; set; }
 
         /// <summary>
-        /// A boolean value based on the current definition of a Fee in AvaTax
+        /// Whether the field is read-only.
         /// </summary>
-        public Boolean? isFee { get; set; }
+        public Boolean? readOnly { get; set; }
 
         /// <summary>
-        /// Metadata for the parameters (attributes) this unit of basis uses for tax calculation. Each
-        /// entry describes an attribute listed in Avalara.AvaTax.AccountServices.Models.v2.UnitOfBasisModel.attributesUsed that is present in the
-        /// parameter dictionary, including engine-derived attributes such as Qty.
+        /// The execution steps in which the field is writable.
         /// </summary>
-        public List<ParameterMetadataModel> parameterMetadata { get; set; }
+        public List<String> writeSteps { get; set; }
+
+        /// <summary>
+        /// Whether the field is write-only.
+        /// </summary>
+        public Boolean? writeOnly { get; set; }
 
 
         /// <summary>
