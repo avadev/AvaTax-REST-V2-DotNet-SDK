@@ -189,32 +189,45 @@ namespace Avalara.AvaTax.RestClient.Test.net20
         /// </summary>
         private void DeleteTestNexus()
         {
+            FetchResult<NexusModel> existing;
             try
             {
-                var existing = Client.ListNexusByCompany(TestCompany.id, null, null, null, null, null);
-                if (existing == null || existing.value == null)
-                {
-                    return;
-                }
-
-                foreach (var nexus in existing.value)
-                {
-                    if (nexus.id == null || nexus.region != "AL")
-                    {
-                        continue;
-                    }
-
-                    if (nexus.jurisCode != "01" && nexus.jurisCode != "00124")
-                    {
-                        continue;
-                    }
-
-                    Client.DeleteNexus(TestCompany.id, nexus.id.Value, null);
-                }
+                existing = Client.ListNexusByCompany(TestCompany.id, null, null, null, null, null);
             }
             catch (AvaTaxError e)
             {
-                TestContext.Progress.WriteLine("Could not clean up test nexus: " + ApiCallLog.Describe(e));
+                TestContext.Progress.WriteLine("Could not list nexus to clean up: " + ApiCallLog.Describe(e));
+                return;
+            }
+
+            if (existing == null || existing.value == null)
+            {
+                return;
+            }
+
+            // The city nexus is a child of the state nexus, and AvaTax refuses to
+            // delete a parent while a child exists, so take the local jurisdiction
+            // first. cascadeDelete covers any child this test does not know about.
+            foreach (var jurisCode in new[] { "00124", "01" })
+            {
+                foreach (var nexus in existing.value)
+                {
+                    if (nexus.id == null || nexus.region != "AL" || nexus.jurisCode != jurisCode)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        Client.DeleteNexus(TestCompany.id, nexus.id.Value, true);
+                    }
+                    catch (AvaTaxError e)
+                    {
+                        // Keep going: one stale entry must not leave the rest behind.
+                        TestContext.Progress.WriteLine($"Could not delete nexus {nexus.id} "
+                            + $"({nexus.region}/{nexus.jurisCode}): " + ApiCallLog.Describe(e));
+                    }
+                }
             }
         }
     }
