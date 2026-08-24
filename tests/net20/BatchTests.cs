@@ -131,12 +131,16 @@ namespace Avalara.AvaTax.RestClient.Test.net20
                 files = new List<BatchFileModel> { batchFileModel }
             };
 
+            // Track the current API call so a failure identifies which step broke.
+            var step = "CreateBatches";
+
             // Send the batch!
             try
             {
                 var batchResult = Client.CreateBatches(TestCompany.id, new List<BatchModel> { batchRequest });
                 Assert.NotNull(batchResult, "Batch not sent.");
                 Assert.True(batchResult.Count > 0, "No batches created.");
+                step = "GetBatch";
 
                 // Check that the batch comes out of Waiting state using a linear backoff strategy.
                 var waiting = true;
@@ -175,6 +179,7 @@ namespace Avalara.AvaTax.RestClient.Test.net20
                 Assert.AreEqual(9, batchFetchResult.currentRecord.Value);
 
                 // We should be able to get back the batch file we sent
+                step = "DownloadBatch";
                 var fileResult = Client.DownloadBatch(TestCompany.id, batchFetchResult.id.Value, batchFetchResult.files[0].id.Value);
                 Assert.NotNull(fileResult);
 
@@ -185,10 +190,11 @@ namespace Avalara.AvaTax.RestClient.Test.net20
 
             } catch (AvaTaxError e)
             {
-                Assert.True(false, $"AvaTaxError: {e.error.error.details?[0].message}");
+                Assert.True(false, $"AvaTaxError in {step}: HTTP {(int)e.statusCode} ({e.statusCode}); "
+                    + $"X-Correlation-Id: {e.XCorrelationId}; {e.error}");
             } catch (Exception e)
             {
-                Assert.True(false, $"Unknown Exception! {e.Message}");
+                Assert.True(false, $"Unknown Exception in {step}! {e}");
             }
         }
     }
