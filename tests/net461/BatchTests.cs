@@ -28,6 +28,7 @@ namespace Avalara.AvaTax.RestClient.Test.net461
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+                ApiCallLog.Attach(Client);
 
 
                 // Verify that we can ping successfully

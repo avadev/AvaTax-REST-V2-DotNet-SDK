@@ -30,6 +30,7 @@ namespace Avalara.AvaTax.RestClient.Test.net45
                     Environment.MachineName,
                     AvaTaxEnvironment.Sandbox)
                     .WithSecurity(Environment.GetEnvironmentVariable("SANDBOX_USERNAME"), Environment.GetEnvironmentVariable("SANDBOX_PASSWORD"));
+                ApiCallLog.Attach(Client);
 
                 // Verify that we can ping successfully
                 var pingResult = Client.Ping();
@@ -168,7 +169,7 @@ namespace Avalara.AvaTax.RestClient.Test.net45
                     .Create();
             });
             Assert.NotNull(err);
-            Assert.AreEqual(HttpStatusCode.BadRequest, err.statusCode);
+            Assert.AreEqual(HttpStatusCode.BadRequest, err.statusCode, ApiCallLog.Describe(err));
         }
 
         [Test]
