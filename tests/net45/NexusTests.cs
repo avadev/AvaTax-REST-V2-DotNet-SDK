@@ -150,29 +150,73 @@ namespace Avalara.AvaTax.RestClient.Test.net45
             nexusModels.Add(stateNexus);
             nexusModels.Add(cityNexus);
 
-            var nexusModelsAdded = Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
+            // The company can be shared with other suites and later runs, so make
+            // sure these jurisdictions are clear before creating them.
+            DeleteTestNexus();
 
-            // Get State nexus
-            NexusModel getALNexus = null;
-            try {
-                getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id.Value, null);
-            } catch (Exception) { }
-            Assert.NotNull(getALNexus);
+            List<NexusModel> nexusModelsAdded = null;
+            try
+            {
+                nexusModelsAdded = Client.CreateNexus(TestCompany.id, new List<NexusModel> { stateNexus, cityNexus });
+                Assert.NotNull(nexusModelsAdded, "Nexus should have been created");
+                Assert.AreEqual(2, nexusModelsAdded.Count, "Both nexus should have been created");
 
-            var fetchedUSNexus = new List<NexusModel> { getALNexus };
+                // Get State nexus
+                var getALNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[0].id.Value, null);
+                Assert.NotNull(getALNexus, "Should have been able to fetch the state nexus");
 
-            // Get City Nexus
-            NexusModel getCityNexus = null;
-            try {
-                getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
-            } catch (Exception) { }
-            Assert.NotNull(getALNexus);
+                // Get City Nexus
+                var getCityNexus = Client.GetNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
+                Assert.NotNull(getCityNexus, "Should have been able to fetch the city nexus");
 
-            fetchedUSNexus.Add(getCityNexus);
+                // Delete Nexus
+                var errorResult = Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
+                Assert.NotNull(errorResult);
+            }
+            finally
+            {
+                // Leave nothing behind, whatever happened above.
+                DeleteTestNexus();
+            }
+        }
 
-            // Delete Nexus
-            var errorResult = Client.DeleteNexus(TestCompany.id, nexusModelsAdded[1].id.Value, null);
-            Assert.NotNull(errorResult);
+        /// <summary>
+        /// Delete the nexus this test creates, when they are present. Called before
+        /// the test so a company left dirty by an earlier run does not fail with
+        /// DuplicateNexusError, and after it so this run leaves nothing behind.
+        ///
+        /// Cleanup is best effort: it must never replace the failure of the test
+        /// itself, so problems are logged rather than thrown.
+        /// </summary>
+        private void DeleteTestNexus()
+        {
+            try
+            {
+                var existing = Client.ListNexusByCompany(TestCompany.id, null, null, null, null, null);
+                if (existing == null || existing.value == null)
+                {
+                    return;
+                }
+
+                foreach (var nexus in existing.value)
+                {
+                    if (nexus.id == null || nexus.region != "AL")
+                    {
+                        continue;
+                    }
+
+                    if (nexus.jurisCode != "01" && nexus.jurisCode != "00124")
+                    {
+                        continue;
+                    }
+
+                    Client.DeleteNexus(TestCompany.id, nexus.id.Value, null);
+                }
+            }
+            catch (AvaTaxError e)
+            {
+                TestContext.Progress.WriteLine("Could not clean up test nexus: " + ApiCallLog.Describe(e));
+            }
         }
     }
 }
