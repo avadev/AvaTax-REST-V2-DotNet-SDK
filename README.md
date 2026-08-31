@@ -43,7 +43,7 @@ public class Program
 
         // Verify that we can ping successfully
         var pingResult = Client.Ping();
-        if (pingResult.authenticated) {
+        if (pingResult.authenticated == true) {
             Console.WriteLine("Success!");
         }
 
