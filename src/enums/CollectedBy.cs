@@ -16,9 +16,11 @@ using System;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Liability Type
+    /// Identifies the party that collects tax from the consumer, as distinct from
+    ///  LiabilityType (who remits it) and ChargedTo (who pays it). Introduced for
+    ///  AVT-99436 — OTA Marketplace Liability Decision.
     /// </summary>
-    public enum LiabilityType
+    public enum CollectedBy
     {
         /// <summary>
         /// Seller
@@ -26,9 +28,9 @@ namespace Avalara.AvaTax.RestClient
         Seller = 0,
 
         /// <summary>
-        /// BuyersAgent
+        /// Marketplace
         /// </summary>
-        BuyersAgent = 1,
+        Marketplace = 1,
 
         /// <summary>
         /// Buyer
@@ -36,19 +38,9 @@ namespace Avalara.AvaTax.RestClient
         Buyer = 2,
 
         /// <summary>
-        /// ThirdParty
-        /// </summary>
-        ThirdParty = 3,
-
-        /// <summary>
-        /// Marketplace
-        /// </summary>
-        Marketplace = 4,
-
-        /// <summary>
         /// OTA
         /// </summary>
-        OTA = 5,
+        OTA = 3,
 
     }
 }

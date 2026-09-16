@@ -18,44 +18,24 @@ using Newtonsoft.Json;
 namespace Avalara.AvaTax.RestClient
 {
     /// <summary>
-    /// Represents the answer to one local jurisdiction question for a location.
+    /// A user-defined field value assigned to a tax detail.
     /// </summary>
-    public class LocationSettingModel
+    public class TransactionLineDetailUserDefinedFieldModel
     {
         /// <summary>
-        /// The unique ID number of the location question answered.
+        /// The name of the user defined field.
         /// </summary>
-        public Int32? questionId { get; set; }
+        public String name { get; set; }
 
         /// <summary>
-        /// The name of the question
-        /// </summary>
-        public String questionName { get; set; }
-
-        /// <summary>
-        /// The answer the user provided.
+        /// The value of the user defined field.
         /// </summary>
         public String value { get; set; }
 
         /// <summary>
-        /// The date when this record was created.
+        /// The customer-friendly name of the user defined field.
         /// </summary>
-        public DateTime? createdDate { get; set; }
-
-        /// <summary>
-        /// The User ID of the user who created this record.
-        /// </summary>
-        public Int32? createdUserId { get; set; }
-
-        /// <summary>
-        /// The date when this record was last modified.
-        /// </summary>
-        public DateTime? modifiedDate { get; set; }
-
-        /// <summary>
-        /// The User ID of the user who last modified this record.
-        /// </summary>
-        public Int32? modifiedUserId { get; set; }
+        public String friendlyName { get; set; }
 
 
         /// <summary>

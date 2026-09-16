@@ -64,6 +64,16 @@ namespace Avalara.AvaTax.RestClient
         public String value { get; set; }
 
         /// <summary>
+        /// The date when this record was created.
+        /// </summary>
+        public DateTime? createdDate { get; set; }
+
+        /// <summary>
+        /// The User ID of the user who created this record.
+        /// </summary>
+        public Int32? createdUserId { get; set; }
+
+        /// <summary>
         /// The value when the entry was last modified.
         /// </summary>
         public DateTime? modifiedDate { get; set; }

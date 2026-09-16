@@ -194,6 +194,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32? taxAuthorityTypeId { get; set; }
 
         /// <summary>
+        /// The unique ID of the tax authority to which this tax will be remitted.
+        /// </summary>
+        public Int32? taxAuthorityId { get; set; }
+
+        /// <summary>
         /// The unique ID number of the tax region.
         /// </summary>
         public Int32? taxRegionId { get; set; }
@@ -293,6 +298,11 @@ namespace Avalara.AvaTax.RestClient
         public ChargedTo? chargedTo { get; set; }
 
         /// <summary>
+        /// CollectedBy identifies the party that collects the tax from the consumer
+        /// </summary>
+        public CollectedBy? collectedBy { get; set; }
+
+        /// <summary>
         /// ID of the AvaTax user creating the transaction. This field will be calculated by AvaTax based on the Company settings and the transaction details.
         /// </summary>
         public String avtUserBIN { get; set; }
@@ -316,6 +326,11 @@ namespace Avalara.AvaTax.RestClient
         /// Indicates the VAT code for this detail.
         /// </summary>
         public String vatCode { get; set; }
+
+        /// <summary>
+        /// Custom user-defined fields assigned to this tax detail.
+        /// </summary>
+        public List<TransactionLineDetailUserDefinedFieldModel> userDefinedFields { get; set; }
 
         /// <summary>
         /// Contains granular duty details as a list of key-value pairs.

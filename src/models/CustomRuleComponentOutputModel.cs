@@ -42,7 +42,7 @@ namespace Avalara.AvaTax.RestClient
         /// of Condition, and UpdateField is a subtype of Action.
         /// The subtype determines the expected format of the data property.
         /// </summary>
-        public CustomRuleComponentSubtype? subtype { get; set; }
+        public String subtype { get; set; }
 
         /// <summary>
         /// Escaped JSON-formatted string containing the configuration data for the component.

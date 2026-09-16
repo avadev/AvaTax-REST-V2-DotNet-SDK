@@ -246,7 +246,9 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// List of company IDs to include in the report.
         /// Only supported for the Document Line and Document Line Detail reports
-        /// (reportSource = SNOWFLAKE with includeMultiTaxLineDetails = false).
+        /// (reportSource = SNOWFLAKE with includeMultiTaxLineDetails = false) and the
+        /// Document Line Detail All Taxes report (reportSource = DOCUMENTLINEDETAILALLTAXES
+        /// with includeAdditionalAttributes = true).
         /// If not specified, only the current company is included.
         /// </summary>
         public List<Int32> companyIds { get; set; }

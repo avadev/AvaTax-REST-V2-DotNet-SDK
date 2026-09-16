@@ -48,7 +48,7 @@ namespace Avalara.AvaTax.RestClient
         public UserDefinedFieldDataType? dataType { get; set; }
 
         /// <summary>
-        /// The category of user defined type For Example: Document level or Line level UDF.
+        /// The scope of the user-defined field: Document, Line, or Detail.
         /// </summary>
         public UserDefinedFieldType? userDefinedFieldType { get; set; }
 

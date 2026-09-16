@@ -30,5 +30,10 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         Line = 2,
 
+        /// <summary>
+        /// Represents line detail level user defined type.
+        /// </summary>
+        Detail = 3,
+
     }
 }
