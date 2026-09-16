@@ -52,7 +52,7 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The subtypes (categories or actions) of the custom rule.
         /// </summary>
-        public CustomRuleSubtype? subtype { get; set; }
+        public List<String> subtype { get; set; }
 
         /// <summary>
         /// The description of the subtypes of the custom rule.

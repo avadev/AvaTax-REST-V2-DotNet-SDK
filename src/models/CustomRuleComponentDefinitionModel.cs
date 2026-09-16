@@ -34,7 +34,7 @@ namespace Avalara.AvaTax.RestClient
         /// MatchCustomerCode, MatchProductCode, etc.
         /// The subtype determines the expected format of the data property.
         /// </summary>
-        public CustomRuleComponentSubtype? subtype { get; set; }
+        public String subtype { get; set; }
 
         /// <summary>
         /// Display name of this component
