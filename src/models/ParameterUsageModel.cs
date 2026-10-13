@@ -108,6 +108,42 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String measurementType { get; set; }
 
+        /// <summary>
+        /// The jurisdiction type for the parameter usage item (e.g. Country, State, City), populated only when
+        /// the request includes $include=jurisdictionDetail. Sourced live from ParameterUsageMapLocalJuris
+        /// (AVT-103797) - it is not cached and is therefore intentionally NOT filterable/sortable.
+        /// </summary>
+        public String jurisdictionTypeId { get; set; }
+
+        /// <summary>
+        /// The jurisdiction code for the parameter usage item, populated only when the request includes
+        /// $include=jurisdictionDetail. Sourced live from ParameterUsageMapLocalJuris (AVT-103797) - it is not
+        /// cached and is therefore intentionally NOT filterable/sortable.
+        /// </summary>
+        public String jurisdictionCode { get; set; }
+
+        /// <summary>
+        /// The jurisdiction name for the parameter usage item (e.g. "Oakland"), populated only when
+        /// the request includes $include=jurisdictionDetail. Sourced live from
+        /// ParameterUsageMapLocalJuris (AVT-103797) - it is not cached and is therefore intentionally
+        /// NOT filterable/sortable.
+        /// </summary>
+        public String jurisdictionName { get; set; }
+
+        /// <summary>
+        /// The unit of basis for the parameter usage item, populated only when the request includes
+        /// $include=jurisdictionDetail. Sourced live from ParameterUsageMapLocalJuris (AVT-103797) - it is not
+        /// cached and is therefore intentionally NOT filterable/sortable.
+        /// </summary>
+        public String unitOfBasis { get; set; }
+
+        /// <summary>
+        /// The tax sub type for the parameter usage item, populated only when the request includes
+        /// $include=jurisdictionDetail. Sourced live from ParameterUsageMapLocalJuris (AVT-103797) - it is not
+        /// cached and is therefore intentionally NOT filterable/sortable.
+        /// </summary>
+        public String taxSubTypeId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

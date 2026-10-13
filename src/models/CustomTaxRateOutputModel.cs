@@ -106,6 +106,14 @@ namespace Avalara.AvaTax.RestClient
         public String unitOfBasis { get; set; }
 
         /// <summary>
+        /// Optionally override the unit of measurement for this specific rate. If not specified, the rate uses the
+        /// custom tax default unit of measurement.
+        /// 
+        /// For a list of units of measurement, use the [ListUnitsOfMeasurement API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListUnitOfMeasurement/).
+        /// </summary>
+        public Int32? uomId { get; set; }
+
+        /// <summary>
         /// Whether this rate applies to all child jurisdictions or only the specified one. When true, the rate is applied
         /// to every jurisdiction beneath the one identified by `jurisCode`; when false or null, only the exact
         /// jurisdiction is matched.

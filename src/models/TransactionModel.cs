@@ -476,6 +476,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Decimal? varianceAmount { get; set; }
 
+        /// <summary>
+        /// Custom clearance fees from Global Compliance landed-cost quoting: the document-level LandedCostFee cost lines,
+        /// with any attributeExpression resolved.
+        /// </summary>
+        public List<CustomClearanceFeeModel> customClearanceFees { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

@@ -23,6 +23,13 @@ namespace Avalara.AvaTax.RestClient
     public class ItemTaxcodeRecommendationBatchesInputModel
     {
         /// <summary>
+        /// The unique ID of the item this recommendation request correlates to.
+        /// Optional for most callers; required per item when the request is sent with
+        /// the X-Avalara-Client: AVATAXUI header (recommendations are then persisted for that item).
+        /// </summary>
+        public Int64? itemId { get; set; }
+
+        /// <summary>
         /// A brief description of the item.
         /// </summary>
         public String description { get; set; }

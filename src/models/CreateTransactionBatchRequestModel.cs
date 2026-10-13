@@ -38,9 +38,12 @@ namespace Avalara.AvaTax.RestClient
         public String options { get; set; }
 
         /// <summary>
-        /// Skips upload-time transaction type, company code, and nested model validation when true.
-        /// The transactions are instead validated individually while BatchV2 processes the batch,
-        /// and transaction validation failures are written to the batch error file.
+        /// Skips upload-time transaction type, company code existence, and nested model validation
+        /// when true. The transactions are instead validated individually while BatchV2 processes
+        /// the batch, and transaction validation failures are written to the batch error file.
+        ///  
+        /// This only defers validation. Transactions that omit a company code still inherit the
+        /// company from the batch URL regardless of this setting.
         ///  
         /// An explicit value overrides the BatchProcessing configuration default. If omitted, the
         /// configured SkipTransactionValidation value is used.

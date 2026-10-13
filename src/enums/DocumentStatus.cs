@@ -113,6 +113,20 @@ namespace Avalara.AvaTax.RestClient
         Uncommitted = 12,
 
         /// <summary>
+        /// Filter-only status that selects documents in `Saved`(1), `Posted`(2), `Committed`(3), and
+        ///  `Cancelled`(4) status.
+        ///  
+        ///  This exact set is fixed. Statuses added to this enum in the future are NOT included
+        ///  automatically; expanding the set requires a deliberate change here and in every consumer.
+        ///  
+        ///  This value is only valid when filtering or searching. Like `Any`(-1) it is negative and so
+        ///  can never be stored in the `Document.DocumentStatusId` column, which is a `byte`. Do not
+        ///  cast it to `byte` either - an unchecked cast silently yields 254. Expand it to the ids
+        ///  above instead.
+        /// </summary>
+        All = -2,
+
+        /// <summary>
         /// DEPRECATED - Represents "a document in any status" when searching. Please search using the
         ///  [Filtering in REST](/avatax/filtering-in-rest/) documentation.
         /// </summary>

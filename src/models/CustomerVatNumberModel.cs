@@ -53,7 +53,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? vatNumberStatus { get; set; }
 
         /// <summary>
-        /// Business name returned from VIES
+        /// Registered business name from the validation service (VIES for EU/NI, ABR for Australia)
         /// </summary>
         public String registeredBusinessName { get; set; }
 
@@ -68,7 +68,7 @@ namespace Avalara.AvaTax.RestClient
         public DateTime? validationDate { get; set; }
 
         /// <summary>
-        /// Validation source: 'VIES' or 'ELR'
+        /// Validation scheme: 'VIES' for EU/NI VAT, 'ABN' for Australia.
         /// </summary>
         public String validationSource { get; set; }
 

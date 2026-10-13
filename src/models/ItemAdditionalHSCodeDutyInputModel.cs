@@ -25,12 +25,12 @@ namespace Avalara.AvaTax.RestClient
         /// <summary>
         /// The unique ID of the item.
         /// </summary>
-        public Int64 itemId { get; set; }
+        public Int64? itemId { get; set; }
 
         /// <summary>
         /// The unique ID of the company.
         /// </summary>
-        public Int32 companyId { get; set; }
+        public Int32? companyId { get; set; }
 
         /// <summary>
         /// The country of import.
@@ -61,6 +61,16 @@ namespace Avalara.AvaTax.RestClient
         /// The country of import.
         /// </summary>
         public Boolean isAdditionalDuty { get; set; }
+
+        /// <summary>
+        /// The import date to pin the duty snapshot (date-only, yyyy-MM-dd). Optional; the UI "Import date" maps to both startDate and endDate. If omitted, current date is sent downstream.
+        /// </summary>
+        public DateTime? startDate { get; set; }
+
+        /// <summary>
+        /// The import date to pin the duty snapshot (date-only, yyyy-MM-dd). Optional; the UI "Import date" maps to both startDate and endDate. If omitted, current date is sent downstream.
+        /// </summary>
+        public DateTime? endDate { get; set; }
 
 
         /// <summary>

@@ -88,7 +88,7 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// The Document status filter used for report
-        /// For documentStatus, accepted values are: Temporary, Saved, Posted, Committed, Cancelled, Adjusted, Queued, PendingApproval
+        /// For documentStatus, accepted values are: Temporary, Saved, Posted, Committed, Cancelled, Adjusted, Queued, PendingApproval, Uncommitted, All
         /// </summary>
         public String documentStatus { get; set; }
 

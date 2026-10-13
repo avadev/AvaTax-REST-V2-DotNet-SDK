@@ -360,6 +360,12 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public Decimal? nonRecoverableAmount { get; set; }
 
+        /// <summary>
+        /// Custom clearance fees from Global Compliance landed-cost quoting for this line: the line-level LandedCostFee cost lines,
+        /// with any attributeExpression resolved.
+        /// </summary>
+        public List<CustomClearanceFeeModel> customClearanceFees { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

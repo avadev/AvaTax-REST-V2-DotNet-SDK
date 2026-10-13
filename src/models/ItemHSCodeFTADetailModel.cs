@@ -33,6 +33,11 @@ namespace Avalara.AvaTax.RestClient
         public String rate { get; set; }
 
         /// <summary>
+        /// The three-character currency code according to the country of import. For example, if the country is 'US' then the currency is 'USD'.
+        /// </summary>
+        public String currency { get; set; }
+
+        /// <summary>
         /// The unit of measure.
         /// </summary>
         public String uom { get; set; }

@@ -63,9 +63,29 @@ namespace Avalara.AvaTax.RestClient
         public String mfnRate { get; set; }
 
         /// <summary>
+        /// The three-character currency code according to the country of import. For example, if the country is 'US' then the currency is 'USD'.
+        /// </summary>
+        public String currency { get; set; }
+
+        /// <summary>
         /// The unit of measure.
         /// </summary>
         public String uom { get; set; }
+
+        /// <summary>
+        /// The import date the duty snapshot is effective for (date-only, yyyy-MM-dd). Optional; saved as-is on Create / Update and returned as null when no date is available.
+        /// </summary>
+        public DateTime? effectiveDate { get; set; }
+
+        /// <summary>
+        /// The effective duty rate as a decimal number (for example, 7.5).
+        /// </summary>
+        public Decimal? effectiveRate { get; set; }
+
+        /// <summary>
+        /// The effective rate formula passed to the UI as-is (for example, "90 * Count").
+        /// </summary>
+        public String effectiveRateFormula { get; set; }
 
         /// <summary>
         /// The date when this record was created.
@@ -76,6 +96,16 @@ namespace Avalara.AvaTax.RestClient
         /// The user ID of the user who created this record.
         /// </summary>
         public Int32? createdUserId { get; set; }
+
+        /// <summary>
+        /// The date when this record was last modified.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
+        /// <summary>
+        /// The user ID of the user who last modified this record.
+        /// </summary>
+        public Int32? modifiedUserId { get; set; }
 
         /// <summary>
         /// List of FTA details.

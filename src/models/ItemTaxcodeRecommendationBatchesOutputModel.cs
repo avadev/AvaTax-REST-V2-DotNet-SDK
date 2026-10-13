@@ -23,6 +23,12 @@ namespace Avalara.AvaTax.RestClient
     public class ItemTaxcodeRecommendationBatchesOutputModel
     {
         /// <summary>
+        /// The unique ID of the item this recommendation correlates to. Echoed back from the
+        /// request when supplied; correlation was previously purely positional.
+        /// </summary>
+        public Int64? itemId { get; set; }
+
+        /// <summary>
         /// A brief description of the item.
         /// </summary>
         public String description { get; set; }
@@ -46,6 +52,21 @@ namespace Avalara.AvaTax.RestClient
         /// A summary or detailed description of the item.
         /// </summary>
         public String summary { get; set; }
+
+        /// <summary>
+        /// The overall data quality label for the item (for example: "GOOD", "FAIR"). Populated for all callers.
+        /// </summary>
+        public String dqLabel { get; set; }
+
+        /// <summary>
+        /// The list of data quality issues detected for the item. Populated for all callers.
+        /// </summary>
+        public List<DataQualityIssueModel> dqIssues { get; set; }
+
+        /// <summary>
+        /// The timestamp when this recommendation response was generated. Populated for all callers.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
 
         /// <summary>
         /// The list of generated tax code recommendations for this item.

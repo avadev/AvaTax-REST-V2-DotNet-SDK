@@ -115,9 +115,17 @@ namespace Avalara.AvaTax.RestClient
         public List<String> companyLocationCode { get; set; }
 
         /// <summary>
-        /// The index order of the rule execution (only applies to advanced rules).
+        /// The index order of the rule's execution relative to other rules. Advanced Rules are
+        /// numbered first (in their AvaTax-defined execution order), followed by Custom Rules
+        /// (ordered by priority, then effective date, then name). Not applicable to Tax Rules.
         /// </summary>
         public Int32? order { get; set; }
+
+        /// <summary>
+        /// The execution position of the rule relative to tax calculation ("Before", "After", or "Both").
+        /// Only applicable to Advanced Rules; null for Custom Rules and Tax Rules.
+        /// </summary>
+        public String executionPosition { get; set; }
 
         /// <summary>
         /// The first date at which this rule applies. If null, this rule will apply to all dates prior to the end date.

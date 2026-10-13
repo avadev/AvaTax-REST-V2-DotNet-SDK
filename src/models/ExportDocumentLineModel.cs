@@ -97,7 +97,8 @@ namespace Avalara.AvaTax.RestClient
 
         /// <summary>
         /// DocumentStatus
-        /// For documentStatus, accepted values are: Saved, Posted, Committed, Cancelled
+        /// For documentStatus, accepted values are: Saved, Posted, Committed, Cancelled, Uncommitted, All.
+        /// Use All to include documents of every supported status.
         /// </summary>
         public DocumentStatus? documentStatus { get; set; }
 
