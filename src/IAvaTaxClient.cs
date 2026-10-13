@@ -694,9 +694,12 @@ namespace Avalara.AvaTax.RestClient
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         ///  
-        /// Set `skipTransactionValidation` to true to defer transaction type, company code, and
-        /// nested model validation until BatchV2 processes each transaction. Per-transaction
-        /// validation failures are then written to the batch error file without blocking upload.
+        /// Set `skipTransactionValidation` to true to defer transaction type, company code
+        /// existence, and nested model validation until BatchV2 processes each transaction.
+        /// Per-transaction validation failures are then written to the batch error file without
+        /// blocking upload. Skipping validation only defers those checks; transactions that omit
+        /// `companyCode` still inherit the company from this URL, exactly as they do when
+        /// validation runs at upload time.
         ///  
         /// The maximum content length of the request body is limited to 28.6 MB. If this limit
         /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
@@ -1318,6 +1321,48 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
         ExemptionStatusModel ListCustomFieldsForCertificate(Int32 companyId, Int32 id);
+
+        /// <summary>
+        /// List the exemption matrix entries for an exposure zone
+        /// </summary>
+        /// <remarks>
+        /// Returns the entries in this company's exemption matrix for one exposure zone.
+        ///  
+        /// Each entry carries the `timeLength` rule used to work out when a certificate
+        /// recorded for that exposure zone and exempt reason expires, and the
+        /// `qualifyingStatement` shown to the customer. See the `timeLength` field
+        /// description for the meaning of each rule value.
+        ///  
+        /// `exposureZoneId` is mandatory. Supplying `exemptReasonId` narrows the result to
+        /// that one exempt reason; omitting it returns every exempt reason configured for
+        /// the zone. Call `ListCertificateExposureZones` and `ListCertificateExemptReasons`
+        /// to look up the available ID numbers.
+        ///  
+        /// An exposure zone with nothing configured returns an empty list rather than a
+        /// `404`, so "nothing configured" can be told apart from "no expiration rule".
+        /// Exempt reasons that are disabled, or that denote exposure rather than exemption,
+        /// are never listed.
+        ///  
+        /// Results are paginated with `$top` and `$skip`. As with the other exemption
+        /// certificate query APIs, `$skip` must be a multiple of `$top`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID number of the company</param>
+        /// <param name="exposureZoneId">Required. The ID number of the exposure zone.</param>
+        /// <param name="exemptReasonId">Optional. The ID number of an exempt reason. Omit to return every exempt reason configured for the exposure zone.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        FetchResult<ExemptionMatrixModel> ListExemptionMatrix(Int32 companyId, Int32? exposureZoneId, Int32? exemptReasonId, Int32? top, Int32? skip);
 
         /// <summary>
         /// List local exempt jurisdictions for a given exposure zone and tax code
@@ -3319,7 +3364,11 @@ namespace Avalara.AvaTax.RestClient
         /// The `scope` of an action determines what part of the transaction to apply changes to: `Document`, `MatchedLines`, `NotMatchedLines`, or `AllLines`.
         ///  
         /// When using a rule to adjust taxability,
-        /// - To exempt a line from tax entirely, use an `UpdateField` node to set its tax code to `NT` (Avalara's standard non-taxable code).
+        /// - Prefer classifying the transaction so Avalara's built-in tax content applies
+        ///  (for example by setting a standard tax code or entity use code with
+        ///  `UpdateField`) before using a `TaxRule*` action to override that content.
+        /// - To treat a line as nontaxable under Avalara's standard nontaxable code, use an
+        ///  `UpdateField` node to set its tax code to `NT`.
         ///  - Place the UpdateField early in the rule so it takes effect pre-calculation.
         /// - To impact tax details, the MatchTax condition node is required to match on jurisdiction + tax type combinations.
         ///  - There can only be one MatchTax node per rule, but it can have more than one criteria set.
@@ -3331,7 +3380,8 @@ namespace Avalara.AvaTax.RestClient
         ///  - `TaxRuleProductTaxability`: sets an item's taxability and assigns its rate type, so it requires a specific (non-wildcard) `rateTypeCode`.
         ///  - `TaxRuleRateOverride`: overrides Avalara's tax rate.
         ///  - `TaxRuleBaseOverride`: changes the tax base as a proportion of the original amount (e.g. `0.5` = 50% taxable).
-        ///  - `TaxRuleExemptEntity`: exempts the matched line for the jurisdiction and tax type; typically paired with a MatchEntityUseCode condition.
+        ///  - `TaxRuleExemptEntity`: after sourcing, overrides whether the matched line is
+        ///  exempt for the jurisdiction and tax type.
         /// - Caps and thresholds can be applied with the `TaxRuleProductTaxability` or `TaxRuleRateOverride` actions.
         ///  - A threshold buckets amounts up to and including the threshold as non-taxable.
         ///  - A cap limits the taxable amount (per unit by default, multiplied by quantity); amounts above the cap become non-taxable.
@@ -3628,7 +3678,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company to query the custom rules for.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* subtypeDescription, ruleEntity</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* ruleEntity</param>
         /// <param name="taxRuleFilter">A simple filter statement to select specific TaxRuleModel records. Applied to the underlying
         ///  Legacy Tax Rule entities before they are converted into summary records; evaluated before `filter`.</param>
         /// <param name="advancedRuleFilter">A simple filter statement to select specific AdvancedRuleExecutionModel records. Applied to the
@@ -3685,7 +3735,11 @@ namespace Avalara.AvaTax.RestClient
         /// The `scope` of an action determines what part of the transaction to apply changes to: `Document`, `MatchedLines`, `NotMatchedLines`, or `AllLines`.
         ///  
         /// When using a rule to adjust taxability,
-        /// - To exempt a line from tax entirely, use an `UpdateField` node to set its tax code to `NT` (Avalara's standard non-taxable code).
+        /// - Prefer classifying the transaction so Avalara's built-in tax content applies
+        ///  (for example by setting a standard tax code or entity use code with
+        ///  `UpdateField`) before using a `TaxRule*` action to override that content.
+        /// - To treat a line as nontaxable under Avalara's standard nontaxable code, use an
+        ///  `UpdateField` node to set its tax code to `NT`.
         ///  - Place the UpdateField early in the rule so it takes effect pre-calculation.
         /// - To impact tax details, the MatchTax condition node is required to match on jurisdiction + tax type combinations.
         ///  - There can only be one MatchTax node per rule, but it can have more than one criteria set.
@@ -3697,7 +3751,8 @@ namespace Avalara.AvaTax.RestClient
         ///  - `TaxRuleProductTaxability`: sets an item's taxability and assigns its rate type, so it requires a specific (non-wildcard) `rateTypeCode`.
         ///  - `TaxRuleRateOverride`: overrides Avalara's tax rate.
         ///  - `TaxRuleBaseOverride`: changes the tax base as a proportion of the original amount (e.g. `0.5` = 50% taxable).
-        ///  - `TaxRuleExemptEntity`: exempts the matched line for the jurisdiction and tax type; typically paired with a MatchEntityUseCode condition.
+        ///  - `TaxRuleExemptEntity`: after sourcing, overrides whether the matched line is
+        ///  exempt for the jurisdiction and tax type.
         /// - Caps and thresholds can be applied with the `TaxRuleProductTaxability` or `TaxRuleRateOverride` actions.
         ///  - A threshold buckets amounts up to and including the threshold as non-taxable.
         ///  - A cap limits the taxable amount (per unit by default, multiplied by quantity); amounts above the cap become non-taxable.
@@ -4453,7 +4508,9 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Returns the full list of all Avalara-supported nexus for all countries and regions.
         ///  
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus. 
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxTypeGroup, taxAuthorityId, taxName, parameters</param>
@@ -4507,7 +4564,9 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country.
         ///  
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country. 
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="country">The country in which you want to fetch the system nexus</param>
@@ -4524,6 +4583,8 @@ namespace Avalara.AvaTax.RestClient
         /// Returns all Avalara-supported nexus for the specified country and region.
         ///  
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
@@ -4565,6 +4626,8 @@ namespace Avalara.AvaTax.RestClient
         /// Returns all Avalara-supported nexus for the specified specified tax type group.
         ///  
         /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by tax type group.
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="taxTypeGroup">The tax type group to fetch the supporting system nexus for.</param>
@@ -4784,11 +4847,14 @@ namespace Avalara.AvaTax.RestClient
         /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributeSubType, values, valueDescriptions</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributeSubType, values, valueDescriptions, jurisdictionTypeId, jurisdictionCode, jurisdictionName, unitOfBasis, taxSubTypeId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<ParameterUsageModel> ListParametersUsage(String filter, Int32? top, Int32? skip, String orderBy);
+        /// <param name="include">A comma separated list of additional data to retrieve, for example "jurisdictionDetail"
+        /// (case-insensitive). When present, the response includes jurisdictionTypeId, jurisdictionCode,
+        /// jurisdictionName, unitOfBasis and taxSubTypeId for each result. These fields are not available to $filter/$orderBy.</param>
+        FetchResult<ParameterUsageModel> ListParametersUsage(String filter, Int32? top, Int32? skip, String orderBy, String include);
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported permissions
@@ -5085,11 +5151,11 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
         /// </remarks>
         /// Swagger Name: AvaTaxClient
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* hasParameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        FetchResult<TaxCodeModel> ListTaxCodes(String filter, Int32? top, Int32? skip, String orderBy);
+        FetchResult<TaxCodeDefinitionModel> ListTaxCodes(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported tax code types.
@@ -5479,18 +5545,18 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve economic nexus threshold statuses for a company
         /// </summary>
         /// <remarks>
-        /// Retrieve the economic nexus threshold status for each US state in which activity has been
+        /// Retrieve the economic nexus threshold status for each US region in which activity has been
         /// evaluated for this company.
         ///  
         /// Each entry in `states` describes the measurement window used, the sales and transaction
-        /// thresholds that apply to that state, the company's totals for the window, and whether
+        /// thresholds that apply to that region, the company's totals for the window, and whether
         /// the threshold has been met.
         ///  
         /// Threshold statuses are evaluated on a recurring schedule rather than at request time.
         /// Use `lastRefreshedAt` to determine how current the returned data is; when it is absent
         /// from the response, the age of the data is not known.
         ///  
-        /// When the optional `region` query parameter is provided, only the matching state is included
+        /// When the optional `region` query parameter is provided, only the matching region is included
         /// in `states`. If no threshold status exists for that company and region, `states` is returned
         /// as an empty array with a 200 response.
         ///  
@@ -5502,7 +5568,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company to retrieve threshold statuses for.</param>
-        /// <param name="region">Optional two-letter US state postal code used to filter the results (case-insensitive).
+        /// <param name="region">Optional two-letter US region postal code used to filter the results (case-insensitive).
         ///  When provided, `states` contains at most one entry, matched against the `region` field of each entry.
         ///  Must be exactly two characters; otherwise this endpoint returns 400.</param>
         EcoNexusThresholdsModel GetEcoNexusThresholds(Int32 companyId, String region);
@@ -5934,8 +6000,11 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this items.</param>
+        /// <param name="x_Avalara_Batch_Id">Optional. The `X-Avalara-Batch-Id` header (for example: `batchv2-98421`). Ties chunks of one source file together; consumed by downstream services.</param>
+        /// <param name="x_Avalara_Is_Last_Chunk">Optional. The `X-Avalara-Is-Last-Chunk` header. Accepts the string values `true` or `false`. Marks the final chunk of a file; consumed by downstream services.</param>
+        /// <param name="x_Avalara_Tax_Mode">Optional. The `X-Avalara-Tax-Mode` header (for example: `HIGH`). Governs downstream ICP tax code classification; consumed by downstream services.</param>
         /// <param name="model">The items you wish to upload.</param>
-        ItemBulkUploadOutputModel BulkUploadItems(Int32 companyId, ItemBulkUploadInputModel model);
+        ItemBulkUploadOutputModel BulkUploadItems(Int32 companyId, String x_Avalara_Batch_Id, String x_Avalara_Is_Last_Chunk, String x_Avalara_Tax_Mode, ItemBulkUploadInputModel model);
 
         /// <summary>
         /// Add classifications to an item.
@@ -6037,8 +6106,9 @@ namespace Avalara.AvaTax.RestClient
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="processRecommendationsSynchronously">If true then Indix api will be called synchronously to get tax code recommendations.</param>
+        /// <param name="x_Avalara_Tax_Mode">Optional. The `X-Avalara-Tax-Mode` header (for example: `HIGH`). Governs downstream ICP tax code classification; consumed by downstream services.</param>
         /// <param name="model">The item you wish to create.</param>
-        List<ItemModel> CreateItems(Int32 companyId, Boolean? processRecommendationsSynchronously, List<ItemModel> model);
+        List<ItemModel> CreateItems(Int32 companyId, Boolean? processRecommendationsSynchronously, String x_Avalara_Tax_Mode, List<ItemModel> model);
 
         /// <summary>
         /// Create tags for a item
@@ -6547,8 +6617,9 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
         /// Swagger Name: AvaTaxClient
         /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="x_Avalara_Tax_Mode">Optional. The `X-Avalara-Tax-Mode` header (Accepted values:'HIGH', 'MEDIUM', 'LOW'). Governs downstream ICP tax code classification.</param>
         /// <param name="model">The list of items to analyze for tax code recommendations (maximum 50).</param>
-        List<ItemTaxcodeRecommendationBatchesOutputModel> GetSyncTaxCodeRecommendations(Int32 companyId, List<ItemTaxcodeRecommendationBatchesInputModel> model);
+        List<ItemTaxcodeRecommendationBatchesOutputModel> GetSyncTaxCodeRecommendations(Int32 companyId, String x_Avalara_Tax_Mode, List<ItemTaxcodeRecommendationBatchesInputModel> model);
 
         /// <summary>
         /// Create an HS code classification request.
@@ -6950,6 +7021,20 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The request object.</param>
         SyncItemsResponseModel SyncItems(Int32 companyId, SyncItemsRequestModel model);
+
+        /// <summary>
+        /// Update HS Duty Details for an item.
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company for which you want to update HS Duty Details.</param>
+        /// <param name="itemId">The ID of the item for which you want to update HS Duty Details.</param>
+        /// <param name="model">The complete HS Code Duty Details body (as returned by fetch-additional-hsdutydetails) to update.</param>
+        List<ItemHSCodeDutyDetailModel> UpdateHSCodeDutyDetails(Int32 companyId, Int64 itemId, List<ItemHSCodeDutyDetailModel> model);
 
         /// <summary>
         /// Update an existing image for an item.
@@ -8420,7 +8505,8 @@ namespace Avalara.AvaTax.RestClient
         /// taxes. The legal requirements for nexus may vary per country and per jurisdiction; please seek advice from your
         /// accountant or lawyer prior to declaring nexus.
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        ///  
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         ///  * Parameters
         /// 
         /// ### Security Policies
@@ -8495,6 +8581,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         ///  * Parameters
         /// 
         /// ### Security Policies
@@ -8581,6 +8668,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         ///  * Parameters
         /// 
         /// ### Security Policies
@@ -9153,6 +9241,9 @@ namespace Avalara.AvaTax.RestClient
         /// `COMPANYLOCATIONPARAMETERDETAIL`, `COMPANYLOCATIONSETTINGCONFIG`, `COMPANYPARAMETERDETAIL`, `COMPANYRETURN`,
         /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`,
         /// `FILINGTASKSTATUSHISTORY`, `COMPANYSTATUSHISTORY`.
+        ///  
+        /// Use `reportSubType` = `All` to run the report across all supported tables. When `All` is used it must be
+        /// the only `reportSubType` and cannot carry filters.
         ///  
         /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         /// 
@@ -10676,7 +10767,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="dataSourceId">Optionally filter transactions to those from a specific data source.</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, exchangeRateProvider, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, exchangeRateProvider, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount, customClearanceFees</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -12536,9 +12627,12 @@ namespace Avalara.AvaTax.RestClient
         /// required, please use the
         /// [CreateTransaction API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Transactions/CreateTransaction/).
         ///  
-        /// Set `skipTransactionValidation` to true to defer transaction type, company code, and
-        /// nested model validation until BatchV2 processes each transaction. Per-transaction
-        /// validation failures are then written to the batch error file without blocking upload.
+        /// Set `skipTransactionValidation` to true to defer transaction type, company code
+        /// existence, and nested model validation until BatchV2 processes each transaction.
+        /// Per-transaction validation failures are then written to the batch error file without
+        /// blocking upload. Skipping validation only defers those checks; transactions that omit
+        /// `companyCode` still inherit the company from this URL, exactly as they do when
+        /// validation runs at upload time.
         ///  
         /// The maximum content length of the request body is limited to 28.6 MB. If this limit
         /// is exceeded, a 404 Not Found status will be returned (possibly with a CORS error if
@@ -13180,6 +13274,49 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The unique ID number of the company that recorded this certificate</param>
         /// <param name="id">The unique ID number of this certificate</param>
         Task<ExemptionStatusModel> ListCustomFieldsForCertificateAsync(Int32 companyId, Int32 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// List the exemption matrix entries for an exposure zone;
+        /// </summary>
+        /// <remarks>
+        /// Returns the entries in this company's exemption matrix for one exposure zone.
+        ///  
+        /// Each entry carries the `timeLength` rule used to work out when a certificate
+        /// recorded for that exposure zone and exempt reason expires, and the
+        /// `qualifyingStatement` shown to the customer. See the `timeLength` field
+        /// description for the meaning of each rule value.
+        ///  
+        /// `exposureZoneId` is mandatory. Supplying `exemptReasonId` narrows the result to
+        /// that one exempt reason; omitting it returns every exempt reason configured for
+        /// the zone. Call `ListCertificateExposureZones` and `ListCertificateExemptReasons`
+        /// to look up the available ID numbers.
+        ///  
+        /// An exposure zone with nothing configured returns an empty list rather than a
+        /// `404`, so "nothing configured" can be told apart from "no expiration rule".
+        /// Exempt reasons that are disabled, or that denote exposure rather than exemption,
+        /// are never listed.
+        ///  
+        /// Results are paginated with `$top` and `$skip`. As with the other exemption
+        /// certificate query APIs, `$skip` must be a multiple of `$top`.
+        ///  
+        /// Before you can use any exemption certificates endpoints, you must set up your company for exemption certificate data storage.
+        /// Companies that do not have this storage system set up will see `CertCaptureNotConfiguredError` when they call exemption
+        /// certificate related APIs. To check if this is set up for a company, call `GetCertificateSetup`. To request setup of exemption
+        /// certificate storage for this company, call `RequestCertificateSetup`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPTester, SSTAdmin, TechnicalSupportAdmin, TechnicalSupportUser.
+        /// * This API depends on the following active services:*Required* (all): AvaTaxPro, ECMEssentials, ECMPro, ECMPremium, VEMPro, VEMPremium, ECMProComms, ECMPremiumComms.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID number of the company</param>
+        /// <param name="exposureZoneId">Required. The ID number of the exposure zone.</param>
+        /// <param name="exemptReasonId">Optional. The ID number of an exempt reason. Omit to return every exempt reason configured for the exposure zone.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        Task<FetchResult<ExemptionMatrixModel>> ListExemptionMatrixAsync(Int32 companyId, Int32? exposureZoneId, Int32? exemptReasonId, Int32? top, Int32? skip);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -15266,7 +15403,11 @@ namespace Avalara.AvaTax.RestClient
         /// The `scope` of an action determines what part of the transaction to apply changes to: `Document`, `MatchedLines`, `NotMatchedLines`, or `AllLines`.
         ///  
         /// When using a rule to adjust taxability,
-        /// - To exempt a line from tax entirely, use an `UpdateField` node to set its tax code to `NT` (Avalara's standard non-taxable code).
+        /// - Prefer classifying the transaction so Avalara's built-in tax content applies
+        ///  (for example by setting a standard tax code or entity use code with
+        ///  `UpdateField`) before using a `TaxRule*` action to override that content.
+        /// - To treat a line as nontaxable under Avalara's standard nontaxable code, use an
+        ///  `UpdateField` node to set its tax code to `NT`.
         ///  - Place the UpdateField early in the rule so it takes effect pre-calculation.
         /// - To impact tax details, the MatchTax condition node is required to match on jurisdiction + tax type combinations.
         ///  - There can only be one MatchTax node per rule, but it can have more than one criteria set.
@@ -15278,7 +15419,8 @@ namespace Avalara.AvaTax.RestClient
         ///  - `TaxRuleProductTaxability`: sets an item's taxability and assigns its rate type, so it requires a specific (non-wildcard) `rateTypeCode`.
         ///  - `TaxRuleRateOverride`: overrides Avalara's tax rate.
         ///  - `TaxRuleBaseOverride`: changes the tax base as a proportion of the original amount (e.g. `0.5` = 50% taxable).
-        ///  - `TaxRuleExemptEntity`: exempts the matched line for the jurisdiction and tax type; typically paired with a MatchEntityUseCode condition.
+        ///  - `TaxRuleExemptEntity`: after sourcing, overrides whether the matched line is
+        ///  exempt for the jurisdiction and tax type.
         /// - Caps and thresholds can be applied with the `TaxRuleProductTaxability` or `TaxRuleRateOverride` actions.
         ///  - A threshold buckets amounts up to and including the threshold as non-taxable.
         ///  - A cap limits the taxable amount (per unit by default, multiplied by quantity); amounts above the cap become non-taxable.
@@ -15583,7 +15725,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company to query the custom rules for.</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* subtypeDescription, ruleEntity</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* ruleEntity</param>
         /// <param name="taxRuleFilter">A simple filter statement to select specific TaxRuleModel records. Applied to the underlying
         ///  Legacy Tax Rule entities before they are converted into summary records; evaluated before `filter`.</param>
         /// <param name="advancedRuleFilter">A simple filter statement to select specific AdvancedRuleExecutionModel records. Applied to the
@@ -15641,7 +15783,11 @@ namespace Avalara.AvaTax.RestClient
         /// The `scope` of an action determines what part of the transaction to apply changes to: `Document`, `MatchedLines`, `NotMatchedLines`, or `AllLines`.
         ///  
         /// When using a rule to adjust taxability,
-        /// - To exempt a line from tax entirely, use an `UpdateField` node to set its tax code to `NT` (Avalara's standard non-taxable code).
+        /// - Prefer classifying the transaction so Avalara's built-in tax content applies
+        ///  (for example by setting a standard tax code or entity use code with
+        ///  `UpdateField`) before using a `TaxRule*` action to override that content.
+        /// - To treat a line as nontaxable under Avalara's standard nontaxable code, use an
+        ///  `UpdateField` node to set its tax code to `NT`.
         ///  - Place the UpdateField early in the rule so it takes effect pre-calculation.
         /// - To impact tax details, the MatchTax condition node is required to match on jurisdiction + tax type combinations.
         ///  - There can only be one MatchTax node per rule, but it can have more than one criteria set.
@@ -15653,7 +15799,8 @@ namespace Avalara.AvaTax.RestClient
         ///  - `TaxRuleProductTaxability`: sets an item's taxability and assigns its rate type, so it requires a specific (non-wildcard) `rateTypeCode`.
         ///  - `TaxRuleRateOverride`: overrides Avalara's tax rate.
         ///  - `TaxRuleBaseOverride`: changes the tax base as a proportion of the original amount (e.g. `0.5` = 50% taxable).
-        ///  - `TaxRuleExemptEntity`: exempts the matched line for the jurisdiction and tax type; typically paired with a MatchEntityUseCode condition.
+        ///  - `TaxRuleExemptEntity`: after sourcing, overrides whether the matched line is
+        ///  exempt for the jurisdiction and tax type.
         /// - Caps and thresholds can be applied with the `TaxRuleProductTaxability` or `TaxRuleRateOverride` actions.
         ///  - A threshold buckets amounts up to and including the threshold as non-taxable.
         ///  - A cap limits the taxable amount (per unit by default, multiplied by quantity); amounts above the cap become non-taxable.
@@ -16448,7 +16595,9 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Returns the full list of all Avalara-supported nexus for all countries and regions.
         ///  
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus.;
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus. 
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.;
         /// </remarks>
 		
         /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* streamlinedSalesTax, isSSTActive, taxTypeGroup, taxAuthorityId, taxName, parameters</param>
@@ -16504,7 +16653,9 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country.
         ///  
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country.;
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country. 
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.;
         /// </remarks>
 		
         /// <param name="country">The country in which you want to fetch the system nexus</param>
@@ -16521,7 +16672,9 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified country and region.
         ///  
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.;
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by country and region.
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.;
         /// </remarks>
 		
         /// <param name="country">The two-character ISO-3166 code for the country.</param>
@@ -16564,7 +16717,9 @@ namespace Avalara.AvaTax.RestClient
         /// <remarks>
         /// Returns all Avalara-supported nexus for the specified specified tax type group.
         ///  
-        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by tax type group.;
+        /// This API is intended to be useful if your user interface needs to display a selectable list of nexus filtered by tax type group.
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.;
         /// </remarks>
 		
         /// <param name="taxTypeGroup">The tax type group to fetch the supporting system nexus for.</param>
@@ -16798,11 +16953,14 @@ namespace Avalara.AvaTax.RestClient
         /// Some parameters are only available for use if you have subscribed to certain features of AvaTax.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributeSubType, values, valueDescriptions</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* attributeSubType, values, valueDescriptions, jurisdictionTypeId, jurisdictionCode, jurisdictionName, unitOfBasis, taxSubTypeId</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<ParameterUsageModel>> ListParametersUsageAsync(String filter, Int32? top, Int32? skip, String orderBy);
+        /// <param name="include">A comma separated list of additional data to retrieve, for example "jurisdictionDetail"
+        /// (case-insensitive). When present, the response includes jurisdictionTypeId, jurisdictionCode,
+        /// jurisdictionName, unitOfBasis and taxSubTypeId for each result. These fields are not available to $filter/$orderBy.</param>
+        Task<FetchResult<ParameterUsageModel>> ListParametersUsageAsync(String filter, Int32? top, Int32? skip, String orderBy, String include);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -17117,11 +17275,11 @@ namespace Avalara.AvaTax.RestClient
         /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser.;
         /// </remarks>
 		
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* hasParameters</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
-        Task<FetchResult<TaxCodeModel>> ListTaxCodesAsync(String filter, Int32? top, Int32? skip, String orderBy);
+        Task<FetchResult<TaxCodeDefinitionModel>> ListTaxCodesAsync(String filter, Int32? top, Int32? skip, String orderBy);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -17536,18 +17694,18 @@ namespace Avalara.AvaTax.RestClient
         /// Retrieve economic nexus threshold statuses for a company;
         /// </summary>
         /// <remarks>
-        /// Retrieve the economic nexus threshold status for each US state in which activity has been
+        /// Retrieve the economic nexus threshold status for each US region in which activity has been
         /// evaluated for this company.
         ///  
         /// Each entry in `states` describes the measurement window used, the sales and transaction
-        /// thresholds that apply to that state, the company's totals for the window, and whether
+        /// thresholds that apply to that region, the company's totals for the window, and whether
         /// the threshold has been met.
         ///  
         /// Threshold statuses are evaluated on a recurring schedule rather than at request time.
         /// Use `lastRefreshedAt` to determine how current the returned data is; when it is absent
         /// from the response, the age of the data is not known.
         ///  
-        /// When the optional `region` query parameter is provided, only the matching state is included
+        /// When the optional `region` query parameter is provided, only the matching region is included
         /// in `states`. If no threshold status exists for that company and region, `states` is returned
         /// as an empty array with a 200 response.
         ///  
@@ -17559,7 +17717,7 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company to retrieve threshold statuses for.</param>
-        /// <param name="region">Optional two-letter US state postal code used to filter the results (case-insensitive).
+        /// <param name="region">Optional two-letter US region postal code used to filter the results (case-insensitive).
         ///  When provided, `states` contains at most one entry, matched against the `region` field of each entry.
         ///  Must be exactly two characters; otherwise this endpoint returns 400.</param>
         Task<EcoNexusThresholdsModel> GetEcoNexusThresholdsAsync(Int32 companyId, String region);
@@ -18016,8 +18174,11 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The ID of the company that owns this items.</param>
+        /// <param name="x_Avalara_Batch_Id">Optional. The `X-Avalara-Batch-Id` header (for example: `batchv2-98421`). Ties chunks of one source file together; consumed by downstream services.</param>
+        /// <param name="x_Avalara_Is_Last_Chunk">Optional. The `X-Avalara-Is-Last-Chunk` header. Accepts the string values `true` or `false`. Marks the final chunk of a file; consumed by downstream services.</param>
+        /// <param name="x_Avalara_Tax_Mode">Optional. The `X-Avalara-Tax-Mode` header (for example: `HIGH`). Governs downstream ICP tax code classification; consumed by downstream services.</param>
         /// <param name="model">The items you wish to upload.</param>
-        Task<ItemBulkUploadOutputModel> BulkUploadItemsAsync(Int32 companyId, ItemBulkUploadInputModel model);
+        Task<ItemBulkUploadOutputModel> BulkUploadItemsAsync(Int32 companyId, String x_Avalara_Batch_Id, String x_Avalara_Is_Last_Chunk, String x_Avalara_Tax_Mode, ItemBulkUploadInputModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -18123,8 +18284,9 @@ namespace Avalara.AvaTax.RestClient
 		
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="processRecommendationsSynchronously">If true then Indix api will be called synchronously to get tax code recommendations.</param>
+        /// <param name="x_Avalara_Tax_Mode">Optional. The `X-Avalara-Tax-Mode` header (for example: `HIGH`). Governs downstream ICP tax code classification; consumed by downstream services.</param>
         /// <param name="model">The item you wish to create.</param>
-        Task<List<ItemModel>> CreateItemsAsync(Int32 companyId, Boolean? processRecommendationsSynchronously, List<ItemModel> model);
+        Task<List<ItemModel>> CreateItemsAsync(Int32 companyId, Boolean? processRecommendationsSynchronously, String x_Avalara_Tax_Mode, List<ItemModel> model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -18659,8 +18821,9 @@ namespace Avalara.AvaTax.RestClient
         /// </remarks>
 		
         /// <param name="companyId">The unique ID of the company.</param>
+        /// <param name="x_Avalara_Tax_Mode">Optional. The `X-Avalara-Tax-Mode` header (Accepted values:'HIGH', 'MEDIUM', 'LOW'). Governs downstream ICP tax code classification.</param>
         /// <param name="model">The list of items to analyze for tax code recommendations (maximum 50).</param>
-        Task<List<ItemTaxcodeRecommendationBatchesOutputModel>> GetSyncTaxCodeRecommendationsAsync(Int32 companyId, List<ItemTaxcodeRecommendationBatchesInputModel> model);
+        Task<List<ItemTaxcodeRecommendationBatchesOutputModel>> GetSyncTaxCodeRecommendationsAsync(Int32 companyId, String x_Avalara_Tax_Mode, List<ItemTaxcodeRecommendationBatchesInputModel> model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -19076,6 +19239,21 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyId">The ID of the company that owns this item.</param>
         /// <param name="model">The request object.</param>
         Task<SyncItemsResponseModel> SyncItemsAsync(Int32 companyId, SyncItemsRequestModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update HS Duty Details for an item.;
+        /// </summary>
+        /// <remarks>
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company for which you want to update HS Duty Details.</param>
+        /// <param name="itemId">The ID of the item for which you want to update HS Duty Details.</param>
+        /// <param name="model">The complete HS Code Duty Details body (as returned by fetch-additional-hsdutydetails) to update.</param>
+        Task<List<ItemHSCodeDutyDetailModel>> UpdateHSCodeDutyDetailsAsync(Int32 companyId, Int64 itemId, List<ItemHSCodeDutyDetailModel> model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -20607,7 +20785,8 @@ namespace Avalara.AvaTax.RestClient
         /// taxes. The legal requirements for nexus may vary per country and per jurisdiction; please seek advice from your
         /// accountant or lawyer prior to declaring nexus.
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
-        ///  
+        /// 
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         ///  * Parameters
         /// 
         /// ### Security Policies
@@ -20685,6 +20864,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         ///  * Parameters
         /// 
         /// ### Security Policies
@@ -20774,6 +20954,7 @@ namespace Avalara.AvaTax.RestClient
         /// Paginate your results using the `$top`, `$skip`, and `$orderby` parameters.
         /// You may specify one or more of the following values in the '$include' parameter to fetch additional nested data, using commas to separate multiple values:
         ///  
+        /// The `localNexusTypeId` field can be null. Treat null as `Selected`, the same as the Tax Calculation Service does.
         ///  * Parameters
         /// 
         /// ### Security Policies
@@ -21371,6 +21552,9 @@ namespace Avalara.AvaTax.RestClient
         /// `COMPANYLOCATIONPARAMETERDETAIL`, `COMPANYLOCATIONSETTINGCONFIG`, `COMPANYPARAMETERDETAIL`, `COMPANYRETURN`,
         /// `COMPANYRETURNSETTING`, `ITEM`, `SERVICE`, `EXEMPTCERT`, `AVACERTSERVICECONFIG`, `JURISDICTIONOVERRIDE`, `COSTCENTER`,
         /// `FILINGTASKSTATUSHISTORY`, `COMPANYSTATUSHISTORY`.
+        ///  
+        /// Use `reportSubType` = `All` to run the report across all supported tables. When `All` is used it must be
+        /// the only `reportSubType` and cannot carry filters.
         ///  
         /// Set `compression` to `GZIP` to reduce the size of the report file and increase download speed.
         /// 
@@ -22943,7 +23127,7 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="companyCode">The company code of the company that recorded this transaction</param>
         /// <param name="dataSourceId">Optionally filter transactions to those from a specific data source.</param>
         /// <param name="include">Specifies objects to include in this fetch call</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, exchangeRateProvider, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exchangeRateCurrencyCode, exchangeRateProvider, totalDiscount, lines, addresses, locationTypes, summary, taxDetailsByTaxType, parameters, userDefinedFields, messages, invoiceMessages, isFakeTransaction, deliveryTerms, apStatusCode, apStatus, vendorName, varianceAmount, customClearanceFees</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>

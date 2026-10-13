@@ -110,5 +110,15 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         FiledByCustomer = 17,
 
+        /// <summary>
+        /// 
+        /// </summary>
+        Mailed = 18,
+
+        /// <summary>
+        /// 
+        /// </summary>
+        PaymentMadeNotFiled = 19,
+
     }
 }

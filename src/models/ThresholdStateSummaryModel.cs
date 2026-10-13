@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         public String id { get; set; }
 
         /// <summary>
-        /// Two-letter US state postal code (e.g. CA, TX, WA).
+        /// Two-letter US region postal code (e.g. CA, TX, WA).
         /// </summary>
         public String region { get; set; }
 

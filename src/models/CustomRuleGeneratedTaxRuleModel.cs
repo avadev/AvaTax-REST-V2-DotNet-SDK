@@ -221,6 +221,14 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String unitOfBasis { get; set; }
 
+        /// <summary>
+        /// For tax rules that are calculated using units of measurement which are neither per-currency
+        /// nor dimensionless, this indicates the unit of measurement used when evaluating tax rates.
+        /// 
+        /// For a list of units of measurement, use the [ListUnitsOfMeasurement API](https://developer.avalara.com/api-reference/avatax/rest/v2/methods/Definitions/ListUnitOfMeasurement/).
+        /// </summary>
+        public Int32? uomId { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

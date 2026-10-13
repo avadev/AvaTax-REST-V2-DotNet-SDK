@@ -32,6 +32,21 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public String level { get; set; }
 
+        /// <summary>
+        /// The overall data quality label for the item (for example: "GOOD", "FAIR").
+        /// </summary>
+        public String dqLabel { get; set; }
+
+        /// <summary>
+        /// The list of data quality issues detected for the item.
+        /// </summary>
+        public List<DataQualityIssueModel> dqIssues { get; set; }
+
+        /// <summary>
+        /// The timestamp when this recommendation was generated.
+        /// </summary>
+        public DateTime? modifiedDate { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself

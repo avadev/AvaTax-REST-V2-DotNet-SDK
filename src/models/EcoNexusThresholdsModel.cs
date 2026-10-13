@@ -28,7 +28,7 @@ namespace Avalara.AvaTax.RestClient
         public Int32? companyId { get; set; }
 
         /// <summary>
-        /// The per-state threshold statuses for this company.
+        /// The per-region threshold statuses for this company.
         /// Empty when no threshold status has been evaluated for the company.
         /// </summary>
         public List<ThresholdStateSummaryModel> states { get; set; }
