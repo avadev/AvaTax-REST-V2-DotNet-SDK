@@ -255,6 +255,11 @@ namespace Avalara.AvaTax.RestClient
         public String customerSupplierName { get; set; }
 
         /// <summary>
+        /// Vendor name for accounts payable transactions when no active ECM vendor exists.
+        /// </summary>
+        public String vendorName { get; set; }
+
+        /// <summary>
         /// The Id of the datasource from which this transaction originated.
         /// This value will be overridden by the system to take the datasource Id from the call header.
         /// </summary>

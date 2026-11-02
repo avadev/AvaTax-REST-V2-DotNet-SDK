@@ -1444,7 +1444,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -3049,7 +3049,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -4262,6 +4262,34 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         FetchResult<EntityUseCodeModel> ListEntityUseCodes(String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// <summary>
+        /// Retrieve supported exchange rate providers and their available frequencies
+        /// </summary>
+        /// <remarks>
+        /// Returns one row per (provider, frequency) pair that AvaTax currently offers, so a
+        /// provider available at more than one frequency appears more than once.
+        ///  
+        /// Read this list before creating an ExchangeRateProviderConfig: the providerCode and
+        /// frequency on that request must name a pair returned here. The pair also determines the
+        /// configuration's currency, which is why baseCurrency is returned but never supplied.
+        ///  
+        /// Only pairs whose mapping, provider and frequency are all active are listed.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter.
+        /// Paginate your results using the `$top` and `$skip` parameters, and sort them
+        /// using `$orderBy`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        FetchResult<ExchangeRateProviderDefinitionOutputModel> ListExchangeRateProviderDefinitions(String filter, String orderBy, Int32? top, Int32? skip);
 
         /// <summary>
         /// Retrieve the full list of Avalara-supported filing frequencies.
@@ -5572,6 +5600,141 @@ namespace Avalara.AvaTax.RestClient
         ///  When provided, `states` contains at most one entry, matched against the `region` field of each entry.
         ///  Must be exactly two characters; otherwise this endpoint returns 400.</param>
         EcoNexusThresholdsModel GetEcoNexusThresholds(Int32 companyId, String region);
+
+        /// <summary>
+        /// Create an ExchangeRateProviderConfig object
+        /// </summary>
+        /// <remarks>
+        /// Create an ExchangeRateProviderConfig object for this company.
+        ///  
+        /// Name the feed with `providerCode` and `frequency`; both must match a pair
+        /// from `ListExchangeRateProviderDefinitions`. The server derives `currencyCode`.
+        ///  
+        /// Customer configuration is currently supported for Switzerland (`countryCode: CH`)
+        /// using provider `SNB` to select between `Daily` and `Monthly` publishing
+        /// frequencies. `effDate` must be today or a future date (UTC). If `endDate` is
+        /// omitted, it defaults to `9999-12-31`.
+        /// System defaults are read-only. Overlapping date ranges for the same currency and country
+        /// return 400.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that owns this ExchangeRateProviderConfig</param>
+        /// <param name="model">The ExchangeRateProviderConfig object you wish to create.</param>
+        ExchangeRateProviderConfigOutputModel CreateExchangeRateProviderConfig(Int32 companyId, ExchangeRateProviderConfigInputModel model);
+
+        /// <summary>
+        /// Delete a single ExchangeRateProviderConfig object
+        /// </summary>
+        /// <remarks>
+        /// Deletes the ExchangeRateProviderConfig object identified by this URL.
+        ///  
+        /// This operation permanently removes a future configuration record. Deletion is
+        /// permitted only when the configuration has not yet taken effect (`effDate` is
+        /// strictly after today). Active, currently effective, or historical configurations
+        /// cannot be deleted because they may have been referenced during transaction
+        /// calculation. To end an active configuration, use `PUT` to update the
+        /// `endDate` instead.
+        ///  
+        /// Currently, this operation applies only to customer configurations for Switzerland
+        /// (`CH`) using provider `SNB`. System defaults are read-only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that owns this ExchangeRateProviderConfig</param>
+        /// <param name="id">The unique ID number of the ExchangeRateProviderConfig object you wish to delete.</param>
+        List<ErrorDetail> DeleteExchangeRateProviderConfig(Int32 companyId, Int32 id);
+
+        /// <summary>
+        /// Retrieve a single ExchangeRateProviderConfig
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single ExchangeRateProviderConfig object defined by this URL.
+        ///  
+        /// This endpoint returns only a configuration owned by the company in the URL. Inherited
+        /// system defaults are available through the company List endpoint.
+        ///  
+        /// An exchange rate provider configuration selects which Exchange Rate Service provider
+        /// feed and refresh frequency a company uses when converting a given currency, optionally
+        /// narrowed to a country.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company that owns this ExchangeRateProviderConfig object</param>
+        /// <param name="id">The unique ID number referring to this ExchangeRateProviderConfig object</param>
+        ExchangeRateProviderConfigOutputModel GetExchangeRateProviderConfig(Int32 companyId, Int32 id);
+
+        /// <summary>
+        /// Retrieve all ExchangeRateProviderConfig objects for this company
+        /// </summary>
+        /// <remarks>
+        /// Lists ExchangeRateProviderConfig objects that apply to this company.
+        ///  
+        /// The company-scoped list answers "what applies to me": it returns this company's
+        /// configurations together with inherited system defaults. Expired rows
+        /// (`endDate` before today) are omitted. Future-dated customer rows are kept.
+        /// A customer configuration replaces an inherited system default with the same currency and
+        /// country. Inherited system defaults are read-only. The `isConfigurable` value
+        /// indicates whether a customer configuration may be created for that country and provider;
+        /// when it is false or null, an override is not permitted. Transaction-time provider
+        /// resolution is handled separately by the tax engine.
+        /// An exchange rate supplied with the transaction takes precedence over Exchange Rate
+        /// Service lookup and this configuration.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full
+        /// documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).
+        /// Paginate your results using the `$top` and `$skip` parameters, and sort them
+        /// using `$orderBy`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The ID of the company whose ExchangeRateProviderConfig objects you wish to list.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* providerCode, frequency, isConfigurable</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        FetchResult<ExchangeRateProviderConfigOutputModel> ListExchangeRateProviderConfigs(Int32 companyId, String filter, String include, String orderBy, Int32? top, Int32? skip);
+
+        /// <summary>
+        /// Update an ExchangeRateProviderConfig object
+        /// </summary>
+        /// <remarks>
+        /// Updates the ExchangeRateProviderConfig object at this URL.
+        ///  
+        /// Only `endDate` may be changed on an existing row. `countryCode`,
+        /// `effDate`, `providerCode` and `frequency` are immutable once created —
+        /// end-date the row and create a new one to change any of them — and a PUT must restate
+        /// them to match the stored row. `endDate` is required and must be today or a future
+        /// date (UTC).
+        ///  
+        /// An `endDate` change that creates an overlapping effective date range for the same
+        /// currency and country returns 400.
+        ///  
+        /// Currently, this operation applies only to customer configurations for Switzerland
+        /// (`CH`) using provider `SNB`. System defaults are read-only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.
+        /// </remarks>
+        /// Swagger Name: AvaTaxClient
+        /// <param name="companyId">The unique ID number of the company that owns this ExchangeRateProviderConfig object.</param>
+        /// <param name="id">The unique ID number of the ExchangeRateProviderConfig object to replace.</param>
+        /// <param name="model">The new ExchangeRateProviderConfig object to store.</param>
+        ExchangeRateProviderConfigOutputModel UpdateExchangeRateProviderConfig(Int32 companyId, Int32 id, ExchangeRateProviderConfigInputModel model);
 
         /// <summary>
         /// Approves linkage to a firm for a client account
@@ -9347,7 +9510,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This API call returns information about all report types across your entire account.
         ///  
-        /// Audit-log report types (`audit`, `audittransactionlogs`) are not included in this list; retrieve those via the
+        /// Audit-log report types (`audit`, `audittransactionlogs`, `auditbatchtransactionlogs`) are not included in this list; retrieve those via the
         /// `GetAuditLogReport` / `DownloadAuditLogReport` APIs.
         ///  
         /// Pagination note: when the response includes a non-null `pageKey` (next link), more results may exist and the
@@ -11574,7 +11737,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -11713,7 +11876,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -13400,7 +13563,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -15077,7 +15240,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate
         ///  * jurisdictions - Retrieves the list of jurisdictions associated with the certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -16335,6 +16498,35 @@ namespace Avalara.AvaTax.RestClient
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
         Task<FetchResult<EntityUseCodeModel>> ListEntityUseCodesAsync(String filter, Int32? top, Int32? skip, String orderBy);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve supported exchange rate providers and their available frequencies;
+        /// </summary>
+        /// <remarks>
+        /// Returns one row per (provider, frequency) pair that AvaTax currently offers, so a
+        /// provider available at more than one frequency appears more than once.
+        ///  
+        /// Read this list before creating an ExchangeRateProviderConfig: the providerCode and
+        /// frequency on that request must name a pair returned here. The pair also determines the
+        /// configuration's currency, which is why baseCurrency is returned but never supplied.
+        ///  
+        /// Only pairs whose mapping, provider and frequency are all active are listed.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter.
+        /// Paginate your results using the `$top` and `$skip` parameters, and sort them
+        /// using `$orderBy`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        Task<FetchResult<ExchangeRateProviderDefinitionOutputModel>> ListExchangeRateProviderDefinitionsAsync(String filter, String orderBy, Int32? top, Int32? skip);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -17721,6 +17913,146 @@ namespace Avalara.AvaTax.RestClient
         ///  When provided, `states` contains at most one entry, matched against the `region` field of each entry.
         ///  Must be exactly two characters; otherwise this endpoint returns 400.</param>
         Task<EcoNexusThresholdsModel> GetEcoNexusThresholdsAsync(Int32 companyId, String region);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Create an ExchangeRateProviderConfig object;
+        /// </summary>
+        /// <remarks>
+        /// Create an ExchangeRateProviderConfig object for this company.
+        ///  
+        /// Name the feed with `providerCode` and `frequency`; both must match a pair
+        /// from `ListExchangeRateProviderDefinitions`. The server derives `currencyCode`.
+        ///  
+        /// Customer configuration is currently supported for Switzerland (`countryCode: CH`)
+        /// using provider `SNB` to select between `Daily` and `Monthly` publishing
+        /// frequencies. `effDate` must be today or a future date (UTC). If `endDate` is
+        /// omitted, it defaults to `9999-12-31`.
+        /// System defaults are read-only. Overlapping date ranges for the same currency and country
+        /// return 400.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that owns this ExchangeRateProviderConfig</param>
+        /// <param name="model">The ExchangeRateProviderConfig object you wish to create.</param>
+        Task<ExchangeRateProviderConfigOutputModel> CreateExchangeRateProviderConfigAsync(Int32 companyId, ExchangeRateProviderConfigInputModel model);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Delete a single ExchangeRateProviderConfig object;
+        /// </summary>
+        /// <remarks>
+        /// Deletes the ExchangeRateProviderConfig object identified by this URL.
+        ///  
+        /// This operation permanently removes a future configuration record. Deletion is
+        /// permitted only when the configuration has not yet taken effect (`effDate` is
+        /// strictly after today). Active, currently effective, or historical configurations
+        /// cannot be deleted because they may have been referenced during transaction
+        /// calculation. To end an active configuration, use `PUT` to update the
+        /// `endDate` instead.
+        ///  
+        /// Currently, this operation applies only to customer configurations for Switzerland
+        /// (`CH`) using provider `SNB`. System defaults are read-only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, SSTAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that owns this ExchangeRateProviderConfig</param>
+        /// <param name="id">The unique ID number of the ExchangeRateProviderConfig object you wish to delete.</param>
+        Task<List<ErrorDetail>> DeleteExchangeRateProviderConfigAsync(Int32 companyId, Int32 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve a single ExchangeRateProviderConfig;
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single ExchangeRateProviderConfig object defined by this URL.
+        ///  
+        /// This endpoint returns only a configuration owned by the company in the URL. Inherited
+        /// system defaults are available through the company List endpoint.
+        ///  
+        /// An exchange rate provider configuration selects which Exchange Rate Service provider
+        /// feed and refresh frequency a company uses when converting a given currency, optionally
+        /// narrowed to a country.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company that owns this ExchangeRateProviderConfig object</param>
+        /// <param name="id">The unique ID number referring to this ExchangeRateProviderConfig object</param>
+        Task<ExchangeRateProviderConfigOutputModel> GetExchangeRateProviderConfigAsync(Int32 companyId, Int32 id);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Retrieve all ExchangeRateProviderConfig objects for this company;
+        /// </summary>
+        /// <remarks>
+        /// Lists ExchangeRateProviderConfig objects that apply to this company.
+        ///  
+        /// The company-scoped list answers "what applies to me": it returns this company's
+        /// configurations together with inherited system defaults. Expired rows
+        /// (`endDate` before today) are omitted. Future-dated customer rows are kept.
+        /// A customer configuration replaces an inherited system default with the same currency and
+        /// country. Inherited system defaults are read-only. The `isConfigurable` value
+        /// indicates whether a customer configuration may be created for that country and provider;
+        /// when it is false or null, an override is not permitted. Transaction-time provider
+        /// resolution is handled separately by the tax engine.
+        /// An exchange rate supplied with the transaction takes precedence over Exchange Rate
+        /// Service lookup and this configuration.
+        ///  
+        /// Search for specific objects using the criteria in the `$filter` parameter; full
+        /// documentation is available on [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).
+        /// Paginate your results using the `$top` and `$skip` parameters, and sort them
+        /// using `$orderBy`.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AccountOperator, AccountUser, AvaTaxOnlyAccountAdmin, AvaTaxOnlyAccountUser, AvaTaxOnlyCompanyAdmin, AvaTaxOnlyCompanyUser, BatchServiceAdmin, CompanyAdmin, CompanyUser, Compliance Root User, ComplianceAdmin, ComplianceUser, CSPAdmin, CSPTester, ECMAccountUser, ECMCompanyUser, FirmAdmin, FirmUser, ProStoresOperator, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyAccountUser, ReturnsOnlyCompanyAdmin, ReturnsOnlyCompanyUser, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin, TechnicalSupportUser, TreasuryAdmin, TreasuryUser.;
+        /// </remarks>
+		
+        /// <param name="companyId">The ID of the company whose ExchangeRateProviderConfig objects you wish to list.</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* providerCode, frequency, isConfigurable</param>
+        /// <param name="include">A comma separated list of additional data to retrieve.</param>
+        /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
+        /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
+        /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
+        Task<FetchResult<ExchangeRateProviderConfigOutputModel>> ListExchangeRateProviderConfigsAsync(Int32 companyId, String filter, String include, String orderBy, Int32? top, Int32? skip);
+
+        /// Swagger Name: AvaTaxClient
+        /// <summary>
+        /// Update an ExchangeRateProviderConfig object;
+        /// </summary>
+        /// <remarks>
+        /// Updates the ExchangeRateProviderConfig object at this URL.
+        ///  
+        /// Only `endDate` may be changed on an existing row. `countryCode`,
+        /// `effDate`, `providerCode` and `frequency` are immutable once created —
+        /// end-date the row and create a new one to change any of them — and a PUT must restate
+        /// them to match the stored row. `endDate` is required and must be today or a future
+        /// date (UTC).
+        ///  
+        /// An `endDate` change that creates an overlapping effective date range for the same
+        /// currency and country returns 400.
+        ///  
+        /// Currently, this operation applies only to customer configurations for Switzerland
+        /// (`CH`) using provider `SNB`. System defaults are read-only.
+        /// 
+        /// ### Security Policies
+        /// 
+        /// * This API requires one of the following user roles: AccountAdmin, AvaTaxOnlyAccountAdmin, AvaTaxOnlyCompanyAdmin, BatchServiceAdmin, CompanyAdmin, CSPTester, FirmAdmin, Registrar, ReturnsOnlyAccountAdmin, ReturnsOnlyCompanyAdmin, SiteAdmin, SSTAdmin, SystemAdmin, TechnicalSupportAdmin.;
+        /// </remarks>
+		
+        /// <param name="companyId">The unique ID number of the company that owns this ExchangeRateProviderConfig object.</param>
+        /// <param name="id">The unique ID number of the ExchangeRateProviderConfig object to replace.</param>
+        /// <param name="model">The new ExchangeRateProviderConfig object to store.</param>
+        Task<ExchangeRateProviderConfigOutputModel> UpdateExchangeRateProviderConfigAsync(Int32 companyId, Int32 id, ExchangeRateProviderConfigInputModel model);
 
         /// Swagger Name: AvaTaxClient
         /// <summary>
@@ -21662,7 +21994,7 @@ namespace Avalara.AvaTax.RestClient
         ///  
         /// This API call returns information about all report types across your entire account.
         ///  
-        /// Audit-log report types (`audit`, `audittransactionlogs`) are not included in this list; retrieve those via the
+        /// Audit-log report types (`audit`, `audittransactionlogs`, `auditbatchtransactionlogs`) are not included in this list; retrieve those via the
         /// `GetAuditLogReport` / `DownloadAuditLogReport` APIs.
         ///  
         /// Pagination note: when the response includes a non-null `pageKey` (next link), more results may exist and the
@@ -23963,7 +24295,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>
@@ -24106,7 +24438,7 @@ namespace Avalara.AvaTax.RestClient
         ///  * logs - Retrieves the certificate log
         ///  * invalid_reasons - Retrieves invalid reasons for this certificate if the certificate is invalid
         ///  * custom_fields - Retrieves custom fields set for this certificate</param>
-        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
+        /// <param name="filter">A filter statement to identify specific records to retrieve. For more information on filtering, see [Filtering in REST](http://developer.avalara.com/avatax/filtering-in-rest/).<br />*Not filterable:* documentTypeId, documentTypeDescription, originalFilename, exemptionNumber, jurisdictions, ecmsId, ecmsStatus, pdf, pages</param>
         /// <param name="top">If nonzero, return no more than this number of results. Used with `$skip` to provide pagination for large datasets. Unless otherwise specified, the maximum number of records that can be returned from an API call is 1,000 records.</param>
         /// <param name="skip">If nonzero, skip this number of results before returning data. Used with `$top` to provide pagination for large datasets.</param>
         /// <param name="orderBy">A comma separated list of sort statements in the format `(fieldname) [ASC|DESC]`, for example `id ASC`.</param>

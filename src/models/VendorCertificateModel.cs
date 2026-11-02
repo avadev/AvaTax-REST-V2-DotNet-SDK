@@ -76,6 +76,13 @@ namespace Avalara.AvaTax.RestClient
         public String filename { get; set; }
 
         /// <summary>
+        /// The name of the file as it was originally uploaded by the customer, when available.
+        /// This is read-only and is null for certificates that were not uploaded with a captured
+        /// original file name.
+        /// </summary>
+        public String originalFilename { get; set; }
+
+        /// <summary>
         /// This value is true if there exists scanned PDF copy of this certificate or the PDF version of the form that the customer filled via the CertCapture wizard on S3 bucket.
         /// </summary>
         public Boolean? documentExists { get; set; }
