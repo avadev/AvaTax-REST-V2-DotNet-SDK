@@ -117,6 +117,11 @@ namespace Avalara.AvaTax.RestClient
         public Int32 taxRegionId { get; set; }
 
         /// <summary>
+        /// The radius, in miles, associated with this jurisdiction override. Supported values are 5, 10, 20, 30, and 40. New overrides default to 5 when omitted
+        /// </summary>
+        public Int32? radius { get; set; }
+
+        /// <summary>
         /// The boundary level of this override
         /// </summary>
         public BoundaryLevel? boundaryLevel { get; set; }

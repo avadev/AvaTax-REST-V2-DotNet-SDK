@@ -24,6 +24,15 @@ namespace Avalara.AvaTax.RestClient
     public class VendorModel
     {
         /// <summary>
+        /// The unique code identifying this vendor. Must be unique within your company.
+        ///  
+        /// This code should be used in the `customerCode` field of any call that creates or adjusts a transaction
+        /// in order to ensure that this vendor's tax determination (trusted, auto-accrue, or always-tax) is
+        /// correctly applied.
+        /// </summary>
+        public String customerCode { get; set; }
+
+        /// <summary>
         /// Indicates whether this entity is a vendor.
         /// This flag helps distinguish vendors from regular customers in the system.
         /// Note: This field is automatically set to true for vendor endpoints and cannot be overridden by user filters.
@@ -44,16 +53,6 @@ namespace Avalara.AvaTax.RestClient
         /// The unique ID number of the AvaTax company that recorded this customer.
         /// </summary>
         public Int32 companyId { get; set; }
-
-        /// <summary>
-        /// The unique code identifying this customer. Must be unique within your company.
-        ///  
-        /// This code should be used in the `customerCode` field of any call that creates or adjusts a transaction
-        /// in order to ensure that all exemptions that apply to this customer are correctly considered.
-        ///  
-        /// Note: This field is case sensitive.
-        /// </summary>
-        public String customerCode { get; set; }
 
         /// <summary>
         /// A customer-configurable alternate ID number for this customer. You may set this value to match any

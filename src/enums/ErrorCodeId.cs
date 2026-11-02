@@ -2163,6 +2163,31 @@ namespace Avalara.AvaTax.RestClient
         InputContainsUnsupportedCharacters = 4035,
 
         /// <summary>
+        /// IncorrectParameterValue code message
+        /// </summary>
+        IncorrectParameterValue = 4036,
+
+        /// <summary>
+        /// Value passed for Country field is not supported
+        /// </summary>
+        CountryNotSupported = 4037,
+
+        /// <summary>
+        /// Value passed for CountryOfExport field is not supported
+        /// </summary>
+        CountryOfExportNotSupported = 4038,
+
+        /// <summary>
+        /// Operation not allowed
+        /// </summary>
+        OperationNotAllowed = 4039,
+
+        /// <summary>
+        /// Permission not granted by the user's security role or custom roles
+        /// </summary>
+        CustomRolePermissionRequired = 4040,
+
+        /// <summary>
         /// Error string from the service unknown
         /// </summary>
         UnexpectedError = -1,

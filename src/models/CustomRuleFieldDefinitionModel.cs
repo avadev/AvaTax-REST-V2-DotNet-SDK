@@ -52,6 +52,11 @@ namespace Avalara.AvaTax.RestClient
         /// </summary>
         public CustomRuleFieldLevelDefinitionModel lineLevel { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public CustomRuleFieldLevelDefinitionModel detailLevel { get; set; }
+
 
         /// <summary>
         /// Convert this object to a JSON string of itself
